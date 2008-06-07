@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -14,7 +13,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -27,13 +25,11 @@ public class CreateSiteInExecutionCourseAction extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
-
         Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
         Object args[] = { executionCourseId };
         try {
 
-            ServiceUtils.executeService(userView, "CreateSiteInExecutionCourse", args);
+            ServiceUtils.executeService("CreateSiteInExecutionCourse", args);
         } catch (NonExistingServiceException exception) {
             throw new NonExistingActionException(exception.getMessage());
         } catch (FenixServiceException e) {

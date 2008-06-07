@@ -97,7 +97,7 @@ public class CompositeRulesManagementBackingBean extends CurricularRulesManageme
             final Object args[] = { 
                     LogicOperator.valueOf(getSelectedLogicOperator()), 
                     getSelectedCurricularRuleIDs() };
-            ServiceUtils.executeService(getUserView(), "CreateCompositeRule", args);
+            ServiceUtils.executeService( "CreateCompositeRule", args);
             removeSelectedCurricularRuleIDs();
             getCurricularRuleItems().setValue(readCurricularRulesLabels());
         } catch (FenixFilterException e) {

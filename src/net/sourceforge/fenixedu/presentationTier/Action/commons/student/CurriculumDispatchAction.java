@@ -25,9 +25,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.EnrolmentStateFilterType;
 import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType;
 import net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.ViewType;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -38,6 +35,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -248,7 +249,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	List result = null;
 	try {
 	    Object args[] = { executionDegreeID, Integer.valueOf(studentCurricularPlanID) };
-	    result = (ArrayList) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurriculum", args);
+	    result = (ArrayList) ServiceManagerServiceFactory.executeService( "ReadStudentCurriculum", args);
 	} catch (NotAuthorizedException e) {
 	    return mapping.findForward("NotAuthorized");
 	}
@@ -269,7 +270,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 	try {
 	    Object args[] = { Integer.valueOf(studentCurricularPlanID) };
-	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(userView,
+	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
 		    "ReadStudentCurricularPlan", args);
 	} catch (ExistingServiceException e) {
 	    throw new ExistingActionException(e);

@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.ProviderRegimeType;
 import net.sourceforge.fenixedu.util.PublicationArea;
@@ -39,6 +38,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Leonor Almeida
@@ -70,7 +71,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
         List infoPublicationsNumber = getInfoPublicationsNumberFromForm(form);
         Object[] args = { infoServiceProviderRegime, infoWeeklyOcupation, infoOrientations,
                 infoPublicationsNumber };
-        ServiceUtils.executeService(SessionUtils.getUserView(request), getEditService(), args);
+        ServiceUtils.executeService(getEditService(), args);
         return read(mapping, form, request, response);
     }
 
@@ -469,9 +470,9 @@ public class TeacherInformationAction extends FenixDispatchAction {
     private InfoSiteTeacherInformation readInfoSiteTeacherInformation(ActionMapping mapping,
             ActionForm form, HttpServletRequest request) throws FenixServiceException,
             FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Object[] args = { userView.getUtilizador(), new String() };
-        SiteView siteView = (SiteView) ServiceUtils.executeService(userView, getReadService(), args);
+        SiteView siteView = (SiteView) ServiceUtils.executeService(getReadService(), args);
         return (InfoSiteTeacherInformation) siteView.getComponent();
     }
 

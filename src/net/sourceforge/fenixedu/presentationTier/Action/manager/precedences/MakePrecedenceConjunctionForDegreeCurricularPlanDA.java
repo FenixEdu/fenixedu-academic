@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -20,6 +19,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author David Santos in Jul 28, 2004
@@ -30,7 +31,7 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
     public ActionForward showFirstPage(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer degreeID = new Integer(request.getParameter("degreeId"));
         Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
@@ -43,7 +44,7 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
         Object args[] = { degreeCurricularPlanID };
 
         try {
-            Map result = (Map) ServiceManagerServiceFactory.executeService(userView,
+            Map result = (Map) ServiceManagerServiceFactory.executeService(
                     "ReadPrecedencesFromDegreeCurricularPlan", args);
             request.setAttribute("precedences", result);
         } catch (FenixServiceException e) {
@@ -60,7 +61,7 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         DynaActionForm mergePrecedencesForm = (DynaActionForm) form;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer degreeID = (Integer) mergePrecedencesForm.get("degreeId");
         Integer degreeCurricularPlanID = (Integer) mergePrecedencesForm.get("degreeCurricularPlanId");
@@ -69,7 +70,7 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
         Object args[] = { degreeCurricularPlanID };
 
         try {
-            Map result = (Map) ServiceManagerServiceFactory.executeService(userView,
+            Map result = (Map) ServiceManagerServiceFactory.executeService(
                     "ReadPrecedencesFromDegreeCurricularPlan", args);
             request.setAttribute("precedences", result);
         } catch (FenixServiceException e) {
@@ -88,7 +89,7 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
 
         ActionErrors errors = new ActionErrors();
         DynaActionForm mergePrecedencesForm = (DynaActionForm) form;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer degreeID = (Integer) mergePrecedencesForm.get("degreeId");
         Integer degreeCurricularPlanID = (Integer) mergePrecedencesForm.get("degreeCurricularPlanId");
@@ -99,9 +100,9 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
         Object args2[] = { degreeCurricularPlanID };
 
         try {
-            ServiceManagerServiceFactory.executeService(userView,
+            ServiceManagerServiceFactory.executeService(
                     "MergePrecedencesForDegreeCurricularPlan", args1);
-            Map result = (Map) ServiceManagerServiceFactory.executeService(userView,
+            Map result = (Map) ServiceManagerServiceFactory.executeService(
                     "ReadPrecedencesFromDegreeCurricularPlan", args2);
             request.setAttribute("precedences", result);
         } catch (InvalidArgumentsServiceException e) {

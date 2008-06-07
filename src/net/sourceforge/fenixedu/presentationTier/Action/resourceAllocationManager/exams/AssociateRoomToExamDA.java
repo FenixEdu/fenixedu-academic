@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
@@ -30,6 +29,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Ana e Ricardo
@@ -50,7 +51,7 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
         request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
 
         DynaActionForm examForm = (DynaActionForm) form;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         String[] executionCourse = (String[]) examForm.get("executionCourses");
         request.setAttribute("executionCoursesArray", executionCourse);
@@ -62,7 +63,7 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
             Object args[] = { new Integer(executionCourse[iterEC]) };
 
             InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
-                    userView, "ReadExecutionCourseByOID", args);
+                    "ReadExecutionCourseByOID", args);
 
             executionCourseNames.add(infoExecutionCourse.getNome());
         }
@@ -101,7 +102,7 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
         	HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime),
         	dayOfWeek, null, null, Boolean.FALSE };
         
-        List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService(userView, "ReadAvailableRoomsForExam", args);
+        List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService("ReadAvailableRoomsForExam", args);
 
         String[] rooms = (String[]) examForm.get("rooms");
         List<InfoRoom> selectedRooms = new ArrayList<InfoRoom>();
@@ -110,7 +111,7 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
         if (rooms != null && rooms.length > 0) {
 
             for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++) {
-                InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID", new Object[] { Integer.valueOf(rooms[iterRooms]) });
+                InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID", new Object[] { Integer.valueOf(rooms[iterRooms]) });
                 selectedRooms.add(infoRoom);
             }
 

@@ -59,14 +59,14 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
                     if (session.getAttribute(SessionConstants.REQUESTER_NUMBER) == null) {
                         Object args[] = { infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson() };
                         infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-                                .executeService(userView, "ReadMasterDegreeCandidate", args);
+                                .executeService( "ReadMasterDegreeCandidate", args);
                     } else {
                         Integer number = (Integer) session
                                 .getAttribute(SessionConstants.REQUESTER_NUMBER);
                         Object args[] = { infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson(),
                                 number };
                         infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-                                .executeService(userView, "ReadCandidateListByPersonAndExecutionDegree",
+                                .executeService( "ReadCandidateListByPersonAndExecutionDegree",
                                         args);
                     }
                 } catch (FenixServiceException e) {
@@ -104,7 +104,7 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
             try {
                 Object args[] = { number, year, version };
 
-                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(
                         "ChooseGuide", args);
             } catch (FenixServiceException e) {
                 throw new FenixActionException();
@@ -118,7 +118,7 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
                 Object args2[] = { infoGuide.getInfoPerson() };
 
                 try {
-                    infoStudents = (List) ServiceUtils.executeService(userView, "ReadStudentsByPerson",
+                    infoStudents = (List) ServiceUtils.executeService("ReadStudentsByPerson",
                             args2);
 
                     Iterator it = infoStudents.iterator();

@@ -27,13 +27,14 @@ import net.sourceforge.fenixedu.persistenceTier.statementInterceptors.FenixState
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.ExpressionBean;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.ParserReport;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ContentManagement extends FenixDispatchAction {
 

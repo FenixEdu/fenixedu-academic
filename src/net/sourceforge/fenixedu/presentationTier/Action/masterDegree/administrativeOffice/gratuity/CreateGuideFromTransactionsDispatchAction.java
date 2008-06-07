@@ -26,12 +26,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -51,7 +52,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         DynaActionForm createGuideFromTransactionsForm = (DynaActionForm) form;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer contributorNumber = (Integer) createGuideFromTransactionsForm.get("contributorNumber");
         Integer gratuitySituationId = (Integer) createGuideFromTransactionsForm
@@ -69,7 +70,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
         List infoTransactions = null;
         Object argsTransactions[] = { gratuitySituationId };
         try {
-            infoTransactions = (List) ServiceUtils.executeService(userView,
+            infoTransactions = (List) ServiceUtils.executeService(
                     "ReadAllTransactionsByGratuitySituationID", argsTransactions);
 
         } catch (FenixServiceException e) {
@@ -100,7 +101,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
             HttpServletResponse response) throws Exception {
 
         DynaActionForm createGuideFromTransactionsForm = (DynaActionForm) form;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer contributorNumber = (Integer) createGuideFromTransactionsForm.get("contributorNumber");
         Integer gratuitySituationId = (Integer) createGuideFromTransactionsForm
@@ -131,7 +132,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
 
         Object argsGuide[] = { infoGuide, "", GuideState.PAYED, Arrays.asList(transactionsWithoutGuide) };
         try {
-            infoGuide = (InfoGuide) ServiceUtils.executeService(userView, "CreateGuideFromTransactions",
+            infoGuide = (InfoGuide) ServiceUtils.executeService("CreateGuideFromTransactions",
                     argsGuide);
 
         } catch (FenixServiceException e) {
@@ -159,7 +160,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
         InfoContributor infoContributor = null;
         Object argsContributor[] = { contributorNumber };
         try {
-            infoContributor = (InfoContributor) ServiceUtils.executeService(userView, "ReadContributor",
+            infoContributor = (InfoContributor) ServiceUtils.executeService("ReadContributor",
                     argsContributor);
 
         } catch (ExcepcaoInexistente e) {
@@ -184,7 +185,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
         InfoGratuitySituation infoGratuitySituation = null;
         Object argsGratuitySituation[] = { gratuitySituationId };
         try {
-            infoGratuitySituation = (InfoGratuitySituation) ServiceUtils.executeService(userView,
+            infoGratuitySituation = (InfoGratuitySituation) ServiceUtils.executeService(
                     "ReadGratuitySituationById", argsGratuitySituation);
 
         } catch (ExcepcaoInexistente e) {
@@ -208,7 +209,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
         InfoStudent infoStudent = null;
         Object argsStudent[] = { studentId };
         try {
-            infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "student.ReadStudentById",
+            infoStudent = (InfoStudent) ServiceUtils.executeService("student.ReadStudentById",
                     argsStudent);
 
         } catch (FenixServiceException e) {

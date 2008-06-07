@@ -4,7 +4,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>	
 
 <logic:present role="DEPARTMENT_ADMINISTRATIVE_OFFICE">
 	<ul>
@@ -57,7 +56,7 @@
 				</html:link>
 			</li>
 											
-			<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>		
+			<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE %>" scope="session"/>		
 			<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
 			<% String deiCode = "28"; %>
 			<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">

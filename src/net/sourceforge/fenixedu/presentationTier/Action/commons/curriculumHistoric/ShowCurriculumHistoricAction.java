@@ -32,7 +32,7 @@ public class ShowCurriculumHistoricAction extends FenixDispatchAction {
 	final Object[] args = new Object[] { curricularCourseOID, semester, executionYearOID };
 
 	final InfoCurriculumHistoricReport result = (InfoCurriculumHistoricReport) ServiceUtils
-		.executeService(getUserView(request), "ReadCurriculumHistoricReport", args);
+		.executeService( "ReadCurriculumHistoricReport", args);
 
 	request.setAttribute("infoCurriculumHistoricReport", result);
 

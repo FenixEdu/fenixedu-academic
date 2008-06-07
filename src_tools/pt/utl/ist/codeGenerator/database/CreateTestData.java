@@ -48,7 +48,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Login;
@@ -142,10 +141,8 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.Money;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.Season;
 
@@ -153,12 +150,12 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.Transaction;
-import pt.utl.ist.codeGenerator.database.ExamRoomManager;
-import pt.utl.ist.codeGenerator.database.LessonRoomManager;
-import pt.utl.ist.codeGenerator.database.WrittenTestsRoomManager;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateTestData {
 
@@ -179,7 +176,7 @@ public class CreateTestData {
     }
 
     private static void setPrivledges() {
-	AccessControl.setUserView(new MockUserView());
+	UserView.setUser(new MockUserView());
     }
 
     private static RootDomainObject getRootDomainObject() {
@@ -1576,10 +1573,6 @@ public class CreateTestData {
 
 	public boolean hasRoleType(RoleType roleType) {
 	    return true;
-	}
-
-	public boolean isPublicRequester() {
-	    return false;
 	}
 
 	public String getPrivateConstantForDigestCalculation() {

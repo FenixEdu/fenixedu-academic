@@ -11,11 +11,12 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Cruz
@@ -25,7 +26,7 @@ public class MonitorSystemDA extends FenixDispatchAction {
     public ActionForward monitor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         SystemInfo systemInfoApplicationServer = ServiceManagerServiceFactory.getSystemInfo(userView);
         request.setAttribute("systemInfoApplicationServer", systemInfoApplicationServer);

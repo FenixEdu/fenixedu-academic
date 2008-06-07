@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -29,6 +28,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * 
@@ -42,7 +43,7 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm editExternalPersonForm = (DynaActionForm) form;
 
         Integer externalPersonId;
@@ -57,7 +58,7 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
 
         Object args[] = { externalPersonId };
         try {
-            infoExternalPerson = (InfoExternalPerson) ServiceUtils.executeService(userView,
+            infoExternalPerson = (InfoExternalPerson) ServiceUtils.executeService(
                     "ReadExternalPersonByID", args);
         } catch (NonExistingServiceException e) {
             throw new FenixActionException(e);
@@ -90,12 +91,12 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
     }
 
     private List getInstitutions(HttpServletRequest request) throws FenixActionException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         List institutions = null;
 
         Object args[] = {};
         try {
-            institutions = (ArrayList) ServiceUtils.executeService(userView, "ReadAllInstitutions",
+            institutions = (ArrayList) ServiceUtils.executeService("ReadAllInstitutions",
                     args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -120,7 +121,7 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm editExternalPersonForm = (DynaActionForm) form;
                
@@ -137,7 +138,7 @@ public class EditExternalPersonDispatchAction extends FenixDispatchAction {
                 email };
 
         try {
-            ServiceUtils.executeService(userView, "EditExternalPerson", args);
+            ServiceUtils.executeService("EditExternalPerson", args);
         } catch (ExistingServiceException e) {
             getInstitutions(request);
             throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));

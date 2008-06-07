@@ -59,7 +59,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
         Object[] args1 = { groupPropertiesCode, null, studentGroupCode, userView.getUtilizador(), new Integer(4)};
         try
         {
-            ServiceUtils.executeService(userView, "VerifyStudentGroupAtributes", args1);
+            ServiceUtils.executeService("VerifyStudentGroupAtributes", args1);
             
         }catch (NotAuthorizedException e) {
 			ActionErrors actionErrors2 = new ActionErrors();
@@ -106,7 +106,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
         Object[] args2 = { groupPropertiesCode, studentGroupCode};
         try
         {
-        	infoSiteShifts = (InfoSiteShifts) ServiceUtils.executeService(userView, "ReadGroupingShifts", args2);
+        	infoSiteShifts = (InfoSiteShifts) ServiceUtils.executeService("ReadGroupingShifts", args2);
 
         }catch (ExistingServiceException e){
 			ActionErrors actionErrors = new ActionErrors();
@@ -209,7 +209,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction
 
             try
             {
-                ServiceUtils.executeService(userView, "EditGroupShift", args);
+                ServiceUtils.executeService("EditGroupShift", args);
             }catch (NotAuthorizedException e) {
     			ActionErrors actionErrors2 = new ActionErrors();
     			ActionError error2 = null;

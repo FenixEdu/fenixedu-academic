@@ -185,7 +185,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *             the exception throw by the service
      */
     public static void deleteFunctionality(Content functionality) throws Exception {
-        ServiceUtils.executeService(AccessControl.getUserView(), "DeleteFunctionality", functionality);
+        ServiceUtils.executeService( "DeleteFunctionality", functionality);
     }
 
     /**
@@ -201,7 +201,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      */
     public static void rearrangeFunctionalities(List<Pair<Module, Content>> arrangements)
             throws Exception {
-        ServiceUtils.executeService(AccessControl.getUserView(), "ArrangeFunctionalities", arrangements);
+        ServiceUtils.executeService( "ArrangeFunctionalities", arrangements);
     }
 
     /**
@@ -214,7 +214,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *             the exception thrown by the service
      */
     public static void enable(Functionality functionality) throws Exception {
-        ServiceUtils.executeService(AccessControl.getUserView(), "ChangeEnableInFunctionality",
+        ServiceUtils.executeService( "ChangeEnableInFunctionality",
                 functionality, true);
     }
 
@@ -228,7 +228,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *             the exception thrown by the service
      */
     public static void disable(Functionality functionality) throws Exception {
-        ServiceUtils.executeService(AccessControl.getUserView(), "ChangeEnableInFunctionality",
+        ServiceUtils.executeService( "ChangeEnableInFunctionality",
                 functionality, false);
     }
 
@@ -244,7 +244,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      */
     public static void setGroupAvailability(Content functionality, String expression)
             throws Exception {
-        ServiceUtils.executeService(AccessControl.getUserView(), "CreateGroupAvailability",
+        ServiceUtils.executeService( "CreateGroupAvailability",
                 functionality, expression);
     }
 
@@ -267,7 +267,7 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      *            with the same uuids
      */
     public static void importFunctionalities(Module module, InputStream stream, boolean principalPreserved, boolean uuidUsed) throws Exception {
-        ServiceUtils.executeService(AccessControl.getUserView(), "ImportFunctionalities",
+        ServiceUtils.executeService( "ImportFunctionalities",
                 module, stream, principalPreserved, uuidUsed);
     }
     
@@ -279,6 +279,6 @@ public class FunctionalitiesDispatchAction extends FenixDispatchAction {
      * @param stream the stream containing the XML funcitonalities structure
      */
     public static void importStartupFunctionalities(InputStream stream) throws Exception {
-        ServiceUtils.executeService(AccessControl.getUserView(), "ImportStartupFunctionalities", stream);
+        ServiceUtils.executeService( "ImportStartupFunctionalities", stream);
     }
 }

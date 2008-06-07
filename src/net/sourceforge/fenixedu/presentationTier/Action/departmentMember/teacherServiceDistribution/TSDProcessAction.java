@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -27,6 +26,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class TSDProcessAction extends FenixDispatchAction {
     private static final Integer NOT_SELECTED_EXECUTION_PERIOD = -1;
@@ -43,7 +44,7 @@ public class TSDProcessAction extends FenixDispatchAction {
 
     public ActionForward prepareForEmptyTSDProcessCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -67,7 +68,7 @@ public class TSDProcessAction extends FenixDispatchAction {
 
     public ActionForward createTSDProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -90,14 +91,14 @@ public class TSDProcessAction extends FenixDispatchAction {
 	Object[] parameters = new Object[] { selectedExecutionPeriodIdList, selectedDepartmentId,
 		userView.getPerson().getIdInternal(), name };
 
-	TSDProcess tsdProcess = (TSDProcess) ServiceUtils.executeService(userView, "CreateTSDProcess", parameters);
+	TSDProcess tsdProcess = (TSDProcess) ServiceUtils.executeService("CreateTSDProcess", parameters);
 
 	return loadTSDProcessServices(mapping, request, tsdProcess.getIdInternal(), userView);
     }
 
     public ActionForward prepareForTSDProcessEdition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -150,7 +151,7 @@ public class TSDProcessAction extends FenixDispatchAction {
     public ActionForward showTSDProcessServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	Integer tsdProcessId = new Integer(request.getParameter("tsdProcess"));
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	return loadTSDProcessServices(mapping, request, tsdProcessId, userView);
     }
@@ -205,7 +206,7 @@ public class TSDProcessAction extends FenixDispatchAction {
 
     public ActionForward prepareForTSDProcessCopy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	DynaActionForm dynaForm = (DynaActionForm) form;
 
 	List<ExecutionYear> executionYearList = ExecutionYear.readNotClosedExecutionYears();
@@ -260,7 +261,7 @@ public class TSDProcessAction extends FenixDispatchAction {
 
     public ActionForward copyTSDProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	DynaActionForm dynaForm = (DynaActionForm) form;
 
 	ExecutionYear selectedExecutionYear = getSelectedExecutionYearForCopy(userView, dynaForm, null);
@@ -279,7 +280,7 @@ public class TSDProcessAction extends FenixDispatchAction {
 	Object[] parameters = new Object[] { selectedExecutionPeriodListForCopyId, selectedTSDProcess.getIdInternal(),
 		userView.getPerson().getIdInternal(), name };
 
-	TSDProcess tsdProcess = (TSDProcess) ServiceUtils.executeService(userView, "CopyTSDProcess", parameters);
+	TSDProcess tsdProcess = (TSDProcess) ServiceUtils.executeService("CopyTSDProcess", parameters);
 
 	request.setAttribute("tsdProcess", tsdProcess);
 	return loadTSDProcessServices(mapping, request, tsdProcess.getIdInternal(), userView);
@@ -288,9 +289,9 @@ public class TSDProcessAction extends FenixDispatchAction {
     public ActionForward deleteTSDProcessServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	Integer tsdProcessId = new Integer(request.getParameter("tsdProcess"));
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
-	ServiceUtils.executeService(userView, "DeleteTSDProcess", new Object[] { tsdProcessId });
+	ServiceUtils.executeService("DeleteTSDProcess", new Object[] { tsdProcessId });
 
 	return prepareForTSDProcessEdition(mapping, form, request, response);
     }

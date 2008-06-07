@@ -19,12 +19,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author lmac1
@@ -35,7 +36,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm readDegreeForm = (DynaActionForm) form;
 
@@ -46,7 +47,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
         Object args[] = { degreeId };
 
         try {
-            oldInfoDegree = (InfoDegree) ServiceUtils.executeService(userView, "ReadDegree", args);
+            oldInfoDegree = (InfoDegree) ServiceUtils.executeService("ReadDegree", args);
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingDegree", mapping
@@ -70,7 +71,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm editDegreeForm = (DynaActionForm) form;
         Integer oldDegreeId = new Integer(request.getParameter("degreeId"));
@@ -89,7 +90,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
         Object args[] = { oldDegreeId, code, name, nameEn, degreeType, gradeScale };
 
         try {
-            ServiceUtils.executeService(userView, "EditDegreeInOldDegreeStructure", args);
+            ServiceUtils.executeService("EditDegreeInOldDegreeStructure", args);
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingDegree", mapping

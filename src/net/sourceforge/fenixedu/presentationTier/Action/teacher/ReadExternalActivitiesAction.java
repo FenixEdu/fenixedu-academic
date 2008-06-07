@@ -37,7 +37,7 @@ public class ReadExternalActivitiesAction extends FenixAction {
         IUserView userView = getUserView(request);
 
             Object[] args = { userView.getUtilizador() };
-            SiteView siteView = (SiteView) ServiceUtils.executeService(userView,
+            SiteView siteView = (SiteView) ServiceUtils.executeService(
                     "ReadExternalActivities", args);
 
             request.setAttribute("siteView", siteView);

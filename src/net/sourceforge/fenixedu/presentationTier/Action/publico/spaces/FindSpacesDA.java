@@ -21,13 +21,14 @@ import net.sourceforge.fenixedu.domain.space.SpaceState;
 import net.sourceforge.fenixedu.domain.space.Blueprint.BlueprintTextRectangles;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpaceBlueprintsDA;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.spaceBlueprints.SpaceBlueprintsDWGProcessor;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class FindSpacesDA extends FenixDispatchAction {
     

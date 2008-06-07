@@ -388,7 +388,7 @@ public class SummariesControlAction extends FenixDispatchAction {
 	List<InfoExecutionPeriod> allExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
 	Object[] args = {};
 
-	allExecutionPeriods = (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(null,
+	allExecutionPeriods = (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(
 		"ReadNotClosedExecutionPeriods", args);
 
 	List<LabelValueBean> executionPeriods = getNotClosedExecutionPeriods(allExecutionPeriods);

@@ -46,7 +46,7 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
         IUserView userView = getUserView(request);
         List curricularCourseList = null;
         try {
-            curricularCourseList = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+            curricularCourseList = (ArrayList) ServiceManagerServiceFactory.executeService(
                     "ReadCurricularCoursesByDegree", args);
         } catch (NonExistingServiceException e) {
             ActionErrors errors = new ActionErrors();
@@ -81,7 +81,7 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
 
         List listEnrolmentEvaluation = null;
         try {
-            listEnrolmentEvaluation = (List) ServiceManagerServiceFactory.executeService(userView,
+            listEnrolmentEvaluation = (List) ServiceManagerServiceFactory.executeService(
                     "ReadStudentMarksListByCurricularCourse", args);
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
@@ -117,7 +117,7 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
         List studentList = null;
         try {
             Object args[] = { userView, courseID, null };
-            studentList = (List) ServiceManagerServiceFactory.executeService(userView,
+            studentList = (List) ServiceManagerServiceFactory.executeService(
                     "ReadStudentListByCurricularCourse", args);
         } catch (NotAuthorizedFilterException e) {
             return mapping.findForward("NotAuthorized");

@@ -21,10 +21,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
@@ -36,8 +32,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
@@ -197,8 +195,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("create-card");
 	}
 
-	LibraryCard libraryCard = (LibraryCard) ServiceUtils.executeService(SessionUtils.getUserView(request),
-		"CreateLibraryCard", new Object[] { libraryCardDTO });
+	LibraryCard libraryCard = (LibraryCard) executeService("CreateLibraryCard", new Object[] { libraryCardDTO });
 	request.setAttribute("libraryCardDTO", new LibraryCardDTO(libraryCard));
 	request.setAttribute("libraryCardSearch", getRenderedObject("libraryCardSearch"));
 	return mapping.findForward("show-details");
@@ -234,7 +231,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources", Language.getLocale());
 	byte[] data = ReportsUtils.exportToPdf("net.sourceforge.fenixedu.domain.library.LibrabryCard", null, bundle, cardList);
 
-	ServiceUtils.executeService(SessionUtils.getUserView(request), "MarkLibraryCardAsEmited", new Object[] { libraryCardDTO
+	executeService("MarkLibraryCardAsEmited", new Object[] { libraryCardDTO
 		.getLibraryCard() });
 
 	response.setContentType("application/pdf");
@@ -266,7 +263,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("edit-card");
 	}
 
-	LibraryCard libraryCard = (LibraryCard) ServiceUtils.executeService(SessionUtils.getUserView(request), "EditLibraryCard",
+	LibraryCard libraryCard = (LibraryCard) executeService("EditLibraryCard",
 		new Object[] { libraryCardDTO });
 
 	request.setAttribute("libraryCardDTO", new LibraryCardDTO(libraryCard));
@@ -297,7 +294,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    byte[] data = ReportsUtils
 		    .exportToPdf("net.sourceforge.fenixedu.domain.library.LibrabryCard", null, bundle, cardList);
 
-	    ServiceUtils.executeService(SessionUtils.getUserView(request), "MarkLibraryCardListAsEmited",
+	    executeService("MarkLibraryCardListAsEmited",
 		    new Object[] { cardList });
 
 	    response.setContentType("application/pdf");
@@ -333,7 +330,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	}
 	byte[] data = ReportsUtils.exportToPdf(reportID, null, bundle, cardList);
 
-	ServiceUtils.executeService(SessionUtils.getUserView(request), "MarkLibraryCardLetterAsEmited",
+	executeService("MarkLibraryCardLetterAsEmited",
 		new Object[] { libraryCard });
 
 	response.setContentType("application/pdf");
@@ -388,7 +385,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    }
 	    byte[] data = ReportsUtils.exportToPdf(reportID, null, bundle, cardList);
 
-	    ServiceUtils.executeService(SessionUtils.getUserView(request), "MarkLibraryCardListLettersAsEmited",
+	    executeService("MarkLibraryCardListLettersAsEmited",
 		    new Object[] { cardList });
 
 	    response.setContentType("application/pdf");

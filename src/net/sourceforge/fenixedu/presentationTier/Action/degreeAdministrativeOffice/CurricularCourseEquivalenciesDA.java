@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -33,11 +32,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	final DynaActionForm actionForm = (DynaActionForm) form;
 
 	setInfoDegrees(request, userView);
@@ -63,7 +64,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	final DynaActionForm actionForm = (DynaActionForm) form;
 
 	final String degreeCurricularPlanIDString = (String) actionForm.get("degreeCurricularPlanID");
@@ -100,7 +101,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	final DynaActionForm actionForm = (DynaActionForm) form;
 
 	final String degreeCurricularPlanIDString = (String) actionForm.get("degreeCurricularPlanID");
@@ -111,7 +112,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 	    final Object[] args = { Integer.valueOf(degreeCurricularPlanIDString),
 		    Integer.valueOf(curricularCourseIDString),
 		    Integer.valueOf(oldCurricularCourseIDString) };
-	    ServiceUtils.executeService(userView, "CreateCurricularCourseEquivalency", args);
+	    ServiceUtils.executeService("CreateCurricularCourseEquivalency", args);
 	}
 
 	return prepare(mapping, form, request, response);
@@ -119,14 +120,14 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	final DynaActionForm actionForm = (DynaActionForm) form;
 
 	final String curricularCourseEquivalencyIDString = (String) actionForm
 		.get("curricularCourseEquivalencyID");
 	if (isValidObjectID(curricularCourseEquivalencyIDString)) {
 	    final Object[] args = { Integer.valueOf(curricularCourseEquivalencyIDString) };
-	    ServiceUtils.executeService(userView, "DeleteCurricularCourseEquivalency", args);
+	    ServiceUtils.executeService("DeleteCurricularCourseEquivalency", args);
 	}
 
 	return prepare(mapping, form, request, response);
@@ -153,7 +154,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 	    throws FenixFilterException, FenixServiceException {
 	final Object[] argsReadCurricularPlans = { degreeID };
 	final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = (List<InfoDegreeCurricularPlan>) ServiceUtils
-		.executeService(userView, "ReadDegreeCurricularPlansByDegree", argsReadCurricularPlans);
+		.executeService( "ReadDegreeCurricularPlansByDegree", argsReadCurricularPlans);
 	sortInfoDegreeCurricularPlans(infoDegreeCurricularPlans);
 	request.setAttribute(attributeName, infoDegreeCurricularPlans);
     }
@@ -163,7 +164,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 	    FenixServiceException {
 	final Object[] args = { degreeCurricularPlanID };
 	final List<InfoCurricularCourse> infoCurricularCourses = (List<InfoCurricularCourse>) ServiceUtils
-		.executeService(userView, "ReadCurricularCoursesByDegreeCurricularPlan", args);
+		.executeService( "ReadCurricularCoursesByDegreeCurricularPlan", args);
 	sortInfoCurricularCourses(infoCurricularCourses);
 	request.setAttribute(attribute, infoCurricularCourses);
     }

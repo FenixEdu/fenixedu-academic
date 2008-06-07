@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -34,6 +33,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -45,7 +46,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         request.setAttribute("executionYears", getExecutionYears(userView));
 
@@ -56,14 +57,14 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         Integer executionYearID = executionYear.getIdInternal();
         Object[] args = { executionYearID };
 
-        List degreeCurricularPlans = (List) ServiceUtils.executeService(userView,
+        List degreeCurricularPlans = (List) ServiceUtils.executeService(
                 "ReadActiveDegreeCurricularPlansByExecutionYear", args);
         final ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
@@ -81,21 +82,21 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
         Integer degreeCurricularPlanID = (Integer) dynaActionForm.get("degreeCurricularPlanID");
         Integer executionYearID = (Integer) dynaActionForm.get("executionYearID");
 
         Object[] argsScopes = { degreeCurricularPlanID, executionYearID };
-        Set<DegreeModuleScope> degreeModuleScopes = (Set<DegreeModuleScope>) ServiceUtils.executeService(userView,
+        Set<DegreeModuleScope> degreeModuleScopes = (Set<DegreeModuleScope>) ServiceUtils.executeService(
                         "ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID", argsScopes);
         
         SortedSet<DegreeModuleScope> sortedScopes = new TreeSet<DegreeModuleScope>(DegreeModuleScope.COMPARATOR_BY_NAME);
         sortedScopes.addAll(degreeModuleScopes);
 
         Object[] argsExecutionYear = { executionYearID };
-        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(userView,
+        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(
                 "ReadExecutionYearByID", argsExecutionYear);
 
         request.setAttribute("sortedScopes", sortedScopes);
@@ -108,13 +109,13 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer executionCourseID = Integer.valueOf(request.getParameter("executionCourseID"));
 
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
-        List institutions = (List) ServiceUtils.executeService(userView, "ReadAllInstitutions", null);
+        List institutions = (List) ServiceUtils.executeService("ReadAllInstitutions", null);
         Collections.sort(institutions, new BeanComparator("name"));
 
         request.setAttribute("professorships", executionCourse.getProfessorships());
@@ -132,7 +133,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
         String nonAffiliatedTeacherName = (String) dynaActionForm.get("nonAffiliatedTeacherName");
@@ -158,13 +159,13 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
             // create institution
             Object[] args = { nonAffiliatedTeacherInstitutionName };
             try {
-                Unit institution = (Unit) ServiceUtils.executeService(userView,
+                Unit institution = (Unit) ServiceUtils.executeService(
                         "InsertInstitution", args);
                 nonAffiliatedTeacherInstitutionID = institution.getIdInternal();
             } catch (ExistingServiceException e) {
                 // define message error...
                 InfoInstitution infoInstitution = (InfoInstitution) ServiceUtils.executeService(
-                        userView, "ReadInstitutionByName", args);
+                        "ReadInstitutionByName", args);
                 nonAffiliatedTeacherInstitutionID = infoInstitution.getIdInternal();
             }
         }
@@ -174,7 +175,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
             Object[] args = { nonAffiliatedTeacherName, nonAffiliatedTeacherInstitutionID };
             try {
                 NonAffiliatedTeacher nonAffiliatedTeacher = (NonAffiliatedTeacher) ServiceUtils
-                        .executeService(userView, "InsertNonAffiliatedTeacher", args);
+                        .executeService( "InsertNonAffiliatedTeacher", args);
                 nonAffiliatedTeacherID = nonAffiliatedTeacher.getIdInternal();
             } catch (NotExistingServiceException e) {
                 // define message error...
@@ -195,7 +196,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer executionCourseID = Integer.valueOf(request.getParameter("executionCourseID"));
         request.setAttribute("executionCourseID", executionCourseID);
@@ -214,7 +215,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
         Object[] args = { nonAffiliatedTeacherID, executionCourseID };
 
         try {
-            ServiceUtils.executeService(userView, "InsertProfessorShipNonAffiliatedTeacher", args);
+            ServiceUtils.executeService("InsertProfessorShipNonAffiliatedTeacher", args);
         } catch (ExistingServiceException e) {
             // TODO Auto-generated catch block
             // error message!!
@@ -226,7 +227,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
 
     private List getExecutionYears(IUserView userView) throws FenixServiceException,
             FenixFilterException {
-        List executionYears = (List) ServiceUtils.executeService(userView,
+        List executionYears = (List) ServiceUtils.executeService(
                 "ReadNotClosedExecutionYears", null);
         return executionYears;
     }

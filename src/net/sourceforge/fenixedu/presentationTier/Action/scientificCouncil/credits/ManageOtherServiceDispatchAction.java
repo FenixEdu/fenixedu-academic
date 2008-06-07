@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -22,6 +21,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 
@@ -99,10 +100,10 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 	    Integer teacherID = (Integer) otherServiceForm.get("teacherId");
 	    Integer executionPeriodID = Integer.valueOf((String) otherServiceForm.get("executionPeriodId"));
 	    Object[] args = { teacherID, executionPeriodID, credits, reason };
-	    ServiceUtils.executeService(SessionUtils.getUserView(request), "CreateOtherService", args);
+	    ServiceUtils.executeService("CreateOtherService", args);
 	} else {
 	    Object[] args = { otherServiceID, credits, reason };
-	    ServiceUtils.executeService(SessionUtils.getUserView(request), "EditOtherService", args);
+	    ServiceUtils.executeService("EditOtherService", args);
 	}
 
 	return mapping.findForward("successful-edit");
@@ -114,7 +115,7 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 	DynaActionForm otherServiceForm = (DynaActionForm) form;
 	Integer otherServiceID = (Integer) otherServiceForm.get("otherServiceID");
 	ServiceUtils
-		.executeService(SessionUtils.getUserView(request), "DeleteOtherServiceByOID", new Object[] { otherServiceID });
+		.executeService( "DeleteOtherServiceByOID", new Object[] { otherServiceID });
 	return mapping.findForward("successful-delete");
     }
 

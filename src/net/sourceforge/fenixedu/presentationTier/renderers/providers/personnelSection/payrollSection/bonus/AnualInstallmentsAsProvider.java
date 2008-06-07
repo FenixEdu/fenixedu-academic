@@ -7,11 +7,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.BonusInstallment;
 import net.sourceforge.fenixedu.dataTransferObject.personnelSection.payrollSection.BonusInstallmentFileBean;
 import net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.AnualBonusInstallment;
+
+import org.joda.time.YearMonthDay;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.IntegerNumberConverter;
-
-import org.joda.time.YearMonthDay;
 
 public class AnualInstallmentsAsProvider implements DataProvider {
 

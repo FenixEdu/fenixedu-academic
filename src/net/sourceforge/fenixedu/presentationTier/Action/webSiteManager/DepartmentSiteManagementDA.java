@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DepartmentSite;
-import net.sourceforge.fenixedu.domain.Item;
 
 public class DepartmentSiteManagementDA extends CustomUnitSiteManagementDA {
 

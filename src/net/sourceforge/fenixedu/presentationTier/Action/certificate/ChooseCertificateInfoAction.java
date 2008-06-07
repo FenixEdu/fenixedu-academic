@@ -92,7 +92,7 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 		Object argsMasterDegreeThesisDataVersion[] = { infoStudentCurricularPlan };
 		try {
 		    infoMasterDegreeThesisDataVersion = (InfoMasterDegreeThesisDataVersion) ServiceUtils
-			    .executeService(userView,
+			    .executeService(
 				    "ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
 				    argsMasterDegreeThesisDataVersion);
 		} catch (NonExistingServiceException e) {
@@ -104,7 +104,7 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 		Object argsMasterDegreeProofVersion[] = { studentCurricularPlanID };
 		try {
 		    infoMasterDegreeProofVersion = (InfoMasterDegreeProofVersion) ServiceUtils
-			    .executeService(userView,
+			    .executeService(
 				    "ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
 				    argsMasterDegreeProofVersion);
 		} catch (NonExistingServiceException e) {

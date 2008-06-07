@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChoiceMadeA
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.SituationName;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -41,6 +40,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -92,7 +93,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         Object args1[] = { executionDegreeID, admitedSituations };
 
         try {
-            candidateList = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+            candidateList = (ArrayList) ServiceManagerServiceFactory.executeService(
                     "ReadCandidatesForSelection", args1);
         } catch (NonExistingServiceException e) {
             errors.add("nonExisting", new ActionError(
@@ -148,7 +149,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         List masterDegreeList = null;
         try {
 
-            masterDegreeList = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+            masterDegreeList = (ArrayList) ServiceManagerServiceFactory.executeService(
                     "ReadMasterDegrees", args);
         } catch (NonExistingServiceException e) {
             ActionErrors errors = new ActionErrors();
@@ -242,7 +243,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         try {
 
             Object args[] = { degreeCurricularPlanID };
-            curricularCourseList = (List) ServiceManagerServiceFactory.executeService(userView,
+            curricularCourseList = (List) ServiceManagerServiceFactory.executeService(
                     "ReadCurricularCoursesByDegree", args);
 
         }
@@ -261,7 +262,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
         try {
             Object args[] = { new Integer(candidateID) };
-            candidateEnrolments = (List) ServiceManagerServiceFactory.executeService(userView,
+            candidateEnrolments = (List) ServiceManagerServiceFactory.executeService(
                     "ReadCandidateEnrolmentsByCandidateID", args);
 
         } catch (NotAuthorizedException e) {
@@ -283,7 +284,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         try {
             Object args[] = { new Integer(candidateID) };
             infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-                    .executeService(userView, "GetCandidatesByID", args);
+                    .executeService( "GetCandidatesByID", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -392,7 +393,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
     public ActionForward chooseCurricularCourses(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
 
@@ -424,7 +425,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         try {
 
             Object args[] = { selectedCurricularCourses, candidateID, attributedCredits, givenCreditsRemarks };
-            ServiceManagerServiceFactory.executeService(userView, "WriteCandidateEnrolments", args);
+            ServiceManagerServiceFactory.executeService( "WriteCandidateEnrolments", args);
         } catch (NotAuthorizedException e) {
             throw new NotAuthorizedActionException(e);
         } catch (NonExistingServiceException e) {
@@ -435,7 +436,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
         try {
             Object args[] = { candidateID };
-            candidateEnrolments = (List) ServiceManagerServiceFactory.executeService(userView,
+            candidateEnrolments = (List) ServiceManagerServiceFactory.executeService(
                     "ReadCandidateEnrolmentsByCandidateID", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -518,7 +519,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         List candidateEnrolments = null;
         try {
             Object args[] = { candidateID };
-            candidateEnrolments = (List) ServiceManagerServiceFactory.executeService(userView,
+            candidateEnrolments = (List) ServiceManagerServiceFactory.executeService(
                     "ReadCandidateEnrolmentsByCandidateID", args);
         } catch (NonExistingServiceException e) {
 
@@ -530,7 +531,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
         try {
             Object args[] = { candidateID };
             infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-                    .executeService(userView, "GetCandidatesByID", args);
+                    .executeService( "GetCandidatesByID", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

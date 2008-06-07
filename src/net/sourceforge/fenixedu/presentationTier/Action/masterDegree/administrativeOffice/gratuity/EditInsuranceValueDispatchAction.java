@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -33,6 +32,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -50,7 +51,7 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
         List executionYears = null;
         Object[] args = {};
         try {
-            executionYears = (List) ServiceManagerServiceFactory.executeService(null,
+            executionYears = (List) ServiceManagerServiceFactory.executeService(
                     "ReadNotClosedExecutionYears", args);
         } catch (FenixServiceException e) {
             errors.add("noExecutionYears", new ActionError("error.impossible.insertExemptionGratuity"));
@@ -78,14 +79,14 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         DynaActionForm editInsuranceForm = (DynaActionForm) form;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer executionYearId = (Integer) editInsuranceForm.get("executionYear");
 
         InfoInsuranceValue infoInsuranceValue = null;
         Object argsInsuranceValue[] = { executionYearId };
         try {
-            infoInsuranceValue = (InfoInsuranceValue) ServiceUtils.executeService(userView,
+            infoInsuranceValue = (InfoInsuranceValue) ServiceUtils.executeService(
                     "ReadInsuranceValueByExecutionYearID", argsInsuranceValue);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -97,7 +98,7 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
 
         InfoExecutionYear infoExecutionYear = null;
         try {
-            infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(userView,
+            infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(
                     "ReadExecutionYearByID", argsInsuranceValue);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -136,7 +137,7 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         DynaActionForm editInsuranceForm = (DynaActionForm) form;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer executionYearId = (Integer) editInsuranceForm.get("executionYear");
         Double insuranceValue = (Double) editInsuranceForm.get("insuranceValue");
@@ -161,7 +162,7 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
 
         Object argsInsuranceValue[] = { executionYearId, insuranceValue, endDate };
         try {
-            ServiceUtils.executeService(userView, "EditInsuranceValueByExecutionYearID",
+            ServiceUtils.executeService("EditInsuranceValueByExecutionYearID",
                     argsInsuranceValue);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

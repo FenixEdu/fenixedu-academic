@@ -11,11 +11,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author David Santos in Jul 28, 2004
@@ -26,7 +27,7 @@ public class ReadPrecedencesFromDegreeCurricularPlanAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer degreeID = new Integer(request.getParameter("degreeId"));
         Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
@@ -34,7 +35,7 @@ public class ReadPrecedencesFromDegreeCurricularPlanAction extends FenixAction {
         Object args[] = { degreeCurricularPlanID };
 
         try {
-            Map result = (Map) ServiceManagerServiceFactory.executeService(userView,
+            Map result = (Map) ServiceManagerServiceFactory.executeService(
                     "ReadPrecedencesFromDegreeCurricularPlan", args);
             request.setAttribute("precedences", result);
         } catch (FenixServiceException e) {

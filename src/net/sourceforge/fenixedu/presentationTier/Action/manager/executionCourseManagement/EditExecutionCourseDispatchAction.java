@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -43,6 +42,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author Fernanda Quitério 19/Dez/2003
  *  
@@ -52,11 +53,11 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditECChooseExecutionPeriod(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         List infoExecutionPeriods = null;
         
         try {
-            infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);
+            infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
             
         } catch (FenixServiceException ex) {
             throw new FenixActionException();
@@ -106,7 +107,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditECChooseExecDegreeAndCurYear(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         buildCurricularYearLabelValueBean(request);
 
         Integer executionPeriodId = separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
@@ -115,7 +116,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         Object args[] = { executionPeriodId };
         List executionDegreeList = null;
         try {
-            executionDegreeList = (List) ServiceUtils.executeService(userView, "ReadExecutionDegreesByExecutionPeriodId", args);
+            executionDegreeList = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionPeriodId", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -167,7 +168,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditExecutionCourse(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer executionPeriodId = separateLabel(form, request, "executionPeriod", "executionPeriodId",
                 "executionPeriodName");
@@ -189,7 +190,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         Object args[] = { executionDegreeId, executionPeriodId, curYear };
         List infoExecutionCourses;
         try {
-            infoExecutionCourses = (List) ServiceUtils.executeService(userView,
+            infoExecutionCourses = (List) ServiceUtils.executeService(
                     "ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -204,7 +205,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     public ActionForward editExecutionCourse(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         String executionCourseId = getAndSetStringToRequest(request, "executionCourseId");
         separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
@@ -225,7 +226,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         Object args[] = { Integer.valueOf(executionCourseId) };
         InfoExecutionCourse infoExecutionCourse;
         try {
-            infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(userView, "ReadInfoExecutionCourseByOID", args);
+            infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService( "ReadInfoExecutionCourseByOID", args);
         
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -291,7 +292,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
     public ActionForward deleteExecutionCourse(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         String executionCourseId = getAndSetStringToRequest(request, "executionCourseId");
         separateLabel(form, request, "executionPeriod", "executionPeriodId", "executionPeriodName");
@@ -314,7 +315,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         List errorCodes = new ArrayList();
         Object args[] = { internalIds };
         try {
-            errorCodes = (List) ServiceUtils.executeService(userView, "DeleteExecutionCourses", args);
+            errorCodes = (List) ServiceUtils.executeService("DeleteExecutionCourses", args);
         } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }

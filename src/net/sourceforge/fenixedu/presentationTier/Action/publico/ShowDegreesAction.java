@@ -44,7 +44,7 @@ public class ShowDegreesAction extends FenixContextDispatchAction {
         List executionDegreesList = null;
         try {
             //ReadExecutionDegreesByExecutionYear
-            executionDegreesList = (List) ServiceManagerServiceFactory.executeService(null,
+            executionDegreesList = (List) ServiceManagerServiceFactory.executeService(
                     "ReadNonMasterExecutionDegreesByExecutionYear", args);
         } catch (FenixServiceException e) {
             errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));
@@ -79,7 +79,7 @@ public class ShowDegreesAction extends FenixContextDispatchAction {
         List executionDegreesList = null;
         try {
             //ReadExecutionDegreesByExecutionYear
-            executionDegreesList = (List) ServiceManagerServiceFactory.executeService(null,
+            executionDegreesList = (List) ServiceManagerServiceFactory.executeService(
                     "ReadMasterDegrees", args);
         } catch (FenixServiceException e) {
             errors.add("impossibleDegreeList", new ActionError("error.impossibleDegreeList"));

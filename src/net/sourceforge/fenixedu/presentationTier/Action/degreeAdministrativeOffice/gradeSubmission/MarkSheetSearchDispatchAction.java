@@ -25,14 +25,15 @@ import net.sourceforge.fenixedu.domain.MarkSheetState;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     
@@ -72,7 +73,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
         ActionMessages actionMessages = createActionMessages();        
         try {
             Map<MarkSheetType, MarkSheetSearchResultBean> result = (Map<MarkSheetType, MarkSheetSearchResultBean>) ServiceUtils
-                    .executeService(getUserView(request), "SearchMarkSheets",
+                    .executeService( "SearchMarkSheets",
                             new Object[] { searchBean });
 
             request.setAttribute("edit", searchBean);

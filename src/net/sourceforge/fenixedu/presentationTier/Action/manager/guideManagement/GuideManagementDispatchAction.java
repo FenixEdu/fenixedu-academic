@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -36,6 +35,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
@@ -57,7 +58,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
     public ActionForward chooseGuide(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm guideForm = (DynaActionForm) actionForm;
 	Integer number = (Integer) guideForm.get("number");
@@ -70,11 +71,11 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
 	    if (version.intValue() == 0) {
 		Object[] args = { number, year };
-		List guidesList = (List) ServiceUtils.executeService(userView, "ChooseGuide", args);
+		List guidesList = (List) ServiceUtils.executeService("ChooseGuide", args);
 		guide = (InfoGuide) guidesList.get(0);
 	    } else {
 		Object[] args = { number, year, version };
-		guide = (InfoGuide) ServiceUtils.executeService(userView, "ChooseGuide", args);
+		guide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
 	    }
 
 	} catch (NonExistingServiceException e) {
@@ -93,7 +94,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
 	    Object[] argsPaymentTransactions = { guideEntry.getIdInternal() };
 	    try {
-		paymentTransaction = (InfoPaymentTransaction) ServiceUtils.executeService(userView,
+		paymentTransaction = (InfoPaymentTransaction) ServiceUtils.executeService(
 			"ReadPaymentTransactionByGuideEntryID", argsPaymentTransactions);
 	    } catch (FenixServiceException e1) {
 		// TODO Auto-generated catch block
@@ -106,7 +107,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	List executionYears = null;
 	Object[] argsEmpty = {};
 	try {
-	    executionYears = (List) ServiceUtils.executeService(userView, "ReadExecutionYears",
+	    executionYears = (List) ServiceUtils.executeService("ReadExecutionYears",
 		    argsEmpty);
 	} catch (FenixServiceException e1) {
 	    // TODO Auto-generated catch block
@@ -115,7 +116,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
 	List degreeCurricularPlans = null;
 	try {
-	    degreeCurricularPlans = (List) ServiceUtils.executeService(userView,
+	    degreeCurricularPlans = (List) ServiceUtils.executeService(
 		    "ReadDegreeCurricularPlans", argsEmpty);
 	} catch (FenixServiceException e1) {
 	    // TODO Auto-generated catch block
@@ -157,7 +158,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
     public ActionForward addGuideEntry(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm guideForm = (DynaActionForm) actionForm;
 	Integer guideID = (Integer) guideForm.get("guideID");
@@ -170,7 +171,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 		DocumentType.valueOf(newEntryDocumentType), newEntryDescription, newEntryPrice,
 		newEntryQuantity };
 	try {
-	    ServiceUtils.executeService(userView, "CreateGuideEntry", args);
+	    ServiceUtils.executeService("CreateGuideEntry", args);
 	} catch (FenixServiceException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -187,7 +188,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
     public ActionForward addGuideSituation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm guideForm = (DynaActionForm) actionForm;
 
@@ -206,7 +207,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	Object[] args = { guideID, newSituationRemarks, GuideState.valueOf(newSituationType), date };
 
 	try {
-	    ServiceUtils.executeService(userView, "CreateGuideSituation", args);
+	    ServiceUtils.executeService("CreateGuideSituation", args);
 	} catch (FenixServiceException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -224,7 +225,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
     public ActionForward createPaymentTransaction(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm guideForm = (DynaActionForm) actionForm;
 
@@ -236,9 +237,9 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	try {
 
 	    if (selectedGuideEntryDocumentType.equals(DocumentType.GRATUITY.name())) {
-		ServiceUtils.executeService(userView, "CreateGratuityTransaction", args);
+		ServiceUtils.executeService("CreateGratuityTransaction", args);
 	    } else if (selectedGuideEntryDocumentType.equals(DocumentType.INSURANCE.name())) {
-		ServiceUtils.executeService(userView, "CreateInsuranceTransaction", args);
+		ServiceUtils.executeService("CreateInsuranceTransaction", args);
 	    }
 
 	} catch (FenixServiceException e) {
@@ -253,7 +254,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
     public ActionForward editExecutionDegree(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm guideForm = (DynaActionForm) actionForm;
 
@@ -264,7 +265,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
 	Object[] args = { guideID, newDegreeCurricularPlanID, newExecutionYear, newPaymentType };
 	try {
-	    ServiceUtils.executeService(userView, "EditGuideInformationInManager", args);
+	    ServiceUtils.executeService("EditGuideInformationInManager", args);
 	} catch (FenixServiceException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -277,14 +278,14 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
     public ActionForward deleteGuideSituation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm guideForm = (DynaActionForm) actionForm;
 	Integer guideSituationID = (Integer) guideForm.get("guideSituationID");
 
 	Object[] args = { guideSituationID };
 	try {
-	    ServiceUtils.executeService(userView, "DeleteGuideSituationInManager", args);
+	    ServiceUtils.executeService("DeleteGuideSituationInManager", args);
 	} catch (FenixServiceException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -297,7 +298,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
     public ActionForward deleteGuideEntry(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm guideForm = (DynaActionForm) actionForm;
 	Integer selectedGuideEntryID = (Integer) guideForm.get("selectedGuideEntryID");
@@ -305,7 +306,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 	Object[] args = { selectedGuideEntryID };
 	try {
 	    ServiceUtils
-		    .executeService(userView, "DeleteGuideEntryAndPaymentTransactionInManager", args);
+		    .executeService( "DeleteGuideEntryAndPaymentTransactionInManager", args);
 	} catch (FenixServiceException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -318,14 +319,14 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
     public ActionForward deleteGuide(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm guideForm = (DynaActionForm) actionForm;
 	Integer guideID = (Integer) guideForm.get("guideID");
 
 	Object[] args = { guideID };
 	try {
-	    ServiceUtils.executeService(userView, "DeleteGuideVersionInManager", args);
+	    ServiceUtils.executeService("DeleteGuideVersionInManager", args);
 	} catch (FenixServiceException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();

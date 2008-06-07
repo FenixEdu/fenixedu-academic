@@ -12,11 +12,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.lang.StringUtils;
 
-import uk.ltd.getahead.dwr.ExecutionContext;
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -32,7 +31,7 @@ public class TeacherBridge {
         }
 
         Object[] args = { Integer.valueOf(number) };
-        InfoTeacher teacher = (InfoTeacher) ServiceUtils.executeService(null, "ReadTeacherByNumber",
+        InfoTeacher teacher = (InfoTeacher) ServiceUtils.executeService("ReadTeacherByNumber",
                 args);
 
         return (teacher != null && teacher.getInfoPerson() != null) ? teacher.getInfoPerson().getNome()
@@ -47,9 +46,9 @@ public class TeacherBridge {
             return new ArrayList();
         }
 
-        IUserView userView = SessionUtils.getUserView(ExecutionContext.get().getHttpServletRequest());        
+        IUserView userView = UserView.getUser();
         Object[] args = { name };
-        List nonAffiliatedTeachers = (List) ServiceUtils.executeService(userView, "ReadNonAffiliatedTeachersByName", args);
+        List nonAffiliatedTeachers = (List) ServiceUtils.executeService("ReadNonAffiliatedTeachersByName", args);
         return nonAffiliatedTeachers;
 //        return CollectionUtils.collect(nonAffiliatedTeachers, new Transformer() {
 //        

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import pt.utl.ist.fenix.tools.util.EMail;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
@@ -21,6 +20,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.RequestUtils;
+
+import pt.utl.ist.fenix.tools.util.EMail;
 
 /**
  * @author João Mota

@@ -21,8 +21,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactor
 import net.sourceforge.fenixedu.domain.assiduousness.util.WorkScheduleTypeFactory.WorkScheduleTypeFactoryEditor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -39,6 +37,8 @@ import org.joda.time.TimeOfDay;
 import org.joda.time.chrono.GregorianChronology;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAction {
     public ActionForward showSchedules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -368,7 +368,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 	Integer assiduousnessExemptionId = new Integer(request.getParameter("idInternal"));
 	AssiduousnessExemption assiduousnessExemption = rootDomainObject
 		.readAssiduousnessExemptionByOID(assiduousnessExemptionId);
-	ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteAssiduousnessExemption",
+	ServiceUtils.executeService("DeleteAssiduousnessExemption",
 		new Object[] { assiduousnessExemption });
 
 	return showAssiduousnessExemptions(mapping, form, request, response);

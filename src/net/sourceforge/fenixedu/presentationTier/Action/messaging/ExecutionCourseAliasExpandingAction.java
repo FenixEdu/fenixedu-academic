@@ -39,7 +39,7 @@ public class ExecutionCourseAliasExpandingAction extends FenixAction {
 
             try {
                 ExpandExecutionCourseMailAlias.ForwardMailsReport report = (ExpandExecutionCourseMailAlias.ForwardMailsReport) ServiceUtils
-                        .executeService(null, "ExpandExecutionCourseMailAlias", new Object[] { address,
+                        .executeService( "ExpandExecutionCourseMailAlias", new Object[] { address,
                                 emailAddressPrefix, mailingListDomainConfiguration() });
 
                 switch (report.getStatus()) {

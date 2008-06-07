@@ -154,7 +154,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
 	InfoForReadStudentsWithAttendsByExecutionCourse infoDTO;
 
-	siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(userView,
+	siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
 		"ReadStudentsWithAttendsByExecutionCourse", args);
 
 	infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();

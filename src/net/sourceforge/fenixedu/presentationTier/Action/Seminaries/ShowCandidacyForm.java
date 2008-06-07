@@ -42,7 +42,7 @@ public class ShowCandidacyForm extends FenixAction {
         ActionForward destiny = null;
         try {
             Object[] argsReadSeminary = { equivalencyID };
-            equivalency = (InfoEquivalency) ServiceManagerServiceFactory.executeService(userView,
+            equivalency = (InfoEquivalency) ServiceManagerServiceFactory.executeService(
                     "Seminaries.GetEquivalency", argsReadSeminary);
         } catch (Exception e) {
             throw new FenixActionException();

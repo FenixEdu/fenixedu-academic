@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -28,6 +27,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Ana & Ricardo
@@ -43,7 +44,7 @@ public class RoomSearchDA extends FenixContextDispatchAction {
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
        
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
         DynaValidatorForm roomSearchForm = (DynaValidatorForm) form;
 
         //  date
@@ -102,7 +103,7 @@ public class RoomSearchDA extends FenixContextDispatchAction {
         
         List<InfoRoom> availableInfoRoom = null;
         try {
-            availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService(userView, "ReadAvailableRoomsForExam", args);
+            availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService("ReadAvailableRoomsForExam", args);
             
         } catch (ExistingServiceException ex) {
 
@@ -162,14 +163,14 @@ public class RoomSearchDA extends FenixContextDispatchAction {
     public ActionForward sort(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         DynaValidatorForm roomSearchForm = (DynaValidatorForm) form;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         String[] availableRoomsId = (String[]) roomSearchForm.get("availableRoomsId");
         String sortParameter = request.getParameter("sortParameter");
         List<InfoRoom> availableRooms = new ArrayList<InfoRoom>();
         for (int i = 0; i < availableRoomsId.length; i++) {
             Object args[] = { new Integer(availableRoomsId[i]) };
-            InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID", args);
+            InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID", args);
             availableRooms.add(infoRoom);
         }
         if ((sortParameter != null) && (sortParameter.length() != 0)) {

@@ -6,9 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-
 import org.apache.struts.taglib.TagUtils;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CollectionPagerTag extends TagSupport {
 

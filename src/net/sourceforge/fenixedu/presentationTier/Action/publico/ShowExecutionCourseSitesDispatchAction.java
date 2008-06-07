@@ -62,7 +62,7 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
 	    throws FenixServiceException, FenixFilterException {
 	final Object[] args = { degree };
 	List<ExecutionCourseView> result = new ArrayList((Collection<ExecutionCourseView>)
-		ServiceManagerServiceFactory.executeService(null, "ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree", args));
+		ServiceManagerServiceFactory.executeService( "ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree", args));
 	BeanComparator beanComparator = new BeanComparator("executionCourseName", Collator.getInstance());
 	Collections.sort(result, beanComparator);
 

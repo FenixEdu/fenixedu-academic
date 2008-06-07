@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.mast
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -29,6 +28,8 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.upload.FormFile;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * 
@@ -53,7 +54,7 @@ public class UploadFilesAction extends FenixDispatchAction {
 
     public ActionForward uploadGratuityFile(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm uploadGratuityFileForm = (DynaActionForm) actionForm;
 
         FormFile uploadedFile = (FormFile) uploadGratuityFileForm.get("uploadedFile");
@@ -75,7 +76,7 @@ public class UploadFilesAction extends FenixDispatchAction {
         Object args[] = { fileName, fileEntries, userView };
 
         try {
-            ServiceUtils.executeService(userView, "ProcessSibsPaymentFile", args);
+            ServiceUtils.executeService("ProcessSibsPaymentFile", args);
         } catch (DuplicateSibsPaymentFileProcessingServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("duplicateSibsPaymentFileProcessing", new ActionError(e.getMessage()));

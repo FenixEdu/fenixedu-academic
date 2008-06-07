@@ -23,13 +23,14 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidGuideSituationActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -41,7 +42,7 @@ public class EditReimbursementGuideSituationDispatchAction extends FenixDispatch
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm editReimbursementGuideSituationForm = (DynaActionForm) form;
 
@@ -51,7 +52,7 @@ public class EditReimbursementGuideSituationDispatchAction extends FenixDispatch
 
         Object args[] = { reimbursementGuideId };
         try {
-            infoReimbursementGuide = (InfoReimbursementGuide) ServiceUtils.executeService(userView,
+            infoReimbursementGuide = (InfoReimbursementGuide) ServiceUtils.executeService(
                     "ViewReimbursementGuide", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
@@ -74,7 +75,7 @@ public class EditReimbursementGuideSituationDispatchAction extends FenixDispatch
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm editReimbursementGuideSituationForm = (DynaActionForm) form;
 
         String remarks = (String) editReimbursementGuideSituationForm.get("remarks");
@@ -96,7 +97,7 @@ public class EditReimbursementGuideSituationDispatchAction extends FenixDispatch
 
         try {
             Object args[] = { reimbursementGuideID, situation, officialDate, remarks, userView };
-            ServiceUtils.executeService(userView, "EditReimbursementGuide", args);
+            ServiceUtils.executeService("EditReimbursementGuide", args);
 
             request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDE, reimbursementGuideID);
 

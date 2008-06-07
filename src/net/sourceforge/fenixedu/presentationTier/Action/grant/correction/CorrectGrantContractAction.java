@@ -14,12 +14,13 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContr
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Pica
@@ -61,10 +62,10 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 	    return setError(request, mapping, "errors.grant.correction.fillAllFields", null, null);
 	}
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	//Read the grant owner
 	Object[] argsGrantOwner = { null, null, null, grantOwnerNumber, new Boolean(false), null };
-	List infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner",
+	List infoGrantOwnerList = (List) ServiceUtils.executeService("SearchGrantOwner",
 		argsGrantOwner);
 	if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownGrantOwner", null, null);
@@ -74,7 +75,7 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 
 	//Read the contracts
 	Object[] argsContracts = { infoGrantOwner.getIdInternal() };
-	List infoGrantContractList = (List) ServiceUtils.executeService(userView,
+	List infoGrantContractList = (List) ServiceUtils.executeService(
 		"ReadAllContractsByGrantOwner", argsContracts);
 	InfoGrantContract infoGrantContract = null;
 	if (!infoGrantContractList.isEmpty()) {
@@ -92,7 +93,7 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 	}
 	//Delete the contract
 	Object[] argsDeleteGrantContract = { infoGrantContract.getIdInternal() };
-	ServiceUtils.executeService(userView, "DeleteGrantContract", argsDeleteGrantContract);
+	ServiceUtils.executeService("DeleteGrantContract", argsDeleteGrantContract);
 	//Set of the request variables and return
 	request.setAttribute("correctionNumber2", "yes");
 	return mapping.findForward("correct-grant-contract-delete");
@@ -117,10 +118,10 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 	    return setError(request, mapping, "errors.grant.correction.fillAllFields", null, null);
 	}
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	//Read the grant owner
 	Object[] argsGrantOwner = { null, null, null, grantOwnerNumber, new Boolean(false), null };
-	List infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner",
+	List infoGrantOwnerList = (List) ServiceUtils.executeService("SearchGrantOwner",
 		argsGrantOwner);
 	if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownGrantOwner", null, null);
@@ -128,7 +129,7 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 	InfoGrantOwner infoGrantOwner = (InfoGrantOwner) infoGrantOwnerList.get(0);
 	//Read the contracts
 	Object[] argsContracts = { infoGrantOwner.getIdInternal() };
-	List infoGrantContractList = (List) ServiceUtils.executeService(userView,
+	List infoGrantContractList = (List) ServiceUtils.executeService(
 		"ReadAllContractsByGrantOwner", argsContracts);
 	InfoGrantContract infoGrantContract = null;
 	if (!infoGrantContractList.isEmpty()) {
@@ -151,7 +152,7 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 	//Change the number, save the contract
 	infoGrantContract.setContractNumber(newGrantContractNumber);
 	Object[] argsNewGrantContract = { infoGrantContract };
-	ServiceUtils.executeService(userView, "EditGrantContract", argsNewGrantContract);
+	ServiceUtils.executeService("EditGrantContract", argsNewGrantContract);
 	//Set of the request variables and return
 	request.setAttribute("correctionNumber3", "yes");
 	return mapping.findForward("correct-grant-contract-change-number");
@@ -176,10 +177,10 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 	    return setError(request, mapping, "errors.grant.correction.fillAllFields", null, null);
 	}
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	//Read the original grant owner
 	Object[] argsOriginalGrantOwner = { null, null, null, grantOwnerNumber, new Boolean(false), null };
-	List infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner",
+	List infoGrantOwnerList = (List) ServiceUtils.executeService("SearchGrantOwner",
 		argsOriginalGrantOwner);
 	if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownGrantOwner", null, null);
@@ -189,7 +190,7 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 
 	//Read the new grant owner
 	Object[] argsNewGrantOwner = { null, null, null, newGrantOwnerNumber, new Boolean(false), null };
-	infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner",
+	infoGrantOwnerList = (List) ServiceUtils.executeService("SearchGrantOwner",
 		argsNewGrantOwner);
 	if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownGrantOwner", null, null);
@@ -199,12 +200,12 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 
 	//Read the contracts of the original grant owner
 	Object[] argsOriginalContracts = { originalGrantOwner.getIdInternal() };
-	List originalGrantContractList = (List) ServiceUtils.executeService(userView,
+	List originalGrantContractList = (List) ServiceUtils.executeService(
 		"ReadAllContractsByGrantOwner", argsOriginalContracts);
 
 	//Read the contracts of the original grant owner
 	Object[] argsNewContracts = { newGrantOwner.getIdInternal() };
-	List newGrantContractList = (List) ServiceUtils.executeService(userView,
+	List newGrantContractList = (List) ServiceUtils.executeService(
 		"ReadAllContractsByGrantOwner", argsNewContracts);
 
 	//Find the contract to move
@@ -239,7 +240,7 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 	infoGrantContractToMove.setGrantOwnerInfo(newGrantOwner);
 
 	Object[] argsNewGrantContract = { infoGrantContractToMove };
-	ServiceUtils.executeService(userView, "EditGrantContract", argsNewGrantContract);
+	ServiceUtils.executeService("EditGrantContract", argsNewGrantContract);
 
 	//Set of the request variables and return
 	request.setAttribute("correctionNumber4", "yes");

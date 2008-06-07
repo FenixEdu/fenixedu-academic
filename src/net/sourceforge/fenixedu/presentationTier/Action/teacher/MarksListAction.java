@@ -40,7 +40,7 @@ public class MarksListAction extends FenixDispatchAction {
 
         try {
             TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils
-                    .executeService(userView, "TeacherAdministrationSiteComponentService", args);
+                    .executeService( "TeacherAdministrationSiteComponentService", args);
 
             request.setAttribute("siteView", siteView);
             request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent())
@@ -69,7 +69,7 @@ public class MarksListAction extends FenixDispatchAction {
         TeacherAdministrationSiteView siteView = null;
 
         try {
-            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(userView,
+            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(
                     "ReadStudentsAndMarksByEvaluation", args);
         } catch (FenixServiceException e) {
             e.printStackTrace();
@@ -99,7 +99,7 @@ public class MarksListAction extends FenixDispatchAction {
                 evaluationCode, null };
         TeacherAdministrationSiteView siteView = null;
         try {
-            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(userView,
+            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(
                     "TeacherAdministrationSiteComponentService", args);
 
         } catch (FenixServiceException e) {
@@ -133,7 +133,7 @@ public class MarksListAction extends FenixDispatchAction {
         Object[] args = { objectCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle };
         IUserView userView = getUserView(request);
         try {
-            ServiceUtils.executeService(userView, "PublishMarks", args);
+            ServiceUtils.executeService("PublishMarks", args);
         } catch (FenixServiceException e) {
             e.printStackTrace();
             throw new FenixActionException(e.getMessage());

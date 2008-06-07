@@ -6,13 +6,13 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-import pt.ist.fenixWebFramework.renderers.components.converters.ConversionException;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.tidy.Tidy;
+
+import pt.ist.fenixWebFramework.renderers.components.converters.ConversionException;
 
 import com.tecnick.htmlutils.htmlentities.HTMLEntities;
 

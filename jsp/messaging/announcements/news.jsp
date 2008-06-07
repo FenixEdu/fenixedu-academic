@@ -5,11 +5,10 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="date"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
 <html:xhtml/>
 
-<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
+<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE %>" scope="session"/>
 <logic:notEmpty name="userView" property="person.user.lastLoginHost">
 	<logic:notEmpty name="userView" property="person.user.lastLoginDateTime">
 		<bean:define id="lastLoginDateTime" type="java.util.Date" name="userView" property="person.user.lastLoginDateTime"/>

@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.injectionCode;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
@@ -15,10 +16,8 @@ import net.sourceforge.fenixedu.domain.Person;
  */
 public class AccessControl {
 
-    static private InheritableThreadLocal<IUserView> userView = new InheritableThreadLocal<IUserView>();
-
     static public IUserView getUserView() {
-	return AccessControl.userView.get();
+	return UserView.getUser();
     }
 
     static public Person getPerson() {
@@ -26,10 +25,6 @@ public class AccessControl {
 	return userView == null ? null : userView.getPerson();
     }
 
-    static public void setUserView(IUserView userView) {
-	AccessControl.userView.set(userView);
-    }
-    
     static public boolean hasPerson() {
 	return getPerson() != null;
     }

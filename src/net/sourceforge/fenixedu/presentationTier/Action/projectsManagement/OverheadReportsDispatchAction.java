@@ -15,13 +15,14 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoOverheadReport;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Susana Fernandes
@@ -30,7 +31,7 @@ public class OverheadReportsDispatchAction extends ReportsDispatchAction {
 
     public ActionForward getReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
         final String reportTypeStr = request.getParameter("reportType");
         final ReportType reportType = new ReportType(reportTypeStr);
         final String costCenter = request.getParameter("costCenter");
@@ -39,7 +40,7 @@ public class OverheadReportsDispatchAction extends ReportsDispatchAction {
                     || reportType.equals(ReportType.TRANSFERED_OVERHEADS)
                     || reportType.equals(ReportType.OVERHEADS_SUMMARY)) {
                 final InfoOverheadReport infoReport = (InfoOverheadReport) ServiceUtils.executeService(
-                        userView, "ReadOverheadReport", new Object[] { userView.getUtilizador(),
+                        "ReadOverheadReport", new Object[] { userView.getUtilizador(),
                                 costCenter, reportType, null });
                 getSpans(request, infoReport);
                 request.setAttribute("infoReport", infoReport);
@@ -55,7 +56,7 @@ public class OverheadReportsDispatchAction extends ReportsDispatchAction {
     public ActionForward exportToExcel(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
             FenixFilterException {
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
         final String reportTypeStr = request.getParameter("reportType");
         final ReportType reportType = new ReportType(reportTypeStr);
         final String costCenter = request.getParameter("costCenter");
@@ -68,7 +69,7 @@ public class OverheadReportsDispatchAction extends ReportsDispatchAction {
                     || reportType.equals(ReportType.TRANSFERED_OVERHEADS)
                     || reportType.equals(ReportType.OVERHEADS_SUMMARY)) {
                 InfoOverheadReport infoOverheadReport = (InfoOverheadReport) ServiceUtils
-                        .executeService(userView, "ReadOverheadReport", new Object[] {
+                        .executeService( "ReadOverheadReport", new Object[] {
                                 userView.getUtilizador(), costCenter, reportType, null });
                 infoOverheadReport.getReportToExcel(userView, wb, reportType);
             }

@@ -17,13 +17,14 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.CreditLine;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Ricardo Rodrigues
@@ -43,7 +44,7 @@ public class ReadAllTeacherCreditsResumeDispatchAction extends FenixDispatchActi
     
     public ActionForward showTeacherCreditsResume(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         
         DynaActionForm dynaForm = (DynaActionForm) form;        
         Integer teacherNumber = Integer.parseInt(dynaForm.getString("teacherNumber")); 
@@ -53,7 +54,7 @@ public class ReadAllTeacherCreditsResumeDispatchAction extends FenixDispatchActi
         request.setAttribute("teacher", teacher);
 
         Object[] args = new Object[] {teacher.getIdInternal()};
-        List<CreditLine> creditsLines = (List) ServiceUtils.executeService(userView, "ReadAllTeacherCredits", args);        
+        List<CreditLine> creditsLines = (List) ServiceUtils.executeService("ReadAllTeacherCredits", args);        
         request.setAttribute("creditsLinesSize",creditsLines.size());
         
         BeanComparator dateComparator = new BeanComparator("executionPeriod.beginDate");        

@@ -25,8 +25,6 @@ public interface IUserView extends Serializable {
 
     boolean hasRoleType(final RoleType roleType);
     
-    boolean isPublicRequester();
-
     public String getPrivateConstantForDigestCalculation();
 
 }

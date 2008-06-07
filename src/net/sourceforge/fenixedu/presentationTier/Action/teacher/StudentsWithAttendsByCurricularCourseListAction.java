@@ -100,7 +100,7 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
 	InfoForReadStudentsWithAttendsByExecutionCourse infoDTO = null;
 
 	try {
-	    siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(userView,
+	    siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
 		    "ReadStudentsWithAttendsByExecutionCourse", args);
 
 	    infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();
@@ -181,7 +181,7 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
 	InfoForReadStudentsWithAttendsByExecutionCourse infoDTO = null;
 
 	try {
-	    siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(userView,
+	    siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
 		    "ReadStudentsWithAttendsByExecutionCourse", args);
 
 	    infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();

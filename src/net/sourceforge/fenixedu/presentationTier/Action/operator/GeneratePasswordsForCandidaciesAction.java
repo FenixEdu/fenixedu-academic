@@ -75,7 +75,7 @@ public class GeneratePasswordsForCandidaciesAction extends FenixDispatchAction {
 	try {
 
 	    final List<PasswordBean> passwordBeans = (List<PasswordBean>) ServiceManagerServiceFactory
-		    .executeService(getUserView(request), "GeneratePasswordsForCandidacies", args);
+		    .executeService( "GeneratePasswordsForCandidacies", args);
 
 	    Collections.sort(passwordBeans, new BeanComparator("person.username"));
 	    request.setAttribute("passwordBeans", passwordBeans);

@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -38,6 +37,8 @@ import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author Ana e Ricardo
  */
@@ -46,7 +47,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ContextUtils.setCurricularYearsContext(request);
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer executionCourseOID = ((InfoExecutionCourse) request
                 .getAttribute(SessionConstants.EXECUTION_COURSE)).getIdInternal();
@@ -54,7 +55,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         Object args[] = { executionCourseOID };
         InfoExecutionCourse executionCourse;
         try {
-            executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView,
+            executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
                     "ReadExecutionCourseWithAssociatedCurricularCourses", args);
         } catch (Exception ex) {
             throw new Exception(ex);
@@ -92,7 +93,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaValidatorForm createExamForm = (DynaValidatorForm) form;
 
         // exam season
@@ -151,7 +152,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         Object argsCreateExam[] = { null, examDate.getTime(), examStartTime.getTime(), examEndTime.getTime(), 
                 executionCourseIDs, curricularCourseScopeIDs, curricularCourseContextIDs, roomIDs, season, null };
         try {
-            ServiceUtils.executeService(userView, "CreateWrittenEvaluation", argsCreateExam);
+            ServiceUtils.executeService("CreateWrittenEvaluation", argsCreateExam);
         } catch (FenixServiceException ex) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("errors", new ActionError(ex.getMessage()));
@@ -191,7 +192,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         ContextUtils.setExecutionPeriodContext(request);
         ContextUtils.setCurricularYearsContext(request);
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaValidatorForm createExamForm = (DynaValidatorForm) form;
         String[] executionCourseArray = (String[]) createExamForm.get("executionCourses");
 
@@ -200,7 +201,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
             Object args[] = { new Integer(executionCourseArray[i]) };
             InfoExecutionCourse executionCourse;
             try {
-                executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView,
+                executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
                         "ReadExecutionCourseWithAssociatedCurricularCourses", args);
             } catch (Exception ex) {
                 throw new Exception(ex);
@@ -237,7 +238,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++) {
                 Object argRoom[] = { new Integer(rooms[iterRooms]) };
-                InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID",
+                InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID",
                         argRoom);
 
                 roomNames.add(infoRoom);
@@ -262,7 +263,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         ContextUtils.setExecutionPeriodContext(request);
         ContextUtils.setCurricularYearsContext(request);
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaValidatorForm createExamForm = (DynaValidatorForm) form;
         String[] executionCourseArray = (String[]) createExamForm.get("executionCourses");
 
@@ -271,7 +272,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
             Object args[] = { new Integer(executionCourseArray[i]) };
             InfoExecutionCourse executionCourse;
             try {
-                executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView,
+                executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
                         "ReadExecutionCourseWithAssociatedCurricularCourses", args);
             } catch (Exception ex) {
                 throw new Exception(ex);
@@ -298,7 +299,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++) {
                 Object argRoom[] = { new Integer(rooms[iterRooms]) };
-                InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID",
+                InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID",
                         argRoom);
 
                 roomNames.add(infoRoom);
@@ -390,7 +391,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         String executionDegreeOID = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE_OID);
         request.setAttribute("executionDegreeOID", executionDegreeOID);
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaValidatorForm createExamForm = (DynaValidatorForm) form;
         String[] executionCourseArray = (String[]) createExamForm.get("executionCourses");
 
@@ -400,7 +401,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
             Object args[] = { new Integer(executionCourseArray[i]) };
             InfoExecutionCourse executionCourse;
             try {
-                executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView,
+                executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
                         "ReadExecutionCourseWithAssociatedCurricularCourses", args);
             } catch (Exception ex) {
                 throw new Exception(ex);
@@ -426,7 +427,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++) {
                 Object argRoom[] = { new Integer(rooms[iterRooms]) };
-                InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID",
+                InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID",
                         argRoom);
 
                 roomNames.add(infoRoom);
@@ -444,7 +445,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         request.setAttribute(SessionConstants.EXAM_OID, infoExamId);
 
         ContextUtils.setCurricularYearsContext(request);
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         InfoExam infoExam = (InfoExam) request.getAttribute(SessionConstants.EXAM);
         List executionCourseList = infoExam.getAssociatedExecutionCourse();
@@ -455,7 +456,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
             Object args[] = { element.getIdInternal() };
             InfoExecutionCourse executionCourse;
             try {
-                executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView,
+                executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
                         "ReadExecutionCourseWithAssociatedCurricularCourses", args);
             } catch (Exception ex) {
                 throw new Exception(ex);
@@ -515,7 +516,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaValidatorForm createExamForm = (DynaValidatorForm) form;
 
         Integer infoExamID = Integer.valueOf(((String) createExamForm.get("exam_oid")));
@@ -575,7 +576,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         Object argsEditExam[] = { null, examDate.getTime(), examStartTime.getTime(), examEndTime.getTime(), executionCourseIDs, scopeIDs, 
                 contextIDs, roomIDs, infoExamID, season, null };
         try {
-            ServiceUtils.executeService(userView, "EditWrittenEvaluation", argsEditExam);
+            ServiceUtils.executeService("EditWrittenEvaluation", argsEditExam);
         } 
         catch (FenixServiceException ex) {
             ActionError actionError = new ActionError(ex.getMessage());
@@ -625,7 +626,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
         DynaActionForm examForm = (DynaActionForm) form;
         ContextUtils.setCurricularYearsContext(request);
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         String infoExamId = (String) request.getAttribute(SessionConstants.EXAM_OID);
         if (infoExamId == null) {
@@ -640,7 +641,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
             Object args[] = { new Integer(executionCourseArray[i]) };
             InfoExecutionCourse executionCourse;
             try {
-                executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView,
+                executionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
                         "ReadExecutionCourseWithAssociatedCurricularCourses", args);
             } catch (Exception ex) {
                 throw new Exception(ex);
@@ -713,7 +714,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
         	HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime),
         	dayOfWeek, null, null, Boolean.FALSE };
 
-        List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService(userView, "ReadAvailableRoomsForExam", args);
+        List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService("ReadAvailableRoomsForExam", args);
 
         String[] rooms = (String[]) examForm.get("rooms");
         List<InfoRoom> selectedRooms = new ArrayList<InfoRoom>();
@@ -723,7 +724,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
             for (int iterRooms = 0; iterRooms < rooms.length; iterRooms++) {
                 Integer argRoom[] = { Integer.valueOf(rooms[iterRooms]) };
-                InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID",
+                InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID",
                         argRoom);
 
                 selectedRooms.add(infoRoom);

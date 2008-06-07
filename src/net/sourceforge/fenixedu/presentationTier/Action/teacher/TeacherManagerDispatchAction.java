@@ -50,17 +50,17 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
             InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
             Object args[] = { infoSite.getInfoExecutionCourse() };
             boolean result = false;
-            List teachers = (List) ServiceManagerServiceFactory.executeService(userView,
+            List teachers = (List) ServiceManagerServiceFactory.executeService(
                     "ReadTeachersByExecutionCourseProfessorship", args);
             if (teachers != null && !teachers.isEmpty()) {
                 session.setAttribute(SessionConstants.TEACHERS_LIST, teachers);
             }
 
-            List responsibleTeachers = (List) ServiceManagerServiceFactory.executeService(userView,
+            List responsibleTeachers = (List) ServiceManagerServiceFactory.executeService(
                     "ReadTeachersByExecutionCourseResponsibility", args);
 
             Object[] args1 = { userView.getUtilizador() };
-            InfoTeacher teacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(userView,
+            InfoTeacher teacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(
                     "ReadTeacherByUsername", args1);
             if (responsibleTeachers != null && !responsibleTeachers.isEmpty()
                     && responsibleTeachers.contains(teacher)) {
@@ -87,7 +87,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
         Integer teacherNumber = new Integer(teacherNumberString);
         Object args[] = { infoSite.getInfoExecutionCourse(), teacherNumber };
         try {
-            ServiceManagerServiceFactory.executeService(userView, "RemoveTeacher", args);
+            ServiceManagerServiceFactory.executeService( "RemoveTeacher", args);
 
         } catch (notAuthorizedServiceDeleteException e) {
             throw new notAuthorizedActionDeleteException("error.invalidTeacherRemoval");
@@ -109,7 +109,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
         Integer teacherNumber = new Integer((String) teacherForm.get("teacherNumber"));
         Object args[] = { infoSite.getInfoExecutionCourse(), teacherNumber };
         try {
-            ServiceManagerServiceFactory.executeService(userView, "AssociateTeacher", args);
+            ServiceManagerServiceFactory.executeService( "AssociateTeacher", args);
 
         } catch (ExistingServiceException e) {
             throw new ExistingActionException("A associação do professor número " + teacherNumber, e);

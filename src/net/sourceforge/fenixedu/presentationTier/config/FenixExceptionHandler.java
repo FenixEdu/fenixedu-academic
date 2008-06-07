@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.domain.log.requests.RequestLog;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixframework.pstm.Transaction;
 import net.sourceforge.fenixedu.util.ArrayUtils;
 
 import org.apache.commons.lang.StringUtils;
@@ -30,6 +28,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
+
+import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.pstm.Transaction;
 
 /**
  * @author João Mota
@@ -84,7 +85,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	final StringBuilder exceptionInfo = new StringBuilder("Error Origin: \n");
 	exceptionInfo.append("Exception: \n" + ex + "\n\n");
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	if (userView != null) {
 	    exceptionInfo.append("UserLogedIn: " + userView.getUtilizador() + "\n");
 	} else {

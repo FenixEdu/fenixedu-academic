@@ -56,7 +56,7 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
             InfoStudent infoStudent = null;
             Object args[] = { studentNumber, DegreeType.MASTER_DEGREE };
             try {
-                infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
+                infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(
                         "ReadStudentByNumberAndType", args);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
@@ -77,7 +77,7 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
 
             //			Get List of available Countries
             Object result = null;
-            result = ServiceManagerServiceFactory.executeService(userView, "ReadAllCountries", null);
+            result = ServiceManagerServiceFactory.executeService( "ReadAllCountries", null);
             List country = (ArrayList) result;
 
             //			Build List of Countries for the Form

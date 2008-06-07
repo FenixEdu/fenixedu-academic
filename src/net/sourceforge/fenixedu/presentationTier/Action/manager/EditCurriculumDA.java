@@ -19,13 +19,14 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author lmac1
@@ -36,7 +37,7 @@ public class EditCurriculumDA extends FenixDispatchAction {
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm curriculumForm = (DynaActionForm) form;
 
@@ -48,7 +49,7 @@ public class EditCurriculumDA extends FenixDispatchAction {
         Object args[] = { curricularCourseId };
 
         try {
-            infoCurriculum = (InfoCurriculum) ServiceUtils.executeService(userView, "ReadCurriculum",
+            infoCurriculum = (InfoCurriculum) ServiceUtils.executeService("ReadCurriculum",
                     args);
 
         } catch (NonExistingServiceException e) {
@@ -82,7 +83,7 @@ public class EditCurriculumDA extends FenixDispatchAction {
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm editForm = (DynaActionForm) form;
 
@@ -118,7 +119,7 @@ public class EditCurriculumDA extends FenixDispatchAction {
         Object args[] = { infoCurriculum, request.getParameter("language"), userView.getUtilizador() };
 
         try {
-            ServiceUtils.executeService(userView, "EditCurriculumByManager", args);
+            ServiceUtils.executeService("EditCurriculumByManager", args);
 
         } catch (NonExistingServiceException nonExistingServiceException) {
             nonExistingServiceException.printStackTrace();

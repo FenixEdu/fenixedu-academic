@@ -18,14 +18,13 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -153,7 +152,7 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 	}
 
 	Object args[] = { admittedCandidacies, substituteCandidacies, notAdmittedCandidacies };
-	ServiceUtils.executeService(SessionUtils.getUserView(request), "SelectCandidacies", args);
+	executeService("SelectCandidacies", args);
 
 	request.setAttribute("admittedCandidacies", admittedCandidacies);
 	request.setAttribute("substituteCandidacies", substituteCandidacies);

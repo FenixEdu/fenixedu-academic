@@ -43,7 +43,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -52,6 +51,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.CollectionPager;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class FunctionsManagementBackingBean extends FenixBackingBean {
 
@@ -139,7 +139,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
 		final Object[] argsToRead = { this.getFunctionID(), this.getPersonID(), credits,
 			YearMonthDay.fromDateFields(beginDate_), YearMonthDay.fromDateFields(endDate_) };
-		ServiceUtils.executeService(getUserView(), "AssociateNewFunctionToPerson", argsToRead);
+		ServiceUtils.executeService( "AssociateNewFunctionToPerson", argsToRead);
 		setErrorMessage("message.success");
 		return "success";
 
@@ -176,7 +176,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
 	    final Object[] argsToRead = { this.getPersonFunctionID(), this.getFunctionID(),
 		    YearMonthDay.fromDateFields(beginDate_), YearMonthDay.fromDateFields(endDate_), credits };
-	    ServiceUtils.executeService(getUserView(), "EditPersonFunction", argsToRead);
+	    ServiceUtils.executeService( "EditPersonFunction", argsToRead);
 	    setErrorMessage("message.success");
 	    return "alterFunction";
 
@@ -192,7 +192,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public String deletePersonFunction() throws FenixFilterException, FenixServiceException {
 	final Object[] argsToRead = { this.getPersonFunctionID() };
-	ServiceUtils.executeService(getUserView(), "DeletePersonFunction", argsToRead);
+	ServiceUtils.executeService( "DeletePersonFunction", argsToRead);
 	setErrorMessage("message.success");
 	return "success";
     }
@@ -296,7 +296,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 		null, null, Boolean.TRUE, null, Boolean.FALSE);
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-	CollectionPager<Person> allPersons = (CollectionPager<Person>) ServiceUtils.executeService(getUserView(), "SearchPerson",
+	CollectionPager<Person> allPersons = (CollectionPager<Person>) ServiceUtils.executeService( "SearchPerson",
 		new Object[] { searchParameters, predicate });
 
 	return allPersons.getCollection();

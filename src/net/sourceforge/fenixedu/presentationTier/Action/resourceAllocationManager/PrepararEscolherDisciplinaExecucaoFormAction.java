@@ -11,13 +11,14 @@ import net.sourceforge.fenixedu.dataTransferObject.CurricularYearAndSemesterAndI
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author tfc130
@@ -27,7 +28,7 @@ public class PrepararEscolherDisciplinaExecucaoFormAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
 
             // Ler Disciplinas em Execucao
             InfoExecutionDegree iLE = (InfoExecutionDegree) request

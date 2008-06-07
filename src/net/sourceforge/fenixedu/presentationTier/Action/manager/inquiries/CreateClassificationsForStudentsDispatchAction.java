@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -28,6 +27,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -38,13 +39,13 @@ public class CreateClassificationsForStudentsDispatchAction extends FenixDispatc
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
-        InfoExecutionYear executionYear = (InfoExecutionYear) ServiceUtils.executeService(userView,
+        InfoExecutionYear executionYear = (InfoExecutionYear) ServiceUtils.executeService(
                 "ReadCurrentExecutionYear", null);
 
         Object[] argsDCPs = { executionYear.getIdInternal() };
-        List degreeCurricularPlans = (List) ServiceUtils.executeService(userView,
+        List degreeCurricularPlans = (List) ServiceUtils.executeService(
                 "ReadActiveDegreeCurricularPlansByExecutionYear", argsDCPs);
         final ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
@@ -67,7 +68,7 @@ public class CreateClassificationsForStudentsDispatchAction extends FenixDispatc
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException, IOException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         Integer degreeCurricularPlanID = (Integer) dynaActionForm.get("degreeCurricularPlanID");
@@ -78,7 +79,7 @@ public class CreateClassificationsForStudentsDispatchAction extends FenixDispatc
         Object[] args = { entryGradeLimits, approvationRatioLimits, arithmeticMeanLimits,
                 degreeCurricularPlanID };
         ByteArrayOutputStream resultStream = (ByteArrayOutputStream) ServiceUtils.executeService(
-                userView, "CreateClassificationsForStudents", args);
+                "CreateClassificationsForStudents", args);
 
         String currentDate = new SimpleDateFormat("dd-MMM-yy.HH-mm").format(new Date());
         response.setHeader("Content-disposition", "attachment;filename=" + degreeCurricularPlanID + "_" + currentDate

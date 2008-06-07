@@ -8,11 +8,12 @@ import net.sourceforge.fenixedu.domain.Person.AnyPersonSearchBean;
 import net.sourceforge.fenixedu.domain.Person.ExternalPersonBeanFactoryCreator;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ExternalPersonDA extends FenixDispatchAction {
 

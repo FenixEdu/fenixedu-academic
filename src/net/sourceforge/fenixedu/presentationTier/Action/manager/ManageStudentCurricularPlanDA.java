@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -27,6 +26,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Cruz
@@ -57,9 +58,9 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 	final String studentCurricularPlanIdString = request.getParameter("studentCurricularPlanId");
 	final Integer studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
 
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	final Object[] args = new Object[] { studentCurricularPlanId };
-	ServiceUtils.executeService(userView, "DeleteStudentCurricularPlan", args);
+	ServiceUtils.executeService("DeleteStudentCurricularPlan", args);
 
 	return show(mapping, form, request, response);
     }
@@ -74,9 +75,9 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 	final Integer studentNumber = Integer.valueOf(studentNumberString);
 	final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
 
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	final Object[] args = new Object[] { studentNumber, degreeType, enrollmentId };
-	ServiceUtils.executeService(userView, "DeleteEnrollment", args);
+	ServiceUtils.executeService("DeleteEnrollment", args);
 
 	return show(mapping, form, request, response);
     }
@@ -92,10 +93,10 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
 	    final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
 
-	    final IUserView userView = SessionUtils.getUserView(request);
+	    final IUserView userView = UserView.getUser();
 
 	    final Object[] args = new Object[] { degreeType };
-	    final List infoDegreeCurricularPlans = (List) ServiceUtils.executeService(userView,
+	    final List infoDegreeCurricularPlans = (List) ServiceUtils.executeService(
 		    "ReadDegreeCurricularPlansByDegreeType", args);
 
 	    putDegreeCurricularPlansInRequest(request, infoDegreeCurricularPlans);
@@ -127,11 +128,11 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 	    final Integer degreeCurricularPlanId = new Integer(degreeCurricularPlanIdString);
 	    final Date startDate = simpleDateFormat.parse(startDateString);
 
-	    final IUserView userView = SessionUtils.getUserView(request);
+	    final IUserView userView = UserView.getUser();
 
 	    final Object[] args = new Object[] { studentNumber, degreeType, studentCurricularPlanState,
 		    degreeCurricularPlanId, startDate };
-	    ServiceUtils.executeService(userView, "CreateStudentCurricularPlan", args);
+	    ServiceUtils.executeService("CreateStudentCurricularPlan", args);
 	}
 
 	return show(mapping, form, request, response);
@@ -165,11 +166,11 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 		enrollmentIDsToTransfer[i] = new Integer(enrollmentStringIDToTransfer);
 	    }
 
-	    final IUserView userView = SessionUtils.getUserView(request);
+	    final IUserView userView = UserView.getUser();
 
 	    final Object[] args = new Object[] { selectedStudentCurricularPlanId,
 		    enrollmentIDsToTransfer, selectedCurriculumGroupID };
-	    ServiceUtils.executeService(userView, "TransferEnrollments", args);
+	    ServiceUtils.executeService("TransferEnrollments", args);
 	}
 
 	return show(mapping, form, request, response);
@@ -178,9 +179,9 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
     protected void putStudentCurricularInformationInRequest(final HttpServletRequest request,
 	    final Integer studentNumber, final DegreeType degreeType) throws FenixFilterException,
 	    FenixServiceException {
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	final Object[] args = new Object[] { studentNumber, degreeType };
-	final List infoStudentCurricularPlans = (List) ServiceUtils.executeService(userView,
+	final List infoStudentCurricularPlans = (List) ServiceUtils.executeService(
 		"ReadStudentCurricularInformation", args);
 	request.setAttribute("infoStudentCurricularPlans", infoStudentCurricularPlans);
     }

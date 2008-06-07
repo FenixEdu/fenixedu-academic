@@ -7,14 +7,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -32,14 +30,12 @@ public class AddClassesDA extends
     public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
-
         InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
         Object[] args = { infoShift.getIdInternal() };
         List classes = null;
         try {
-            classes = (List) ServiceUtils.executeService(userView, "ReadAvailableClassesForShift", args);
+            classes = (List) ServiceUtils.executeService("ReadAvailableClassesForShift", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -67,7 +63,7 @@ public class AddClassesDA extends
 
         Object args[] = { infoShift, classOIDs };
         try {
-            ServiceUtils.executeService(SessionUtils.getUserView(request), "AddSchoolClassesToShift", args);
+            ServiceUtils.executeService("AddSchoolClassesToShift", args);
         } catch (FenixServiceException ex) {
             // No probem, the user refreshed the page after adding classes
             request.setAttribute("selectMultipleItemsForm", null);

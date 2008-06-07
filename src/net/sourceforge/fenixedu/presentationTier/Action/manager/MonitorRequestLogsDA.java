@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.renderer.BarChart;
 import net.sourceforge.fenixedu.util.renderer.TimeLineChart;
 import net.sourceforge.fenixedu.util.renderer.container.RequestEntry;
@@ -38,6 +37,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Cruz
@@ -53,8 +54,8 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
     public ActionForward listFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
-        ServiceUtils.executeService(userView, "ConfirmManagerIdentity", null);
+        IUserView userView = UserView.getUser();
+        ServiceUtils.executeService("ConfirmManagerIdentity", null);
 
         DynaActionForm actionForm = (DynaActionForm) form;
         String logDirName = (String) actionForm.get("logDirName");
@@ -98,8 +99,8 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
     public ActionForward analyseFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
-        ServiceUtils.executeService(userView, "ConfirmManagerIdentity", null);
+        IUserView userView = UserView.getUser();
+        ServiceUtils.executeService("ConfirmManagerIdentity", null);
 
         DynaActionForm actionForm = (DynaActionForm) form;
         String logDirName = (String) actionForm.get("logDirName");

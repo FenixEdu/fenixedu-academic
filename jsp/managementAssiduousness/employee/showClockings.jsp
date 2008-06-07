@@ -43,7 +43,7 @@
 		</p>
 	</logic:empty>
 	<logic:notEmpty name="clockings">
-	<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants.U_VIEW);
+	<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE);
 		if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
 		<fr:view name="clockings" schema="show.clockingsDaySheet.assiduosunessManager">
 			<fr:layout name="tabular">

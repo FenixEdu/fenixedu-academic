@@ -27,13 +27,14 @@ import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class DFACandidacyDispatchAction extends FenixDispatchAction {
 
@@ -119,7 +120,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 		.getViewState().getMetaObject().getObject();
 	Candidacy candidacy = null;
 	try {
-	    candidacy = (Candidacy) ServiceUtils.executeService(getUserView(request), "CreateCandidacy",
+	    candidacy = (Candidacy) ServiceUtils.executeService("CreateCandidacy",
 		    new Object[] { createDFACandidacyBean.getExecutionDegree(),
 			    createDFACandidacyBean.getDegreeType(), createDFACandidacyBean.getName(),
 			    createDFACandidacyBean.getIdentificationNumber(),
@@ -217,7 +218,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 	    throw new FenixActionException("error.enrolmentFee.to.pay");
 	}
 
-	String pass = (String) ServiceUtils.executeService(getUserView(request), "GenerateNewPassword",
+	String pass = (String) ServiceUtils.executeService("GenerateNewPassword",
 		new Object[] { candidacy.getPerson() });
 	request.setAttribute("password", pass);
 
@@ -271,13 +272,13 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	PrecedentDegreeInformationBean precedentDegreeInformation = (PrecedentDegreeInformationBean) RenderUtils
 		.getViewState("precedentDegreeInformation").getMetaObject().getObject();
 
 	Object[] argsInstitution = { precedentDegreeInformation };
-	ServiceUtils.executeService(userView, "EditPrecedentDegreeInformation", argsInstitution);
+	ServiceUtils.executeService("EditPrecedentDegreeInformation", argsInstitution);
 
 	request.setAttribute("candidacyID", precedentDegreeInformation.getPrecedentDegreeInformation()
 		.getStudentCandidacy().getIdInternal());
@@ -311,7 +312,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 	Object[] args = { new StateMachineRunner.RunnerArgs(candidacy.getActiveCandidacySituation(),
 		nextState) };
 	try {
-	    ServiceUtils.executeService(getUserView(request), "StateMachineRunner", args);
+	    ServiceUtils.executeService("StateMachineRunner", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    request.setAttribute("candidacy", candidacy);
@@ -378,7 +379,7 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 
 	Object[] args = { registerCandidacyBean };
 	try {
-	    ServiceUtils.executeService(getUserView(request), "RegisterCandidateNew", args);
+	    ServiceUtils.executeService("RegisterCandidateNew", args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	    request.setAttribute("candidacy", candidacy);

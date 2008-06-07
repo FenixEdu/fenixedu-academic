@@ -119,7 +119,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             Object[] args = { coursesIds, new Integer(curricularPlanId) };
 
             try {
-                ServiceUtils.executeService(userView, "setBasicCurricularCourses", args);
+                ServiceUtils.executeService("setBasicCurricularCourses", args);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
@@ -136,7 +136,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             Object[] args = { new InfoSiteCurriculum(), new Integer(curricularCourseIdString), null };
             SiteView siteView = null;
             try {
-                siteView = (SiteView) ServiceUtils.executeService(userView,
+                siteView = (SiteView) ServiceUtils.executeService(
                         "ScientificCouncilCurricularCourseCurriculumComponentService", args);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
@@ -154,7 +154,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             Object[] args = { new Integer(curriculumIdString) };
             SiteView siteView = null;
             try {
-                siteView = (SiteView) ServiceUtils.executeService(userView,
+                siteView = (SiteView) ServiceUtils.executeService(
                         "ReadCurriculumByOIdService", args);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
@@ -181,7 +181,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
             Boolean result;
             try {
-                result = (Boolean) ServiceUtils.executeService(userView, "EditCurriculum", args);
+                result = (Boolean) ServiceUtils.executeService("EditCurriculum", args);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
@@ -201,7 +201,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
             Object[] args = { new Integer(curricularCourseIdString) };
             SiteView siteView = null;
             try {
-                siteView = (SiteView) ServiceUtils.executeService(userView,
+                siteView = (SiteView) ServiceUtils.executeService(
                         "ReadCurricularCourseByOIdService", args);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
@@ -228,7 +228,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 
             Boolean result;
             try {
-                result = (Boolean) ServiceUtils.executeService(userView, "InsertCurriculum", args);
+                result = (Boolean) ServiceUtils.executeService("InsertCurriculum", args);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
@@ -245,7 +245,7 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
         Object[] args = { component, degreeId, coursesIds, degreeCurricularPlanId };
         SiteView siteView = null;
         try {
-            siteView = (SiteView) ServiceUtils.executeService(userView,
+            siteView = (SiteView) ServiceUtils.executeService(
                     "ScientificCouncilComponentService", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

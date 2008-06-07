@@ -17,12 +17,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author lmac1
@@ -31,13 +32,13 @@ public class ReadExecutionCoursesAction extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
         List executionCourses = null;
         Object args[] = { executionPeriodId };
         try {
-            executionCourses = (List) ServiceUtils.executeService(userView,
+            executionCourses = (List) ServiceUtils.executeService(
                     "ReadExecutionCoursesByExecutionPeriod", args);
 
             if (executionCourses != null && executionCourses.size() > 0) {

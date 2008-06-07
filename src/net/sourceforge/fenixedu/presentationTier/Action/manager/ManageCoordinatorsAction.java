@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -27,6 +26,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Tânia Pousão
@@ -41,7 +42,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         Integer executionDegreeId = getFromRequest("executionDegreeId", request);
         request.setAttribute("executionDegreeId", executionDegreeId);
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Object[] args = { executionDegreeId };
         InfoExecutionDegree infoExecutionDegree = null;
@@ -107,7 +108,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         Integer executionDegreeId = getFromRequest("executionDegreeId", request);
         request.setAttribute("executionDegreeId", executionDegreeId);
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Object[] args = { executionDegreeId };
         InfoExecutionDegree infoExecutionDegree = null;
@@ -138,7 +139,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
     public ActionForward insert(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer executionDegreeId = getFromRequest("executionDegreeId", request);
         request.setAttribute("executionDegreeId", executionDegreeId);
@@ -155,7 +156,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 
         Object[] args = { executionDegreeId, coordinatorNumber };
         try {
-            ServiceManagerServiceFactory.executeService(userView, "AddCoordinatorByManager", args);
+            ServiceManagerServiceFactory.executeService( "AddCoordinatorByManager", args);
         } catch (FenixServiceException e) {
             e.printStackTrace();
             errors.add("impossibleInsertCoordinator", new ActionError(
@@ -173,7 +174,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 
         ActionErrors errors = new ActionErrors();
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer executionDegreeId = getFromRequest("executionDegreeId", request);
         request.setAttribute("executionDegreeId", executionDegreeId);
@@ -193,7 +194,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
             List responsibleCoordinatorsIdsList = Arrays.asList(responsibleCoordinatorsIds);
             Object[] args = { executionDegreeId, responsibleCoordinatorsIdsList };
             try {
-                ServiceManagerServiceFactory.executeService(userView,
+                ServiceManagerServiceFactory.executeService(
                         "ResponsibleCoordinatorsByManager", args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
@@ -209,7 +210,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
             List deletedCoordinatorsIdsList = Arrays.asList(deletedCoordinatorsIds);
             Object[] args = { executionDegreeId, deletedCoordinatorsIdsList };
             try {
-                ServiceManagerServiceFactory.executeService(userView, "RemoveCoordinatorsByManager",
+                ServiceManagerServiceFactory.executeService( "RemoveCoordinatorsByManager",
                         args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();

@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -28,6 +27,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author Luis Cruz
  */
@@ -35,7 +36,7 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	final DynaActionForm finalDegreeWorkAttributionForm = (DynaActionForm) form;
 
@@ -53,7 +54,7 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 	request.setAttribute("executionYears", executionYears);
 
 	Object[] args = { userView.getPerson(), executionYear };
-	InfoGroup infoGroup = (InfoGroup) ServiceUtils.executeService(userView,
+	InfoGroup infoGroup = (InfoGroup) ServiceUtils.executeService(
 		"ReadFinalDegreeWorkStudentGroupByUsername", args);
 	if (infoGroup != null && infoGroup.getGroupProposals() != null) {
 	    final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoGroup
@@ -102,11 +103,11 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 	String selectedGroupProposalOID = (String) finalDegreeWorkAttributionForm
 		.get("selectedGroupProposal");
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	if (selectedGroupProposalOID != null && !selectedGroupProposalOID.equals("")) {
 	    Object args[] = { userView.getUtilizador(), new Integer(selectedGroupProposalOID) };
-	    ServiceUtils.executeService(userView, "ConfirmAttributionOfFinalDegreeWork", args);
+	    ServiceUtils.executeService("ConfirmAttributionOfFinalDegreeWork", args);
 	}
 
 	return mapping.findForward("prepareShowFinalDegreeWorkList");

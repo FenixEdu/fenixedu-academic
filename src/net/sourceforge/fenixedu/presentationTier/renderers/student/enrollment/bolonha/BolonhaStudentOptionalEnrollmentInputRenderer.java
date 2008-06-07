@@ -19,6 +19,9 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+
+import org.apache.commons.beanutils.BeanComparator;
+
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlActionLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
@@ -31,8 +34,6 @@ import pt.ist.fenixWebFramework.renderers.components.controllers.HtmlActionLinkC
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer {
 

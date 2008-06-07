@@ -3,10 +3,11 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 import java.util.Collections;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import pt.ist.fenixWebFramework.renderers.DataProvider;
-import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 import org.apache.commons.beanutils.MethodUtils;
+
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class GroupsForUnit implements DataProvider {
 

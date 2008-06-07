@@ -49,7 +49,7 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
         InfoTeacher infoTeacher = null;
         Object[] args = { teacherNumber };
         try {
-            infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView,
+            infoTeacher = (InfoTeacher) ServiceUtils.executeService(
                     "ReadInfoTeacherByTeacherNumber", args);
 
         } catch (NonExistingServiceException e) {
@@ -101,7 +101,7 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
         HashMap professorshipsNotRemoved = null;
         Object[] args = { teacherNumber, professorshipsToDelete, responsibleForsToDelete };
         try {
-            professorshipsNotRemoved = (HashMap) ServiceUtils.executeService(userView,
+            professorshipsNotRemoved = (HashMap) ServiceUtils.executeService(
                     "DissociateProfessorShipsAndResponsibleFor", args);
 
         } catch (NonExistingServiceException e) {

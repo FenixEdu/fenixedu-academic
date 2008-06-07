@@ -35,7 +35,7 @@ public class ChooseExamsExecutionPeriodContextDA extends FenixContextDispatchAct
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
         Object argsReadExecutionPeriods[] = {};
-        List executionPeriods = (ArrayList) ServiceUtils.executeService(userView,
+        List executionPeriods = (ArrayList) ServiceUtils.executeService(
                 "ReadExecutionPeriods", argsReadExecutionPeriods);
         ComparatorChain chainComparator = new ComparatorChain();
         chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
@@ -73,7 +73,7 @@ public class ChooseExamsExecutionPeriodContextDA extends FenixContextDispatchAct
         IUserView userView = getUserView(request);
 
         Object argsReadExecutionPeriods[] = {};
-        List infoExecutionPeriodList = (ArrayList) ServiceUtils.executeService(userView,
+        List infoExecutionPeriodList = (ArrayList) ServiceUtils.executeService(
                 "ReadExecutionPeriods", argsReadExecutionPeriods);
         ComparatorChain chainComparator = new ComparatorChain();
         chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));

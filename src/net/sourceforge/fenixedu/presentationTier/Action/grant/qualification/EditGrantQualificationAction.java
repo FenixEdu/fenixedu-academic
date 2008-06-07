@@ -18,12 +18,13 @@ import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -41,7 +42,7 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 	}
 
 	DynaValidatorForm grantQualificationForm = (DynaValidatorForm) form;
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	Integer idPerson = null;
 
@@ -51,7 +52,7 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 		//Read the qualification
 		Object[] args = { idQualification };
 		InfoQualification infoGrantQualification = (InfoQualification) ServiceUtils
-			.executeService(userView, "ReadQualification", args);
+			.executeService( "ReadQualification", args);
 
 		//Populate the form
 		setFormGrantQualification(grantQualificationForm, infoGrantQualification);
@@ -75,7 +76,7 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 	request.setAttribute("grantOwnerNumber", request.getParameter("grantOwnerNumber"));
 
 	List countryList = null;
-	countryList = (List) ServiceUtils.executeService(SessionUtils.getUserView(request),
+	countryList = (List) ServiceUtils.executeService(
 		"ReadAllCountries", null);
 
 	//Adding a select country line to the list (presentation reasons)
@@ -105,8 +106,8 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 
 	//Run Service
 	Object[] args = { infoGrantQualification.getIdInternal(), infoGrantQualification };
-	IUserView userView = SessionUtils.getUserView(request);
-	ServiceUtils.executeService(userView, "EditQualification", args);
+	IUserView userView = UserView.getUser();
+	ServiceUtils.executeService("EditQualification", args);
 	return mapping.findForward("manage-grant-qualification");
     }
 
@@ -125,8 +126,8 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 
 	//Run Service
 	Object[] args = { idQualification };
-	IUserView userView = SessionUtils.getUserView(request);
-	ServiceUtils.executeService(userView, "DeleteQualification", args);
+	IUserView userView = UserView.getUser();
+	ServiceUtils.executeService("DeleteQualification", args);
 	return mapping.findForward("manage-grant-qualification");
     }
 

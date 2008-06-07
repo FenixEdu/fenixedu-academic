@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -36,6 +35,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Tânia Pousão
@@ -51,7 +52,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
 	List executionYears = null;
 	Object[] args = {};
 	try {
-	    executionYears = (List) ServiceManagerServiceFactory.executeService(null,
+	    executionYears = (List) ServiceManagerServiceFactory.executeService(
 		    "ReadNotClosedExecutionYears", args);
 	} catch (FenixServiceException e) {
 	    errors.add("noExecutionYears", new ActionError("error.impossible.insertExemptionGratuity"));
@@ -94,7 +95,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
     public ActionForward readStudent(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	ActionErrors errors = new ActionErrors();
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	// Read parameters
 	String executionYearStr = request.getParameter("executionYear");
@@ -117,7 +118,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
 	Object[] args = { studentNumber, DegreeType.MASTER_DEGREE };
 	try {
 	    List<StudentCurricularPlan> studentCurricularPlans = (List) ServiceManagerServiceFactory
-		    .executeService(userView,
+		    .executeService(
 			    "ReadStudentCurricularPlansByNumberAndDegreeTypeInMasterDegree", args);
 
 	    for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
@@ -170,7 +171,7 @@ public class ExemptionGratuityAction extends FenixDispatchAction {
 	Object[] args = { studentCurricularPlanID };
 	try {
 	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
-		    .executeService(userView, "ReadStudentCurricularPlanInMasterDegree", args);
+		    .executeService( "ReadStudentCurricularPlanInMasterDegree", args);
 	} catch (FenixServiceException fenixServiceException) {
 	    fenixServiceException.printStackTrace();
 	    errors.add("noStudentCurricularPlans", new ActionError("error.impossible.readStudent"));

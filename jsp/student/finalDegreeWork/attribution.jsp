@@ -122,7 +122,8 @@
 						<logic:present name="infoGroup" property="groupStudents">
 							<logic:iterate id="groupStudent" indexId="i" name="infoGroup" property="groupStudents">
 								<td rowspan="2">
-									<bean:define id="username"><%= net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils.getUserView(request).getUtilizador() %></bean:define>
+										<% IUserView userView = UserView.getUser(); %>
+									<bean:define id="username"><%= userView.getUtilizador() %></bean:define>
 									<logic:equal name="groupStudent" property="student.infoPerson.username" value="<%= username %>">
 										<bean:define id="onChange">
 											this.form.selectedGroupProposal.value='<bean:write name="groupProposal" property="idInternal"/>';this.form.submit();

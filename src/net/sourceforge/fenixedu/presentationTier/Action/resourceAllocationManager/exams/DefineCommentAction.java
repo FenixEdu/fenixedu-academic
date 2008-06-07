@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
 import org.apache.struts.action.ActionError;
@@ -27,6 +26,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -74,7 +75,7 @@ public class DefineCommentAction extends
     public ActionForward define(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaValidatorForm defineExamCommentForm = (DynaValidatorForm) form;
 
@@ -85,7 +86,7 @@ public class DefineCommentAction extends
 
         Object argsDefineComment[] = { executionCourseCode, infoExecutionPeriod.getIdInternal(), comment };
         try {
-            ServiceUtils.executeService(userView, "DefineExamComment", argsDefineComment);
+            ServiceUtils.executeService("DefineExamComment", argsDefineComment);
         } catch (FenixServiceException e) {
            ActionErrors actionErrors = new ActionErrors();
            actionErrors.add(e.getMessage(), new ActionError(e.getMessage()));
@@ -108,7 +109,7 @@ public class DefineCommentAction extends
         final Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
         InfoExamsMap infoExamsMap;
         try {
-            infoExamsMap = (InfoExamsMap) ServiceUtils.executeService(userView, "ReadExamsMap", args);
+            infoExamsMap = (InfoExamsMap) ServiceUtils.executeService("ReadExamsMap", args);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e);
         } catch (FenixServiceException e) {

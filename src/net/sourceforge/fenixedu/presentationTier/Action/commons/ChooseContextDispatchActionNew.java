@@ -36,6 +36,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author jpvl
  */
@@ -85,8 +87,8 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
 		.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 	if (infoExecutionPeriod == null) {
-	    IUserView userView = SessionUtils.getUserView(request);
-	    infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadCurrentExecutionPeriod",
+	    IUserView userView = UserView.getUser();
+	    infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService("ReadCurrentExecutionPeriod",
 		    new Object[0]);
 	    request.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 	}
@@ -121,7 +123,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 	/* Cria o form bean com as licenciaturas em execucao. */
 	Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-	List executionDegreeList = (List) ServiceUtils.executeService(null, "ReadExecutionDegreesByExecutionYear",
+	List executionDegreeList = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionYear",
 		argsLerLicenciaturas);
 
 	List<LabelValueBean> licenciaturas = new ArrayList<LabelValueBean>();
@@ -174,7 +176,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 	    throws Exception {
 	DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	String nextPage = (String) request.getAttribute(SessionConstants.NEXT_PAGE);
 	if (nextPage == null) {
@@ -191,7 +193,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
 	Object argsLerLicenciaturas[] = { ((InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD))
 		.getInfoExecutionYear() };
-	List infoExecutionDegreeList = (List) ServiceUtils.executeService(userView, "ReadExecutionDegreesByExecutionYear",
+	List infoExecutionDegreeList = (List) ServiceUtils.executeService("ReadExecutionDegreesByExecutionYear",
 		argsLerLicenciaturas);
 	List<LabelValueBean> licenciaturas = new ArrayList<LabelValueBean>();
 	licenciaturas.add(new LabelValueBean("escolher", ""));
@@ -268,7 +270,7 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 	if (executionPeriodID != null) {
 	    try {
 		final Object args[] = { executionPeriodID };
-		infoExecutionPeriod = (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService(null,
+		infoExecutionPeriod = (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService(
 			"ReadExecutionPeriodByOID", args);
 	    } catch (FenixServiceException e) {
 		errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));

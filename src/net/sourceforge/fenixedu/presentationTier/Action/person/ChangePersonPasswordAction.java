@@ -38,7 +38,7 @@ public class ChangePersonPasswordAction extends FenixAction {
             Object args[] = { userView, oldPassword, newPassword };
 
             try {
-                ServiceUtils.executeService(userView, "ChangePassword", args);
+                ServiceUtils.executeService("ChangePassword", args);
             } catch (InvalidPasswordServiceException e) {
                 throw new InvalidPasswordActionException(e);
             } catch (FenixServiceException e) {

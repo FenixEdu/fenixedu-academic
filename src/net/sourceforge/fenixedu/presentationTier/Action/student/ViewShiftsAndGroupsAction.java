@@ -44,13 +44,13 @@ public class ViewShiftsAndGroupsAction extends FenixContextAction {
         String username = userView.getUtilizador();
 
         List<InfoExportGrouping> infoExportGroupings = (List<InfoExportGrouping>) ServiceUtils.
-                executeService(userView, "ReadExportGroupingsByGrouping", new Object[]{ groupPropertiesCode });
+                executeService( "ReadExportGroupingsByGrouping", new Object[]{ groupPropertiesCode });
         request.setAttribute("infoExportGroupings", infoExportGroupings);
 
         InfoSiteShiftsAndGroups infoSiteShiftsAndGroups;
         Object[] args = { groupPropertiesCode, username};
         try {
-            infoSiteShiftsAndGroups = (InfoSiteShiftsAndGroups) ServiceUtils.executeService(userView,
+            infoSiteShiftsAndGroups = (InfoSiteShiftsAndGroups) ServiceUtils.executeService(
                     "ReadShiftsAndGroups", args);
 
         } catch (InvalidSituationServiceException e)

@@ -8,6 +8,9 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.struts.util.RequestUtils;
+import org.joda.time.DateTime;
+
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlHiddenField;
@@ -22,9 +25,6 @@ import pt.ist.fenixWebFramework.renderers.converters.DateConverter;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.model.MetaSlotKey;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-
-import org.apache.struts.util.RequestUtils;
-import org.joda.time.DateTime;
 
 /**
  * This renderers provides a standard input presentation for a <code>DateTime</code> from the Joda framework.

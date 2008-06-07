@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixDateAndTimeAndCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.util.Season;
@@ -39,6 +38,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -49,7 +50,7 @@ public class EditExamRoomsDA
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm editExamRoomsForm = (DynaActionForm) form;
 
         //InfoExam infoExam =
@@ -68,7 +69,7 @@ public class EditExamRoomsDA
         InfoViewExamByDayAndShift infoViewExamByDayAndShift = null;
         try {
             infoViewExamByDayAndShift = ((InfoViewExamByDayAndShift) ServiceUtils.executeService(
-                    userView, "ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod", args1));
+                    "ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod", args1));
             infoExam = infoViewExamByDayAndShift.getInfoExam();
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -89,7 +90,7 @@ public class EditExamRoomsDA
         Object[] args = { infoExam };
         List availableRooms;
         try {
-            availableRooms = (List) ServiceManagerServiceFactory.executeService(userView,
+            availableRooms = (List) ServiceManagerServiceFactory.executeService(
                     "ReadEmptyRoomsForExam", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -122,7 +123,7 @@ public class EditExamRoomsDA
     public ActionForward select(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm editExamRoomsForm = (DynaActionForm) form;
 
         //InfoViewExamByDayAndShift infoViewExamByDayAndShift =
@@ -141,7 +142,7 @@ public class EditExamRoomsDA
         InfoViewExamByDayAndShift infoViewExamByDayAndShift = null;
         try {
             infoViewExamByDayAndShift = ((InfoViewExamByDayAndShift) ServiceUtils.executeService(
-                    userView, "ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod", args1));
+                    "ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod", args1));
             infoExam = infoViewExamByDayAndShift.getInfoExam();
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -155,7 +156,7 @@ public class EditExamRoomsDA
 
         Object[] args = { infoExam, roomsToSet };
         try {
-            infoExam = (InfoExam) ServiceManagerServiceFactory.executeService(userView, "EditExamRooms",
+            infoExam = (InfoExam) ServiceManagerServiceFactory.executeService( "EditExamRooms",
                     args);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e);

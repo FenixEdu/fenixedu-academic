@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFi
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.StringUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument {
 

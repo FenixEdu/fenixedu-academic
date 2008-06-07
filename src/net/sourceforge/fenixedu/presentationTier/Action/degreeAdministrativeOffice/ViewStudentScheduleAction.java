@@ -24,7 +24,7 @@ public class ViewStudentScheduleAction extends FenixAction {
 			FenixServiceException {
 
 		final Object[] args = { Registration.readByUsername(request.getParameter("userName")) };
-		request.setAttribute("infoLessons", ServiceUtils.executeService(getUserView(request),
+		request.setAttribute("infoLessons", ServiceUtils.executeService(
 				"ReadStudentTimeTable", args));
 
 		return mapping.findForward("sucess");

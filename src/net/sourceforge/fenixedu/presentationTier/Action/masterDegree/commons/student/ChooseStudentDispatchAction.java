@@ -37,7 +37,7 @@ public class ChooseStudentDispatchAction extends FenixDispatchAction {
 
         try {
             Object args[] = { studentNumber, DegreeType.MASTER_DEGREE};
-            result = (List) ServiceManagerServiceFactory.executeService(userView,
+            result = (List) ServiceManagerServiceFactory.executeService(
                     "ReadStudentCurricularPlansByNumberAndDegreeType", args);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("O Aluno");

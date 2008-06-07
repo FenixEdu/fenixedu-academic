@@ -5,6 +5,5 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/taglibs-string.tld" prefix="str" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
-Utilizador: <bean:write name="<%= SessionConstants.U_VIEW %>" property="person.nickname"/> - <dt:format pattern="dd.MM.yyyy"><dt:currentTime/></dt:format>
+Utilizador: <bean:write name="<%= pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE %>" property="person.nickname"/> - <dt:format pattern="dd.MM.yyyy"><dt:currentTime/></dt:format>

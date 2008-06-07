@@ -18,12 +18,13 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostC
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -61,7 +62,7 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
         }
 
         if (loaddb != null) {
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
             DynaValidatorForm grantContractRegimeForm = (DynaValidatorForm) form;
             try {
                 InfoGrantContract infoGrantContract = null;
@@ -70,7 +71,7 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
                 {
                     //Read the contract regime
                     Object[] args3 = { idContract };
-                    infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(userView,
+                    infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(
                             "ReadGrantContract", args3);
 
                     if (infoGrantContract != null) {
@@ -86,7 +87,7 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
                     //Read the subsidy
                     Object[] args = { idGrantContractRegime };
                     InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) ServiceUtils
-                            .executeService(userView, "ReadGrantContractRegime", args);
+                            .executeService( "ReadGrantContractRegime", args);
 
                     idContract = infoGrantContractRegime.getInfoGrantContract().getIdInternal();
  
@@ -128,13 +129,13 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
                 return setError(request, mapping, "errors.grant.contract.conflictdates", null, null);
             }
 
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
 
             //Verify the teacher
             if (infoGrantContractRegime.getInfoTeacher() != null) {
                 InfoTeacher infoTeacher = null;
                 Object[] argsTeacher = { infoGrantContractRegime.getInfoTeacher().getTeacherNumber() };
-                infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByNumber",
+                infoTeacher = (InfoTeacher) ServiceUtils.executeService("ReadTeacherByNumber",
                         argsTeacher);
                 if (infoTeacher == null) {
                     return setError(request, mapping, "errors.grant.contract.regime.unknownTeacher",
@@ -153,7 +154,7 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
                     InfoGrantCostCenter infoGrantCostCenter = null;
                     Object[] argsCostCenter = { infoGrantContractRegime.getGrantCostCenterInfo().getNumber() };
                     
-                    infoGrantCostCenter = (InfoGrantCostCenter) ServiceUtils.executeService(userView, "ReadCostCenterByNumber",
+                    infoGrantCostCenter = (InfoGrantCostCenter) ServiceUtils.executeService("ReadCostCenterByNumber",
                     		argsCostCenter);
                     if (infoGrantCostCenter == null) {
                         return setError(request, mapping, "errors.grant.contract.regime.unknownTeacher",
@@ -173,7 +174,7 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
             }
             
             Object[] args = { infoGrantContractRegime };
-            ServiceUtils.executeService(userView, "EditGrantContractRegime", args);
+            ServiceUtils.executeService("EditGrantContractRegime", args);
             return mapping.findForward("manage-grant-contract-regime");
 
         } catch (FenixServiceException e) {

@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.Veh
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.VehicleAllocation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
@@ -21,6 +20,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class VehicleManagementDA extends FenixDispatchAction {
 

@@ -12,11 +12,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBuilding;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Util {
 
@@ -27,7 +28,7 @@ public class Util {
             edificios.add(new LabelValueBean(name, value));
 
         final Object args[] = {};
-        final List<InfoBuilding> infoBuildings = (List<InfoBuilding>) ServiceUtils.executeService(null, "ReadBuildings", args);
+        final List<InfoBuilding> infoBuildings = (List<InfoBuilding>) ServiceUtils.executeService("ReadBuildings", args);
         Collections.sort(infoBuildings, new BeanComparator("name"));
 
         for (final Iterator<InfoBuilding> iterator = infoBuildings.iterator(); iterator.hasNext(); ) {

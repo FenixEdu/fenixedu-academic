@@ -12,11 +12,12 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.CareerType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Leonor Almeida
@@ -38,13 +39,13 @@ public class ReadCareersAction extends FenixAction {
 
         String string = request.getParameter("careerType");
         CareerType careerType = null;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         if ((string != null)) {
             careerType = CareerType.valueOf(string);
 
             Object[] args = { careerType, userView.getUtilizador() };
-            SiteView siteView = (SiteView) ServiceUtils.executeService(userView, "ReadCareers", args);
+            SiteView siteView = (SiteView) ServiceUtils.executeService("ReadCareers", args);
 
             request.setAttribute("siteView", siteView);
         }

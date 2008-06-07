@@ -11,11 +11,12 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -39,8 +40,8 @@ public class ManageGrantOwnerAction extends FenixDispatchAction {
 
 	//Read Grant Owner
 	Object[] args = { idInternal };
-	IUserView userView = SessionUtils.getUserView(request);
-	InfoGrantOwner infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService(userView,
+	IUserView userView = UserView.getUser();
+	InfoGrantOwner infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService(
 		"ReadGrantOwner", args);
 
 	if (infoGrantOwner == null) {

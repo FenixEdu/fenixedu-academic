@@ -9,13 +9,14 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkAuthor
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class AssiduousnessExtraWorkDispatchAction extends FenixDispatchAction {
 
@@ -34,7 +35,7 @@ public class AssiduousnessExtraWorkDispatchAction extends FenixDispatchAction {
                 request.setAttribute("extraWorkAuthorizationFactory", extraWorkAuthorizationFactory);
             }
         } else {
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
             request.setAttribute("extraWorkAuthorizationFactory", new ExtraWorkAuthorizationFactory(
                     userView.getPerson().getEmployee()));
         }
@@ -46,7 +47,7 @@ public class AssiduousnessExtraWorkDispatchAction extends FenixDispatchAction {
 
         ExtraWorkAuthorizationFactory extraWorkAuthorizationFactory = (ExtraWorkAuthorizationFactory) getFactoryObject();
         ExtraWorkAuthorization extraWorkAuthorization = (ExtraWorkAuthorization) ServiceUtils
-                .executeService(SessionUtils.getUserView(request), "ExecuteFactoryMethod",
+                .executeService( "ExecuteFactoryMethod",
                         new Object[] { extraWorkAuthorizationFactory });
         request.setAttribute("authorizationID", extraWorkAuthorization.getIdInternal());
 
@@ -105,7 +106,7 @@ public class AssiduousnessExtraWorkDispatchAction extends FenixDispatchAction {
             Integer authorizationID = getIntegerFromRequest(request, "authorizationID");
             ExtraWorkAuthorization extraWorkAuthorization = rootDomainObject
                     .readExtraWorkAuthorizationByOID(authorizationID);
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
             request.setAttribute("extraWorkAuthorizationFactory", new ExtraWorkAuthorizationFactory(
                     userView.getPerson().getEmployee(), extraWorkAuthorization));
         }
@@ -116,7 +117,7 @@ public class AssiduousnessExtraWorkDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         ExtraWorkAuthorizationFactory extraWorkAuthorizationFactory = (ExtraWorkAuthorizationFactory) getFactoryObject();
-        ServiceUtils.executeService(SessionUtils.getUserView(request), "ExecuteFactoryMethod",
+        ServiceUtils.executeService("ExecuteFactoryMethod",
                 new Object[] { extraWorkAuthorizationFactory });
         request.setAttribute("authorizationID", extraWorkAuthorizationFactory
                 .getExtraWorkAuthorization().getIdInternal());

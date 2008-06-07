@@ -37,13 +37,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
@@ -464,7 +464,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public ExecutionYear getExecutionYear(Integer executionYear) throws FenixFilterException, FenixServiceException {
 	final Object[] argsexecutionYearToRead = { executionYear };
-	ExecutionYear iExecutionYear = (ExecutionYear) ServiceUtils.executeService(null, "ReadExecutionYearsService", argsexecutionYearToRead);
+	ExecutionYear iExecutionYear = (ExecutionYear) ServiceUtils.executeService("ReadExecutionYearsService", argsexecutionYearToRead);
 	return iExecutionYear;
     }
 

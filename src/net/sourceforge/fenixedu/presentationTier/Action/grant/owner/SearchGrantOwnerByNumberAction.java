@@ -11,12 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Pica
@@ -32,8 +33,8 @@ public class SearchGrantOwnerByNumberAction extends FenixDispatchAction {
 	grantOwnerNumber = new Integer((String) searchGrantOwnerForm.get("grantOwnerNumber"));
 
 	Object[] args = { null, null, null, grantOwnerNumber, null, null };
-	IUserView userView = SessionUtils.getUserView(request);
-	infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner", args);
+	IUserView userView = UserView.getUser();
+	infoGrantOwnerList = (List) ServiceUtils.executeService("SearchGrantOwner", args);
 
 	if (infoGrantOwnerList.isEmpty()) {
 	    return setError(request, mapping, "errors.grant.owner.not.found", "search-unSuccesfull",

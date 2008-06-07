@@ -35,7 +35,7 @@ public class EnrollStudentInShiftsAction extends FenixAction {
 
 	try {
 	    ShiftEnrollmentErrorReport errorReport = (ShiftEnrollmentErrorReport) ServiceUtils
-		    .executeService(userView, "EnrollStudentInShifts", new Object[] {
+		    .executeService( "EnrollStudentInShifts", new Object[] {
 			    getRegistration(request), shiftId });
 
 	    if (errorReport.getUnAvailableShifts().size() > 0) {

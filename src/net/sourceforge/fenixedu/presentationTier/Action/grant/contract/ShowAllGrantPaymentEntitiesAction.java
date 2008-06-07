@@ -14,11 +14,12 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Pica
@@ -29,7 +30,7 @@ public class ShowAllGrantPaymentEntitiesAction extends FenixDispatchAction {
     public ActionForward showForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	String grantPaymentEntity = null;
 
 	if (verifyParameterInRequest(request, "project")) {
@@ -43,7 +44,7 @@ public class ShowAllGrantPaymentEntitiesAction extends FenixDispatchAction {
 	}
 
 	Object[] args = { grantPaymentEntity };
-	List grantPaymentList = (List) ServiceUtils.executeService(userView,
+	List grantPaymentList = (List) ServiceUtils.executeService(
 		"ReadAllGrantPaymentEntitiesByClassName", args);
 	request.setAttribute("grantPaymentList", grantPaymentList);
 

@@ -49,7 +49,7 @@ public class RegistrationDeclaration extends FenixDispatchAction {
         Object args[] = { new Integer(studentNumber), DegreeType.DEGREE };
 
         infoRegistrationDeclaration = (InfoRegistrationDeclaration) ServiceManagerServiceFactory
-                .executeService(userView, "ReadInfoRegistrationDeclaration", args);        
+                .executeService( "ReadInfoRegistrationDeclaration", args);        
 
         String degreeName = infoRegistrationDeclaration.getDegreeName();
 

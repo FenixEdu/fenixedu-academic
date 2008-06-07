@@ -12,14 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import pt.ist.fenixframework.pstm.TransactionAction;
-import pt.ist.fenixframework.pstm.TransactionReport;
 import net.sourceforge.fenixedu.util.date.SerializationTool;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixframework.pstm.TransactionAction;
+import pt.ist.fenixframework.pstm.TransactionReport;
 
 /**
  * @author Luis Cruz

@@ -73,12 +73,12 @@ public class SendMailToAllStudents extends FenixDispatchAction {
         InfoExecutionCourse infoExecutionCourse = null;
         InfoSite infoSite = null;
 
-        siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(userView,
+        siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
                 "ReadStudentsByCurricularCourse", argsReadSiteView);
         infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
                 userView, "ReadExecutionCourseByOID", argsReadExecutionCourse);
         Object argsReadSite[] = { infoExecutionCourse };
-        infoSite = (InfoSite) ServiceManagerServiceFactory.executeService(userView, "ReadSite",
+        infoSite = (InfoSite) ServiceManagerServiceFactory.executeService( "ReadSite",
                 argsReadSite);
 
         DynaActionForm sendMailForm = (DynaActionForm) form;
@@ -97,7 +97,7 @@ public class SendMailToAllStudents extends FenixDispatchAction {
         Object argsReadPerson[] = { userView.getUtilizador() };
         InfoPerson infoPerson = null;
 
-        infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
+        infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(
                 "ReadPersonByUsername", argsReadPerson);
 
         DynaActionForm sendMailForm = (DynaActionForm) form;
@@ -196,7 +196,7 @@ public class SendMailToAllStudents extends FenixDispatchAction {
         List failedEmails = null;
         try {
             Object[] argsReadCandidacies = getReadCandidaciesArgs(request);
-            candidacies = (List) ServiceManagerServiceFactory.executeService(userView,
+            candidacies = (List) ServiceManagerServiceFactory.executeService(
                     "Seminaries.ReadCandidacies", argsReadCandidacies);
             for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
                 InfoStudent student = null;
@@ -246,7 +246,7 @@ public class SendMailToAllStudents extends FenixDispatchAction {
                 bccList.add(infoStudent.getInfoPerson().getEmail());
             }
             Object[] argsSendMails = { toList, ccList, bccList, fromName, from, subject, text };
-            failedEmails = (List) ServiceManagerServiceFactory.executeService(userView,
+            failedEmails = (List) ServiceManagerServiceFactory.executeService(
                     "commons.SendMail", argsSendMails);
         } catch (Exception e) {
             e.printStackTrace();
@@ -300,7 +300,7 @@ public class SendMailToAllStudents extends FenixDispatchAction {
         List shiftStudents = null;
         List failedEmails = null;
 
-        siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(userView,
+        siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
                 "ReadStudentsByCurricularCourse", args);
         infoSiteStudents = (InfoSiteStudents) siteView.getComponent();
         if (shiftID != null) {
@@ -309,13 +309,13 @@ public class SendMailToAllStudents extends FenixDispatchAction {
             // please read
             // http://www.dcc.unicamp.br/~oliva/fun/prog/resign-patterns
             Object[] argsReadShiftStudents = { objectCode, shiftID };
-            shiftStudents = (List) ServiceManagerServiceFactory.executeService(userView,
+            shiftStudents = (List) ServiceManagerServiceFactory.executeService(
                     "teacher.ReadStudentsByShiftID", argsReadShiftStudents);
             infoSiteStudents.setStudents(shiftStudents);
         }
         if (groupCode != null) {
             Object[] argsReadGroupStudents = { objectCode, groupCode };
-            groupStudents = (List) ServiceManagerServiceFactory.executeService(userView,
+            groupStudents = (List) ServiceManagerServiceFactory.executeService(
                     "teacher.ReadStudentsByStudentGroupID", argsReadGroupStudents);
             infoSiteStudents.setStudents(groupStudents);
         }
@@ -332,7 +332,7 @@ public class SendMailToAllStudents extends FenixDispatchAction {
             bccList.add(infoStudent.getInfoPerson().getEmail());
         }
         Object[] argsSendMails = { toList, ccList, bccList, fromName, from, subject, text };
-        failedEmails = (List) ServiceManagerServiceFactory.executeService(userView, "commons.SendMail",
+        failedEmails = (List) ServiceManagerServiceFactory.executeService( "commons.SendMail",
                 argsSendMails);
 
         getFailedMails(request, infoSiteStudents.getStudents(), failedEmails);

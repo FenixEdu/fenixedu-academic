@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,6 +31,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Ricardo Rodrigues
@@ -78,7 +79,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             FenixFilterException, FenixServiceException {
 
         DynaActionForm teachingServiceForm = (DynaActionForm) form;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         HashMap<String, String> teacherPercentageMap = (HashMap<String, String>) teachingServiceForm.get("teacherPercentageMap");
 
         Integer professorshipID = (Integer) teachingServiceForm.get("professorshipID");
@@ -98,7 +99,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
 
         try {
             Object[] args = { professorshipID, shiftIDPercentages, roleType };
-            ServiceUtils.executeService(userView, "UpdateDegreeTeachingServices", args);
+            ServiceUtils.executeService("UpdateDegreeTeachingServices", args);
         } catch (DomainException domainException) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("error", new ActionMessage(domainException.getMessage(), domainException

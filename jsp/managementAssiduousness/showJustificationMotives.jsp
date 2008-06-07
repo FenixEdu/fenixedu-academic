@@ -8,7 +8,7 @@
 <em class="invisible"><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="link.justifications" /></h2>
 <%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
-                    .getAttribute(net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants.U_VIEW);
+                    .getAttribute(pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE);
             if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {
 
             %>

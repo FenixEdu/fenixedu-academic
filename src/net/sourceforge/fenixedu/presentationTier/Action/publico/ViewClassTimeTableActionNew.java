@@ -78,7 +78,7 @@ public class ViewClassTimeTableActionNew extends FenixContextAction {
 //                nameDegreeCurricularPlan };
         InfoExecutionDegree infoExecutionDegree = ReadExecutionDegreesByExecutionYearAndDegreeInitials.getInfoExecutionDegree(schoolClass.getExecutionDegree());
 //        try {
-//            infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(null,
+//            infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
 //                    "ReadExecutionDegreesByExecutionYearAndDegreeInitials", args);
 //        } catch (FenixServiceException e1) {
 //            throw new FenixActionException(e1);
@@ -93,7 +93,7 @@ public class ViewClassTimeTableActionNew extends FenixContextAction {
         SiteView siteView = null;
 
         try {
-            siteView = (SiteView) ServiceUtils.executeService(null, "ClassSiteComponentService", args1);
+            siteView = (SiteView) ServiceUtils.executeService("ClassSiteComponentService", args1);
         } catch (FenixServiceException e1) {
             throw new FenixActionException(e1);
         }

@@ -14,14 +14,15 @@ import net.sourceforge.fenixedu.domain.space.SpaceResponsibility;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
 
@@ -40,7 +41,7 @@ public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
 	SpaceResponsibility spaceResponsibility = getSpaceResponsibility(request);
 	Object[] args = { spaceResponsibility };
 	try {
-	    ServiceUtils.executeService(getUserView(request), "DeleteSpaceResponsibility", args);
+	    ServiceUtils.executeService("DeleteSpaceResponsibility", args);
 	} catch (DomainException domainException) {
 	    saveMessages(request, domainException);
 	}

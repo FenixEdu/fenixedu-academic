@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -29,13 +28,15 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 public class CRUDActionByOID extends FenixDispatchAction {
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         CRUDMapping crudMapping = (CRUDMapping) mapping;
         Object[] args = { getOIDProperty(crudMapping, form) };
-        ServiceUtils.executeService(SessionUtils.getUserView(request), crudMapping.getDeleteService(),
+        ServiceUtils.executeService(crudMapping.getDeleteService(),
                 args);
         return crudMapping.findForward("successfull-delete");
     }
@@ -45,7 +46,7 @@ public class CRUDActionByOID extends FenixDispatchAction {
         CRUDMapping crudMapping = (CRUDMapping) mapping;
         InfoObject infoObject = populateInfoObjectFromForm(form, crudMapping);
         Object[] args = getEditServiceArguments(form, crudMapping, infoObject, request);
-        ServiceUtils.executeService(SessionUtils.getUserView(request), crudMapping.getEditService(),
+        ServiceUtils.executeService(crudMapping.getEditService(),
                 args);
         return crudMapping.findForward("successfull-edit");
     }
@@ -163,12 +164,12 @@ public class CRUDActionByOID extends FenixDispatchAction {
 
     private InfoObject readInfoObject(CRUDMapping crudMapping, ActionForm form,
             HttpServletRequest request) throws FenixServiceException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Integer oid = getOIDProperty(crudMapping, form);
         InfoObject infoObject = null;
         if (oid != null) {
             Object[] args = { getOIDProperty(crudMapping, form) };
-            infoObject = (InfoObject) ServiceUtils.executeService(userView,
+            infoObject = (InfoObject) ServiceUtils.executeService(
                     crudMapping.getReadService(), args);
         }
         return infoObject;

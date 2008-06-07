@@ -43,6 +43,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author joaosa & rmalo
  */
@@ -72,7 +74,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
             if (nextPage != null)
                 request.setAttribute(SessionConstants.NEXT_PAGE, nextPage);
 
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
 
             InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
 
@@ -98,7 +100,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
             /* Cria o form bean com as licenciaturas em execucao. */
             Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-            List executionDegreeList = (List) ServiceUtils.executeService(userView,
+            List executionDegreeList = (List) ServiceUtils.executeService(
                     "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
             ArrayList licenciaturas = new ArrayList();
@@ -171,7 +173,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
         /* Cria o form bean com as licenciaturas em execucao. */
         Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-        List executionDegreeList = (List) ServiceUtils.executeService(null,
+        List executionDegreeList = (List) ServiceUtils.executeService(
                 "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
         ArrayList licenciaturas = new ArrayList();
@@ -212,7 +214,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
             HttpServletResponse response) throws Exception {
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         // SessionUtils.removeAttributtes(session,
         // SessionConstants.CONTEXT_PREFIX);
@@ -235,7 +237,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
             // session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY);
             Object argsLerLicenciaturas[] = { ((InfoExecutionPeriod) request
                     .getAttribute(SessionConstants.EXECUTION_PERIOD)).getInfoExecutionYear() };
-            List infoExecutionDegreeList = (List) ServiceUtils.executeService(userView,
+            List infoExecutionDegreeList = (List) ServiceUtils.executeService(
                     "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
             ArrayList licenciaturas = new ArrayList();
             licenciaturas.add(new LabelValueBean("escolher", ""));
@@ -300,7 +302,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 
         List infoExecutionDegreeList;
         try {
-            infoExecutionDegreeList = (List) ServiceUtils.executeService(null,
+            infoExecutionDegreeList = (List) ServiceUtils.executeService(
                     "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -371,8 +373,8 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
         if (infoExecutionPeriod == null) {
-            IUserView userView = SessionUtils.getUserView(request);
-            infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView,
+            IUserView userView = UserView.getUser();
+            infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
                     "ReadCurrentExecutionPeriod", new Object[0]);
 
             request.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
@@ -398,7 +400,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 
         try {
             TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils
-                    .executeService(userView, "TeacherAdministrationSiteComponentService", args);
+                    .executeService( "TeacherAdministrationSiteComponentService", args);
             request.setAttribute("siteView", siteView);
             request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent())
                     .getExecutionCourse().getIdInternal());

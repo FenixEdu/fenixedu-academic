@@ -35,7 +35,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
     List getDetailedProfessorships(IUserView userView, Integer teacherId, DynaActionForm actionForm,
             HttpServletRequest request) throws FenixServiceException, FenixFilterException {
     	
-        List detailedInfoProfessorshipList = (List) ServiceUtils.executeService(userView,
+        List detailedInfoProfessorshipList = (List) ServiceUtils.executeService(
                 "ReadDetailedTeacherProfessorshipsByExecutionYear", new Object[] { teacherId, actionForm.get("executionYearId")});
         request.setAttribute("args", new TreeMap());
         return detailedInfoProfessorshipList;
@@ -85,7 +85,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
     private void prepareConstants(IUserView userView, InfoTeacher infoTeacher, HttpServletRequest request)
             throws FenixServiceException, FenixFilterException {
 
-        List executionYears = (List) ServiceUtils.executeService(userView,
+        List executionYears = (List) ServiceUtils.executeService(
                 "ReadNotClosedExecutionYears", null);
 
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) CollectionUtils.find(executionYears,
@@ -100,13 +100,13 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
                 });
 
         Object args2[] = { infoTeacher };
-        InfoDepartment teacherDepartment = (InfoDepartment) ServiceUtils.executeService(userView,
+        InfoDepartment teacherDepartment = (InfoDepartment) ServiceUtils.executeService(
                 "ReadDepartmentByTeacher", args2);
 
         if (!request.isUserInRole(RoleType.CREDITS_MANAGER.toString())) {
             Object args[] = { userView.getUtilizador() };
 
-            InfoDepartment userDepartment = (InfoDepartment) ServiceUtils.executeService(userView,
+            InfoDepartment userDepartment = (InfoDepartment) ServiceUtils.executeService(
                     "ReadDepartmentByUser", args);
             if (userDepartment != null) {
                 request.setAttribute("isDepartmentManager", Boolean.valueOf(userDepartment

@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.EmployeeExtraWorkAuthorizat
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
 import net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
@@ -29,6 +28,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.joda.time.DateTimeFieldType;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 

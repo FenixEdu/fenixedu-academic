@@ -11,9 +11,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
 
-import pt.utl.ist.fenix.tools.util.Pair;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.presentationTier.renderers.validators.MultiLanguageStringValidator;
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlActionLink;
@@ -35,6 +32,7 @@ import pt.ist.fenixWebFramework.renderers.model.MetaSlotKey;
 import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
+import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 

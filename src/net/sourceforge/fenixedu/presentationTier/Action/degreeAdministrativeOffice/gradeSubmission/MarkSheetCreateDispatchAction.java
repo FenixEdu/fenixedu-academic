@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.struts.action.ActionForm;
@@ -36,6 +35,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 
@@ -129,7 +130,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 	ActionMessages actionMessages = createActionMessages();
 	IUserView userView = getUserView(request);
 	try {
-	    MarkSheet markSheet = (MarkSheet) ServiceUtils.executeService(userView, "CreateMarkSheet", new Object[] { createBean,
+	    MarkSheet markSheet = (MarkSheet) ServiceUtils.executeService("CreateMarkSheet", new Object[] { createBean,
 		    userView.getPerson().getEmployee() });
 	    ((DynaActionForm) actionForm).set("msID", markSheet.getIdInternal());
 	    return viewMarkSheet(mapping, actionForm, request, response);
@@ -234,7 +235,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 	ActionMessages actionMessages = new ActionMessages();
 	IUserView userView = getUserView(request);
 	try {
-	    ServiceUtils.executeService(userView, "CreateRectificationMarkSheet", new Object[] { rectifyBean.getMarkSheet(),
+	    ServiceUtils.executeService("CreateRectificationMarkSheet", new Object[] { rectifyBean.getMarkSheet(),
 		    rectifyBean.getEnrolmentEvaluation(), rectifyBean.getRectifiedGrade(), rectifyBean.getEvaluationDate(),
 		    rectifyBean.getReason(), userView.getPerson().getEmployee() });
 	    return mapping.findForward("searchMarkSheetFilled");

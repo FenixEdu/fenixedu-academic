@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.LessonPlanning;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -34,9 +33,6 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -44,6 +40,11 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ManageExecutionCourseDA extends FenixDispatchAction {
 
@@ -89,7 +90,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	final Object args[] = { executionCourseTo.getIdInternal(), executionCourseTo, executionCourseFrom,
 		null };
 	try {
-	    ServiceManagerServiceFactory.executeService(getUserView(request), importContentService, args);
+	    ServiceManagerServiceFactory.executeService( importContentService, args);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	}
@@ -326,7 +327,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
 	final Object args[] = { executionCourse.getIdInternal(), title, authors, reference, year,
 		Boolean.valueOf(optional) };
-	ServiceManagerServiceFactory.executeService(userView, "CreateBibliographicReference", args);
+	ServiceManagerServiceFactory.executeService( "CreateBibliographicReference", args);
 
 	return mapping.findForward("bibliographicReference");
     }
@@ -369,7 +370,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 
 	final Object args[] = { bibliographicReference.getIdInternal(), title, authors, reference, year,
 		Boolean.valueOf(optional) };
-	ServiceManagerServiceFactory.executeService(userView, "EditBibliographicReference", args);
+	ServiceManagerServiceFactory.executeService( "EditBibliographicReference", args);
 
 	return mapping.findForward("bibliographicReference");
     }
@@ -380,7 +381,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	final String bibliographicReferenceIDString = request.getParameter("bibliographicReferenceID");
 	final IUserView userView = getUserView(request);
 	final Object args[] = { Integer.valueOf(bibliographicReferenceIDString) };
-	ServiceManagerServiceFactory.executeService(userView, "DeleteBibliographicReference", args);
+	ServiceManagerServiceFactory.executeService( "DeleteBibliographicReference", args);
 
 	return mapping.findForward("bibliographicReference");
     }
@@ -815,7 +816,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
 	    finalOrderedReferences.addAll(getOptionalBibliographicReferences(executionCourse));
 	}
 
-	ServiceUtils.executeService(getUserView(request), "OrderBibliographicReferences", executionCourse, finalOrderedReferences);
+	ServiceUtils.executeService("OrderBibliographicReferences", executionCourse, finalOrderedReferences);
 	return mapping.findForward("bibliographicReference");
     }
 

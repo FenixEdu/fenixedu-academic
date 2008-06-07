@@ -44,7 +44,7 @@ public class StudentListDispatchAction extends FenixDispatchAction {
 
             try {
                 Object args[] = { degreeCurricularPlanID, DegreeType.MASTER_DEGREE };
-                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                result = (List) ServiceManagerServiceFactory.executeService(
                         "ReadStudentsFromDegreeCurricularPlan", args);
 
             } catch (NotAuthorizedException e) {
@@ -82,7 +82,7 @@ public class StudentListDispatchAction extends FenixDispatchAction {
 
         try {
 
-            result = (List) ServiceManagerServiceFactory.executeService(userView,
+            result = (List) ServiceManagerServiceFactory.executeService(
                     "ReadCurricularCoursesByDegree", args);
 
         } catch (NonExistingServiceException e) {

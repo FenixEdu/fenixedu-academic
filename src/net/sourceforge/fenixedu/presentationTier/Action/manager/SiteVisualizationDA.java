@@ -160,7 +160,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
     }
 
     private boolean isAuthenticated(IUserView userView) {
-        return userView != null && !userView.isPublicRequester();
+        return userView != null;
     }
 
     protected Section selectSection(HttpServletRequest request) {

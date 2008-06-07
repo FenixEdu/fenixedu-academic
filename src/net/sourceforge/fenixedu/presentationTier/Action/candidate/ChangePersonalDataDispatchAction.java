@@ -18,12 +18,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -54,19 +55,19 @@ public class ChangePersonalDataDispatchAction extends FenixDispatchAction {
     public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	PrecedentDegreeInformationBean precedentDegreeInformation = (PrecedentDegreeInformationBean) RenderUtils
 		.getViewState("precedentDegreeInformation").getMetaObject().getObject();
 
 	Object[] argsInstitution = { precedentDegreeInformation };
-	ServiceUtils.executeService(userView, "EditPrecedentDegreeInformation", argsInstitution);
+	ServiceUtils.executeService("EditPrecedentDegreeInformation", argsInstitution);
 
 	Object[] argsStateMachine = { new StateMachineRunner.RunnerArgs(precedentDegreeInformation
 		.getPrecedentDegreeInformation().getStudentCandidacy().getActiveCandidacySituation(),
 		CandidacySituationType.STAND_BY_FILLED_DATA.toString()) };
 	try {
-	    ServiceUtils.executeService(userView, "StateMachineRunner", argsStateMachine);
+	    ServiceUtils.executeService("StateMachineRunner", argsStateMachine);
 	} catch (DomainException e) {
 	    // Didn't move to next state
 	}

@@ -32,7 +32,7 @@ public class LocalAuthenticationAction extends BaseAuthenticationAction {
                 
         
         final Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
-        final IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null,
+        final IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(
                 "Autenticacao", argsAutenticacao);
 
         return userView;

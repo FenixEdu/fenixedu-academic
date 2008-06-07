@@ -14,13 +14,14 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSup
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.CRUDActionByOID;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class CRUDSupportLessonAction extends CRUDActionByOID {
 
@@ -119,12 +120,12 @@ public class CRUDSupportLessonAction extends CRUDActionByOID {
 
     protected void prepareFormConstants(ActionMapping mapping, ActionForm form,
             HttpServletRequest request) throws FenixServiceException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm supportLessonForm = (DynaActionForm) form;
 
         Integer professorshipId = (Integer) supportLessonForm.get("infoProfessorshipId");
 
-        InfoProfessorship infoProfessorship = (InfoProfessorship) ServiceUtils.executeService(userView,
+        InfoProfessorship infoProfessorship = (InfoProfessorship) ServiceUtils.executeService(
                 "ReadProfessorshipByOID", new Object[] { professorshipId });
         request.setAttribute("infoProfessorship", infoProfessorship);
     }

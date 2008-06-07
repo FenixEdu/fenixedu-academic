@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.text.DecimalFormat;
 
+import net.sourceforge.fenixedu.util.Money;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.util.Money;
 
 /**
  * This renderer provides a generic presentation for a money number. The

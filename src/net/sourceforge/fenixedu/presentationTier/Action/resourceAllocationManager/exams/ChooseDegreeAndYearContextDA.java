@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameF
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -29,6 +28,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Ana e Ricardo
@@ -46,7 +47,7 @@ public class ChooseDegreeAndYearContextDA extends FenixContextDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
@@ -58,7 +59,7 @@ public class ChooseDegreeAndYearContextDA extends FenixContextDispatchAction {
         /* Cria o form bean com as licenciaturas em execucao. */
         Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-        List executionDegreeList = (List) ServiceUtils.executeService(userView,
+        List executionDegreeList = (List) ServiceUtils.executeService(
                 "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
         List licenciaturas = new ArrayList();

@@ -24,9 +24,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidGiafCodeException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -41,6 +38,10 @@ import org.joda.time.DurationFieldType;
 import org.joda.time.Interval;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class MonthClosureDispatchAction extends FenixDispatchAction {
 
@@ -92,9 +93,9 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 		endDay = new YearMonthDay().getDayOfMonth();
 	    }
 	    final YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
-	    final IUserView userView = SessionUtils.getUserView(request);
+	    final IUserView userView = UserView.getUser();
 	    List<AssiduousnessClosedMonth> negativeAssiduousnessClosedMonths = (List<AssiduousnessClosedMonth>) ServiceUtils
-		    .executeService(userView, "CloseAssiduousnessMonth", new Object[] { beginDate, endDate });
+		    .executeService( "CloseAssiduousnessMonth", new Object[] { beginDate, endDate });
 	    request.setAttribute("negativeAssiduousnessClosedMonths", negativeAssiduousnessClosedMonths);
 	}
 
@@ -112,9 +113,9 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 		endDay = new YearMonthDay().getDayOfMonth();
 	    }
 	    final YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
-	    final IUserView userView = SessionUtils.getUserView(request);
+	    final IUserView userView = UserView.getUser();
 	    final ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
-	    final String result = (String) ServiceUtils.executeService(userView, "ExportClosedMonth", new Object[] { closedMonth,
+	    final String result = (String) ServiceUtils.executeService("ExportClosedMonth", new Object[] { closedMonth,
 		    beginDate, endDate });
 	    response.setContentType("text/plain");
 	    response.addHeader("Content-Disposition", "attachment; filename=Telep.dat");
@@ -305,9 +306,9 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	final YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
 	final ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	if (yearMonth != null && !ClosedMonth.isMonthClosedForExtraWork(yearMonth.getPartial())) {
-	    ServiceUtils.executeService(userView, "CloseExtraWorkMonth", new Object[] { closedMonth });
+	    ServiceUtils.executeService("CloseExtraWorkMonth", new Object[] { closedMonth });
 	}
 	RenderUtils.invalidateViewState();
 	return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
@@ -317,7 +318,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToOpen");
 	if (yearMonth != null && yearMonth.getIsThisYearMonthClosed()) {
-	    ServiceUtils.executeService(SessionUtils.getUserView(request), "OpenClosedMonth", new Object[] { ClosedMonth
+	    ServiceUtils.executeService("OpenClosedMonth", new Object[] { ClosedMonth
 		    .getClosedMonth(yearMonth) });
 	}
 	RenderUtils.invalidateViewState();
@@ -328,7 +329,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToOpen");
 	if (yearMonth != null && yearMonth.getIsThisYearMonthClosedForExtraWork()) {
-	    ServiceUtils.executeService(SessionUtils.getUserView(request), "OpenExtraWorkClosedMonth", new Object[] { ClosedMonth
+	    ServiceUtils.executeService("OpenExtraWorkClosedMonth", new Object[] { ClosedMonth
 		    .getClosedMonth(yearMonth) });
 	}
 	RenderUtils.invalidateViewState();
@@ -339,7 +340,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToUpdate");
 	if (yearMonth != null && yearMonth.getIsThisYearMonthClosedForExtraWork()) {
-	    ActionMessage result = (ActionMessage) ServiceUtils.executeService(SessionUtils.getUserView(request),
+	    ActionMessage result = (ActionMessage) ServiceUtils.executeService(
 		    "UpdateExtraWorkClosedMonth", new Object[] { ClosedMonth.getClosedMonth(yearMonth) });
 	    if (result == null) {
 		result = new ActionMessage("message.successUpdatingExtraWork");
@@ -402,11 +403,11 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	}
 	request.setAttribute("yearMonthToExport", yearMonth);
 
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
 	String result = null;
 	try {
-	    result = (String) ServiceUtils.executeService(userView, "ExportClosedExtraWorkMonth", new Object[] { closedMonth,
+	    result = (String) ServiceUtils.executeService("ExportClosedExtraWorkMonth", new Object[] { closedMonth,
 		    closedMonthDocumentType == ClosedMonthDocumentType.WORK_ABSENCES,
 		    closedMonthDocumentType == ClosedMonthDocumentType.MOVEMENTS });
 	} catch (InvalidGiafCodeException e) {
@@ -421,7 +422,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	String fileName = new StringBuilder().append(bundleEnumeration.getString(closedMonthDocumentType.name())).append("-")
 		.append(month).append("-").append(yearMonth.getYear()).append(".txt").toString();
 
-	ActionMessage error = (ActionMessage) ServiceUtils.executeService(userView, "ExportToGIAFAndSaveFile", new Object[] {
+	ActionMessage error = (ActionMessage) ServiceUtils.executeService("ExportToGIAFAndSaveFile", new Object[] {
 		closedMonth, fileName, closedMonthDocumentType, result });
 	if (error != null) {
 	    ActionMessages actionMessages = getMessages(request);
@@ -447,11 +448,11 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	}
 	request.setAttribute("yearMonthToExport", yearMonth);
 
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
 	String result = null;
 	try {
-	    result = (String) ServiceUtils.executeService(userView, "ExportClosedExtraWorkMonth", new Object[] { closedMonth,
+	    result = (String) ServiceUtils.executeService("ExportClosedExtraWorkMonth", new Object[] { closedMonth,
 		    true, true });
 	} catch (InvalidGiafCodeException e) {
 	    ActionMessages actionMessages = getMessages(request);
@@ -488,11 +489,11 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	}
 	request.setAttribute("yearMonthToExport", yearMonth);
 
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
 	String result = null;
 	try {
-	    result = (String) ServiceUtils.executeService(userView, "ExportClosedExtraWorkMonth", new Object[] { closedMonth,
+	    result = (String) ServiceUtils.executeService("ExportClosedExtraWorkMonth", new Object[] { closedMonth,
 		    false, true });
 	} catch (InvalidGiafCodeException e) {
 	    ActionMessages actionMessages = getMessages(request);

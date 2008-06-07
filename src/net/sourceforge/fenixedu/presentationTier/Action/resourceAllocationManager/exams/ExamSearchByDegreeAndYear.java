@@ -23,14 +23,15 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameF
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author Ana e Ricardo
@@ -40,7 +41,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
               
-        IUserView userView = SessionUtils.getUserView(request);        
+        IUserView userView = UserView.getUser();        
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
         List curricularYearsList = new ArrayList();
@@ -53,7 +54,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
         /* Cria o form bean com as licenciaturas em execucao. */
         Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-        List executionDegreeList = (List) ServiceUtils.executeService(userView,
+        List executionDegreeList = (List) ServiceUtils.executeService(
                 "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
         Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
@@ -130,7 +131,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
         
         Object argsReadDegrees[] = { infoExecutionPeriod.getInfoExecutionYear() };
-        List executionDegreeList = (List) ServiceUtils.executeService(userView,
+        List executionDegreeList = (List) ServiceUtils.executeService(
                 "ReadExecutionDegreesByExecutionYear", argsReadDegrees);
         Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 
@@ -158,7 +159,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
         InfoExamsMap infoRoomExamsMaps = null;
 
         Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
-        infoRoomExamsMaps = (InfoExamsMap) ServiceUtils.executeService(userView, "ReadFilteredExamsMap", args);
+        infoRoomExamsMaps = (InfoExamsMap) ServiceUtils.executeService("ReadFilteredExamsMap", args);
 
         return infoRoomExamsMaps;
     }
@@ -175,7 +176,7 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
 
             Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
 
-            infoRoomExamsMap = (InfoExamsMap) ServiceUtils.executeService(userView, "ReadFilteredExamsMap", args);
+            infoRoomExamsMap = (InfoExamsMap) ServiceUtils.executeService("ReadFilteredExamsMap", args);
             infoExamsMaps.add(infoRoomExamsMap);
         }
         return infoExamsMaps;

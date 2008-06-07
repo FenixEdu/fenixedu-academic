@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -41,6 +40,8 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author nmgo
  */
@@ -54,7 +55,7 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction {
 	List executionPeriods = null;
 	Object[] args = { DegreeType.DEGREE };
 	try {
-	    executionPeriods = (List) ServiceManagerServiceFactory.executeService(null, "ReadExecutionPeriodsEnrollmentFenix",
+	    executionPeriods = (List) ServiceManagerServiceFactory.executeService( "ReadExecutionPeriodsEnrollmentFenix",
 		    args);
 	} catch (FenixServiceException e) {
 	    messages.add("noExecutionYears", new ActionMessage("error.impossible.operations"));
@@ -119,7 +120,7 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction {
 
     public ActionForward improvmentEnrollStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	DynaActionForm actionForm = (DynaActionForm) form;
 	ActionErrors errors = new ActionErrors();
 
@@ -137,7 +138,7 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction {
 	Object[] args = { registration, executionSemester, userView.getUtilizador(), CollectionUtils.toList(enrolments) };
 
 	try {
-	    ServiceUtils.executeService(userView, "ImprovmentEnrollService", args);
+	    ServiceUtils.executeService("ImprovmentEnrollService", args);
 	} catch (NotAuthorizedFilterException e) {
 	    errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
 	    saveErrors(request, errors);
@@ -151,7 +152,7 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction {
 
     public ActionForward improvmentUnenrollStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	DynaActionForm actionForm = (DynaActionForm) form;
 	ActionErrors errors = new ActionErrors();
 
@@ -169,7 +170,7 @@ public class ImprovmentEnrolmentDispacthAction extends FenixDispatchAction {
 	Object[] args = { registration, CollectionUtils.toList(enrolments) };
 
 	try {
-	    ServiceUtils.executeService(userView, "ImprovmentUnEnrollService", args);
+	    ServiceUtils.executeService("ImprovmentUnEnrollService", args);
 	} catch (NotAuthorizedFilterException e) {
 	    errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
 	    saveErrors(request, errors);

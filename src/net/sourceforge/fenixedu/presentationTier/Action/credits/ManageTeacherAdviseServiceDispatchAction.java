@@ -20,8 +20,6 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.Advise.AdvisePercentageException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -69,8 +67,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
         Object[] args = { teacherID, executionPeriodID, studentNumber, percentage,
                 AdviseType.FINAL_WORK_DEGREE, roleType };
         try {
-            ServiceUtils.executeService(SessionUtils.getUserView(request), "EditTeacherAdviseService",
-                    args);
+            executeService("EditTeacherAdviseService", args);
 
         } catch (AdvisePercentageException ape) {
             ActionMessages actionMessages = new ActionMessages();
@@ -90,8 +87,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
 
         Integer adviseServiceID = Integer.valueOf(request.getParameter("teacherAdviseServiceID"));
         try {
-            ServiceUtils.executeService(SessionUtils.getUserView(request),
-                    "DeleteTeacherAdviseServiceByOID", new Object[] { adviseServiceID, roleType });
+            executeService("DeleteTeacherAdviseServiceByOID", new Object[] { adviseServiceID, roleType });
         } catch (DomainException e) {
             saveMessages(request, e);
         }

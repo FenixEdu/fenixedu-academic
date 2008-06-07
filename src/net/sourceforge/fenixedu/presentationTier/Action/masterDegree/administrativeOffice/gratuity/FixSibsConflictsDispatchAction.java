@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.formbeans.masterDegreeAdminOffice.FixSibsPaymentFileEntriesForm;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Exceptions;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
@@ -25,7 +24,8 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -42,13 +42,13 @@ public class FixSibsConflictsDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	Object args[] = {};
 	List infoSibsPaymentFileEntries = null;
 
 	try {
-	    infoSibsPaymentFileEntries = (List) ServiceUtils.executeService(userView, "ReadNonProcessedSibsEntries", args);
+	    infoSibsPaymentFileEntries = (List) ServiceUtils.executeService("ReadNonProcessedSibsEntries", args);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -69,7 +69,7 @@ public class FixSibsConflictsDispatchAction extends FenixDispatchAction {
     public ActionForward fix(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	FixSibsPaymentFileEntriesForm fixSibsPaymentFileEntriesForm = (FixSibsPaymentFileEntriesForm) form;
 
 	Integer sibsPaymentFileEntryId = fixSibsPaymentFileEntriesForm.getSibsPaymentFileEntryId();
@@ -84,7 +84,7 @@ public class FixSibsConflictsDispatchAction extends FenixDispatchAction {
 
 	Object args[] = { sibsPaymentFileEntryId };
 	try {
-	    ServiceUtils.executeService(userView, "FixSibsEntryByID", args);
+	    ServiceUtils.executeService("FixSibsEntryByID", args);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

@@ -225,10 +225,10 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
 	Object argsDegree[] = { degree.getIdInternal() };
 	List<InfoOldInquiriesSummary> allSummariesDegree = (List<InfoOldInquiriesSummary>) ServiceUtils
-		.executeService(userView, "ReadOldIquiriesSummaryByDegreeID", argsDegree);
+		.executeService( "ReadOldIquiriesSummaryByDegreeID", argsDegree);
 
 	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils
-		.executeService(userView, "ReadExecutionPeriods", null);
+		.executeService( "ReadExecutionPeriods", null);
 	List<InfoExecutionPeriod> executionPeriodList = new ArrayList<InfoExecutionPeriod>(
 		infoExecutionPeriods);
 	for (InfoExecutionPeriod iep : infoExecutionPeriods) {
@@ -344,7 +344,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	try {
 	    final Object[] args = { executionDegreeId };
 	    final InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory
-		    .executeService(null, "ReadExecutionDegreeByOID", args);
+		    .executeService( "ReadExecutionDegreeByOID", args);
 	    if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null) {
 		return null;
 	    }
@@ -363,7 +363,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 	try {
 	    final Object[] args = { degreeId };
 	    infoDegreeCurricularPlanList = (List<InfoDegreeCurricularPlan>) ServiceManagerServiceFactory
-		    .executeService(null, "ReadPublicDegreeCurricularPlansByDegree", args);
+		    .executeService( "ReadPublicDegreeCurricularPlansByDegree", args);
 	    if (infoDegreeCurricularPlanList.isEmpty()) {
 		return null;
 	    }

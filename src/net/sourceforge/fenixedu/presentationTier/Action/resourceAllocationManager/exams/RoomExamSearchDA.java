@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -30,6 +29,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author Ana & Ricardo
  */
@@ -38,9 +39,9 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
       
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Object args[] = {};
-        List infoBuildings = (List) ServiceUtils.executeService(userView, "ReadBuildings", args);
+        List infoBuildings = (List) ServiceUtils.executeService("ReadBuildings", args);
         List buildingsStrings = (List) CollectionUtils.collect(infoBuildings, new Transformer() {
             public Object transform(Object arg0) {
                 final InfoBuilding infoBuilding = (InfoBuilding) arg0;
@@ -66,7 +67,7 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaValidatorForm roomExamForm = (DynaValidatorForm) form;
                 
         String name = (String) roomExamForm.get("name");
@@ -99,7 +100,7 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
         }
 
         Object args[] = { name, building, floor, type, normal, exam };
-        List rooms = (List) ServiceUtils.executeService(userView, "SearchRooms", args);
+        List rooms = (List) ServiceUtils.executeService("SearchRooms", args);
         if (rooms != null && !rooms.isEmpty()) {
             request.setAttribute(SessionConstants.ROOMS_LIST, rooms);
         }
@@ -108,7 +109,7 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
 
     public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaValidatorForm roomExamForm = (DynaValidatorForm) form;
 
         String rooms[] = (String[]) roomExamForm.get("roomsId");
@@ -116,7 +117,7 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
         for (int i = 0; i < rooms.length; i++) {
             String roomId = rooms[i];
             Object args[] = { new Integer(roomId) };
-            InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID", args);
+            InfoRoom infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID", args);
             infoRooms.add(infoRoom);
         }
 
@@ -138,7 +139,7 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
         List infoRoomExamsMaps;
 
         try {
-            infoRoomExamsMaps = (ArrayList) ServiceUtils.executeService(userView, "ReadExamsMapByRooms",
+            infoRoomExamsMaps = (ArrayList) ServiceUtils.executeService("ReadExamsMapByRooms",
                     args);
 
         } catch (NonExistingServiceException e) {

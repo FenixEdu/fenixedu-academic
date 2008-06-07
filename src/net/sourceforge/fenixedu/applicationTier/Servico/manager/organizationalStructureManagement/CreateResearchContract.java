@@ -15,9 +15,10 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchContractBean;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class CreateResearchContract extends Service {
 

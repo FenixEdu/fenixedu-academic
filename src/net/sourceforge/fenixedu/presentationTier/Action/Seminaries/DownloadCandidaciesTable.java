@@ -119,7 +119,7 @@ public class DownloadCandidaciesTable extends FenixAction {
         List candidacies = new LinkedList();
         try {
             Object[] argsReadCandidacies = getReadCandidaciesArgs(request);
-            candidacies = (List) ServiceManagerServiceFactory.executeService(userView,
+            candidacies = (List) ServiceManagerServiceFactory.executeService(
                     "Seminaries.ReadCandidacies", argsReadCandidacies);
             for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
 

@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
@@ -32,6 +31,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
@@ -71,7 +71,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	    if (roleType.equals(RoleType.EMPLOYEE.getName())
 		    || roleType.equals(RoleType.TEACHER.getName())) {
 		if (roleType.equals(RoleType.TEACHER.getName())) {
-		    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService(null, "ReadAllDepartments", null);
+		    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments", null);
 		    request.setAttribute("departments", departments);
 		}
 		// request.removeAttribute("degreeType");
@@ -81,7 +81,7 @@ public class FindPersonAction extends FenixDispatchAction {
 
 		if (degreeType.length() != 0) {
 		    Object[] args = { degreeType };
-		    List<InfoDegree> nonMasterDegree = (List<InfoDegree>) ServiceUtils.executeService(null, "ReadAllDegreesByType", args);
+		    List<InfoDegree> nonMasterDegree = (List<InfoDegree>) ServiceUtils.executeService("ReadAllDegreesByType", args);
 
 		    request.setAttribute("nonMasterDegree", nonMasterDegree);
 		    request.setAttribute("degreeType", true);
@@ -123,7 +123,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	ActionErrors errors = new ActionErrors();
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm findPersonForm = (DynaActionForm) actionForm;
 	String name = null;
@@ -157,7 +157,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	} else if (roleType.equals(RoleType.STUDENT.getName())) {
 	    if (degreeType.length() != 0) {
 		Object[] args1 = { degreeType };
-		List<InfoDegree> nonMasterDegree = (List<InfoDegree>) ServiceUtils.executeService(null, "ReadAllDegreesByType", args1);
+		List<InfoDegree> nonMasterDegree = (List<InfoDegree>) ServiceUtils.executeService("ReadAllDegreesByType", args1);
 
 		request.setAttribute("nonMasterDegree", nonMasterDegree);
 		request.setAttribute("degreeType", degreeType);
@@ -175,7 +175,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	}
 
 	if (roleType.equals(RoleType.TEACHER.getName())) {
-	    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService(null, "ReadAllDepartments", null);
+	    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments", null);
 	    request.setAttribute("departments", departments);
 	}
 
@@ -195,7 +195,7 @@ public class FindPersonAction extends FenixDispatchAction {
 
 	CollectionPager result = null;
 	try {
-	    result = (CollectionPager) ServiceManagerServiceFactory.executeService(userView, "SearchPerson", args);
+	    result = (CollectionPager) ServiceManagerServiceFactory.executeService( "SearchPerson", args);
 
 	} catch (FenixServiceException e) {
 	    errors.add("impossibleFindPerson", new ActionError(e.getMessage()));

@@ -30,6 +30,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 
 
 /**
@@ -41,8 +43,6 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping actionMapping,
             ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
 
         HttpSession session = request.getSession();
         
@@ -56,10 +56,10 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
         
         Integer degreeId = ied.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
         
-        List executionPeriodList = (List)ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);
+        List executionPeriodList = (List)ServiceUtils.executeService("ReadExecutionPeriods", null);
         
         Object[] args = { degreeId };
-        List teachersRes = (List)ServiceUtils.executeService(userView, "ReadOldInquiriesTeachersResByDegreeId", args);
+        List teachersRes = (List)ServiceUtils.executeService("ReadOldInquiriesTeachersResByDegreeId", args);
         
         Iterator periodIter = executionPeriodList.iterator();
         while(periodIter.hasNext()) {
@@ -143,7 +143,7 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
         
             Object args[] = { executionPeriodId, degreeId, curricularYear, courseCode, teacherNumber };
             
-            List oldInquiriesTeachersResList = (List) ServiceUtils.executeService(userView,
+            List oldInquiriesTeachersResList = (List) ServiceUtils.executeService(
                     "ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCodeAndTeacherNumber",
                     args);
             
@@ -153,7 +153,7 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 
             Object args[] = { executionPeriodId, degreeId, curricularYear, courseCode };
             
-            List oldInquiriesTeachersResList = (List) ServiceUtils.executeService(userView,
+            List oldInquiriesTeachersResList = (List) ServiceUtils.executeService(
                     "ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCode",
                     args);
             

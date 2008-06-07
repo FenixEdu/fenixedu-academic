@@ -46,7 +46,7 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
         InfoPerson infoPerson = null;
         try {
             Object args[] = { username };
-            infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
+            infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(
                     "ReadPersonByUsername", args);
         } catch (ExcepcaoInexistente e) {
             throw new NonExistingActionException("A Person", e);
@@ -68,13 +68,13 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
 
         final Person person = (Person) RootDomainObject.getInstance().readPartyByOID(personID);
         if (person != null) {
-        	ServiceUtils.executeService(null, "SetUserUID", new Object[] { person } );
+        	ServiceUtils.executeService("SetUserUID", new Object[] { person } );
         }
 
         // Change the Password
         try {
             Object args[] = { personID };
-            password = (String) ServiceManagerServiceFactory.executeService(userView, "GenerateNewPassword", args);
+            password = (String) ServiceManagerServiceFactory.executeService( "GenerateNewPassword", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -84,7 +84,7 @@ public class GenerateNewPasswordDispatchAction extends FenixDispatchAction {
         InfoPerson infoPerson = null;
         try {
             Object args[] = { request.getParameter("username") };
-            infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
+            infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(
                     "ReadPersonByUsername", args);
         } catch (ExcepcaoInexistente e) {
             throw new NonExistingActionException("A Person", e);

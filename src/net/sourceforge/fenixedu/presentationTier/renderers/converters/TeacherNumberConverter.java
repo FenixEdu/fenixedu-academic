@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.converters;
 
 import net.sourceforge.fenixedu.domain.Teacher;
-import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 import org.apache.commons.lang.StringUtils;
+
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class TeacherNumberConverter extends Converter{
 

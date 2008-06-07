@@ -54,7 +54,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 
             final Object[] argsToRead = { this.getFunctionID(), this.getPersonID(), credits,
                     YearMonthDay.fromDateFields(beginDate_), YearMonthDay.fromDateFields(endDate_) };
-            ServiceUtils.executeService(getUserView(), "AssociateNewFunctionToPerson", argsToRead);
+            ServiceUtils.executeService( "AssociateNewFunctionToPerson", argsToRead);
             setErrorMessage("message.success");
             return "success";
 

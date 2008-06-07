@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.ServiceManagerException;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
@@ -18,6 +19,12 @@ public class ServiceManagerServiceFactory {
 
     private static final IServiceManagerWrapper service = new ServiceManagerDefaultImpl();
 
+    public static Object executeService(String serviceName, Object[] serviceArgs)
+    	throws FenixServiceException, FenixFilterException {
+	final IUserView userView = UserView.getUser();
+	return executeService(userView, serviceName, serviceArgs);
+    }
+    
     public static Object executeService(IUserView userView, String serviceName, Object[] serviceArgs)
             throws FenixServiceException, FenixFilterException {
         try {

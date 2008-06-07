@@ -64,7 +64,7 @@ public class ViewClassTimeTableAction extends FenixContextAction {
         SiteView siteView = null;
 
         try {
-            siteView = (SiteView) ServiceUtils.executeService(null, "ClassSiteComponentService", args);
+            siteView = (SiteView) ServiceUtils.executeService("ClassSiteComponentService", args);
         } catch (FenixServiceException e1) {
             throw new FenixActionException(e1);
         }

@@ -62,7 +62,7 @@ public class ShowCandidacyDetails extends FenixAction {
         ActionForward destiny = null;
         try {
             Object[] argsReadCandidacy = { candidacyID };
-            candidacy = (InfoCandidacy) ServiceManagerServiceFactory.executeService(userView,
+            candidacy = (InfoCandidacy) ServiceManagerServiceFactory.executeService(
                     "Seminaries.GetCandidacyById", argsReadCandidacy);
 
             student = candidacy.getInfoStudent();

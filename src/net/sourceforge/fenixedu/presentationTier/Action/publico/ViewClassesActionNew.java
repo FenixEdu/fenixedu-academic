@@ -105,7 +105,7 @@ public class ViewClassesActionNew extends FenixContextAction {
 	    // classList
 	    try {
 		final Object[] args = { infoExecutionDegree, infoExecutionPeriod, null };
-		List<InfoClass> classList = (List<InfoClass>) ServiceUtils.executeService(null, "LerTurmas", args);
+		List<InfoClass> classList = (List<InfoClass>) ServiceUtils.executeService("LerTurmas", args);
 
 		if (!classList.isEmpty()) {
 		    ComparatorChain comparatorChain = new ComparatorChain();

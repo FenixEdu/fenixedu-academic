@@ -47,7 +47,7 @@ public class PrepareStudentDataDispatchAction extends FenixDispatchAction {
 
         Object args[] = { degreeType, studentNumber };
         try {
-            infoStudent = (InfoStudent) ServiceUtils.executeService(userView,
+            infoStudent = (InfoStudent) ServiceUtils.executeService(
                     "GetStudentByNumberAndDegreeType", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

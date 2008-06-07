@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesEmailR
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -37,6 +36,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 /**
@@ -48,14 +48,13 @@ public class SendEmailReminderAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
-	InfoExecutionYear currentExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(
-		userView, "ReadCurrentExecutionYear", null);
+	InfoExecutionYear currentExecutionYear = (InfoExecutionYear) executeService("ReadCurrentExecutionYear", null);
 
 	Object[] argsExecutionYearId = { currentExecutionYear.getIdInternal() };
 	List<InfoDegreeCurricularPlan> degreeCurricularPlans = (List<InfoDegreeCurricularPlan>) ServiceUtils
-		.executeService(userView, "ReadActiveDegreeCurricularPlansByExecutionYear",
+		.executeService( "ReadActiveDegreeCurricularPlansByExecutionYear",
 			argsExecutionYearId);
 
 	final ComparatorChain comparatorChain = new ComparatorChain();
@@ -73,7 +72,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
     public ActionForward sendEmails(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	DynaActionForm form = (DynaActionForm) actionForm;
 
 	Integer[] degreeCurricularPlanIds = (Integer[]) form.get("degreeCurricularPlanIds");
@@ -82,8 +81,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 
 	// Obtaining the current execution period
 	// FIXME: THIS SHOULD BE PARAMETRIZABLE
-	InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
-		userView, "ReadCurrentExecutionPeriod", null);
+	InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) executeService("ReadCurrentExecutionPeriod", null);
 	List<InfoInquiriesEmailReminderReport> reportList = new ArrayList<InfoInquiriesEmailReminderReport>(
 		degreeCurricularPlanIds.length);
 
@@ -91,13 +89,13 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 
 	    Object[] argsDegreeCPId = { degreeCurricularPlanIds[i] };
 	    InfoExecutionDegree infoExecutionDegreeStudent = (InfoExecutionDegree) ServiceUtils
-		    .executeService(userView, "ReadActiveExecutionDegreebyDegreeCurricularPlanID",
+		    .executeService( "ReadActiveExecutionDegreebyDegreeCurricularPlanID",
 			    argsDegreeCPId);
 
 	    Object[] argsDegreeCurriculapPlanIdAndExecutionPeriod = { degreeCurricularPlanIds[i],
 		    currentExecutionPeriod.getIdInternal(), Boolean.TRUE };
 	    List<InfoStudentWithAttendsAndInquiriesRegistries> studentsList = (List<InfoStudentWithAttendsAndInquiriesRegistries>) ServiceUtils
-		    .executeService(userView,
+		    .executeService(
 			    "student.ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod",
 			    argsDegreeCurriculapPlanIdAndExecutionPeriod);
 

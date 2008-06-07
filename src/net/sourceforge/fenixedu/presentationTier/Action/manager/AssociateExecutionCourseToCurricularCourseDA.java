@@ -21,13 +21,14 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author lmac1
@@ -38,7 +39,7 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer executionPeriodId = new Integer(request.getParameter("executionPeriodId"));
 
@@ -46,7 +47,7 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
 
         List infoExecutionCoursesList = null;
         try {
-            infoExecutionCoursesList = (List) ServiceUtils.executeService(userView,
+            infoExecutionCoursesList = (List) ServiceUtils.executeService(
                     "ReadExecutionCoursesByExecutionPeriod", args);
 
         } catch (NonExistingServiceException e) {
@@ -73,7 +74,7 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
     public ActionForward associate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm associateForm = (DynaActionForm) form;
 
@@ -87,7 +88,7 @@ public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchA
         Object args[] = { executionCourseId, curricularCourseId, executionPeriodId };
 
         try {
-            ServiceUtils.executeService(userView, "AssociateExecutionCourseToCurricularCourse", args);
+            ServiceUtils.executeService("AssociateExecutionCourseToCurricularCourse", args);
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e.getMessage(), mapping
                     .findForward("readAvailableExecutionPeriods"));

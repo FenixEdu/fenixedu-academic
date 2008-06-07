@@ -66,7 +66,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
         Object[] args1 = { groupPropertiesCode, shiftCode, null, userView.getUtilizador(), new Integer(2)};
         try {
 
-            ServiceUtils.executeService(userView, "VerifyStudentGroupAtributes", args1);
+            ServiceUtils.executeService("VerifyStudentGroupAtributes", args1);
 
         }catch (NotAuthorizedException e) {
             ActionErrors actionErrors2 = new ActionErrors();
@@ -106,7 +106,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
         Object[] args3 = { groupPropertiesCode, userView.getUtilizador()};
         try {
             studentsNotEnroled =
-                (InfoSiteStudentsWithoutGroup) ServiceUtils.executeService(userView, "ReadStudentsWithoutGroup", args3);
+                (InfoSiteStudentsWithoutGroup) ServiceUtils.executeService("ReadStudentsWithoutGroup", args3);
 
         } catch (ExistingServiceException e) {
             ActionErrors actionErrors1 = new ActionErrors();
@@ -139,7 +139,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
         request.setAttribute("infoGrouping", studentsNotEnroled.getInfoGrouping());
 
         List<InfoExportGrouping> infoExportGroupings = (List<InfoExportGrouping>) ServiceUtils.
-                executeService(userView, "ReadExportGroupingsByGrouping", new Object[]{ groupPropertiesCode });
+                executeService( "ReadExportGroupingsByGrouping", new Object[]{ groupPropertiesCode });
         request.setAttribute("infoExportGroupings", infoExportGroupings);
 
         return mapping.findForward("sucess");
@@ -167,7 +167,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 
         Object[] args = { groupPropertiesCode, shiftCode, groupNumber, studentUsernames, userView.getUtilizador()};
         try {
-            ServiceUtils.executeService(userView, "GroupEnrolment", args);
+            ServiceUtils.executeService("GroupEnrolment", args);
         
         }catch (NonExistingServiceException e) {
             ActionErrors actionErrors1 = new ActionErrors();

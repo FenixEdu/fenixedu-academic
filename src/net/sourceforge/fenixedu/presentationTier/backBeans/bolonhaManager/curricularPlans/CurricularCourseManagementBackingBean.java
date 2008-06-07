@@ -445,7 +445,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 	    checkCourseGroup();
 	    checkCurricularSemesterAndYear();
 
-	    ServiceUtils.executeService(getUserView(), "CreateCurricularCourse", getArgumentsToCreate());
+	    ServiceUtils.executeService( "CreateCurricularCourse", getArgumentsToCreate());
 
 	} catch (FenixActionException e) {
 	    this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
@@ -490,7 +490,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public String editCurricularCourse() throws FenixFilterException {
 	try {
-	    ServiceUtils.executeService(getUserView(), "EditCurricularCourseBolonhaManager", getArgumentsToEdit());
+	    ServiceUtils.executeService( "EditCurricularCourseBolonhaManager", getArgumentsToEdit());
 	    setContextID(0); // resetContextID
 	} catch (FenixServiceException e) {
 	    addErrorMessage(bolonhaBundle.getString(e.getMessage()));
@@ -562,7 +562,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 	    Object args[] = { getCurricularCourse(), getCourseGroup(), getBeginExecutionPeriodID(),
 		    getFinalEndExecutionPeriodID(), getCurricularYearID(), getCurricularSemesterID() };
 
-	    ServiceUtils.executeService(getUserView(), "AddContextToCurricularCourse", args);
+	    ServiceUtils.executeService( "AddContextToCurricularCourse", args);
 
 	} catch (FenixActionException e) {
 	    this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
@@ -590,7 +590,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 	    checkCourseGroup();
 	    Object args[] = { getCurricularCourse(), getContext(getContextID()), getCourseGroup(), getCurricularYearID(),
 		    getCurricularSemesterID(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
-	    ServiceUtils.executeService(getUserView(), "EditContextFromCurricularCourse", args);
+	    ServiceUtils.executeService( "EditContextFromCurricularCourse", args);
 	    setContextID(0); // resetContextID
 	} catch (FenixServiceException e) {
 	    addErrorMessage(e.getMessage());
@@ -619,7 +619,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public void deleteContext(ActionEvent event) throws FenixFilterException {
 	try {
 	    Object args[] = { getCurricularCourseID(), getContextIDToDelete() };
-	    ServiceUtils.executeService(getUserView(), "DeleteContextFromDegreeModule", args);
+	    ServiceUtils.executeService( "DeleteContextFromDegreeModule", args);
 	    setContextID(0); // resetContextID
 	    addInfoMessage(bolonhaBundle.getString("successAction"));
 	} catch (FenixServiceException e) {

@@ -10,13 +10,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Fernanda Quitério 30/06/2003
@@ -34,11 +35,11 @@ public class ShowMarkDispatchAction extends FenixDispatchAction {
         MarksManagementDispatchAction.getFromRequest("objectCode", request);
         MarksManagementDispatchAction.getFromRequest("degreeId", request);
         // Get students List
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Object args[] = { userView, Integer.valueOf(curricularCourseId), null };
         List listEnrolmentEvaluation = null;
         try {
-            listEnrolmentEvaluation = (List) ServiceManagerServiceFactory.executeService(userView,
+            listEnrolmentEvaluation = (List) ServiceManagerServiceFactory.executeService(
                     "ReadStudentMarksListByCurricularCourse", args);
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");

@@ -23,12 +23,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
 
@@ -141,7 +142,7 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 		.getMetaObject().getObject();
 
 	try {
-	    final Receipt receipt = (Receipt) ServiceUtils.executeService(getUserView(request), "CreateReceipt", new Object[] {
+	    final Receipt receipt = (Receipt) ServiceUtils.executeService("CreateReceipt", new Object[] {
 		    getUserView(request).getPerson().getEmployee(), createReceiptBean.getPerson(),
 		    createReceiptBean.getContributorParty(), getReceiptCreatorUnit(request), getReceiptOwnerUnit(request),
 		    createReceiptBean.getSelectedEntries() });
@@ -189,7 +190,7 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 
 	try {
 
-	    ServiceUtils.executeService(getUserView(request), "RegisterReceiptPrint", new Object[] { receipt,
+	    ServiceUtils.executeService("RegisterReceiptPrint", new Object[] { receipt,
 		    getUserView(request).getPerson().getEmployee() });
 
 	    return mapping.findForward("printReceipt");

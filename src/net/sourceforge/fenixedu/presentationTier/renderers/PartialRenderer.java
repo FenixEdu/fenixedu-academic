@@ -3,13 +3,13 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.base.AbstractPartial;
+
 import pt.ist.fenixWebFramework.renderers.DateRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
-
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.base.AbstractPartial;
 
 public class PartialRenderer extends DateRenderer {
 	

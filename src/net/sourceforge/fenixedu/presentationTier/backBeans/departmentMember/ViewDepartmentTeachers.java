@@ -89,7 +89,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         if (this.selectedExecutionYearID == null) {
 
             InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(
-                    getUserView(), "ReadCurrentExecutionYear", new Object[] {});
+                    "ReadCurrentExecutionYear", new Object[] {});
 
             if (infoExecutionYear != null) {
                 this.selectedExecutionYearID = infoExecutionYear.getIdInternal();
@@ -113,7 +113,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         }
 
         List<Teacher> result = new ArrayList<Teacher>((List<Teacher>) ServiceUtils.executeService(
-                getUserView(), "ReadDepartmentTeachersByDepartmentIDAndExecutionYearID", new Object[] {
+                "ReadDepartmentTeachersByDepartmentIDAndExecutionYearID", new Object[] {
                         getDepartment().getIdInternal(), executionYearID }));
 
         ComparatorChain comparatorChain = new ComparatorChain();
@@ -140,7 +140,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
     public InfoTeacher getSelectedTeacher() throws FenixFilterException, FenixServiceException {
 
         if (this.selectedTeacher == null) {
-            this.selectedTeacher = (InfoTeacher) ServiceUtils.executeService(getUserView(),
+            this.selectedTeacher = (InfoTeacher) ServiceUtils.executeService(
                     "ReadTeacherByOID", new Object[] { getSelectedTeacherID() });
         }
 
@@ -152,7 +152,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         if (this.executionYearItems == null) {
 
             List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils
-                    .executeService(getUserView(), "ReadNotClosedExecutionYears", null);
+                    .executeService( "ReadNotClosedExecutionYears", null);
 
             List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
             for (InfoExecutionYear executionYear : executionYears) {
@@ -211,7 +211,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
         }
 
         List<ExecutionCourse> lecturedExecutionCourses = (List<ExecutionCourse>) ServiceUtils
-                .executeService(getUserView(),
+                .executeService(
                         "ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType",
                         new Object[] { getSelectedTeacherID(), executionYearID, degreeType });
 
@@ -277,7 +277,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
             }
 
             List<Advise> result = new ArrayList<Advise>((List<Advise>) ServiceUtils
-                    .executeService(getUserView(),
+                    .executeService(
                             "ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID",
                             new Object[] { AdviseType.FINAL_WORK_DEGREE, getSelectedTeacherID(),
                                     executionYearID }));
@@ -305,7 +305,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
             }
 
             this.guidedMasterDegreeThesisList = (List<MasterDegreeThesisDataVersion>) ServiceUtils
-                    .executeService(getUserView(),
+                    .executeService(
                             "ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID", new Object[] {
                                     getSelectedTeacherID(), executionYearID });
         }
@@ -325,7 +325,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
             Teacher teacher = rootDomainObject.readTeacherByOID(getSelectedTeacherID());
 
             List<PersonFunction> result = new ArrayList<PersonFunction>(
-                    (List<PersonFunction>) ServiceUtils.executeService(getUserView(),
+                    (List<PersonFunction>) ServiceUtils.executeService(
                             "ReadPersonFunctionsByPersonIDAndExecutionYearID", new Object[] {
                                     teacher.getPerson().getIdInternal(), executionYearID }));
 

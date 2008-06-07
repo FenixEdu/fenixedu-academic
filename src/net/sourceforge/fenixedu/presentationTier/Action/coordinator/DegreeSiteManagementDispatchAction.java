@@ -1,14 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 
-import java.net.MalformedURLException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -19,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
 import org.apache.struts.action.ActionError;
@@ -27,6 +23,8 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Tânia Pousão Created on 31/Out/2003
@@ -95,7 +93,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
         DegreeInfo currentDegreeInfo = currentExecutionYear.getDegreeInfo(degreeCurricularPlan.getDegree());
         
         if (currentDegreeInfo == null) {
-            final IUserView userView = SessionUtils.getUserView(request);
+            final IUserView userView = UserView.getUser();
             
             if (!userView.getPerson().isCoordinatorFor(degreeCurricularPlan, currentExecutionYear)
                     && !userView.getPerson().isCoordinatorFor(degreeCurricularPlan, currentExecutionYear.getNextExecutionYear())) {
@@ -106,7 +104,7 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
             }
 
             final Object[] args = { degreeCurricularPlan.getDegree() };
-            currentDegreeInfo = (DegreeInfo) ServiceManagerServiceFactory.executeService(userView, "CreateCurrentDegreeInfo", args);
+            currentDegreeInfo = (DegreeInfo) ServiceManagerServiceFactory.executeService( "CreateCurrentDegreeInfo", args);
         }
         
         request.setAttribute("currentDegreeInfo", currentDegreeInfo);
@@ -146,7 +144,8 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
         DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         
         if (degreeCurricularPlan.hasAnyExecutionDegrees()) {
-            request.setAttribute("executionDegrees", SessionUtils.getUserView(request).getPerson().getCoordinatedExecutionDegrees(degreeCurricularPlan));    
+            final IUserView userView = UserView.getUser();
+            request.setAttribute("executionDegrees", userView.getPerson().getCoordinatedExecutionDegrees(degreeCurricularPlan));    
         }
 
         return mapping.findForward("viewHistoric");

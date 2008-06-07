@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.webSiteManager;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +19,6 @@ import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteLayoutType;
@@ -33,16 +31,15 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.util.RequestUtils;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class CustomUnitSiteManagementDA extends SiteManagementDA {
@@ -421,7 +418,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
 	    orderedLinks.add(initialLinks.get(itemIndex - 1));
 	}
 
-	ServiceUtils.executeService(getUserView(request), "RearrangeUnitSiteLinks", site, top,
+	ServiceUtils.executeService("RearrangeUnitSiteLinks", site, top,
 		orderedLinks);
     }
 

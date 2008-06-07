@@ -86,7 +86,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 	} else {
 
 	    try {
-		ServiceUtils.executeService(getUserView(request), "DeleteAnnouncementBoard", new Object[] { this
+		ServiceUtils.executeService("DeleteAnnouncementBoard", new Object[] { this
 			.getRequestedAnnouncementBoard(request) });
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getKey());
@@ -127,7 +127,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 	    params.managementGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardManagementPermittedGroupType());
 	    params.unitId = form.getKeyUnit();
 
-	    ServiceUtils.executeService(getUserView(request), "CreateUnitAnnouncementBoard", new Object[] { params });
+	    ServiceUtils.executeService("CreateUnitAnnouncementBoard", new Object[] { params });
 	}
 	return this.prepareCreateBoard(mapping, actionForm, request, response);
     }
@@ -212,7 +212,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 
 	    Collection<AnnouncementBoardApproversBean> announcementApprovers = (Collection<AnnouncementBoardApproversBean>) getRenderedObject();
 
-	    ServiceUtils.executeService(getUserView(request), "EditUnitAnnouncementBoardApprovers", new Object[] { board,
+	    ServiceUtils.executeService("EditUnitAnnouncementBoardApprovers", new Object[] { board,
 		    announcementApprovers });
 
 	    UnitAnnouncementBoardsManagementForm form = (UnitAnnouncementBoardsManagementForm) actionForm;
@@ -251,7 +251,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 	    params.managementGroupType = UnitBoardPermittedGroupType.valueOf(form.getUnitBoardManagementPermittedGroupType());
 	    params.unitId = form.getKeyUnit();
 
-	    ServiceUtils.executeService(getUserView(request), "EditUnitAnnouncementBoard", new Object[] { board, params });
+	    ServiceUtils.executeService("EditUnitAnnouncementBoard", new Object[] { board, params });
 
 	    if (form.getReturnAction() != null && !form.getReturnAction().equals("") && !form.getReturnAction().equals("null")) {
 		ActionForward destination = new ActionForward();

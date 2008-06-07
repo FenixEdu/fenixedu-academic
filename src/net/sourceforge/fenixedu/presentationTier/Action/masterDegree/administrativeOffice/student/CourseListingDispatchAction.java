@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -24,6 +23,8 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -50,7 +51,7 @@ public class CourseListingDispatchAction extends FenixDispatchAction {
 
             List result = null;
             try {
-                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                result = (List) ServiceManagerServiceFactory.executeService(
                         "ReadAllMasterDegrees", args);
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("O Degree de Mestrado", e);
@@ -84,7 +85,7 @@ public class CourseListingDispatchAction extends FenixDispatchAction {
 
             try {
 
-                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                result = (List) ServiceManagerServiceFactory.executeService(
                         "ReadCPlanFromChosenMasterDegree", args);
 
             } catch (NonExistingServiceException e) {
@@ -104,10 +105,10 @@ public class CourseListingDispatchAction extends FenixDispatchAction {
         String degreeCurricularPlanId = getFromRequest("curricularPlanID", request);
 
         Object args[] = { Integer.valueOf(degreeCurricularPlanId) };
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         List curricularCourseList = null;
         try {
-            curricularCourseList = (List) ServiceManagerServiceFactory.executeService(userView,
+            curricularCourseList = (List) ServiceManagerServiceFactory.executeService(
                     "ReadCurricularCoursesByDegreeCurricularPlanId", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -142,7 +143,7 @@ public class CourseListingDispatchAction extends FenixDispatchAction {
         Object args[] = { userView, scopeCode, yearString };
         try {
 
-            enrolments = (List) ServiceManagerServiceFactory.executeService(userView,
+            enrolments = (List) ServiceManagerServiceFactory.executeService(
                     "ReadStudentListByCurricularCourse", args);
 
         } catch (NonExistingServiceException e) {

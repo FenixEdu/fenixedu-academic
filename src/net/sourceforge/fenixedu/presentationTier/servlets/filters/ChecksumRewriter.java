@@ -40,7 +40,9 @@ public class ChecksumRewriter extends RequestRewriter {
 	    stringBuilder.append(string);
 	}
 	final IUserView userView = AccessControl.getUserView();
-	stringBuilder.append(userView.getPrivateConstantForDigestCalculation());
+	if (userView != null) {
+	    stringBuilder.append(userView.getPrivateConstantForDigestCalculation());
+	}
 	final String checksum = new String(DigestUtils.shaHex(stringBuilder.toString()));
 	// System.out.println("Generating checksum for: " +
 	// stringBuilder.toString() + " --> " + checksum);

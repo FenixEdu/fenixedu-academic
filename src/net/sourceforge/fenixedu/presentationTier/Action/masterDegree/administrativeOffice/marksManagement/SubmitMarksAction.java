@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -36,6 +35,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Fernanda Quitério 01/07/2003
@@ -53,11 +54,11 @@ public class SubmitMarksAction extends FenixDispatchAction {
 
         // Get students List
         Object args[] = { curricularCourseCode, null };
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
         try {
             infoSiteEnrolmentEvaluation = (InfoSiteEnrolmentEvaluation) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadStudentsAndMarksByCurricularCourse", args);
+                    .executeService( "ReadStudentsAndMarksByCurricularCourse", args);
         } catch (NonExistingServiceException e) {
             sendErrors(request, "nonExisting", "message.masterDegree.notfound.students");
             return mapping.findForward("ShowMarksManagementMenu");
@@ -138,7 +139,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
         for (final InfoEnrolmentEvaluation infoEnrolmentEvaluation : infoEnrolmentEvaluations) {
             try {
         	final Object args[] = { infoEnrolmentEvaluation, teacherNumber, evaluationDate };
-        	ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request), "InsertStudentsFinalEvaluation", args);
+        	executeService( "InsertStudentsFinalEvaluation", args);
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException(teacherNumber.toString(), e);
             } catch (DomainException e) {

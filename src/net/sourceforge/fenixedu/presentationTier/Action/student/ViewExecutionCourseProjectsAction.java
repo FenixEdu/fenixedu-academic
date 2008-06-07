@@ -52,12 +52,12 @@ public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 	Integer executionCourseCode = new Integer(executionCourseCodeString);
 
 	Object[] args = { executionCourseCode, userView.getUtilizador() };
-	ISiteComponent viewProjectsComponent = (InfoSiteProjects) ServiceUtils.executeService(userView,
+	ISiteComponent viewProjectsComponent = (InfoSiteProjects) ServiceUtils.executeService(
 		"ReadExecutionCourseProjects", args);
 
 	Object[] args2 = { executionCourseCode };
 	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
-		userView, "ReadExecutionCourseByOID", args2);
+		"ReadExecutionCourseByOID", args2);
 	request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
 	InfoSiteProjects infoSiteProjects = (InfoSiteProjects) viewProjectsComponent;

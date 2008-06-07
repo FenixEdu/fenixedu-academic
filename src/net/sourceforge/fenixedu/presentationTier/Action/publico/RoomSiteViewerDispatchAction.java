@@ -80,7 +80,7 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
 
         try {
             ExecutionCourseSiteView siteView = (ExecutionCourseSiteView) ServiceUtils.executeService(
-                    null, "ExecutionCourseSiteComponentService", args);
+                    "ExecutionCourseSiteComponentService", args);
 
             List curricularCoursesByDegree = ((InfoSiteCommon) siteView.getCommonComponent())
                     .getAssociatedDegreesByDegree();
@@ -157,7 +157,7 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
 
             InfoExecutionPeriod executionPeriod;
             if (executionPeriodID == null) {
-                executionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView,
+                executionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
                         "ReadCurrentExecutionPeriod", new Object[] {});
                 executionPeriodID = executionPeriod.getIdInternal();
                 try {
@@ -166,7 +166,7 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
                 } catch (IllegalArgumentException ex) {
                 }
             } else {
-                executionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView,
+                executionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
                         "ReadExecutionPeriodByOID", new Object[] { executionPeriodID });
             }
 
@@ -215,7 +215,7 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
             Object[] args = { bodyComponent, roomKey, today, executionPeriodID };
 
             try {
-                SiteView siteView = (SiteView) ServiceUtils.executeService(null,
+                SiteView siteView = (SiteView) ServiceUtils.executeService(
                         "RoomSiteComponentServiceByExecutionPeriodID", args);
 
                 request.setAttribute("siteView", siteView);

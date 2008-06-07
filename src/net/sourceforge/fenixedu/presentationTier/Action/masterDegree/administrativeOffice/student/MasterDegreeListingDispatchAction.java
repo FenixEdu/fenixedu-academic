@@ -52,7 +52,7 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
 
             List result = null;
             try {
-                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                result = (List) ServiceManagerServiceFactory.executeService(
                         "ReadAllMasterDegrees", args);
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("O Degree de Mestrado", e);
@@ -81,7 +81,7 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
 
             try {
 
-                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                result = (List) ServiceManagerServiceFactory.executeService(
                         "ReadCPlanFromChosenMasterDegree", args);
 
             } catch (NonExistingServiceException e) {
@@ -119,7 +119,7 @@ public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
 
         try {
             Object args[] = { degreeCurricularPlanID, DegreeType.MASTER_DEGREE };
-            result = (List) ServiceManagerServiceFactory.executeService(userView,
+            result = (List) ServiceManagerServiceFactory.executeService(
                     "ReadStudentsFromDegreeCurricularPlan", args);
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");

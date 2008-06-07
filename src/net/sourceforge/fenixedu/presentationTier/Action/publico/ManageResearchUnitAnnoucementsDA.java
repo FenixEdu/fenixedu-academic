@@ -13,11 +13,12 @@ import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityCont
 import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ManageResearchUnitAnnoucementsDA extends UnitSiteBoardsDA {
 

@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.renderers.util;
 
 import java.util.Properties;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.resources.AbstractMessageResourceProvider;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class RendererMessageResourceProvider extends AbstractMessageResourceProvider {
 

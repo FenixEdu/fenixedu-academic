@@ -11,11 +11,12 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoSiteQualifications;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -45,9 +46,9 @@ public class ManageGrantQualificationAction extends FenixDispatchAction {
 	username = request.getParameter("username");
 
 	Object[] args = { username };
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	InfoSiteQualifications infoSiteQualifications = (InfoSiteQualifications) ServiceUtils
-		.executeService(userView, "ReadQualifications", args);
+		.executeService( "ReadQualifications", args);
 
 	if (infoSiteQualifications != null) {
 	    if (infoSiteQualifications.getInfoPerson() != null) {

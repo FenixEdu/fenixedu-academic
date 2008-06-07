@@ -37,7 +37,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
     public void addMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
         if (selectedPersonsIDsToAdd != null) {
             Object[] args = { getDegreeCurricularPlan(), selectedPersonsIDsToAdd, null };
-            ServiceUtils.executeService(getUserView(), "UpdateDegreeCurricularPlanMembersGroup", args);
+            ServiceUtils.executeService( "UpdateDegreeCurricularPlanMembersGroup", args);
         }
         // avoid preset check-boxes after action
         selectedPersonsIDsToAdd = null;
@@ -47,7 +47,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
     public void removeMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
         if (selectedPersonsIDsToRemove != null) {
             Object[] args = { getDegreeCurricularPlan(), null, selectedPersonsIDsToRemove };
-            ServiceUtils.executeService(getUserView(), "UpdateDegreeCurricularPlanMembersGroup", args);
+            ServiceUtils.executeService( "UpdateDegreeCurricularPlanMembersGroup", args);
         }
         // avoid preset check-boxes after action
         selectedPersonsIDsToAdd = null;

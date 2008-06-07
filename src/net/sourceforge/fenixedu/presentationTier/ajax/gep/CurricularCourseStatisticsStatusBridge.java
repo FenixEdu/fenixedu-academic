@@ -9,8 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import uk.ltd.getahead.dwr.ExecutionContext;
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -40,7 +39,7 @@ public class CurricularCourseStatisticsStatusBridge {
     }
 
     private static IUserView getUserVIew() {
-        return SessionUtils.getUserView(ExecutionContext.get().getHttpServletRequest());
+	return UserView.getUser();
     }
 
 }

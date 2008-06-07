@@ -36,7 +36,7 @@ public class ChangeStudentAreasDispatchAction extends FenixDispatchAction {
 	try {
 	    final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
 	    final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) ServiceManagerServiceFactory
-		    .executeService(getUserView(request), "ReadStudentCurricularPlanForEnrollments",
+		    .executeService( "ReadStudentCurricularPlanForEnrollments",
 			    new Object[] { null, registration });
 
 	    if (studentCurricularPlan.isBoxStructure()) {
@@ -81,7 +81,7 @@ public class ChangeStudentAreasDispatchAction extends FenixDispatchAction {
 	final Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber,
 		degreeType);
 	try {
-	    ServiceManagerServiceFactory.executeService(getUserView(request),
+	    ServiceManagerServiceFactory.executeService(
 		    "WriteStudentAreasWithoutRestrictions", new Object[] { registration, degreeType,
 			    specializationAreaID, secondaryAreaID });
 	} catch (Exception e) {

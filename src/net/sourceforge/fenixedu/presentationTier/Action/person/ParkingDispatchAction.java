@@ -20,8 +20,6 @@ import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFact
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.commons.httpclient.HttpException;
 import org.apache.struts.action.ActionForm;
@@ -32,16 +30,18 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class ParkingDispatchAction extends FenixDispatchAction {
     public ActionForward prepareParking(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	ParkingParty parkingParty = userView.getPerson().getParkingParty();
 	if (parkingParty == null) {
-	    parkingParty = (ParkingParty) ServiceUtils.executeService(SessionUtils.getUserView(request),
+	    parkingParty = (ParkingParty) ServiceUtils.executeService(
 		    "CreateParkingParty", new Object[] { userView.getPerson() });
 	}
 	ParkingRequest parkingRequest = parkingParty.getFirstRequest();
@@ -58,10 +58,10 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 
     public ActionForward acceptRegulation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	ParkingParty parkingParty = userView.getPerson().getParkingParty();
 	if (parkingParty != null) {
-	    ServiceUtils.executeService(SessionUtils.getUserView(request), "AcceptRegulation",
+	    ServiceUtils.executeService("AcceptRegulation",
 		    new Object[] { parkingParty });
 	}
 	return prepareParking(mapping, actionForm, request, response);
@@ -70,7 +70,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEditParking(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	ParkingParty parkingParty = userView.getPerson().getParkingParty();
 	request.setAttribute("parkingParty", parkingParty);
 
@@ -404,7 +404,8 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 
     private boolean checkRequestFields(ParkingRequestFactory parkingRequestFactory,
 	    HttpServletRequest request, DynaActionForm parkingForm) {
-	final boolean isStudent = isStudent(SessionUtils.getUserView(request));
+	final IUserView userView = UserView.getUser();
+	final boolean isStudent = isStudent(userView);
 	ActionMessages actionMessages = new ActionMessages();
 	boolean result = true;
 
@@ -684,8 +685,8 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 
     public ActionForward renewUnlimitedParkingRequest(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	IUserView userView = SessionUtils.getUserView(request);
-	ServiceUtils.executeService(SessionUtils.getUserView(request), "RenewUnlimitedParkingRequest",
+	IUserView userView = UserView.getUser();
+	ServiceUtils.executeService("RenewUnlimitedParkingRequest",
 		new Object[] { userView.getPerson().getParkingParty().getFirstRequest(), Boolean.TRUE });
 	return prepareParking(mapping, actionForm, request, response);
     }

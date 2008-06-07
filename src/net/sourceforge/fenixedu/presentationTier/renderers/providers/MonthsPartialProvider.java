@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.ist.fenixWebFramework.renderers.DataProvider;
-import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
+
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class MonthsPartialProvider implements DataProvider {
 

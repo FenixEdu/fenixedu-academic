@@ -37,7 +37,7 @@ public class ViewAllRoomsForExamsFormAction extends FenixContextAction {
             Object[] args = { infoExecutionPeriod };
             List infoRoomExamsMaps;
             try {
-                infoRoomExamsMaps = (List) ServiceManagerServiceFactory.executeService(userView,
+                infoRoomExamsMaps = (List) ServiceManagerServiceFactory.executeService(
                         "ReadAllRoomsExamsMap", args);
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException(e);

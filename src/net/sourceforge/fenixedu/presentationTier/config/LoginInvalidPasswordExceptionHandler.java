@@ -16,6 +16,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.config.ExceptionConfig;
 
+import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
+
 public class LoginInvalidPasswordExceptionHandler extends FenixExceptionHandler {
 
     public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping, ActionForm formInstance,
@@ -44,7 +46,7 @@ public class LoginInvalidPasswordExceptionHandler extends FenixExceptionHandler 
 	sessao = request.getSession(true);
 
 	// Store the UserView into the session and return
-	sessao.setAttribute(SessionConstants.U_VIEW, userView);
+	sessao.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
 	sessao.setAttribute(SessionConstants.SESSION_IS_VALID, new Boolean(true));
 
 	ActionForward forward = mapping.findForward("changePass");

@@ -61,7 +61,7 @@ public class GenerateFilesAction extends FenixDispatchAction {
         List executionYears = null;
         Object[] args = {};
         try {
-            executionYears = (List) ServiceManagerServiceFactory.executeService(null,
+            executionYears = (List) ServiceManagerServiceFactory.executeService(
                     "ReadNotClosedExecutionYears", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException();
@@ -132,7 +132,7 @@ public class GenerateFilesAction extends FenixDispatchAction {
         
         byte[] generatedFile = null;
         try {
-            generatedFile = (byte[]) ServiceManagerServiceFactory.executeService(userView, serviceName, args);
+            generatedFile = (byte[]) ServiceManagerServiceFactory.executeService( serviceName, args);
                                      
         } catch (InsufficientSibsPaymentPhaseCodesServiceException exception) {
             errors.add("noList", new ActionError("error.generateFiles.invalidBind", exception

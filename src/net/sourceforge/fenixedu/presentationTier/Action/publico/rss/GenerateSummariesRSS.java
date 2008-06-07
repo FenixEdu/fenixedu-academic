@@ -4,8 +4,8 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.Summary;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import de.nava.informa.core.ItemIF;
 
 public class GenerateSummariesRSS extends GenerateExecutionCourseRSS {

@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.HostAccessControl;
@@ -33,7 +32,9 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
+import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 
 public abstract class BaseAuthenticationAction extends FenixAction {
 
@@ -57,7 +58,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
 	    final HttpSession session = request.getSession(false);
 
-	    AccessControl.setUserView(userView);
+	    UserView.setUser(userView);
 
 	    if (isStudentAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
@@ -163,7 +164,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	final HttpSession newSession = request.getSession(true);
 
 	// Store the UserView into the session and return
-	newSession.setAttribute(SessionConstants.U_VIEW, userView);
+	newSession.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
 	newSession.setAttribute(SessionConstants.SESSION_IS_VALID, Boolean.TRUE);
 
 	I18NFilter.setDefaultLocale(request, newSession);

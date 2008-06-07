@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.CRUDActionByOID;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping;
 
 import org.apache.struts.action.ActionError;
@@ -32,6 +31,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author jpvl
@@ -79,7 +80,7 @@ public class CRUDTeacherDegreeFinalProjectStudent extends CRUDActionByOID {
 
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
 	if (infoTeacher == null) {
@@ -93,7 +94,7 @@ public class CRUDTeacherDegreeFinalProjectStudent extends CRUDActionByOID {
 	Object args[] = { infoTeacher, dynaForm.get("executionPeriodId") };
 
 	TeacherDegreeFinalProjectStudentsDTO teacherDFPStudents = (TeacherDegreeFinalProjectStudentsDTO) ServiceUtils
-		.executeService(userView, "ReadTeacherDFPStudents", args);
+		.executeService( "ReadTeacherDFPStudents", args);
 
 	request.setAttribute("teacherDegreeFinalProjectStudents", teacherDFPStudents);
 

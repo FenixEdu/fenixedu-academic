@@ -20,11 +20,8 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSit
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -33,6 +30,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class AcademicServiceRequestsManagementDispatchAction extends FenixDispatchAction {
@@ -124,7 +122,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final AcademicServiceRequestBean requestBean = (AcademicServiceRequestBean) getObjectFromViewState("serviceRequestBean");
 
 	try {
-	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request),
+	    executeService(
 		    "SendAcademicServiceRequestToExternalEntity", new Object[] { serviceRequest, requestBean.getSituationDate(),
 			    requestBean.getJustification() });
 
@@ -156,7 +154,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final AcademicServiceRequestBean requestBean = (AcademicServiceRequestBean) getObjectFromViewState("serviceRequestBean");
 
 	try {
-	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request),
+	    executeService(
 		    "ReceivedAcademicServiceRequestFromExternalEntity", new Object[] { serviceRequest,
 			    requestBean.getSituationDate(), requestBean.getJustification() });
 
@@ -188,7 +186,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final String justification = ((DynaActionForm) actionForm).getString("justification");
 
 	try {
-	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request), "RejectAcademicServiceRequest",
+	    executeService( "RejectAcademicServiceRequest",
 		    new Object[] { academicServiceRequest, justification });
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -216,7 +214,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final String justification = ((DynaActionForm) actionForm).getString("justification");
 
 	try {
-	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request), "CancelAcademicServiceRequest",
+	    executeService( "CancelAcademicServiceRequest",
 		    new Object[] { academicServiceRequest, justification });
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -250,7 +248,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final DynaActionForm form = (DynaActionForm) actionForm;
 
 	try {
-	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request), "ConcludeAcademicServiceRequest",
+	    executeService( "ConcludeAcademicServiceRequest",
 		    new Object[] { academicServiceRequest, getSendEmailToStudent(form) });
 	    addActionMessage(request, "academic.service.request.concluded.with.success");
 
@@ -278,7 +276,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 
 	try {
-	    ServiceManagerServiceFactory.executeService(SessionUtils.getUserView(request), "DeliveredAcademicServiceRequest",
+	    executeService( "DeliveredAcademicServiceRequest",
 		    new Object[] { academicServiceRequest });
 	    addActionMessage(request, "academic.service.request.delivered.with.success");
 	} catch (DomainException ex) {

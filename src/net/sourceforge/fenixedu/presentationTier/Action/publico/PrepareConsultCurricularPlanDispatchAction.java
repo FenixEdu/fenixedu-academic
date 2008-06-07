@@ -55,7 +55,7 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
 
         try {
             final Object argsLerLicenciaturas[] = { degreeCurricularPlanId };
-            final List<InfoExecutionDegree> infoExecutionDegreeList = (List<InfoExecutionDegree>) ServiceUtils.executeService(null, "ReadPublicExecutionDegreeByDCPID", argsLerLicenciaturas);
+            final List<InfoExecutionDegree> infoExecutionDegreeList = (List<InfoExecutionDegree>) ServiceUtils.executeService("ReadPublicExecutionDegreeByDCPID", argsLerLicenciaturas);
 
             if (!infoExecutionDegreeList.isEmpty()) {
                 List<LabelValueBean> executionPeriodsLabelValueList = new ArrayList<LabelValueBean>();
@@ -101,11 +101,11 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
 
         try {
             final Object arg[] = { degreeCurricularPlanId, (Integer) indexForm.get("indice") };
-            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(null, "ReadPublicExecutionDegreeByDCPID", arg);
+            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService("ReadPublicExecutionDegreeByDCPID", arg);
             if (infoExecutionDegree == null) {
                 try {
                     final Object arg1[] = { degreeCurricularPlanId };
-                    List<InfoExecutionDegree> infoExecutionDegrees = (List<InfoExecutionDegree>) ServiceUtils.executeService(null, "ReadPublicExecutionDegreeByDCPID", arg1);
+                    List<InfoExecutionDegree> infoExecutionDegrees = (List<InfoExecutionDegree>) ServiceUtils.executeService("ReadPublicExecutionDegreeByDCPID", arg1);
                     if (infoExecutionDegrees.size() >= 1) {
                         infoExecutionDegree = infoExecutionDegrees.get(infoExecutionDegrees.size() - 1);
                         indexForm.set("indice", infoExecutionDegree.getInfoExecutionYear().getIdInternal());
@@ -159,7 +159,7 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
         Object args[] = { executionYear };
         List infoExecutionPeriodList;
         try {
-            infoExecutionPeriodList = (List) ServiceUtils.executeService(null,
+            infoExecutionPeriodList = (List) ServiceUtils.executeService(
                     "ReadExecutionPeriodsByExecutionYear", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -174,7 +174,7 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
         // ----------------------------------------------------------
         Object arg[] = { degreeCurricularPlanId, executionYear };
 
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(null,
+        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
                     "ReadPublicExecutionDegreeByDCPID", arg);
 
         // request.setAttribute("windowLocation",FenixCacheFilter.getPageURL(request));

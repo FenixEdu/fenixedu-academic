@@ -17,11 +17,12 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
@@ -89,7 +90,7 @@ public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
 	Object[] args = new Object[] { bean.getMarkSheetToConfirmSendMailBeanToSubmit(), bean.getFrom(), bean.getCc(),
 		bean.getSubject(), bean.getMessage() };
 
-	ServiceUtils.executeService(getUserView(request), "MarkSheetsToConfirmSendMail", args);
+	ServiceUtils.executeService("MarkSheetsToConfirmSendMail", args);
 	resetMail(bean);
 	return searchSendMail(mapping, actionForm, request, response);
     }
@@ -108,7 +109,7 @@ public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
 	Object[] args = new Object[] { bean.getGradesToSubmitExecutionCourseSendMailBeanToSubmit(), bean.getFrom(), bean.getCc(),
 		bean.getSubject(), bean.getMessage() };
 
-	ServiceUtils.executeService(getUserView(request), "GradesToSubmitSendMail", args);
+	ServiceUtils.executeService("GradesToSubmitSendMail", args);
 	resetMail(bean);
 	return searchSendMail(mapping, actionForm, request, response);
     }

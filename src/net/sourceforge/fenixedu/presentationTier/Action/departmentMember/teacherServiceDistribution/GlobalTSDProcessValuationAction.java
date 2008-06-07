@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhas
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
@@ -34,6 +33,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
@@ -43,7 +43,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
 
     public ActionForward prepareForGlobalTSDProcessValuation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm globalForm = (DynaActionForm) form;
 
@@ -129,7 +129,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
 
     public ActionForward viewGlobalTSDProcessValuation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	DynaActionForm globalForm = (DynaActionForm) form;
 
 	TSDProcess selectedTSDProcess = getTSDProcess(globalForm);
@@ -210,7 +210,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
 		selectedTeacherServiceDistribution.getIdInternal(), (executionSemester == null) ? 0 : executionSemester
 			.getIdInternal()));
 
-	return (List<TSDTeacherDTOEntry>) ServiceUtils.executeService(userView, "ReadTSDTeachersFromTSDProcesses",
+	return (List<TSDTeacherDTOEntry>) ServiceUtils.executeService("ReadTSDTeachersFromTSDProcesses",
 		new Object[] { tsdProcessIdMap });
     }
 
@@ -223,7 +223,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
 		selectedTeacherServiceDistribution.getIdInternal(), (executionSemester == null) ? 0 : executionSemester
 			.getIdInternal()));
 
-	return (List<TSDCourseDTOEntry>) ServiceUtils.executeService(userView, "ReadTSDCoursesFromTSDProcesses",
+	return (List<TSDCourseDTOEntry>) ServiceUtils.executeService("ReadTSDCoursesFromTSDProcesses",
 		new Object[] { tsdProcessIdMap });
     }
 

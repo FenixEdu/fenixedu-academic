@@ -56,10 +56,6 @@ public class MockUserView implements IUserView {
 	return person;
     }
 
-    public boolean isPublicRequester() {
-	return false;
-    }
-
     public Collection<RoleType> getRoleTypes() {
 	return roleTypes;
     }

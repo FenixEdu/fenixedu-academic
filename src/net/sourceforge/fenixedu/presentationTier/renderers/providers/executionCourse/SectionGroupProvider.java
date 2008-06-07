@@ -2,9 +2,10 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.executionC
 
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
-import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 import org.apache.commons.collections.list.UnmodifiableList;
+
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class SectionGroupProvider extends SectionProvider {
 

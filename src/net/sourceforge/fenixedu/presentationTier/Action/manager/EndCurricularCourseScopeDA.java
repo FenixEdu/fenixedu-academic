@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.struts.action.ActionForm;
@@ -28,6 +27,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Fernanda Quitério 27/10/2003
@@ -37,7 +38,7 @@ public class EndCurricularCourseScopeDA extends FenixDispatchAction {
 
     public ActionForward prepareEnd(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         Integer curricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
@@ -47,7 +48,7 @@ public class EndCurricularCourseScopeDA extends FenixDispatchAction {
 
         try {
             oldInfoCurricularCourseScope = (InfoCurricularCourseScope) ServiceUtils.executeService(
-                    userView, "ReadCurricularCourseScope", args);
+                    "ReadCurricularCourseScope", args);
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException("message.nonExistingCurricularCourseScope", mapping
                     .findForward("readCurricularCourse"));
@@ -66,7 +67,7 @@ public class EndCurricularCourseScopeDA extends FenixDispatchAction {
     public ActionForward end(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
         Integer oldCurricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
@@ -91,7 +92,7 @@ public class EndCurricularCourseScopeDA extends FenixDispatchAction {
         Object args[] = { newInfoCurricularCourseScope };
 
         try {
-            ServiceUtils.executeService(userView, "EndCurricularCourseScope", args);
+            ServiceUtils.executeService("EndCurricularCourseScope", args);
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException(ex.getMessage(), mapping
                     .findForward("readCurricularCourse"), ex);

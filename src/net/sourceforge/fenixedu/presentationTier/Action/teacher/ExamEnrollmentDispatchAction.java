@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -30,6 +29,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Tânia Nunes
@@ -57,7 +58,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
         TeacherAdministrationSiteView siteView = null;
         try {
-            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(userView,
+            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(
                     "TeacherAdministrationSiteComponentService", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -103,7 +104,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
         TeacherAdministrationSiteView siteView = null;
         try {
-            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(userView,
+            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(
                     "TeacherAdministrationSiteComponentService", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -133,7 +134,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         DynaActionForm examEnrollmentForm = (DynaActionForm) form;
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer examIdInternal = new Integer(request.getParameter("evaluationCode"));
         Integer disciplinaExecucaoIdInternal = new Integer(request.getParameter("objectCode"));
@@ -175,7 +176,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
                 endTime };
 
         try {
-            ServiceUtils.executeService(userView, "EditWrittenEvaluationEnrolmentPeriod", args);
+            ServiceUtils.executeService("EditWrittenEvaluationEnrolmentPeriod", args);
         } catch (DomainException e) {
             setErrorMessage(request, e.getKey());
             return mapping.getInputForward();

@@ -16,11 +16,12 @@ import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -31,7 +32,7 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
     public ActionForward retrieveOwnPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
         final FileEntry personalPhoto = userView.getPerson().getPersonalPhoto();
 
         if (personalPhoto != null) {
@@ -51,7 +52,7 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
         final FileEntry personalPhoto = person.getPersonalPhoto();
 
         if (personalPhoto != null) {
-            final IUserView userView = SessionUtils.getUserView(request);
+            final IUserView userView = UserView.getUser();
             final Person requester = userView.getPerson();
             if (requester != person && !person.getAvailablePhoto()) {
                 if (!(person.hasRole(RoleType.STUDENT) && (requester.hasRole(RoleType.TEACHER) || requester

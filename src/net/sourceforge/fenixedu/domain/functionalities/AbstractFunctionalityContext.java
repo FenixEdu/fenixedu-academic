@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.contents.Container;
@@ -29,7 +31,8 @@ public abstract class AbstractFunctionalityContext implements FunctionalityConte
         super();
         
         this.request = request;
-        this.userView = SessionUtils.getUserView(request);
+        this.userView = UserView.getUser();
+        this.userView = UserView.getUser();
     }
 
     public HttpServletRequest getRequest() {
@@ -41,14 +44,8 @@ public abstract class AbstractFunctionalityContext implements FunctionalityConte
     }
 
     public User getLoggedUser() {
-        IUserView userView = getUserView();
-        
-        if (userView == null || userView.isPublicRequester()) {
-            return null;
-        }
-        else {
-            return userView.getPerson().getUser();
-        }
+        final IUserView userView = getUserView();
+        return userView == null ? null : userView.getPerson().getUser();
     }
 
     protected String getPath(final String encoding) {

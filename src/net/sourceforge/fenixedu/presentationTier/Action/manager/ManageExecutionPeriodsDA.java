@@ -19,12 +19,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Crus & Sara Ribeiro
@@ -37,10 +38,10 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	try {
-	    List infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);
+	    List infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
 
 	    if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
 
@@ -67,12 +68,12 @@ public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 	final String year = request.getParameter("year");
 	final Integer semester = new Integer(request.getParameter("semester"));
 	final String periodStateToSet = request.getParameter("periodState");
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	final PeriodState periodState = new PeriodState(periodStateToSet);
 
 	final Object[] args = { year, semester, periodState };
 	try {
-	    ServiceUtils.executeService(userView, "AlterExecutionPeriodState", args);
+	    ServiceUtils.executeService("AlterExecutionPeriodState", args);
 	} catch (InvalidArgumentsServiceException ex) {
 	    throw new FenixActionException("errors.nonExisting.executionPeriod", ex);
 	}

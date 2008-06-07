@@ -54,12 +54,12 @@ public class ShowCandidacyOptions extends FenixAction {
         try {
             Object[] argsReadSeminary = { seminaryID };
             Object[] argsReadStudent = { userView.getUtilizador() };
-            seminary = (InfoSeminaryWithEquivalencies) ServiceManagerServiceFactory.executeService(userView,
+            seminary = (InfoSeminaryWithEquivalencies) ServiceManagerServiceFactory.executeService(
                     "Seminaries.GetSeminary", argsReadSeminary);
-            student = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
+            student = (InfoStudent) ServiceManagerServiceFactory.executeService(
                     "ReadStudentByUsername", argsReadStudent);
             Object[] ReadCurricularCoursesByUsername = { userView.getUtilizador() };
-            disciplines = (List) ServiceManagerServiceFactory.executeService(userView,
+            disciplines = (List) ServiceManagerServiceFactory.executeService(
                     "student.ReadCurricularCoursesByUsername", ReadCurricularCoursesByUsername);
             List avaliableEquivalencies = new LinkedList();
             for (Iterator iterator = disciplines.iterator(); iterator.hasNext();) {
@@ -76,7 +76,7 @@ public class ShowCandidacyOptions extends FenixAction {
             }
             seminary.setEquivalencies(avaliableEquivalencies);
             Object[] argsReadCandidacies = { student.getIdInternal(), seminaryID };
-            List candidacies = (List) ServiceManagerServiceFactory.executeService(userView,
+            List candidacies = (List) ServiceManagerServiceFactory.executeService(
                     "Seminaries.GetCandidaciesByStudentIDAndSeminaryID", argsReadCandidacies);
             if (candidacies.size() >= seminary.getAllowedCandidaciesPerStudent().intValue()) {
                 ActionErrors actionErrors = new ActionErrors();

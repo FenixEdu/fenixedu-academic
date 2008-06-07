@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Exceptions;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
@@ -34,6 +33,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -60,7 +61,7 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
 
 	ActionErrors errors = new ActionErrors();
 	DynaActionForm studentSituationForm = (DynaActionForm) form;
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	Integer studentNumber = getIntegerFromRequestOrForm(request, studentSituationForm, "studentNumber");
 	String degreeType = (String) getFromRequestOrForm(request, studentSituationForm, "degreeType");
@@ -70,7 +71,7 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
 	Object argsStudent[] = { studentNumber, DegreeType.valueOf(degreeType) };
 
 	try {
-	    infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "ReadStudentByNumberAndDegreeType", argsStudent);
+	    infoStudent = (InfoStudent) ServiceUtils.executeService("ReadStudentByNumberAndDegreeType", argsStudent);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -85,7 +86,7 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
 	Object argsGratuitySituations[] = { studentNumber };
 
 	try {
-	    gratuitySituations = (List) ServiceUtils.executeService(userView, "UpdateAndReadGratuitySituationsByStudentNumber",
+	    gratuitySituations = (List) ServiceUtils.executeService("UpdateAndReadGratuitySituationsByStudentNumber",
 		    argsGratuitySituations);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -106,7 +107,7 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
 		    infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree().getInfoExecutionYear().getIdInternal() };
 
 	    try {
-		infoInsuranceTransaction = (InfoInsuranceTransaction) ServiceUtils.executeService(userView,
+		infoInsuranceTransaction = (InfoInsuranceTransaction) ServiceUtils.executeService(
 			"ReadInsuranceTransactionByStudentIDAndExecutionYearID", argsInsurance);
 	    } catch (FenixServiceException e) {
 		errors.add("insurance", new ActionError("error.duplicate.insurance", studentNumber));
@@ -121,7 +122,7 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
 	    Object argsInsuranceValue[] = { infoExecutionYear.getIdInternal() };
 
 	    try {
-		infoInsuranceValue = (InfoInsuranceValue) ServiceUtils.executeService(userView,
+		infoInsuranceValue = (InfoInsuranceValue) ServiceUtils.executeService(
 			"ReadInsuranceValueByExecutionYearID", argsInsuranceValue);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);

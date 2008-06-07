@@ -22,8 +22,6 @@ import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -108,7 +106,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
 
 	try {
 	    if (institutionWorkTimeDTO.getIdInternal() != null && institutionWorkTimeDTO.getIdInternal() != 0) {
-		ServiceUtils.executeService(SessionUtils.getUserView(request), "EditTeacherInstitutionWorkTime", new Object[] {
+		executeService("EditTeacherInstitutionWorkTime", new Object[] {
 			institutionWorkTimeDTO, roleType });
 	    } else {
 		DynaActionForm institutionWorkingTimeForm = (DynaActionForm) form;
@@ -116,7 +114,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
 		Integer executionPeriodID = Integer.valueOf(institutionWorkingTimeForm.getString("executionPeriodId"));
 
 		Object[] args = { teacherID, executionPeriodID, institutionWorkTimeDTO, roleType };
-		ServiceUtils.executeService(SessionUtils.getUserView(request), "CreateTeacherInstitutionWorkTime", args);
+		executeService("CreateTeacherInstitutionWorkTime", args);
 	    }
 	} catch (DomainException e) {
 	    saveMessages(request, e);
@@ -129,7 +127,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
 	DynaActionForm institutionWorkTimeForm = (DynaActionForm) actionForm;
 	Integer institutionWorkTimeID = (Integer) institutionWorkTimeForm.get("institutionWorkTimeID");
 	try {
-	    ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteInstitutionWorkTimeByOID", new Object[] {
+	    executeService("DeleteInstitutionWorkTimeByOID", new Object[] {
 		    institutionWorkTimeID, roleType });
 	} catch (DomainException e) {
 	    saveMessages(request, e);

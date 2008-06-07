@@ -37,11 +37,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
@@ -53,6 +48,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ParkingManagerDispatchAction extends FenixDispatchAction {
     private static final int MAX_NOTE_LENGTH = 250;
@@ -287,7 +286,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    args[1] = ParkingRequestState.PENDING;
 	}
 
-	ServiceUtils.executeService(SessionUtils.getUserView(request), "UpdateParkingParty", args);
+	executeService("UpdateParkingParty", args);
 
 	return showParkingRequests(mapping, actionForm, request, response);
     }
@@ -408,8 +407,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	if (searchPartyBean != null) {
 	    searchPartyBean.setParty(null);
 	    Object[] args = { searchPartyBean.getPartyName(), searchPartyBean.getCarPlateNumber() };
-	    List<Party> partyList = (List<Party>) ServiceUtils.executeService(SessionUtils
-		    .getUserView(request), "SearchPartyCarPlate", args);
+	    List<Party> partyList = (List<Party>) executeService("SearchPartyCarPlate", args);
 	    request.setAttribute("searchPartyBean", searchPartyBean);
 	    request.setAttribute("partyList", partyList);
 
@@ -532,8 +530,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    saveErrorMessage(request, "noVehicles", "error.parkingParty.no.vehicles");
 	    return prepareEditParkingParty(mapping, actionForm, request, response);
 	}
-	ServiceUtils.executeService(SessionUtils.getUserView(request), "ExecuteFactoryMethod",
-		new Object[] { parkingPartyBean });
+	executeService("ExecuteFactoryMethod", new Object[] { parkingPartyBean });
 	request.setAttribute("partyID", parkingPartyBean.getParkingParty().getParty().getIdInternal());
 
 	return showParkingPartyRequests(mapping, actionForm, request, response);

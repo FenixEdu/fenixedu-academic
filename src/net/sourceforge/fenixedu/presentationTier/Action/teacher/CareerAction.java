@@ -13,10 +13,11 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.CRUDActionByOID;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Leonor Almeida
@@ -26,9 +27,9 @@ import org.apache.struts.action.ActionMapping;
 public class CareerAction extends CRUDActionByOID {
     protected void prepareFormConstants(ActionMapping mapping, ActionForm form,
             HttpServletRequest request) throws FenixServiceException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         List categories = (List) ServiceUtils
-                .executeService(userView, "ReadCategories", new Object[] {});
+                .executeService( "ReadCategories", new Object[] {});
 
         request.setAttribute("categories", categories);
     }

@@ -97,7 +97,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         try {
             final Object args[] = { getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(),
                     getNameEn(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
-            ServiceUtils.executeService(getUserView(), "CreateCourseGroup", args);
+            ServiceUtils.executeService( "CreateCourseGroup", args);
             addInfoMessage(bolonhaBundle.getString("courseGroupCreated"));
             return "editCurricularPlanStructure";
         } catch (FenixFilterException e) {
@@ -115,7 +115,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         try {
             final Object args[] = { getCourseGroupID(), getContextID(), getName(), getNameEn(),
                     getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
-            ServiceUtils.executeService(getUserView(), "EditCourseGroup", args);
+            ServiceUtils.executeService( "EditCourseGroup", args);
             addInfoMessage(bolonhaBundle.getString("courseGroupEdited"));
             return "editCurricularPlanStructure";
         } catch (FenixFilterException e) {
@@ -132,7 +132,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     public String deleteCourseGroup() {
         try {
             final Object args[] = { getCourseGroupID(), getContextID() };
-            ServiceUtils.executeService(getUserView(), "DeleteContextFromDegreeModule", args);
+            ServiceUtils.executeService( "DeleteContextFromDegreeModule", args);
             addInfoMessage(bolonhaBundle.getString("courseGroupDeleted"));
             return "editCurricularPlanStructure";
         } catch (FenixFilterException e) {
@@ -152,7 +152,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
             Object args[] = { getCourseGroup(getCourseGroupID()),
                     getCourseGroup(getParentCourseGroupID()), getBeginExecutionPeriodID(),
                     getFinalEndExecutionPeriodID() };
-            ServiceUtils.executeService(getUserView(), "AddContextToCourseGroup", args);
+            ServiceUtils.executeService( "AddContextToCourseGroup", args);
             addInfoMessage(bolonhaBundle.getString("courseGroupAssociated"));
             return "editCurricularPlanStructure";
         } catch (FenixActionException e) {
@@ -197,7 +197,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
     public String orderCourseGroup() {
         try {
             Object args[] = { getContextID(), getPosition() };
-            ServiceUtils.executeService(getUserView(), "OrderDegreeModule", args);
+            ServiceUtils.executeService( "OrderDegreeModule", args);
             addInfoMessage(bolonhaBundle.getString("courseGroupMoved"));
             return "editCurricularPlanStructure";
         } catch (FenixFilterException e) {

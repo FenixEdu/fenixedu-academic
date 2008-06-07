@@ -17,12 +17,13 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -43,12 +44,12 @@ public class EditGrantProjectAction extends FenixDispatchAction {
         if (idGrantProject != null) { // Edit
             try {
                 DynaValidatorForm grantProjectForm = (DynaValidatorForm) form;
-                IUserView userView = SessionUtils.getUserView(request);
+                IUserView userView = UserView.getUser();
 
                 // Read the grant project
                 Object[] args = { idGrantProject };
                 InfoGrantProject infoGrantProject = (InfoGrantProject) ServiceUtils.executeService(
-                        userView, "ReadGrantPaymentEntity", args);
+                        "ReadGrantPaymentEntity", args);
 
                 // Populate the form
                 setFormGrantProject(grantProjectForm, infoGrantProject);
@@ -67,7 +68,7 @@ public class EditGrantProjectAction extends FenixDispatchAction {
 
         InfoGrantProject infoGrantProject = new InfoGrantProject();
         try {
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
 
             DynaValidatorForm editGrantProjectForm = (DynaValidatorForm) form;
             infoGrantProject = populateInfoFromForm(editGrantProjectForm);
@@ -76,7 +77,7 @@ public class EditGrantProjectAction extends FenixDispatchAction {
             InfoTeacher infoTeacher = null;
             if (infoGrantProject.getInfoResponsibleTeacher() != null) {
                 Object[] argsTeacher = { infoGrantProject.getInfoResponsibleTeacher().getTeacherNumber() };
-                infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByNumber",
+                infoTeacher = (InfoTeacher) ServiceUtils.executeService("ReadTeacherByNumber",
                         argsTeacher);
             }
 
@@ -92,7 +93,7 @@ public class EditGrantProjectAction extends FenixDispatchAction {
             if (infoGrantProject.getInfoGrantCostCenter() != null) {
                 Object[] argsCostCenter = { infoGrantProject.getInfoGrantCostCenter().getNumber(),
                 	GrantCostCenter.class.getName() };
-                infoGrantCostCenter = (InfoGrantCostCenter) ServiceUtils.executeService(userView,
+                infoGrantCostCenter = (InfoGrantCostCenter) ServiceUtils.executeService(
                         "ReadPaymentEntityByNumberAndClass", argsCostCenter);
             }
 
@@ -105,7 +106,7 @@ public class EditGrantProjectAction extends FenixDispatchAction {
 
             // Edit-Create the project
             Object[] args = { infoGrantProject };
-            ServiceUtils.executeService(userView, "EditGrantPaymentEntity", args);
+            ServiceUtils.executeService("EditGrantPaymentEntity", args);
 
             return mapping.findForward("manage-grant-project");
         } catch (ExistingServiceException e) {

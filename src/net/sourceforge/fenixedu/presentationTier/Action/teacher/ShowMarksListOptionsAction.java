@@ -47,7 +47,7 @@ public class ShowMarksListOptionsAction extends FenixDispatchAction {
 
         TeacherAdministrationSiteView siteView = null;
         try {
-            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(userView,
+            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(
                     "TeacherAdministrationSiteComponentService", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

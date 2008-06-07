@@ -28,7 +28,7 @@ public class UpdateGratuitySituations extends FenixBackingBean {
 
         Object[] args = { this.executionYear };
         try {
-            ServiceUtils.executeService(userView, "CreateGratuitySituationsForCurrentExecutionYear",
+            ServiceUtils.executeService("CreateGratuitySituationsForCurrentExecutionYear",
                     args);
 
         } catch (FenixFilterException e) {
@@ -41,7 +41,7 @@ public class UpdateGratuitySituations extends FenixBackingBean {
 
         try {
             Object[] argsEmpty = {};
-            List<LabelValueBean> executionYears = (List) ServiceUtils.executeService(userView,
+            List<LabelValueBean> executionYears = (List) ServiceUtils.executeService(
                     "ReadNotClosedExecutionYears", argsEmpty);
 
             CollectionUtils.transform(executionYears, new Transformer() {

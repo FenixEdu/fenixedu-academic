@@ -22,10 +22,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
@@ -35,6 +32,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -85,7 +86,7 @@ public class ListPayedInsurancesDispatchAction extends FenixDispatchAction {
 
         Object[] args = { executionYear, beginDate, endDate };
         List<InsuranceTransaction> payedInsurances = (List<InsuranceTransaction>) ServiceUtils
-                .executeService(SessionUtils.getUserView(request), "ListPayedInsurancesByDates", args);
+                .executeService( "ListPayedInsurancesByDates", args);
 
         ResourceBundle rb = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
         String functionalityName = rb

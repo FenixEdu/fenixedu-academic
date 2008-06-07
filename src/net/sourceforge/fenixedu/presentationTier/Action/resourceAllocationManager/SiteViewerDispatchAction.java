@@ -60,7 +60,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
         boolean result = true;
         try {
             ExecutionCourseSiteView siteView = (ExecutionCourseSiteView) ServiceUtils.executeService(
-                    null, "ExecutionCourseSiteComponentService", args);
+                    "ExecutionCourseSiteComponentService", args);
             request.setAttribute("objectCode", objectCode);
             if (siteView == null) {
                 result = false;

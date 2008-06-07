@@ -36,7 +36,7 @@ public class ListAllSeminaries extends FenixAction {
         List currentCandidacies = null;
         try {
             Object[] argsReadCandidacies = { userView.getPerson() };
-            currentCandidacies = (List) ServiceManagerServiceFactory.executeService(userView,
+            currentCandidacies = (List) ServiceManagerServiceFactory.executeService(
                     "Seminaries.GetCandidaciesByStudentID", argsReadCandidacies);
         } catch (Exception e) {
             throw new FenixActionException(e);
@@ -54,7 +54,7 @@ public class ListAllSeminaries extends FenixAction {
         List candidaciesToDisplay = new LinkedList();
         try {
             Object[] args = { new Boolean(true) };
-            seminaries = (List) ServiceManagerServiceFactory.executeService(userView,
+            seminaries = (List) ServiceManagerServiceFactory.executeService(
                     "Seminaries.GetAllSeminaries", args);
             for (Iterator iter = currentCandidacies.iterator(); iter.hasNext();) {
                 InfoCandidacy infoCandidacy = (InfoCandidacy) iter.next();

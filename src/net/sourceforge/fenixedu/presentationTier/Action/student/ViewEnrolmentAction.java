@@ -9,11 +9,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author tfc130
@@ -24,13 +25,13 @@ public class ViewEnrolmentAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         HttpSession session = request.getSession(false);
 
         Object argsReadShiftEnrolment[] = { (InfoStudent) session.getAttribute("infoStudent") };
 
-        InfoShiftEnrolment iSE = (InfoShiftEnrolment) ServiceUtils.executeService(userView,
+        InfoShiftEnrolment iSE = (InfoShiftEnrolment) ServiceUtils.executeService(
                 "ReadShiftEnrolment", argsReadShiftEnrolment);
 
         session.removeAttribute("infoShiftEnrolment");

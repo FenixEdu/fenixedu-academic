@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -21,7 +20,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -75,8 +73,6 @@ public class DefineExamCommentActionDA extends
     public ActionForward define(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
-
         DynaValidatorForm defineExamCommentForm = (DynaValidatorForm) form;
 
         String comment = (String) defineExamCommentForm.get("comment");
@@ -87,7 +83,7 @@ public class DefineExamCommentActionDA extends
         // Define comment
         Object argsDefineComment[] = { executionCourseCode, infoExecutionPeriod.getIdInternal(), comment };
         try {
-            ServiceUtils.executeService(userView, "DefineExamComment", argsDefineComment);
+            ServiceUtils.executeService("DefineExamComment", argsDefineComment);
         } catch (ExistingServiceException ex) {
             throw new ExistingActionException("O comentario do exame", ex);
         }
@@ -96,8 +92,6 @@ public class DefineExamCommentActionDA extends
     }
 
     private InfoExamsMap getExamsMap(HttpServletRequest request) throws FenixActionException, FenixFilterException {
-        IUserView userView = getUserView(request);
-
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
                 .getAttribute(SessionConstants.EXECUTION_DEGREE);
 
@@ -109,7 +103,7 @@ public class DefineExamCommentActionDA extends
         Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
         InfoExamsMap infoExamsMap;
         try {
-            infoExamsMap = (InfoExamsMap) ServiceManagerServiceFactory.executeService(userView,
+            infoExamsMap = (InfoExamsMap) ServiceManagerServiceFactory.executeService(
                     "ReadExamsMap", args);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e);

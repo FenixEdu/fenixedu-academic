@@ -40,7 +40,7 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
             /* Cria o form bean com as licenciaturas em execucao. */
             Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-            List executionDegreeList = (List) ServiceUtils.executeService(userView,
+            List executionDegreeList = (List) ServiceUtils.executeService(
                     "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
             Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
@@ -63,7 +63,7 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
             //				setExecutionContext(request);
 
             Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
-            List infoExecutionDegreeList = (List) ServiceUtils.executeService(userView,
+            List infoExecutionDegreeList = (List) ServiceUtils.executeService(
                     "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
             Collections.sort(infoExecutionDegreeList, new ComparatorByNameForInfoExecutionDegree());
 

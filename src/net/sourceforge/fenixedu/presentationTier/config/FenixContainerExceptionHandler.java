@@ -13,13 +13,14 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.config.ExceptionConfig;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * 
@@ -40,7 +41,7 @@ public class FenixContainerExceptionHandler extends FenixExceptionHandler {
             }
         }
         
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
         if (userView != null) {
             final Person person = userView.getPerson();
             request.setAttribute("loggedPersonEmail", person.getEmail());

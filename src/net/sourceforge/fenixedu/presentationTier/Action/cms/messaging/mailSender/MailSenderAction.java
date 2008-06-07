@@ -248,7 +248,7 @@ public abstract class MailSenderAction extends FenixDispatchAction {
             throws FenixActionException {
         try {
             SendMailReport result = (SendMailReport) ServiceManagerServiceFactory
-                    .executeService(userView, "SendEMail",
+                    .executeService( "SendEMail",
                             new Object[] { parameters });
             processReport(request, resources, result);
         } catch (Exception e) {

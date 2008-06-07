@@ -46,7 +46,7 @@ public class UnitAnnouncementBoardsManagement
         }
 	
 	try {
-	    ServiceUtils.executeService(getUserView(request), "DeleteAnnouncementBoard",
+	    ServiceUtils.executeService("DeleteAnnouncementBoard",
 		    new Object[] { this.getRequestedAnnouncementBoard(request) });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey());

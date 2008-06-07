@@ -17,11 +17,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class StudentOptionalEnrolmentsDA extends FenixDispatchAction {
 
@@ -67,7 +68,7 @@ public class StudentOptionalEnrolmentsDA extends FenixDispatchAction {
 	final Context context = rootDomainObject.readContextByOID(contextID);
 
 	try {
-	    ServiceUtils.executeService(getUserView(request), "CreateOptionalEnrolment", new Object[] { studentCurricularPlan,
+	    ServiceUtils.executeService("CreateOptionalEnrolment", new Object[] { studentCurricularPlan,
 		    executionSemester, (CurriculumGroup) rootDomainObject.readCurriculumModuleByOID(curriculumGroupID),
 		    rootDomainObject.readContextByOID(contextID),
 		    (CurricularCourse) rootDomainObject.readDegreeModuleByOID(optionalCCID), EnrollmentCondition.VALIDATED });

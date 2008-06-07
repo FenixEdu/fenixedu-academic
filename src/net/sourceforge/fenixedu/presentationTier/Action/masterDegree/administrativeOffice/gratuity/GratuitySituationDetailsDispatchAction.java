@@ -18,12 +18,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -35,7 +36,7 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
     public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         String gratuitySituationId = getFromRequest("gratuitySituationId", request);
         String studentId = getFromRequest("studentId", request);
@@ -48,7 +49,7 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
         InfoStudent infoStudent = null;
         Object argsStudent[] = { new Integer(studentId) };
         try {
-            infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "student.ReadStudentById",
+            infoStudent = (InfoStudent) ServiceUtils.executeService("student.ReadStudentById",
                     argsStudent);
 
         } catch (FenixServiceException e) {
@@ -64,7 +65,7 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
         InfoGratuitySituation infoGratuitySituation = null;
         Object argsGratuitySituation[] = { new Integer(gratuitySituationId) };
         try {
-            infoGratuitySituation = (InfoGratuitySituation) ServiceUtils.executeService(userView,
+            infoGratuitySituation = (InfoGratuitySituation) ServiceUtils.executeService(
                     "ReadGratuitySituationById", argsGratuitySituation);
 
         } catch (ExcepcaoInexistente e) {
@@ -79,7 +80,7 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
         Object argsTransactions[] = { infoGratuitySituation.getIdInternal() };
 
         try {
-            infoTransactions = (List) ServiceUtils.executeService(userView,
+            infoTransactions = (List) ServiceUtils.executeService(
                     "ReadAllTransactionsByGratuitySituationID", argsTransactions);
 
         } catch (FenixServiceException e) {

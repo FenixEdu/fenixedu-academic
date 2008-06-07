@@ -49,8 +49,6 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 import net.sourceforge.fenixedu.util.spaceBlueprints.SpaceBlueprintsDWGProcessor;
@@ -64,6 +62,9 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ManageSpacesDA extends FenixDispatchAction {
 
@@ -408,7 +409,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	if(space != null && space.isAllocatableSpace() && day != null) {
 	    Object args[] = { space, day };
-	    List<InfoObject> showOccupations = (List<InfoObject>) ServiceUtils.executeService(getUserView(request), "ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom", args);
+	    List<InfoObject> showOccupations = (List<InfoObject>) ServiceUtils.executeService("ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom", args);
 	    request.setAttribute(SessionConstants.LESSON_LIST_ATT, showOccupations);	    
 	}
 

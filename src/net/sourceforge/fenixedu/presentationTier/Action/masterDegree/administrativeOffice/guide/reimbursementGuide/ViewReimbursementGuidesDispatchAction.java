@@ -18,11 +18,12 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidGuideS
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -34,7 +35,7 @@ public class ViewReimbursementGuidesDispatchAction extends FenixDispatchAction {
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer guideNumber = new Integer(this.getFromRequest("number", request));
         Integer guideYear = new Integer(this.getFromRequest("year", request));
@@ -44,7 +45,7 @@ public class ViewReimbursementGuidesDispatchAction extends FenixDispatchAction {
 
         Object args[] = { guideNumber, guideYear, guideVersion };
         try {
-            infoGuide = (InfoGuide) ServiceUtils.executeService(userView, "ChooseGuide", args);
+            infoGuide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
 
             request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDES_LIST, infoGuide
                     .getInfoReimbursementGuides());

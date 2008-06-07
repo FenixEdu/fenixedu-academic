@@ -18,11 +18,12 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculum
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class StudentExtraEnrolmentsDA extends FenixDispatchAction {
 
@@ -85,7 +86,7 @@ public class StudentExtraEnrolmentsDA extends FenixDispatchAction {
 	final ExecutionSemester executionPeriod = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
 	try {
-	    ServiceUtils.executeService(getUserView(request), "CreateExtraEnrolment", new Object[] { studentCurricularPlan,
+	    ServiceUtils.executeService("CreateExtraEnrolment", new Object[] { studentCurricularPlan,
 		    executionPeriod, (CurricularCourse) rootDomainObject.readDegreeModuleByOID(optionalCCID), groupType });
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());

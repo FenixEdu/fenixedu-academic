@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -27,6 +26,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
@@ -37,12 +38,12 @@ public class EditInstitutionDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         ActionErrors actionErrors = new ActionErrors();
         Object args[] = {};
 
         try {
-            List infoInstitutions = (List) ServiceUtils.executeService(userView,
+            List infoInstitutions = (List) ServiceUtils.executeService(
                     "ReadAllInstitutions", args);
 
             if (infoInstitutions != null) {
@@ -81,7 +82,7 @@ public class EditInstitutionDispatchAction extends FenixDispatchAction {
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm editInstitutionForm = (DynaActionForm) form;
 
@@ -91,7 +92,7 @@ public class EditInstitutionDispatchAction extends FenixDispatchAction {
         Object args[] = { oldInstitutionId, newInstitutionName };
 
         try {
-            ServiceUtils.executeService(userView, "EditInstitution", args);
+            ServiceUtils.executeService("EditInstitution", args);
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e.getMessage(), mapping
                     .findForward("errorLocationAlreadyExists"));

@@ -18,12 +18,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author lmac1
@@ -35,7 +36,7 @@ public class SaveTeachersBodyAction extends FenixAction {
             HttpServletResponse response) throws FenixActionException, FenixServiceException,
             FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
         DynaActionForm actionForm = (DynaActionForm) form;
 
@@ -52,7 +53,7 @@ public class SaveTeachersBodyAction extends FenixAction {
         Boolean result;
         
         try {
-            result = (Boolean) ServiceUtils.executeService(userView, "SaveTeachersBody", args);
+            result = (Boolean) ServiceUtils.executeService("SaveTeachersBody", args);
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e.getMessage(), mapping
@@ -61,7 +62,7 @@ public class SaveTeachersBodyAction extends FenixAction {
         
         Object args1[] = { nonAffilTeachersIds, executionCourseId };
         try {
-            ServiceUtils.executeService(userView, "UpdateNonAffiliatedTeachersProfessorship", args1);
+            ServiceUtils.executeService("UpdateNonAffiliatedTeachersProfessorship", args1);
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e.getMessage(), mapping

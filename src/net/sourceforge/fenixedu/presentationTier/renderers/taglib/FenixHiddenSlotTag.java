@@ -8,12 +8,13 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+
+import org.apache.struts.taglib.TagUtils;
+
 import pt.ist.fenixWebFramework.renderers.components.state.HiddenSlot;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
 import pt.ist.fenixWebFramework.renderers.taglib.HiddenSlotTag;
-
-import org.apache.struts.taglib.TagUtils;
 
 public class FenixHiddenSlotTag extends HiddenSlotTag {
 

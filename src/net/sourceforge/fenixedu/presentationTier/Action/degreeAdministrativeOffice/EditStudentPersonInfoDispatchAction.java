@@ -71,7 +71,7 @@ public class EditStudentPersonInfoDispatchAction extends FenixDispatchAction {
 	    InfoPerson infoPerson = null;
 	    Object args[] = { personId };
 	    try {
-		infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
+		infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(
 			"ReadPersonByID", args);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
@@ -90,7 +90,7 @@ public class EditStudentPersonInfoDispatchAction extends FenixDispatchAction {
 
 	    //          Get List of available Countries
 	    Object result = null;
-	    result = ServiceManagerServiceFactory.executeService(userView, "ReadAllCountries", null);
+	    result = ServiceManagerServiceFactory.executeService( "ReadAllCountries", null);
 	    List country = (ArrayList) result;
 
 	    //          Build List of Countries for the Form
@@ -236,7 +236,7 @@ public class EditStudentPersonInfoDispatchAction extends FenixDispatchAction {
 
 	    InfoPerson newInfoPerson = null;
 	    try {
-		newInfoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
+		newInfoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(
 			"EditPersonalStudentInfo", args);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);

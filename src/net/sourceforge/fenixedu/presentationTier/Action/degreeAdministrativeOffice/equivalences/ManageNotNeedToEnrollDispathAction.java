@@ -156,7 +156,7 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
 	Integer studentCurricularPlanID = (Integer) notNeedToEnrollForm.get("studentCurricularPlanID");
 
 	Object[] args = { studentCurricularPlanID, curricularCoursesID };
-	ServiceManagerServiceFactory.executeService(getUserView(request),
+	ServiceManagerServiceFactory.executeService(
 		"InsertNotNeedToEnrollInCurricularCourses", args);
 
 	request.setAttribute("insert", "insert");
@@ -171,7 +171,7 @@ public class ManageNotNeedToEnrollDispathAction extends FenixDispatchAction {
 	final IUserView userView = getUserView(request);
 
 	final Object[] args = { Integer.valueOf((String) request.getParameter("notNeedToEnrollID")) };
-	ServiceManagerServiceFactory.executeService(userView, "DeleteNotNeedToEnrollInCurricularCourse",
+	ServiceManagerServiceFactory.executeService( "DeleteNotNeedToEnrollInCurricularCourse",
 		args);
 
 	return prepareNotNeedToEnroll(mapping, form, request, response);

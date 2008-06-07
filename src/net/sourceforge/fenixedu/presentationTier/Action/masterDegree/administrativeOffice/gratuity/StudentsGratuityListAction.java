@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -40,6 +39,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author Tânia Pousão
  * 
@@ -52,7 +53,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         List executionYears = null;
         Object[] args = {};
         try {
-            executionYears = (List) ServiceManagerServiceFactory.executeService(null,
+            executionYears = (List) ServiceManagerServiceFactory.executeService(
                     "ReadNotClosedExecutionYears", args);
         } catch (FenixServiceException e) {
             throw new FenixServiceException();
@@ -96,7 +97,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm studentListForm = (DynaActionForm) actionForm;
         String executionYear = (String) studentListForm.get("executionYear");
@@ -105,7 +106,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         Object args[] = { executionYear, DegreeType.MASTER_DEGREE };
         List executionDegreeList = null;
         try {
-            executionDegreeList = (List) ServiceManagerServiceFactory.executeService(userView,
+            executionDegreeList = (List) ServiceManagerServiceFactory.executeService(
                     "ReadExecutionDegreesByExecutionYearAndDegreeType", args);
         } catch (FenixServiceException e) {
             errors.add("impossibleOperation", new ActionError(
@@ -206,7 +207,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         Object[] args = { executionDegreeId, executionYear, specialization, situation };
         HashMap result = null;
         try {
-            result = (HashMap) ServiceManagerServiceFactory.executeService(userView,
+            result = (HashMap) ServiceManagerServiceFactory.executeService(
                     "ReadGratuitySituationListByExecutionDegreeAndSpecialization", args);
         } catch (FenixServiceException exception) {
             exception.printStackTrace();
@@ -299,7 +300,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         Object[] yearArgs = { degreeCurricularPlanID };
         List executionYearList = null;
         try {
-            executionYearList = (List) ServiceManagerServiceFactory.executeService(userView,
+            executionYearList = (List) ServiceManagerServiceFactory.executeService(
                     "ReadExecutionYearsByDegreeCurricularPlanID", yearArgs);
         } catch (FenixServiceException exception) {
             exception.printStackTrace();
@@ -314,7 +315,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         HashMap gratuityList = null;
 
         try {
-            gratuityList = (HashMap) ServiceManagerServiceFactory.executeService(userView,
+            gratuityList = (HashMap) ServiceManagerServiceFactory.executeService(
                     "ReadGratuitySituationListByExecutionDegreeAndSpecialization", gratuityArgs);
         } catch (FenixServiceException exception) {
             exception.printStackTrace();
@@ -385,7 +386,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         args[0] = degreeCurricularPlanID;
 
         try {
-            infoExecutionDegrees = (List) ServiceManagerServiceFactory.executeService(userView,
+            infoExecutionDegrees = (List) ServiceManagerServiceFactory.executeService(
                     "ReadExecutionDegreesByDegreeCurricularPlanID", args);
         } catch (FenixServiceException exception) {
             throw new FenixActionException(exception);

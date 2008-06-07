@@ -14,11 +14,8 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
-import net.sourceforge.fenixedu.domain.assiduousness.Schedule;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
@@ -32,6 +29,8 @@ import org.apache.struts.action.ActionMessages;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class VacationsManagementDispatchAction extends FenixDispatchAction {
 
@@ -74,7 +73,7 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 
 	spreadsheet.addHeader("Média de horas");
 
-	ServiceUtils.executeService(SessionUtils.getUserView(request), "CalculateArticles17And18", new Object[] { yearMonth
+	ServiceUtils.executeService("CalculateArticles17And18", new Object[] { yearMonth
 		.getYear() });
 
 	YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear() - 1, 1, 1);

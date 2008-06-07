@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.validators;
 
+import org.joda.time.DateTime;
+
 import pt.ist.fenixWebFramework.renderers.components.HtmlSimpleValueComponent;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
-
-import org.joda.time.DateTime;
 
 public class FutureDateTimeValidator extends DateTimeValidator {
 

@@ -15,12 +15,13 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContr
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidy;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -53,7 +54,7 @@ public class EditGrantSubsidyAction extends FenixDispatchAction {
             return mapping.findForward("edit-grant-subsidy");
         }
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaValidatorForm grantSubsidyForm = (DynaValidatorForm) form;
 
         try {
@@ -63,7 +64,7 @@ public class EditGrantSubsidyAction extends FenixDispatchAction {
             {
                 //Read the contract
                 Object[] args3 = { idContract };
-                infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(userView,
+                infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(
                         "ReadGrantContract", args3);
                 if (infoGrantContract != null) {
                     request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
@@ -76,12 +77,12 @@ public class EditGrantSubsidyAction extends FenixDispatchAction {
                 //Read the subsidy
                 Object[] args = { idSubsidy };
                 InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) ServiceUtils.executeService(
-                        userView, "ReadGrantSubsidy", args);
+                        "ReadGrantSubsidy", args);
 
                 idContract = infoGrantSubsidy.getInfoGrantContract().getIdInternal();
                 //Read the contract
                 Object[] args2 = { idContract };
-                infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(userView,
+                infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(
                         "ReadGrantContract", args2);
                 if (infoGrantContract != null) {
                     request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
@@ -116,7 +117,7 @@ public class EditGrantSubsidyAction extends FenixDispatchAction {
                 return setError(request, mapping, "errors.grant.subsidy.conflictdates", null, null);
             }
 
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
             if (infoGrantSubsidy.getState().equals(Integer.valueOf(-1))) {
                 //If is a new Subsidy
                 infoGrantSubsidy.setState(new Integer(1)); //Active the subsidy
@@ -124,7 +125,7 @@ public class EditGrantSubsidyAction extends FenixDispatchAction {
 
             //Save the subsidy
             Object[] args = { infoGrantSubsidy };
-            ServiceUtils.executeService(userView, "EditGrantSubsidy", args);
+            ServiceUtils.executeService("EditGrantSubsidy", args);
             request.setAttribute("idInternal", editGrantSubsidyForm.get("idGrantOwner"));
 
         } catch (FenixServiceException e) {

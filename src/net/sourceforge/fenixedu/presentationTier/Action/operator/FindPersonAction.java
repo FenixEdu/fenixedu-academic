@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
@@ -25,6 +24,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
@@ -41,7 +41,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	ActionErrors errors = new ActionErrors();
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm findPersonForm = (DynaActionForm) actionForm;
 	String username = null;
@@ -64,7 +64,7 @@ public class FindPersonAction extends FenixDispatchAction {
 
 	CollectionPager<Person> result = null;
 	try {
-	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService(userView,
+	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService(
 		    "SearchPerson", args);
 
 	} catch (FenixServiceException e) {

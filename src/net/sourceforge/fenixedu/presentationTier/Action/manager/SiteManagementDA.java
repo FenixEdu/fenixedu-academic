@@ -33,8 +33,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.person.ModifiedContentBean;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -42,6 +40,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
@@ -587,7 +587,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	}
 
 	try {
-	    ServiceUtils.executeService(getUserView(request), "DeleteFileContent", fileContent);
+	    ServiceUtils.executeService("DeleteFileContent", fileContent);
 	} catch (FileManagerException e1) {
 	    addErrorMessage(request, "items", "errors.unableToDeleteFile");
 	}
@@ -659,7 +659,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	FileItemPermissionBean bean = (FileItemPermissionBean) viewState.getMetaObject().getObject();
 	try {
 	    Site site = fileItem.getSite();
-	    ServiceUtils.executeService(getUserView(request), "EditFilePermissions", site, fileItem, bean.getPermittedGroup());
+	    ServiceUtils.executeService("EditFilePermissions", site, fileItem, bean.getPermittedGroup());
 	    return mapping.findForward("section");
 	} catch (FileManagerException ex) {
 	    addErrorMessage(request, "error.teacher.siteAdministration.editItemFilePermissions.unableToChangeFilePermissions");

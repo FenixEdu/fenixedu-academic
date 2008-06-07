@@ -20,8 +20,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
-import pt.ist.fenixWebFramework.renderers.components.state.ViewState;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.action.ActionForm;
@@ -31,6 +29,9 @@ import org.apache.struts.action.DynaActionForm;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.Period;
+
+import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
+import pt.ist.fenixWebFramework.renderers.components.state.ViewState;
 
 public class WeeklyWorkLoadDA extends FenixDispatchAction {
 

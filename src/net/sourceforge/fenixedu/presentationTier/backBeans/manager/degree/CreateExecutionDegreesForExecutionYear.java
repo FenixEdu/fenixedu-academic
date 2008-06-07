@@ -319,7 +319,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixBackingBean {
 
         try {
             createdDegreeCurricularPlans = (List<DegreeCurricularPlan>) ServiceUtils.executeService(
-                    getUserView(), "CreateExecutionDegreesForExecutionYear", args);
+                    "CreateExecutionDegreesForExecutionYear", args);
         } catch (FenixFilterException e) {
             throw new FenixActionException(e);
         } catch (FenixServiceException e) {

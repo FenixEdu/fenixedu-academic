@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -32,6 +31,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author jpvl
@@ -55,8 +56,8 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 
     private Object executeService(String serviceName, HttpServletRequest request, Object[] arguments)
             throws FenixServiceException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
-        return ServiceUtils.executeService(userView, serviceName, arguments);
+        IUserView userView = UserView.getUser();
+        return ServiceUtils.executeService(serviceName, arguments);
     }
 
     private List getExecutionDegrees(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
@@ -93,10 +94,10 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 
     private void prepareFirstStep(DynaValidatorForm teacherExecutionCourseForm,
             HttpServletRequest request) throws FenixServiceException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         prepareConstants(teacherExecutionCourseForm, request);
 
-        List executionPeriodsNotClosed = (List) ServiceUtils.executeService(userView,
+        List executionPeriodsNotClosed = (List) ServiceUtils.executeService(
                 "ReadNotClosedExecutionPeriods", null);
 
         setChoosedExecutionPeriod(request, executionPeriodsNotClosed, teacherExecutionCourseForm);

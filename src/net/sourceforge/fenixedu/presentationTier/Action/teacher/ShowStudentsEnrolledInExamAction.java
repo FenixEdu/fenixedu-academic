@@ -46,7 +46,7 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction {
         final Object[] args = { executionCourseCode, writtenEvaluationCode };
         SiteView siteView = null;
         try {
-            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadStudentsEnrolledInWrittenEvaluation",
+            siteView = (SiteView) ServiceUtils.executeService("ReadStudentsEnrolledInWrittenEvaluation",
                     args);
         } catch (FenixServiceException e) {
             ActionErrors actionErrors = new ActionErrors();

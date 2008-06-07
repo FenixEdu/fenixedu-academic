@@ -49,7 +49,7 @@ public class SelectRoomsFormAction extends FenixContextAction {
 
 	    List infoRooms;
 	    try {
-		infoRooms = (List) ServiceUtils.executeService(null, "SelectRooms", argsSelectRooms);
+		infoRooms = (List) ServiceUtils.executeService("SelectRooms", argsSelectRooms);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
 	    }

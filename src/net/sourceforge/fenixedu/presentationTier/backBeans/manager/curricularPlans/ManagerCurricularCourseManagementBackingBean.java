@@ -114,7 +114,7 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 	    checkCourseGroup();
 	    checkCurricularSemesterAndYear();
 
-	    ServiceUtils.executeService(getUserView(), "CreateOldCurricularCourse", getArgumentsToCreate());
+	    ServiceUtils.executeService( "CreateOldCurricularCourse", getArgumentsToCreate());
 
 	} catch (FenixActionException e) {
 	    this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
@@ -145,7 +145,7 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 
     public String editOldCurricularCourse() throws FenixFilterException {
 	try {
-	    ServiceUtils.executeService(getUserView(), "EditOldCurricularCourse", getArgumentsToEdit());
+	    ServiceUtils.executeService( "EditOldCurricularCourse", getArgumentsToEdit());
 	    setContextID(0); // resetContextID
 	} catch (FenixServiceException e) {
 	    addErrorMessage(bolonhaBundle.getString(e.getMessage()));

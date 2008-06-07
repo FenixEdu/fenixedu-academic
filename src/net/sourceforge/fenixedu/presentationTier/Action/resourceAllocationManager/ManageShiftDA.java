@@ -37,6 +37,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  *  
@@ -106,7 +108,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
     public ActionForward editShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm editShiftForm = (DynaActionForm) form;
 
@@ -137,7 +139,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	Object argsCriarTurno[] = { infoShiftOld, infoShiftNew };
 	try {
-	    ServiceUtils.executeService(userView, "EditarTurno", argsCriarTurno);
+	    ServiceUtils.executeService("EditarTurno", argsCriarTurno);
 
 	} catch (DomainException ex) {
 	    ActionErrors actionErrors = new ActionErrors();
@@ -158,12 +160,12 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
 	ContextUtils.setClassContext(request);
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 	InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
 	Object argsRemove[] = { infoShift, infoClass };
-	ServiceUtils.executeService(userView, "RemoverTurno", argsRemove);
+	ServiceUtils.executeService("RemoverTurno", argsRemove);
 
 	ContextUtils.setShiftContext(request);
 	request.removeAttribute(SessionConstants.CLASS_VIEW);
@@ -192,7 +194,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	InfoShift infoShift = (InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
 	Object args[] = { infoShift, classOIDs };
-	ServiceUtils.executeService(SessionUtils.getUserView(request), "RemoveClasses", args);
+	ServiceUtils.executeService("RemoveClasses", args);
 
 	return mapping.findForward("EditShift");
 
@@ -220,7 +222,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	final Object args[] = { lessonOIDs };
 
 	try {
-	    ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteLessons", args);
+	    ServiceUtils.executeService("DeleteLessons", args);
 
 	} catch (FenixServiceMultipleException e) {
 	    final ActionErrors actionErrors = new ActionErrors();            
@@ -241,7 +243,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	ShiftKey shiftKey = new ShiftKey(infoShift.getNome(), infoShift.getInfoDisciplinaExecucao());
 
 	Object args[] = { shiftKey };
-	List<InfoStudent> students = (List<InfoStudent>) ServiceUtils.executeService(SessionUtils.getUserView(request),
+	List<InfoStudent> students = (List<InfoStudent>) ServiceUtils.executeService(
 		"LerAlunosDeTurno", args);
 
 	Collections.sort(students, new BeanComparator("number"));
@@ -254,7 +256,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	.getAttribute(SessionConstants.EXECUTION_COURSE);
 
 	Object args2[] = { infoExecutionCourse };
-	List<InfoShift> shifts = (List<InfoShift>) ServiceUtils.executeService(SessionUtils.getUserView(request),
+	List<InfoShift> shifts = (List<InfoShift>) ServiceUtils.executeService(
 		"LerTurnosDeDisciplinaExecucao", args2);
 
 	if (shifts != null && !shifts.isEmpty()) {
@@ -267,7 +269,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
     public ActionForward changeStudentsShift(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
 
@@ -286,7 +288,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	}
 
 	Object args[] = { userView, oldShiftId, newShiftId, registrations };
-	ServiceUtils.executeService(userView, "ChangeStudentsShift", args);
+	ServiceUtils.executeService("ChangeStudentsShift", args);
 
 	return mapping.findForward("Continue");
     }

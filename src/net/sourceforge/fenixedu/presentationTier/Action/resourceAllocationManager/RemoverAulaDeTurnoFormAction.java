@@ -14,12 +14,13 @@ import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Cruz & SaraRibeiro
@@ -35,11 +36,11 @@ public class RemoverAulaDeTurnoFormAction extends
             DynaActionForm editarAulasDeTurnoForm = (DynaActionForm) request
                     .getAttribute("editarAulasDeTurnoForm");
 
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
 
             Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
             Object args[] = { shiftOID };
-            InfoShift infoTurno = (InfoShift) ServiceManagerServiceFactory.executeService(userView,
+            InfoShift infoTurno = (InfoShift) ServiceManagerServiceFactory.executeService(
                     "ReadShiftByOID", args);
 
             InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
@@ -48,14 +49,14 @@ public class RemoverAulaDeTurnoFormAction extends
             Integer indexAula = (Integer) editarAulasDeTurnoForm.get("indexAula");
 
             Object argsLerAulasDeTurno[] = { new ShiftKey(infoTurno.getNome(), infoExecutionCourse) };
-            List infoAulas = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+            List infoAulas = (ArrayList) ServiceManagerServiceFactory.executeService(
                     "LerAulasDeTurno", argsLerAulasDeTurno);
 
             InfoLesson infoLesson = (InfoLesson) infoAulas.get(indexAula.intValue());
 
             Object argsRemoverAula[] = { infoLesson, infoTurno };
 
-            ServiceManagerServiceFactory.executeService(userView, "RemoverAula", argsRemoverAula);
+            ServiceManagerServiceFactory.executeService( "RemoverAula", argsRemoverAula);
 
             return mapping.findForward("Sucesso");
     }

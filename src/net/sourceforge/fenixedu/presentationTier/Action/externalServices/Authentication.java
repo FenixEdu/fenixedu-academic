@@ -47,10 +47,10 @@ public class Authentication extends FenixAction {
                     person = Person.readPersonByIstUsername(username);
                 }
                 if (person != null) {
-                	ServiceUtils.executeService(null, "SetUserUID", new Object[] { person } );
+                	ServiceUtils.executeService("SetUserUID", new Object[] { person } );
                 }
 
-                ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsAutenticacao);
+                ServiceManagerServiceFactory.executeService( "Autenticacao", argsAutenticacao);
                 result = true;
             }
 

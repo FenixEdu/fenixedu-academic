@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.domain.tests.NewPresentationMaterialType;
 import net.sourceforge.fenixedu.domain.tests.NewTestElement;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class PresentationMaterialManagementAction extends FenixDispatchAction {
@@ -99,7 +99,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
 		request.setAttribute("oid", presentationMaterial.getTestElement().getIdInternal());
 
-		ServiceUtils.executeService(getUserView(request), "DeletePresentationMaterial",
+		ServiceUtils.executeService("DeletePresentationMaterial",
 				new Object[] { presentationMaterial });
 
 		PresentationMaterialBean bean = (PresentationMaterialBean) getMetaObject("delete-presentation-material");
@@ -119,7 +119,7 @@ public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
 		Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 
-		ServiceUtils.executeService(getUserView(request), "SwitchPosition", new Object[] {
+		ServiceUtils.executeService("SwitchPosition", new Object[] {
 				presentationMaterial, relativePosition });
 
 		request.setAttribute("bean", new PresentationMaterialBean(presentationMaterial.getTestElement(),

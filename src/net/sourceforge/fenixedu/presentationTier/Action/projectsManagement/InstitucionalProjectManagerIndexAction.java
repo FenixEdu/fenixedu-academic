@@ -15,11 +15,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Susana Fernandes
@@ -30,9 +31,9 @@ public class InstitucionalProjectManagerIndexAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
 
-        ServiceManagerServiceFactory.executeService(userView, "ReviewProjectAccess", new Object[] {
+        ServiceManagerServiceFactory.executeService( "ReviewProjectAccess", new Object[] {
                 userView.getPerson(), mapping.getModuleConfig().getPrefix() });
         List<InfoRubric> infoCostCenterList = (List) ServiceManagerServiceFactory.executeService(
                 userView, "ReadUserCostCenters", new Object[] { userView.getPerson(),

@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -28,6 +27,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -49,7 +50,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
         //Get list of shifts and place them in request
         Object args[] = { infoClass };
 
-        List<InfoShift> infoShifts = (List<InfoShift>) ServiceUtils.executeService(SessionUtils.getUserView(request),
+        List<InfoShift> infoShifts = (List<InfoShift>) ServiceUtils.executeService(
                 "ReadShiftsByClass", args);
 
         if (infoShifts != null && !infoShifts.isEmpty()) {            
@@ -67,7 +68,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 
         String className = (String) classForm.get("className");
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         InfoClass infoClassOld = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
@@ -76,7 +77,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
 
         InfoClass infoClassNew = null;
         try {
-            infoClassNew = (InfoClass) ServiceUtils.executeService(userView, "EditarTurma", argsCriarTurma);
+            infoClassNew = (InfoClass) ServiceUtils.executeService("EditarTurma", argsCriarTurma);
        
         } catch (DomainException e) {
             throw new ExistingActionException("A SchoolClass", e);
@@ -91,7 +92,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
     public ActionForward removeShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
@@ -100,13 +101,13 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
         Object[] args = { shiftOID };
         InfoShift infoShift = null;
         try {
-            infoShift = (InfoShift) ServiceUtils.executeService(userView, "ReadShiftByOID", args);
+            infoShift = (InfoShift) ServiceUtils.executeService("ReadShiftByOID", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException();
         }
 
         Object argsRemove[] = { infoShift, infoClass };
-        ServiceUtils.executeService(userView, "RemoverTurno", argsRemove);
+        ServiceUtils.executeService("RemoverTurno", argsRemove);
 
         return prepare(mapping, form, request, response);
     }
@@ -119,7 +120,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
         //Get list of available shifts and place them in request
         Object args[] = { infoClass };
 
-        List<InfoShift> infoShifts = (List<InfoShift>) ServiceUtils.executeService(SessionUtils.getUserView(request),
+        List<InfoShift> infoShifts = (List<InfoShift>) ServiceUtils.executeService(
                 "ReadAvailableShiftsForClass", args);
 
         /* Sort the list of shifts */
@@ -134,7 +135,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
     public ActionForward viewSchedule(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
@@ -146,7 +147,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
         Object argsApagarTurma[] = { infoClass };
 
         /** InfoLesson List */
-        List<InfoLesson> lessonList = (ArrayList<InfoLesson>) ServiceUtils.executeService(userView, "LerAulasDeTurma",
+        List<InfoLesson> lessonList = (ArrayList<InfoLesson>) ServiceUtils.executeService("LerAulasDeTurma",
                 argsApagarTurma);
 
         request.setAttribute(SessionConstants.LESSON_LIST_ATT, lessonList);
@@ -175,7 +176,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
         InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
         Object args[] = { infoClass, shiftOIDs };
-        ServiceUtils.executeService(SessionUtils.getUserView(request), "RemoveShifts", args);
+        ServiceUtils.executeService("RemoveShifts", args);
 
         return mapping.findForward("EditClass");
 

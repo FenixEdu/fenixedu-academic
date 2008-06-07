@@ -42,7 +42,7 @@ public class SelectRoomsFormAction extends FenixAction {
             Integer executionPeriodId = (Integer) roomForm.get("executionPeriodId");
             List infoRooms;
             try {
-                infoRooms = (List) ServiceManagerServiceFactory.executeService(null, "SelectRooms", argsSelectRooms);
+                infoRooms = (List) ServiceManagerServiceFactory.executeService( "SelectRooms", argsSelectRooms);
             } catch (FenixServiceException e) {
                 throw new FenixActionException("Problemas a seleccionar salas", e);
             }

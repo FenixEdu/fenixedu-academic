@@ -16,12 +16,13 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameF
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author tfc130
@@ -33,7 +34,7 @@ public class PrepararEscolherContextoFormAction extends FenixContextAction {
 
         super.execute(mapping, form, request, response);
 
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
 
             InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
 
@@ -56,7 +57,7 @@ public class PrepararEscolherContextoFormAction extends FenixContextAction {
             /* Cria o form bean com as licenciaturas em execucao. */
             Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-            List executionDegreeList = (List) ServiceUtils.executeService(userView,
+            List executionDegreeList = (List) ServiceUtils.executeService(
                     "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
             Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
@@ -121,8 +122,8 @@ public class PrepararEscolherContextoFormAction extends FenixContextAction {
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
         if (infoExecutionPeriod == null) {
-            IUserView userView = SessionUtils.getUserView(request);
-            infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView,
+            IUserView userView = UserView.getUser();
+            infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
                     "ReadCurrentExecutionPeriod", new Object[0]);
 
             request.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);

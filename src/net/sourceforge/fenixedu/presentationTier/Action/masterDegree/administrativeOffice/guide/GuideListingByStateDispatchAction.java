@@ -59,7 +59,7 @@ public class GuideListingByStateDispatchAction extends FenixDispatchAction {
         List guideList = null;
         try {
             Object args[] = { year, situationOfGuide };
-            guideList = (List) ServiceManagerServiceFactory.executeService(userView,
+            guideList = (List) ServiceManagerServiceFactory.executeService(
                     "ListGuidesByState", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -23,11 +22,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 public class CurricularCourseCompetenceCourseDispatchAction extends FenixDispatchAction {
 	
     public ActionForward removeFromCompetenceCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException{
-       	IUserView userView = SessionUtils.getUserView(request);
+       	IUserView userView = UserView.getUser();
        	DynaActionForm actionForm = (DynaActionForm) form;
        	
        	Integer competenceCourseID = (Integer) actionForm.get("competenceCourseID");
@@ -35,7 +36,7 @@ public class CurricularCourseCompetenceCourseDispatchAction extends FenixDispatc
        	Object[] args = {competenceCourseID, curricularCoursesIDs};
        	
        	try {
-            ServiceUtils.executeService(userView, "RemoveCurricularCoursesFromCompetenceCourse", args);
+            ServiceUtils.executeService("RemoveCurricularCoursesFromCompetenceCourse", args);
        	} catch (NotExistingServiceException notExistingServiceException) {
             
         } catch (FenixServiceException fenixServiceException) {
@@ -47,7 +48,7 @@ public class CurricularCourseCompetenceCourseDispatchAction extends FenixDispatc
     
     public ActionForward addToCompetenceCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException{
-       	IUserView userView = SessionUtils.getUserView(request);
+       	IUserView userView = UserView.getUser();
        	DynaActionForm actionForm = (DynaActionForm) form;
        	
        	Integer competenceCourseID = (Integer) actionForm.get("competenceCourseID");
@@ -55,7 +56,7 @@ public class CurricularCourseCompetenceCourseDispatchAction extends FenixDispatc
        	Object[] args = {competenceCourseID, curricularCoursesIDs};
        	
        	try {
-            ServiceUtils.executeService(userView, "AssociateCurricularCoursesToCompetenceCourse", args);
+            ServiceUtils.executeService("AssociateCurricularCoursesToCompetenceCourse", args);
        	} catch (NotExistingServiceException notExistingServiceException) {
             
         } catch (FenixServiceException fenixServiceException) {
@@ -67,13 +68,13 @@ public class CurricularCourseCompetenceCourseDispatchAction extends FenixDispatc
     
     public ActionForward readDegrees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException{
-       	IUserView userView = SessionUtils.getUserView(request);
+       	IUserView userView = UserView.getUser();
        	Integer competenceCourseID = Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "competenceCourseID"));
        	DegreeType degreeType = DegreeType.DEGREE;
        	Object[] args = {degreeType};
        	List<InfoDegreeCurricularPlan> result = null;
        	try {
-       		result = (List<InfoDegreeCurricularPlan>) ServiceUtils.executeService(userView, "ReadDegreeCurricularPlansByDegreeType", args);
+       		result = (List<InfoDegreeCurricularPlan>) ServiceUtils.executeService("ReadDegreeCurricularPlansByDegreeType", args);
        	} catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
@@ -85,13 +86,13 @@ public class CurricularCourseCompetenceCourseDispatchAction extends FenixDispatc
     
     public ActionForward readCurricularCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException{
-       	IUserView userView = SessionUtils.getUserView(request);
+       	IUserView userView = UserView.getUser();
        	DynaActionForm actionForm = (DynaActionForm) form;
        	Integer degreeCurricularPlanID = (Integer) actionForm.get("degreeCurricularPlanID"); 
        	Object[] args = {degreeCurricularPlanID};
        	List<InfoCurricularCourse> result = null;
        	try {
-       		result = (List<InfoCurricularCourse>) ServiceUtils.executeService(userView, "ReadCurricularCoursesByDegreeCurricularPlan", args);
+       		result = (List<InfoCurricularCourse>) ServiceUtils.executeService("ReadCurricularCoursesByDegreeCurricularPlan", args);
        	} catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }

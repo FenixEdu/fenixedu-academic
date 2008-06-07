@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -34,6 +33,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Ricardo Rodrigues
@@ -46,7 +47,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 	    throws NumberFormatException, FenixFilterException, FenixServiceException, ParseException {
 
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	Integer executionPeriodID = (Integer) dynaActionForm.get("executionPeriodId");
 
@@ -103,7 +104,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 	List<InfoExecutionPeriod> notClosedExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
 	Object[] args = {};
 
-	notClosedExecutionPeriods = (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(null,
+	notClosedExecutionPeriods = (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(
 		"ReadNotClosedExecutionPeriods", args);
 
 	List<LabelValueBean> executionPeriods = getNotClosedExecutionPeriods(notClosedExecutionPeriods);

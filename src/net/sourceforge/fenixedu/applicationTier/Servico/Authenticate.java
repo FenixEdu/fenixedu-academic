@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.fenixframework.pstm.Transaction;
 import net.sourceforge.fenixedu.util.cas.CASServiceUrlProvider;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
@@ -42,6 +41,7 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import edu.yale.its.tp.cas.client.CASAuthenticationException;
 import edu.yale.its.tp.cas.client.CASReceipt;
@@ -154,10 +154,6 @@ public class Authenticate extends Service implements Serializable {
 
 	public DateTime getExpirationDate() {
 	    return expirationDate;
-	}
-
-	public boolean isPublicRequester() {
-	    return false;
 	}
 
 	@Override

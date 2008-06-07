@@ -7,6 +7,8 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@page import="net.sourceforge.fenixedu.domain.Person"%>
+<%@page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
+<%@page import="pt.ist.fenixWebFramework.security.UserView;"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
@@ -207,20 +209,6 @@
 	<bean:define id="tsdCourseId" name="tsdCourseDTOEntry" property="TSDCourse.idInternal"/>
 	<tr class='acenter' id=<%= tsdCourseId %>>
 		<td class='highlight7'>
-			<%--<%
-				if(((TSDCourse) tsdCourse).getHavePermissionToValuate(SessionUtils.getUserView(request).getPerson())) {
-			%>
-			<html:link page="<%= "/tsdCourse.do?method=prepareLinkForTSDCourse&amp;tsdProcess=" + 
-			tsdProcessId + "&amp;tsdCourse=" + tsdCourseId %>">
-				<bean:write name="tsdCourseDTOEntry" property="TSDCourse.name"/>
-			 </html:link>			
-			<%
-				} else {
-			%>
-				<bean:write name="tsdCourseDTOEntry" property="TSDCourse.name"/>
-			<%
-				}
-			%>--%>
 			<bean:write name="tsdCourseDTOEntry" property="TSDCourse.name"/>
 		</td>	
 <logic:equal name="viewCurricularInformation" value="true">
@@ -306,7 +294,8 @@
 						<%
 							Integer tsdTeacherId = ((TSDProfessorshipDTOEntry) tsdProfessorshipDTOEntry).getTSDTeacherDTOEntry().getTSDTeachers().get(0).getIdInternal();
 							TeacherServiceDistribution tsd = (TeacherServiceDistribution) request.getAttribute("selectedTSD");
-							Person person = SessionUtils.getUserView(request).getPerson();
+							IUserView userView = UserView.getUser();
+							Person person = userView.getPerson();
 							if(tsd.isMemberOfCoursesValuationManagers(person) || tsd.isMemberOfTeachersValuationManagers(person)) {
 						%>
 						<html:link page="<%= "/tsdProfessorship.do?method=prepareLinkForTSDProfessorshipByCourse&amp;tsdProcess=" + 

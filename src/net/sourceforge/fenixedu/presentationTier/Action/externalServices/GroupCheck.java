@@ -41,7 +41,7 @@ public class GroupCheck extends ExternalInterfaceDispatchAction {
             responseCode = NOT_AUTHORIZED_CODE;
         } else {
             try {
-                Boolean result = (Boolean) ServiceUtils.executeService(null, "GroupCheckService",
+                Boolean result = (Boolean) ServiceUtils.executeService("GroupCheckService",
                         new Object[] { query });
 
                 responseMessage = result.toString().toLowerCase();

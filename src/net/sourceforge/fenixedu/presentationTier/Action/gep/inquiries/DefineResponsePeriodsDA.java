@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
@@ -24,6 +22,9 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class DefineResponsePeriodsDA extends FenixDispatchAction {
 
@@ -60,7 +61,7 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
     public ActionForward define(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 
 	final DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
 
@@ -78,7 +79,7 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
 		+ ":00") : null;
 
 	final Object[] args = new Object[] { executionPeriodID, inquiryResponseBegin, inquiryResponseEnd };
-	ServiceUtils.executeService(userView, "DefineInquiryResponsePeriod", args);
+	ServiceUtils.executeService("DefineInquiryResponsePeriod", args);
 
 	final ActionMessages actionMessages = new ActionMessages();
 	actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("message.inquiry.response.period.defined"));

@@ -13,11 +13,12 @@ import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Leonor Almeida
@@ -34,11 +35,11 @@ public class ReadCourseInformationAction extends FenixAction {
      */
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         
         Object[] args1 = { new Integer(request.getParameter("executionCourseId")) };
         TeacherAdministrationSiteView teacherAdministrationSiteView = (TeacherAdministrationSiteView) ServiceUtils
-                .executeService(userView, "ReadCourseInformation", args1);
+                .executeService( "ReadCourseInformation", args1);
         InfoSiteCourseInformation infoSiteCourseInformation = (InfoSiteCourseInformation) teacherAdministrationSiteView
                 .getComponent();
         request.setAttribute("infoSiteCourseInformation", infoSiteCourseInformation);
@@ -46,7 +47,7 @@ public class ReadCourseInformationAction extends FenixAction {
         if (request.getParameter("executionDegreeId") != null) {
             Object[] args2 = { new Integer(request.getParameter("executionDegreeId")) };
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
-                    userView, "ReadExecutionDegreeByOID", args2);
+                    "ReadExecutionDegreeByOID", args2);
             request.setAttribute("infoExecutionDegree", infoExecutionDegree);
         }
 

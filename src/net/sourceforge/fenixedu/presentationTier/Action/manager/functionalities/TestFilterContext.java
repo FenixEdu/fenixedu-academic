@@ -42,12 +42,7 @@ public class TestFilterContext implements FunctionalityContext {
     }
 
     public User getLoggedUser() {
-        if (this.userView.isPublicRequester()) {
-            return null;
-        }
-        else {
-            return AccessControl.getPerson().getUser();
-        }
+	return this.userView == null ? null : AccessControl.getPerson().getUser();
     }
 
     public Module getSelectedModule() {

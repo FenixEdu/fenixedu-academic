@@ -9,12 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Cruz e Sara Ribeiro
@@ -24,7 +25,7 @@ public class ViewEmptyRoomsInDayAndShiftAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
 
             Calendar dateAndTime = (Calendar) request.getAttribute(SessionConstants.EXAM_DATEANDTIME);
 
@@ -47,7 +48,7 @@ public class ViewEmptyRoomsInDayAndShiftAction extends Action {
 
             // Chamar servico que vai ler salas vazias no dia escolhido
             Object[] args = { date, time };
-            List infoRoomsList = (List) ServiceManagerServiceFactory.executeService(userView,
+            List infoRoomsList = (List) ServiceManagerServiceFactory.executeService(
                     "ReadRoomsWithNoExamsInDayAndBeginning", args);
 
             if (infoRoomsList != null && infoRoomsList.isEmpty()) {

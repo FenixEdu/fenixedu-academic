@@ -49,9 +49,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-
-import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.pstm.MissingObjectException;
 import pt.ist.fenixframework.pstm.Transaction;
 import dml.DomainClass;

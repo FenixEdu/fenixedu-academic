@@ -22,24 +22,25 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class ReadPersonCandidatesAction extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Object args[] = { userView.getUtilizador() };
 
         List<InfoMasterDegreeCandidate> candidates = null;
         try {
-            candidates = (List<InfoMasterDegreeCandidate>) ServiceManagerServiceFactory.executeService(userView,
+            candidates = (List<InfoMasterDegreeCandidate>) ServiceManagerServiceFactory.executeService(
                     "ReadPersonCandidates", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

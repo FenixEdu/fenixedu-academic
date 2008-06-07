@@ -12,11 +12,12 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends
 	AcademicAdminOfficeBolonhaStudentEnrollmentDA {
@@ -49,7 +50,7 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends
 	RenderUtils.invalidateViewState();
 
 	try {
-	    ServiceUtils.executeService(getUserView(request), "ChangeSpecialSeasonCode", new Object[] {
+	    ServiceUtils.executeService("ChangeSpecialSeasonCode", new Object[] {
 		specialSeasonCodeBean.getStudentCurricularPlan().getRegistration(),
 		specialSeasonCodeBean.getExecutionPeriod().getExecutionYear(),
 		specialSeasonCodeBean.getSpecialSeasonCode() });

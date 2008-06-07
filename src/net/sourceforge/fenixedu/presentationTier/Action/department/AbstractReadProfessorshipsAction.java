@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -26,6 +25,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author jpvl
  */
@@ -33,7 +34,7 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
     
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         InfoTeacher infoTeacher = getInfoTeacher(request, dynaForm);
@@ -65,7 +66,8 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
             throws Exception {
         InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
         if (infoTeacher == null) {
-            infoTeacher = (InfoTeacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
+            final IUserView userView = UserView.getUser();
+            infoTeacher = (InfoTeacher) ServiceUtils.executeService(
                     "ReadTeacherByOID", new Object[] { Integer.valueOf(dynaForm.get("idInternal")
                             .toString()) });
             request.setAttribute("infoTeacher", infoTeacher);

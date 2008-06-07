@@ -11,11 +11,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author David Santos in Jul 28, 2004
@@ -26,7 +27,7 @@ public class DeleteRestrictionFromDegreeCurricularPlanAction extends FenixAction
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer degreeID = new Integer(request.getParameter("degreeId"));
         Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanId"));
@@ -36,8 +37,8 @@ public class DeleteRestrictionFromDegreeCurricularPlanAction extends FenixAction
         Object args2[] = { degreeCurricularPlanID };
 
         try {
-            ServiceUtils.executeService(userView, "DeleteRestrictionFromDegreeCurricularPlan", args1);
-            Map result = (Map) ServiceUtils.executeService(userView,
+            ServiceUtils.executeService("DeleteRestrictionFromDegreeCurricularPlan", args1);
+            Map result = (Map) ServiceUtils.executeService(
                     "ReadPrecedencesFromDegreeCurricularPlan", args2);
             request.setAttribute("precedences", result);
         } catch (FenixServiceException e) {

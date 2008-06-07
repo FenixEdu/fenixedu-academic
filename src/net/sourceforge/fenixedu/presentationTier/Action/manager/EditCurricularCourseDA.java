@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -29,6 +28,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author lmac1
@@ -38,7 +39,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
@@ -48,7 +49,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
         Object args[] = { curricularCourseId };
 
         try {
-            oldInfoCurricularCourse = (InfoCurricularCourse) ServiceUtils.executeService(userView,
+            oldInfoCurricularCourse = (InfoCurricularCourse) ServiceUtils.executeService(
                     "ReadCurricularCourse", args);
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException("message.nonExistingCurricularCourse", mapping
@@ -106,7 +107,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException, FenixServiceException,
             FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
@@ -194,7 +195,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
         Object args[] = { newInfoCurricularCourse };
 
         try {
-            ServiceUtils.executeService(userView, "EditCurricularCourse", args);
+            ServiceUtils.executeService("EditCurricularCourse", args);
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException("message.nonExistingCurricularCourse", mapping
                     .findForward("readDegreeCP"));

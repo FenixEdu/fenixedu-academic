@@ -18,13 +18,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Fernanda Quitério 28/10/2003
@@ -35,7 +36,7 @@ public class ReadAllCurricularCourseScopesAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
         Integer degreeId = new Integer(request.getParameter("degreeId"));
         Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
@@ -47,7 +48,7 @@ public class ReadAllCurricularCourseScopesAction extends FenixAction {
 
         List curricularCourseScopes = new ArrayList();
         try {
-            curricularCourseScopes = (List) ServiceUtils.executeService(userView,
+            curricularCourseScopes = (List) ServiceUtils.executeService(
                     "ReadCurricularCourseScopes", args);
 
         } catch (FenixServiceException e) {

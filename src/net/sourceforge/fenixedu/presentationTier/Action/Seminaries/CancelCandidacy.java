@@ -40,7 +40,7 @@ public class CancelCandidacy extends FenixAction {
         ActionForward destiny = null;
         try {
             Object[] argsReadSeminary = { candidacyID };
-            ServiceManagerServiceFactory.executeService(userView, "Seminaries.DeleteCandidacy",
+            ServiceManagerServiceFactory.executeService( "Seminaries.DeleteCandidacy",
                     argsReadSeminary);
         } catch (Exception e) {
             throw new FenixActionException();

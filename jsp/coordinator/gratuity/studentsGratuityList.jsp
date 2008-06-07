@@ -2,13 +2,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree" %>
 <%@ page import="net.sourceforge.fenixedu.domain.person.RoleType" %>
 <%@ page import="java.lang.String" %>
 
 
-<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
+<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE %>" scope="session"/>
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request"/>
 <bean:define id="degree" name="degree" scope="request"/>
 <bean:define id="order" name="order" scope="request"/>

@@ -8,12 +8,13 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.ExcepcaoSessaoInexistente;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.LookupDispatchAction;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public abstract class FenixLookupDispatchAction extends LookupDispatchAction {
 
@@ -32,7 +33,7 @@ public abstract class FenixLookupDispatchAction extends LookupDispatchAction {
     }
     
     protected static IUserView getUserView(HttpServletRequest request) {
-        return SessionUtils.getUserView(request);
+        return UserView.getUser();
     }
 
     /**

@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.Date;
 
+import org.joda.time.DateTime;
+
 import pt.ist.fenixWebFramework.renderers.DateRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
-
-import org.joda.time.DateTime;
 
 /**
  * Renders a DateTime as a simple Date. This renderer convers the incoming

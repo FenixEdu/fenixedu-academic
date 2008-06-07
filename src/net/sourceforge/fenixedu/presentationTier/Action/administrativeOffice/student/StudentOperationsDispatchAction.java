@@ -21,12 +21,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -282,7 +283,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	Object[] args = { personBean, executionDegreeBean, precedentDegreeInformationBean, ingressionInformationBean };
 
 	try {
-	    Registration registration = (Registration) ServiceUtils.executeService(getUserView(request), "CreateStudent", args);
+	    Registration registration = (Registration) ServiceUtils.executeService("CreateStudent", args);
 	    request.setAttribute("registration", registration);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());

@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.ExcepcaoSessaoInexistente;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -19,6 +18,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public abstract class FenixAction extends Action {
 
@@ -34,7 +35,7 @@ public abstract class FenixAction extends Action {
         return result;
     }
     protected IUserView getUserView(HttpServletRequest request) {
-    	return SessionUtils.getUserView(request);
+    	return UserView.getUser();
     }
 
     protected Person getLoggedPerson(HttpServletRequest request) {
@@ -85,7 +86,7 @@ public abstract class FenixAction extends Action {
 
     protected Object executeService(final HttpServletRequest request, final String serviceName,
 	    final Object[] serviceArgs) throws FenixFilterException, FenixServiceException {
-	return ServiceUtils.executeService(getUserView(request), serviceName, serviceArgs);
+	return ServiceUtils.executeService(serviceName, serviceArgs);
     }
 
 }

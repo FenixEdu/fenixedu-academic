@@ -4,7 +4,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>	
 <%@ page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
 
 <logic:present role="DEPARTMENT_MEMBER">
@@ -46,7 +45,7 @@
 		</ul>
 		
 		<ul style="margin-top: 1em">
-			<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
+			<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE %>" scope="session"/>
 			<% String deiCode = "28"; %>
 			
 			<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">	
@@ -77,7 +76,7 @@
 				</logic:notEmpty>	
 		</ul>	
 		<%
-			IUserView user = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			IUserView user = (IUserView) userView;
         	if (user.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.ASSIDUOUSNESS_RESPONSIBLE,
     		    net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE)) {
         %>

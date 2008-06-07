@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author jpvl
@@ -20,11 +21,12 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
  */
 public abstract class ServiceUtils {
 
-    public static Object executeService(IUserView userView, String serviceName, Object... serviceArgs)
+    public static Object executeService(String serviceName, Object... serviceArgs)
             throws FenixServiceException, FenixFilterException {
+	final IUserView userView = UserView.getUser();
         if (serviceArgs == null)
             serviceArgs = new Object[0];
-        return ServiceManagerServiceFactory.executeService(userView, serviceName, serviceArgs);
+        return ServiceManagerServiceFactory.executeService( serviceName, serviceArgs);
     }
 
 }

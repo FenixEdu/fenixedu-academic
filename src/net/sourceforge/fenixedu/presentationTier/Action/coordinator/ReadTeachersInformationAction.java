@@ -14,13 +14,14 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Leonor Almeida
@@ -39,7 +40,7 @@ public class ReadTeachersInformationAction extends FenixAction {
      */
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm teacherInformationForm = (DynaActionForm) actionForm;
         Integer degreeCurricularPlanID = null;
@@ -55,7 +56,7 @@ public class ReadTeachersInformationAction extends FenixAction {
         List executionYearList = null;
         try {
             Object[] args = { degreeCurricularPlanID };
-            executionYearList = (List) ServiceUtils.executeService(userView,
+            executionYearList = (List) ServiceUtils.executeService(
                     "ReadExecutionYearsByDegreeCurricularPlanID", args);
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,7 +81,7 @@ public class ReadTeachersInformationAction extends FenixAction {
         }
 
         Object[] args = { executionDegreeID, Boolean.FALSE, yearString };
-        infoSiteTeachersInformation = (List) ServiceUtils.executeService(userView,
+        infoSiteTeachersInformation = (List) ServiceUtils.executeService(
                 "ReadTeachersInformation", args);
 
         request.setAttribute("infoSiteTeachersInformation", infoSiteTeachersInformation);

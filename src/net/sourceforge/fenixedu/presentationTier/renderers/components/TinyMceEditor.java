@@ -8,14 +8,14 @@ import javax.servlet.ServletContext;
 import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu._development.LogLevel;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+import org.apache.log4j.Logger;
+
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlScript;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTextArea;
 import pt.ist.fenixWebFramework.renderers.components.tags.HtmlTag;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-
-import org.apache.log4j.Logger;
 
 public class TinyMceEditor extends HtmlTextArea {
 

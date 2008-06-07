@@ -17,13 +17,14 @@ import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQEntry;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQSection;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Crus
@@ -32,12 +33,12 @@ public class ManageFAQDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
-        List infoFAQSections = (List) ServiceUtils.executeService(userView, "ReadFAQSections", null);
+        List infoFAQSections = (List) ServiceUtils.executeService("ReadFAQSections", null);
         request.setAttribute("infoFAQSections", infoFAQSections);
 
-        List infoFAQEntries = (List) ServiceUtils.executeService(userView, "ReadFAQEntries", null);
+        List infoFAQEntries = (List) ServiceUtils.executeService("ReadFAQEntries", null);
         request.setAttribute("infoFAQEntries", infoFAQEntries);
 
         List rootInfoFAQSections = new ArrayList(infoFAQSections);
@@ -122,9 +123,9 @@ public class ManageFAQDA extends FenixDispatchAction {
         }
         infoFAQSection.setSectionName(sectionName);
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Object[] args = { infoFAQSection };
-        ServiceUtils.executeService(userView, "CreateFAQSection", args);
+        ServiceUtils.executeService("CreateFAQSection", args);
 
         return mapping.findForward("Manage");
     }
@@ -135,9 +136,9 @@ public class ManageFAQDA extends FenixDispatchAction {
 
         if (sectionIdString != null && StringUtils.isNumeric(sectionIdString)) {
             Integer sectionId = new Integer(sectionIdString);
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
             Object[] args = { sectionId };
-            ServiceUtils.executeService(userView, "DeleteFAQSection", args);
+            ServiceUtils.executeService("DeleteFAQSection", args);
         }
 
         return mapping.findForward("Manage");
@@ -162,9 +163,9 @@ public class ManageFAQDA extends FenixDispatchAction {
         infoFAQEntry.setAnswer(answer);
         infoFAQEntry.setParentSection(infoFAQSection);
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Object[] args = { infoFAQEntry };
-        ServiceUtils.executeService(userView, "CreateFAQEntry", args);
+        ServiceUtils.executeService("CreateFAQEntry", args);
 
         return mapping.getInputForward();
     }
@@ -175,9 +176,9 @@ public class ManageFAQDA extends FenixDispatchAction {
 
         if (entryIdString != null && StringUtils.isNumeric(entryIdString)) {
             Integer entryId = new Integer(entryIdString);
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
             Object[] args = { entryId };
-            ServiceUtils.executeService(userView, "DeleteFAQEntry", args);
+            ServiceUtils.executeService("DeleteFAQEntry", args);
         }
 
         return mapping.getInputForward();

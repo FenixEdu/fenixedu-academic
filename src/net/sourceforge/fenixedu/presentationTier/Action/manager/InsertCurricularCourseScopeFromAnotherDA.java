@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.struts.action.ActionForm;
@@ -38,6 +37,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author lmac1
  */
@@ -46,7 +47,7 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
     public ActionForward prepareInsert(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
@@ -57,7 +58,7 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
 
         try {
             oldInfoCurricularCourseScope = (InfoCurricularCourseScope) ServiceUtils.executeService(
-                    userView, "ReadCurricularCourseScope", args);
+                    "ReadCurricularCourseScope", args);
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException("message.nonExistingCurricularCourseScope", mapping
                     .findForward("readCurricularCourse"));
@@ -79,7 +80,7 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
         Object[] args1 = { degreeCurricularPlanId };
         List result = null;
         try {
-            result = (List) ServiceUtils.executeService(userView, "ReadBranchesByDegreeCurricularPlan",
+            result = (List) ServiceUtils.executeService("ReadBranchesByDegreeCurricularPlan",
                     args1);
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping
@@ -107,7 +108,7 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
         // obtain execution periods to show in jsp
         List<InfoExecutionPeriod> infoExecutionPeriods = null;
         try {
-            infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadExecutionPeriods",
+            infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods",
                     null);
 
         } catch (FenixServiceException e) {
@@ -135,7 +136,7 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
@@ -165,7 +166,7 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
 
         Object args[] = { newInfoCurricularCourseScope };
         try {
-            ServiceUtils.executeService(userView, "InsertCurricularCourseScopeAtCurricularCourse", args);
+            ServiceUtils.executeService("InsertCurricularCourseScopeAtCurricularCourse", args);
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e.getMessage(), e);
         } catch (FenixServiceException fenixServiceException) {

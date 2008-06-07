@@ -38,7 +38,7 @@ public class ProjectsManagementDispatchAction extends FenixDispatchAction {
         final IUserView userView = getUserView(request);
         final Integer oid = Integer.parseInt(request.getParameter("projectId"));
         
-        ServiceUtils.executeService(userView, "DeleteResearchProject", new Object[] { oid });
+        ServiceUtils.executeService("DeleteResearchProject", new Object[] { oid });
         
         return listProjects(mapping, form, request, response);  
     }

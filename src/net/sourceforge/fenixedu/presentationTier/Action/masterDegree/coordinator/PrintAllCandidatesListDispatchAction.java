@@ -183,7 +183,7 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
         Object args[] = { new Integer(degreeCurricularID), filterBy, filterValue };
 
         try {
-            candidates = (List) ServiceManagerServiceFactory.executeService(userView,
+            candidates = (List) ServiceManagerServiceFactory.executeService(
                     "ReadDegreeCandidatesWithFilter", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

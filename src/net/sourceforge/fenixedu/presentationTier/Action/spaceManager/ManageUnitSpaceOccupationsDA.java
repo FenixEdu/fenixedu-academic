@@ -14,14 +14,15 @@ import net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
 
@@ -68,7 +69,7 @@ public class ManageUnitSpaceOccupationsDA extends FenixDispatchAction {
 	UnitSpaceOccupation unitSpaceOccupation = getUnitSpaceOccupation(request);
 	Object[] args = { unitSpaceOccupation };
 	try {
-	    ServiceUtils.executeService(getUserView(request), "DeleteUnitSpaceOccupation", args);
+	    ServiceUtils.executeService("DeleteUnitSpaceOccupation", args);
 	} catch (DomainException domainException) {
 	    saveMessages(request, domainException);
 	}

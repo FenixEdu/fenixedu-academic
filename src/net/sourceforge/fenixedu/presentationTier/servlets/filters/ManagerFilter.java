@@ -8,11 +8,10 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class ManagerFilter implements Filter {
 
@@ -25,7 +24,7 @@ public class ManagerFilter implements Filter {
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain)
             throws IOException, ServletException {
 
-        final IUserView userView = SessionUtils.getUserView((HttpServletRequest) request);
+        final IUserView userView = UserView.getUser();
         if (userView == null || !userView.hasRoleType(RoleType.MANAGER)) {
             throw new RuntimeException();
         }

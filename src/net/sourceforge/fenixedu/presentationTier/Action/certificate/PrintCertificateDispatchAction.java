@@ -88,7 +88,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                 List enrolmentList = null;
                 Object args[] = { infoStudentCurricularPlan.getIdInternal() };
                 try {
-                    enrolmentList = (List) ServiceManagerServiceFactory.executeService(userView,
+                    enrolmentList = (List) ServiceManagerServiceFactory.executeService(
                             "GetEnrolmentList", args);
                 } catch (NonExistingServiceException e) {
                     throw new NonExistingActionException("Inscrição", e);
@@ -126,7 +126,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                     // , EnrolmentState.ENROLED
                     Object args[] = { infoStudentCurricularPlan.getIdInternal() };
                     try {
-                        enrolmentList = (List) ServiceManagerServiceFactory.executeService(userView,
+                        enrolmentList = (List) ServiceManagerServiceFactory.executeService(
                                 "GetEnrolmentList", args);
                     } catch (NonExistingServiceException e) {
                         throw new NonExistingActionException("Inscrição", e);
@@ -167,7 +167,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                         Object args[] = { infoStudentCurricularPlan.getIdInternal(),
 				EnrollmentState.APROVED, Boolean.TRUE, Boolean.TRUE };
                         try {
-                            enrolmentList = (List) ServiceManagerServiceFactory.executeService(userView,
+                            enrolmentList = (List) ServiceManagerServiceFactory.executeService(
                                     "GetEnrolmentList", args);
                         } catch (NonExistingServiceException e) {
                             throw new NonExistingActionException("Inscrição", e);
@@ -236,7 +236,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                                 try {
                                     Object args[] = { infoStudentCurricularPlan };
                                     infoFinalResult = (InfoFinalResult) ServiceManagerServiceFactory
-                                            .executeService(userView, "FinalResult", args);
+                                            .executeService( "FinalResult", args);
                                 } catch (FenixServiceException e) {
                                     throw new FenixServiceException("");
                                 }
@@ -270,7 +270,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                                 try {
                                     Object argsTemp[] = { infoStudentCurricularPlan.getIdInternal() };
                                     endOfScholarshipDate = (Date) ServiceManagerServiceFactory
-                                            .executeService(userView, "GetEndOfScholarshipDate",
+                                            .executeService( "GetEndOfScholarshipDate",
                                                     argsTemp);
                                 } catch (FenixServiceException e) {
                                     throw new FenixActionException(e);
@@ -300,7 +300,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                                 Object argsAux[] = { infoStudentCurricularPlan.getIdInternal() };
                                 Date date = null;
                                 try {
-                                    date = (Date) ServiceManagerServiceFactory.executeService(userView,
+                                    date = (Date) ServiceManagerServiceFactory.executeService(
                                             "GetEndOfScholarshipDate", argsAux);
                                 } catch (NonExistingServiceException e) {
                                     throw new NonExistingActionException("Inscrição", e);

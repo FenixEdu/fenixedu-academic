@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class AutoCompleteServlet extends HttpServlet {
 
@@ -83,7 +84,7 @@ public class AutoCompleteServlet extends HttpServlet {
     private Collection executeService(IUserView userView, String serviceName,
             Class type, String value, int maxCount, Map<String, String> arguments) throws ServletException {
         try {
-            return (Collection) ServiceUtils.executeService(userView, serviceName,
+            return (Collection) ServiceUtils.executeService(serviceName,
                     new Object[] { type, value, maxCount, arguments });
         } catch (Exception e) {
             throw new ServletException("Error executing service", e);
@@ -103,7 +104,7 @@ public class AutoCompleteServlet extends HttpServlet {
     }
 
     private IUserView getUserView(HttpServletRequest request) {
-        return SessionUtils.getUserView(request);
+        return UserView.getUser();
     }
 
     private String getResponseHtml(Collection result, String labelField, String format, String valueField, String styleClass, int maxCount) {

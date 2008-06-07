@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -25,6 +24,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
@@ -58,7 +59,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
         final Object[] args = { Integer.valueOf(enrolmentPeriodIDString), getDate(startDateString, startTimeString),
         		getDate(endDateString, endTimeString)};
-        ServiceManagerServiceFactory.executeService(userView, "ChangeEnrolmentPeriodValues", args);
+        ServiceManagerServiceFactory.executeService( "ChangeEnrolmentPeriodValues", args);
 
         return prepare(mapping, form, request, response);
     }
@@ -84,7 +85,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
         		degreeType, enrolmentPeriodClassString,
         		getDate(startDateString, startTimeString),
         		getDate(endDateString, endTimeString)};
-        ServiceManagerServiceFactory.executeService(userView, "CreateEnrolmentPeriods", args);
+        ServiceManagerServiceFactory.executeService( "CreateEnrolmentPeriods", args);
 
         return prepare(mapping, form, request, response);
     }
@@ -93,7 +94,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
             final String executionPeriodIDString) throws FenixFilterException, FenixServiceException {
         final Object[] args = { Integer.valueOf(executionPeriodIDString) };
         final List<InfoEnrolmentPeriod> infoEnrolmentPeriods = (List<InfoEnrolmentPeriod>) 
-                ServiceManagerServiceFactory.executeService(userView, "ReadEnrolmentPeriods", args);
+                ServiceManagerServiceFactory.executeService( "ReadEnrolmentPeriods", args);
         sortInfoEnrolmentPeriods(infoEnrolmentPeriods);
         request.setAttribute("infoEnrolmentPeriods", infoEnrolmentPeriods);
     }
@@ -101,7 +102,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
     private void setInfoExecutionPeriods(final HttpServletRequest request, final IUserView userView) 
             throws FenixFilterException, FenixServiceException {
         final List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) 
-                ServiceManagerServiceFactory.executeService(userView, "ReadExecutionPeriods", null);
+                ServiceManagerServiceFactory.executeService( "ReadExecutionPeriods", null);
         sortInfoExecutionPeriods(infoExecutionPeriods);
         request.setAttribute("infoExecutionPeriods", infoExecutionPeriods);
     }

@@ -10,7 +10,7 @@ public class ExecutionPeriods {
 		try {
 			final Object[] args = {};
 			final Collection infoExecutionPeriods = (Collection) ServiceUtils
-					.executeService(null, "ReadExecutionPeriods", args);
+					.executeService( "ReadExecutionPeriods", args);
 			return infoExecutionPeriods;
 		} catch (Exception e) {
 			throw new RuntimeException(e);

@@ -52,10 +52,10 @@ public class ViewShiftTimeTableAction extends FenixContextAction {
         }
 
         Object[] args = { new ShiftKey(shiftName, infoExecutionCourse) };
-        List lessons = (List) ServiceUtils.executeService(null, "LerAulasDeTurno", args);
+        List lessons = (List) ServiceUtils.executeService("LerAulasDeTurno", args);
 
         Object argsReadCurricularCourseListOfExecutionCourse[] = { infoExecutionCourse };
-        List infoCurricularCourses = (List) ServiceManagerServiceFactory.executeService(null,
+        List infoCurricularCourses = (List) ServiceManagerServiceFactory.executeService(
                 "ReadCurricularCourseListOfExecutionCourse",
                 argsReadCurricularCourseListOfExecutionCourse);
 

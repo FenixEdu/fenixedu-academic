@@ -26,12 +26,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Arch
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.DiskZipArchive;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Fetcher;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Resource;
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAction {
 

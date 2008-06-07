@@ -42,7 +42,7 @@ public class ChooseDataToCreateGuideDispatchAction extends FenixDispatchAction {
 
             List result = null;
             try {
-                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                result = (List) ServiceManagerServiceFactory.executeService(
                         "ReadAllMasterDegrees", args);
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("O Degree de Mestrado", e);
@@ -74,7 +74,7 @@ public class ChooseDataToCreateGuideDispatchAction extends FenixDispatchAction {
 
             try {
 
-                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                result = (List) ServiceManagerServiceFactory.executeService(
                         "ReadCPlanFromChosenMasterDegree", args);
 
             } catch (NonExistingServiceException e) {
@@ -102,7 +102,7 @@ public class ChooseDataToCreateGuideDispatchAction extends FenixDispatchAction {
             Object args[] = { curricularPlanID };
             List result = null;
 
-            result = (List) ServiceManagerServiceFactory.executeService(userView,
+            result = (List) ServiceManagerServiceFactory.executeService(
                     "ReadExecutionDegreesByDegreeCurricularPlanID", args);
 
             if ((result != null) && (result.size() > 0)) {

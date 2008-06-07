@@ -19,12 +19,13 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -37,7 +38,7 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
      */
     public ActionForward prepareEditGrantInsuranceForm(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaValidatorForm grantInsuranceForm = (DynaValidatorForm) form;
 
         Integer idContract = null;
@@ -57,12 +58,12 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
             Object[] args = { idContract };
             InfoGrantContract infoGrantContract = null;
             InfoGrantInsurance infoGrantInsurance = (InfoGrantInsurance) ServiceUtils.executeService(
-                    userView, "ReadGrantInsuranceByGrantContract", args);
+                    "ReadGrantInsuranceByGrantContract", args);
 
             if (infoGrantInsurance == null) { //Is a new Insurance
                 //Read the contract
                 Object[] argsContract = { idContract };
-                infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(userView,
+                infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(
                         "ReadGrantContract", argsContract);
                 if (infoGrantContract != null) {
                     request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
@@ -107,7 +108,7 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
             }
 
             InfoGrantInsurance infoGrantInsurance = populateInfoFromForm(editGrantInsuranceForm);
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
 
             //Let's read the payment entity
             if (infoGrantInsurance.getInfoGrantPaymentEntity().getNumber() != null) {
@@ -121,7 +122,7 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
         	}
                 Object[] args = { infoGrantInsurance.getInfoGrantPaymentEntity().getNumber(), classname };
                 InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ServiceUtils
-                        .executeService(userView, "ReadPaymentEntityByNumberAndClass", args);
+                        .executeService( "ReadPaymentEntityByNumberAndClass", args);
 
                 if (infoGrantPaymentEntity == null) {
                     if (verifyStringParameterInForm(editGrantInsuranceForm, "project")) {
@@ -140,7 +141,7 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
             }
             //Save the insurance
             Object[] args = { infoGrantInsurance };
-            ServiceUtils.executeService(userView, "EditGrantInsurance", args);
+            ServiceUtils.executeService("EditGrantInsurance", args);
             request.setAttribute("idInternal", editGrantInsuranceForm.get("idGrantOwner"));
 
         } catch (FenixServiceException e) {

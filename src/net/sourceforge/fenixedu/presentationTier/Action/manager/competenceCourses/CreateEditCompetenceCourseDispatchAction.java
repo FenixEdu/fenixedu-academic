@@ -16,23 +16,24 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 public class CreateEditCompetenceCourseDispatchAction extends
 		FenixDispatchAction {
 	
 	public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
     		HttpServletResponse response) throws FenixActionException, FenixFilterException{
-		IUserView userView = SessionUtils.getUserView(request);
+		IUserView userView = UserView.getUser();
     	Object[] args = {};
     	List<InfoDepartment> departmentList = null;
         try {
-            departmentList = (List<InfoDepartment>) ServiceUtils.executeService(userView,"ReadAllDepartments", args);
+            departmentList = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments", args);
         } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
@@ -43,7 +44,7 @@ public class CreateEditCompetenceCourseDispatchAction extends
 	
     public ActionForward createCompetenceCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
     		HttpServletResponse response) throws FenixActionException, FenixFilterException{
-    	IUserView userView = SessionUtils.getUserView(request);
+    	IUserView userView = UserView.getUser();
     	DynaActionForm actionForm = (DynaActionForm) form;
     	
     	String code = (String) actionForm.get("code");
@@ -52,7 +53,7 @@ public class CreateEditCompetenceCourseDispatchAction extends
     	Object[] args = {null, code, name, departmentIDs};
     	InfoCompetenceCourse competenceCourse = null;
         try {
-            competenceCourse = (InfoCompetenceCourse) ServiceUtils.executeService(userView,"CreateEditCompetenceCourse", args);
+            competenceCourse = (InfoCompetenceCourse) ServiceUtils.executeService("CreateEditCompetenceCourse", args);
             
         } catch (InvalidArgumentsServiceException invalidArgumentsServiceException) {
 
@@ -68,7 +69,7 @@ public class CreateEditCompetenceCourseDispatchAction extends
     
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException{
-    	IUserView userView = SessionUtils.getUserView(request);
+    	IUserView userView = UserView.getUser();
     	
     	Integer competenceCourseID = Integer.valueOf((String) request.getParameter("competenceCourse"));
     	Object[] args = {competenceCourseID};
@@ -76,8 +77,8 @@ public class CreateEditCompetenceCourseDispatchAction extends
     	InfoCompetenceCourse competenceCourse = null;
     	List<InfoDepartment> infoDepartments = null;
         try {
-            competenceCourse = (InfoCompetenceCourse) ServiceUtils.executeService(userView,"ReadCompetenceCourse", args);
-            infoDepartments = (List<InfoDepartment>) ServiceUtils.executeService(userView,"ReadAllDepartments", args2);
+            competenceCourse = (InfoCompetenceCourse) ServiceUtils.executeService("ReadCompetenceCourse", args);
+            infoDepartments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments", args2);
         } catch (NotExistingServiceException notExistingServiceException) {
             
          
@@ -105,7 +106,7 @@ public class CreateEditCompetenceCourseDispatchAction extends
     
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
     		HttpServletResponse response) throws FenixActionException, FenixFilterException{
-    	IUserView userView = SessionUtils.getUserView(request);
+    	IUserView userView = UserView.getUser();
     	DynaActionForm actionForm = (DynaActionForm) form;
     	Integer competenceCourseID = (Integer) actionForm.get("competenceCourseID");
     	String code = (String) actionForm.get("code");
@@ -114,7 +115,7 @@ public class CreateEditCompetenceCourseDispatchAction extends
     	Object[] args = {competenceCourseID, code, name, departmentIDs};
     	InfoCompetenceCourse competenceCourse = null;
         try {
-            competenceCourse = (InfoCompetenceCourse) ServiceUtils.executeService(userView,"CreateEditCompetenceCourse", args);
+            competenceCourse = (InfoCompetenceCourse) ServiceUtils.executeService("CreateEditCompetenceCourse", args);
             
         } catch (InvalidArgumentsServiceException invalidArgumentsServiceException) {
 

@@ -37,6 +37,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  *  
@@ -75,7 +77,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
     public ActionForward createShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm createShiftForm = (DynaActionForm) form;
 
@@ -104,7 +106,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
 	Object argsCriarTurno[] = { infoShift };
 	try {
-	    final InfoShift newInfoShift = (InfoShift) ServiceUtils.executeService(userView, "CriarTurno", argsCriarTurno);
+	    final InfoShift newInfoShift = (InfoShift) ServiceUtils.executeService("CriarTurno", argsCriarTurno);
 	    request.setAttribute(SessionConstants.SHIFT, newInfoShift);
 
 	} catch (ExistingServiceException ex) {
@@ -119,7 +121,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
     public ActionForward deleteShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	ContextUtils.setShiftContext(request);
 
@@ -127,7 +129,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
 	Object args[] = { infoShiftToDelete };
 	try {
-	    ServiceUtils.executeService(userView, "DeleteShift", args);
+	    ServiceUtils.executeService("DeleteShift", args);
 	} catch (FenixServiceException exception) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    if (exception.getMessage() != null && exception.getMessage().length() > 0) {
@@ -162,7 +164,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 	final Object args[] = { shiftOIDs };
 
 	try {
-	    ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteShifts", args);
+	    ServiceUtils.executeService("DeleteShifts", args);
 	} catch (FenixServiceMultipleException e) {
 	    final ActionErrors actionErrors = new ActionErrors();
 
@@ -179,14 +181,14 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
     private void readAndSetInfoToManageShifts(HttpServletRequest request) throws FenixServiceException, FenixFilterException, Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
 	InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(SessionConstants.CURRICULAR_YEAR);
 
 	Object args[] = { infoExecutionPeriod, infoExecutionDegree, infoCurricularYear };
-	List<InfoShift> infoShifts = (List<InfoShift>) ServiceUtils.executeService(userView,
+	List<InfoShift> infoShifts = (List<InfoShift>) ServiceUtils.executeService(
 		"ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear", args);
 
 	Collections.sort(infoShifts, InfoShift.SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS);

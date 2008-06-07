@@ -43,7 +43,7 @@ public class ChooseMasterDegreeDispatchAction extends FenixDispatchAction {
         List degreeList = null;
         try {
 
-            degreeList = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+            degreeList = (ArrayList) ServiceManagerServiceFactory.executeService(
                     "ReadMasterDegrees", args);
             //ver aqui o que devolvs o servico
         } catch (NonExistingServiceException e) {

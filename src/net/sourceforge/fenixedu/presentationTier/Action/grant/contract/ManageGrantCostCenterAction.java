@@ -14,11 +14,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -31,8 +32,8 @@ public class ManageGrantCostCenterAction extends FenixDispatchAction {
 
             Object[] args = { GrantCostCenter.class.getName() };
 
-            IUserView userView = SessionUtils.getUserView(request);
-            List infoGrantCostCenterList = (List) ServiceUtils.executeService(userView,
+            IUserView userView = UserView.getUser();
+            List infoGrantCostCenterList = (List) ServiceUtils.executeService(
                     "ReadAllGrantPaymentEntitiesByClassName", args);
 
             if (infoGrantCostCenterList != null && !infoGrantCostCenterList.isEmpty())

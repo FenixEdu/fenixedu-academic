@@ -31,6 +31,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author Ana e Ricardo
  * 
@@ -69,7 +71,7 @@ public class AssociateExecutionCourseToExamAction
         ContextUtils.setExecutionPeriodContext(request);
         ContextUtils.setCurricularYearsContext(request);
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
@@ -80,7 +82,7 @@ public class AssociateExecutionCourseToExamAction
         /* Cria o form bean com as licenciaturas em execucao. */
         Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-        List executionDegreeList = (List) ServiceUtils.executeService(userView,
+        List executionDegreeList = (List) ServiceUtils.executeService(
                 "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
         List licenciaturas = new ArrayList();

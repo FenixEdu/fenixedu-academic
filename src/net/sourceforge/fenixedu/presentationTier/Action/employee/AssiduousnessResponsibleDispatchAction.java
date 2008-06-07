@@ -36,8 +36,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.WeekDay;
 
@@ -50,13 +48,16 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction {
 
     private final YearMonthDay firstMonth = new YearMonthDay(2006, 9, 1);
 
     public ActionForward showEmployeeList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	final YearMonth yearMonth = getYearMonth(request);
 	if (yearMonth == null) {
 	    return mapping.getInputForward();
@@ -143,7 +144,7 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 
     public ActionForward showEmployeeWorkSheet(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	final Employee employee = getEmployee(request);
 	if (employee == null) {
 	    return mapping.findForward("show-clockings");
@@ -168,7 +169,7 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 	if (employee.getAssiduousness() != null) {
 	    try {
 		Object[] args = { employee.getAssiduousness(), beginDate, endDate };
-		employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(userView,
+		employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(
 			"ReadAssiduousnessResponsibleWorkSheet", args);
 		request.setAttribute("employeeWorkSheet", employeeWorkSheet);
 	    } catch (NotAuthorizedFilterException e) {

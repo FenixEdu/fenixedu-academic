@@ -196,7 +196,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		curricularCourseId };
 
 	try {
-	    ExecutionCourseSiteView siteView = (ExecutionCourseSiteView) ServiceUtils.executeService(null,
+	    ExecutionCourseSiteView siteView = (ExecutionCourseSiteView) ServiceUtils.executeService(
 		    "ExecutionCourseSiteComponentService", args);
 
 	    if (siteView != null) {
@@ -250,7 +250,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 	    Object[] args = { bodyComponent, roomKey, objectCode };
 
 	    try {
-		SiteView siteView = (SiteView) ServiceUtils.executeService(null, "RoomSiteComponentService", args);
+		SiteView siteView = (SiteView) ServiceUtils.executeService("RoomSiteComponentService", args);
 
 		request.setAttribute("siteView", siteView);
 		request.setAttribute("objectCode", objectCode);
@@ -284,7 +284,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 	Object[] args = { commonComponent, firstPageComponent, objectCode, groupPropertiesCode, studentGroupCode };
 	ExecutionCourseSiteView siteView = null;
 	try {
-	    siteView = (ExecutionCourseSiteView) ServiceUtils.executeService(null, "GroupSiteComponentService", args);
+	    siteView = (ExecutionCourseSiteView) ServiceUtils.executeService("GroupSiteComponentService", args);
 
 	    if (infoExecutionCourseCode != null) {
 		request.setAttribute("objectCode", ((InfoSiteFirstPage) siteView.getComponent()).getSiteIdInternal());

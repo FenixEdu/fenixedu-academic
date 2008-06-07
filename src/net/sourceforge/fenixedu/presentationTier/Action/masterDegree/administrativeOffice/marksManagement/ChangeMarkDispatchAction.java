@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.FormataData;
 
@@ -40,6 +39,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Angela 30/06/2003 Modified by Fernanda Quitério
@@ -56,10 +57,10 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
         List listEnrolmentEvaluation = null;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Object args[] = { userView, Integer.valueOf(curricularCourseId), null };
         try {
-            listEnrolmentEvaluation = (List) ServiceManagerServiceFactory.executeService(userView,
+            listEnrolmentEvaluation = (List) ServiceManagerServiceFactory.executeService(
                     "ReadStudentMarksListByCurricularCourse", args);
         } catch (NotAuthorizedException e) {
             return mapping.findForward("NotAuthorized");
@@ -105,10 +106,10 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         String showMarks = MarksManagementDispatchAction.getFromRequest("showMarks", request);
 
         List infoSiteEnrolmentEvaluations = null;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         try {
             Object args[] = { Integer.valueOf(curricularCourseId), studentNumber, null, getIntegerFromRequest(request, "enrolmentId") };
-            infoSiteEnrolmentEvaluations = (List) ServiceManagerServiceFactory.executeService(userView,
+            infoSiteEnrolmentEvaluations = (List) ServiceManagerServiceFactory.executeService(
                     "ReadStudentMarksByCurricularCourse", args);
         } catch (ExistingServiceException e) {
             //invalid student number
@@ -149,7 +150,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         try {
             Object args[] = { userView, studentNumber, DegreeType.MASTER_DEGREE, infoEnrolmentTemp.getIdInternal() };
             newEnrolmentEvaluation = (InfoEnrolmentEvaluation) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadInfoEnrolmentEvaluationByEvaluationOID", args);
+                    .executeService( "ReadInfoEnrolmentEvaluationByEvaluationOID", args);
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
         }
@@ -241,7 +242,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
             try {
                 Object args[] = { newEnrolmentEvaluation.getInfoPersonResponsibleForGrade()
                         .getUsername() };
-                infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(userView,
+                infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(
                         "ReadTeacherByUsername", args);
             } catch (ExistingServiceException e) {
                 throw new ExistingActionException(e);
@@ -359,10 +360,10 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
         infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(enrolmentEvaluation.getEnrolment()));
 
         try {
-	    IUserView userView = SessionUtils.getUserView(request);
+	    IUserView userView = UserView.getUser();
 	    Object args[] = { Integer.valueOf(curricularCourseId), enrolmentEvaluationCode, infoEnrolmentEvaluation,
 		    infoTeacher.getTeacherNumber(), userView };
-	    ServiceManagerServiceFactory.executeService(userView, "AlterStudentEnrolmentEvaluation", args);
+	    ServiceManagerServiceFactory.executeService( "AlterStudentEnrolmentEvaluation", args);
 	} catch (DomainException e) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    actionErrors.add(e.getKey(), new ActionError(e.getKey(), e.getArgs()));

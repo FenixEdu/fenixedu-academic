@@ -39,7 +39,7 @@ public class ViewStudentsAndGroupsWithoutShiftAction extends FenixContextAction 
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
         Object[] args = { groupPropertiesCode};
         try {
-        	infoSiteStudentsAndGroups = (InfoSiteStudentsAndGroups) ServiceUtils.executeService(userView,
+        	infoSiteStudentsAndGroups = (InfoSiteStudentsAndGroups) ServiceUtils.executeService(
                     "ReadStudentsAndGroupsWithoutShift", args);
 
         } catch (InvalidSituationServiceException e)

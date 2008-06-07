@@ -79,7 +79,7 @@ public class SeeStudentAndCurricularPlansDispatchAction extends FenixDispatchAct
 
         List studentList = null;
         try {
-            studentList = (ArrayList) ServiceUtils.executeService(userView,
+            studentList = (ArrayList) ServiceUtils.executeService(
                     "ReadStudentsByNameIDnumberIDtypeAndStudentNumber", args);
             if (studentList != null && !studentList.isEmpty()) {
                 this.sort(studentList);

@@ -24,13 +24,14 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class TSDTeachersGroupAction extends FenixDispatchAction {
 			
@@ -133,13 +134,13 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
 			ActionForm form, 
 			HttpServletRequest request,
 			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		IUserView userView = SessionUtils.getUserView(request);
+		IUserView userView = UserView.getUser();
 		DynaActionForm dynaForm = (DynaActionForm) form;
 		
 		TSDTeacher selectedTSDTeacher = getSelectedTSDTeacher(dynaForm); 
 		TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
 			
-		ServiceUtils.executeService(userView, "RemoveTeacherFromTeacherServiceDistributions", 
+		ServiceUtils.executeService("RemoveTeacherFromTeacherServiceDistributions", 
 				new Object[] { selectedTeacherServiceDistribution.getIdInternal(), selectedTSDTeacher.getIdInternal()});
 		
 		return listTSDTeachers(mapping, form, request, response);
@@ -151,13 +152,13 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
 			ActionForm form, 
 			HttpServletRequest request,
 			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-		IUserView userView = SessionUtils.getUserView(request);
+		IUserView userView = UserView.getUser();
 		DynaActionForm dynaForm = (DynaActionForm) form;
 		
 		TSDCourse selectedCourse = getSelectedTSDCourse(dynaForm); 
 		TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
 			
-		ServiceUtils.executeService(userView, "RemoveCourseFromTeacherServiceDistribution", 
+		ServiceUtils.executeService("RemoveCourseFromTeacherServiceDistribution", 
 				new Object[] { selectedTeacherServiceDistribution.getIdInternal(), selectedCourse.getIdInternal()});
 		
 		return listTSDTeachers(mapping, form, request, response);
@@ -170,13 +171,13 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
 			HttpServletRequest request,
 			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 		
-		IUserView userView = SessionUtils.getUserView(request);
+		IUserView userView = UserView.getUser();
 		DynaActionForm dynaForm = (DynaActionForm) form;
 		
 		Teacher selectedTeacher = getSelectedTeacher(dynaForm); 
 		TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
 				
-		ServiceUtils.executeService(userView, "AddTeacherToTeacherServiceDistribution", new Object[] { 
+		ServiceUtils.executeService("AddTeacherToTeacherServiceDistribution", new Object[] { 
 				selectedTeacherServiceDistribution.getIdInternal(), selectedTeacher.getIdInternal()});
 				
 		return listTSDTeachers(mapping, form, request, response);
@@ -188,13 +189,13 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
 			HttpServletRequest request,
 			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 		
-		IUserView userView = SessionUtils.getUserView(request);
+		IUserView userView = UserView.getUser();
 		DynaActionForm dynaForm = (DynaActionForm) form;
 		 
 		TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
 		CompetenceCourse selectedCourse = getSelectedCompetenceCourse(dynaForm);
 				
-		ServiceUtils.executeService(userView, "AddCourseToTeacherServiceDistribution", new Object[] { 
+		ServiceUtils.executeService("AddCourseToTeacherServiceDistribution", new Object[] { 
 				selectedTeacherServiceDistribution.getIdInternal(), selectedCourse.getIdInternal()});
 		
 		return listTSDTeachers(mapping, form, request, response);
@@ -265,7 +266,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
 			HttpServletRequest request,
 			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 		
-		IUserView userView = SessionUtils.getUserView(request);		
+		IUserView userView = UserView.getUser();		
 		DynaActionForm dynaForm = (DynaActionForm) form;
 		
 		TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
@@ -280,7 +281,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
 			selectedTeacherServiceDistribution.getIdInternal()
 		};
 		
-		Boolean teacherSuccessfullyCreated = (Boolean) ServiceUtils.executeService(userView, "CreateTSDTeacher", parameters);
+		Boolean teacherSuccessfullyCreated = (Boolean) ServiceUtils.executeService("CreateTSDTeacher", parameters);
 						
 		if(!teacherSuccessfullyCreated){
 			request.setAttribute("creationFailure", true);
@@ -296,7 +297,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
 			HttpServletRequest request,
 			HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 		
-		IUserView userView = SessionUtils.getUserView(request);		
+		IUserView userView = UserView.getUser();		
 		DynaActionForm dynaForm = (DynaActionForm) form;
 		
 		TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
@@ -313,8 +314,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
 			degreeCurricularPlansIdArray
 		};
 		
-		TSDCourse course = (TSDCourse) ServiceUtils.executeService(
-				userView, "CreateTSDVirtualGroup", parameters);
+		TSDCourse course = (TSDCourse) executeService("CreateTSDVirtualGroup", parameters);
 		
 		dynaForm.set("tsdCourse", course.getIdInternal());
 						

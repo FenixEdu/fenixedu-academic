@@ -53,7 +53,7 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
     throws FenixActionException, FenixFilterException, FenixServiceException {
 
 	List<InfoLesson> infoLessons = 
-	    (List) ServiceUtils.executeService(getUserView(request),
+	    (List) ServiceUtils.executeService(
 		    "ReadStudentTimeTable", 
 		    new Object[] { registration });
 

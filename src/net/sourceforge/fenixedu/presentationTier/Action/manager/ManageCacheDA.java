@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.Custodian;
-import pt.ist.fenixframework.FenixFramework;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -26,6 +25,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixframework.FenixFramework;
 import dml.DomainModel;
 import dml.DomainRelation;
 import dml.Role;
@@ -45,9 +45,9 @@ public class ManageCacheDA extends FenixDispatchAction {
         Profiler.report();
         Profiler.resetInstance();
 
-        // IUserView userView = SessionUtils.getUserView(request);
+        // IUserView userView = UserView.getUser();
 
-        Integer numberCachedItems = (Integer) ServiceUtils.executeService(null, "ReadNumberCachedItems",
+        Integer numberCachedItems = (Integer) ServiceUtils.executeService("ReadNumberCachedItems",
                 null);
 
         request.setAttribute(SessionConstants.NUMBER_CACHED_ITEMS, numberCachedItems);
@@ -70,9 +70,9 @@ public class ManageCacheDA extends FenixDispatchAction {
     public ActionForward clearCache(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        // IUserView userView = SessionUtils.getUserView(request);
+        // IUserView userView = UserView.getUser();
 
-        ServiceUtils.executeService(null, "ClearCache", null);
+        ServiceUtils.executeService("ClearCache", null);
 
         return mapping.findForward("CacheCleared");
     }
@@ -117,7 +117,7 @@ public class ManageCacheDA extends FenixDispatchAction {
                 } else if (secondRole.getType().getFullName().equals(RootDomainObject.class.getName())) {
                     numberOfReadDomainObjects += loadDomainObjects(firstRole);
                 }
-                final Integer numberCachedItems = (Integer) ServiceUtils.executeService(null,
+                final Integer numberCachedItems = (Integer) ServiceUtils.executeService(
                         "ReadNumberCachedItems", null);
                 final Runtime runtime = Runtime.getRuntime();
                 System.out.println("   total read: " + numberOfReadDomainObjects + " in cache: "

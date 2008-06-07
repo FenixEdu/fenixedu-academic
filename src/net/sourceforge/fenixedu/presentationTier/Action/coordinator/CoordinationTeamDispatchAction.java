@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -25,6 +24,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * 
@@ -37,7 +38,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixServiceException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
@@ -46,7 +47,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         }
 
         Object[] args = { degreeCurricularPlanID };
-        List executionDegrees = (List) ServiceUtils.executeService(userView,
+        List executionDegrees = (List) ServiceUtils.executeService(
                 "ReadExecutionDegreesByDegreeCurricularPlanID", args);
 
         request.setAttribute("executionDegrees", executionDegrees);
@@ -73,7 +74,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         Object[] args = { executionDegreeID };
         List coordinators = new ArrayList();
         try {
-            coordinators = (List) ServiceUtils.executeService(userView, "ReadCoordinationTeam", args);
+            coordinators = (List) ServiceUtils.executeService("ReadCoordinationTeam", args);
         } catch (NotAuthorizedFilterException e) {
             actionErrors.add("error", new ActionError("noAuthorization"));
             saveErrors(request, actionErrors);
@@ -86,7 +87,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         Boolean result = Boolean.FALSE;
         Object[] args1 = { executionDegreeID, userView };
         try {
-            result = (Boolean) ServiceUtils.executeService(userView, "ReadCoordinationResponsibility",
+            result = (Boolean) ServiceUtils.executeService("ReadCoordinationResponsibility",
                     args1);
         } catch (FenixServiceException e) {
             actionErrors.add("error", new ActionError(e.getMessage()));
@@ -114,7 +115,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         Boolean result = new Boolean(false);
         Object[] args1 = { infoExecutionDegreeId, userView };
         try {
-            result = (Boolean) ServiceUtils.executeService(userView, "ReadCoordinationResponsibility",
+            result = (Boolean) ServiceUtils.executeService("ReadCoordinationResponsibility",
                     args1);
 
         } catch (FenixServiceException e) {
@@ -138,7 +139,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
         Object[] args = { infoExecutionDegreeId, teacherNumber };
         try {
-            ServiceUtils.executeService(userView, "AddCoordinator", args);
+            ServiceUtils.executeService("AddCoordinator", args);
         } catch (NonExistingServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("unknownTeacher", new ActionError("error.nonExistingTeacher"));
@@ -170,7 +171,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
         Object[] args = { infoExecutionDegreeId, coordinators };
         try {
-            ServiceUtils.executeService(userView, "RemoveCoordinators", args);
+            ServiceUtils.executeService("RemoveCoordinators", args);
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

@@ -28,6 +28,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
+
 public class AuthenticationExpiredAction extends FenixDispatchAction {
 
     protected static final boolean useCASAuthentication = PropertiesManager
@@ -72,7 +74,7 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
 		final HttpSession session = request.getSession(true);
 
 		// Store the UserView into the session and return
-		session.setAttribute(SessionConstants.U_VIEW, userView);
+		session.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
 		session.setAttribute(SessionConstants.SESSION_IS_VALID, Boolean.TRUE);
 
 		int numberOfSubApplications = getNumberOfSubApplications(userView.getRoleTypes());
@@ -161,7 +163,7 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
 	String remoteHostName = BaseAuthenticationAction.getRemoteHostName(request);
 	Object argsAutenticacao[] = { username, password, newPassword, requestURL, remoteHostName };
 
-	return (IUserView) ServiceManagerServiceFactory.executeService(null, "AuthenticationExpired",
+	return (IUserView) ServiceManagerServiceFactory.executeService( "AuthenticationExpired",
 		argsAutenticacao);
     }
 

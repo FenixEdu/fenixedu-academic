@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -36,6 +35,8 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ExecutionDegreesManagementDispatchAction extends FenixDispatchAction {
 
@@ -109,7 +110,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 
         try {
             final Object[] args = { executionDegreeID, coordinatorNumber };
-            ServiceManagerServiceFactory.executeService(getUserView(request), "AddCoordinatorByManager",
+            ServiceManagerServiceFactory.executeService( "AddCoordinatorByManager",
                     args);
 
         } catch (final FenixFilterException e) {
@@ -131,12 +132,12 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         try {
             final Integer[] coordinatorsToBeResponsibleIDs = (Integer[]) form
                     .get("responsibleCoordinatorsIDs");
-            ServiceManagerServiceFactory.executeService(getUserView(request),
+            ServiceManagerServiceFactory.executeService(
                     "ResponsibleCoordinatorsByManager", new Object[] { executionDegreeID,
                             Arrays.asList(coordinatorsToBeResponsibleIDs) });
 
             final Integer[] coordinatorsToRemoveIDs = (Integer[]) form.get("removeCoordinatorsIDs");
-            ServiceManagerServiceFactory.executeService(getUserView(request),
+            ServiceManagerServiceFactory.executeService(
                     "RemoveCoordinatorsByManager", new Object[] { executionDegreeID,
                             Arrays.asList(coordinatorsToRemoveIDs) });
 
@@ -248,7 +249,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
             final Date periodGradeSubmissionSpecialSeasonEnd = DateFormatUtil.parse(dateFormat,
                     (String) form.get("periodGradeSubmissionSpecialSeasonEnd"));
 
-            ServiceUtils.executeService(getUserView(request), "EditBolonhaExecutionDegree",
+            ServiceUtils.executeService("EditBolonhaExecutionDegree",
                     new Object[] { executionDegreeID, executionYearID, campusID, temporaryExamMap,
                             periodLessonsFirstSemesterBegin, periodLessonsFirstSemesterEnd,
                             periodExamsFirstSemesterBegin, periodExamsFirstSemesterEnd,
@@ -345,7 +346,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
         try {
             Object args[] = { executionDegreesIds };
             List<String> undeletedExecutionDegreesYears = (List<String>) ServiceUtils.executeService(
-                    getUserView(request), "DeleteExecutionDegreesOfDegreeCurricularPlan", args);
+                    "DeleteExecutionDegreesOfDegreeCurricularPlan", args);
 
             if (!undeletedExecutionDegreesYears.isEmpty()) {
                 ActionErrors actionErrors = new ActionErrors();

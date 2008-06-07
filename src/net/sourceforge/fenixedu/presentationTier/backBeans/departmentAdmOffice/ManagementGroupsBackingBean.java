@@ -96,7 +96,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
     public void addMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
         if (selectedPersonsIDsToAdd != null) {
             Object[] args = { getDepartment(), selectedPersonsIDsToAdd, null };
-            ServiceUtils.executeService(getUserView(), "UpdateDepartmentsCompetenceCourseManagementGroup", args);
+            ServiceUtils.executeService( "UpdateDepartmentsCompetenceCourseManagementGroup", args);
         }
         // avoid preset check-boxes after action
         selectedPersonsIDsToAdd = null;
@@ -106,7 +106,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
     public void removeMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
         if (selectedPersonsIDsToRemove != null) {
             Object[] args = { getDepartment(), null, selectedPersonsIDsToRemove };
-            ServiceUtils.executeService(getUserView(), "UpdateDepartmentsCompetenceCourseManagementGroup", args);
+            ServiceUtils.executeService( "UpdateDepartmentsCompetenceCourseManagementGroup", args);
         }
         // avoid preset check-boxes after action
         selectedPersonsIDsToAdd = null;

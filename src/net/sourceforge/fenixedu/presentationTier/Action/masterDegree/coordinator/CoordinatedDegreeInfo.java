@@ -27,11 +27,12 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class CoordinatedDegreeInfo extends FenixAction {
 
@@ -41,7 +42,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
         final HttpSession session = request.getSession(false);
         
         if (session != null) {
-            final IUserView userView = SessionUtils.getUserView(request);
+            final IUserView userView = UserView.getUser();
 
             final Integer degreeCurricularPlanOID = findDegreeCurricularPlanID(request);
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
@@ -54,7 +55,7 @@ public class CoordinatedDegreeInfo extends FenixAction {
 
             final List<InfoMasterDegreeCandidate> infoMasterDegreeCandidates;
             try {
-        	infoMasterDegreeCandidates = (List) ServiceManagerServiceFactory.executeService(userView, "ReadDegreeCandidates", new Object[]{degreeCurricularPlanOID} );
+        	infoMasterDegreeCandidates = (List) ServiceManagerServiceFactory.executeService( "ReadDegreeCandidates", new Object[]{degreeCurricularPlanOID} );
             } catch (Exception e) {
                 throw new FenixActionException(e);
             }

@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -36,6 +35,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -75,15 +76,13 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 	    {
 		//Read the grant owner
 		Object[] args = { idInternal };
-		infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService(SessionUtils
-			.getUserView(request), "ReadGrantOwner", args);
+		infoGrantOwner = (InfoGrantOwner) executeService("ReadGrantOwner", args);
 		request.setAttribute("toShow", "toShow");
 	    } else if (personId != null) {
 		//Read the person (grant owner doesn't exist)
 		Object[] args = { personId };
 		InfoPerson infoPerson = null;
-		infoPerson = (InfoPerson) ServiceUtils.executeService(SessionUtils.getUserView(request),
-			"ReadPersonByID", args);
+		infoPerson = (InfoPerson) executeService("ReadPersonByID", args);
 		infoGrantOwner.setPersonInfo(infoPerson);
 		request.setAttribute("toShow", "toShow");
 	    }
@@ -131,8 +130,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 	List maritalStatusList = Arrays.asList(MaritalStatus.values());
 	request.setAttribute("maritalStatusList", maritalStatusList);
 
-	List countryList = (List) ServiceUtils.executeService(SessionUtils.getUserView(request),
-		"ReadAllCountries", null);
+	List countryList = (List) executeService("ReadAllCountries", null);
 
 	//Adding a select country line to the list (presentation reasons)             
 	InfoCountryEditor selectCountry = new InfoCountryEditor();
@@ -175,8 +173,8 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 
 	    //Edit Grant Owner
 	    Object[] args = { infoGrantOwner };
-	    IUserView userView = SessionUtils.getUserView(request);
-	    grantOwnerId = (Integer) ServiceUtils.executeService(userView, "EditGrantOwner", args);
+	    IUserView userView = UserView.getUser();
+	    grantOwnerId = (Integer) ServiceUtils.executeService("EditGrantOwner", args);
 
 	} catch (DomainException e) {
 	    return setError(request, mapping, "errors.grant.owner.personexists", null, null);
@@ -189,8 +187,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 	try {
 	    //Read the grant owner by person
 	    Object[] args2 = { grantOwnerId };
-	    infoGrantOwner = (InfoGrantOwner) ServiceUtils.executeService(SessionUtils
-		    .getUserView(request), "ReadGrantOwner", args2);
+	    infoGrantOwner = (InfoGrantOwner) executeService("ReadGrantOwner", args2);
 	} catch (FenixServiceException e) {
 	    return setError(request, mapping, "errors.grant.owner.bd.read", null, null);
 	}

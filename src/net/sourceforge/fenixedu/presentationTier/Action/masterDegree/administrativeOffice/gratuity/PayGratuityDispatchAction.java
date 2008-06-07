@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -38,6 +37,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -76,7 +77,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         DynaActionForm payGratuityForm = (DynaActionForm) form;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer contributorNumber = (Integer) payGratuityForm.get("contributorNumber");
         Integer studentId = (Integer) payGratuityForm.get("studentId");
@@ -101,7 +102,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
             try {
                 infoInsuranceTransaction = (InfoInsuranceTransaction) ServiceUtils
-                        .executeService(userView,
+                        .executeService(
                                 "ReadInsuranceTransactionByStudentIDAndExecutionYearID", argsInsurance);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
@@ -153,7 +154,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         DynaActionForm payGratuityForm = (DynaActionForm) form;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer contributorNumber = (Integer) payGratuityForm.get("contributorNumber");
         Integer gratuitySituationId = (Integer) payGratuityForm.get("gratuitySituationId");
@@ -223,7 +224,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
             List studentCurricularPlans = null;
             Object argsSCP[] = { infoStudent.getIdInternal() };
             try {
-                studentCurricularPlans = (List) ServiceUtils.executeService(userView,
+                studentCurricularPlans = (List) ServiceUtils.executeService(
                         "ReadPosGradStudentCurricularPlans", argsSCP);
 
             } catch (FenixServiceException e) {
@@ -240,7 +241,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
                         .getIdInternal() };
                 List executionDegreesList = null;
                 try {
-                    executionDegreesList = (List) ServiceUtils.executeService(userView,
+                    executionDegreesList = (List) ServiceUtils.executeService(
                             "ReadExecutionDegreesByDegreeCurricularPlan", argsDCP);
 
                 } catch (FenixServiceException e) {
@@ -281,7 +282,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
         Object argsGuide[] = { infoGuide, "", null, "", GuideState.NON_PAYED, "" };
         try {
-            infoGuide = (InfoGuide) ServiceUtils.executeService(userView, "CreateGuide", argsGuide);
+            infoGuide = (InfoGuide) ServiceUtils.executeService("CreateGuide", argsGuide);
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -308,7 +309,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         InfoContributor infoContributor = null;
         Object argsContributor[] = { contributorNumber };
         try {
-            infoContributor = (InfoContributor) ServiceUtils.executeService(userView, "ReadContributor",
+            infoContributor = (InfoContributor) ServiceUtils.executeService("ReadContributor",
                     argsContributor);
 
         } catch (ExcepcaoInexistente e) {
@@ -333,7 +334,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         InfoGratuitySituation infoGratuitySituation = null;
         Object argsGratuitySituation[] = { gratuitySituationId };
         try {
-            infoGratuitySituation = (InfoGratuitySituation) ServiceUtils.executeService(userView,
+            infoGratuitySituation = (InfoGratuitySituation) ServiceUtils.executeService(
                     "ReadGratuitySituationById", argsGratuitySituation);
 
         } catch (ExcepcaoInexistente e) {
@@ -357,7 +358,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         InfoStudent infoStudent = null;
         Object argsStudent[] = { studentId };
         try {
-            infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "student.ReadStudentById",
+            infoStudent = (InfoStudent) ServiceUtils.executeService("student.ReadStudentById",
                     argsStudent);
 
         } catch (FenixServiceException e) {
@@ -382,7 +383,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         InfoInsuranceValue infoInsuranceValue = null;
         Object argsInsuranceValue[] = { insuranceExecutionYearId };
         try {
-            infoInsuranceValue = (InfoInsuranceValue) ServiceUtils.executeService(userView,
+            infoInsuranceValue = (InfoInsuranceValue) ServiceUtils.executeService(
                     "ReadInsuranceValueByExecutionYearID", argsInsuranceValue);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

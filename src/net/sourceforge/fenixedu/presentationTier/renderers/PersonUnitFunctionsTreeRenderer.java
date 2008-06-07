@@ -10,10 +10,11 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.PersonFunctionsBean;
-import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 
 public class PersonUnitFunctionsTreeRenderer extends AbstractUnitFunctionsTreeRenderer {
 

@@ -42,7 +42,7 @@ public class CheckPasswordKerberosAction extends FenixAction {
 	    String result = null;
 
 	    try {
-		final IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null,
+		final IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(
 			"KerberosExternalAuthentication", authenticationArgs);
 
 		result = SUCCESS_MESSAGE + "\n"

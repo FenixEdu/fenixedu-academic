@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -32,6 +31,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.upload.FormFile;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Tânia Pousão
@@ -118,13 +119,13 @@ public class WriteMarksAction extends FenixDispatchAction {
         }
         reader.close();
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Object[] args = { objectCode, evaluationCode, hashMarks };
         TeacherAdministrationSiteView siteView = null;
 
         try {
-            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(userView,
+            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(
                     "InsertEvaluationMarks", args);
         } catch (FenixServiceException e) {
             e.printStackTrace();
@@ -174,7 +175,7 @@ public class WriteMarksAction extends FenixDispatchAction {
 
         try {
             TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils
-                    .executeService(userView, "TeacherAdministrationSiteComponentService", args);
+                    .executeService( "TeacherAdministrationSiteComponentService", args);
 
             request.setAttribute("siteView", siteView);
             request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent())
@@ -205,7 +206,7 @@ public class WriteMarksAction extends FenixDispatchAction {
         TeacherAdministrationSiteView siteView = null;
 
         try {
-            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(userView,
+            siteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(
                     "InsertEvaluationMarks", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

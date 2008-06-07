@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixSelectedRoomsAndSelectedRoomIndexContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -31,6 +30,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author tfc130
@@ -52,7 +53,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 		.length() > 0) ? new Integer(selectedExecutionPeriodOIDString) : null;
 		
 	request.removeAttribute(SessionConstants.INFO_SECTION);
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	setListOfExecutionPeriods(request, userView);
 
 	List<InfoRoom> infoRooms = (List<InfoRoom>) request.getAttribute(SessionConstants.SELECTED_ROOMS);
@@ -62,7 +63,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 	    String roomOidString = request.getParameter(SessionConstants.ROOM_OID);
 	    if (roomOidString != null) {
 		Integer roomOid = new Integer(Integer.parseInt(roomOidString));
-		infoRoom = (InfoRoom) ServiceUtils.executeService(userView, "ReadRoomByOID",
+		infoRoom = (InfoRoom) ServiceUtils.executeService("ReadRoomByOID",
 			new Object[] { roomOid });
 
 	    } else {
@@ -120,7 +121,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 
 	Object argsReadLessonsAndExams[] = { room, YearMonthDay.fromCalendarFields(today) };
 
-	List<InfoObject> showOccupations = (List<InfoObject>) ServiceUtils.executeService(userView,
+	List<InfoObject> showOccupations = (List<InfoObject>) ServiceUtils.executeService(
 		"ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom", argsReadLessonsAndExams);
 
 	if (showOccupations != null) {
@@ -142,11 +143,11 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
     private InfoExecutionPeriod getExecutionPeriod(IUserView userView, Integer selectedExecutionPeriodOID)
 	    throws FenixFilterException, FenixServiceException {
 	if (selectedExecutionPeriodOID == null) {
-	    return (InfoExecutionPeriod) ServiceUtils.executeService(userView,
+	    return (InfoExecutionPeriod) ServiceUtils.executeService(
 		    "ReadCurrentExecutionPeriod", new Object[] {});
 	}
 	Object[] args = { selectedExecutionPeriodOID };
-	return (InfoExecutionPeriod) ServiceUtils.executeService(null, "ReadExecutionPeriodByOID", args);
+	return (InfoExecutionPeriod) ServiceUtils.executeService("ReadExecutionPeriodByOID", args);
 
     }
 
@@ -155,7 +156,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 	
 	Object argsReadExecutionPeriods[] = {};
 	List<InfoExecutionPeriod> executionPeriods;
-	executionPeriods = (ArrayList<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(userView,
+	executionPeriods = (ArrayList<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(
 		"ReadNotClosedExecutionPeriods", argsReadExecutionPeriods);
 
 	ComparatorChain chainComparator = new ComparatorChain();

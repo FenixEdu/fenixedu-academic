@@ -65,7 +65,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
         degreeTypes.add(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
         degreeTypes.add(DegreeType.BOLONHA_MASTER_DEGREE);
         Object args[] = new Object[] { new Integer(executionYearOID), degreeTypes };
-        List infoExecutionDegrees = (List) ServiceUtils.executeService(null,
+        List infoExecutionDegrees = (List) ServiceUtils.executeService(
                 "ReadExecutionDegreesByExecutionYearAndType", args);
         Collections.sort(infoExecutionDegrees, new BeanComparator(
                 "infoDegreeCurricularPlan.infoDegree.nome"));
@@ -147,7 +147,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
             }
 
             Object[] args = { finalDegreeWorkProposalOID };
-            InfoProposal infoProposal = (InfoProposal) ServiceUtils.executeService(null,
+            InfoProposal infoProposal = (InfoProposal) ServiceUtils.executeService(
                     "ReadFinalDegreeWorkProposal", args);
             infoProposal.getExecutionDegree().setGetNextExecutionYear(true);
             request.setAttribute("finalDegreeWorkProposal", infoProposal);
@@ -209,7 +209,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
             HttpServletRequest request, String executionDegreeOID, String sortBy) throws Exception {
         if (executionDegreeOID != null && !executionDegreeOID.equals("")) {
             Object[] args = { new Integer(executionDegreeOID) };
-            List publishedFinalDegreeWorkProposalHeaders = (List) ServiceUtils.executeService(null,
+            List publishedFinalDegreeWorkProposalHeaders = (List) ServiceUtils.executeService(
                     "ReadPublishedFinalDegreeWorkProposalHeaders", args);
             Collections.sort(publishedFinalDegreeWorkProposalHeaders, new BeanComparator(sortBy));
             request.setAttribute("publishedFinalDegreeWorkProposalHeaders",

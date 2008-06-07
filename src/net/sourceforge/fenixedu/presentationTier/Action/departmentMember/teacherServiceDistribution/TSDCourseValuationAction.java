@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.collections.Transformer;
 import org.apache.struts.action.ActionForm;
@@ -31,12 +30,14 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 public class TSDCourseValuationAction extends FenixDispatchAction {
 
     public ActionForward prepareForTSDCourseValuation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	DynaActionForm dynaForm = (DynaActionForm) form;
 
 	getFromRequestAndSetOnForm(request, dynaForm);
@@ -175,14 +176,14 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
 
     public ActionForward setTSDCourseStudents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	DynaActionForm dynaForm = (DynaActionForm) form;
 
 	TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm);
 	Map<String, Object> tsdCourseParameters = obtainStudentsParametersFromForm(dynaForm);
 
 	Object[] parameters = new Object[] { tsdCourse.getIdInternal(), tsdCourseParameters };
-	ServiceUtils.executeService(userView, "SetTSDCourse", parameters);
+	ServiceUtils.executeService("SetTSDCourse", parameters);
 
 	return loadTSDCourses(mapping, form, request, response, "courseValuationStudents");
     }
@@ -204,14 +205,14 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
      * public ActionForward removeTSDCourseLoad( ActionMapping mapping,
      * ActionForm form, HttpServletRequest request, HttpServletResponse
      * response) throws FenixFilterException, FenixServiceException { IUserView
-     * userView = SessionUtils.getUserView(request); DynaActionForm dynaForm =
+     * userView = UserView.getUser(); DynaActionForm dynaForm =
      * (DynaActionForm) form;
      * 
      * TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm); Map<String,
      * Object> tsdCourseParameters = obtainRemoveParametersFromForm(dynaForm);
      * 
      * Object[] parameters = new Object[] { tsdCourse.getIdInternal(),
-     * tsdCourseParameters }; ServiceUtils.executeService(userView,
+     * tsdCourseParameters }; ServiceUtils.executeService(
      * "SetTSDCourse", parameters);
      * 
      * dynaForm.set("shiftType", "");
@@ -231,14 +232,14 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
 
     public ActionForward setTSDCourseWeights(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	DynaActionForm dynaForm = (DynaActionForm) form;
 
 	TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm);
 	Map<String, Object> tsdCourseParameters = obtainWeightsParametersFromForm(dynaForm);
 
 	Object[] parameters = new Object[] { tsdCourse.getIdInternal(), tsdCourseParameters };
-	ServiceUtils.executeService(userView, "SetTSDCourse", parameters);
+	ServiceUtils.executeService("SetTSDCourse", parameters);
 
 	return loadTSDCourses(mapping, form, request, response, "courseValuationWeights");
     }
@@ -261,14 +262,14 @@ public class TSDCourseValuationAction extends FenixDispatchAction {
 
     public ActionForward setTSDCourseHours(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	DynaActionForm dynaForm = (DynaActionForm) form;
 
 	TSDCourse tsdCourse = getSelectedTSDCourse(dynaForm);
 	Map<String, Object> tsdCourseParameters = obtainHoursParametersFromForm(dynaForm);
 
 	Object[] parameters = new Object[] { tsdCourse.getIdInternal(), tsdCourseParameters };
-	ServiceUtils.executeService(userView, "SetTSDCourse", parameters);
+	ServiceUtils.executeService("SetTSDCourse", parameters);
 
 	return loadTSDCourses(mapping, form, request, response, "courseValuationHours");
     }

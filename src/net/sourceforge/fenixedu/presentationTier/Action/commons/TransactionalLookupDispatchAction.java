@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixTransactionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -16,6 +15,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.actions.LookupDispatchAction;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * Contains util functions for struts transaction management.
@@ -84,7 +85,7 @@ public abstract class TransactionalLookupDispatchAction extends LookupDispatchAc
     }
     
     protected static IUserView getUserView(HttpServletRequest request) {
-        return SessionUtils.getUserView(request);
+        return UserView.getUser();
     }
     
     @Override

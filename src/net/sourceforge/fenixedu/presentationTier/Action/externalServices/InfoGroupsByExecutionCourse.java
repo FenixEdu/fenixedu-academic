@@ -86,7 +86,7 @@ public class InfoGroupsByExecutionCourse extends FenixAction
             FenixServiceException
     {
         Object[] args = { integer, userView.getUtilizador() };
-        Collection info = (Collection) ServiceManagerServiceFactory.executeService(userView,
+        Collection info = (Collection) ServiceManagerServiceFactory.executeService(
                 "ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername", args); //$NON-NLS-1$
         XStream xstream = new XStream();
         String data = xstream.toXML(info);
@@ -123,7 +123,7 @@ public class InfoGroupsByExecutionCourse extends FenixAction
     private IUserView authenticate(String username, String password, String requestURL,
             String remoteHostName) throws FenixServiceException, FenixFilterException {
         Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
-        IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null,
+        IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(
                 "Autenticacao", argsAutenticacao);
         return userView;
     }

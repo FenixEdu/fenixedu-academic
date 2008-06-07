@@ -36,7 +36,7 @@ public class ShowStudentCurricularCoursePlanAction extends FenixDispatchAction {
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
         try {
             infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadPosGradStudentCurricularPlanById", args);
+                    .executeService( "ReadPosGradStudentCurricularPlanById", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

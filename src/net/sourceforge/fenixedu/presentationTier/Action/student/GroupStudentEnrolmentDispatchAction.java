@@ -50,7 +50,7 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 		Object[] args1 = { null, null, studentGroupCode, userView.getUtilizador(), new Integer(1)};
 		
 		try {
-			ServiceUtils.executeService(userView, "VerifyStudentGroupAtributes", args1);
+			ServiceUtils.executeService("VerifyStudentGroupAtributes", args1);
 
 		} catch (NotAuthorizedException e) {
 			ActionErrors actionErrors = new ActionErrors();
@@ -92,7 +92,7 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 		Object[] args2 = { studentGroupCode };
 		ISiteComponent viewStudentGroup = null;
 		try {
-			viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService(userView, "ReadStudentGroupInformation", args2);
+			viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService("ReadStudentGroupInformation", args2);
 
 		} catch (InvalidSituationServiceException e) {
 			ActionErrors actionErrors3 = new ActionErrors();
@@ -126,7 +126,7 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 		
 		try {
 
-			ServiceUtils.executeService(userView, "GroupStudentEnrolment", args1);
+			ServiceUtils.executeService("GroupStudentEnrolment", args1);
 
 		}  catch (NotAuthorizedException e) {
 			ActionErrors actionErrors = new ActionErrors();

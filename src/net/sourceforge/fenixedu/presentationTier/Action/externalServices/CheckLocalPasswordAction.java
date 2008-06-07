@@ -43,7 +43,7 @@ public class CheckLocalPasswordAction extends FenixAction {
 	    String result = null;
 
 	    try {
-		final IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null,
+		final IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(
 			"LocalAuthenticate", authenticationArgs);
 
 		result = SUCCESS_MESSAGE;

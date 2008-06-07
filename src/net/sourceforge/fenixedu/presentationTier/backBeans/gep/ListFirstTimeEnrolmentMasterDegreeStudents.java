@@ -34,13 +34,13 @@ public class ListFirstTimeEnrolmentMasterDegreeStudents extends FenixBackingBean
         }
 
         Object[] args = { getSelectedExecutionYear() };
-        return (Collection) ServiceUtils.executeService(userView, "ListMasterDegreeStudents", args);
+        return (Collection) ServiceUtils.executeService("ListMasterDegreeStudents", args);
     }
 
     public List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
         List<SelectItem> result = new ArrayList<SelectItem>();
         List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils.executeService(
-                userView, "ReadNotClosedExecutionYears", null);
+                "ReadNotClosedExecutionYears", null);
 
         Collections.sort(executionYears, new Comparator<InfoExecutionYear>() {
 

@@ -12,13 +12,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.fenixframework.FenixFramework;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -28,6 +26,8 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.FenixFramework;
 import dml.DomainClass;
 import dml.Slot;
 
@@ -72,14 +72,14 @@ public class DomainObjectStringPropertyFormatterDispatchAction extends FenixDisp
             HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException,
             FenixFilterException, FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm actionForm = (DynaActionForm) form;
         String domainObjectClass = (String) actionForm.get("domainObjectClass");
         String slotName = (String) actionForm.get("slotName");
 
         Object[] args = { Class.forName(domainObjectClass), slotName };
-        ServiceUtils.executeService(userView, "DomainObjectStringPropertyFormatter", args);
+        ServiceUtils.executeService("DomainObjectStringPropertyFormatter", args);
 
         ActionMessages actionMessages = new ActionMessages();
         actionMessages.add("formatCompleted", new ActionMessage("label.property.format.ok", ""));

@@ -68,7 +68,7 @@ public class SendEmailBean implements Serializable {
 
     public void send() throws FenixFilterException, FenixServiceException {
 	final Object[] args = { getToList(), getCCList(), getBCCList(), getFromName(), getFrom(), getSubject(), getMessageWithFooter() };
-	ServiceUtils.executeService(null, "commons.SendMail", args);
+	ServiceUtils.executeService("commons.SendMail", args);
 	sent = Boolean.TRUE;
     }
 

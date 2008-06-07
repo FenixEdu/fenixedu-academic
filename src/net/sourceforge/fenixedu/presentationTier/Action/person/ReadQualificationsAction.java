@@ -11,11 +11,12 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoSiteQualifications;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -33,12 +34,12 @@ public class ReadQualificationsAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
             Object[] args = { userView.getUtilizador() };
 
             InfoSiteQualifications infoSiteQualifications = (InfoSiteQualifications) ServiceUtils
-                    .executeService(userView, "ReadQualifications", args);
+                    .executeService( "ReadQualifications", args);
 
             request.setAttribute("infoSiteQualifications", infoSiteQualifications);
 

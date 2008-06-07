@@ -5,14 +5,16 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.SummariesControlAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class DepartmentAdmOfficeSummariesControlAction extends SummariesControlAction {
 
@@ -21,7 +23,8 @@ public class DepartmentAdmOfficeSummariesControlAction extends SummariesControlA
 	    FenixServiceException {
 
 	List<LabelValueBean> departments = new ArrayList<LabelValueBean>();
-	Person person = SessionUtils.getUserView(request).getPerson();
+	final IUserView userView = UserView.getUser();
+	Person person = userView.getPerson();
 	List<Department> manageableDepartments = person.getManageableDepartmentCredits();
 	for (Department department : manageableDepartments) {
 	    LabelValueBean bean = new LabelValueBean();

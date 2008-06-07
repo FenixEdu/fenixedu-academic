@@ -11,13 +11,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.sibs.SibsOutgoingPaymentFile;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class DegreePaymentsManagementDA extends FenixDispatchAction {
 
@@ -31,7 +32,7 @@ public class DegreePaymentsManagementDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
 	    FenixServiceException {
 
-	request.setAttribute("gratuityLetterDTOs", ServiceUtils.executeService(getUserView(request),
+	request.setAttribute("gratuityLetterDTOs", ServiceUtils.executeService(
 		"BuildInformationForDegreeGratuityLetters", new Object[] { ExecutionYear
 			.readCurrentExecutionYear() }));
 
@@ -49,7 +50,7 @@ public class DegreePaymentsManagementDA extends FenixDispatchAction {
 	    FenixFilterException, FenixServiceException {
 
 	final SibsOutgoingPaymentFile sibsOutgoingPaymentFile = (SibsOutgoingPaymentFile) ServiceUtils
-		.executeService(getUserView(request),
+		.executeService(
 			"GenerateDegreeAdministrativeOfficeSibsOutgoingPaymentFile",
 			new Object[] { ExecutionYear.readCurrentExecutionYear() });
 
@@ -83,7 +84,7 @@ public class DegreePaymentsManagementDA extends FenixDispatchAction {
 	    return prepareUploadSibsPaymentsFile(mapping, form, request, response);
 	}
 
-	ServiceUtils.executeService(getUserView(request), "UploadSibsPaymentsFile", new Object[] {
+	ServiceUtils.executeService("UploadSibsPaymentsFile", new Object[] {
 		getUserView(request).getPerson(), paymentsFileBean });
 
 	RenderUtils.invalidateViewState("paymentsFileBean-create");

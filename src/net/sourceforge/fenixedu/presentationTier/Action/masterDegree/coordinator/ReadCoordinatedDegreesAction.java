@@ -13,11 +13,12 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class ReadCoordinatedDegreesAction extends FenixAction {
 
@@ -25,11 +26,11 @@ public class ReadCoordinatedDegreesAction extends FenixAction {
 		HttpSession session = request.getSession(false);
 
         if (session != null) {
-			IUserView userView = SessionUtils.getUserView(request);
+			IUserView userView = UserView.getUser();
 
 			try {
                 Object args[] = { userView };
-                List<InfoDegreeCurricularPlan> degrees = (List<InfoDegreeCurricularPlan>) ServiceManagerServiceFactory.executeService(userView, "ReadCoordinatedDegrees", args);
+                List<InfoDegreeCurricularPlan> degrees = (List<InfoDegreeCurricularPlan>) ServiceManagerServiceFactory.executeService( "ReadCoordinatedDegrees", args);
                 session.setAttribute(SessionConstants.MASTER_DEGREE_LIST, degrees);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);

@@ -20,13 +20,14 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoOpenin
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjectReport;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Susana Fernandes
@@ -35,7 +36,7 @@ public class ProjectReportsDispatchAction extends ReportsDispatchAction {
 
     public ActionForward prepareShowReport(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException, FenixFilterException {
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
         final String reportTypeStr = request.getParameter("reportType");
         final String costCenter = request.getParameter("costCenter");
         final ReportType reportType = new ReportType(reportTypeStr);
@@ -45,13 +46,13 @@ public class ProjectReportsDispatchAction extends ReportsDispatchAction {
                 && (reportType.equals(ReportType.EXPENSES) || reportType.equals(ReportType.REVENUE) || reportType.equals(ReportType.CABIMENTOS) || reportType
                         .equals(ReportType.ADIANTAMENTOS)) || reportType.equals(ReportType.COMPLETE_EXPENSES)
                 || reportType.equals(ReportType.OPENING_PROJECT_FILE) || reportType.equals(ReportType.PROJECT_BUDGETARY_BALANCE)) {
-            final List projectList = (List) ServiceUtils.executeService(userView, "ReadUserProjects", new Object[] { userView.getUtilizador(),
+            final List projectList = (List) ServiceUtils.executeService("ReadUserProjects", new Object[] { userView.getUtilizador(),
                     costCenter, new Boolean(true) });
 
             request.setAttribute("projectList", projectList);
             return mapping.findForward("projectList");
         } else if (reportType.getReportType() != null && (reportType.equals(ReportType.SUMMARY))) {
-            final List coordinatorsList = (List) ServiceUtils.executeService(userView, "ReadCoordinators", new Object[] { userView.getUtilizador(),
+            final List coordinatorsList = (List) ServiceUtils.executeService("ReadCoordinators", new Object[] { userView.getUtilizador(),
                     costCenter });
             if (coordinatorsList != null && coordinatorsList.size() == 1) {
                 request.setAttribute("coordinatorCode", ((InfoRubric) coordinatorsList.get(0)).getCode());
@@ -66,7 +67,7 @@ public class ProjectReportsDispatchAction extends ReportsDispatchAction {
 
     public ActionForward getReport(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException, FenixFilterException {
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
         final String reportTypeStr = request.getParameter("reportType");
         final ReportType reportType = new ReportType(reportTypeStr);
         final String costCenter = request.getParameter("costCenter");
@@ -76,7 +77,7 @@ public class ProjectReportsDispatchAction extends ReportsDispatchAction {
             if (reportType.equals(ReportType.EXPENSES) || reportType.equals(ReportType.COMPLETE_EXPENSES)) {
                 final Integer projectCode = getCodeFromRequest(request, "projectCode");
                 final String rubric = request.getParameter("rubric");
-                InfoProjectReport infoExpensesReport = (InfoProjectReport) ServiceUtils.executeService(userView, "ReadExpensesReport", new Object[] {
+                InfoProjectReport infoExpensesReport = (InfoProjectReport) ServiceUtils.executeService("ReadExpensesReport", new Object[] {
                         userView.getUtilizador(), costCenter, reportType, projectCode, rubric });
                 getSpans(request, infoExpensesReport);
                 request.setAttribute("rubric", rubric);
@@ -85,18 +86,18 @@ public class ProjectReportsDispatchAction extends ReportsDispatchAction {
             } else if (reportType.equals(ReportType.REVENUE) || reportType.equals(ReportType.ADIANTAMENTOS)
                     || reportType.equals(ReportType.CABIMENTOS) || reportType.equals(ReportType.PROJECT_BUDGETARY_BALANCE)) {
                 final Integer projectCode = getCodeFromRequest(request, "projectCode");
-                final InfoProjectReport infoReport = (InfoProjectReport) ServiceUtils.executeService(userView, "ReadReport", new Object[] {
+                final InfoProjectReport infoReport = (InfoProjectReport) ServiceUtils.executeService("ReadReport", new Object[] {
                         userView.getUtilizador(), costCenter, reportType, projectCode });
                 request.setAttribute("infoReport", infoReport);
             } else if (reportType.equals(ReportType.SUMMARY)) {
                 final Integer coordinatorCode = getCodeFromRequest(request, "coordinatorCode");
-                final InfoCoordinatorReport infoSummaryReport = (InfoCoordinatorReport) ServiceUtils.executeService(userView, "ReadSummaryReport",
+                final InfoCoordinatorReport infoSummaryReport = (InfoCoordinatorReport) ServiceUtils.executeService("ReadSummaryReport",
                         new Object[] { userView.getUtilizador(), costCenter, coordinatorCode });
                 request.setAttribute("infoSummaryReport", infoSummaryReport);
             } else if (reportType.equals(ReportType.OPENING_PROJECT_FILE)) {
                 final Integer projectCode = getCodeFromRequest(request, "projectCode");
                 final InfoOpeningProjectFileReport infoOpeningProjectFileReport = (InfoOpeningProjectFileReport) ServiceUtils.executeService(
-                        userView, "ReadOpeningProjectFileReport", new Object[] { userView.getUtilizador(), costCenter, projectCode });
+                        "ReadOpeningProjectFileReport", new Object[] { userView.getUtilizador(), costCenter, projectCode });
                 request.setAttribute("infoOpeningProjectFileReport", infoOpeningProjectFileReport);
             }
             return mapping.findForward("show" + reportTypeStr);
@@ -107,7 +108,7 @@ public class ProjectReportsDispatchAction extends ReportsDispatchAction {
 
     public ActionForward exportToExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException, FenixFilterException {
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
         final String reportTypeStr = request.getParameter("reportType");
         final ReportType reportType = new ReportType(reportTypeStr);
         final String costCenter = request.getParameter("costCenter");
@@ -118,17 +119,17 @@ public class ProjectReportsDispatchAction extends ReportsDispatchAction {
         if (reportType.getReportType() != null) {
             if (reportType.equals(ReportType.EXPENSES) || reportType.equals(ReportType.COMPLETE_EXPENSES)) {
                 final Integer projectCode = getCodeFromRequest(request, "projectCode");
-                infoProjectReport = (InfoExpensesReport) ServiceUtils.executeService(userView, "ReadExpensesReport", new Object[] {
+                infoProjectReport = (InfoExpensesReport) ServiceUtils.executeService("ReadExpensesReport", new Object[] {
                         userView.getUtilizador(), costCenter, reportType, projectCode, request.getParameter("rubric") });
                 infoProjectReport.getReportToExcel(userView, wb, reportType);
             } else if (reportType.equals(ReportType.SUMMARY)) {
                 final Integer coordinatorCode = getCodeFromRequest(request, "coordinatorCode");
-                final InfoCoordinatorReport infoSummaryReport = (InfoCoordinatorReport) ServiceUtils.executeService(userView, "ReadSummaryReport",
+                final InfoCoordinatorReport infoSummaryReport = (InfoCoordinatorReport) ServiceUtils.executeService("ReadSummaryReport",
                         new Object[] { userView.getUtilizador(), costCenter, coordinatorCode });
                 infoSummaryReport.getReportToExcel(userView, wb, reportType);
             } else {
                 final Integer projectCode = getCodeFromRequest(request, "projectCode");
-                infoProjectReport = (InfoProjectReport) ServiceUtils.executeService(userView, "ReadReport", new Object[] { userView.getUtilizador(),
+                infoProjectReport = (InfoProjectReport) ServiceUtils.executeService("ReadReport", new Object[] { userView.getUtilizador(),
                         costCenter, reportType, projectCode });
                 infoProjectReport.getReportToExcel(userView, wb, reportType);
             }

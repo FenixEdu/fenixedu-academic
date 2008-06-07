@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoGlossaryEntry;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -23,6 +22,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author Luis Crus
  */
@@ -30,9 +31,9 @@ public class ManageGlossaryDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
-        List infoGlossaryEntries = (List) ServiceUtils.executeService(userView, "ReadGlossaryEntries",
+        List infoGlossaryEntries = (List) ServiceUtils.executeService("ReadGlossaryEntries",
                 null);
         Collections.sort(infoGlossaryEntries, new BeanComparator("term"));
         request.setAttribute("infoGlossaryEntries", infoGlossaryEntries);
@@ -50,9 +51,9 @@ public class ManageGlossaryDA extends FenixDispatchAction {
         infoGlossaryEntry.setTerm(term);
         infoGlossaryEntry.setDefinition(definition);
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Object[] args = { infoGlossaryEntry };
-        ServiceUtils.executeService(userView, "CreateGlossaryEntry", args);
+        ServiceUtils.executeService("CreateGlossaryEntry", args);
 
         return mapping.getInputForward();
     }
@@ -63,9 +64,9 @@ public class ManageGlossaryDA extends FenixDispatchAction {
 
         if (entryIdString != null && StringUtils.isNumeric(entryIdString)) {
             Integer entryId = new Integer(entryIdString);
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
             Object[] args = { entryId };
-            ServiceUtils.executeService(userView, "DeleteGlossaryEntry", args);
+            ServiceUtils.executeService("DeleteGlossaryEntry", args);
         }
 
         return mapping.getInputForward();

@@ -19,13 +19,14 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author lmac1
@@ -35,7 +36,7 @@ public class ReadCurricularCourseAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 
         request.setAttribute("degreeId", request.getParameter("degreeId"));
@@ -47,7 +48,7 @@ public class ReadCurricularCourseAction extends FenixAction {
         InfoCurricularCourse infoCurricularCourse = null;
 
         try {
-            infoCurricularCourse = (InfoCurricularCourse) ServiceUtils.executeService(userView,
+            infoCurricularCourse = (InfoCurricularCourse) ServiceUtils.executeService(
                     "ReadCurricularCourse", args);
 
         } catch (NonExistingServiceException e) {
@@ -59,7 +60,7 @@ public class ReadCurricularCourseAction extends FenixAction {
         // in case the curricular course really exists
         List executionCourses = null;
         try {
-            executionCourses = (List) ServiceUtils.executeService(userView,
+            executionCourses = (List) ServiceUtils.executeService(
                     "ReadExecutionCoursesByCurricularCourse", args);
 
         } catch (FenixServiceException e) {
@@ -70,7 +71,7 @@ public class ReadCurricularCourseAction extends FenixAction {
 
         List curricularCourseScopes = new ArrayList();
         try {
-            curricularCourseScopes = (List) ServiceUtils.executeService(userView,
+            curricularCourseScopes = (List) ServiceUtils.executeService(
                     "ReadInterminatedCurricularCourseScopes", args);
 
         } catch (FenixServiceException e) {

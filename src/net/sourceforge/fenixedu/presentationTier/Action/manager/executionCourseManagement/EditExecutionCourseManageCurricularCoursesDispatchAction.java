@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -36,6 +35,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /*
  * 
  * @author Fernanda Quitério 23/Dez/2003
@@ -46,7 +47,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
     public ActionForward dissociateCurricularCourse(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer executionCourseId = new Integer(getAndSetStringToRequest(request, "executionCourseId"));
         Integer curricularCourseId = new Integer(getAndSetStringToRequest(request, "curricularCourseId"));
@@ -61,7 +62,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
 
         Object[] args = { executionCourseId, curricularCourseId };
         try {
-            ServiceUtils.executeService(userView, "DissociateCurricularCourseByExecutionCourseId", args);
+            ServiceUtils.executeService("DissociateCurricularCourseByExecutionCourseId", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -73,7 +74,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
             ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         getAndSetStringToRequest(request, "executionCourseId");
         getAndSetStringToRequest(request, "executionCourseName");
@@ -91,7 +92,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
         Object args[] = { executionPeriodId };
         List executionDegreeList = null;
         try {
-            executionDegreeList = (List) ServiceUtils.executeService(userView,
+            executionDegreeList = (List) ServiceUtils.executeService(
                     "ReadExecutionDegreesByExecutionPeriodId", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -145,7 +146,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
     public ActionForward prepareAssociateCurricularCourse(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         getAndSetStringToRequest(request, "executionCourseId");
         getAndSetStringToRequest(request, "executionCourseName");
@@ -186,7 +187,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
     public ActionForward associateCurricularCourses(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm executionCourseForm = (DynaValidatorForm) form;
         getAndSetStringToRequest(request, "executionPeriodId");
@@ -201,7 +202,7 @@ public class EditExecutionCourseManageCurricularCoursesDispatchAction extends Fe
 
         Object args[] = { Integer.valueOf(executionCourseId), curricularCourseIds };
         try {
-            ServiceUtils.executeService(userView, "AssociateCurricularCoursesToExecutionCourse", args);
+            ServiceUtils.executeService("AssociateCurricularCoursesToExecutionCourse", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

@@ -220,7 +220,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
     private String changeDegree(String serviceName, Object[] args, String successfulMsg, String errorMsg) {
         try {
-            ServiceUtils.executeService(this.getUserView(), serviceName, args);
+            ServiceUtils.executeService( serviceName, args);
         } catch (FenixFilterException e) {
             this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
             return "curricularPlansManagement";

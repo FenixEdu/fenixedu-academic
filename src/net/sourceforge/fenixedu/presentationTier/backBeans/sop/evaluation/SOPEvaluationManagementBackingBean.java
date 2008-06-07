@@ -51,7 +51,6 @@ import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLin
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.Season;
@@ -61,6 +60,8 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.util.MessageResources;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class SOPEvaluationManagementBackingBean extends EvaluationManagementBackingBean {
 
@@ -429,7 +430,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     // BEGIN Drop down menu logic
     public List<SelectItem> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
-	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils.executeService(getUserView(),
+	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils.executeService(
 		"ReadNotClosedExecutionPeriods", null);
 
 	ComparatorChain chainComparator = new ComparatorChain();
@@ -468,7 +469,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	}
 
 	Object[] args = { this.getExecutionPeriod().getExecutionYear().getIdInternal() };
-	List<InfoExecutionDegree> infoExecutionDegrees = (List<InfoExecutionDegree>) ServiceUtils.executeService(getUserView(),
+	List<InfoExecutionDegree> infoExecutionDegrees = (List<InfoExecutionDegree>) ServiceUtils.executeService(
 		"ReadExecutionDegreesByExecutionYearId", args);
 	Collections.sort(infoExecutionDegrees, new ComparatorByNameForInfoExecutionDegree());
 
@@ -733,7 +734,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	    for (final Integer curricularYearID : curricularYears) {
 		final Object args[] = { this.getExecutionDegree().getDegreeCurricularPlan().getIdInternal(),
 			this.getExecutionPeriodID(), curricularYearID };
-		executionCourses.addAll((Collection<ExecutionCourse>) ServiceManagerServiceFactory.executeService(getUserView(),
+		executionCourses.addAll((Collection<ExecutionCourse>) ServiceManagerServiceFactory.executeService(
 			"ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear", args));
 	    }
 	}
@@ -752,7 +753,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	    for (final Integer curricularYearID : curricularYears) {
 		final Object args[] = { degreeCurricularPlan.getIdInternal(), this.getExecutionPeriodID(), curricularYearID };
 		final Collection<ExecutionCourse> executionCourses = (Collection<ExecutionCourse>) ServiceManagerServiceFactory
-			.executeService(getUserView(),
+			.executeService(
 				"ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear", args);
 		for (final ExecutionCourse executionCourse : executionCourses) {
 		    final Set<WrittenEvaluation> writtenEvaluations = new TreeSet<WrittenEvaluation>(
@@ -956,7 +957,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 		HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek,
 		null, null, Boolean.FALSE };
 
-	List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService(this.getUserView(),
+	List<InfoRoom> availableInfoRoom = (List<InfoRoom>) ServiceUtils.executeService(
 		"ReadAvailableRoomsForExam", args);
 
 	if (this.getEvaluationID() != null) {
@@ -1054,7 +1055,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	final Object[] args = { null, this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(),
 		executionCourseIDs, degreeModuleScopeIDs, roomsIDs, season, this.getDescription() };
 	try {
-	    ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
+	    ServiceUtils.executeService( "CreateWrittenEvaluation", args);
 
 	} catch (Exception e) {
 	    String errorMessage = e.getMessage();
@@ -1116,7 +1117,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	final Object[] args = { null, this.getBegin().getTime(), this.getBegin().getTime(), this.getEnd().getTime(),
 		executionCourseIDs, degreeModuleScopeIDs, roomsIDs, this.evaluationID, season, this.getDescription() };
 	try {
-	    ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
+	    ServiceUtils.executeService( "EditWrittenEvaluation", args);
 
 	} catch (Exception e) {
 	    String errorMessage = e.getMessage();
@@ -1396,7 +1397,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	try {
 	    Object argsDefineComment[] = { this.getExecutionCourse().getSigla(),
 		    this.getExecutionCourse().getExecutionPeriod().getIdInternal(), this.getComment() };
-	    ServiceUtils.executeService(this.getUserView(), "DefineExamComment", argsDefineComment);
+	    ServiceUtils.executeService( "DefineExamComment", argsDefineComment);
 	} catch (FenixFilterException e) {
 	    this.setErrorMessage(e.getMessage());
 	    return "";
@@ -1476,7 +1477,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	final Object args[] = { executionDegree.getDegreeCurricularPlan().getIdInternal(), this.getExecutionPeriodID(),
 		this.getSelectedCurricularYearID() };
 	List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>(
-		(List<ExecutionCourse>) ServiceManagerServiceFactory.executeService(getUserView(),
+		(List<ExecutionCourse>) ServiceManagerServiceFactory.executeService(
 			"ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear", args));
 	Collections.sort(executionCourses, new BeanComparator("sigla"));
 	return executionCourses;

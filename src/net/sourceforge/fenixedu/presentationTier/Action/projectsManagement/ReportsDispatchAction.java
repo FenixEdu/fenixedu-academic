@@ -15,12 +15,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoReport;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.projectsManagement.RubricType;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Susana Fernandes
@@ -30,13 +31,13 @@ public class ReportsDispatchAction extends FenixDispatchAction {
 
     public ActionForward showHelp(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException, FenixFilterException {
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
         final String helpPage = request.getParameter("helpPage");
         final String costCenter = request.getParameter("costCenter");
         getCostCenterName(request, costCenter);
         final RubricType rubricType = RubricType.getRubricType(helpPage);
         if (rubricType != null) {
-            List infoRubricList = (List) ServiceUtils.executeService(userView, "ReadRubric", new Object[] { userView.getUtilizador(), costCenter,
+            List infoRubricList = (List) ServiceUtils.executeService("ReadRubric", new Object[] { userView.getUtilizador(), costCenter,
                     rubricType });
             request.setAttribute("infoRubricList", infoRubricList);
         } else if (!helpPage.equals("listHelp"))
@@ -96,8 +97,8 @@ public class ReportsDispatchAction extends FenixDispatchAction {
 
     protected void getCostCenterName(HttpServletRequest request, String costCenter) throws FenixServiceException, FenixFilterException {
         if (costCenter != null && !costCenter.equals("")) {
-            final IUserView userView = SessionUtils.getUserView(request);
-            request.setAttribute("infoCostCenter", ServiceUtils.executeService(userView, "ReadCostCenter", new Object[] { userView.getUtilizador(),
+            final IUserView userView = UserView.getUser();
+            request.setAttribute("infoCostCenter", ServiceUtils.executeService("ReadCostCenter", new Object[] { userView.getUtilizador(),
                     costCenter }));
         }
     }

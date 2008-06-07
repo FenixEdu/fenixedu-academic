@@ -68,7 +68,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         Integer numerusClausus = null;
         try {
             Object args[] = { degreeCurricularPlanID };
-            numerusClausus = (Integer) ServiceManagerServiceFactory.executeService(userView,
+            numerusClausus = (Integer) ServiceManagerServiceFactory.executeService(
                     "ReadNumerusClausus", args);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e);
@@ -117,7 +117,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 
         Object args[] = { executionDegree, activeSituations };
         try {
-            candidateList = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+            candidateList = (ArrayList) ServiceManagerServiceFactory.executeService(
                     "ReadCandidatesForSelection", args);
 
         } catch (NonExistingServiceException e) {
@@ -187,7 +187,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 
         try {
             Object args[] = { candidateList, ids };
-            candidatesAdmited = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+            candidatesAdmited = (ArrayList) ServiceManagerServiceFactory.executeService(
                     "ReadAdmitedCandidates", args);
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
@@ -208,7 +208,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
             //Object args[] = { executionYear, degree };
             //Object args[] = { executionDegree };
             Object args[] = { degreeCurricularPlanID };
-            numerusClausus = (Integer) ServiceManagerServiceFactory.executeService(userView,
+            numerusClausus = (Integer) ServiceManagerServiceFactory.executeService(
                     "ReadNumerusClausus", args);
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException(e);
@@ -254,7 +254,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
             Object args[] = { candidateList, ids };
             List result = null;
             try {
-                result = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                result = (ArrayList) ServiceManagerServiceFactory.executeService(
                         "ReadSubstituteCandidates", args);
             } catch (ExistingServiceException e) {
                 throw new ExistingActionException(e);
@@ -307,7 +307,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
         Object args[] = { ids };
         try {
             result = (List) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadCandidates", args);
+                    .executeService( "ReadCandidates", args);
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
         }
@@ -366,7 +366,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 
         Object args[] = { ids };
         try {
-            candidates = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidates",
+            candidates = (List) ServiceManagerServiceFactory.executeService( "ReadCandidates",
                     args);
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
@@ -411,7 +411,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 
         try {
             Object args[] = { ids };
-            candidates = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidates",
+            candidates = (List) ServiceManagerServiceFactory.executeService( "ReadCandidates",
                     args);
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
@@ -517,7 +517,7 @@ public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 
             Object args[] = { candidateList, ids, remarks, substitutes };
             try {
-                ServiceManagerServiceFactory.executeService(userView, "ApproveCandidates", args);
+                ServiceManagerServiceFactory.executeService( "ApproveCandidates", args);
             } catch (ExistingServiceException e) {
                 throw new ExistingActionException(e);
             }

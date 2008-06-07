@@ -41,7 +41,7 @@ public class InsertProfessorShipByNumberDA extends FenixDispatchAction {
         
         try {
             final Object args[] = { executionCourseId, teacherNumber, Boolean.FALSE, 0.0 };
-            ServiceUtils.executeService(getUserView(request), "InsertProfessorShip", args);
+            ServiceUtils.executeService("InsertProfessorShip", args);
 
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException(ex.getMessage(), mapping.findForward("insertProfessorShip"));

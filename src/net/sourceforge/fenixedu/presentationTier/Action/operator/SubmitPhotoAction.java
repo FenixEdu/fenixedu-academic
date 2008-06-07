@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.apache.struts.action.ActionForm;
@@ -29,6 +28,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 import pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter;
 
@@ -47,7 +47,7 @@ public class SubmitPhotoAction extends FenixDispatchAction {
     public ActionForward photoUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm photoForm = (DynaActionForm) form;
         
@@ -79,7 +79,7 @@ public class SubmitPhotoAction extends FenixDispatchAction {
             
             Object[] args = { outputStream.toByteArray(),
                     contentType, username };
-            ServiceUtils.executeService(userView, "StorePersonalPhoto", args);
+            ServiceUtils.executeService("StorePersonalPhoto", args);
 
         } catch (ExcepcaoInexistente e) {
             actionMessages.add("unknownPerson", new ActionMessage("error.exception.nonExistingPerson",

@@ -14,13 +14,14 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Leonor Almeida
@@ -38,7 +39,7 @@ public class ViewCourseInformationAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         String executionCourseId = request.getParameter("executionCourseId");
         Integer degreeCurricularPlanID = null;
         if(request.getParameter("degreeCurricularPlanID") != null){
@@ -49,7 +50,7 @@ public class ViewCourseInformationAction extends FenixAction {
         SiteView siteView = null;
         Object[] args = { new Integer(executionCourseId) };
         try {
-            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadCourseInformation", args);
+            siteView = (SiteView) ServiceUtils.executeService("ReadCourseInformation", args);
         } catch (NotAuthorizedFilterException e) {
             errors.add("notResponsible", new ActionError("label.notAuthorized.courseInformation"));
             saveErrors(request, errors);

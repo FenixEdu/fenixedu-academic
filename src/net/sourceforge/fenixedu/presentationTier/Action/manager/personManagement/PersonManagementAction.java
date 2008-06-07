@@ -24,9 +24,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
@@ -36,6 +33,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
@@ -58,7 +58,7 @@ public class PersonManagementAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	ActionErrors errors = new ActionErrors();
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm findPersonForm = (DynaActionForm) actionForm;
 	String name = null;
@@ -93,7 +93,7 @@ public class PersonManagementAction extends FenixDispatchAction {
 
 	CollectionPager<Person> result = null;
 	try {
-	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService(userView, "SearchPerson", args);
+	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService( "SearchPerson", args);
 
 	} catch (FenixServiceException e) {
 	    e.printStackTrace();
@@ -143,12 +143,12 @@ public class PersonManagementAction extends FenixDispatchAction {
 
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	CollectionPager<Person> result = null;
 	Object[] args = { searchParameters, predicate };
 
 	try {
-	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService(userView, "SearchPerson", args);
+	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService( "SearchPerson", args);
 
 	} catch (FenixServiceException e) {
 	    request.setAttribute("anyPersonSearchBean", bean);

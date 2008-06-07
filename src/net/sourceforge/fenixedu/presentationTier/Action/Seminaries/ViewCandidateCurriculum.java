@@ -52,7 +52,7 @@ public class ViewCandidateCurriculum extends FenixAction {
         InfoStudentCurricularPlan selectedSCP = null;
         try {
             Object args[] = { studentUserView };
-            cps = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+            cps = (ArrayList) ServiceManagerServiceFactory.executeService(
                     "ReadStudentCurricularPlansForSeminaries", args);
             long startDate = Long.MAX_VALUE;
             for (Iterator iter = cps.iterator(); iter.hasNext();) {
@@ -63,7 +63,7 @@ public class ViewCandidateCurriculum extends FenixAction {
                 }
             }
             Object getCurriculumArgs[] = { null, selectedSCP.getIdInternal() };
-            enrollments = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+            enrollments = (ArrayList) ServiceManagerServiceFactory.executeService(
                     "ReadStudentCurriculum", getCurriculumArgs);
         } catch (NonExistingServiceException e) {
             throw new FenixActionException(e);

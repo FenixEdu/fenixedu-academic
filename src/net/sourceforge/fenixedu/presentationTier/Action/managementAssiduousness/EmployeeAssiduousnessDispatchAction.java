@@ -31,8 +31,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -46,6 +44,8 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
@@ -66,8 +66,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 		date = new YearMonthDay(dateString);
 	    }
 	    yearMonth = getYearMonth(request, date);
-	    regularizationMonthFactory = new RegularizationMonthFactory(yearMonth, employee.getAssiduousness(), SessionUtils
-		    .getUserView(request).getPerson().getEmployee());
+	    regularizationMonthFactory = new RegularizationMonthFactory(yearMonth, employee.getAssiduousness(), ((IUserView)UserView.getUser()).getPerson().getEmployee());
 	}
 	request.setAttribute("regularizationMonthFactory", regularizationMonthFactory);
 	request.setAttribute("yearMonth", yearMonth);
@@ -190,7 +189,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	EmployeeScheduleFactory employeeScheduleFactory = null;
 	if (scheduleID != null) {
 	    Schedule schedule = (Schedule) RootDomainObject.readDomainObjectByOID(Schedule.class, scheduleID);
-	    employeeScheduleFactory = new EmployeeScheduleFactory(schedule, SessionUtils.getUserView(request).getPerson()
+	    employeeScheduleFactory = new EmployeeScheduleFactory(schedule, ((IUserView)UserView.getUser()).getPerson()
 		    .getEmployee());
 	} else {
 	    employeeScheduleFactory = (EmployeeScheduleFactory) getFactoryObject();
@@ -208,7 +207,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 		Employee employee = rootDomainObject.readEmployeeByOID(employeeID);
 		Schedule currentSchedule = employee.getAssiduousness() != null ? employee.getAssiduousness().getCurrentSchedule()
 			: null;
-		employeeScheduleFactory = new EmployeeScheduleFactory(employee, SessionUtils.getUserView(request).getPerson()
+		employeeScheduleFactory = new EmployeeScheduleFactory(employee, ((IUserView)UserView.getUser()).getPerson()
 			.getEmployee(), currentSchedule);
 	    }
 	}
@@ -225,12 +224,12 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	Integer scheduleID = getIntegerFromRequest(request, "scheduleID");
 	if (scheduleID != null) {
 	    schedule = (Schedule) rootDomainObject.readDomainObjectByOID(Schedule.class, scheduleID);
-	    employeeExceptionScheduleBean = new EmployeeExceptionScheduleBean(schedule, SessionUtils.getUserView(request)
+	    employeeExceptionScheduleBean = new EmployeeExceptionScheduleBean(schedule, ((IUserView)UserView.getUser())
 		    .getPerson().getEmployee());
 	} else {
 	    Integer employeeID = getIntegerFromRequest(request, "employeeID");
 	    Employee employee = rootDomainObject.readEmployeeByOID(employeeID);
-	    employeeExceptionScheduleBean = new EmployeeExceptionScheduleBean(employee, SessionUtils.getUserView(request)
+	    employeeExceptionScheduleBean = new EmployeeExceptionScheduleBean(employee, ((IUserView)UserView.getUser())
 		    .getPerson().getEmployee());
 	}
 	setWorkSchedules(employeeExceptionScheduleBean);
@@ -252,7 +251,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 		if (request.getParameter("changeDates") != null) {
 		    employeeExceptionScheduleBean.setOnlyChangeDates(Boolean.TRUE);
 		}
-		ServiceUtils.executeService(SessionUtils.getUserView(request), "EditEmployeeExceptionSchedule",
+		ServiceUtils.executeService("EditEmployeeExceptionSchedule",
 			new Object[] { employeeExceptionScheduleBean });
 	    }
 	} else {
@@ -261,7 +260,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 		setError(request, "errorMessage", (ActionMessage) new ActionMessage("error.schedule.canNotBeNull"));
 		return mapping.getInputForward();
 	    }
-	    ServiceUtils.executeService(SessionUtils.getUserView(request), "CreateEmployeeExceptionSchedule",
+	    ServiceUtils.executeService("CreateEmployeeExceptionSchedule",
 		    new Object[] { employeeExceptionScheduleBean });
 	}
 
@@ -385,9 +384,9 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	request.setAttribute("employeeNumber", clocking.getAssiduousness().getEmployee().getEmployeeNumber());
 
 	if (!yearMonth.getIsThisYearMonthClosed()) {
-	    final IUserView userView = SessionUtils.getUserView(request);
+	    final IUserView userView = ((IUserView)UserView.getUser());
 	    Employee employee = userView.getPerson().getEmployee();
-	    ServiceUtils.executeService(userView, "DeleteClocking", new Object[] { clocking, employee });
+	    ServiceUtils.executeService("DeleteClocking", new Object[] { clocking, employee });
 	}
 	return new ViewEmployeeAssiduousnessDispatchAction().showClockings(mapping, form, request, response);
     }
@@ -400,9 +399,9 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	request.setAttribute("yearMonth", yearMonth);
 	request.setAttribute("employeeNumber", clocking.getAssiduousness().getEmployee().getEmployeeNumber());
 	if (!yearMonth.getIsThisYearMonthClosed()) {
-	    final IUserView userView = SessionUtils.getUserView(request);
+	    final IUserView userView = UserView.getUser();
 	    Employee employee = userView.getPerson().getEmployee();
-	    ServiceUtils.executeService(userView, "RestoreClocking", new Object[] { clocking, employee });
+	    ServiceUtils.executeService("RestoreClocking", new Object[] { clocking, employee });
 	}
 	return new ViewEmployeeAssiduousnessDispatchAction().showClockings(mapping, form, request, response);
     }
@@ -462,8 +461,8 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	AssiduousnessStatusHistory assiduousnessStatusHistory = (AssiduousnessStatusHistory) rootDomainObject
 		.readAssiduousnessStatusHistoryByOID(new Integer(getFromRequest(request, "idInternal").toString()));
 	Employee employee = assiduousnessStatusHistory.getAssiduousness().getEmployee();
-	IUserView userView = SessionUtils.getUserView(request);
-	ServiceUtils.executeService(userView, "DeleteAssiduousnessStatusHistory", new Object[] { assiduousnessStatusHistory });
+	IUserView userView = UserView.getUser();
+	ServiceUtils.executeService("DeleteAssiduousnessStatusHistory", new Object[] { assiduousnessStatusHistory });
 	YearMonth yearMonth = getYearMonth(request, null);
 	request.setAttribute("yearMonth", yearMonth);
 	List<AssiduousnessStatusHistory> employeeStatusList = new ArrayList<AssiduousnessStatusHistory>(employee

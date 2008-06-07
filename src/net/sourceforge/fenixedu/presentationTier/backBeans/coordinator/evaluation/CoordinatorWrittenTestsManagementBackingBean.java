@@ -40,7 +40,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends
             final Object[] args = { this.getExecutionCourseID(), this.getBegin().getTime(), this.getBegin().getTime(),
                     this.getEnd().getTime(), executionCourseIDs, degreeModuleScopeIDs, null, null, this.getDescription() };
             
-            ServiceUtils.executeService(getUserView(), "CreateWrittenEvaluation", args);
+            ServiceUtils.executeService( "CreateWrittenEvaluation", args);
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
@@ -68,7 +68,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends
                     this.getEnd().getTime(), executionCourseIDs, degreeModuleScopeIDs, null, this.getEvaluationID(),
                     null, this.getDescription() };
             
-            ServiceUtils.executeService(getUserView(), "EditWrittenEvaluation", args);
+            ServiceUtils.executeService( "EditWrittenEvaluation", args);
 
         } catch (Exception e) {
             String errorMessage = e.getMessage();
@@ -84,7 +84,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends
     public String deleteWrittenTest() {
         try {
             final Object args[] = { this.getExecutionCourseID(), this.getEvaluationID() };
-            ServiceUtils.executeService(getUserView(), "DeleteWrittenEvaluation", args);
+            ServiceUtils.executeService( "DeleteWrittenEvaluation", args);
         } catch (Exception e) {
             String errorMessage = e.getMessage();
             if (e instanceof NotAuthorizedFilterException) {

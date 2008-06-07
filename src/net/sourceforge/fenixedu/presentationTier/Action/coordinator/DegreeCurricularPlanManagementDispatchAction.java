@@ -52,7 +52,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 	List activeCurricularCourseScopes = null;
 	final Object[] args = { degreeCurricularPlanID };
 	try {
-	    activeCurricularCourseScopes = (List) ServiceUtils.executeService(userView,
+	    activeCurricularCourseScopes = (List) ServiceUtils.executeService(
 		    "ReadActiveDegreeCurricularPlanScopes", args);
 
 	} catch (NonExistingServiceException e) {
@@ -111,7 +111,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 	ActionErrors errors = new ActionErrors();
 	Object[] args = { degreeCurricularPlanID };
 	try {
-	    infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) ServiceUtils.executeService(userView,
+	    infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) ServiceUtils.executeService(
 		    "ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID", args);
 
 	} catch (NonExistingServiceException e) {
@@ -228,8 +228,8 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 	Integer infoExecutionDegreeCode = null;
 	Object[] infoArgs = { degreeCurricularPlanID };
 
-	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
-		userView, "ReadCurrentExecutionDegreeByDegreeCurricularPlanID", infoArgs);
+	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) executeService(
+		"ReadCurrentExecutionDegreeByDegreeCurricularPlanID", infoArgs);
 
 	infoExecutionDegreeCode = infoExecutionDegree.getIdInternal();
 
@@ -239,7 +239,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 	Object[] argsAuthorization = { infoExecutionDegreeCode, infoCurricularCourseCode,
 		userView.getUtilizador() };
 	try {
-	    canEdit = (Boolean) ServiceUtils.executeService(null, "LoggedCoordinatorCanEdit",
+	    canEdit = (Boolean) ServiceUtils.executeService("LoggedCoordinatorCanEdit",
 		    argsAuthorization);
 
 	} catch (NonExistingServiceException e) {
@@ -284,7 +284,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 	InfoCurriculum infoCurriculum = null;
 	Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode };
 	try {
-	    infoCurriculum = (InfoCurriculum) ServiceUtils.executeService(userView,
+	    infoCurriculum = (InfoCurriculum) ServiceUtils.executeService(
 		    "ReadCurrentCurriculumByCurricularCourseCode", args);
 
 	} catch (NonExistingServiceException e) {
@@ -332,7 +332,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 	List infoExecutionYears = null;
 	Object[] args = {};
 	try {
-	    infoExecutionYears = (List) ServiceUtils.executeService(null, "ReadNotClosedExecutionYears",
+	    infoExecutionYears = (List) ServiceUtils.executeService("ReadNotClosedExecutionYears",
 		    args);
 
 	} catch (FenixServiceException e) {
@@ -369,7 +369,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 	ActionErrors errors = new ActionErrors();
 	Object[] args = { null, infoCurricularCourseCode, executionYear };
 	try {
-	    infoCurriculum = (InfoCurriculum) ServiceUtils.executeService(userView,
+	    infoCurriculum = (InfoCurriculum) ServiceUtils.executeService(
 		    "ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName", args);
 
 	} catch (NonExistingServiceException e) {
@@ -424,7 +424,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 	Object[] argsAuthorization = { infoExecutionDegreeCode, infoCurricularCourseCode,
 		userView.getUtilizador() };
 	try {
-	    canEdit = (Boolean) ServiceUtils.executeService(null, "LoggedCoordinatorCanEdit",
+	    canEdit = (Boolean) ServiceUtils.executeService("LoggedCoordinatorCanEdit",
 		    argsAuthorization);
 
 	} catch (NonExistingServiceException e) {
@@ -457,7 +457,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 	InfoCurriculum infoCurriculum = null;
 	Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode };
 	try {
-	    infoCurriculum = (InfoCurriculum) ServiceUtils.executeService(userView,
+	    infoCurriculum = (InfoCurriculum) ServiceUtils.executeService(
 		    "ReadCurrentCurriculumByCurricularCourseCode", args);
 
 	} catch (NonExistingServiceException e) {
@@ -523,7 +523,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 	Object[] args = { infoExecutionDegreeCode, infoCurriculumCode, infoCurricularCourseCode,
 		infoCurriculum, userView.getUtilizador(), language };
 	try {
-	    result = (Boolean) ServiceUtils.executeService(userView,
+	    result = (Boolean) ServiceUtils.executeService(
 		    "EditCurriculumForCurricularCourse", args);
 	} catch (NonExistingServiceException e) {
 	    if (e.getMessage().equals("noCurricularCourse")) {

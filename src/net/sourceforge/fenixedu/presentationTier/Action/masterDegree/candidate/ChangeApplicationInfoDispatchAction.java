@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.SituationName;
 
@@ -39,12 +38,14 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
 
     public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
         
         Integer candidateID = (Integer) changeApplicationInfoForm.get("candidateID");
@@ -135,7 +136,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
         try {
             final Object args[] = { masterDegreeCandidate, infoPerson, userView, isNewPerson };
             masterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-                    .executeService(userView, "ChangeApplicationInfo", args);
+                    .executeService( "ChangeApplicationInfo", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -167,7 +168,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer choosenCandidateID = Integer.valueOf(request.getParameter("candidateID"));
         request.setAttribute("candidateID", choosenCandidateID);
@@ -193,7 +194,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
         // Get List of available Countries
         List<InfoCountry> country = null;
         try {
-            country = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+            country = (ArrayList) ServiceManagerServiceFactory.executeService(
                     "ReadAllCountries", null);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -233,7 +234,7 @@ public class ChangeApplicationInfoDispatchAction extends FenixDispatchAction {
         InfoMasterDegreeCandidate masterDegreeCandidate = null;
         try {
             Object args[] = { candidateID };
-            masterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceUtils.executeService(userView,
+            masterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceUtils.executeService(
                     "ReadMasterDegreeCandidateByID", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

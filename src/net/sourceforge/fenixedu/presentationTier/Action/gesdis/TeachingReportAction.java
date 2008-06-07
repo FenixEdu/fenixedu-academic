@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts.Globals;
@@ -29,6 +28,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Leonor Almeida
@@ -51,7 +52,7 @@ public class TeachingReportAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         InfoCourseReport infoCourseReport = getInfoCourseReportFromForm(form);
         Object[] args = { infoCourseReport.getIdInternal(), infoCourseReport, infoCourseReport.getReport() };
-        ServiceUtils.executeService(SessionUtils.getUserView(request), getEditService(), args);
+        ServiceUtils.executeService(getEditService(), args);
         return read(mapping, form, request, response);
     }
 
@@ -131,20 +132,20 @@ public class TeachingReportAction extends FenixDispatchAction {
 
     private List readCoursesHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request)
             throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         String executionCourseId = request.getParameter("executionCourseId");
 
         Object[] args = { new Integer(executionCourseId) };
-        return (List) ServiceUtils.executeService(userView, getReadHistoricService(), args);
+        return (List) ServiceUtils.executeService(getReadHistoricService(), args);
     }
 
     private SiteView readSiteView(ActionMapping mapping, ActionForm form, HttpServletRequest request)
             throws FenixServiceException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         String executionCourseId = request.getParameter("executionCourseId");
 
         Object[] args = { new Integer(executionCourseId) };
-        return (SiteView) ServiceUtils.executeService(userView, getReadService(), args);
+        return (SiteView) ServiceUtils.executeService(getReadService(), args);
     }
 
     private void setSiteViewToRequest(HttpServletRequest request, SiteView siteView,

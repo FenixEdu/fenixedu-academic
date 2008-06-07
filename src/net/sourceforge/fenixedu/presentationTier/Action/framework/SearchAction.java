@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -37,6 +36,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * Example:
@@ -153,9 +154,9 @@ public class SearchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response, Comparator comparator)
             throws Exception {
         String serviceName = mapping.getServiceName();
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Object[] args = getSearchServiceArgs(request, form);
-        Collection result = (Collection) ServiceUtils.executeService(userView, serviceName, args);
+        Collection result = (Collection) ServiceUtils.executeService(serviceName, args);
         result = treateServiceResult(mapping, request, result);
         ActionForward actionForward = null;
         if (result.isEmpty()) {
@@ -308,7 +309,7 @@ public class SearchAction extends FenixDispatchAction {
         List executionYears = null;
         Object[] args = {};
         try {
-            executionYears = (List) ServiceManagerServiceFactory.executeService(null,
+            executionYears = (List) ServiceManagerServiceFactory.executeService(
                     "ReadNotClosedExecutionYears", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException();

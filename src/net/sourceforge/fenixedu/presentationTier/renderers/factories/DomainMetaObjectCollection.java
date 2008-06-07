@@ -10,7 +10,7 @@ public class DomainMetaObjectCollection extends MetaObjectCollection {
     @Override
     public void commit() {
         try {
-            ServiceUtils.executeService(getUserView(), "CommitMetaObjects", new Object[] { getAllMetaObjects() });
+            ServiceUtils.executeService( "CommitMetaObjects", new Object[] { getAllMetaObjects() });
         } catch (Exception e) {
             if (e instanceof DomainException) {
                 throw (DomainException) e;

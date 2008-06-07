@@ -2,11 +2,12 @@ package net.sourceforge.fenixedu.presentationTier.docs;
 
 import java.text.MessageFormat;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class IRSCustomDeclaration extends FenixReport {
 

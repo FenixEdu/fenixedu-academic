@@ -57,7 +57,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
         Object argsReadExecutionPeriods[] = {};
-        List executionPeriods = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+        List executionPeriods = (ArrayList) ServiceManagerServiceFactory.executeService(
                 "ReadExecutionPeriods", argsReadExecutionPeriods);
 
         ComparatorChain chainComparator = new ComparatorChain();
@@ -91,7 +91,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
         Object argsLerLicenciaturas[] = { selectedExecutionPeriod.getInfoExecutionYear() };
         List executionDegreeList = null;
         try {                                  
-            executionDegreeList = (List) ServiceUtils.executeService(userView,
+            executionDegreeList = (List) ServiceUtils.executeService(
                     "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
             /* Sort the list of degrees */
@@ -158,7 +158,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
         Object args[] = { request.getAttribute(SessionConstants.EXECUTION_PERIOD),
                 request.getAttribute(SessionConstants.EXECUTION_DEGREE),
                 request.getAttribute(SessionConstants.CURRICULAR_YEAR), executionCourseName };
-        infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService(userView,
+        infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService(
                 "SearchExecutionCourses", args);
 
         // if query result is a list then go to a page where they are listed
@@ -222,7 +222,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
         Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
 
         InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = (InfoExecutionCourseOccupancy) ServiceManagerServiceFactory
-                .executeService(userView, "ReadShiftsByExecutionCourseID", args);
+                .executeService( "ReadShiftsByExecutionCourseID", args);
 
         arranjeShifts(infoExecutionCourseOccupancy);
 
@@ -352,9 +352,9 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
         Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
 
         InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory
-                .executeService(userView, "ReadExecutionCourseByOID", args);
+                .executeService( "ReadExecutionCourseByOID", args);
 
-        List scopes = (List) ServiceManagerServiceFactory.executeService(userView,
+        List scopes = (List) ServiceManagerServiceFactory.executeService(
                 "ReadCurricularCourseScopesByExecutionCourseID", args);
 
         request.setAttribute("infoExecutionCourse", infoExecutionCourse);

@@ -58,7 +58,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 	List<InfoExecutionPeriod> executionPeriods = null;
 	try {
 	    final Object[] args = { DegreeType.valueOf(readAndSetDegreeType(request, (DynaActionForm) form)) };
-	    executionPeriods = (List) ServiceManagerServiceFactory.executeService(null, "ReadExecutionPeriodsEnrollmentFenix",
+	    executionPeriods = (List) ServiceManagerServiceFactory.executeService( "ReadExecutionPeriodsEnrollmentFenix",
 		    args);
 
 	} catch (FenixServiceException e) {
@@ -136,7 +136,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 	StudentCurricularPlan studentCurricularPlan = null;
 	try {
 	    final Object[] args = { getStudent(form), getDegreeType(form), executionSemester };
-	    studentCurricularPlan = (StudentCurricularPlan) ServiceManagerServiceFactory.executeService(getUserView(request),
+	    studentCurricularPlan = (StudentCurricularPlan) ServiceManagerServiceFactory.executeService(
 		    "ReadStudentCurricularPlanForEnrollmentsWithoutRules", args);
 
 	} catch (NotAuthorizedFilterException e) {
@@ -202,7 +202,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 
 	try {
 	    final Object[] args = { getStudent(form), getDegreeType(form), unenrollmentsList };
-	    ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteEnrollmentsList", args);
+	    ServiceManagerServiceFactory.executeService( "DeleteEnrollmentsList", args);
 
 	} catch (NotAuthorizedFilterException e) {
 	    addActionMessage(request, "error.exception.notAuthorized2");
@@ -234,7 +234,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 	    final Registration registration = getStudent(form);
 	    studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
-	    result = (List<ExecutionDegree>) ServiceManagerServiceFactory.executeService(getUserView(request),
+	    result = (List<ExecutionDegree>) ServiceManagerServiceFactory.executeService(
 		    "PrepareDegreesListByStudentNumber", new Object[] { registration, getDegreeType(form), executionSemester });
 
 	} catch (NotAuthorizedFilterException e) {
@@ -398,11 +398,11 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 	try {
 	    Registration registration = getStudent(form);
 	    if (registration.getDegreeType().isBolonhaType()) {
-		ServiceManagerServiceFactory.executeService(getUserView(request), "WriteBolonhaEnrolmentsList", new Object[] {
+		ServiceManagerServiceFactory.executeService( "WriteBolonhaEnrolmentsList", new Object[] {
 			registration.getActiveStudentCurricularPlan(), getDegreeType(form), getExecutionPeriod(form),
 			curricularCourses, optionalEnrollments, getUserView(request) });
 	    } else {
-		ServiceManagerServiceFactory.executeService(getUserView(request), "WriteEnrollmentsList", new Object[] {
+		ServiceManagerServiceFactory.executeService( "WriteEnrollmentsList", new Object[] {
 			registration.getActiveStudentCurricularPlan(), getDegreeType(form), getExecutionPeriod(form),
 			curricularCourses, optionalEnrollments, getUserView(request) });
 	    }
@@ -511,7 +511,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 
 	try {
 	    final Object[] args = { studentCurricularPlan.getRegistration(), getDegreeType(form), unenrollmentsList };
-	    ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteEnrollmentsList", args);
+	    ServiceManagerServiceFactory.executeService( "DeleteEnrollmentsList", args);
 
 	} catch (NotAuthorizedFilterException e) {
 	    addActionMessage(request, "error.exception.notAuthorized2");
@@ -542,7 +542,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 	List<ExecutionDegree> result = null;
 	try {
 
-	    result = (List<ExecutionDegree>) ServiceManagerServiceFactory.executeService(getUserView(request),
+	    result = (List<ExecutionDegree>) ServiceManagerServiceFactory.executeService(
 		    "PrepareDegreesListByStudentNumber", new Object[] { studentCurricularPlan.getRegistration(),
 			    getDegreeType(form), executionSemester });
 
@@ -640,11 +640,11 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 
 	try {
 	    if (studentCurricularPlan.getRegistration().getDegreeType().isBolonhaType()) {
-		ServiceManagerServiceFactory.executeService(getUserView(request), "WriteBolonhaEnrolmentsList", new Object[] {
+		ServiceManagerServiceFactory.executeService( "WriteBolonhaEnrolmentsList", new Object[] {
 			studentCurricularPlan, getDegreeType(form), getExecutionPeriod(form), curricularCourses,
 			optionalEnrollments, getUserView(request) });
 	    } else {
-		ServiceManagerServiceFactory.executeService(getUserView(request), "WriteEnrollmentsList", new Object[] {
+		ServiceManagerServiceFactory.executeService( "WriteEnrollmentsList", new Object[] {
 			studentCurricularPlan, getDegreeType(form), getExecutionPeriod(form), curricularCourses,
 			optionalEnrollments, getUserView(request) });
 	    }

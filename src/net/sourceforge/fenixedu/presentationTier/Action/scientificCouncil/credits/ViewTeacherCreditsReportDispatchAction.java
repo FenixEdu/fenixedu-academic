@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.NumberUtils;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
@@ -50,6 +49,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Ricardo Rodrigues
@@ -77,7 +78,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException, InvalidPeriodException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         Integer fromExecutionYearID = Integer.parseInt(dynaForm.getString("fromExecutionYearID"));
@@ -110,7 +111,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             for (Department department : departments) {
                 Unit unit = department.getDepartmentUnit();
                 teacherCreditsReportList = (List<TeacherCreditsReportDTO>) ServiceUtils.executeService(
-                        userView, "ReadTeachersCreditsResumeByPeriodAndUnit", new Object[] { unit,
+                        "ReadTeachersCreditsResumeByPeriodAndUnit", new Object[] { unit,
                                 fromExecutionPeriod, untilExecutionPeriod });
                 teachersCreditsByDepartment.put(department, teacherCreditsReportList);
             }
@@ -119,7 +120,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             Department department = rootDomainObject.readDepartmentByOID(departmentID);
             Unit departmentUnit = department.getDepartmentUnit();
             teacherCreditsReportList = (List<TeacherCreditsReportDTO>) ServiceUtils.executeService(
-                    userView, "ReadTeachersCreditsResumeByPeriodAndUnit", new Object[] { departmentUnit,
+                    "ReadTeachersCreditsResumeByPeriodAndUnit", new Object[] { departmentUnit,
                             fromExecutionPeriod, untilExecutionPeriod });
             teachersCreditsByDepartment.put(department, teacherCreditsReportList);
             request.setAttribute("department", department);
@@ -162,7 +163,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException, InvalidPeriodException, ParseException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         Integer fromExecutionYearID = Integer.parseInt(dynaForm.getString("fromExecutionYearID"));
@@ -225,7 +226,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
             FenixFilterException, InvalidPeriodException, ParseException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         
         Integer fromExecutionYearID = Integer.parseInt(request.getParameter("fromExecutionYearID"));
         Integer untilExecutionYearID = Integer.parseInt(request.getParameter("untilExecutionYearID"));
@@ -376,7 +377,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             for (Department department : departments) {
                 Unit unit = department.getDepartmentUnit();
                 departmentPeriodTotalCredits = (Map<ExecutionYear, PeriodCreditsReportDTO>) ServiceUtils.executeService(
-                        userView, "ReadDepartmentTotalCreditsByPeriod", new Object[] { unit,
+                        "ReadDepartmentTotalCreditsByPeriod", new Object[] { unit,
                                 fromExecutionPeriod, untilExecutionPeriod });
                 departmentTotalCredits.put(department, departmentPeriodTotalCredits);
             }
@@ -385,7 +386,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             Department department = rootDomainObject.readDepartmentByOID(departmentID);
             Unit departmentUnit = department.getDepartmentUnit();
             departmentPeriodTotalCredits = (Map<ExecutionYear, PeriodCreditsReportDTO>) ServiceUtils.executeService(
-                    userView, "ReadDepartmentTotalCreditsByPeriod", new Object[] { departmentUnit,
+                    "ReadDepartmentTotalCreditsByPeriod", new Object[] { departmentUnit,
                             fromExecutionPeriod, untilExecutionPeriod });
             
             departmentTotalCredits.put(department, departmentPeriodTotalCredits);            
@@ -402,7 +403,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
             FenixFilterException, InvalidPeriodException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer fromExecutionYearID = Integer.parseInt(request.getParameter("fromExecutionYearID"));
         Integer untilExecutionYearID = Integer.parseInt(request.getParameter("untilExecutionYearID"));

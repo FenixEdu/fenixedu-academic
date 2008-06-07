@@ -8,7 +8,7 @@
 <em class="invisible"><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="link.justifications" /></h2>
 
-<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants.U_VIEW); %>
+<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE); %>
 <logic:present name="yearMonth">
 	<bean:define id="month" name="yearMonth" property="month" />
 	<bean:define id="year" name="yearMonth" property="year" />

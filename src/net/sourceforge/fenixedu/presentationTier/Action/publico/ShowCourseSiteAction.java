@@ -66,7 +66,7 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
 
         InfoCurriculum infoCurriculum = null;
         try {
-            infoCurriculum = (InfoCurriculum) ServiceManagerServiceFactory.executeService(null,
+            infoCurriculum = (InfoCurriculum) ServiceManagerServiceFactory.executeService(
                     "ReadCurriculumByCurricularCourseCode", args);
         } catch (NonExistingServiceException e) {
             errors.add("chosenCurricularCourse", new ActionError(
@@ -133,7 +133,7 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
         ExecutionCourseSiteView siteView = null;
 
         try {
-            siteView = (ExecutionCourseSiteView) ServiceManagerServiceFactory.executeService(null,
+            siteView = (ExecutionCourseSiteView) ServiceManagerServiceFactory.executeService(
                     "ExecutionCourseSiteComponentService", args);
 
             request.setAttribute("objectCode", ((InfoSiteFirstPage) siteView.getComponent())

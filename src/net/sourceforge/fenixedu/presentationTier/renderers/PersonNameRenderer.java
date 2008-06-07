@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import net.sourceforge.fenixedu.util.StringFormatter;
 import pt.ist.fenixWebFramework.renderers.StringRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.util.StringFormatter;
 
 /**
  * Presents a string considering that it's a person's name. So it allows you to

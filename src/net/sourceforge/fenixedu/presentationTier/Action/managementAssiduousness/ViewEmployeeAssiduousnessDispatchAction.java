@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -47,6 +46,8 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
     public ActionForward chooseEmployee(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
@@ -58,7 +59,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 
     public ActionForward showWorkSheet(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	final Employee employee = getEmployee(request, (DynaActionForm) form);
 	ActionForward actionForward = validateEmployee(mapping, request, employee);
 	if (actionForward != null) {
@@ -78,7 +79,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
 
 	Object[] args = { employee.getAssiduousness(), beginDate, endDate };
-	EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(userView, "ReadEmployeeWorkSheet",
+	EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService("ReadEmployeeWorkSheet",
 		args);
 
 	request.setAttribute("employeeWorkSheet", employeeWorkSheet);
@@ -290,7 +291,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 
 	    List<AssiduousnessStatusHistory> assiduousnessStatusHistoryList = employee.getAssiduousness().getStatusBetween(
 		    beginDate, endDate);
-	    final IUserView userView = SessionUtils.getUserView(request);
+	    final IUserView userView = UserView.getUser();
 	    ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
 	    for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousnessStatusHistoryList) {
 		EmployeeBalanceResume employeeBalanceResume = new EmployeeBalanceResume();
@@ -300,7 +301,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 		    employeeBalanceResume.setEmployeeBalanceResume(assiduosunessClosedMonth);
 		} else {
 		    Object[] args = { employee.getAssiduousness(), beginDate, endDate };
-		    EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(userView,
+		    EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(
 			    "ReadEmployeeWorkSheet", args);
 		    employeeBalanceResume.setEmployeeBalanceResume(employeeWorkSheet.getTotalBalance() == null ? Duration.ZERO
 			    : employeeWorkSheet.getTotalBalance(),

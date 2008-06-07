@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.protocols.Protocol;
 import net.sourceforge.fenixedu.domain.protocols.ProtocolHistory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -18,12 +17,14 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.Months;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 public class ProtocolsResponsibleDispatchAction extends FenixDispatchAction {
 
     public ActionForward showProtocols(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 
 	YearMonthDay now = new YearMonthDay();
 	List<ProtocolHistory> protocolHistories = new ArrayList<ProtocolHistory>();
@@ -42,7 +43,7 @@ public class ProtocolsResponsibleDispatchAction extends FenixDispatchAction {
     public ActionForward viewProtocol(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	Integer protocolId = new Integer(request.getParameter("idInternal"));
 
 	Protocol protocol = rootDomainObject.readProtocolByOID(protocolId);

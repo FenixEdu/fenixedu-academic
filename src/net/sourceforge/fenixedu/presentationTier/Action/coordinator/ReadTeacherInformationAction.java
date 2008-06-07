@@ -12,11 +12,12 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Leonor Almeida
@@ -26,7 +27,7 @@ public class ReadTeacherInformationAction extends FenixAction {
     
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         
         Integer degreeCurricularPlanID = null;
         if(request.getParameter("degreeCurricularPlanID") != null){
@@ -34,7 +35,7 @@ public class ReadTeacherInformationAction extends FenixAction {
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
         Object[] args = { request.getParameter("username"), request.getParameter("executionYear") };
-        SiteView siteView = (SiteView) ServiceUtils.executeService(userView, "ReadTeacherInformation",
+        SiteView siteView = (SiteView) ServiceUtils.executeService("ReadTeacherInformation",
                 args);
         InfoSiteTeacherInformation infoSiteTeacherInformation = (InfoSiteTeacherInformation) siteView
                 .getComponent();

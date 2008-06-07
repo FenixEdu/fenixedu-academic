@@ -31,12 +31,13 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.MessageResources;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Leonor Almeida
@@ -317,14 +318,14 @@ public class SearchCoursesInformationAction extends SearchAction {
     
     protected void materializeSearchCriteria(SearchActionMapping mapping, HttpServletRequest request,
             ActionForm form) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         if (!request.getParameter("executionDegreeId").equals("all")) {
             Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
 
             Object[] args = { executionDegreeId };
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
-                    userView, "ReadExecutionDegreeByOID", args);
+                    "ReadExecutionDegreeByOID", args);
             request.setAttribute("infoExecutionDegree", infoExecutionDegree);
         }
 
@@ -359,7 +360,7 @@ public class SearchCoursesInformationAction extends SearchAction {
 
     protected void prepareFormConstants(ActionMapping mapping, HttpServletRequest request,
             ActionForm form) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         String executionYear = request.getParameter("executionYear");
 
         InfoExecutionYear infoExecutionYear = null;
@@ -370,7 +371,7 @@ public class SearchCoursesInformationAction extends SearchAction {
                 infoExecutionYear = (InfoExecutionYear) ServiceManagerServiceFactory.executeService(
                         null, "ReadExecutionYear", args);
             } else {
-                infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(userView,
+                infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(
                         "ReadCurrentExecutionYear", new Object[] {});
             }
         } catch (FenixServiceException e) {
@@ -380,7 +381,7 @@ public class SearchCoursesInformationAction extends SearchAction {
         request.setAttribute("executionYear", infoExecutionYear.getYear());
 
         Object[] args = { executionYear, DegreeType.DEGREE };
-        List infoExecutionDegrees = (List) ServiceUtils.executeService(userView,
+        List infoExecutionDegrees = (List) ServiceUtils.executeService(
                 "ReadExecutionDegreesByExecutionYearAndDegreeType", args);
         Collections.sort(infoExecutionDegrees, new Comparator() {
 

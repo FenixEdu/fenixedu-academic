@@ -36,7 +36,7 @@ public abstract class FenixContextAction extends FenixAction {
         List<InfoExecutionDegree> infoExecutionDegreeList = new ArrayList<InfoExecutionDegree>();
         try {
             final Object argsLerLicenciaturas[] = { degreeCurricularPlanId };
-            infoExecutionDegreeList = (List<InfoExecutionDegree>) ServiceUtils.executeService(null, "ReadPublicExecutionDegreeByDCPID", argsLerLicenciaturas);
+            infoExecutionDegreeList = (List<InfoExecutionDegree>) ServiceUtils.executeService("ReadPublicExecutionDegreeByDCPID", argsLerLicenciaturas);
         } catch (Exception e) {
             throw new FenixActionException(e);
         } 
@@ -45,7 +45,7 @@ public abstract class FenixContextAction extends FenixAction {
         for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegreeList) {
             Object args[] = { infoExecutionDegree.getInfoExecutionYear() };
             try {
-                List<InfoExecutionPeriod> infoExecutionPeriodsList = (List<InfoExecutionPeriod>) ServiceUtils.executeService(null, "ReadNotClosedPublicExecutionPeriodsByExecutionYear", args);
+                List<InfoExecutionPeriod> infoExecutionPeriodsList = (List<InfoExecutionPeriod>) ServiceUtils.executeService("ReadNotClosedPublicExecutionPeriodsByExecutionYear", args);
 
                 for (InfoExecutionPeriod infoExecutionPeriodIter : infoExecutionPeriodsList) {
                     result.add(new LabelValueBean(infoExecutionPeriodIter.getName() + " - " + infoExecutionPeriodIter.getInfoExecutionYear().getYear(), 

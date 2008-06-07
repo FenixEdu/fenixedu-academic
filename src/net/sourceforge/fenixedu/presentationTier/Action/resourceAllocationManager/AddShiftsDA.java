@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -30,7 +29,7 @@ public class AddShiftsDA extends FenixClassAndExecutionDegreeAndCurricularYearCo
         
         Object args[] = { infoClass, selectedShifts };
         try {
-            ServiceUtils.executeService(SessionUtils.getUserView(request), "AddShiftsToSchoolClass", args);
+            ServiceUtils.executeService("AddShiftsToSchoolClass", args);
         } catch (ExistingServiceException ex) {
             // No problem, the user refreshed the page after adding classes
             request.setAttribute("selectMultipleItemsForm", null);

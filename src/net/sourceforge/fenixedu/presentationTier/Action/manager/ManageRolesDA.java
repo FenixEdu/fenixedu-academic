@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -34,6 +33,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
@@ -122,10 +122,10 @@ public class ManageRolesDA extends FenixDispatchAction {
             roles.add(rootDomainObject.readRoleByOID(Integer.valueOf(roleId)));
         }
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Object[] args = { person, roles };
         try {
-            ServiceUtils.executeService(userView, "SetPersonRoles", args);
+            ServiceUtils.executeService("SetPersonRoles", args);
         } catch (Exception e) {
             ActionMessages messages = new ActionMessages();
             messages.add("invalidRole", new ActionMessage("error.invalidRole"));

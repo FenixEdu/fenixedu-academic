@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.struts.action.ActionForm;
@@ -36,6 +35,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author lmac1
  */
@@ -44,7 +45,6 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
@@ -54,7 +54,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
         Object args[] = { curricularCourseScopeId };
         try {
             oldInfoCurricularCourseScope = (InfoCurricularCourseScope) ServiceUtils.executeService(
-                    userView, "ReadCurricularCourseScope", args);
+                    "ReadCurricularCourseScope", args);
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException("message.nonExistingCurricularCourseScope", mapping
                     .findForward("readCurricularCourse"));
@@ -76,7 +76,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
         Object[] args1 = { degreeCurricularPlanId };
         List result = null;
         try {
-            result = (List) ServiceUtils.executeService(userView, "ReadBranchesByDegreeCurricularPlan",
+            result = (List) ServiceUtils.executeService("ReadBranchesByDegreeCurricularPlan",
                     args1);
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping
@@ -104,7 +104,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
         // obtain execution periods to show in jsp
         List<InfoExecutionPeriod> infoExecutionPeriods = null;
         try {
-            infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadExecutionPeriods",
+            infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods",
                     null);
 
         } catch (FenixServiceException e) {
@@ -132,7 +132,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
@@ -166,7 +166,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
         Object args[] = { newInfoCurricularCourseScope };
 
         try {
-            ServiceUtils.executeService(userView, "EditCurricularCourseScope", args);
+            ServiceUtils.executeService("EditCurricularCourseScope", args);
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException(ex.getMessage(), mapping
                     .findForward("readCurricularCourse"));

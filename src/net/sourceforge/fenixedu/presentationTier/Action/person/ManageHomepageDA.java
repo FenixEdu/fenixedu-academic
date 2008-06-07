@@ -18,13 +18,14 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.RequestUtils;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ManageHomepageDA extends SiteManagementDA {
 
@@ -154,7 +155,7 @@ public class ManageHomepageDA extends SiteManagementDA {
     @Override
     protected Homepage getSite(HttpServletRequest request) {
         try {
-            return (Homepage) ServiceUtils.executeService(getUserView(request), "GetHomepage", getUserView(request).getPerson(), true);
+            return (Homepage) ServiceUtils.executeService("GetHomepage", getUserView(request).getPerson(), true);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -89,7 +89,7 @@ public class ViewExamsMapDANew extends FenixContextDispatchAction {
             try {
                 final IUserView userView = getUserView(request);
                 final Object[] args = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
-                final InfoExamsMap infoExamsMap = (InfoExamsMap) ServiceUtils.executeService(userView, "ReadFilteredExamsMap", args);
+                final InfoExamsMap infoExamsMap = (InfoExamsMap) ServiceUtils.executeService("ReadFilteredExamsMap", args);
                 request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
             } catch (NonExistingServiceException e) {
                 return mapping.findForward("viewExamsMap");

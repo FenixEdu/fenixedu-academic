@@ -34,7 +34,7 @@ public class CommonServiceRequests {
 	Object[] argsBranches = { degreeCurricularPlanOID };
         List branches = null;
         try {
-            branches = (List) ServiceUtils.executeService(userView, "ReadBranchesByDegreeCurricularPlanId", argsBranches);
+            branches = (List) ServiceUtils.executeService("ReadBranchesByDegreeCurricularPlanId", argsBranches);
         } catch (FenixServiceException fse) {
             throw new FenixActionException(fse);
         }
@@ -61,7 +61,7 @@ public class CommonServiceRequests {
         InfoExecutionDegree infoExecutionDegree = null;
         Object[] args = { degreeOID };
         try {
-            infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(userView,
+            infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
                     "ReadExecutionDegreeByOID", args);
         } catch (FenixServiceException fse) {
             throw new FenixActionException(fse);
@@ -70,7 +70,7 @@ public class CommonServiceRequests {
     }
 
 	public static List<InfoExecutionYear> getInfoExecutionYears() throws FenixFilterException, FenixServiceException {
-		return (List) ServiceUtils.executeService(null, "ReadExecutionYearsService", null);
+		return (List) ServiceUtils.executeService("ReadExecutionYearsService", null);
 	}
 
 }

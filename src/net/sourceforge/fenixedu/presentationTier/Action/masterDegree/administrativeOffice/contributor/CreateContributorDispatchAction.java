@@ -93,7 +93,7 @@ public class CreateContributorDispatchAction extends FenixDispatchAction {
 
             Object args[] = { infoContributor };
             try {
-                ServiceManagerServiceFactory.executeService(userView, "CreateContributor", args);
+                ServiceManagerServiceFactory.executeService( "CreateContributor", args);
             } catch (ExistingServiceException e) {
                 throw new ExistingActionException("O Contribuinte", e);
             }

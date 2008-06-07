@@ -74,7 +74,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
         InfoExamsMap infoExamsMap;
 
         infoExamsMap = (InfoExamsMap) ServiceUtils
-                .executeService(userView, "ReadFilteredExamsMap", args);
+                .executeService( "ReadFilteredExamsMap", args);
 
         return infoExamsMap;
     }
@@ -126,7 +126,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
 
         Integer examID = new Integer(request.getParameter(SessionConstants.EXAM_OID));
         Object[] args = { examID };
-        InfoExam infoExam = (InfoExam) ServiceUtils.executeService(userView, "ReadExamByOID", args);
+        InfoExam infoExam = (InfoExam) ServiceUtils.executeService("ReadExamByOID", args);
         request.setAttribute(SessionConstants.EXAM, infoExam);
         request.setAttribute(SessionConstants.EXAM_OID, infoExam.getIdInternal());
         return mapping.findForward("editExam");
@@ -148,7 +148,7 @@ public class ShowExamsManagement extends FenixContextDispatchAction {
         Object[] args = { null, examID };
 
         try {
-            ServiceUtils.executeService(userView, "DeleteWrittenEvaluation", args);
+            ServiceUtils.executeService("DeleteWrittenEvaluation", args);
         } catch (FenixServiceException exception) {
             actionErrors.add(exception.getMessage(), new ActionError(exception.getMessage()));
             saveErrors(request, actionErrors);

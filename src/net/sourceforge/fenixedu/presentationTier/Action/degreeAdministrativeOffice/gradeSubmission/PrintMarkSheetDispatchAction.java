@@ -129,7 +129,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 	MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(Integer.valueOf(markSheetString));
 	ActionMessages actionMessages = new ActionMessages();
 	try {
-	    ServiceUtils.executeService(getUserView(request), "PrintMarkSheet", new Object[] { markSheet, printerName });
+	    ServiceUtils.executeService("PrintMarkSheet", new Object[] { markSheet, printerName });
 	} catch (NotAuthorizedException e) {
 	    addMessage(request, actionMessages, "error.notAuthorized");
 	    return mapping.getInputForward();
@@ -149,7 +149,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(ecID);
 	ActionMessages actionMessages = new ActionMessages();
 	try {
-	    ServiceUtils.executeService(getUserView(request), "PrintMarkSheets",
+	    ServiceUtils.executeService("PrintMarkSheets",
 		    new Object[] {
 			    executionSemester.getWebMarkSheetsNotPrintedByAdministraticeOfficeAndCampus(AccessControl.getPerson()
 				    .getEmployee().getAdministrativeOffice(), AccessControl.getPerson().getEmployee()

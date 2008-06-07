@@ -22,13 +22,14 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -50,7 +51,7 @@ public class EditGrantPartAction extends FenixDispatchAction {
 	    idGrantPart = new Integer(request.getParameter("idGrantPart"));
 	}
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	DynaValidatorForm grantPartForm = (DynaValidatorForm) form;
 
 	if (loaddb != null && loaddb.equals(new Integer(1))) {
@@ -59,7 +60,7 @@ public class EditGrantPartAction extends FenixDispatchAction {
 		try {
 		    //Read the grant part
 		    Object[] args = { idGrantPart };
-		    InfoGrantPart infoGrantPart = (InfoGrantPart) ServiceUtils.executeService(userView,
+		    InfoGrantPart infoGrantPart = (InfoGrantPart) ServiceUtils.executeService(
 			    "ReadGrantPart", args);
 
 		    //Populate the form
@@ -89,7 +90,7 @@ public class EditGrantPartAction extends FenixDispatchAction {
 
 	DynaValidatorForm editGrantPartForm = (DynaValidatorForm) form;
 	InfoGrantPart infoGrantPart = null;
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	try {
 	    //Verificar se foi escolhida UMA E SO UMA entidade pagadora
 	    if (!verifyStringParameterInForm(editGrantPartForm, "project")
@@ -115,7 +116,7 @@ public class EditGrantPartAction extends FenixDispatchAction {
 		Object[] args = { infoGrantPart.getInfoGrantPaymentEntity().getNumber(),
 			paymentEntityClass };
 		InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ServiceUtils
-			.executeService(userView, "ReadPaymentEntityByNumberAndClass", args);
+			.executeService( "ReadPaymentEntityByNumberAndClass", args);
 
 		if (infoGrantPaymentEntity == null) {
 		    if (verifyStringParameterInForm(editGrantPartForm, "project")) {
@@ -139,13 +140,13 @@ public class EditGrantPartAction extends FenixDispatchAction {
 		// entity responsible teacher
 		Object[] args = { infoGrantPart.getInfoGrantPaymentEntity().getIdInternal() };
 		InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ServiceUtils
-			.executeService(userView, "ReadGrantPaymentEntity", args);
+			.executeService( "ReadGrantPaymentEntity", args);
 		infoGrantPart.setInfoResponsibleTeacher(infoGrantPaymentEntity
 			.getInfoResponsibleTeacher());
 	    }
 
 	    Object[] args = { infoGrantPart };
-	    ServiceUtils.executeService(userView, "EditGrantPart", args);
+	    ServiceUtils.executeService("EditGrantPart", args);
 
 	    request.setAttribute("idSubsidy", editGrantPartForm.get("grantSubsidyId"));
 
@@ -170,8 +171,8 @@ public class EditGrantPartAction extends FenixDispatchAction {
 	    Integer idSubsidy = new Integer(request.getParameter("idSubsidy"));
 
 	    Object[] args = { idGrantPart };
-	    IUserView userView = SessionUtils.getUserView(request);
-	    ServiceUtils.executeService(userView, "DeleteGrantPart", args);
+	    IUserView userView = UserView.getUser();
+	    ServiceUtils.executeService("DeleteGrantPart", args);
 
 	    request.setAttribute("idSubsidy", idSubsidy);
 	    return mapping.findForward("manage-grant-part");

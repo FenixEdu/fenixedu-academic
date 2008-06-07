@@ -19,11 +19,12 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -40,7 +41,7 @@ public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 	    bean = new ListMasterDegreeProofsBean();
 	} else {
 	    Collection<MasterDegreeThesis> masterDegreeThesisCollection = (Collection<MasterDegreeThesis>) ServiceUtils
-		    .executeService(SessionUtils.getUserView(request), "ReadActiveMasterDegreeThesis",
+		    .executeService( "ReadActiveMasterDegreeThesis",
 			    new Object[] { bean.getThesisState(), bean.getYear(), bean.getDegree() });
 
 	    if (bean.getGenerateFile()) {

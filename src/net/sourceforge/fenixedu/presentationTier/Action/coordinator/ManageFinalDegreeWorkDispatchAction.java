@@ -61,7 +61,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
@@ -84,6 +83,7 @@ import org.apache.struts.config.FormBeanConfig;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.MessageResources;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
@@ -95,13 +95,13 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     public ActionForward showChooseExecutionDegreeForm(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException, FenixServiceException {
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
 
         final Integer degreeCurricularPlanOID = Integer.valueOf(request
                 .getParameter("degreeCurricularPlanID"));
         final Object[] args = { degreeCurricularPlanOID };
         final List<InfoExecutionDegree> infoExecutionDegrees = (List<InfoExecutionDegree>) ServiceUtils
-                .executeService(userView, "ReadExecutionDegreesByDegreeCurricularPlan", args);
+                .executeService( "ReadExecutionDegreesByDegreeCurricularPlan", args);
         request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
@@ -175,7 +175,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
@@ -192,7 +192,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         Object args[] = { executionDegreeOID };
         List finalDegreeWorkProposalHeaders = null;
         try {
-            finalDegreeWorkProposalHeaders = (List) ServiceUtils.executeService(userView,
+            finalDegreeWorkProposalHeaders = (List) ServiceUtils.executeService(
                     "ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan", args);
 
             if (finalDegreeWorkProposalHeaders != null && !finalDegreeWorkProposalHeaders.isEmpty()) {
@@ -214,7 +214,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         }
 
         try {
-            InfoScheduleing infoScheduleing = (InfoScheduleing) ServiceUtils.executeService(userView,
+            InfoScheduleing infoScheduleing = (InfoScheduleing) ServiceUtils.executeService(
                     "ReadFinalDegreeWorkProposalSubmisionPeriod", args);
 
             if (infoScheduleing != null) {
@@ -363,11 +363,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         if (finalDegreeWorkProposalOIDString != null
                 && StringUtils.isNumeric(finalDegreeWorkProposalOIDString)) {
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
 
             Object args[] = { Integer.valueOf(finalDegreeWorkProposalOIDString) };
             try {
-                InfoProposal infoProposal = (InfoProposal) ServiceUtils.executeService(userView,
+                InfoProposal infoProposal = (InfoProposal) ServiceUtils.executeService(
                         "ReadFinalDegreeWorkProposal", args);
 
                 if (infoProposal != null) {
@@ -479,7 +479,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     public ActionForward createNewFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException, FenixServiceException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
@@ -655,7 +655,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             FenixServiceException {
         DynaActionForm finalWorkForm = (DynaActionForm) form;
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer degreeCurricularPlanID = (Integer) finalWorkForm.get("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
@@ -771,7 +771,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         try {
             Object argsProposal[] = { infoFinalWorkProposal };
-            ServiceUtils.executeService(userView, "SubmitFinalWorkProposal", argsProposal);
+            ServiceUtils.executeService("SubmitFinalWorkProposal", argsProposal);
         } catch (Exception e) {
             if (e instanceof OutOfPeriodException) {
                 ActionErrors actionErrors = new ActionErrors();
@@ -789,7 +789,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     public ActionForward showTeacherName(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException, FenixServiceException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
 	final Integer executionDegreeOID = Integer.valueOf(finalWorkForm.getString("executionDegreeOID"));
@@ -853,7 +853,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     public ActionForward prepareFinalWorkInformation(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException, FenixServiceException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         String degreeId = (String) finalWorkForm.get("degree");
@@ -925,7 +925,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     public ActionForward publishAprovedProposals(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException, FenixServiceException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         Integer executionDegreeOID = Integer.valueOf((String) dynaActionForm.get("executionDegreeOID"));
@@ -944,7 +944,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         Object args[] = { executionDegreeOID };
         try {
-            ServiceUtils.executeService(userView, "PublishAprovedFinalDegreeWorkProposals", args);
+            ServiceUtils.executeService("PublishAprovedFinalDegreeWorkProposals", args);
         } catch (NotAuthorizedFilterException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error", new ActionError("error.exception.notAuthorized2"));
@@ -974,7 +974,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     public ActionForward changeSelectedProposalsStatus(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response,
             FinalDegreeWorkProposalStatus status) throws FenixActionException, FenixFilterException, FenixServiceException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         String[] selectedProposals = (String[]) finalWorkForm.get("selectedProposals");
@@ -991,7 +991,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
             Object args[] = { executionDegreeOID, selectedProposalOIDs, status };
             try {
-                ServiceUtils.executeService(userView, "ChangeStatusOfFinalDegreeWorkProposals", args);
+                ServiceUtils.executeService("ChangeStatusOfFinalDegreeWorkProposals", args);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
@@ -1067,7 +1067,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                     maximumNumberOfProposalCandidaciesPerGroupString);
         }
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         try {
             Object args[] = { executionDegreeOID, minimumNumberOfCompletedCourses,
@@ -1075,7 +1075,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             		minimumCompletedCurricularYear,
                     minimumNumberOfStudents, maximumNumberOfStudents,
                     maximumNumberOfProposalCandidaciesPerGroup, attributionByTeachers, allowSimultaneousCoorientationAndCompanion, minimumCompletedCreditsSecondCycle };
-            ServiceUtils.executeService(userView, "DefineFinalDegreeWorkCandidacyRequirements", args);
+            ServiceUtils.executeService("DefineFinalDegreeWorkCandidacyRequirements", args);
         } catch (NotAuthorizedFilterException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error", new ActionMessage("error.exception.notAuthorized2"));
@@ -1101,10 +1101,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         if (selectedGroupProposal != null && !selectedGroupProposal.equals("")
                 && StringUtils.isNumeric(selectedGroupProposal)) {
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
 
             Object args[] = { Integer.valueOf(selectedGroupProposal) };
-            ServiceUtils.executeService(userView, "AttributeFinalDegreeWork", args);
+            ServiceUtils.executeService("AttributeFinalDegreeWork", args);
         }
 
         return mapping.findForward("prepare-show-final-degree-work-proposal");

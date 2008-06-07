@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.struts.action.ActionForm;
@@ -36,6 +35,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author lmac1
@@ -46,7 +47,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
     public ActionForward prepareInsert(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 
@@ -54,7 +55,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 
         List result = null;
         try {
-            result = (List) ServiceUtils.executeService(userView, "ReadBranchesByDegreeCurricularPlan",
+            result = (List) ServiceUtils.executeService("ReadBranchesByDegreeCurricularPlan",
                     args);
 
         } catch (NonExistingServiceException ex) {
@@ -83,7 +84,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 
         List<InfoExecutionPeriod> infoExecutionPeriods = null;
         try {
-            infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadExecutionPeriods",
+            infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods",
                     null);
 
         } catch (FenixServiceException e) {
@@ -111,7 +112,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
@@ -139,7 +140,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
         Object args[] = { infoCurricularCourseScope };
 
         try {
-            ServiceUtils.executeService(userView, "InsertCurricularCourseScopeAtCurricularCourse", args);
+            ServiceUtils.executeService("InsertCurricularCourseScopeAtCurricularCourse", args);
 
         } catch (ExistingServiceException ex) {
             throw new ExistingActionException(ex.getMessage(), ex);

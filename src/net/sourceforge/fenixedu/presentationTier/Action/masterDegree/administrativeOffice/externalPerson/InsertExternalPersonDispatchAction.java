@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.Globals;
@@ -31,6 +30,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * 
@@ -63,12 +64,12 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
 
     private List getInstitutions(HttpServletRequest request) throws FenixActionException,
             FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         List institutions = null;
 
         Object args[] = {};
         try {
-            institutions = (ArrayList) ServiceUtils.executeService(userView, "ReadAllInstitutions",
+            institutions = (ArrayList) ServiceUtils.executeService("ReadAllInstitutions",
                     args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -95,7 +96,7 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
 
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm insertExternalPersonForm = (DynaActionForm) form;
 
@@ -125,7 +126,7 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
         Object args[] = { name, sex, address, institutionID, phone, mobile, homepage, email };
 
         try {
-            ServiceUtils.executeService(userView, "InsertExternalPerson", args);
+            ServiceUtils.executeService("InsertExternalPerson", args);
         } catch (ExistingServiceException e) {
             request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
                     .getAttribute(Globals.LOCALE_KEY)));

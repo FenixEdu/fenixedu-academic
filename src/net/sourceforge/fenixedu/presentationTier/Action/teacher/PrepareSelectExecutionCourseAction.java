@@ -103,7 +103,7 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
 		try
 		{
 			TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils
-					.executeService(userView, "TeacherAdministrationSiteComponentService", args);
+					.executeService( "TeacherAdministrationSiteComponentService", args);
 	request.setAttribute("siteView", siteView);
 	request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent())
 					.getExecutionCourse().getIdInternal());

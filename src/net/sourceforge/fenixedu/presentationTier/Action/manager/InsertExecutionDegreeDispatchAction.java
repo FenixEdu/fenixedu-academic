@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -35,6 +34,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author lmac1
  */
@@ -43,7 +44,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
     public ActionForward prepareInsert(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         List infoExecutionYearList = null;
         List infoCampusList = null;
@@ -52,9 +53,9 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
          * jsp
          */
         try {
-            infoExecutionYearList = (List) ServiceUtils.executeService(userView,
+            infoExecutionYearList = (List) ServiceUtils.executeService(
                     "ReadAllExecutionYears", null);
-            infoCampusList = (List) ServiceUtils.executeService(userView, "ReadAllCampus", null);
+            infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus", null);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -98,7 +99,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
         final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
@@ -325,7 +326,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
         Object args[] = { infoExecutionDegree };
 
         try {
-            ServiceUtils.executeService(userView, "InsertExecutionDegreeAtDegreeCurricularPlan", args);
+            ServiceUtils.executeService("InsertExecutionDegreeAtDegreeCurricularPlan", args);
         } catch (ExistingServiceException ex) {
             throw new ExistingActionException(ex.getMessage(), ex);
         } catch (NonExistingServiceException exception) {
@@ -339,7 +340,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
     public ActionForward addLine(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
@@ -373,9 +374,9 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
          * jsp
          */
         try {
-            infoExecutionYearList = (List) ServiceUtils.executeService(userView,
+            infoExecutionYearList = (List) ServiceUtils.executeService(
                     "ReadAllExecutionYears", null);
-            infoCampusList = (List) ServiceUtils.executeService(userView, "ReadAllCampus", null);
+            infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus", null);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -402,7 +403,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
     public ActionForward removeLine(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
@@ -436,9 +437,9 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
          * jsp
          */
         try {
-            infoExecutionYearList = (List) ServiceUtils.executeService(userView,
+            infoExecutionYearList = (List) ServiceUtils.executeService(
                     "ReadAllExecutionYears", null);
-            infoCampusList = (List) ServiceUtils.executeService(userView, "ReadAllCampus", null);
+            infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus", null);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

@@ -21,12 +21,13 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjec
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Susana Fernandes
@@ -35,11 +36,11 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 
     public ActionForward showProjectsAccesses(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException, FenixFilterException {
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
         final String costCenter = request.getParameter("costCenter");
         getCostCenterName(request, costCenter);
         try {
-            final List projectsAccessesList = (List) ServiceManagerServiceFactory.executeService(userView, "ReadProjectAccesses", new Object[] {
+            final List projectsAccessesList = (List) ServiceManagerServiceFactory.executeService( "ReadProjectAccesses", new Object[] {
                     userView.getUtilizador(), costCenter });
             request.setAttribute("projectsAccessesList", projectsAccessesList);
         } catch (InvalidArgumentsServiceException e) {
@@ -49,10 +50,10 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 
     public ActionForward choosePerson(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException, FenixFilterException {
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
         final String costCenter = request.getParameter("costCenter");
         getCostCenterName(request, costCenter);
-        final List projectList = (List) ServiceUtils.executeService(userView, "ReadUserProjects", new Object[] { userView.getUtilizador(),
+        final List projectList = (List) ServiceUtils.executeService("ReadUserProjects", new Object[] { userView.getUtilizador(),
                 costCenter, new Boolean(false) });
         if (projectList == null || projectList.size() == 0)
             request.setAttribute("noUserProjects", new Boolean(true));
@@ -61,7 +62,7 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 
     public ActionForward showPersonAccesses(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException, FenixFilterException {
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
         final String username = (String) ((DynaActionForm) form).get("username");
         request.setAttribute("username", username);
         final String costCenter = request.getParameter("costCenter");
@@ -69,16 +70,16 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
         if (username != null && !username.equals("")) {
             try {
                 if (!username.equalsIgnoreCase(userView.getUtilizador())) {
-                    final List personAccessesList = (List) ServiceManagerServiceFactory.executeService(userView, "ReadProjectAccesses", new Object[] {
+                    final List personAccessesList = (List) ServiceManagerServiceFactory.executeService( "ReadProjectAccesses", new Object[] {
                             userView.getUtilizador(), costCenter, username });
                     request.setAttribute("personAccessesList", personAccessesList);
                     if (personAccessesList == null || personAccessesList.size() == 0) {
-                        final InfoPerson infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
+                        final InfoPerson infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(
                                 "ReadPersonToDelegateAccess", new Object[] { userView.getUtilizador(), costCenter, username });
                         request.setAttribute("infoPerson", infoPerson);
                     }
 
-                    final List projectList = (List) ServiceUtils.executeService(userView, "ReadProjectWithoutPersonAccess", new Object[] {
+                    final List projectList = (List) ServiceUtils.executeService("ReadProjectWithoutPersonAccess", new Object[] {
                             userView.getUtilizador(), costCenter, personAccessesList });
                     request.setAttribute("projectList", projectList);
                     return mapping.findForward("showPersonAccesses");
@@ -94,7 +95,7 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 
     public ActionForward delegateAccess(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException, FenixFilterException {
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
         final Integer projectCode = (Integer) ((DynaActionForm) form).get("projectCode");
         final String costCenter = request.getParameter("costCenter");
         getCostCenterName(request, costCenter);
@@ -115,12 +116,12 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
             request.setAttribute("invalidEndTime", new Boolean(true));
         } else {
             if (projectCode != null && projectCode.equals(new Integer(-1))) {
-                ServiceManagerServiceFactory.executeService(userView, "InsertNewProjectAccess", new Object[] { userView.getUtilizador(), costCenter,
+                ServiceManagerServiceFactory.executeService( "InsertNewProjectAccess", new Object[] { userView.getUtilizador(), costCenter,
                         username, beginDate, endDate });
             } else {
                 final String[] projectCodes = request.getParameterValues("projectCodes");
                 if (projectCodes != null && projectCodes.length != 0) {
-                    ServiceManagerServiceFactory.executeService(userView, "InsertNewProjectAccess", new Object[] { userView.getUtilizador(),
+                    ServiceManagerServiceFactory.executeService( "InsertNewProjectAccess", new Object[] { userView.getUtilizador(),
                             costCenter, username, projectCodes, beginDate, endDate });
                 } else {
                     request.setAttribute("noProjectsSelected", new Boolean(true));
@@ -133,34 +134,34 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 
     public ActionForward removeProjectAccess(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException, FenixFilterException {
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
         final Integer projectCode = getCodeFromRequest(request, "projectCode");
         final String personUsername = request.getParameter("username");
         final String costCenter = request.getParameter("costCenter");
-        ServiceManagerServiceFactory.executeService(userView, "RemoveProjectAccess", new Object[] { userView.getUtilizador(), costCenter,
+        ServiceManagerServiceFactory.executeService( "RemoveProjectAccess", new Object[] { userView.getUtilizador(), costCenter,
                 personUsername, projectCode });
         return showProjectsAccesses(mapping, form, request, response);
     }
 
     public ActionForward removePersonAccess(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException, FenixFilterException {
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
         final Integer projectCode = getCodeFromRequest(request, "projectCode");
         final String personUsername = request.getParameter("username");
         final String costCenter = request.getParameter("costCenter");
-        ServiceManagerServiceFactory.executeService(userView, "RemoveProjectAccess", new Object[] { userView.getUtilizador(), costCenter,
+        ServiceManagerServiceFactory.executeService( "RemoveProjectAccess", new Object[] { userView.getUtilizador(), costCenter,
                 personUsername, projectCode });
         return showPersonAccesses(mapping, form, request, response);
     }
 
     public ActionForward prepareEditProjectAccess(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException, FenixFilterException {
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
         final Integer projectCode = getCodeFromRequest(request, "projectCode");
         final Integer personCode = getCodeFromRequest(request, "personCode");
         final String costCenter = request.getParameter("costCenter");
         getCostCenterName(request, costCenter);
-        final InfoProjectAccess infoProjectAccess = (InfoProjectAccess) ServiceManagerServiceFactory.executeService(userView, "ReadProjectAccesses",
+        final InfoProjectAccess infoProjectAccess = (InfoProjectAccess) ServiceManagerServiceFactory.executeService( "ReadProjectAccesses",
                 new Object[] { userView.getUtilizador(), costCenter, personCode, projectCode });
         ((DynaActionForm) form).set("beginDay", new Integer(infoProjectAccess.getBeginDate().get(Calendar.DAY_OF_MONTH)).toString());
         ((DynaActionForm) form).set("beginMonth", new Integer(infoProjectAccess.getBeginDate().get(Calendar.MONTH) + 1).toString());
@@ -174,7 +175,7 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 
     public ActionForward editProjectAccess(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException, FenixFilterException {
-        final IUserView userView = SessionUtils.getUserView(request);
+        final IUserView userView = UserView.getUser();
         final Integer projectCode = (Integer) ((DynaActionForm) form).get("projectCode");
         final String costCenter = request.getParameter("costCenter");
         final Integer personCode = (Integer) ((DynaActionForm) form).get("personCode");
@@ -194,7 +195,7 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
             request.setAttribute("invalidEndTime", new Boolean(true));
             return prepareEditProjectAccess(mapping, form, request, response);
         } else
-            ServiceManagerServiceFactory.executeService(userView, "EditProjectAccess", new Object[] { userView.getUtilizador(), costCenter,
+            ServiceManagerServiceFactory.executeService( "EditProjectAccess", new Object[] { userView.getUtilizador(), costCenter,
                     personCode, projectCode, beginDate, endDate });
         return showPersonAccesses(mapping, form, request, response);
     }
@@ -229,8 +230,8 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
 
     private void getCostCenterName(HttpServletRequest request, String costCenter) throws FenixServiceException, FenixFilterException {
         if (costCenter != null && !costCenter.equals("")) {
-            final IUserView userView = SessionUtils.getUserView(request);
-            request.setAttribute("infoCostCenter", ServiceUtils.executeService(userView, "ReadCostCenter", new Object[] { userView.getUtilizador(),
+            final IUserView userView = UserView.getUser();
+            request.setAttribute("infoCostCenter", ServiceUtils.executeService("ReadCostCenter", new Object[] { userView.getUtilizador(),
                     costCenter }));
         }
     }

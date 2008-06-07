@@ -42,7 +42,7 @@ public class SeeStudentCurricularPlansAction extends FenixAction {
 
         List studentCurricularPlansList = null;
         try {
-            studentCurricularPlansList = (ArrayList) ServiceUtils.executeService(userView,
+            studentCurricularPlansList = (ArrayList) ServiceUtils.executeService(
                     "ReadPosGradStudentCurricularPlans", args);
             if (studentCurricularPlansList != null && !studentCurricularPlansList.isEmpty()) {
                 Collections.sort(studentCurricularPlansList);

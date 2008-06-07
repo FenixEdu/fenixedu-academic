@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -17,6 +16,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 import edu.yale.its.tp.cas.client.CASReceipt;
 
 public class CASAuthenticationAction extends BaseAuthenticationAction {
@@ -37,7 +37,7 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
             final CASReceipt receipt = Authenticate.getCASReceipt(casTicket, requestURL);
             final Object authenticationArgs[] = { receipt, requestURL , remoteHostName};
 
-            userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao",
+            userView = (IUserView) ServiceManagerServiceFactory.executeService( "Autenticacao",
                     authenticationArgs);
 
         }
@@ -56,7 +56,7 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
 
     private IUserView getCurrentUserView(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        return (IUserView) ((session != null) ? session.getAttribute(SessionConstants.U_VIEW) : null);
+        return (IUserView) ((session != null) ? session.getAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE) : null);
 
     }
 }

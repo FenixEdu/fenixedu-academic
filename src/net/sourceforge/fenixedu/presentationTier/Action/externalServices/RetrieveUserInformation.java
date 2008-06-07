@@ -39,7 +39,7 @@ public class RetrieveUserInformation extends ExternalInterfaceDispatchAction {
             String responseCode = null;
 
             try {
-                final Person person = (Person) ServiceUtils.executeService(null,
+                final Person person = (Person) ServiceUtils.executeService(
                         "ReadPersonByUsernameOrIstUsername", new Object[] { username });
 
                 if (person == null) {

@@ -66,7 +66,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 	Object args[] = { studentCurricularPlanID };
 	try {
 	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
-		    .executeService(userView, "ReadStudentCurricularPlan", args);
+		    .executeService( "ReadStudentCurricularPlan", args);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException("O aluno");
 	}
@@ -75,7 +75,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 	InfoFinalResult infoFinalResult = null;
 	try {
 	    Object argsFinalResult[] = { infoStudentCurricularPlan };
-	    infoFinalResult = (InfoFinalResult) ServiceManagerServiceFactory.executeService(userView,
+	    infoFinalResult = (InfoFinalResult) ServiceManagerServiceFactory.executeService(
 		    "FinalResult", argsFinalResult);
 	} catch (FenixServiceException e) {
 	    throw new FenixServiceException("");
@@ -88,7 +88,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 	try {
 	    Object argsEnrolmentList[] = { infoStudentCurricularPlan.getIdInternal(),
 		    EnrollmentState.APROVED };
-	    enrolmentList = (List) ServiceManagerServiceFactory.executeService(userView,
+	    enrolmentList = (List) ServiceManagerServiceFactory.executeService(
 		    "GetEnrolmentList", argsEnrolmentList);
 
 	} catch (NonExistingServiceException e) {
@@ -103,7 +103,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 	Date endOfScholarshipDate = null;
 	try {
 	    Object argsTemp[] = { studentCurricularPlanID };
-	    endOfScholarshipDate = (Date) ServiceManagerServiceFactory.executeService(userView,
+	    endOfScholarshipDate = (Date) ServiceManagerServiceFactory.executeService(
 		    "GetEndOfScholarshipDate", argsTemp);
 
 	} catch (FenixServiceException e) {
@@ -139,7 +139,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 
 	request.setAttribute(SessionConstants.CONCLUSION_DATE, conclusionDate);
 	try {
-	    ServiceManagerServiceFactory.executeService(userView, "ReadCurrentExecutionYear", null);
+	    ServiceManagerServiceFactory.executeService( "ReadCurrentExecutionYear", null);
 
 	} catch (RuntimeException e) {
 	    throw new RuntimeException("Error", e);

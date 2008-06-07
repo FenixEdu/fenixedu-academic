@@ -111,7 +111,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     protected List<InfoExecutionPeriod> getExecutionPeriods() {
 	try {
 	    final Object args[] = { getDegreeCurricularPlanID() };
-	    return (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(getUserView(),
+	    return (List<InfoExecutionPeriod>) ServiceManagerServiceFactory.executeService(
 		    "ReadExecutionPeriodsByDegreeCurricularPlan", args);
 	} catch (FenixFilterException e) {
 	} catch (FenixServiceException e) {
@@ -140,7 +140,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
 	}
 	try {
 	    final Object args[] = { getDegreeCurricularPlanID(), getExecutionPeriodID(), getCurricularYearID() };
-	    this.executionCourses = (List) ServiceManagerServiceFactory.executeService(getUserView(),
+	    this.executionCourses = (List) ServiceManagerServiceFactory.executeService(
 		    "ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear", args);
 	    return this.executionCourses;
 	} catch (FenixFilterException e) {
@@ -158,7 +158,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     protected InfoExecutionPeriod getCurrentExecutionPeriod() {
 	try {
 	    final Object args[] = {};
-	    return (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService(getUserView(), "ReadCurrentExecutionPeriod",
+	    return (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService( "ReadCurrentExecutionPeriod",
 		    args);
 	} catch (FenixFilterException e) {
 	} catch (FenixServiceException e) {

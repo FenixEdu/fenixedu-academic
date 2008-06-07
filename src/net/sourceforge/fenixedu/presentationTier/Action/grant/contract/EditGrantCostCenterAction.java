@@ -16,12 +16,13 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostC
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -42,12 +43,12 @@ public class EditGrantCostCenterAction extends FenixDispatchAction {
         if (idGrantCostCenter != null) //Edit
         {
             try {
-                IUserView userView = SessionUtils.getUserView(request);
+                IUserView userView = UserView.getUser();
 
                 //Read the grant cost center
                 Object[] args = { idGrantCostCenter };
                 InfoGrantCostCenter infoGrantCostCenter = (InfoGrantCostCenter) ServiceUtils
-                        .executeService(userView, "ReadGrantPaymentEntity", args);
+                        .executeService( "ReadGrantPaymentEntity", args);
 
                 //Populate the form
                 setFormGrantCostCenter((DynaValidatorForm) form, infoGrantCostCenter);
@@ -67,10 +68,10 @@ public class EditGrantCostCenterAction extends FenixDispatchAction {
         try {
             infoGrantCostCenter = populateInfoFromForm((DynaValidatorForm) form);
 
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
             //Check if teacher exists
             Object[] argTeacher = { infoGrantCostCenter.getInfoResponsibleTeacher().getTeacherNumber() };
-            InfoTeacher infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView,
+            InfoTeacher infoTeacher = (InfoTeacher) ServiceUtils.executeService(
                     "ReadTeacherByNumber", argTeacher);
             if (infoTeacher == null) {
                 return setError(request, mapping, "errors.grant.paymententity.unknownTeacher", null,
@@ -80,7 +81,7 @@ public class EditGrantCostCenterAction extends FenixDispatchAction {
 
             //Edit-Create the payment entity
             Object[] argCostCenter = { infoGrantCostCenter };
-            ServiceUtils.executeService(userView, "EditGrantPaymentEntity", argCostCenter);
+            ServiceUtils.executeService("EditGrantPaymentEntity", argCostCenter);
 
             return mapping.findForward("manage-grant-costcenter");
         } catch (ExistingServiceException e) {

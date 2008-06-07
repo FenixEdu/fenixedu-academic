@@ -153,7 +153,7 @@ public class EditStudentInfoDispatchAction extends FenixDispatchAction {
             
             InfoPerson newInfoPerson = null;
             try {
-                newInfoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
+                newInfoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(
                         "ChangePersonalStudentInfo", new Object[] { infoPerson });
             
             } catch (DomainException e) {

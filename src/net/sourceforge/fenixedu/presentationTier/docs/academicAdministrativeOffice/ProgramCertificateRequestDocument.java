@@ -16,12 +16,12 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.utl.fenix.utils.NumberToWordsConverter;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocument {
 

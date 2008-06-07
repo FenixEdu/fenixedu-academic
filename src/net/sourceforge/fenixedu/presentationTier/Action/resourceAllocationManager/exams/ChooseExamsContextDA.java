@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
 import org.apache.struts.action.ActionError;
@@ -18,6 +17,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Ana & Ricardo
@@ -38,14 +39,14 @@ public class ChooseExamsContextDA extends FenixContextDispatchAction {
 
         DynaActionForm chooseExamsContextForm = (DynaActionForm) form;
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         /* Determine Selected Curricular Year */
         Integer anoCurricular = new Integer((String) chooseExamsContextForm.get("curricularYear"));
 
         Object argsReadCurricularYearByOID[] = { anoCurricular };
         InfoCurricularYear infoCurricularYear = (InfoCurricularYear) ServiceUtils.executeService(
-                userView, "ReadCurricularYearByOID", argsReadCurricularYearByOID);
+                "ReadCurricularYearByOID", argsReadCurricularYearByOID);
 
         request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
 
@@ -55,7 +56,7 @@ public class ChooseExamsContextDA extends FenixContextDispatchAction {
 
         Object argsReadExecutionDegreeByOID[] = { executionDegreeOID };
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
-                userView, "ReadExecutionDegreeByOID", argsReadExecutionDegreeByOID);
+                "ReadExecutionDegreeByOID", argsReadExecutionDegreeByOID);
 
         if (infoExecutionDegree == null) {
             ActionErrors actionErrors = new ActionErrors();

@@ -47,7 +47,7 @@ public class EnrollmentDeclarations extends FenixDispatchAction {
         Integer lastStudentNumber = new Integer((String) studentsNumberForm.get("lastStudentNumber"));
         Object args[] = { firstStudentNumber, lastStudentNumber };
 
-        List result = (List) ServiceManagerServiceFactory.executeService(userView,
+        List result = (List) ServiceManagerServiceFactory.executeService(
                 "ReadStudentsWithEnrollmentInCurrentSemester", args);
 
         List infoStudents = (List) result.get(0);

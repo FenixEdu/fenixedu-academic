@@ -44,7 +44,7 @@ public class ViewStudentsAndGroupsByShiftAction extends FenixContextAction {
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
         Object[] args = { groupPropertiesCode, shiftCode };
         try {
-        	infoSiteStudentsAndGroups = (InfoSiteStudentsAndGroups) ServiceUtils.executeService(userView,
+        	infoSiteStudentsAndGroups = (InfoSiteStudentsAndGroups) ServiceUtils.executeService(
                     "ReadStudentsAndGroupsByShiftID", args);
 
         } catch (InvalidSituationServiceException e)
@@ -62,7 +62,7 @@ public class ViewStudentsAndGroupsByShiftAction extends FenixContextAction {
         request.setAttribute("infoSiteStudentsAndGroups", infoSiteStudentsAndGroups);
 
         List<InfoExportGrouping> infoExportGroupings = (List<InfoExportGrouping>) ServiceUtils.
-                executeService(userView, "ReadExportGroupingsByGrouping", new Object[]{ groupPropertiesCode });
+                executeService( "ReadExportGroupingsByGrouping", new Object[]{ groupPropertiesCode });
         request.setAttribute("infoExportGroupings", infoExportGroupings);
 
         return mapping.findForward("sucess");

@@ -16,11 +16,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Nuno Correia
@@ -36,11 +37,11 @@ public class TfcManagementAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixServiceException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Object args[] = { userView.getUtilizador() };
 
-        InfoTeacher infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView,
+        InfoTeacher infoTeacher = (InfoTeacher) ServiceUtils.executeService(
                 "ReadTeacherByUsername", args);
 
         request.setAttribute("infoTeacher", infoTeacher);
@@ -49,7 +50,7 @@ public class TfcManagementAction extends FenixDispatchAction {
         Object[] args1 = { degreeCurricularPlanId };
         List branches = null;
         try {
-            branches = (List) ServiceUtils.executeService(userView,
+            branches = (List) ServiceUtils.executeService(
                     "ReadBranchesByDegreeCurricularPlanId", args1);
         } catch (FenixServiceException fse) {
             throw new FenixActionException(fse);

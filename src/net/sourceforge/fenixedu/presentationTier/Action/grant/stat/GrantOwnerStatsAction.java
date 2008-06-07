@@ -16,12 +16,13 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantType;
 import net.sourceforge.fenixedu.dataTransferObject.grant.stat.InfoStatGrantOwner;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -32,11 +33,11 @@ public class GrantOwnerStatsAction extends FenixDispatchAction {
     public ActionForward actionStart(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         try {
             // Read grant types for the contract
             Object[] args = {};
-            List grantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args);
+            List grantTypeList = (List) ServiceUtils.executeService("ReadAllGrantTypes", args);
             // Adding a select country line to the list (presentation reasons)
             InfoGrantType grantType = new InfoGrantType();
             grantType.setIdInternal(null);
@@ -64,9 +65,9 @@ public class GrantOwnerStatsAction extends FenixDispatchAction {
             return setError(request, mapping, "errors.grant.stat.beginDateBeforeEnd", null, null);
         }
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Object[] args = { infoStatGrantOwner };
-        Object[] result = (Object[]) ServiceUtils.executeService(userView,
+        Object[] result = (Object[]) ServiceUtils.executeService(
                 "CalculateStateGrantOwnerByCriteria", args);
 
         // Set the request with the variables

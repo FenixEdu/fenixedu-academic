@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -29,6 +28,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -48,7 +49,7 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 
         Object argsLerTurmas[] = { infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear() };
 
-        List<InfoClass> classesList = (List<InfoClass>) ServiceUtils.executeService(SessionUtils.getUserView(request), "LerTurmas", argsLerTurmas);
+        List<InfoClass> classesList = (List<InfoClass>) ServiceUtils.executeService("LerTurmas", argsLerTurmas);
 
         if (classesList != null && !classesList.isEmpty()) {
             BeanComparator nameComparator = new BeanComparator("nome");
@@ -67,7 +68,7 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 
         DynaValidatorForm classForm = (DynaValidatorForm) form;
         String className = (String) classForm.get("className");
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(SessionConstants.CURRICULAR_YEAR);        
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
@@ -77,7 +78,7 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
         Object argsCriarTurma[] = { className, curricularYear, infoExecutionDegree, infoExecutionPeriod };
 
         try {
-            ServiceUtils.executeService(userView, "CriarTurma", argsCriarTurma);
+            ServiceUtils.executeService("CriarTurma", argsCriarTurma);
             
         } catch (DomainException e) {
             throw new ExistingActionException("A SchoolClass", e);
@@ -96,10 +97,10 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 
         InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Object argsApagarTurma[] = { infoClass };
-        ServiceUtils.executeService(userView, "ApagarTurma", argsApagarTurma);
+        ServiceUtils.executeService("ApagarTurma", argsApagarTurma);
 
         request.removeAttribute(SessionConstants.CLASS_VIEW);
 
@@ -126,7 +127,7 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
         }
 
         Object args[] = { classOIDs };
-        ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteClasses", args);
+        ServiceUtils.executeService("DeleteClasses", args);
 
         return mapping.findForward("ShowShiftList");
 

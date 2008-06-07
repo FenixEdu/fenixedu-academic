@@ -25,14 +25,7 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.components.state.ViewDestination;
-import pt.ist.fenixWebFramework.renderers.model.MetaObject;
-import pt.ist.fenixWebFramework.renderers.plugin.ExceptionHandler;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.apache.commons.lang.StringUtils;
@@ -46,6 +39,14 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.components.state.ViewDestination;
+import pt.ist.fenixWebFramework.renderers.model.MetaObject;
+import pt.ist.fenixWebFramework.renderers.plugin.ExceptionHandler;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class FenixDispatchAction extends DispatchAction implements ExceptionHandler {
 
@@ -75,17 +76,17 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     protected static IUserView getUserView(HttpServletRequest request) {
-	return SessionUtils.getUserView(request);
+	return UserView.getUser();
     }
 
     protected Object executeService(final HttpServletRequest request, final String serviceName, final Object[] serviceArgs)
 	    throws FenixFilterException, FenixServiceException {
-	return ServiceUtils.executeService(getUserView(request), serviceName, serviceArgs);
+	return ServiceUtils.executeService(serviceName, serviceArgs);
     }
 
     protected Object executeService(final String serviceName, final Object... serviceArgs) throws FenixFilterException,
 	    FenixServiceException {
-	return ServiceUtils.executeService(AccessControl.getUserView(), serviceName, serviceArgs);
+	return ServiceUtils.executeService( serviceName, serviceArgs);
     }
 
     protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz, final Integer idInternal) {

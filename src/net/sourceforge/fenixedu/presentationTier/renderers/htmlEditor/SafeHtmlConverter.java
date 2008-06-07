@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -21,6 +20,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.w3c.tidy.Tidy;
+
+import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor;
 
 public class SafeHtmlConverter extends TidyConverter {
 

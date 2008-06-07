@@ -32,13 +32,14 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCourseDA {
 
@@ -105,7 +106,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
 
 	ActionMessages actionMessages = new ActionMessages();
 	try {
-	    List<EnrolmentEvaluation> marksSubmited = (List<EnrolmentEvaluation>) ServiceUtils.executeService(userView,
+	    List<EnrolmentEvaluation> marksSubmited = (List<EnrolmentEvaluation>) ServiceUtils.executeService(
 		    "CreateMarkSheetByTeacher", new Object[] { submissionBean });
 	    request.setAttribute("marksSubmited", marksSubmited);
 	    return mapping.findForward("viewGradesSubmited");

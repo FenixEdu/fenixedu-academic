@@ -10,12 +10,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
@@ -32,7 +33,7 @@ public class InsertInstitutionDispatchAction extends FenixDispatchAction {
 
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm insertInstitutionForm = (DynaActionForm) form;
 
@@ -41,7 +42,7 @@ public class InsertInstitutionDispatchAction extends FenixDispatchAction {
         Object args[] = { institutionName };
 
         try {
-            ServiceUtils.executeService(userView, "InsertInstitution", args);
+            ServiceUtils.executeService("InsertInstitution", args);
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e.getMessage(), mapping.findForward("error"));
         } catch (FenixServiceException e) {

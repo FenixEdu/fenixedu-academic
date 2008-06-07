@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -27,6 +26,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * 
  * @author Luis Cruz
@@ -37,16 +38,16 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
     public ActionForward prepareTransfer(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
 
         InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory
-                .executeService(userView, "ReadExecutionCourseWithShiftsAndCurricularCoursesByOID",
+                .executeService( "ReadExecutionCourseWithShiftsAndCurricularCoursesByOID",
                         new Object[] { executionCourseId });
         request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
-        List executionDegrees = (List) ServiceManagerServiceFactory.executeService(userView,
+        List executionDegrees = (List) ServiceManagerServiceFactory.executeService(
                 "ReadExecutionDegreesByExecutionPeriodId", new Object[] { infoExecutionCourse
                         .getInfoExecutionPeriod().getIdInternal() });
         transformExecutionDegreesIntoLabelValueBean(executionDegrees);
@@ -92,7 +93,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         String destinationCurricularYear = (String) dynaActionForm.get("destinationCurricularYear");
 
         if (isSet(destinationExecutionDegreeId) && isSet(destinationCurricularYear)) {
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
 
             InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
                     .getAttribute("infoExecutionCourse");
@@ -100,7 +101,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
             Object args[] = { new Integer(destinationExecutionDegreeId),
                     infoExecutionCourse.getInfoExecutionPeriod().getIdInternal(),
                     new Integer(destinationCurricularYear) };
-            List executionCourses = (List) ServiceManagerServiceFactory.executeService(userView,
+            List executionCourses = (List) ServiceManagerServiceFactory.executeService(
                     "ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear", args);
             Collections.sort(executionCourses, new BeanComparator("nome"));
             request.setAttribute("executionCourses", executionCourses);
@@ -121,7 +122,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
         String[] curricularCourseIdsToTransfer = (String[]) dynaActionForm
                 .get("curricularCourseIdsToTransfer");
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer destinationExecutionCourseID = null;
         if (destinationExecutionCourseIDString != null
@@ -130,7 +131,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
             destinationExecutionCourseID = new Integer(destinationExecutionCourseIDString);
         }
 
-        ServiceManagerServiceFactory.executeService(userView, "SeperateExecutionCourse", new Object[] {
+        ServiceManagerServiceFactory.executeService( "SeperateExecutionCourse", new Object[] {
                 executionCourseId, destinationExecutionCourseID, makeIntegerArray(shiftIdsToTransfer),
                 makeIntegerArray(curricularCourseIdsToTransfer) });
 

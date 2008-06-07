@@ -19,11 +19,12 @@ import net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation;
 import net.sourceforge.fenixedu.domain.research.project.ProjectParticipation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class EditProjectDispatchAction extends FenixDispatchAction {
 
@@ -104,7 +105,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
         if(simpleBean.getPerson() != null) {
             // Criar a participação efectivamente quando já existe a pessoa escolhida
             Integer oid = Integer.parseInt(request.getParameter("projectId"));
-            ServiceUtils.executeService(userView, "CreateProjectParticipant", new Object[] {simpleBean, oid });
+            ServiceUtils.executeService("CreateProjectParticipant", new Object[] {simpleBean, oid });
             
             mantainExternalStatus(request);
             return prepareEditParticipants(mapping, form, request, response);
@@ -127,7 +128,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
             
             if (simpleBean.getPerson() != null){
                 //Criação de uma participação com uma pessoa externa já existente
-                ServiceUtils.executeService(userView, "CreateProjectParticipant", new Object[] { simpleBean, oid });
+                ServiceUtils.executeService("CreateProjectParticipant", new Object[] { simpleBean, oid });
             }
             else {
                 //Caso em que foi inserido o nome de uma pessoa externa não existente
@@ -145,7 +146,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
         else if (RenderUtils.getViewState().getMetaObject().getObject() instanceof ProjectParticipantFullCreationBean) {
             //Criação de uma participação com o nome de uma pessoa não existente ainda no sistema e a sua organização
             ProjectParticipantFullCreationBean fullBean = (ProjectParticipantFullCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
-            ServiceUtils.executeService(userView, "CreateProjectParticipant", new Object[] { fullBean, oid });
+            ServiceUtils.executeService("CreateProjectParticipant", new Object[] { fullBean, oid });
         }
         return prepareEditParticipants(mapping, form, request, response);
     }    
@@ -156,7 +157,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
         final IUserView userView = getUserView(request);
         Integer participantId = Integer.parseInt(request.getParameter("participantId"));
         
-        ServiceUtils.executeService(userView, "DeleteProjectParticipant", new Object[] { participantId });
+        ServiceUtils.executeService("DeleteProjectParticipant", new Object[] { participantId });
         
         return prepareEditParticipants(mapping, form, request, response);
     }    
@@ -202,7 +203,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
             if(simpleBean.getEvent() != null) {
                 // Criar a associaï¿½ï¿½o efectivamente quando jï¿½ existe o evento escolhido
                 Integer oid = Integer.parseInt(request.getParameter("projectId"));
-                ServiceUtils.executeService(userView, "CreateProjectEventAssociation", new Object[] {simpleBean, oid });
+                ServiceUtils.executeService("CreateProjectEventAssociation", new Object[] {simpleBean, oid });
                 return prepareEditEventAssociations(mapping, form, request, response);
             }
             else {
@@ -227,7 +228,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
         final IUserView userView = getUserView(request);
         Integer oid = Integer.parseInt(request.getParameter("projectId"));
         
-        ServiceUtils.executeService(userView, "CreateProjectEventAssociation", new Object[] { fullBean, oid });
+        ServiceUtils.executeService("CreateProjectEventAssociation", new Object[] { fullBean, oid });
         
         return prepareEditEventAssociations(mapping, form, request, response);
     }       
@@ -238,7 +239,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
         final IUserView userView = getUserView(request);
         Integer associationId = Integer.parseInt(request.getParameter("associationId"));
         
-        ServiceUtils.executeService(userView, "DeleteProjectEventAssociation", new Object[] { associationId });
+        ServiceUtils.executeService("DeleteProjectEventAssociation", new Object[] { associationId });
         
         return prepareEditEventAssociations(mapping, form, request, response);
     }       
@@ -285,7 +286,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 		
 		Integer oid = Integer.parseInt(request
 				.getParameter("projectId"));
-		ServiceUtils.executeService(userView,
+		ServiceUtils.executeService(
 				"CreateProjectParticipant", new Object[] { bean,
 						oid });
 		return prepareEditParticipantUnits(mapping, form, request, response);
@@ -299,7 +300,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 		Integer participantId = Integer.parseInt(request
 				.getParameter("participantUnitId"));
 
-		ServiceUtils.executeService(userView, "DeleteProjectParticipant",
+		ServiceUtils.executeService("DeleteProjectParticipant",
 				new Object[] { participantId });
 
 		return prepareEditParticipants(mapping, form, request, response);

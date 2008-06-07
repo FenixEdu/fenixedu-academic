@@ -16,11 +16,12 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.ResearchInterest;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class InterestsManagementDispatchAction extends FenixDispatchAction {
 
@@ -35,7 +36,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
 		Integer oid = Integer.parseInt(request.getParameter("oid"));
 		IUserView userView = getUserView(request);
 
-		ServiceUtils.executeService(userView, "DeleteResearchInterest",
+		ServiceUtils.executeService("DeleteResearchInterest",
 				new Object[] { oid });
 
 		return prepare(mapping, form, request, response);
@@ -127,7 +128,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
 				orderedInterests.add(index + direction, interest);
 			}
 
-			ServiceUtils.executeService(userView,
+			ServiceUtils.executeService(
 					"ChangeResearchInterestOrder", new Object[] { person,
 							orderedInterests });
 		}

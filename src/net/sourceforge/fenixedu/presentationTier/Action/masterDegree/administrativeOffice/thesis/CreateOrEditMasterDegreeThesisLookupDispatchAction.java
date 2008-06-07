@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.GuiderAlreadyChosenActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -26,6 +25,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.LookupDispatchAction;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDispatchAction {
 
@@ -445,7 +446,7 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 	    throws FenixActionException, FenixFilterException {
 
 	DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	Integer scpID = (Integer) createMasterDegreeForm.get("scpID");
 	String dissertationTitle = (String) createMasterDegreeForm.get("dissertationTitle");
@@ -480,7 +481,7 @@ public class CreateOrEditMasterDegreeThesisLookupDispatchAction extends LookupDi
 		operations.getExternalPersonsIDs(form, "externalAssistentGuidersIDs") };
 
 	try {
-	    ServiceUtils.executeService(userView, serviceName, args2);
+	    ServiceUtils.executeService(serviceName, args2);
 	} catch (GuiderAlreadyChosenServiceException e) {
 	    throw new GuiderAlreadyChosenActionException(e.getMessage(), mapping.findForward("start"));
 	} catch (ExistingServiceException e) {

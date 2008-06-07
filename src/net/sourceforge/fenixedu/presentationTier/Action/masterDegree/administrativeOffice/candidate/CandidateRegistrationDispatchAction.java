@@ -72,7 +72,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 
         try {
             Object args[] = { executionDegree };
-            result = (List) ServiceManagerServiceFactory.executeService(userView,
+            result = (List) ServiceManagerServiceFactory.executeService(
                     "ReadCandidateForRegistration", args);
         } catch (NonExistingServiceException e) {
             request.getSession(false).removeAttribute(SessionConstants.DEGREE_LIST);
@@ -118,7 +118,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
         List branchList = null;
         try {
             Object args[] = { candidateID };
-            branchList = (List) ServiceManagerServiceFactory.executeService(userView,
+            branchList = (List) ServiceManagerServiceFactory.executeService(
                     "GetBranchListByCandidateID", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -130,7 +130,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
         try {
             Object args[] = { candidateID };
             infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-                    .executeService(userView, "GetCandidatesByID", args);
+                    .executeService( "GetCandidatesByID", args);
         } catch (NonExistingServiceException e) {
             throw new FenixActionException(e);
         }
@@ -170,7 +170,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
             try {
                 Object args[] = { candidateID, branchID, studentNumber, userView };
                 infoCandidateRegistration = (InfoCandidateRegistration) ServiceManagerServiceFactory
-                        .executeService(userView, "RegisterCandidate", args);
+                        .executeService( "RegisterCandidate", args);
             } catch (InvalidStudentNumberServiceException e) {
                 throw new InvalidStudentNumberActionException(e);
             } catch (ActiveStudentCurricularPlanAlreadyExistsServiceException e) {
@@ -182,7 +182,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
                 List branchList = null;
                 try {
                     Object args[] = { candidateID };
-                    branchList = (List) ServiceManagerServiceFactory.executeService(userView,
+                    branchList = (List) ServiceManagerServiceFactory.executeService(
                             "GetBranchListByCandidateID", args);
                 } catch (FenixServiceException ex) {
                     throw new FenixActionException(ex);
@@ -192,7 +192,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 
                 try {
                     Object args[] = { candidateID };
-                    ServiceManagerServiceFactory.executeService(userView, "GetCandidatesByID", args);
+                    ServiceManagerServiceFactory.executeService( "GetCandidatesByID", args);
                 } catch (NonExistingServiceException ex) {
                     throw new FenixActionException(ex);
                 }
@@ -225,7 +225,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
         try {
             Object args[] = { candidateID };
             infoCandidateRegistration = (InfoCandidateRegistration) ServiceManagerServiceFactory
-                    .executeService(userView, "GetCandidateRegistrationInformation", args);
+                    .executeService( "GetCandidateRegistrationInformation", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

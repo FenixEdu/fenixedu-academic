@@ -66,7 +66,7 @@ public class CourseStatistics extends FenixBackingBean {
 
             if (executionPeriodId == null) {
                 InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
-                        getUserView(), "ReadCurrentExecutionPeriod", new Object[] {});
+                        "ReadCurrentExecutionPeriod", new Object[] {});
 
                 if (infoExecutionPeriod == null) {
                     executionPeriodId = (Integer) this.getExecutionPeriods().get(
@@ -109,7 +109,7 @@ public class CourseStatistics extends FenixBackingBean {
         if (this.executionPeriods == null) {
             Object[] args = {};
             List<InfoExecutionYear> executionYearsList = (List<InfoExecutionYear>) ServiceUtils
-                    .executeService(getUserView(), "ReadNotClosedExecutionYears", args);
+                    .executeService( "ReadNotClosedExecutionYears", args);
             List<SelectItem> result = new ArrayList<SelectItem>();
             for (InfoExecutionYear executionYear : executionYearsList) {
             	List<ExecutionSemester> executionSemesters = rootDomainObject.readExecutionYearByOID(executionYear.getIdInternal()).getExecutionPeriods();
@@ -126,7 +126,7 @@ public class CourseStatistics extends FenixBackingBean {
         Integer departmentID = getUserView().getPerson().getTeacher().getLastWorkingDepartment().getIdInternal();
         Object args[] = { departmentID, this.getExecutionPeriodId() };
         competenceCourses = (List<CompetenceCourseStatisticsDTO>) ServiceUtils.executeService(
-                getUserView(), "ComputeCompetenceCourseStatistics", args);
+                "ComputeCompetenceCourseStatistics", args);
     }
 
     public List<CompetenceCourseStatisticsDTO> getCompetenceCourses() throws FenixFilterException,
@@ -139,7 +139,7 @@ public class CourseStatistics extends FenixBackingBean {
     }
 
     private void loadDegreeCourses() throws FenixFilterException, FenixServiceException {
-        degreeCourses = (List<DegreeCourseStatisticsDTO>) ServiceUtils.executeService(getUserView(),
+        degreeCourses = (List<DegreeCourseStatisticsDTO>) ServiceUtils.executeService(
                 "ComputeDegreeCourseStatistics", new Object[] { getCompetenceCourseId(),
                         getExecutionPeriodId() });
     }
@@ -155,7 +155,7 @@ public class CourseStatistics extends FenixBackingBean {
 
     private void loadExecutionCourses() throws FenixFilterException, FenixServiceException {
         executionCourses = (List<ExecutionCourseStatisticsDTO>) ServiceUtils.executeService(
-                getUserView(), "ComputeExecutionCourseStatistics", new Object[] {
+                "ComputeExecutionCourseStatistics", new Object[] {
                         this.getCompetenceCourseId(), this.getDegreeId(), getExecutionPeriodId() });
     }
 

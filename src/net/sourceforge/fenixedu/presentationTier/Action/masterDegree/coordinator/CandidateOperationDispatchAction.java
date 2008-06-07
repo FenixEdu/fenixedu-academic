@@ -14,11 +14,12 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class CandidateOperationDispatchAction extends FenixDispatchAction {
 
@@ -36,7 +37,7 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
             Object args[] = { degreeCurricularPlanId };
 
             try {
-                candidates = (List) ServiceManagerServiceFactory.executeService(userView,
+                candidates = (List) ServiceManagerServiceFactory.executeService(
                         "ReadDegreeCandidates", args);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
@@ -56,7 +57,7 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
         Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
@@ -66,7 +67,7 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
         InfoMasterDegreeCandidate infoMasterDegreeCandidate;
         try {
             infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadMasterDegreeCandidateByID", args);
+                    .executeService( "ReadMasterDegreeCandidateByID", args);
         } catch (FenixServiceException e) {
             e.printStackTrace();
             throw new FenixActionException();
@@ -92,7 +93,7 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
         Object[] args = { candidateID };
 
         try {
-            return (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+            return (ArrayList) ServiceManagerServiceFactory.executeService(
                     "ReadCandidateEnrolmentsByCandidateID", args);
         } catch (Exception e) {
             return null;

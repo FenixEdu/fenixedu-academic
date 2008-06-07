@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 
 import org.apache.commons.lang.StringUtils;
@@ -26,6 +25,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  *
@@ -42,7 +43,7 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
             HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer executionCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "executionCourseId"));
         Integer curricularCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "curricularCourseId"));
@@ -50,17 +51,17 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
 
         Object[] args1 = { executionCourseId };
         InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
-                userView, "ReadExecutionCourseByOID", args1);
+                "ReadExecutionCourseByOID", args1);
         request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
         Object[] args2 = { curricularCourseId };
         InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) ServiceUtils.executeService(
-                userView, "ReadCurricularCourseByID", args2);
+                "ReadCurricularCourseByID", args2);
         request.setAttribute("infoCurricularCourse", infoCurricularCourse);
 
         Object[] args3 = { executionPeriodId };
         List executionDegrees = (List) ServiceUtils.executeService(
-                userView, "ReadExecutionDegreesByExecutionPeriodId", args3);
+                "ReadExecutionDegreesByExecutionPeriodId", args3);
         Collection executionDegreesLabelValueList = RequestUtils.buildExecutionDegreeLabelValueBean(executionDegrees);
         request.setAttribute("executionDegrees", executionDegreesLabelValueList);
 
@@ -78,7 +79,7 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         RequestUtils.getAndSetStringToRequest(request, "executionCourseId");
         RequestUtils.getAndSetStringToRequest(request, "curricularCourseId");
@@ -99,7 +100,7 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
 
             Object[] args = { destinationExecutionDegreeId, executionPeriodId, curricularYear };
             List executionCourses = (List) ServiceUtils.executeService(
-                    userView, "ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear", args);
+                    "ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear", args);
             request.setAttribute("executionCourses", executionCourses);
         }
 
@@ -114,7 +115,7 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer executionCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "executionCourseId"));
         Integer curricularCourseId = new Integer(RequestUtils.getAndSetStringToRequest(request, "curricularCourseId"));
@@ -137,7 +138,7 @@ public class EditExecutionCourseTransferCurricularCoursesDispatchAction extends 
 
             Object[] args = { executionCourseId, curricularCourseId, destinationExecutionCourseId };
             ServiceUtils.executeService(
-                    userView, "TransferCurricularCourse", args);
+                    "TransferCurricularCourse", args);
         }
 
         return mapping.findForward("completedTransfer");

@@ -19,11 +19,12 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author lmac1
@@ -34,7 +35,7 @@ public class ReadDegreeAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer degreeId = null;
         if (request.getParameter("degreeId") != null) {
@@ -45,7 +46,7 @@ public class ReadDegreeAction extends FenixAction {
         InfoDegree degree = null;
 
         try {
-            degree = (InfoDegree) ServiceUtils.executeService(userView, "ReadDegree", args);
+            degree = (InfoDegree) ServiceUtils.executeService("ReadDegree", args);
 
         } catch (NonExistingServiceException e) {
             throw new NonExistingActionException("message.nonExistingDegree", "", e);
@@ -57,7 +58,7 @@ public class ReadDegreeAction extends FenixAction {
         List degreeCurricularPlans = null;
 
         try {
-            degreeCurricularPlans = (List) ServiceUtils.executeService(userView,
+            degreeCurricularPlans = (List) ServiceUtils.executeService(
                     "ReadDegreeCurricularPlansByDegree", args);
 
         } catch (FenixServiceException e) {

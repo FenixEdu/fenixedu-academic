@@ -141,7 +141,7 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 	if (executionPeriodID != null) {
 	    try {
 		final Object args[] = { executionPeriodID };
-		infoExecutionPeriod = (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService(null,
+		infoExecutionPeriod = (InfoExecutionPeriod) ServiceManagerServiceFactory.executeService(
 			"ReadExecutionPeriodByOID", args);
 	    } catch (FenixServiceException e) {
 		errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));

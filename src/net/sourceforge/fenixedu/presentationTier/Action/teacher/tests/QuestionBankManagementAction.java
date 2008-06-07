@@ -27,14 +27,15 @@ import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean.Action;
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * 
@@ -88,7 +89,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 		NewQuestionBank questionBank = person.getQuestionBank();
 
 		if (questionBank == null) {
-			questionBank = (NewQuestionBank) ServiceUtils.executeService(getUserView(request),
+			questionBank = (NewQuestionBank) ServiceUtils.executeService(
 					"CreateQuestionBank", new Object[] { person });
 		}
 
@@ -148,7 +149,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 			FenixServiceException {
 		GroupElementBean groupElementBean = (GroupElementBean) getMetaObject("associateParent");
 
-		ServiceUtils.executeService(getUserView(request), "AssociateParent", new Object[] {
+		ServiceUtils.executeService("AssociateParent", new Object[] {
 				groupElementBean.getParent(), groupElementBean.getChild() });
 
 		request.setAttribute("oid", groupElementBean.getChild().getIdInternal());
@@ -161,7 +162,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 			FenixServiceException {
 		GroupElementBean groupElementBean = (GroupElementBean) getMetaObject("disassociateParent");
 
-		ServiceUtils.executeService(getUserView(request), "DisassociateParent", new Object[] {
+		ServiceUtils.executeService("DisassociateParent", new Object[] {
 				groupElementBean.getParent(), groupElementBean.getChild() });
 
 		request.setAttribute("oid", groupElementBean.getChild().getIdInternal());
@@ -296,7 +297,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 			FenixServiceException {
 		PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
 
-		ServiceUtils.executeService(getUserView(request), "ChooseCorrector", new Object[] {
+		ServiceUtils.executeService("ChooseCorrector", new Object[] {
 				bean.getQuestion(), bean.getChoosenPredicate(), bean.getPercentage() });
 
 		bean = new PredicateBean(bean);
@@ -313,7 +314,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 			FenixServiceException {
 		PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
 
-		ServiceUtils.executeService(getUserView(request), "ChooseValidator", new Object[] {
+		ServiceUtils.executeService("ChooseValidator", new Object[] {
 				bean.getQuestion(), bean.getChoosenPredicate() });
 
 		bean = new PredicateBean(bean);
@@ -330,7 +331,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 			FenixServiceException {
 		PredicateBean bean = (PredicateBean) getMetaObject("choosePredicate");
 
-		ServiceUtils.executeService(getUserView(request), "ChoosePreCondition", new Object[] {
+		ServiceUtils.executeService("ChoosePreCondition", new Object[] {
 				bean.getQuestion(), bean.getChoosenPredicate() });
 
 		bean = new PredicateBean(bean);
@@ -432,7 +433,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 			FenixServiceException {
 		AtomicQuestionBean atomicQuestionTypeBean = (AtomicQuestionBean) getMetaObject("edit-atomic-question-type-bean");
 
-		NewQuestion atomicQuestion = (NewQuestion) ServiceUtils.executeService(getUserView(request),
+		NewQuestion atomicQuestion = (NewQuestion) ServiceUtils.executeService(
 				"CreateAtomicQuestion", new Object[] { atomicQuestionTypeBean.getParentQuestionGroup(),
 						atomicQuestionTypeBean.getQuestionType() });
 
@@ -460,7 +461,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 		NewMultipleChoiceQuestion multipleChoiceQuestion = (NewMultipleChoiceQuestion) rootDomainObject
 				.readNewTestElementByOID(multipleChoiceQuestionId);
 
-		NewChoice choice = (NewChoice) ServiceUtils.executeService(getUserView(request), "CreateChoice",
+		NewChoice choice = (NewChoice) ServiceUtils.executeService("CreateChoice",
 				new Object[] { multipleChoiceQuestion });
 
 		request.setAttribute("oid", multipleChoiceQuestionId);
@@ -477,7 +478,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
 		NewAtomicQuestion atomicQuestion = corrector.getAtomicQuestion();
 
-		ServiceUtils.executeService(getUserView(request), "DeleteCorrector", new Object[] { corrector });
+		ServiceUtils.executeService("DeleteCorrector", new Object[] { corrector });
 
 		request.setAttribute("oid", atomicQuestion.getIdInternal());
 
@@ -515,7 +516,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 		NewAtomicQuestion atomicQuestion = (NewAtomicQuestion) rootDomainObject
 				.readNewTestElementByOID(atomicQuestionId);
 
-		ServiceUtils.executeService(getUserView(request), "DeleteValidator",
+		ServiceUtils.executeService("DeleteValidator",
 				new Object[] { atomicQuestion });
 
 		request.setAttribute("oid", atomicQuestion.getIdInternal());
@@ -530,7 +531,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
 		NewQuestion question = (NewQuestion) rootDomainObject.readNewTestElementByOID(questionId);
 
-		ServiceUtils.executeService(getUserView(request), "DeletePreCondition",
+		ServiceUtils.executeService("DeletePreCondition",
 				new Object[] { question });
 
 		request.setAttribute("oid", question.getIdInternal());
@@ -547,7 +548,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
 		request.setAttribute("question", permissionUnit.getQuestion());
 
-		ServiceUtils.executeService(getUserView(request), "DeletePermissionUnit",
+		ServiceUtils.executeService("DeletePermissionUnit",
 				new Object[] { permissionUnit });
 
 		return mapping.findForward("managePermissionUnits");
@@ -562,7 +563,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
 		request.setAttribute("oid", choice.getMultipleChoiceQuestion().getIdInternal());
 
-		ServiceUtils.executeService(getUserView(request), "DeleteChoice", new Object[] { choice });
+		ServiceUtils.executeService("DeleteChoice", new Object[] { choice });
 
 		return this.editTestElement(mapping, form, request, response);
 	}
@@ -575,7 +576,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 				.readNewTestElementByOID(atomicQuestionId);
 
 		ServiceUtils
-				.executeService(getUserView(request), "DeleteGrade", new Object[] { question });
+				.executeService( "DeleteGrade", new Object[] { question });
 
 		request.setAttribute("oid", question.getIdInternal());
 
@@ -607,7 +608,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
 		List<NewQuestionGroup> parentQuestionGroups = question.getParentQuestionGroups();
 
-		ServiceUtils.executeService(getUserView(request), "DeleteQuestion", new Object[] { question });
+		ServiceUtils.executeService("DeleteQuestion", new Object[] { question });
 
 		Integer parentQuestionGroupId = getCodeFromRequest(request, "parentQuestionGroupOid");
 
@@ -631,7 +632,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
 		Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 
-		ServiceUtils.executeService(getUserView(request), "SwitchPosition", new Object[] { choice,
+		ServiceUtils.executeService("SwitchPosition", new Object[] { choice,
 				relativePosition });
 
 		request.setAttribute("oid", choice.getMultipleChoiceQuestion().getIdInternal());
@@ -646,7 +647,7 @@ public class QuestionBankManagementAction extends FenixDispatchAction {
 
 		Integer relativePosition = getCodeFromRequest(request, "relativePosition");
 
-		ServiceUtils.executeService(getUserView(request), "SwitchPosition", new Object[] { corrector,
+		ServiceUtils.executeService("SwitchPosition", new Object[] { corrector,
 				relativePosition });
 
 		request.setAttribute("oid", corrector.getAtomicQuestion().getIdInternal());

@@ -3,7 +3,6 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
 <logic:present name="siteView">
 	<bean:define id="component" name="siteView" property="commonComponent" />
@@ -11,7 +10,7 @@
 	<bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
      
       
-	<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
+	<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE %>" scope="session"/>
 	<ul>
 		<li><html:link page="/teacherAdministrationViewer.do?method=instructions" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.home"/></html:link></li>
 		<li><html:link page="/copySiteExecutionCourse.do?method=prepareChooseExecutionPeriod" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.copySiteExecutionCourse"/></html:link></li>

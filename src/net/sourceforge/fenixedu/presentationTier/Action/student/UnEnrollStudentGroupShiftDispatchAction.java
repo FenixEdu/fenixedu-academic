@@ -51,7 +51,7 @@ public class UnEnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
 		
 		try
 		{
-                ServiceUtils.executeService(userView, "UnEnrollGroupShift", args);
+                ServiceUtils.executeService("UnEnrollGroupShift", args);
             }catch (NotAuthorizedException e) {
     			ActionErrors actionErrors2 = new ActionErrors();
     			ActionError error2 = null;

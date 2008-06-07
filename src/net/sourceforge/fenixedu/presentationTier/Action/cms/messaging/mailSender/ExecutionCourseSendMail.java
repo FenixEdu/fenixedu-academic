@@ -73,7 +73,7 @@ public abstract class ExecutionCourseSendMail extends ContextualGroupMailSenderA
 	String executionCourseIdString = (String) ((String[]) previousRequestParameters
 		.get("objectCode"))[0];
 	Integer executionCourseId = new Integer(executionCourseIdString);
-	SiteView siteView = (SiteView) ServiceUtils.executeService(userView, "ReadCourseInformation",
+	SiteView siteView = (SiteView) ServiceUtils.executeService("ReadCourseInformation",
 		new Object[] { executionCourseId });
 
 	Pair<String, Object> pair = new Pair<String, Object>("siteView", siteView);

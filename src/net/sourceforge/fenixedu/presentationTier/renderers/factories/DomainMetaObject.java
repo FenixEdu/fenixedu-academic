@@ -130,7 +130,7 @@ public class DomainMetaObject extends SimpleMetaObject {
     protected Object callService(List<ObjectChange> changes) {
         try {
             if (ServiceInfo.getCurrentServiceInfo() == null) {
-                return ServiceUtils.executeService(getUserView(), getService(), getServiceArguments(changes));
+                return ServiceUtils.executeService( getService(), getServiceArguments(changes));
             }
             else {
                 return classServiceInstance(changes);

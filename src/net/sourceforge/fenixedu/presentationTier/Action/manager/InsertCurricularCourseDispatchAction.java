@@ -21,13 +21,14 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author lmac1
@@ -44,7 +45,7 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
         final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
@@ -116,7 +117,7 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
         Object args[] = { infoCurricularCourse };
 
         try {
-            ServiceUtils.executeService(userView, "InsertCurricularCourseAtDegreeCurricularPlan", args);
+            ServiceUtils.executeService("InsertCurricularCourseAtDegreeCurricularPlan", args);
 
         } catch (ExistingServiceException ex) {
             throw new ExistingActionException(ex.getMessage(), ex);

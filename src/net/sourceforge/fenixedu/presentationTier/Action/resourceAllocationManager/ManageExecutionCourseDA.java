@@ -18,12 +18,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -77,7 +78,7 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
 
 	CourseLoadBean bean = (CourseLoadBean) getRenderedObject("courseLoadBeanID");		
         try {
-            ServiceManagerServiceFactory.executeService(getUserView(request), "EditExecutionCourse",  new Object[] { bean } );   
+            ServiceManagerServiceFactory.executeService( "EditExecutionCourse",  new Object[] { bean } );   
 	
         } catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
@@ -101,7 +102,7 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
 	CourseLoad courseLoad = getCourseLoadFromParameter(request);
 	ExecutionCourse executionCourse = courseLoad.getExecutionCourse();
 	try {
-	    ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteCourseLoad",  new Object[] { courseLoad } );
+	    ServiceManagerServiceFactory.executeService( "DeleteCourseLoad",  new Object[] { courseLoad } );
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());    
 	}
@@ -114,7 +115,7 @@ public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDeg
     private void readAndSetExecutionCourseClasses(HttpServletRequest request, ExecutionCourse executionCourse) 
     	throws FenixFilterException, FenixServiceException{
 	
-	List<InfoClass> infoClasses = (List<InfoClass>) ServiceManagerServiceFactory.executeService(getUserView(request),
+	List<InfoClass> infoClasses = (List<InfoClass>) ServiceManagerServiceFactory.executeService(
 		"ReadClassesByExecutionCourse", new Object[] {executionCourse});
 
         if (infoClasses != null && !infoClasses.isEmpty()) {

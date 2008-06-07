@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
@@ -45,6 +44,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 /**
@@ -150,14 +150,14 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	DynaActionForm dynaForm = (DynaActionForm) form;
 	Map creditsMap = (Map) dynaForm.get("creditsMap");
 	Map hoursMap = (Map) dynaForm.get("hoursMap");
 
 	Object args[] = { hoursMap, creditsMap };
 	try {
-	    ServiceUtils.executeService(userView, "EditTeacherMasterDegreeCredits", args);
+	    ServiceUtils.executeService("EditTeacherMasterDegreeCredits", args);
 	} catch (FenixServiceException fse) {
 	    Throwable throwable = fse.getCause();
 	    if (throwable.getCause() instanceof NumberFormatException) {

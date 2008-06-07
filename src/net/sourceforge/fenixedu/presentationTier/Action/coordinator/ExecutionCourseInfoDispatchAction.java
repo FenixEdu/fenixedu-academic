@@ -54,7 +54,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
 
 	Object argsReadExecutionPeriods[] = { infoExecutionDegree.getInfoExecutionYear().getIdInternal() };
-	List executionPeriods = (List) ServiceManagerServiceFactory.executeService(userView,
+	List executionPeriods = (List) ServiceManagerServiceFactory.executeService(
 		"ReadExecutionPeriodsByExecutionYear", argsReadExecutionPeriods);
 
 	ComparatorChain chainComparator = new ComparatorChain();
@@ -89,7 +89,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 	}
 
 	Object argsReadExecutionPeriods[] = { degreeCurricularPlanID };
-	List executionPeriods = (List) ServiceManagerServiceFactory.executeService(userView,
+	List executionPeriods = (List) ServiceManagerServiceFactory.executeService(
 		"ReadExecutionPeriodsByDegreeCurricularPlan", argsReadExecutionPeriods);
 
 	ComparatorChain chainComparator = new ComparatorChain();
@@ -170,7 +170,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 
 	List infoExecutionCourses = null;
 	try {
-	    infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService(userView, "SearchExecutionCourses", args);
+	    infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService( "SearchExecutionCourses", args);
 	} catch (NotAuthorizedFilterException e) {
 	    return mapping.findForward("notAuthorized");
 	}
@@ -197,7 +197,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 	Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
 
 	InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = (InfoExecutionCourseOccupancy) ServiceManagerServiceFactory
-		.executeService(userView, "ReadShiftsByExecutionCourseID", args);
+		.executeService( "ReadShiftsByExecutionCourseID", args);
 
 	arranjeShifts(infoExecutionCourseOccupancy);
 
@@ -304,10 +304,10 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 
 	Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(userView,
+	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ServiceManagerServiceFactory.executeService(
 		"ReadExecutionCourseByOID", args);
 
-	List curricularCoursesWithScopes = (List) ServiceManagerServiceFactory.executeService(userView,
+	List curricularCoursesWithScopes = (List) ServiceManagerServiceFactory.executeService(
 		"ReadCurricularCourseScopesByExecutionCourseID", args);
 
 	request.setAttribute("infoExecutionCourse", infoExecutionCourse);

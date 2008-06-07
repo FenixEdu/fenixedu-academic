@@ -20,12 +20,13 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.util.HostRedirector;
 
 import org.apache.commons.fileupload.FileUpload;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class RequestChecksumFilter implements Filter {
 
@@ -125,7 +126,7 @@ public class RequestChecksumFilter implements Filter {
 	}
 	if (!isValidChecksum(httpServletRequest, checksum)) {
 	    if (LogLevel.ERROR) {
-		final IUserView userView = SessionUtils.getUserView(httpServletRequest);
+		final IUserView userView = UserView.getUser();
 		final String userString = userView == null ? "<no user logged in>" : userView.getUtilizador();
 		final String url = httpServletRequest.getRequestURI() + '?' + httpServletRequest.getQueryString();
 		final StringBuilder stringBuilder = new StringBuilder();

@@ -33,6 +33,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
@@ -40,8 +42,6 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-            IUserView userView = SessionUtils.getUserView(request);
 
             InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
 
@@ -63,7 +63,7 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
             /* Cria o form bean com as licenciaturas em execucao. */
             Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-            List executionDegreeList = (List) ServiceUtils.executeService(userView,
+            List executionDegreeList = (List) ServiceUtils.executeService(
                     "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
             Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
@@ -101,8 +101,6 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
             HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
         DynaActionForm chooseExamContextoForm = (DynaActionForm) form;
-
-        IUserView userView = SessionUtils.getUserView(request);
 
         SessionUtils.removeAttributtes(session, SessionConstants.CONTEXT_PREFIX);
 
@@ -148,7 +146,7 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                     .getAttribute(SessionConstants.EXECUTION_PERIOD);
             Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
-            List executionDegreeList = (List) ServiceUtils.executeService(userView,
+            List executionDegreeList = (List) ServiceUtils.executeService(
                     "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
             Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
             //////////
@@ -203,8 +201,8 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
         if (infoExecutionPeriod == null) {
-            IUserView userView = SessionUtils.getUserView(request);
-            infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView,
+            IUserView userView = UserView.getUser();
+            infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
                     "ReadCurrentExecutionPeriod", new Object[0]);
 
             request.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);

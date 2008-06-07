@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -41,6 +40,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author Fernanda Quitério 7/Jan/2003
  *  
@@ -53,7 +54,7 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
         List executionYears = null;
         Object[] args = {};
         try {
-            executionYears = (List) ServiceManagerServiceFactory.executeService(null,
+            executionYears = (List) ServiceManagerServiceFactory.executeService(
                     "ReadNotClosedExecutionYears", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException();
@@ -87,7 +88,7 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareInsertGratuityDataChooseDegree(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm gratuityForm = (DynaActionForm) form;
 
         String executionYear = (String) gratuityForm.get("executionYear");
@@ -96,7 +97,7 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
         Object args[] = { executionYear, DegreeType.MASTER_DEGREE };
         List executionDegreeList = null;
         try {
-            executionDegreeList = (List) ServiceManagerServiceFactory.executeService(userView,
+            executionDegreeList = (List) ServiceManagerServiceFactory.executeService(
                     "ReadExecutionDegreesByExecutionYearAndDegreeType", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -147,7 +148,7 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareInsertGratuityData(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
         ActionErrors errors = new ActionErrors();
 
@@ -163,7 +164,7 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
         InfoGratuityValues infoGratuityValues = null;
         Object args[] = { degreeId };
         try {
-            infoGratuityValues = (InfoGratuityValues) ServiceUtils.executeService(userView,
+            infoGratuityValues = (InfoGratuityValues) ServiceUtils.executeService(
                     "ReadGratuityValuesByExecutionDegree", args);
         } catch (FenixServiceException ex) {
             errors.add("gratuityValues", new ActionError(ex.getMessage()));

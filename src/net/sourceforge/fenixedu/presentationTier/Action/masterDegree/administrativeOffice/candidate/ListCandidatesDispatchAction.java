@@ -41,7 +41,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.SituationName;
 
 import org.apache.commons.lang.StringUtils;
@@ -51,6 +50,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * 
@@ -97,7 +98,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    Object args[] = { executionYear };
 
 	    try {
-		degreeList = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+		degreeList = (ArrayList) ServiceManagerServiceFactory.executeService(
 			"ReadMasterDegrees", args);
 	    } catch (Exception e) {
 		throw new Exception(e);
@@ -160,7 +161,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    List result = null;
 
 	    try {
-		result = (List) ServiceManagerServiceFactory.executeService(userView,
+		result = (List) ServiceManagerServiceFactory.executeService(
 			"ReadCandidateList", args);
 	    } catch (Exception e) {
 		throw new Exception(e);
@@ -221,7 +222,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	    Object args[] = { personID };
 	    try {
-		result = (List) ServiceManagerServiceFactory.executeService(userView,
+		result = (List) ServiceManagerServiceFactory.executeService(
 			"GetCandidatesByPerson", args);
 	    } catch (Exception e) {
 		throw new Exception(e);
@@ -282,7 +283,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    Object args[] = { candidateID };
 	    try {
 		infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-			.executeService(userView, "GetCandidatesByID", args);
+			.executeService( "GetCandidatesByID", args);
 	    } catch (Exception e) {
 		throw new Exception(e);
 	    }
@@ -294,7 +295,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	    // Get List of available Countries
 	    Object result = null;
-	    result = ServiceManagerServiceFactory.executeService(userView, "ReadAllCountries", null);
+	    result = ServiceManagerServiceFactory.executeService( "ReadAllCountries", null);
 	    List country = (ArrayList) result;
 
 	    // Build List of Countries for the Form
@@ -458,7 +459,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 			.readMasterDegreeCandidateByOID(candidateID);
 		final Object args[] = { masterDegreeCandidate, newCandidate, infoPerson };
 		infoMasterDegreeCandidateChanged = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-			.executeService(userView, "EditMasterDegreeCandidate", args);
+			.executeService( "EditMasterDegreeCandidate", args);
 	    } catch (ExistingServiceException e) {
 		throw new ExistingActionException("Esta Person", e);
 	    } catch (FenixServiceException e) {
@@ -487,7 +488,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    try {
 		Object args[] = { candidateID };
 		infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-			.executeService(userView, "GetCandidatesByID", args);
+			.executeService( "GetCandidatesByID", args);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException();
 	    }
@@ -495,7 +496,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    try {
 		final Person person = (Person) rootDomainObject.readPartyByOID(infoMasterDegreeCandidate
 			.getInfoPerson().getIdInternal());
-        pass = (String)ServiceManagerServiceFactory.executeService(userView, "GenerateNewPassword",
+        pass = (String)ServiceManagerServiceFactory.executeService( "GenerateNewPassword",
 			new Object[] { person });
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException();
@@ -658,7 +659,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	Object[] args = { candidateID };
 
 	try {
-	    return (List) ServiceManagerServiceFactory.executeService(userView,
+	    return (List) ServiceManagerServiceFactory.executeService(
 		    "ReadCandidateEnrolmentsByCandidateID", args);
 	} catch (Exception e) {
 	    e.printStackTrace();

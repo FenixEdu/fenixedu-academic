@@ -25,9 +25,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.ReportsUtils;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
@@ -41,6 +38,10 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 
@@ -76,8 +77,8 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
-	final IUserView userView = SessionUtils.getUserView(request);
-	List<EmployeeWorkSheet> employeeWorkSheetList = (List<EmployeeWorkSheet>) ServiceUtils.executeService(userView,
+	final IUserView userView = UserView.getUser();
+	List<EmployeeWorkSheet> employeeWorkSheetList = (List<EmployeeWorkSheet>) ServiceUtils.executeService(
 		"ReadAllAssiduousnessWorkSheets", new Object[] { assiduousnessExportChoices });
 	if (employeeWorkSheetList.size() != 0) {
 	    Map<String, String> parameters = new HashMap<String, String>();
@@ -118,9 +119,9 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
 	assiduousnessExportChoices.setYearMonth();
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	List<AssiduousnessMonthlyResume> assiduousnessMonthlyResumeList = (List<AssiduousnessMonthlyResume>) ServiceUtils
-		.executeService(userView, "ReadMonthResume", new Object[] { assiduousnessExportChoices });
+		.executeService( "ReadMonthResume", new Object[] { assiduousnessExportChoices });
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=resumoMes.xls");
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
@@ -140,8 +141,8 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
 	assiduousnessExportChoices.setYearMonth();
-	final IUserView userView = SessionUtils.getUserView(request);
-	StyledExcelSpreadsheet spreadsheet = (StyledExcelSpreadsheet) ServiceUtils.executeService(userView,
+	final IUserView userView = UserView.getUser();
+	StyledExcelSpreadsheet spreadsheet = (StyledExcelSpreadsheet) ServiceUtils.executeService(
 		"ExportJustifications", new Object[] { assiduousnessExportChoices });
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=justificacoes.xls");
@@ -190,7 +191,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response, AssiduousnessStatus assiduousnessStatus, String fileName, String action)
 	    throws Exception {
 	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 
 	if (!isMonthClosed(yearMonth)) {
 	    addError(request, "error.monthNotClosed");
@@ -200,7 +201,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("choose-year-month");
 	}
 
-	List<EmployeeAnualInfo> assignedEmployeeInfoList = (List<EmployeeAnualInfo>) ServiceUtils.executeService(userView,
+	List<EmployeeAnualInfo> assignedEmployeeInfoList = (List<EmployeeAnualInfo>) ServiceUtils.executeService(
 		"ExportEmployeesAnualInfo", new Object[] { yearMonth, assiduousnessStatus });
 
 	Collections.sort(assignedEmployeeInfoList, new BeanComparator("employee.employeeNumber"));

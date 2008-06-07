@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoEntryChosenActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Exceptions;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
@@ -36,6 +35,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -53,7 +54,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer guideNumber = new Integer(this.getFromRequest("number", request));
         Integer guideYear = new Integer(this.getFromRequest("year", request));
@@ -63,7 +64,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
 
         Object args[] = { guideNumber, guideYear, guideVersion };
         try {
-            infoGuide = (InfoGuide) ServiceUtils.executeService(userView, "ChooseGuide", args);
+            infoGuide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
 
             request.setAttribute(SessionConstants.GUIDE, infoGuide);
         } catch (FenixServiceException e) {
@@ -80,7 +81,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm createReimbursementGuideForm = (DynaActionForm) form;
 
         Double[] valuesList = (Double[]) createReimbursementGuideForm.get("values");
@@ -92,7 +93,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
 
         try {
             Object args[] = { number, year, version };
-            InfoGuide infoGuide = (InfoGuide) ServiceUtils.executeService(userView, "ChooseGuide", args);
+            InfoGuide infoGuide = (InfoGuide) ServiceUtils.executeService("ChooseGuide", args);
 
             if (infoGuide.getInfoGuideEntries().size() != valuesList.length)
                 throw new FenixActionException("Incoerent guide entries number", mapping
@@ -118,7 +119,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
 
             Object createArgs[] = { infoGuide.getIdInternal(), remarks, infoReimbursementGuideEntries,
                     userView };
-            Integer reimbursementGuideID = (Integer) ServiceUtils.executeService(userView,
+            Integer reimbursementGuideID = (Integer) ServiceUtils.executeService(
                     "CreateReimbursementGuide", createArgs);
 
             request.setAttribute(SessionConstants.REIMBURSEMENT_GUIDE, reimbursementGuideID);

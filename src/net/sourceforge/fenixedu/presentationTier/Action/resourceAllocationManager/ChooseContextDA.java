@@ -7,9 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixDateAndTimeDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
 import org.apache.struts.action.ActionError;
@@ -18,6 +16,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -38,14 +38,13 @@ public class ChooseContextDA extends FenixDateAndTimeDispatchAction {
 
         DynaActionForm chooseScheduleContext = (DynaActionForm) form;
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         /* Determine Selected Curricular Year */
         Integer anoCurricular = new Integer((String) chooseScheduleContext.get("curricularYear"));
 
         Object argsReadCurricularYearByOID[] = { anoCurricular };
-        InfoCurricularYear infoCurricularYear = (InfoCurricularYear) ServiceUtils.executeService(
-                userView, "ReadCurricularYearByOID", argsReadCurricularYearByOID);
+        InfoCurricularYear infoCurricularYear = (InfoCurricularYear) executeService("ReadCurricularYearByOID", argsReadCurricularYearByOID);
 
         request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
 
@@ -54,8 +53,7 @@ public class ChooseContextDA extends FenixDateAndTimeDispatchAction {
                 .get("executionDegreeOID"));
 
         Object argsReadExecutionDegreeByOID[] = { executionDegreeOID };
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
-                userView, "ReadExecutionDegreeByOID", argsReadExecutionDegreeByOID);
+        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) executeService("ReadExecutionDegreeByOID", argsReadExecutionDegreeByOID);
 
         if (infoExecutionDegree == null) {
             ActionErrors actionErrors = new ActionErrors();

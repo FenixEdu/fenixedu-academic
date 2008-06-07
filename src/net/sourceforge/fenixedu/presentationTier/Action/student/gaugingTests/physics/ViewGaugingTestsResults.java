@@ -32,7 +32,7 @@ public class ViewGaugingTestsResults extends FenixAction {
 
         Object[] args = { userView };
         try {
-            InfoGaugingTestResult result = (InfoGaugingTestResult) ServiceUtils.executeService(userView,
+            InfoGaugingTestResult result = (InfoGaugingTestResult) ServiceUtils.executeService(
                     "readGaugingTestsResults", args);
             request.setAttribute("gaugingTestResult", result);
         } catch (FenixServiceException e) {

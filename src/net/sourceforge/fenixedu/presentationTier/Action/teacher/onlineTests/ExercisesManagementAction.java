@@ -229,7 +229,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 		    secondarySubject, learningTime, level, subQuestion, questionText, secondQuestionText, options,
 		    correctOptions, shuffle, correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox,
 		    breakLineAfterResponseBox, getServlet().getServletContext().getRealPath("/") };
-	    ServiceUtils.executeService(userView, "CreateExercise", args);
+	    ServiceUtils.executeService("CreateExercise", args);
 	} catch (FenixServiceException e) {
 	    error(request, "createExercise", "error.exerciseCreationError");
 	    return prepareCreateExercise(mapping, form, request, response);
@@ -601,7 +601,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 	try {
 	    Object[] args = { executionCourseId, metadataId, xmlZipFile, getServlet().getServletContext().getRealPath("/") };
 
-	    List badXmls = (List) ServiceUtils.executeService(userView, "InsertExerciseVariation", args);
+	    List badXmls = (List) ServiceUtils.executeService("InsertExerciseVariation", args);
 	    request.setAttribute("badXmls", badXmls);
 	} catch (InvalidXMLFilesException e) {
 	    error(request, "FileNotExist", "error.badXmlFiles");
@@ -659,7 +659,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 	List badXmls = null;
 	try {
 	    Object[] args = { executionCourseId, xmlZipFile, path };
-	    badXmls = (List) ServiceUtils.executeService(userView, "InsertExercise", args);
+	    badXmls = (List) ServiceUtils.executeService("InsertExercise", args);
 	} catch (InvalidMetadataException e) {
 	    error(request, "FileNotExist", "error.badMetadataFile");
 	    return mapping.findForward("insertNewExercise");
@@ -691,7 +691,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 	final Integer executionCourseId = getCodeFromRequest(request, "objectCode");
 	final Integer metadataId = getCodeFromRequest(request, "exerciseCode");
 	try {
-	    ServiceUtils.executeService(userView, "DeleteExercise", new Object[] { executionCourseId, metadataId });
+	    ServiceUtils.executeService("DeleteExercise", new Object[] { executionCourseId, metadataId });
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -709,7 +709,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 	Integer variationCode = getCodeFromRequest(request, "variationCode");
 	Metadata metadata = null;
 	try {
-	    metadata = (Metadata) ServiceUtils.executeService(userView, "ReadExercise", new Object[] { executionCourseId,
+	    metadata = (Metadata) ServiceUtils.executeService("ReadExercise", new Object[] { executionCourseId,
 		    exerciseId });
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -765,7 +765,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 	try {
 	    Object[] args = { executionCourseId, exerciseId, author, description, difficulty, string2Hour(learningTime), level,
 		    mainSubject, secondarySubject };
-	    result = (Boolean) ServiceUtils.executeService(userView, "EditExercise", args);
+	    result = (Boolean) ServiceUtils.executeService("EditExercise", args);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -786,13 +786,13 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 	request.setAttribute("asc", request.getParameter("asc"));
 	Integer metadataCode = getCodeFromRequest(request, "metadataCode");
 	try {
-	    List<LabelValueBean> result = (List<LabelValueBean>) ServiceUtils.executeService(userView, "DeleteExerciseVariation",
+	    List<LabelValueBean> result = (List<LabelValueBean>) ServiceUtils.executeService("DeleteExerciseVariation",
 		    new Object[] { executionCourseId, variationCode });
 	    if (result == null || result.size() == 0) {
 		return prepareEditExercise(mapping, form, request, response);
 	    }
 	    request.setAttribute("studentsList", result);
-	    InfoQuestion infoQuestion = (InfoQuestion) ServiceUtils.executeService(userView, "ReadQuestion", new Object[] {
+	    InfoQuestion infoQuestion = (InfoQuestion) ServiceUtils.executeService("ReadQuestion", new Object[] {
 		    executionCourseId, null, variationCode, getServlet().getServletContext().getRealPath("/") });
 	    request.setAttribute("infoQuestion", infoQuestion);
 	} catch (FenixServiceException e) {
@@ -813,7 +813,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 	request.setAttribute("exerciseCode", exerciseId);
 
 	try {
-	    ServiceUtils.executeService(userView, "ChangeStudentTestQuestion", new Object[] { executionCourseId, null,
+	    ServiceUtils.executeService("ChangeStudentTestQuestion", new Object[] { executionCourseId, null,
 		    variationCode, null, null, new TestQuestionChangesType(TestQuestionChangesType.CHANGE_VARIATION),
 		    new Boolean(true), new TestQuestionStudentsChangesType(TestQuestionStudentsChangesType.ALL_STUDENTS),
 		    request.getContextPath() });

@@ -34,7 +34,7 @@ public class PrepareConsultRoomsDispatchAction extends FenixContextDispatchActio
         Object argsReadExecutionPeriods[] = {};
         List executionPeriods;
         try {
-            executionPeriods = (ArrayList) ServiceUtils.executeService(null,
+            executionPeriods = (ArrayList) ServiceUtils.executeService(
                     "ReadNotClosedPublicExecutionPeriods", argsReadExecutionPeriods);
         } catch (FenixServiceException e) {
             throw new FenixActionException();
@@ -89,7 +89,7 @@ public class PrepareConsultRoomsDispatchAction extends FenixContextDispatchActio
         Object argsReadExecutionPeriods[] = {};
         List infoExecutionPeriods;
         try {
-            infoExecutionPeriods = (ArrayList) ServiceUtils.executeService(null,
+            infoExecutionPeriods = (ArrayList) ServiceUtils.executeService(
                     "ReadNotClosedPublicExecutionPeriods", argsReadExecutionPeriods);
         } catch (FenixServiceException e) {
             throw new FenixActionException();

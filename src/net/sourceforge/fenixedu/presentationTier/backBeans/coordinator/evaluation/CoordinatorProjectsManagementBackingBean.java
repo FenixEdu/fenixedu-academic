@@ -34,7 +34,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
             final Object[] args = { getExecutionCourseID(), getName(),
                     DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
                     DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription() };
-            ServiceUtils.executeService(getUserView(), "CreateProject", args);
+            ServiceUtils.executeService( "CreateProject", args);
         } catch (final FenixFilterException e) {
             return "";
         } catch (final FenixServiceException e) {
@@ -52,7 +52,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
             final Object[] args = { getExecutionCourseID(), getEvaluationID(), getName(),
                     DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
                     DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription() };
-            ServiceUtils.executeService(getUserView(), "EditProject", args);
+            ServiceUtils.executeService( "EditProject", args);
         } catch (final FenixFilterException e) {
         } catch (final FenixServiceException e) {
             setErrorMessage(e.getMessage());
@@ -67,7 +67,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
     public String deleteProject() {
         try {
             final Object[] args = { getExecutionCourseID(), getEvaluationID() };
-            ServiceUtils.executeService(getUserView(), "DeleteEvaluation", args);
+            ServiceUtils.executeService( "DeleteEvaluation", args);
         } catch (FenixFilterException e) {
         } catch (FenixServiceException e) {
             setErrorMessage(e.getMessage());

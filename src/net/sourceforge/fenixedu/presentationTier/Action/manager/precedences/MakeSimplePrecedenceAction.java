@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionNotEnrolledInCurri
 import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -32,6 +31,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Tânia Pousão
@@ -52,7 +53,7 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 
     public ActionForward chooseRestriction(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         ActionErrors errors = new ActionErrors();
 
@@ -66,7 +67,7 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
         Object[] args = { degreeCurricularPlanID };
         List curricularCoursesList = null;
         try {
-            curricularCoursesList = (List) ServiceManagerServiceFactory.executeService(userView,
+            curricularCoursesList = (List) ServiceManagerServiceFactory.executeService(
                     "ReadCurricularCoursesByDegreeCurricularPlan", args);
         } catch (FenixServiceException e) {
             e.printStackTrace();
@@ -109,7 +110,7 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
 
     public ActionForward insertRestriction(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         ActionErrors errors = new ActionErrors();
 
@@ -136,7 +137,7 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
         Object[] args = { classeNameRestriction, curricularCourseToAddPrecedenceID,
                 precedentCurricularCourseID, number };
         try {
-            ServiceManagerServiceFactory.executeService(userView, "InsertSimplePrecedence", args);
+            ServiceManagerServiceFactory.executeService( "InsertSimplePrecedence", args);
         } catch (FenixServiceException e) {
             e.printStackTrace();
             errors.add("impossibleInsertPrecedence", new ActionError(

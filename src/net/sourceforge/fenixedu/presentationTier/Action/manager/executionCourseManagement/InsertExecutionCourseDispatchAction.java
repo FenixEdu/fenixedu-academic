@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -36,6 +35,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author Fernanda Quitério 17/Dez/2003
  * 
@@ -43,11 +44,11 @@ import org.apache.struts.validator.DynaValidatorForm;
 public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
     public ActionForward prepareInsertExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	List infoExecutionPeriods = null;
 	try {
-	    infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);
+	    infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods", null);
 	} catch (FenixServiceException ex) {
 	    throw new FenixActionException();
 	}
@@ -97,13 +98,13 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
 
     public ActionForward insertExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	InfoExecutionCourseEditor infoExecutionCourse = fillInfoExecutionCourse(form, request);
 
 	Object args[] = { infoExecutionCourse };
 	try {
-	    ServiceUtils.executeService(userView, "InsertExecutionCourseAtExecutionPeriod", args);
+	    ServiceUtils.executeService("InsertExecutionCourseAtExecutionPeriod", args);
 
 	} catch (ExistingServiceException ex) {
 	    throw new ExistingActionException(ex.getMessage(), ex);

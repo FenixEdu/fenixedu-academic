@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoViewExam;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -21,6 +20,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Ana e Ricardo
@@ -75,7 +76,7 @@ public class ExamSearchByDate extends FenixContextDispatchAction {
             HttpServletResponse response) throws Exception {
       
         DynaActionForm examSearchByDateForm = (DynaActionForm) form;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         // exam date
         Calendar examDate = Calendar.getInstance();
@@ -144,7 +145,7 @@ public class ExamSearchByDate extends FenixContextDispatchAction {
         }
 
         Object[] args = { examDate, examStartTime, examEndTime };
-        InfoViewExam infoViewExam = (InfoViewExam) ServiceUtils.executeService(userView,
+        InfoViewExam infoViewExam = (InfoViewExam) ServiceUtils.executeService(
                 "ReadExamsByDate", args);
 
         if (infoViewExam.getInfoViewExamsByDayAndShift().size() != 0) {

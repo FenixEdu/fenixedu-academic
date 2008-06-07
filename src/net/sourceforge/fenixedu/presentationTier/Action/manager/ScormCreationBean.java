@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.io.InputStream;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Container;
 
 import org.joda.time.YearMonthDay;
 
 import pt.linkare.scorm.utils.ScormMetaDataHash;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author pcma

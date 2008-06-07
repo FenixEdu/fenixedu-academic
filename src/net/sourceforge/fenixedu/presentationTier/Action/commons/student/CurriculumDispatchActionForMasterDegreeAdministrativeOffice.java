@@ -50,7 +50,7 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
         List result = null;
         try {
             Object args[] = { executionDegreeId, Integer.valueOf(studentCurricularPlanID) };
-            result = (ArrayList) ServiceManagerServiceFactory.executeService(userView,"ReadStudentCurriculum", args);
+            result = (ArrayList) ServiceManagerServiceFactory.executeService("ReadStudentCurriculum", args);
         }
         catch (NotAuthorizedException e)
         {
@@ -68,7 +68,7 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
         try {
             Object args[] = { Integer.valueOf(studentCurricularPlanID) };
-            infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(userView, "ReadStudentCurricularPlan", args);
+            infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService( "ReadStudentCurricularPlan", args);
         } catch (ExistingServiceException e) {
             throw new ExistingActionException(e);
         }
@@ -95,7 +95,7 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
                         userView, "ReadPersonByUsername", args1);
 
                 Object args2[] = { infoPerson };
-                infoStudents = (List) ServiceManagerServiceFactory.executeService(userView,
+                infoStudents = (List) ServiceManagerServiceFactory.executeService(
                         "ReadStudentsByPerson", args2);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
@@ -121,7 +121,7 @@ public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends
                 InfoStudent infoStudent = (InfoStudent) iterator.next();
                 try {
                     Object args[] = { infoStudent.getNumber(), infoStudent.getDegreeType() };
-                    List resultTemp = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                    List resultTemp = (ArrayList) ServiceManagerServiceFactory.executeService(
                             "ReadStudentCurricularPlans", args);
                     result.addAll(resultTemp);
                 } catch (NonExistingServiceException e) {

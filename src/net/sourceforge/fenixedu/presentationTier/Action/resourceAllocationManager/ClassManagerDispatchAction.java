@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -36,6 +35,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author jpvl
@@ -61,7 +62,7 @@ public class ClassManagerDispatchAction extends
         request.removeAttribute(SessionConstants.LESSON_LIST_ATT);
         String className = getClassName(form);
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         if (className != null && !className.equals("")) {
 
@@ -84,7 +85,7 @@ public class ClassManagerDispatchAction extends
                 Object argsCriarTurma[] = { className, curricularYear, infoExecutionDegree, infoExecutionPeriod };
 
                 try {
-                    infoClass = (InfoClass) ServiceUtils.executeService(userView, "CriarTurma",
+                    infoClass = (InfoClass) ServiceUtils.executeService("CriarTurma",
                             argsCriarTurma);
                     request.setAttribute(SessionConstants.CLASS_VIEW, infoClass);
                 } catch (ExistingServiceException e) {
@@ -111,7 +112,7 @@ public class ClassManagerDispatchAction extends
 
         String className = getClassName(form);
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         boolean change = request.getParameter("change") != null;
 
         if (change) {
@@ -134,7 +135,7 @@ public class ClassManagerDispatchAction extends
             Object[] argsEditarTurma = { oldClassView, newClassView };
             try {
 
-                newClassView = (InfoClass) ServiceUtils.executeService(userView, "EditarTurma", argsEditarTurma);
+                newClassView = (InfoClass) ServiceUtils.executeService("EditarTurma", argsEditarTurma);
             } catch (ExistingServiceException ex) {
                 throw new ExistingActionException("A SchoolClass", ex);
             } catch (NotAuthorizedException e) {
@@ -151,8 +152,7 @@ public class ClassManagerDispatchAction extends
         } else {
             /** starting editing */
             //InfoClass classView = getInfoTurma(userView, className, request);
-            request.setAttribute(SessionConstants.CLASS_VIEW, getInfoTurma(SessionUtils
-                    .getUserView(request), className, request));
+            request.setAttribute(SessionConstants.CLASS_VIEW, getInfoTurma(userView, className, request));
         }
 
         setLessonListToSession(request, userView, className);
@@ -167,7 +167,7 @@ public class ClassManagerDispatchAction extends
             HttpServletResponse response) throws Exception {
 
         //String className = getClassName(form);
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         //InfoClass classView = getInfoTurma(userView, className, request);
         InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
         setLessonListToSession(request, userView, infoClass.getNome());
@@ -184,10 +184,10 @@ public class ClassManagerDispatchAction extends
 
         InfoClass infoClass = (InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Object argsApagarTurma[] = { infoClass };
-        ServiceUtils.executeService(userView, "ApagarTurma", argsApagarTurma);
+        ServiceUtils.executeService("ApagarTurma", argsApagarTurma);
 
         request.removeAttribute(SessionConstants.CLASS_VIEW);
 
@@ -217,7 +217,7 @@ public class ClassManagerDispatchAction extends
 
         Object argsLerTurma[] = { className, infoExecutionDegree, infoExecutionPeriod };
         InfoClass classView = (InfoClass) ServiceUtils
-                .executeService(userView, "LerTurma", argsLerTurma);
+                .executeService( "LerTurma", argsLerTurma);
         return classView;
     }
 
@@ -242,7 +242,7 @@ public class ClassManagerDispatchAction extends
 
         Object argsApagarTurma[] = { infoClass };
 
-        List lessonList = (ArrayList) ServiceUtils.executeService(userView, "LerAulasDeTurma", argsApagarTurma);
+        List lessonList = (ArrayList) ServiceUtils.executeService("LerAulasDeTurma", argsApagarTurma);
 
         request.setAttribute(SessionConstants.LESSON_LIST_ATT, lessonList);
 

@@ -49,7 +49,7 @@ public class StartupServlet extends HttpServlet {
         try {
             try {
                 InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
-                        .executeService(null, "ReadCurrentExecutionPeriod", null);
+                        .executeService( "ReadCurrentExecutionPeriod", null);
                 config.getServletContext().setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY,
                         infoExecutionPeriod);
 
@@ -61,7 +61,7 @@ public class StartupServlet extends HttpServlet {
             
             try {
         	long start = System.currentTimeMillis();
-        	ServiceUtils.executeService(null, "CreateMetaDomainObectTypes", null);
+        	ServiceUtils.executeService("CreateMetaDomainObectTypes", null);
                 long end = System.currentTimeMillis();
                 System.out.println("CreateMetaDomainObectTypes: " + (end - start) + "ms.");
             } catch(Throwable throwable) {
@@ -69,7 +69,7 @@ public class StartupServlet extends HttpServlet {
             }
 
             try {
-                final Boolean result = (Boolean) ServiceManagerServiceFactory.executeService(null,
+                final Boolean result = (Boolean) ServiceManagerServiceFactory.executeService(
                         "CheckIsAliveService", null);
 
                 if (result != null && result.booleanValue()) {
@@ -127,7 +127,7 @@ public class StartupServlet extends HttpServlet {
 		    try {
 			try {
 			    Object[] args = { "" };
-			    ServiceManagerServiceFactory.executeService(null,
+			    ServiceManagerServiceFactory.executeService(
 									"CreateGratuitySituationsForCurrentExecutionYear",
 									args);
 			    
@@ -137,7 +137,7 @@ public class StartupServlet extends HttpServlet {
 			// temporary
 			try {
 			    Object[] args2003_2004 = { "2003/2004" };
-			    ServiceManagerServiceFactory.executeService(null,
+			    ServiceManagerServiceFactory.executeService(
 									"CreateGratuitySituationsForCurrentExecutionYear",
 									args2003_2004);
 			    

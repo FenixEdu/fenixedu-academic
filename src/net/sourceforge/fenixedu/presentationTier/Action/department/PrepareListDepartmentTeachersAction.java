@@ -10,12 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author jpvl
@@ -32,8 +33,8 @@ public class PrepareListDepartmentTeachersAction extends Action {
      */
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
-        InfoDepartment infoDepartment = (InfoDepartment) ServiceUtils.executeService(userView,
+        IUserView userView = UserView.getUser();
+        InfoDepartment infoDepartment = (InfoDepartment) ServiceUtils.executeService(
                 "ReadDepartmentByUser", new Object[] { userView.getUtilizador() });
         request.setAttribute("infoDepartment", infoDepartment);
 

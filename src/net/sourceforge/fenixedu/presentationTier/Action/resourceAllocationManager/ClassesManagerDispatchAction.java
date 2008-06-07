@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixClassAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -50,7 +49,7 @@ public class ClassesManagerDispatchAction extends
 
         Object argsLerTurmas[] = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
 
-        List classesList = (List) ServiceUtils.executeService(SessionUtils.getUserView(request),
+        List classesList = (List) ServiceUtils.executeService(
                 "LerTurmas", argsLerTurmas);
 
         if (classesList != null && !classesList.isEmpty())

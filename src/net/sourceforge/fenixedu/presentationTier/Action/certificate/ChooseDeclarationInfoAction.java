@@ -84,7 +84,7 @@ public class ChooseDeclarationInfoAction extends FenixDispatchAction {
 	List enrolmentList = null;
 	Object argsEnrolment[] = { infoStudentCurricularPlan.getIdInternal() };
 	try {
-	    enrolmentList = (List) ServiceManagerServiceFactory.executeService(userView,
+	    enrolmentList = (List) ServiceManagerServiceFactory.executeService(
 		    "GetEnrolmentList", argsEnrolment);
 
 	} catch (NonExistingServiceException e) {

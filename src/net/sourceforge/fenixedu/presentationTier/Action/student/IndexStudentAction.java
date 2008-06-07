@@ -18,11 +18,12 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -35,12 +36,12 @@ public class IndexStudentAction extends FenixAction {
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
         HttpSession session = getSession(request);
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         InfoStudent student = null;
         try {
             Object args[] = { userView.getUtilizador() };
-            student = (InfoStudent) ServiceUtils.executeService(userView, "ReadStudentByUsername", args);
+            student = (InfoStudent) ServiceUtils.executeService("ReadStudentByUsername", args);
             //TODO: fix the situation where the student is null
             if (student == null) {
                 throw new InvalidSessionActionException();

@@ -76,7 +76,7 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
 
             List result = null;
             try {
-                result = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide",
+                result = (List) ServiceManagerServiceFactory.executeService( "ChooseGuide",
                         args);
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("A Guia", e);
@@ -112,7 +112,7 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
 
             try {
                 Object args[] = { guideNumber, guideYear, guideVersion };
-                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(
                         "ChooseGuide", args);
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("A Versão da Guia", e);
@@ -121,7 +121,7 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
             List guideList = null;
             try {
                 Object args[] = { guideNumber, guideYear };
-                guideList = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide",
+                guideList = (List) ServiceManagerServiceFactory.executeService( "ChooseGuide",
                         args);
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("A Guia", e);

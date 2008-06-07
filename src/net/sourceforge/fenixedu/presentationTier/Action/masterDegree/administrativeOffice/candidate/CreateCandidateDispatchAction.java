@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -35,6 +34,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -59,7 +60,7 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 
             List result = null;
             try {
-                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                result = (List) ServiceManagerServiceFactory.executeService(
                         "ReadAllMasterDegrees", args);
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("O Degree de Mestrado", e);
@@ -92,7 +93,7 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
 
             try {
 
-                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                result = (List) ServiceManagerServiceFactory.executeService(
                         "ReadCPlanFromChosenMasterDegree", args);
 
             } catch (NonExistingServiceException e) {
@@ -124,7 +125,7 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
             List executionYearList = null;
             Object args[] = { curricularPlanID };
             try {
-                executionYearList = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                executionYearList = (ArrayList) ServiceManagerServiceFactory.executeService(
                         "ReadExecutionDegreesByDegreeCurricularPlanID", args);
             } catch (ExistingServiceException e) {
                 throw new ExistingActionException(e);
@@ -196,7 +197,7 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
              * executionYearName };
              * //session.removeAttribute(SessionConstants.EXECUTION_YEAR); try {
              * degreeList = (ArrayList)
-             * ServiceManagerServiceFactory.executeService(userView,
+             * ServiceManagerServiceFactory.executeService(
              * "ReadMasterDegrees", args); } catch (ExistingServiceException e) {
              * throw new ExistingActionException("Degree" ,e); }
              * //BeanComparator nameComparator = new
@@ -224,7 +225,7 @@ public class CreateCandidateDispatchAction extends FenixDispatchAction {
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         // Get the Information
         DynaActionForm createCandidateForm = (DynaActionForm) form;

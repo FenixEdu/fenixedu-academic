@@ -22,9 +22,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateUnit extends Service {
     

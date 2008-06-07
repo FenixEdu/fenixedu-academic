@@ -33,6 +33,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author jpvl
  */
@@ -45,11 +47,6 @@ public final class SessionUtils {
                 .getAttribute(SessionConstants.CONTEXT_KEY);
     }
 
-    public static IUserView getUserView(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        return session != null ? (IUserView) session.getAttribute(SessionConstants.U_VIEW) : null;
-    }
-
     public static List getExecutionCourses(HttpServletRequest request) throws Exception {
 
         List infoCourseList = new ArrayList();
@@ -57,7 +54,7 @@ public final class SessionUtils {
         // Nao verifica se ja existem em sessao porque podem
         // ser de um periodo execucao diferente
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         // Ler Disciplinas em Execucao
         InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request
                 .getAttribute(SessionConstants.CURRICULAR_YEAR);
@@ -67,7 +64,7 @@ public final class SessionUtils {
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
         Object[] args = { infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear() };
 
-        infoCourseList = (ArrayList) ServiceUtils.executeService(userView,
+        infoCourseList = (ArrayList) ServiceUtils.executeService(
                 "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", args);
 
         request.setAttribute(SessionConstants.EXECUTION_COURSE_LIST_KEY, infoCourseList);
@@ -84,7 +81,7 @@ public final class SessionUtils {
         // Nao verifica se ja existem em sessao porque podem
         // ser de um periodo execucao diferente
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         // Ler Disciplinas em Execucao
         InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request
                 .getAttribute(SessionConstants.CURRICULAR_YEAR);
@@ -95,7 +92,7 @@ public final class SessionUtils {
 
         Object[] args = { infoExecutionDegree, infoExecutionPeriod, infoCurricularYear.getYear() };
 
-        infoCourseList = (ArrayList) ServiceUtils.executeService(userView,
+        infoCourseList = (ArrayList) ServiceUtils.executeService(
                 "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular", args);
 
         DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;

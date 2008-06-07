@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.MergeEventEditionPageContainerBean;
 import net.sourceforge.fenixedu.dataTransferObject.MergeResearchActivityPageContainerBean;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 
 public class MergeEventEditionsDA extends MergeResearchActivityDA {

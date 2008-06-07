@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import pt.ist.fenixframework.FenixFramework;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import pt.ist.fenixWebFramework.renderers.model.DefaultSchemaFactory;
 import pt.ist.fenixWebFramework.renderers.schemas.Schema;
 import pt.ist.fenixWebFramework.renderers.schemas.SchemaSlotDescription;
+import pt.ist.fenixframework.FenixFramework;
 import dml.DomainClass;
 import dml.Role;
 import dml.Slot;

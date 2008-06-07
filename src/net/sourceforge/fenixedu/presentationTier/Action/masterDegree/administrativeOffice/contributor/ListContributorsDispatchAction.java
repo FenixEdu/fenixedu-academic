@@ -82,7 +82,7 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 
             Object args[] = { contributorNumber };
             try {
-                contributors = (List) ServiceManagerServiceFactory.executeService(userView,
+                contributors = (List) ServiceManagerServiceFactory.executeService(
                         "ReadContributorList", args);
             } catch (Exception e) {
                 throw new Exception(e);

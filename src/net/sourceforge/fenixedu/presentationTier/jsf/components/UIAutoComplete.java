@@ -17,9 +17,10 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanUtils;
+
+import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 
 public class UIAutoComplete extends UIInput {
 
@@ -78,7 +79,7 @@ public class UIAutoComplete extends UIInput {
 
     private IUserView getUserView(FacesContext context) {
         final HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-        return (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        return (IUserView) session.getAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE);
     }
 
     private String getInputTextValue(IUserView userView, String className, Integer idInternal,

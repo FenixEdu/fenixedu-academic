@@ -13,12 +13,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author tfc130
@@ -32,7 +33,7 @@ public class EscolherContextoFormAction extends FenixContextAction {
 
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                     .getAttribute(SessionConstants.EXECUTION_PERIOD);
@@ -42,7 +43,7 @@ public class EscolherContextoFormAction extends FenixContextAction {
 
             Object argsReadCurricularYearByOID[] = { anoCurricular };
             InfoCurricularYear infoCurricularYear = (InfoCurricularYear) ServiceUtils.executeService(
-                    userView, "ReadCurricularYearByOID", argsReadCurricularYearByOID);
+                    "ReadCurricularYearByOID", argsReadCurricularYearByOID);
 
             int index = Integer.parseInt((String) escolherContextoForm.get("index"));
 
@@ -50,7 +51,7 @@ public class EscolherContextoFormAction extends FenixContextAction {
 
             Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-            List infoExecutionDegreeList = (List) ServiceUtils.executeService(userView,
+            List infoExecutionDegreeList = (List) ServiceUtils.executeService(
                     "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList

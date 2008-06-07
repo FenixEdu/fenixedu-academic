@@ -72,7 +72,7 @@ public class ManageCreditsNotes extends FenixDispatchAction {
 		masterDegreeTeachingNote, functionsAccumulation, thesisNote, roleType };
 
 	try {
-	    ServiceUtils.executeService(getUserView(request), "EditTeacherServiceNotes", args);
+	    ServiceUtils.executeService("EditTeacherServiceNotes", args);
 	} catch (DomainException domainException) {
 	    ActionMessages actionMessages = new ActionMessages();
 	    actionMessages.add("error", new ActionMessage(domainException.getMessage(), domainException.getArgs()));

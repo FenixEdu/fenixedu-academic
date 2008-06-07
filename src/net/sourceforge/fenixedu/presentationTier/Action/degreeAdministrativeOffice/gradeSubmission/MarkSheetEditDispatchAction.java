@@ -21,13 +21,14 @@ import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
     
@@ -71,7 +72,7 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
 
         if (actionMessages.isEmpty()) {
             try {
-                ServiceUtils.executeService(getUserView(request), "EditMarkSheet", new Object[] {
+                ServiceUtils.executeService("EditMarkSheet", new Object[] {
                         editBean.getMarkSheet(), editBean.getTeacher(), editBean.getEvaluationDate() });
                 
                 editBean.setEnrolmentEvaluationBeansToEdit(getEnrolmentEvaluationBeansToEdit(editBean.getMarkSheet()));
@@ -100,7 +101,7 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
         ActionMessages actionMessages = createActionMessages();
         try {
             
-            ServiceUtils.executeService(getUserView(request), "EditMarkSheet", new Object[] { editBean });
+            ServiceUtils.executeService("EditMarkSheet", new Object[] { editBean });
             return mapping.findForward("searchMarkSheetFilled");
 
         } catch (NotAuthorizedFilterException e) {

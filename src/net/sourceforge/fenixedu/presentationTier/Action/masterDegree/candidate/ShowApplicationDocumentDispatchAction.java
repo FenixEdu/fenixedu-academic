@@ -44,7 +44,7 @@ public class ShowApplicationDocumentDispatchAction extends FenixDispatchAction {
 
         try {
             Object[] args = { userView.getUtilizador() };
-            result = (InfoPerson) ServiceUtils.executeService(userView, "ReadPersonByUsername", args);
+            result = (InfoPerson) ServiceUtils.executeService("ReadPersonByUsername", args);
             return result;
         } catch (ExcepcaoInexistente e) {
             actionErrors.add("unknownPerson", new ActionError("error.exception.nonExisting", userView

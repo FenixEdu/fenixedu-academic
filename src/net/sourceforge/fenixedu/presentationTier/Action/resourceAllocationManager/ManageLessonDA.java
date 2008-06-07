@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
@@ -238,7 +237,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 		Object args[] = { lessonNewBeginDate, lessonEndDate, HourMinuteSecond.fromCalendarFields(inicio), HourMinuteSecond.fromCalendarFields(fim),
 			weekDay, null, frequency, Boolean.TRUE };
 
-		emptyRoomsList = (List<InfoRoom>) ServiceUtils.executeService(SessionUtils.getUserView(request), "ReadAvailableRoomsForExam", args);
+		emptyRoomsList = (List<InfoRoom>) ServiceUtils.executeService("ReadAvailableRoomsForExam", args);
 		
 	    } else if (action != null && action.equals("edit")) {
 		actionErrors.add("error.Lesson.already.finished", new ActionError("error.Lesson.already.finished"));
@@ -357,7 +356,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 		    final Object argsEditLesson[] = { infoLessonOld, weekDay, inicio, fim, frequency, infoRoomOccupation, 
 			    infoShift, newBeginDate, newEndDate, createLessonInstances };
 		    
-		    ServiceUtils.executeService(SessionUtils.getUserView(request), "EditLesson", argsEditLesson);		    	
+		    ServiceUtils.executeService("EditLesson", argsEditLesson);		    	
 		    
 		} catch (DomainException domainException) {
 		    actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage(), domainException.getArgs()));
@@ -367,7 +366,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	    } else {				
 		try {
 		    final Object argsCreateLesson[] = { weekDay, inicio, fim, frequency, infoRoomOccupation, infoShift, newBeginDate, newEndDate };		   
-		    ServiceUtils.executeService(SessionUtils.getUserView(request), "CreateLesson", argsCreateLesson);
+		    ServiceUtils.executeService("CreateLesson", argsCreateLesson);
 		    				
 		}  catch (DomainException domainException) {
 		    actionErrors.add(domainException.getMessage(), new ActionError(domainException.getMessage(), domainException.getArgs()));
@@ -391,7 +390,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 	final Object argsApagarAula[] = { lessons };
 
 	try {
-	    ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteLessons", argsApagarAula);
+	    ServiceUtils.executeService("DeleteLessons", argsApagarAula);
 	    
 	} catch (FenixServiceMultipleException e) {
 	    final ActionErrors actionErrors = new ActionErrors();

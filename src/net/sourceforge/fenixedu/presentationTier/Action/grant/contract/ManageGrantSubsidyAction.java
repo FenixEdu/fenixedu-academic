@@ -14,11 +14,12 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContr
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidy;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -45,8 +46,8 @@ public class ManageGrantSubsidyAction extends FenixDispatchAction {
 
 	//Read Contract
 	Object[] args = { idContract };
-	IUserView userView = SessionUtils.getUserView(request);
-	InfoGrantContract infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(userView,
+	IUserView userView = UserView.getUser();
+	InfoGrantContract infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(
 		"ReadGrantContract", args);
 
 	request.setAttribute("idContract", idContract);
@@ -55,9 +56,9 @@ public class ManageGrantSubsidyAction extends FenixDispatchAction {
 	//Read Subsidies
 	Object[] argsActiveSubsidy = { idContract, InfoGrantSubsidy.getActiveStateValue() };
 	Object[] argsNotActiveSubsidy = { idContract, InfoGrantSubsidy.getInactiveStateValue() };
-	List infoGrantActiveSubsidyList = (List) ServiceUtils.executeService(userView,
+	List infoGrantActiveSubsidyList = (List) ServiceUtils.executeService(
 		"ReadAllGrantSubsidiesByGrantContractAndState", argsActiveSubsidy);
-	List infoGrantNotActiveSubsidyList = (List) ServiceUtils.executeService(userView,
+	List infoGrantNotActiveSubsidyList = (List) ServiceUtils.executeService(
 		"ReadAllGrantSubsidiesByGrantContractAndState", argsNotActiveSubsidy);
 
 	//If they exist put them on request

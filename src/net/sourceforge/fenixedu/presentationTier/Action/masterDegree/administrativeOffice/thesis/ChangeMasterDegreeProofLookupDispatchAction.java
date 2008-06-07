@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ScholarshipNotFinishedActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.struts.action.ActionErrors;
@@ -34,6 +33,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.LookupDispatchAction;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * 
@@ -220,7 +221,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 	    FenixFilterException {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	DynaActionForm changeMasterDegreeProofForm = (DynaActionForm) form;
 
@@ -291,7 +292,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 		attachedCopiesNumber, juriesNumbers, externalJuriesIDs };
 
 	try {
-	    ServiceUtils.executeService(userView, "ChangeMasterDegreeProof", args2);
+	    ServiceUtils.executeService("ChangeMasterDegreeProof", args2);
 	} catch (NonExistingServiceException e) {
 	    throw new NonExistingActionException(e.getMessage(), mapping.findForward("start"));
 	} catch (ScholarshipNotFinishedServiceException e) {

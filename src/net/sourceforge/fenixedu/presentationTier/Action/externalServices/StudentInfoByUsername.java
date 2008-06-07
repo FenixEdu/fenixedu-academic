@@ -39,6 +39,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 import com.thoughtworks.xstream.XStream;
 
 /**
@@ -132,7 +134,7 @@ public class StudentInfoByUsername extends FenixAction {
     private Collection readInformation(String username) throws FenixFilterException,
             FenixServiceException {
         Object args[] = { username };
-        return (Collection) ServiceManagerServiceFactory.executeService(null,
+        return (Collection) ServiceManagerServiceFactory.executeService(
                 "ReadStudentExternalInformation", args);
     }
 
@@ -157,9 +159,9 @@ public class StudentInfoByUsername extends FenixAction {
 	    userView = new MockUserView(username, new ArrayList<Role>(), Person.readPersonByUsername(username));
 	} else {
 	    final Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
-	    userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsAutenticacao);
+	    userView = (IUserView) ServiceManagerServiceFactory.executeService( "Autenticacao", argsAutenticacao);
 	}
-	AccessControl.setUserView(userView);
+	UserView.setUser(userView);
     }
 
     private void sendAnswer(HttpServletResponse response, String result) throws IOException {

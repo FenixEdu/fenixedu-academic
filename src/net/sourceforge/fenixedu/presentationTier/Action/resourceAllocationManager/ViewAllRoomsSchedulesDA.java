@@ -67,7 +67,7 @@ public class ViewAllRoomsSchedulesDA extends FenixContextDispatchAction {
             }
 
             Object[] args = { selectedPavillions, infoExecutionPeriod };
-            List infoViewClassScheduleList = (List) ServiceManagerServiceFactory.executeService(userView, "ReadPavillionsRoomsLessons", args);
+            List infoViewClassScheduleList = (List) ServiceManagerServiceFactory.executeService( "ReadPavillionsRoomsLessons", args);
 
             if (infoViewClassScheduleList != null && infoViewClassScheduleList.isEmpty()) {
                 request.removeAttribute(SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE);

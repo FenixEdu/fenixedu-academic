@@ -15,12 +15,13 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContr
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractMovement;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -32,7 +33,7 @@ public class EditGrantContractMovementAction extends FenixDispatchAction {
      */
     public ActionForward prepareEditGrantContractMovementForm(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	DynaValidatorForm grantContractMovementForm = (DynaValidatorForm) form;
 
 	Integer idGrantMovement = null;
@@ -53,7 +54,7 @@ public class EditGrantContractMovementAction extends FenixDispatchAction {
 		    //Read the grant contract movement
 		    Object[] args = { idGrantMovement };
 		    InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) ServiceUtils
-			    .executeService(userView, "ReadGrantContractMovement", args);
+			    .executeService( "ReadGrantContractMovement", args);
 
 		    //Populate the form
 		    setFormGrantContractMovement(grantContractMovementForm, infoGrantContractMovement);
@@ -84,7 +85,7 @@ public class EditGrantContractMovementAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	DynaValidatorForm editGrantContractMovementForm = (DynaValidatorForm) form;
 	InfoGrantContractMovement infoGrantContractMovement = null;
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	try {
 	    infoGrantContractMovement = populateInfoFromForm(editGrantContractMovementForm);
 
@@ -97,7 +98,7 @@ public class EditGrantContractMovementAction extends FenixDispatchAction {
 	    }
 
 	    Object[] args = { infoGrantContractMovement };
-	    ServiceUtils.executeService(userView, "EditGrantContractMovement", args);
+	    ServiceUtils.executeService("EditGrantContractMovement", args);
 
 	    request.setAttribute("idContract", editGrantContractMovementForm.get("grantContractId"));
 	} catch (FenixServiceException e) {
@@ -116,8 +117,8 @@ public class EditGrantContractMovementAction extends FenixDispatchAction {
 	    Integer idContract = new Integer(request.getParameter("idContract"));
 
 	    Object[] args = { idGrantMovement };
-	    IUserView userView = SessionUtils.getUserView(request);
-	    ServiceUtils.executeService(userView, "DeleteGrantContractMovement", args);
+	    IUserView userView = UserView.getUser();
+	    ServiceUtils.executeService("DeleteGrantContractMovement", args);
 
 	    request.setAttribute("idContract", idContract);
 	} catch (FenixServiceException e) {

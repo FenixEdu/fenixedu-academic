@@ -15,12 +15,13 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoListGrantOwner
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoSpanListGrantOwner;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Pica
@@ -65,12 +66,12 @@ public class ListGrantOwnerAction extends FenixDispatchAction {
 	    ActionForm form, HttpServletResponse response, InfoSpanListGrantOwner infoSpanListGrantOwner)
 	    throws Exception {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	// Read the grant owners
 	Object[] args = { infoSpanListGrantOwner };
 
-	Object[] result = (Object[]) ServiceUtils.executeService(userView, "ListGrantOwners", args);
+	Object[] result = (Object[]) ServiceUtils.executeService("ListGrantOwners", args);
 	List listGrantOwners = (List) result[0];
 	infoSpanListGrantOwner = (InfoSpanListGrantOwner) result[1];
 
@@ -104,13 +105,13 @@ public class ListGrantOwnerAction extends FenixDispatchAction {
 	    grantOwnerId = new Integer(request.getParameter("grantOwnerId"));
 	}
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	if (grantOwnerId != null) {
 	    // Read all the information about the grant owner
 	    Object[] args = { grantOwnerId };
 	    InfoListGrantOwnerComplete listGrantOwnerCompleteInfo = (InfoListGrantOwnerComplete) ServiceUtils
-		    .executeService(userView, "ShowGrantOwner", args);
+		    .executeService( "ShowGrantOwner", args);
 
 	    if (listGrantOwnerCompleteInfo != null) {
 		// Set the request

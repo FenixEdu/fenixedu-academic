@@ -151,7 +151,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	try {
 
 	    final List<ShiftToEnrol> shiftsToEnrol = (List<ShiftToEnrol>) ServiceManagerServiceFactory
-		    .executeService(getUserView(request), "ReadShiftsToEnroll", new Object[] { registration });
+		    .executeService( "ReadShiftsToEnroll", new Object[] { registration });
 
 	    request.setAttribute("numberOfExecutionCoursesHavingNotEnroledShifts", registration
 		    .getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(executionSemester));
@@ -259,7 +259,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	}
 
 	try {
-	    ServiceManagerServiceFactory.executeService(getUserView(request), "UnEnrollStudentFromShift",
+	    ServiceManagerServiceFactory.executeService( "UnEnrollStudentFromShift",
 		    new Object[] { registration, shiftId });
 
 	} catch (FenixServiceException e) {

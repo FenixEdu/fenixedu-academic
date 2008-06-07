@@ -5,16 +5,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.Partial;
+import org.joda.time.base.AbstractPartial;
+
 import pt.ist.fenixWebFramework.renderers.DateInputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.converters.ConversionException;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.DateConverter;
 import pt.ist.fenixWebFramework.renderers.converters.MultipleFormatDateConverter;
-
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.Partial;
-import org.joda.time.base.AbstractPartial;
 
 public class MultipleFormatTimeInputRenderer extends DateInputRenderer {
 

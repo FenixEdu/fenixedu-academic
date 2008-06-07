@@ -14,11 +14,12 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContr
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegime;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -45,8 +46,8 @@ public class ManageGrantContractRegimeAction extends FenixDispatchAction {
 
 	//Read Contract
 	Object[] args = { idContract };
-	IUserView userView = SessionUtils.getUserView(request);
-	InfoGrantContract infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(userView,
+	IUserView userView = UserView.getUser();
+	InfoGrantContract infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(
 		"ReadGrantContract", args);
 
 	request.setAttribute("idContract", idContract);
@@ -54,9 +55,9 @@ public class ManageGrantContractRegimeAction extends FenixDispatchAction {
 
 	Object[] argsActiveContractRegime = { idContract, InfoGrantContractRegime.getActiveState() };
 	Object[] argsNotActiveContractRegime = { idContract, InfoGrantContractRegime.getInactiveState() };
-	List infoGrantActiveContractRegimeList = (List) ServiceUtils.executeService(userView,
+	List infoGrantActiveContractRegimeList = (List) ServiceUtils.executeService(
 		"ReadGrantContractRegimeByContractAndState", argsActiveContractRegime);
-	List infoGrantNotActiveContractRegimeList = (List) ServiceUtils.executeService(userView,
+	List infoGrantNotActiveContractRegimeList = (List) ServiceUtils.executeService(
 		"ReadGrantContractRegimeByContractAndState", argsNotActiveContractRegime);
 
 	//If they exist put them on request

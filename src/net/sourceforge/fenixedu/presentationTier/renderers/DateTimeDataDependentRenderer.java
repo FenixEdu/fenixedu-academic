@@ -4,10 +4,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import org.joda.time.DateTime;
+
 import pt.ist.fenixWebFramework.renderers.FormatRenderer;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
-
-import org.joda.time.DateTime;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br><br>

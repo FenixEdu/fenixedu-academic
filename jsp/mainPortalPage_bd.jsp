@@ -5,9 +5,8 @@
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants" %>
 
-<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
+<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.USER_SESSION_ATTRIBUTE %>" scope="session"/>
 
 <logic:iterate id="roleType" type="net.sourceforge.fenixedu.domain.person.RoleType" name="userView" property="roleTypes">
 	<%

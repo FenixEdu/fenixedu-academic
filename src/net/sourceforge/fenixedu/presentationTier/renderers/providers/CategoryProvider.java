@@ -5,11 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.TreeSet;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CategoryProvider implements DataProvider {

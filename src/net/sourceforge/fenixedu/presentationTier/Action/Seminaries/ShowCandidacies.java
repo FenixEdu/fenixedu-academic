@@ -122,7 +122,7 @@ public class ShowCandidacies extends FenixAction {
         List candidaciesExtendedInfo = new LinkedList();
         try {
             Object[] argsReadCandidacies = getReadCandidaciesArgs(request);
-            candidacies = (List) ServiceManagerServiceFactory.executeService(userView,
+            candidacies = (List) ServiceManagerServiceFactory.executeService(
                     "Seminaries.ReadCandidacies", argsReadCandidacies);
             for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
                 List casesChoices = null;
@@ -166,15 +166,15 @@ public class ShowCandidacies extends FenixAction {
             Object[] argsReadThemes = {};
             Object[] argsReadEquivalencies = {};
             
-            seminaries = (List) ServiceManagerServiceFactory.executeService(userView,
+            seminaries = (List) ServiceManagerServiceFactory.executeService(
                     "Seminaries.GetAllSeminaries", argsReadSeminaries);
-            cases = (List) ServiceManagerServiceFactory.executeService(userView,
+            cases = (List) ServiceManagerServiceFactory.executeService(
                     "Seminaries.GetAllCasesStudy", argsReadCasesStudy);
-            modalities = (List) ServiceManagerServiceFactory.executeService(userView,
+            modalities = (List) ServiceManagerServiceFactory.executeService(
                     "Seminaries.GetAllModalities", argsReadModalities);
-            themes = (List) ServiceManagerServiceFactory.executeService(userView,
+            themes = (List) ServiceManagerServiceFactory.executeService(
                     "Seminaries.GetAllThemes", argsReadThemes);
-            equivalencies = (List) ServiceManagerServiceFactory.executeService(userView,
+            equivalencies = (List) ServiceManagerServiceFactory.executeService(
                     "Seminaries.GetAllEquivalencies", argsReadEquivalencies);
             //
             //

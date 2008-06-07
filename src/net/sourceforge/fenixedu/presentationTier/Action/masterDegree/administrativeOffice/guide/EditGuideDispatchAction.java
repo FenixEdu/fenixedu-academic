@@ -66,7 +66,7 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 
             InfoGuide infoGuide = null;
             try {
-                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(
                         "ChooseGuide", args);
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("A Versão da Guia", e);
@@ -150,7 +150,7 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
                     situationOfGuide, paymentType, userView };
 
             try {
-                ServiceManagerServiceFactory.executeService(userView, "ChangeGuideSituation", args);
+                ServiceManagerServiceFactory.executeService( "ChangeGuideSituation", args);
             } catch (NonValidChangeServiceException e) {
                 throw new NonValidChangeActionException(e);
             } catch (ExistingServiceException e) {
@@ -192,9 +192,9 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
             InfoGuide infoGuide = null;
             List contributors = null;
             try {
-                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(
                         "ChooseGuide", args);
-                contributors = (List) ServiceManagerServiceFactory.executeService(userView,
+                contributors = (List) ServiceManagerServiceFactory.executeService(
                         "ReadAllContributors", null);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
@@ -243,7 +243,7 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
             InfoGuide infoGuide = null;
             try {
                 Object args[] = { guideNumber, guideYear, guideVersion };
-                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(
                         "ChooseGuide", args);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
@@ -301,7 +301,7 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
             try {
                 Object args[] = { infoGuide, quantityList, contributorNumber, othersRemarks,
                         othersQuantity, othersPrice };
-                result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+                result = (InfoGuide) ServiceManagerServiceFactory.executeService(
                         "EditGuideInformation", args);
             } catch (InvalidChangeServiceException e) {
                 throw new InvalidChangeActionException(e);
@@ -314,7 +314,7 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
             List guideList = null;
             try {
                 Object args[] = { guideNumber, guideYear };
-                guideList = (List) ServiceManagerServiceFactory.executeService(userView, "ChooseGuide",
+                guideList = (List) ServiceManagerServiceFactory.executeService( "ChooseGuide",
                         args);
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("A Guia", e);

@@ -13,8 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.parking.ParkingCardSearchBean
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -26,6 +24,8 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ManageParkingPeriodsDA extends FenixDispatchAction {
 
@@ -120,7 +120,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
 	    request.setAttribute("parkingCardSearchBean", parkingCardSearchBean);
 	    return mapping.findForward("cardsRenewal");
 	}
-	ServiceUtils.executeService(SessionUtils.getUserView(request), "RenewParkingCards",
+	ServiceUtils.executeService("RenewParkingCards",
 		new Object[] { parkingCardSearchBean.getSelectedParkingParties(),
 			parkingCardSearchBean.getRenewalEndDate(), parkingCardSearchBean.getNewParkingGroup() });
 	parkingCardSearchBean.getSelectedParkingParties().clear();
@@ -159,7 +159,7 @@ public class ManageParkingPeriodsDA extends FenixDispatchAction {
     public ActionForward deleteRequestPeriod(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	Integer parkingRequestPeriodToDeleteCode = new Integer(request.getParameter("idInternal"));
-	ServiceUtils.executeService(SessionUtils.getUserView(request), "DeleteParkingRequestPeriod",
+	ServiceUtils.executeService("DeleteParkingRequestPeriod",
 		new Object[] { parkingRequestPeriodToDeleteCode });
 	return prepareManageRequestsPeriods(mapping, actionForm, request, response);
     }

@@ -26,13 +26,14 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormat
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.joda.time.DateTime;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public abstract class PaymentsManagementDispatchAction extends FenixDispatchAction {
 
@@ -120,7 +121,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	}
 
 	try {
-	    final Collection<Entry> resultingEntries = (Collection<Entry>) ServiceUtils.executeService(getUserView(request),
+	    final Collection<Entry> resultingEntries = (Collection<Entry>) ServiceUtils.executeService(
 		    "CreatePaymentsForEvents", new Object[] { getUserView(request).getPerson().getUser(),
 			    paymentsManagementDTO.getSelectedEntries(), PaymentMode.CASH,
 			    paymentsManagementDTO.isDifferedPayment(), paymentsManagementDTO.getPaymentDate() });

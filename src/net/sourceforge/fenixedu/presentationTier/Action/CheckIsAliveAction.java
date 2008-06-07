@@ -17,7 +17,7 @@ public class CheckIsAliveAction extends FenixAction {
 			throws Exception {
 
 		final Boolean result = (Boolean) ServiceManagerServiceFactory
-				.executeService(null, "CheckIsAliveService", null);
+				.executeService( "CheckIsAliveService", null);
 
 		if (result != null && result.booleanValue()) {
 			request.setAttribute("isAlive", "ok");

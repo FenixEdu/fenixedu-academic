@@ -19,14 +19,15 @@ import net.sourceforge.fenixedu.domain.tests.NewTest;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * 
@@ -69,7 +70,7 @@ public class TestsStudentAction extends FenixDispatchAction {
 
 		NewTestGroup testGroup = rootDomainObject.readNewTestGroupByOID(testGroupId);
 
-		NewTest test = (NewTest) ServiceUtils.executeService(getUserView(request), "GetStudentTest",
+		NewTest test = (NewTest) ServiceUtils.executeService("GetStudentTest",
 				new Object[] { getPerson(request), testGroup });
 
 		request.setAttribute("test", test);
@@ -88,7 +89,7 @@ public class TestsStudentAction extends FenixDispatchAction {
 
 		NewTestGroup testGroup = atomicQuestion.getTest().getTestGroup();
 
-		ServiceUtils.executeService(getUserView(request), "DeleteAnswer",
+		ServiceUtils.executeService("DeleteAnswer",
 				new Object[] { atomicQuestion });
 
 		request.setAttribute("oid", testGroup.getIdInternal());
@@ -106,7 +107,7 @@ public class TestsStudentAction extends FenixDispatchAction {
 
 		NewTestGroup testGroup = atomicQuestion.getTest().getTestGroup();
 
-		ServiceUtils.executeService(getUserView(request), "GiveUpQuestion",
+		ServiceUtils.executeService("GiveUpQuestion",
 				new Object[] { atomicQuestion });
 
 		request.setAttribute("oid", testGroup.getIdInternal());

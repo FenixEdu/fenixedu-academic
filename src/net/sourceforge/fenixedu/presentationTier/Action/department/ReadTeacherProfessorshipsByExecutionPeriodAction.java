@@ -32,7 +32,7 @@ public class ReadTeacherProfessorshipsByExecutionPeriodAction extends AbstractRe
         Integer executionPeriodId = (Integer) actionForm.get("executionPeriodId");
         executionPeriodId = ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) ? null
                 : executionPeriodId;
-        List detailedInfoProfessorshipList = (List) ServiceUtils.executeService(userView,
+        List detailedInfoProfessorshipList = (List) ServiceUtils.executeService(
                 "ReadDetailedTeacherProfessorshipsByExecutionPeriod", new Object[] { teacherId,
                         executionPeriodId });
         return detailedInfoProfessorshipList;

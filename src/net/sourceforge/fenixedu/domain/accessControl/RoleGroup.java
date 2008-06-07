@@ -68,7 +68,7 @@ public class RoleGroup extends LeafGroup {
      */
     @Override
     public boolean allows(IUserView userView) {
-	return userView != null && !userView.isPublicRequester() && userView.hasRoleType(roleType);
+	return userView != null && userView.hasRoleType(roleType);
     }
 
     @Override

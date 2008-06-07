@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -28,6 +27,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * 
@@ -39,12 +40,12 @@ public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction 
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         ActionErrors actionErrors = new ActionErrors();
         Object args[] = {};
 
         try {
-            List infoInstitutions = (List) ServiceUtils.executeService(userView,
+            List infoInstitutions = (List) ServiceUtils.executeService(
                     "ReadAllInstitutions", args);
 
             if (infoInstitutions != null) {
@@ -84,7 +85,7 @@ public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction 
 
     public ActionForward visualize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm visualizeExternalPersonsForm = (DynaActionForm) form;
         Integer institutionId = (Integer) visualizeExternalPersonsForm.get("institutionId");
@@ -96,7 +97,7 @@ public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction 
 
         try {
 
-            infoExternalPersons = (List) ServiceUtils.executeService(userView,
+            infoExternalPersons = (List) ServiceUtils.executeService(
                     "ReadExternalPersonsByInstitution", args);
 
             if ((infoExternalPersons == null) || (infoExternalPersons.isEmpty())) {

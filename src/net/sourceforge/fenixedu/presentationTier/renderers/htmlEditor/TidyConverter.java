@@ -7,13 +7,13 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
-import pt.ist.fenixWebFramework.renderers.components.converters.ConversionException;
-import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-
 import org.w3c.dom.Document;
 import org.w3c.tidy.Tidy;
 import org.w3c.tidy.TidyMessage;
 import org.w3c.tidy.TidyMessageListener;
+
+import pt.ist.fenixWebFramework.renderers.components.converters.ConversionException;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public abstract class TidyConverter extends Converter {
 

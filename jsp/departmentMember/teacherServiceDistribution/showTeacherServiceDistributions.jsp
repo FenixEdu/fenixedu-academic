@@ -3,6 +3,8 @@
 <%@ page import="net.sourceforge.fenixedu.domain.Person" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
+<%@page import="pt.ist.fenixWebFramework.security.UserView"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
@@ -85,7 +87,8 @@
 			<th>
 			</th>
 		</tr>
-		<% Person person = SessionUtils.getUserView(request).getPerson(); %>
+		<% IUserView userView = UserView.getUser(); %>
+		<% Person person = userView.getPerson(); %>
 	<logic:iterate name="tsdProcessList" id="tsdProcess">	
 		<tr>
 		 	<td class="highlight7" align="left" width="250">

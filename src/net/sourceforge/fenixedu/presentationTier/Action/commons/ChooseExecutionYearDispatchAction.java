@@ -50,7 +50,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
 
             List result = null;
             try {
-                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                result = (List) ServiceManagerServiceFactory.executeService(
                         "ReadAllMasterDegrees", args);
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("O Degree de Mestrado", e);
@@ -79,7 +79,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
 
             try {
 
-                result = (List) ServiceManagerServiceFactory.executeService(userView,
+                result = (List) ServiceManagerServiceFactory.executeService(
                         "ReadCPlanFromChosenMasterDegree", args);
 
             } catch (NonExistingServiceException e) {
@@ -104,7 +104,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
             List executionYearList = null;
             Object args[] = { curricularPlanID };
             try {
-                executionYearList = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                executionYearList = (ArrayList) ServiceManagerServiceFactory.executeService(
                         "ReadExecutionDegreesByDegreeCurricularPlanID", args);
             } catch (ExistingServiceException e) {
                 throw new ExistingActionException(e);

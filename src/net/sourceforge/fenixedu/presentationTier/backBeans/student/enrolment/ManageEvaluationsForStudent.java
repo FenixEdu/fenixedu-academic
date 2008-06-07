@@ -103,7 +103,7 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
     public String enrolStudent() {
         try {
             final Object args[] = { getUserView().getUtilizador(), getEvaluationID() };
-            ServiceUtils.executeService(getUserView(), "EnrolStudentInWrittenEvaluation", args);
+            ServiceUtils.executeService( "EnrolStudentInWrittenEvaluation", args);
             clearAttributes();
         } catch (DomainException e) {
             setErrorMessage(e.getMessage());
@@ -118,7 +118,7 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
     public String unenrolStudent() {
         try {
             final Object args[] = { getUserView().getUtilizador(), getEvaluationID() };
-            ServiceUtils.executeService(getUserView(), "UnEnrollStudentInWrittenEvaluation", args);
+            ServiceUtils.executeService( "UnEnrollStudentInWrittenEvaluation", args);
             clearAttributes();
         } catch (DomainException e) {
             setErrorMessage(e.getMessage());

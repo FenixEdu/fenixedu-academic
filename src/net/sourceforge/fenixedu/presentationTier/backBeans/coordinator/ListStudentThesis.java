@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
+import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 
 /**
  * 
@@ -27,7 +27,7 @@ public class ListStudentThesis {
 
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext()
                 .getSession(false);
-        userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        userView = (IUserView) session.getAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE);
     }
 
     public Integer getDegreeCurricularPlanID() {
@@ -46,7 +46,7 @@ public class ListStudentThesis {
 
         Object[] args = { degreeCurricularPlanID };
         try {
-            return (List) ServiceUtils.executeService(userView,
+            return (List) ServiceUtils.executeService(
                     "ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan", args);
         } catch (FenixFilterException e) {
             // TODO Auto-generated catch block

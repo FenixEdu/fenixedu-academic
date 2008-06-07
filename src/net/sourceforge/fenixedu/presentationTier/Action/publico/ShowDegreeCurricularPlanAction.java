@@ -54,7 +54,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         InfoExecutionDegree infoExecutionDegree1 = null;
         try {
             final Object argsLerLicenciaturas[] = { degreeCurricularPlanId };
-            final List<InfoExecutionDegree> infoExecutionDegreeList = (List) ServiceUtils.executeService(null, "ReadPublicExecutionDegreeByDCPID", argsLerLicenciaturas);
+            final List<InfoExecutionDegree> infoExecutionDegreeList = (List) ServiceUtils.executeService("ReadPublicExecutionDegreeByDCPID", argsLerLicenciaturas);
 
             if (!infoExecutionDegreeList.isEmpty()) {
                 List<LabelValueBean> executionPeriodsLabelValueList = new ArrayList<LabelValueBean>();
@@ -108,7 +108,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         if (infoExecutionDegree == null) {
             final Object arg[] = { degreeCurricularPlanId, selectedExecutionPeriod.getInfoExecutionYear().getIdInternal() };
             try {
-                infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(null, "ReadPublicExecutionDegreeByDCPID", arg);
+                infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService("ReadPublicExecutionDegreeByDCPID", arg);
             } catch (FenixServiceException e) {
                 throw new FenixActionException(e);
             }
@@ -122,14 +122,14 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         if (curricularYear != 0) {
             final Object[] args = { infoExecutionDegree, selectedExecutionPeriod, curricularYear, getLocale(request) };
             try {
-                activeCurricularCourseScopes = (List) ServiceManagerServiceFactory.executeService(null, "ReadActiveDegreeCurricularPlanByID", args);
+                activeCurricularCourseScopes = (List) ServiceManagerServiceFactory.executeService( "ReadActiveDegreeCurricularPlanByID", args);
             } catch (FenixServiceException e) {
                 return new ActionForward(mapping.getInput());
             }
         } else {
             final Object[] args = { degreeCurricularPlanId, selectedExecutionPeriod.getIdInternal(), getLocale(request), "" };
             try {
-                activeCurricularCourseScopes = (List) ServiceManagerServiceFactory.executeService(null, "ReadActiveDegreeCurricularPlanByID", args);
+                activeCurricularCourseScopes = (List) ServiceManagerServiceFactory.executeService( "ReadActiveDegreeCurricularPlanByID", args);
             } catch (FenixServiceException e) {
                 return new ActionForward(mapping.getInput());
             }

@@ -63,7 +63,7 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
         IUserView userView = getUserView(request);
         Object args[] = { infoSite, alternativeSite, mail, initialStatement, introduction };
         try {
-            ServiceManagerServiceFactory.executeService(userView, "EditSite", args);
+            ServiceManagerServiceFactory.executeService( "EditSite", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

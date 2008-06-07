@@ -13,12 +13,13 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class CorrectGrantOwnerAction extends FenixDispatchAction {
 
@@ -46,11 +47,11 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
 	    return setError(request, mapping, "errors.grant.correction.fillAllFields", null, null);
 	}
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	//Read the grant owner
 	Object[] argsGrantOwner = { null, null, null, grantOwnerNumber, new Boolean(true), null };
-	List infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner",
+	List infoGrantOwnerList = (List) ServiceUtils.executeService("SearchGrantOwner",
 		argsGrantOwner);
 
 	if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
@@ -61,7 +62,7 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
 	//Read the new person
 	Object[] argsPerson = { null, documentIdNumber.toString(), documentIdType, null,
 		new Boolean(false), null };
-	List infoPersonList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner",
+	List infoPersonList = (List) ServiceUtils.executeService("SearchGrantOwner",
 		argsPerson);
 
 	if (infoPersonList.isEmpty() || infoPersonList.size() > 1) {
@@ -85,7 +86,7 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
 	if (oldInfoPerson.getUsername().charAt(0) == 'B') {
 	    Person person = (Person) rootDomainObject.readPartyByOID(oldInfoPerson.getIdInternal());
 	    Object[] argsChangeUsername = { person.getLoginIdentification() };
-	    ServiceUtils.executeService(userView, "CloseLogin", argsChangeUsername);
+	    ServiceUtils.executeService("CloseLogin", argsChangeUsername);
 	}
 
 	//Change username of the new person if is a "INA***" to
@@ -97,11 +98,11 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
 
 	    Object[] argsChangeUsername = { newUsernameNewPerson, infoPerson.getIdInternal(),
 		    RoleType.GRANT_OWNER };
-	    ServiceUtils.executeService(userView, "ChangePersonUsername", argsChangeUsername);
+	    ServiceUtils.executeService("ChangePersonUsername", argsChangeUsername);
 	}
 
 	Object[] argsNewGrantOwner = { infoGrantOwner };
-	ServiceUtils.executeService(userView, "EditGrantOwner", argsNewGrantOwner);
+	ServiceUtils.executeService("EditGrantOwner", argsNewGrantOwner);
 
 	request.setAttribute("correctionNumber1", "yes");
 	return mapping.findForward("correct-grant-owner");

@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -26,6 +25,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Ricardo Rodrigues
@@ -38,11 +39,11 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
             HttpServletResponse response) throws FenixFilterException, FenixServiceException,
             NonExistingActionException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         List institutions = null;
         try {
-            institutions = (List) ServiceUtils.executeService(userView, "ReadInstitutions", null);
+            institutions = (List) ServiceUtils.executeService("ReadInstitutions", null);
 
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException(ex.getMessage(), mapping
@@ -61,12 +62,12 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException, NonExistingActionException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
         String institutionName = (String) dynaForm.get("institutionName");
 
         try{
-            ServiceUtils.executeService(userView, "InsertInstitution", new Object[] { institutionName });
+            ServiceUtils.executeService("InsertInstitution", new Object[] { institutionName });
         }catch(FenixServiceException e){
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("", new ActionMessage(e.getMessage()));
@@ -76,7 +77,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
 
         List institutions = null;
         try {
-            institutions = (List) ServiceUtils.executeService(userView, "ReadInstitutions", null);
+            institutions = (List) ServiceUtils.executeService("ReadInstitutions", null);
 
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException(ex.getMessage(), mapping
@@ -92,7 +93,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException, NonExistingActionException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
         Integer institutionID = (Integer) dynaForm.get("institutionID");
         String nonAffiliatedTeacherNameToInsert = (String) dynaForm
@@ -109,7 +110,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
         Object[] args = { nonAffiliatedTeacherNameToInsert, institutionID };
 
         try {
-            ServiceUtils.executeService(userView, "InsertNonAffiliatedTeacher", args);
+            ServiceUtils.executeService("InsertNonAffiliatedTeacher", args);
         } catch (NotExistingServiceException e) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add("", new ActionMessage(e.getMessage()));
@@ -122,7 +123,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
         }
         List institutions = null;
         try {
-            institutions = (List) ServiceUtils.executeService(userView, "ReadInstitutions", null);
+            institutions = (List) ServiceUtils.executeService("ReadInstitutions", null);
 
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException(ex.getMessage(), mapping
@@ -137,18 +138,18 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
             HttpServletResponse response) throws FenixFilterException, FenixServiceException,
             NonExistingActionException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
         String nonAffiliatedTeacherNameToInsert = (String) dynaForm.get("nonAffiliatedTeacherName");
 
-        List nonAffiliatedTeachers = (List) ServiceUtils.executeService(userView,
+        List nonAffiliatedTeachers = (List) ServiceUtils.executeService(
                 "ReadNonAffiliatedTeachersByName", new Object[] { nonAffiliatedTeacherNameToInsert });
 
         request.setAttribute("nonAffiliatedTeachers", nonAffiliatedTeachers);
 
         List institutions = null;
         try {
-            institutions = (List) ServiceUtils.executeService(userView, "ReadInstitutions", null);
+            institutions = (List) ServiceUtils.executeService("ReadInstitutions", null);
 
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException(ex.getMessage(), mapping
@@ -164,7 +165,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException, FenixActionException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Integer executionCourseID = new Integer(request.getParameter("executionCourseId"));
         Integer nonAffiliatedTeacherID = new Integer(request.getParameter("nonAffiliatedTeacherID"));
 
@@ -179,7 +180,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
         Object args[] = { nonAffiliatedTeacherID, executionCourseID };
 
         try {
-            ServiceUtils.executeService(userView, "InsertProfessorShipNonAffiliatedTeacher", args);
+            ServiceUtils.executeService("InsertProfessorShipNonAffiliatedTeacher", args);
 
         } catch (NonExistingServiceException ex) {
             throw new NonExistingActionException(ex.getMessage(), mapping

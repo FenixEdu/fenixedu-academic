@@ -31,6 +31,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.security.UserView;
+
 /**
  * @author jpvl
  */
@@ -57,7 +59,7 @@ public abstract class RequestUtils {
 	    InfoExecutionPeriod infoExecutionPeriod = getExecutionPeriodFromRequest(request);
 	    String code = request.getParameter("exeCode");
 	    Object[] args = { infoExecutionPeriod, code };
-	    infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService(null, "ReadExecutionCourse", args);
+	    infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService("ReadExecutionCourse", args);
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -76,7 +78,7 @@ public abstract class RequestUtils {
 
 	    if (year != null) {
 		Object[] args = { year };
-		infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(null, "ReadExecutionYear", args);
+		infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService("ReadExecutionYear", args);
 	    }
 
 	} catch (FenixServiceException e) {
@@ -97,7 +99,7 @@ public abstract class RequestUtils {
 
 	    if (name != null & infoExecutionYear != null) {
 		Object[] args = { name, infoExecutionYear };
-		infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(null, "ReadExecutionPeriod", args);
+		infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService("ReadExecutionPeriod", args);
 	    }
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -111,7 +113,7 @@ public abstract class RequestUtils {
 	try {
 	    InfoExecutionCourse infoExecutionCourse = getExecutionCourseFromRequest(request);
 	    Object[] args = { infoExecutionCourse };
-	    infoSite = (InfoSite) ServiceUtils.executeService(null, "ReadSite", args);
+	    infoSite = (InfoSite) ServiceUtils.executeService("ReadSite", args);
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -131,7 +133,7 @@ public abstract class RequestUtils {
 	    try {
 		InfoExecutionCourse infoExecutionCourse = getExecutionCourseFromRequest(request);
 		Object[] args = { infoExecutionCourse };
-		infoSite = (InfoSite) ServiceUtils.executeService(null, "ReadSite", args);
+		infoSite = (InfoSite) ServiceUtils.executeService("ReadSite", args);
 
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
@@ -161,7 +163,7 @@ public abstract class RequestUtils {
 	Object[] args1 = { infoExecutionYear, degreeInitials, nameDegreeCurricularPlan };
 
 	try {
-	    infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(null,
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
 		    "ReadExecutionDegreesByExecutionYearAndDegreeInitials", args1);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -220,16 +222,16 @@ public abstract class RequestUtils {
     public static final InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws FenixActionException,
 	    FenixFilterException {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	// Read executionPeriod from request
 	InfoExecutionPeriod infoExecutionPeriod = RequestUtils.getExecutionPeriodFromRequest(request);
 
 	// If executionPeriod not in request nor in DB, read current
 	if (infoExecutionPeriod == null) {
-	    userView = SessionUtils.getUserView(request);
+	    userView = UserView.getUser();
 	    try {
-		infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadCurrentExecutionPeriod",
+		infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService("ReadCurrentExecutionPeriod",
 			new Object[0]);
 	    } catch (FenixServiceException e) {
 		e.printStackTrace();

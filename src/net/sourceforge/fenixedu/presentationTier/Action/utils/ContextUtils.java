@@ -38,14 +38,14 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.StringAppender;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -71,7 +71,7 @@ public class ContextUtils {
             // Read from database
             try {
                 Object[] args = { executionPeriodOID };
-                infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(null,
+                infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
                         "ReadExecutionPeriodByOID", args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
@@ -82,7 +82,7 @@ public class ContextUtils {
 
             // Read current execution period from database
             try {
-                infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(null,
+                infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
                         "ReadCurrentExecutionPeriod", new Object[0]);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
@@ -132,7 +132,7 @@ public class ContextUtils {
             // Read from database
             try {
                 Object[] args = { executionDegreeOID };
-                infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(null,
+                infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
                         "ReadExecutionDegreeByOID", args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
@@ -170,7 +170,7 @@ public class ContextUtils {
             // Read from database
             try {
                 Object[] args = { curricularYearOID };
-                infoCurricularYear = (InfoCurricularYear) ServiceUtils.executeService(null,
+                infoCurricularYear = (InfoCurricularYear) ServiceUtils.executeService(
                         "ReadCurricularYearByOID", args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
@@ -274,7 +274,7 @@ public class ContextUtils {
             // Read from database
             try {
                 Object[] args = { executionCourseOID };
-                infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService(null,
+                infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService(
                         "ReadExecutionCourseByOID", args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
@@ -309,7 +309,7 @@ public class ContextUtils {
             // Read from database
             try {
                 Object[] args = { shiftOID };
-                infoShift = (InfoShift) ServiceUtils.executeService(null, "ReadShiftByOID", args);
+                infoShift = (InfoShift) ServiceUtils.executeService("ReadShiftByOID", args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
             } catch (FenixFilterException e) {
@@ -343,7 +343,7 @@ public class ContextUtils {
             // Read from database
             try {
                 Object[] args = { classOID };
-                infoClass = (InfoClass) ServiceUtils.executeService(null, "ReadClassByOID", args);
+                infoClass = (InfoClass) ServiceUtils.executeService("ReadClassByOID", args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
             } catch (FenixFilterException e) {
@@ -375,7 +375,7 @@ public class ContextUtils {
             // Read from database
             try {
                 Object[] args = { lessonOID };
-                infoLesson = (InfoLesson) ServiceUtils.executeService(null, "ReadLessonByOID", args);
+                infoLesson = (InfoLesson) ServiceUtils.executeService("ReadLessonByOID", args);
             } catch (FenixServiceException e) {
                 e.printStackTrace();
             } catch (FenixFilterException e) {
@@ -398,7 +398,7 @@ public class ContextUtils {
 
         List selectedRooms = null;
         try {
-            selectedRooms = (List) ServiceManagerServiceFactory.executeService(null, "SelectRooms",
+            selectedRooms = (List) ServiceManagerServiceFactory.executeService( "SelectRooms",
                     argsSelectRooms);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -625,7 +625,7 @@ public class ContextUtils {
 
     public static List createExecutionDegreeList(HttpServletRequest request)
             throws FenixServiceException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
@@ -633,7 +633,7 @@ public class ContextUtils {
         /* Cria o form bean com as licenciaturas em execucao. */
         Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear() };
 
-        List executionDegreeList = (List) ServiceUtils.executeService(userView,
+        List executionDegreeList = (List) ServiceUtils.executeService(
                 "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
         List licenciaturas = new ArrayList();

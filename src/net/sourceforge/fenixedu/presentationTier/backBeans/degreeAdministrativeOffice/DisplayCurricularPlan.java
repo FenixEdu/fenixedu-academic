@@ -41,7 +41,7 @@ public class DisplayCurricularPlan extends FenixBackingBean {
     public List getDegreeCurricularPlans() throws FenixFilterException, FenixServiceException {
 
         Object[] args = { DegreeType.DEGREE };
-        List degreeCurricularPlans = (List) ServiceUtils.executeService(getUserView(),
+        List degreeCurricularPlans = (List) ServiceUtils.executeService(
                 "ReadActiveDegreeCurricularPlansByDegreeType", args);
 
         List<SelectItem> result = new ArrayList<SelectItem>(degreeCurricularPlans.size());
@@ -57,7 +57,7 @@ public class DisplayCurricularPlan extends FenixBackingBean {
     public List getExecutionYears() throws FenixFilterException, FenixServiceException {
 
         List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils.executeService(
-                getUserView(), "ReadNotClosedExecutionYears", (Object[]) null);
+                "ReadNotClosedExecutionYears", (Object[]) null);
 
         List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
         for (InfoExecutionYear executionYear : executionYears) {
@@ -74,7 +74,7 @@ public class DisplayCurricularPlan extends FenixBackingBean {
     public String getChoosenExecutionYear() throws FenixFilterException, FenixServiceException {
         
         Object[] args = { getChoosenExecutionYearID() };
-        InfoExecutionYear executionYear = (InfoExecutionYear) ServiceUtils.executeService(getUserView(),
+        InfoExecutionYear executionYear = (InfoExecutionYear) ServiceUtils.executeService(
                 "ReadExecutionYearByID", args);
         
         return executionYear.getYear();
@@ -88,7 +88,7 @@ public class DisplayCurricularPlan extends FenixBackingBean {
             Object[] args = { degreeCurricularPlanID, this.choosenExecutionYearID };
 
             Collection<DegreeModuleScope> degreeModuleScopes = (Collection<DegreeModuleScope>) ServiceManagerServiceFactory
-                    .executeService(getUserView(),
+                    .executeService(
                             "ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear",
                             args);
 

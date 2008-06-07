@@ -13,11 +13,12 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -29,8 +30,8 @@ public class ManageGrantProjectAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	Object[] args = { GrantProject.class.getName() };
-	IUserView userView = SessionUtils.getUserView(request);
-	List infoGrantProjectList = (List) ServiceUtils.executeService(userView,
+	IUserView userView = UserView.getUser();
+	List infoGrantProjectList = (List) ServiceUtils.executeService(
 		"ReadAllGrantPaymentEntitiesByClassName", args);
 
 	if (infoGrantProjectList != null && !infoGrantProjectList.isEmpty())

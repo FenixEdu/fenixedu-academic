@@ -34,7 +34,7 @@ public class UserPermissionCheck extends ExternalInterfaceDispatchAction {
             String username = request.getParameter("username");
 
             try {
-                Boolean result = (Boolean) ServiceManagerServiceFactory.executeService(null,
+                Boolean result = (Boolean) ServiceManagerServiceFactory.executeService(
                         "CheckIfUserCanAccessFile", new Object[] { username,
                                 dspaceBitstreamIdentification });
 

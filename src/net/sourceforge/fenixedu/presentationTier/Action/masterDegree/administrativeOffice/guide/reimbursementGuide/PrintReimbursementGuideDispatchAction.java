@@ -25,11 +25,12 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -41,7 +42,7 @@ public class PrintReimbursementGuideDispatchAction extends FenixDispatchAction {
     public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Integer reimbursementGuideId = new Integer(this.getFromRequest("id", request));
 
@@ -51,12 +52,12 @@ public class PrintReimbursementGuideDispatchAction extends FenixDispatchAction {
 
         Object args[] = { reimbursementGuideId };
         try {
-            infoReimbursementGuide = (InfoReimbursementGuide) ServiceUtils.executeService(userView,
+            infoReimbursementGuide = (InfoReimbursementGuide) ServiceUtils.executeService(
                     "ViewReimbursementGuide", args);
 
             Object args2[] = { infoReimbursementGuide.getInfoGuide().getInfoPerson() };
 
-            infoStudents = (List) ServiceUtils.executeService(userView, "ReadStudentsByPerson", args2);
+            infoStudents = (List) ServiceUtils.executeService("ReadStudentsByPerson", args2);
 
             Iterator it = infoStudents.iterator();
             while (it.hasNext()) {

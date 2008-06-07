@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixLookupDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -32,6 +31,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Fernanda Quitério 6/Jan/2003
@@ -143,7 +144,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 
     public ActionForward insertGratuityData(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	ActionErrors errors = new ActionErrors();
 	DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
 	maintainState(request, gratuityForm);
@@ -152,7 +153,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 
 	Object[] args = { infoGratuityValues };
 	try {
-	    ServiceManagerServiceFactory.executeService(userView, "InsertGratuityData", args);
+	    ServiceManagerServiceFactory.executeService( "InsertGratuityData", args);
 	} catch (FenixServiceException e) {
 	    if (e.getMessage().equals("impossible.insertGratuityValues")) {
 		errors.add("exception", new ActionError("error.impossible.insertGratuityValues",
@@ -174,7 +175,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 	infoGratuityValues = null;
 	Object argsRead[] = { degreeId };
 	try {
-	    infoGratuityValues = (InfoGratuityValues) ServiceUtils.executeService(userView,
+	    infoGratuityValues = (InfoGratuityValues) ServiceUtils.executeService(
 		    "ReadGratuityValuesByExecutionDegree", argsRead);
 	} catch (FenixServiceException ex) {
 	    errors.add("gratuityValues", new ActionError(ex.getMessage()));

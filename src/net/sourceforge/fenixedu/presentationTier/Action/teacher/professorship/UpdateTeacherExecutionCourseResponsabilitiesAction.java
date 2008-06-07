@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author jpvl
@@ -36,8 +37,8 @@ public class UpdateTeacherExecutionCourseResponsabilitiesAction extends Action {
                 .get("executionYearId");
         Object args[] = { teacherId, executionYearId, Arrays.asList(executionCourseResponsabilities) };
 
-        IUserView userView = SessionUtils.getUserView(request);
-        ServiceUtils.executeService(userView, "UpdateTeacherExecutionYearResponsabilities", args);
+        IUserView userView = UserView.getUser();
+        ServiceUtils.executeService("UpdateTeacherExecutionYearResponsabilities", args);
 
         return mapping.findForward("successfull-update");
     }

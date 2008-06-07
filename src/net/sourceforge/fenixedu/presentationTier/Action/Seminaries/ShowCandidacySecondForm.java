@@ -37,7 +37,7 @@ public class ShowCandidacySecondForm extends FenixAction {
         InfoStudent student = null;
         try {
             Object[] argsReadStudent = { userView.getUtilizador() };
-            student = (InfoStudent) ServiceManagerServiceFactory.executeService(userView,
+            student = (InfoStudent) ServiceManagerServiceFactory.executeService(
                     "ReadStudentByUsername", argsReadStudent);
         } catch (Exception e) {
             throw new FenixActionException();
@@ -67,20 +67,20 @@ public class ShowCandidacySecondForm extends FenixAction {
         ActionForward destiny = null;
         try {
             Object[] argsReadEquivalency = { equivalencyID };
-            equivalency = (InfoEquivalency) ServiceManagerServiceFactory.executeService(userView,
+            equivalency = (InfoEquivalency) ServiceManagerServiceFactory.executeService(
                     "Seminaries.GetEquivalency", argsReadEquivalency);
 
             //
             if (themeID != null) // we want the cases of ONE theme
             {
                 Object[] argsReadCases = { themeID };
-                cases = (List) ServiceManagerServiceFactory.executeService(userView,
+                cases = (List) ServiceManagerServiceFactory.executeService(
                         "Seminaries.GetCaseStudiesByThemeID", argsReadCases);
             } else // we want ALL the cases of the equivalency (its a "Completa"
             // modality)
             {
                 Object[] argsReadCases = { equivalencyID };
-                cases = (List) ServiceManagerServiceFactory.executeService(userView,
+                cases = (List) ServiceManagerServiceFactory.executeService(
                         "Seminaries.GetCaseStudiesByEquivalencyID", argsReadCases);
             }
         } catch (Exception e) {
@@ -107,10 +107,10 @@ public class ShowCandidacySecondForm extends FenixAction {
             infoCandidacy.setCaseStudyChoices(new LinkedList());
             try {
                 Object[] argsWriteCandidacy = { infoCandidacy };
-                ServiceManagerServiceFactory.executeService(userView, "Seminaries.WriteCandidacy",
+                ServiceManagerServiceFactory.executeService( "Seminaries.WriteCandidacy",
                         argsWriteCandidacy);
                 Object[] argsReadTheme = { themeID };
-                theme = (InfoTheme) ServiceManagerServiceFactory.executeService(userView,
+                theme = (InfoTheme) ServiceManagerServiceFactory.executeService(
                         "Seminaries.GetThemeById", argsReadTheme);
             } catch (Exception e) {
                 throw new FenixActionException();

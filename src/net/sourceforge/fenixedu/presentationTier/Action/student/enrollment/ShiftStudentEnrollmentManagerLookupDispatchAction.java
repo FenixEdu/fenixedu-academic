@@ -64,7 +64,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	final Integer executionCourseId = (Integer) form.get("wantedCourse");
 
 	try {
-	    ServiceManagerServiceFactory.executeService(userView, "WriteStudentAttendingCourse",
+	    ServiceManagerServiceFactory.executeService( "WriteStudentAttendingCourse",
 		    new Object[] { registration, executionCourseId });
 
 	} catch (NotAuthorizedException exception) {
@@ -104,7 +104,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	}
 
 	try {
-	    ServiceManagerServiceFactory.executeService(getUserView(request), "DeleteStudentAttendingCourse",
+	    ServiceManagerServiceFactory.executeService( "DeleteStudentAttendingCourse",
 		    new Object[] { registration, executionCourseId });
 
 	} catch (DomainException e) {
@@ -146,14 +146,14 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 
 	final IUserView userView = getUserView(request);
 	
-	final List infoClasslessons = (List) ServiceManagerServiceFactory.executeService(userView,
+	final List infoClasslessons = (List) ServiceManagerServiceFactory.executeService(
 		"ReadClassTimeTableByStudent",
 		new Object[] { registration, schoolClass, executionCourse });
 
 	request.setAttribute("infoClasslessons", infoClasslessons);
 	request.setAttribute("infoClasslessonsEndTime", Integer.valueOf(getEndTime(infoClasslessons)));
 
-	final List infoLessons = (List) ServiceManagerServiceFactory.executeService(userView,
+	final List infoLessons = (List) ServiceManagerServiceFactory.executeService(
 		"ReadStudentTimeTable", new Object[] { registration });
 
 	request.setAttribute("infoLessons", infoLessons);

@@ -22,10 +22,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
 import net.sourceforge.fenixedu.domain.assiduousness.Justification;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
-import pt.ist.fenixWebFramework.renderers.components.state.ViewState;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -36,6 +32,11 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.renderers.components.state.ViewState;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class AssiduousnessDispatchAction extends FenixDispatchAction {
 
     private final YearMonthDay firstMonth = new YearMonthDay(2006, 9, 1);
@@ -43,7 +44,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
     public ActionForward showEmployeeInfo(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
 	    FenixFilterException {
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	Employee employee = userView.getPerson().getEmployee();
 	if (employee == null) {
 	    ActionMessages actionMessages = new ActionMessages();
@@ -60,7 +61,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
     public ActionForward showClockings(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
 	    FenixFilterException {
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	Employee employee = userView.getPerson().getEmployee();
 	if (employee == null) {
 	    ActionMessages actionMessages = new ActionMessages();
@@ -119,7 +120,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
     public ActionForward showJustifications(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
 	    FenixFilterException {
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	Employee employee = userView.getPerson().getEmployee();
 	if (employee == null) {
 	    ActionMessages actionMessages = new ActionMessages();
@@ -165,7 +166,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
     public ActionForward showWorkSheet(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
 	    FenixFilterException {
-	final IUserView userView = SessionUtils.getUserView(request);
+	final IUserView userView = UserView.getUser();
 	Employee employee = userView.getPerson().getEmployee();
 	if (employee == null) {
 	    ActionMessages actionMessages = new ActionMessages();
@@ -204,7 +205,7 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
 		endDay);
 
 	Object[] args = { employee.getAssiduousness(), beginDate, endDate };
-	EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(userView,
+	EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService(
 		"ReadEmployeeWorkSheet", args);
 	request.setAttribute("employeeWorkSheet", employeeWorkSheet);
 	request.setAttribute("yearMonth", yearMonth);

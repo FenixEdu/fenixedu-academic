@@ -18,7 +18,7 @@ public class PersonBridge {
             FenixServiceException {
 
         Object[] args = { username };
-        InfoPerson person = (InfoPerson) ServiceUtils.executeService(null, "ReadPersonByUsername", args);
+        InfoPerson person = (InfoPerson) ServiceUtils.executeService("ReadPersonByUsername", args);
 
         return person.getNome();
     }

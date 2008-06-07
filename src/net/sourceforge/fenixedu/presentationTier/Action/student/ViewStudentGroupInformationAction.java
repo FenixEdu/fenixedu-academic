@@ -51,8 +51,8 @@ public class ViewStudentGroupInformationAction extends FenixContextAction {
 		
 		try {
 			
-			Integer type = (Integer) ServiceUtils.executeService(userView, "VerifyGroupingAndStudentGroupWithoutShift",argsAux);
-			viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService(userView, "ReadStudentGroupInformation", args);
+			Integer type = (Integer) ServiceUtils.executeService("VerifyGroupingAndStudentGroupWithoutShift",argsAux);
+			viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService("ReadStudentGroupInformation", args);
 			request.setAttribute("ShiftType",type);
 		}catch (ExistingServiceException e){
 			ActionErrors actionErrors = new ActionErrors();
@@ -83,7 +83,7 @@ public class ViewStudentGroupInformationAction extends FenixContextAction {
 		request.setAttribute("infoSiteStudentGroup", infoSiteStudentGroup);
 
         List<InfoExportGrouping> infoExportGroupings = (List<InfoExportGrouping>) ServiceUtils.
-                executeService(userView, "ReadExportGroupingsByGrouping", new Object[]{ groupPropertiesCode });
+                executeService( "ReadExportGroupingsByGrouping", new Object[]{ groupPropertiesCode });
         request.setAttribute("infoExportGroupings", infoExportGroupings);
 
 		return mapping.findForward("sucess");

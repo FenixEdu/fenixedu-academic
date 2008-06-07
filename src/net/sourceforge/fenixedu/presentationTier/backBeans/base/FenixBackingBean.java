@@ -20,6 +20,8 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjecti
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.Globals;
 
+import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
+
 public class FenixBackingBean {
 
     protected IUserView userView;
@@ -36,7 +38,7 @@ public class FenixBackingBean {
         final FacesContext facesContext = FacesContext.getCurrentInstance();
 
         final HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        userView = (IUserView) session.getAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE);
 
         final Locale locale = (Locale) session.getAttribute(Globals.LOCALE_KEY);
         facesContext.getViewRoot().setLocale(locale);

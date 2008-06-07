@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -30,6 +29,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 3/Dez/2003
@@ -59,26 +60,26 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 
     protected void getExecutionPeriod(HttpServletRequest request, Integer executionPeriodId)
             throws FenixServiceException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Object[] args = { executionPeriodId };
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
-                userView, "ReadExecutionPeriodByOID", args);
+                "ReadExecutionPeriodByOID", args);
 
         request.setAttribute("infoExecutionPeriod", infoExecutionPeriod);
     }
 
     protected void getSourceAndDestinationDegrees(HttpServletRequest request, Integer sourceDegreeId,
             Integer destinationDegreeId) throws FenixServiceException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Object[] args1 = { sourceDegreeId };
         Object[] args2 = { destinationDegreeId };
 
-        InfoDegree sourceInfoDegree = (InfoDegree) ServiceUtils.executeService(userView,
+        InfoDegree sourceInfoDegree = (InfoDegree) ServiceUtils.executeService(
                 "ReadDegreeByOID", args1);
-        InfoDegree destinationInfoDegree = (InfoDegree) ServiceUtils.executeService(userView,
+        InfoDegree destinationInfoDegree = (InfoDegree) ServiceUtils.executeService(
                 "ReadDegreeByOID", args2);
 
         request.setAttribute("sourceInfoDegree", sourceInfoDegree);
@@ -88,13 +89,13 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
     protected void getSourceAndDestinationExecutionCourses(HttpServletRequest request,
             Integer sourceDegreeId, Integer destinationDegreeId, Integer executionPeriodId)
             throws FenixServiceException, FenixFilterException {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         Object[] args1 = { destinationDegreeId, executionPeriodId };
         Object[] args2 = { sourceDegreeId, executionPeriodId };
-        List destinationExecutionCourses = (List) ServiceUtils.executeService(userView,
+        List destinationExecutionCourses = (List) ServiceUtils.executeService(
                 "ReadExecutionCoursesByDegreeAndExecutionPeriodId", args1);
-        List sourceExecutionCourses = (List) ServiceUtils.executeService(userView,
+        List sourceExecutionCourses = (List) ServiceUtils.executeService(
                 "ReadExecutionCoursesByDegreeAndExecutionPeriodId", args2);
 
         Collator collator = Collator.getInstance();
@@ -113,7 +114,7 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
         SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID); 
         degrees.addAll(RootDomainObject.getInstance().getDegrees()); 
         
-        List executionPeriods = (List) ServiceUtils.executeService(userView, "ReadAllExecutionPeriods",
+        List executionPeriods = (List) ServiceUtils.executeService("ReadAllExecutionPeriods",
                 new Object[0]);
 
         ComparatorChain comparator = new ComparatorChain();
@@ -140,7 +141,7 @@ public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
                 .get("destinationExecutionCourseId");
         Object[] args = { destinationExecutionCourseId, sourceExecutionCourseId };
 
-        ServiceUtils.executeService(userView, "MergeExecutionCourses", args);
+        ServiceUtils.executeService("MergeExecutionCourses", args);
 
         return mapping.findForward("sucess");
     }

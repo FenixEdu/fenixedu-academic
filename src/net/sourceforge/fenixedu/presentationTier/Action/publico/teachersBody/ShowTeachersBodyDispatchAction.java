@@ -58,13 +58,13 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
         	
             Object[] args = { executionYearId };
 
-            List executionDegrees = (List) ServiceUtils.executeService(null,
+            List executionDegrees = (List) ServiceUtils.executeService(
                     "ReadExecutionDegreesByExecutionYearId", args);
 
             List executionYears = (List) ServiceUtils
-                    .executeService(null, "ReadNotClosedExecutionYears", null);
+                    .executeService( "ReadNotClosedExecutionYears", null);
             
-            List departments = (List) ServiceUtils.executeService(null, "ReadAllDepartments", null);
+            List departments = (List) ServiceUtils.executeService("ReadAllDepartments", null);
             
             if (executionDegrees != null && executionDegrees.size() > 0) {
                 //put execution year in the form
@@ -141,7 +141,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
             Object[] args = { executionDegreeId, semester, teacherType };
 
-            List detailedProfessorShipsListofLists = (List) ServiceUtils.executeService(null,
+            List detailedProfessorShipsListofLists = (List) ServiceUtils.executeService(
                     "ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod", args);
             
             if((detailedProfessorShipsListofLists != null) && (!detailedProfessorShipsListofLists.isEmpty())) {
@@ -165,7 +165,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
             }
             
             Object[] oid = { executionDegreeId };
-            InfoExecutionDegree degree = (InfoExecutionDegree) ServiceUtils.executeService(null, "ReadExecutionDegreeByOID", oid);
+            InfoExecutionDegree degree = (InfoExecutionDegree) ServiceUtils.executeService("ReadExecutionDegreeByOID", oid);
             
             request.setAttribute("searchType", "Consulta Por Curso");
             request.setAttribute("searchTarget", degree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso() + " em " + 
@@ -198,7 +198,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
             Object[] args = { departmentId, executionYearId, semester, teacherType };
 
-            List detailedProfessorShipsListofLists = (List) ServiceUtils.executeService(null,
+            List detailedProfessorShipsListofLists = (List) ServiceUtils.executeService(
                     "ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod", args);
             
             if((detailedProfessorShipsListofLists != null) && (!detailedProfessorShipsListofLists.isEmpty())) {
@@ -222,7 +222,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
                 }
             
             Object[] oid = { departmentId };
-            InfoDepartment department = (InfoDepartment) ServiceUtils.executeService(null, "ReadDepartmentByOID", oid);
+            InfoDepartment department = (InfoDepartment) ServiceUtils.executeService("ReadDepartmentByOID", oid);
             
             request.setAttribute("searchType", "Consulta Por Departmento");
             request.setAttribute("searchTarget", department.getName());

@@ -14,7 +14,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.ist.fenixframework.FenixFramework;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -23,7 +22,6 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.struts.action.ActionForm;
@@ -32,6 +30,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.FenixFramework;
 import dml.DomainClass;
 import dml.Role;
 import dml.Slot;
@@ -192,7 +192,7 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IllegalAccessException,
 	    InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 
 	String classToMerge = (String) request.getParameter("classToMerge");
 	Integer object1IdInternal = Integer.valueOf(request.getParameter("object1IdInternal"));
@@ -206,7 +206,7 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 
 	Object[] args = { (sourceOrder == 1) ? domainObject1 : domainObject2, (sourceOrder == 1) ? domainObject2 : domainObject1,
 		slotName };
-	ServiceUtils.executeService(userView, "TransferDomainObjectProperty", args);
+	ServiceUtils.executeService("TransferDomainObjectProperty", args);
 
 	return chooseObjects(mapping, form, request, response);
 
@@ -216,13 +216,13 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
 	    throws FenixFilterException, FenixServiceException, IllegalAccessException, InvocationTargetException,
 	    NoSuchMethodException, ClassNotFoundException {
 
-	IUserView userView = SessionUtils.getUserView(request);
+	IUserView userView = UserView.getUser();
 	Integer objectIdInternal = Integer.valueOf(request.getParameter("objectIdInternal"));
 
 	final String classToMerge = request.getParameter("classToMerge");
 	Object[] args = { Class.forName(classToMerge), objectIdInternal };
 	try {
-	    ServiceUtils.executeService(userView, "DeleteObjectByOID", args);
+	    ServiceUtils.executeService("DeleteObjectByOID", args);
 	} catch (DomainException e) {
 	    e.printStackTrace();
 	    return chooseObjects(mapping, form, request, response);

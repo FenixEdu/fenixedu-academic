@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -22,6 +21,8 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * 
@@ -39,11 +40,11 @@ public class ConfirmMarksAction extends FenixDispatchAction {
 
         // Get students final evaluation
         Object args[] = { curricularCourseCode, null };
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
         try {
             infoSiteEnrolmentEvaluation = (InfoSiteEnrolmentEvaluation) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadStudentsFinalEvaluationForConfirmation", args);
+                    .executeService( "ReadStudentsFinalEvaluationForConfirmation", args);
         } catch (NonExistingServiceException e) {
             sendErrors(request, "nonExisting", "message.masterDegree.notfound.students");
             return mapping.findForward("ShowMarksManagementMenu");
@@ -93,11 +94,11 @@ public class ConfirmMarksAction extends FenixDispatchAction {
         MarksManagementDispatchAction.getFromRequest("degreeId", request);
 
         //		set final evaluation to final state
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Object args[] = { curricularCourseCode, null, userView };
         try {
             ServiceManagerServiceFactory
-                    .executeService(userView, "ConfirmStudentsFinalEvaluation", args);
+                    .executeService( "ConfirmStudentsFinalEvaluation", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

@@ -39,7 +39,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
         try {
             infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadPosGradStudentCurricularPlanById", args);
+                    .executeService( "ReadPosGradStudentCurricularPlanById", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -49,7 +49,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
         List branchList = null;
 
         try {
-            branchList = (List) ServiceManagerServiceFactory.executeService(userView,
+            branchList = (List) ServiceManagerServiceFactory.executeService(
                     "ReadBranchesByDegreeCurricularPlanId", argsBranches);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -124,7 +124,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
                 extraCurricularCourses, observations, branch, specialization };
 
         try {
-            ServiceManagerServiceFactory.executeService(userView,
+            ServiceManagerServiceFactory.executeService(
                     "EditPosGradStudentCurricularPlanStateAndCredits", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

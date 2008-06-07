@@ -5,13 +5,14 @@ import java.util.Stack;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
+
+import org.apache.commons.collections.Predicate;
+
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlList;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
-
-import org.apache.commons.collections.Predicate;
 
 public class ContentHierarchyTreeRenderer extends TreeRenderer {
 

@@ -21,11 +21,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class SpecialSeasonEnrolmentDispatchAction extends FenixDispatchAction {
 
@@ -111,7 +112,7 @@ public class SpecialSeasonEnrolmentDispatchAction extends FenixDispatchAction {
 		.getSpecialSeasonToEnrolSubmited();
 	if (!specialSeasonToEnrolSubmited.isEmpty()) {
 	    try {
-		ServiceUtils.executeService(getUserView(request), "CreateSpecialSeasonEvaluations",
+		ServiceUtils.executeService("CreateSpecialSeasonEvaluations",
 			new Object[] { specialSeasonEnrolmentBean.getStudent(),
 				specialSeasonEnrolmentBean.getExecutionYear(),
 				specialSeasonToEnrolSubmited });
@@ -144,7 +145,7 @@ public class SpecialSeasonEnrolmentDispatchAction extends FenixDispatchAction {
 	Collection<Enrolment> specialSeasonAlreadyEnroledSubmited = specialSeasonEnrolmentBean
 		.getSpecialSeasonAlreadyEnroledSubmited();
 	if (!specialSeasonAlreadyEnroledSubmited.isEmpty()) {
-	    ServiceUtils.executeService(getUserView(request), "DeleteSpecialSeasonEvaluations",
+	    ServiceUtils.executeService("DeleteSpecialSeasonEvaluations",
 		    new Object[] { specialSeasonAlreadyEnroledSubmited });
 	}
 
@@ -160,7 +161,7 @@ public class SpecialSeasonEnrolmentDispatchAction extends FenixDispatchAction {
 	RenderUtils.invalidateViewState();
 
 	try {
-	    ServiceUtils.executeService(getUserView(request), "ChangeSpecialSeasonCode", new Object[] {
+	    ServiceUtils.executeService("ChangeSpecialSeasonCode", new Object[] {
 		    specialSeasonEnrolmentBean.getStudent(),
 		    specialSeasonEnrolmentBean.getExecutionYear(),
 		    specialSeasonEnrolmentBean.getSpecialSeasonCode() });

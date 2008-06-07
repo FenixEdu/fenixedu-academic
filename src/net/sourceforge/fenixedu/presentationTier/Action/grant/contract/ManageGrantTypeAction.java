@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Barbosa
@@ -28,8 +29,8 @@ public class ManageGrantTypeAction extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	Object[] args = {};
-	IUserView userView = SessionUtils.getUserView(request);
-	List infoGrantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args);
+	IUserView userView = UserView.getUser();
+	List infoGrantTypeList = (List) ServiceUtils.executeService("ReadAllGrantTypes", args);
 
 	if (infoGrantTypeList != null && !infoGrantTypeList.isEmpty())
 	    request.setAttribute("infoGrantTypeList", infoGrantTypeList);

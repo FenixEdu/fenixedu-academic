@@ -138,6 +138,6 @@ public class ViewGenericContents extends FenixDispatchAction {
     }
 
     private boolean isAuthenticated(IUserView userView) {
-	return userView != null && !userView.isPublicRequester();
+	return userView != null;
     }
 }

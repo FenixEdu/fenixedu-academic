@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoActiveStudentCurricularPlanActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
 import net.sourceforge.fenixedu.util.SituationName;
 
@@ -47,6 +46,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -145,7 +146,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	    Object argsAux[] = { GraduationType.MASTER_DEGREE, types };
 	    List studentGuideList = null;
 	    try {
-		studentGuideList = (List) ServiceManagerServiceFactory.executeService(userView,
+		studentGuideList = (List) ServiceManagerServiceFactory.executeService(
 			"ReadCertificateList", argsAux);
 
 	    } catch (NonExistingServiceException e) {
@@ -167,7 +168,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 		Object args[] = { graduationType, infoExecutionDegree, number, requesterType,
 			contributorParty };
 
-		infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+		infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(
 			"PrepareCreateGuide", args);
 	    } catch (ExistingServiceException e) {
 		e.printStackTrace();
@@ -279,7 +280,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	try {
 	    Object args[] = { infoGuide, othersRemarks, othersPrice, remarks, situationOfGuide,
 		    paymentType };
-	    newInfoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(userView,
+	    newInfoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService(
 		    "CreateGuide", args);
 	} catch (InvalidSituationServiceException e) {
 	    Object object = new Object();
@@ -311,7 +312,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 		    Object args[] = { newInfoGuide.getInfoExecutionDegree().getIdInternal(),
 			    newInfoGuide.getInfoPerson().getIdInternal(),
 			    new SituationName(SituationName.PENDENTE_STRING) };
-		    ServiceManagerServiceFactory.executeService(userView, "CreateCandidateSituation",
+		    ServiceManagerServiceFactory.executeService( "CreateCandidateSituation",
 			    args);
 		} catch (FenixServiceException e) {
 		    throw new FenixActionException();
@@ -324,7 +325,7 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 		    try {
 			Object args[] = { newInfoGuide.getInfoPerson().getIdInternal(),
 				RandomStringGenerator.getRandomStringGenerator(8) };
-			ServiceManagerServiceFactory.executeService(userView, "ChangePersonPassword",
+			ServiceManagerServiceFactory.executeService( "ChangePersonPassword",
 				args);
 		    } catch (FenixServiceException e) {
 			throw new FenixActionException();

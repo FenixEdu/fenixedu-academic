@@ -31,7 +31,7 @@ public class ExecutionCourseAnnouncementManagement extends AnnouncementManagemen
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final SiteView siteView = (SiteView) ServiceUtils.executeService(getUserView(request), "ReadCourseInformation",
+        final SiteView siteView = (SiteView) ServiceUtils.executeService("ReadCourseInformation",
                 new Object[] { this.getRequestedExecutionCourseId(request) });
         request.setAttribute("siteView", siteView);
         return super.execute(mapping, actionForm, request, response);

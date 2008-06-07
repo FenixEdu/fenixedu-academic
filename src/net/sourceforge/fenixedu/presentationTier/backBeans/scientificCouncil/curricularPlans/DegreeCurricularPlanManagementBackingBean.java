@@ -147,8 +147,8 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     public List<SelectItem> getExecutionYearItems() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
 
-        final InfoExecutionYear currentInfoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(getUserView(), "ReadCurrentExecutionYear", new Object[] {});
-        final List<InfoExecutionYear> notClosedInfoExecutionYears = (List<InfoExecutionYear>) ServiceUtils.executeService(getUserView(), "ReadNotClosedExecutionYears", new Object[] {});
+        final InfoExecutionYear currentInfoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService( "ReadCurrentExecutionYear", new Object[] {});
+        final List<InfoExecutionYear> notClosedInfoExecutionYears = (List<InfoExecutionYear>) ServiceUtils.executeService( "ReadNotClosedExecutionYears", new Object[] {});
         for (final InfoExecutionYear notClosedInfoExecutionYear : notClosedInfoExecutionYears) {
             if (notClosedInfoExecutionYear.after(currentInfoExecutionYear)) {
                 result.add(new SelectItem(notClosedInfoExecutionYear.getIdInternal(), notClosedInfoExecutionYear.getYear()));
@@ -165,7 +165,7 @@ public class DegreeCurricularPlanManagementBackingBean extends FenixBackingBean 
     
     private String changeDegreeCurricularPlan(String serviceName, Object[] args, String successfulMsg, String errorMsg) {
         try {
-            ServiceUtils.executeService(this.getUserView(), serviceName, args);
+            ServiceUtils.executeService( serviceName, args);
         } catch (FenixFilterException e) {
             this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
             return "curricularPlansManagement";

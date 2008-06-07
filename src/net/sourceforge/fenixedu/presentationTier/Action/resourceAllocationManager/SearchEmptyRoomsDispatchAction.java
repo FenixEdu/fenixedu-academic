@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
@@ -100,7 +99,7 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
             }
             
             Object args[] = { startDate, endDate, startTime, endTime, weekDay, normalCapacity, FrequencyType.WEEKLY, Boolean.TRUE };            
-            List<InfoRoom> emptyRoomsList = (List<InfoRoom>) ServiceUtils.executeService(SessionUtils.getUserView(request), "ReadAvailableRoomsForExam", args);
+            List<InfoRoom> emptyRoomsList = (List<InfoRoom>) ServiceUtils.executeService("ReadAvailableRoomsForExam", args);
             Collections.sort(emptyRoomsList, new RoomAlphabeticComparator());            
             
             if (emptyRoomsList == null || emptyRoomsList.isEmpty()) {

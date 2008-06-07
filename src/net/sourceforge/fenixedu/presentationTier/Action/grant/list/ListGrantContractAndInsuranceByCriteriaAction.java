@@ -17,12 +17,13 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoListGrantOwner
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoSpanByCriteriaListGrantContract;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Pica
@@ -34,7 +35,7 @@ public class ListGrantContractAndInsuranceByCriteriaAction extends FenixDispatch
             HttpServletResponse response) throws Exception {
 
         DynaValidatorForm listForm = (DynaValidatorForm) form;
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         request.setAttribute("grantTypeList", createGrantTypeList(userView));
 
@@ -44,7 +45,7 @@ public class ListGrantContractAndInsuranceByCriteriaAction extends FenixDispatch
 
     public ActionForward prepareListGrantContractByCriteria(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner = null;
         if (verifyParameterInRequest(request, "argsInRequest")) {
             infoSpanByCriteriaListGrantOwner = populateInfoFromRequest(request);
@@ -127,12 +128,12 @@ public class ListGrantContractAndInsuranceByCriteriaAction extends FenixDispatch
             ActionForm form, HttpServletResponse response,
             InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner) throws Exception {
 
-            IUserView userView = SessionUtils.getUserView(request);
+            IUserView userView = UserView.getUser();
 
             // Read the grant contracts
             Object[] args = { infoSpanByCriteriaListGrantOwner };
 
-            Object[] result = (Object[]) ServiceUtils.executeService(userView,
+            Object[] result = (Object[]) ServiceUtils.executeService(
                     "ListGrantContractAndInsuranceByCriteria", args);
 
             List listGrantContracts = (List) result[0];
@@ -166,14 +167,14 @@ public class ListGrantContractAndInsuranceByCriteriaAction extends FenixDispatch
             grantOwnerId = new Integer(request.getParameter("grantOwnerId"));
         }
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         if (grantOwnerId != null) {
 
             // Read all the information about the grant owner
 	    Object[] args = { grantOwnerId };
 	    InfoListGrantOwnerComplete listGrantOwnerCompleteInfo = (InfoListGrantOwnerComplete) ServiceUtils
-		    .executeService(userView, "ShowGrantOwner", args);
+		    .executeService( "ShowGrantOwner", args);
 
 	    if (listGrantOwnerCompleteInfo != null) {
 		// Set the request
@@ -297,7 +298,7 @@ public class ListGrantContractAndInsuranceByCriteriaAction extends FenixDispatch
             FenixFilterException {
         // Read grant types for the contract
         Object[] args = {};
-        List grantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args);
+        List grantTypeList = (List) ServiceUtils.executeService("ReadAllGrantTypes", args);
         // Adding a select country line to the list (presentation reasons)
         InfoGrantType grantType = new InfoGrantType();
         grantType.setIdInternal(null);

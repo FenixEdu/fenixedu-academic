@@ -49,7 +49,7 @@ public class UnEnrollStudentInGroupDispatchAction extends FenixDispatchAction {
 
 		Object[] args1 = { null,null, studentGroupCode, userView.getUtilizador(), new Integer(3)};
 		try {
-			ServiceUtils.executeService(userView, "VerifyStudentGroupAtributes", args1);
+			ServiceUtils.executeService("VerifyStudentGroupAtributes", args1);
 
 		}catch (NotAuthorizedException e) {
 			ActionErrors actionErrors = new ActionErrors();
@@ -90,7 +90,7 @@ public class UnEnrollStudentInGroupDispatchAction extends FenixDispatchAction {
 		Object[] args = { studentGroupCode };
 
 		try {
-			viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService(userView, "ReadStudentGroupInformation", args);
+			viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService("ReadStudentGroupInformation", args);
 
 		} catch (InvalidSituationServiceException e) {
 			ActionErrors actionErrors = new ActionErrors();
@@ -124,7 +124,7 @@ public class UnEnrollStudentInGroupDispatchAction extends FenixDispatchAction {
 		Object[] args1 = { userName, studentGroupCode };
 		Boolean shiftWithGroups;
 		try {
-			shiftWithGroups = (Boolean) ServiceUtils.executeService(userView, "UnEnrollStudentInGroup", args1);
+			shiftWithGroups = (Boolean) ServiceUtils.executeService("UnEnrollStudentInGroup", args1);
 
 		}catch (NotAuthorizedException e) {
 			ActionErrors actionErrors = new ActionErrors();

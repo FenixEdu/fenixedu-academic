@@ -31,7 +31,7 @@ public class StrutsExampleDsipatchAction extends FenixDispatchAction {
         Collection infoExecutionPeriods = null;
         try {
             infoExecutionPeriods = (Collection) ServiceUtils
-                    .executeService(null, "ReadExecutionPeriods", args);
+                    .executeService( "ReadExecutionPeriods", args);
         } catch (FenixFilterException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipSupportLessonsDTO;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -21,6 +20,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author jpvl
@@ -37,14 +38,14 @@ public class ReadTeacherSupportLessonsAction extends Action {
      */
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         DynaActionForm professorShipForm = (DynaActionForm) form;
         Integer teacherId = (Integer) professorShipForm.get("teacherId");
         Integer executionCourseId = (Integer) professorShipForm.get("executionCourseId");
 
         Object args[] = { teacherId, executionCourseId };
         ProfessorshipSupportLessonsDTO professorshipSupportLessonsDTO = (ProfessorshipSupportLessonsDTO) ServiceUtils
-                .executeService(userView, "ReadProfessorshipSupportLessons", args);
+                .executeService( "ReadProfessorshipSupportLessons", args);
 
         ComparatorChain comparatorChain = new ComparatorChain();
 

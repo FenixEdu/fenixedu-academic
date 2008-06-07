@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.dataTransferObject.TypeLessonAndInfoShift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionError;
@@ -25,6 +24,8 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author João Mota
@@ -35,7 +36,7 @@ public class ShowShiftListAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         HttpSession session = request.getSession(false);
 
@@ -61,7 +62,7 @@ public class ShowShiftListAction extends Action {
         List shiftsList = new ArrayList();
 
         try {
-            shiftsList = (ArrayList) ServiceUtils.executeService(userView,
+            shiftsList = (ArrayList) ServiceUtils.executeService(
                     "ReadShiftsByTypeFromExecutionCourse", argsReadShiftsByType);
             if (!shiftsList.isEmpty()) {
                 request.setAttribute("shiftsList", shiftsList);
@@ -80,7 +81,7 @@ public class ShowShiftListAction extends Action {
             while (iterator.hasNext()) {
                 InfoShift element = (InfoShift) iterator.next();
                 Object[] args = { new ShiftKey(element.getNome(), element.getInfoDisciplinaExecucao()) };
-                List students = (ArrayList) ServiceUtils.executeService(userView, "LerAlunosDeTurno",
+                List students = (ArrayList) ServiceUtils.executeService("LerAlunosDeTurno",
                         args);
                 Integer vacancy = element.getLotacao();
 

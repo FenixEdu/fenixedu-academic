@@ -16,12 +16,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -40,16 +41,16 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm actionForm = (DynaActionForm) form;
         String degreeType = (String) actionForm.get("degreeType");
 
         Object[] args = { DegreeType.valueOf(degreeType) };
         Collection<InfoDegreeCurricularPlan> degreeCurricularPlans = (Collection<InfoDegreeCurricularPlan>) ServiceUtils
-                .executeService(userView, "ReadActiveDegreeCurricularPlansByDegreeType", args);
+                .executeService( "ReadActiveDegreeCurricularPlansByDegreeType", args);
 
-        List executionPeriods = (List) ServiceUtils.executeService(userView, "ReadNotClosedExecutionPeriods",
+        List executionPeriods = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods",
                 null);
         
         request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
@@ -63,14 +64,14 @@ public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
             FenixServiceException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
 
         DynaActionForm actionForm = (DynaActionForm) form;
         Integer[] degreeCurricularPlansIDs = (Integer[]) actionForm.get("degreeCurricularPlansIDs");
         Integer executionPeriodID = (Integer) actionForm.get("executionPeriodID");
 
         Object[] args = { degreeCurricularPlansIDs, executionPeriodID };
-        ServiceUtils.executeService(userView,
+        ServiceUtils.executeService(
                 "CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod", args);
 
         return mapping.findForward("createExecutionCoursesSuccess");

@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -20,6 +19,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * 
@@ -39,7 +40,7 @@ public class FindExternalPersonDispatchAction extends FenixDispatchAction {
 
     public ActionForward find(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         ActionErrors actionErrors = new ActionErrors();
 
         DynaActionForm findExternalPersonForm = (DynaActionForm) form;
@@ -50,7 +51,7 @@ public class FindExternalPersonDispatchAction extends FenixDispatchAction {
 
         try {
             if (!externalPersonName.equals(""))
-                infoExternalPersonsList = (ArrayList) ServiceUtils.executeService(userView,
+                infoExternalPersonsList = (ArrayList) ServiceUtils.executeService(
                         "SearchExternalPersonsByName", args);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

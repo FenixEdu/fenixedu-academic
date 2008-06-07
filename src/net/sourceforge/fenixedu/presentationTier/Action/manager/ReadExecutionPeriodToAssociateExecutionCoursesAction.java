@@ -21,13 +21,14 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author lmac1
@@ -37,14 +38,14 @@ public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixA
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = UserView.getUser();
         Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 
         Object args1[] = { curricularCourseId };
 
         List executionCoursesList = null;
         try {
-            executionCoursesList = (List) ServiceUtils.executeService(userView,
+            executionCoursesList = (List) ServiceUtils.executeService(
                     "ReadExecutionCoursesByCurricularCourse", args1);
 
         } catch (NonExistingServiceException e) {
@@ -66,7 +67,7 @@ public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixA
 
         Object args2[] = { unavailableExecutionPeriodsIds };
         try {
-            List infoExecutionPeriods = (List) ServiceUtils.executeService(userView,
+            List infoExecutionPeriods = (List) ServiceUtils.executeService(
                     "ReadAvailableExecutionPeriods", args2);
 
             if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {

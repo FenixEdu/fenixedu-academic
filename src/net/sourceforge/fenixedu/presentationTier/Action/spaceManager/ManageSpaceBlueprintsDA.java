@@ -19,8 +19,6 @@ import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.spaceBlueprints.SpaceBlueprintsDWGProcessor;
 
 import org.apache.commons.lang.StringUtils;
@@ -30,6 +28,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
@@ -68,7 +68,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 
 	Blueprint newBlueprint = null;
 	try {
-	    newBlueprint = (Blueprint) ServiceUtils.executeService(getUserView(request),
+	    newBlueprint = (Blueprint) ServiceUtils.executeService(
 		    "CreateNewBlueprintVersion", new Object[] { blueprintSubmissionBean });
 
 	} catch (DomainException ex) {
@@ -115,7 +115,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 	Blueprint blueprint = getSpaceBlueprintFromParameter(request);
 
 	try {
-	    ServiceUtils.executeService(getUserView(request), "EditBlueprintVersion", new Object[] {
+	    ServiceUtils.executeService("EditBlueprintVersion", new Object[] {
 		    blueprint, blueprintSubmissionBean });
 
 	} catch (DomainException ex) {
@@ -137,7 +137,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 	Blueprint blueprint = getSpaceBlueprintFromParameter(request);
 
 	try {
-	    ServiceUtils.executeService(getUserView(request), "DeleteBlueprintVersion",
+	    ServiceUtils.executeService("DeleteBlueprintVersion",
 		    new Object[] { blueprint });
 
 	} catch (DomainException ex) {
