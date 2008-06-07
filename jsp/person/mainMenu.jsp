@@ -17,8 +17,8 @@
 
 	<!-- Vigilancy link for people who do not have ROLE TEACHER -->
 
-	<logic:notEmpty name="UserView" property="person.vigilants">
-		<logic:notPresent name="UserView" property="person.teacher">
+	<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.vigilants">
+		<logic:notPresent name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher">
 	 		<li class="navheader"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></li>
 			<li><html:link  page="/vigilancy/vigilantManagement.do?method=prepareMap"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></html:link></li>
 		</logic:notPresent>

@@ -40,7 +40,7 @@
 		<logic:present name="assiduousnessStatusHistory">
 			<fr:edit name="assiduousnessStatusHistory" schema="edit.employeeStatus"
 				action="<%="/viewEmployeeAssiduousness.do?method=showStatus&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
-				<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
+				<fr:hidden slot="modifiedBy" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 			</fr:edit>
 		</logic:present>
 		
@@ -50,7 +50,7 @@
 				type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory"
 				action="<%="/viewEmployeeAssiduousness.do?method=showStatus&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
 					<fr:hidden slot="assiduousness" name="employee" property="assiduousness"/>
-					<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
+					<fr:hidden slot="modifiedBy" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 					<fr:default slot="beginDate" name="beginDate"/>
 				</fr:create>
 			</logic:present>
@@ -59,7 +59,7 @@
 				type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory"
 				action="<%="/viewEmployeeAssiduousness.do?method=showStatus&month="+month.toString()+"&year="+year.toString()+"&employeeNumber="+employeeNumber.toString()%>">
 					<fr:hidden slot="assiduousness" name="employee" property="assiduousness"/>
-					<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
+					<fr:hidden slot="modifiedBy" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 				</fr:create>
 			</logic:notPresent>
 		</logic:notPresent>

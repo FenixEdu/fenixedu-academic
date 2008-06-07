@@ -72,7 +72,7 @@
     <div>
         <p><strong>Result</strong></p>
         <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
-            <fr:view name="UserView" scope="session"/>
+            <fr:view name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" scope="session"/>
         </div>
     </div>
 </div>
@@ -100,7 +100,7 @@
     <div>
         <p><strong>Result</strong></p>
         <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
-            <fr:view name="UserView" property="person" layout="tabular"/>
+            <fr:view name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" layout="tabular"/>
         </div>
     </div>
 </div>
@@ -128,7 +128,7 @@
 </p>
 
 <div style="border: 1px solid #000; padding: 20px 20px 20px 20px;">
-    <bean:define id="personId" name="UserView" property="person.idInternal"/>
+    <bean:define id="personId" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.idInternal"/>
     <pre>&lt;fr:view oid=&quot;<%= personId %>&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot; layout=&quot;tabular&quot;/&gt;</pre>
 </div>
 
@@ -234,7 +234,7 @@
     <div>
         <p><strong>Result</strong></p>
         <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
-            <fr:view name="UserView" property="person" layout="tabular" schema="person.simple-admin-info"/>
+            <fr:view name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" layout="tabular" schema="person.simple-admin-info"/>
         </div>
     </div>
 </div>
@@ -290,7 +290,7 @@
     <div>
         <p><strong>Result</strong></p>
         <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
-            <fr:view name="UserView" property="person" schema="person.simple-admin-info">
+            <fr:view name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="person.simple-admin-info">
                 <fr:layout name="tabular">
                     <fr:property name="classes" value="style1"/>
                     <fr:property name="columnClasses" value="listClasses,"/>
@@ -390,7 +390,7 @@
     <div>
         <p><strong>Result</strong></p>
         <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
-            <fr:view name="UserView" property="person" schema="person.simple-admin-info.extended">
+            <fr:view name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="person.simple-admin-info.extended">
                 <fr:layout name="tabular">
                     <fr:property name="classes" value="style1"/>
                     <fr:property name="columnClasses" value="listClasses,"/>
@@ -459,7 +459,7 @@
     <div>
         <p><strong>Result</strong></p>
         <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
-            <fr:view name="UserView" property="person" schema="person.simple-admin-info.extended" layout="nice-details-table"/>
+            <fr:view name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="person.simple-admin-info.extended" layout="nice-details-table"/>
         </div>
     </div>
 </div>
@@ -501,7 +501,7 @@
     <div>
         <p><strong>Result</strong></p>
         <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
-            <fr:view name="UserView" property="person">
+            <fr:view name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person">
                 <fr:layout name="template">
                     <fr:property name="template" value="/manager/renderers/template.jsp"/>
                 </fr:layout>

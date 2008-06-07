@@ -82,7 +82,7 @@
     <div>
         <p><strong>Result</strong></p>
         <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
-             <fr:edit id="input" name="UserView" property="person" schema="person.simple-edit">
+             <fr:edit id="input" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="person.simple-edit">
                 <fr:layout name="tabular">
                     <fr:property name="classes" value="style1"/>
                     <fr:property name="columnClasses" value="listClasses,,"/>
@@ -149,7 +149,7 @@
     <div>
         <p><strong>Result</strong></p>
         <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
-            <fr:edit id="validate" name="UserView" property="person" schema="person.simple-edit-validated">
+            <fr:edit id="validate" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="person.simple-edit-validated">
                 <fr:layout name="tabular">
                     <fr:property name="classes" value="style1"/>
                     <fr:property name="columnClasses" value="listClasses,,"/>
@@ -399,7 +399,7 @@ public class RegexpValidator extends HtmlValidator {
                     <fr:property name="columnClasses" value="listClasses,,"/>
                 </fr:layout>
                 
-                <fr:default slot="name" name="UserView" property="person.name"/>
+                <fr:default slot="name" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.name"/>
                 <fr:default slot="username" value="<%= "p" + 12345 %>"/>
                 <fr:default slot="idDocumentType" value="IDENTITY_CARD" 
                             converter="pt.ist.fenixWebFramework.renderers.converters.EnumConverter"/>
@@ -515,7 +515,7 @@ public class RegexpValidator extends HtmlValidator {
         <p><strong>Result</strong></p>
         <div style="border: 1px solid #000; padding: 20px 20px 20px 20px">
             <fr:create id="hidden" type="net.sourceforge.fenixedu.domain.Person" schema="person.create-minimal-defaults">
-                <fr:hidden slot="personRoles" multiple="true" name="UserView" property="person.personRoles"/>
+                <fr:hidden slot="personRoles" multiple="true" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.personRoles"/>
                 
                 <fr:layout name="tabular">
                     <fr:property name="classes" value="style1"/>
@@ -570,8 +570,8 @@ public class RegexpValidator extends HtmlValidator {
         <p><strong>Result</strong></p>
         <div style="border: 1px solid #000; padding: 20px 20px 20px 20px">
             <fr:create id="hidden" type="net.sourceforge.fenixedu.domain.Person" schema="person.create-minimal-defaults">
-                <fr:hidden slot="personRoles" name="UserView" property="person.personRoles[1]"/>
-                <fr:hidden slot="personRoles" name="UserView" property="person.personRoles[0]"/>
+                <fr:hidden slot="personRoles" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.personRoles[1]"/>
+                <fr:hidden slot="personRoles" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.personRoles[0]"/>
                 
                 <fr:layout name="tabular">
                     <fr:property name="classes" value="style1"/>

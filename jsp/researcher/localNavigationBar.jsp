@@ -34,7 +34,7 @@
 	</ul>
 	--%>
 	
-	<bean:define id="workingResearchUnits" name="UserView" property="person.workingResearchUnitsAndParents" type="java.util.List"/>
+	<bean:define id="workingResearchUnits" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.workingResearchUnitsAndParents" type="java.util.List"/>
 	<logic:notEmpty name="workingResearchUnits">
 	<ul>
 		<li class="navheader"><bean:message key="label.researchUnits" bundle="RESEARCHER_RESOURCES"/></li>

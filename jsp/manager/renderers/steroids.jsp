@@ -127,7 +127,7 @@
     <div>
         <p><strong>Result</strong></p>
         <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
-             <fr:edit id="input" name="UserView" property="person" schema="person.simple-edit"/>
+             <fr:edit id="input" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="person.simple-edit"/>
         </div>
     </div>
 </div>
@@ -187,22 +187,22 @@
                 <table border="1">
                     <tr>
                         <td>
-                            <fr:edit name="UserView" property="person" slot="name">
+                            <fr:edit name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" slot="name">
                                 <fr:layout>
                                     <fr:property name="size" value="50"/>
                                 </fr:layout>
                             </fr:edit>
                         </td>
                         <td>
-                            <fr:edit name="UserView" property="person" slot="gender"/>
+                            <fr:edit name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" slot="gender"/>
                         </td>
                         <td>
-                            <fr:edit name="UserView" property="person" slot="idDocumentType"/>
+                            <fr:edit name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" slot="idDocumentType"/>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <fr:edit name="UserView" property="person" slot="documentIdNumber">
+                            <fr:edit name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" slot="documentIdNumber">
                                 <fr:layout>
                                     <fr:property name="size" value="12"/>
                                     <fr:property name="maxLength" value="10"/>
@@ -210,10 +210,10 @@
                             </fr:edit>
                         </td>
                         <td>
-                            <fr:edit name="UserView" property="person" slot="expirationDateOfDocumentIdYearMonthDay"/>
+                            <fr:edit name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" slot="expirationDateOfDocumentIdYearMonthDay"/>
                         </td>
                         <td>
-                            <fr:edit name="UserView" property="person" slot="availablePhoto"/>
+                            <fr:edit name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" slot="availablePhoto"/>
                         </td>
                     </tr>
                 </table>
@@ -287,7 +287,7 @@
                 <table border="1">
                     <tr>
                         <td>
-                            <fr:edit id="person-name-validated" name="UserView" property="person" slot="name"
+                            <fr:edit id="person-name-validated" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" slot="name"
                                      validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
                                 <fr:layout>
                                     <fr:property name="size" value="50"/>

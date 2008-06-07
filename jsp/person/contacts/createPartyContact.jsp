@@ -11,7 +11,7 @@
 <fr:form action="/partyContacts.do">	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createPartyContact"/>
 
-	<bean:define id="person" name="UserView" property="person" />
+	<bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" />
 	
 	<fr:create schema="<%= "contacts." + partyContactName + ".manage-student" %>" type="<%= "net.sourceforge.fenixedu.domain.contacts." + partyContactName  %>" >
 		<fr:layout name="tabular-editable" >

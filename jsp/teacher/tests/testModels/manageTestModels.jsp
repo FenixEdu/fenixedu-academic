@@ -28,7 +28,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="columnClasses" value="width10em,," />
 			</fr:layout>
-			<fr:hidden slot="creator" name="UserView" property="person.teacher" />
+			<fr:hidden slot="creator" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher" />
 			<fr:destination name="invalid" path="/tests/testModels.do?method=createTestModel" />
 		</fr:create>
 		<html:submit><bean:message key="label.button.create" bundle="TESTS_RESOURCES" /></html:submit>

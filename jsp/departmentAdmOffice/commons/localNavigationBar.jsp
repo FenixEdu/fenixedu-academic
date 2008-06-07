@@ -162,7 +162,7 @@
         </html:link>
     </li>
     
-    <bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
+    <bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
     <bean:define id="site" name="person" property="employee.currentDepartmentWorkingPlace.departmentUnit.site" type="net.sourceforge.fenixedu.domain.UnitSite"/>
     <bean:define id="siteId" name="site" property="idInternal"/>
     

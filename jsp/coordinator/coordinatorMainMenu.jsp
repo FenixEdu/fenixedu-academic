@@ -9,7 +9,7 @@
 <%@ page import="net.sourceforge.fenixedu.domain.Degree" %>
 <%@ page import="net.sourceforge.fenixedu.domain.RootDomainObject" %>
 
-<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
+<bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 
 <logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
 	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session" type="InfoExecutionDegree" />

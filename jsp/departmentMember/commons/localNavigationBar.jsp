@@ -25,7 +25,7 @@
 			</html:link>
 		</li>
 		
-		<logic:notEmpty name="UserView" property="person.vigilants">
+		<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.vigilants">
 			<li>
 				<html:link page="/vigilancy/vigilantManagement.do?method=prepareMap">
 					<bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/>
@@ -145,7 +145,7 @@
 			
 		</logic:notEmpty>
 		
-		<logic:notEmpty name="UserView" property="person.protocols">
+		<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.protocols">
 			<ul style="margin-top: 1em">
 			<li class="navheader"><bean:message key="title.protocolsResponsible" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></li>
 			<li>

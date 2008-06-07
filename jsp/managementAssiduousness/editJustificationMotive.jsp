@@ -8,7 +8,7 @@
 <em class="invisible"><bean:message key="title.assiduousness" /></em>
 <logic:present name="justificationMotive">
 	<h2><bean:message key="link.editJustification" /></h2>
-	<bean:define id="employee" name="UserView" property="person.employee" />
+	<bean:define id="employee" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 
 	<p>
 	<span class="error0">
@@ -25,7 +25,7 @@
 				type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
 				schema="edit.justificationMotives"
 				action="assiduousnessParametrization.do?method=showJustificationMotives">
-				<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
+				<fr:hidden slot="modifiedBy" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 				<fr:destination name="invalid" path="/assiduousnessParametrization.do?method=sendErrorToEditJustificationMotive" />
 				<fr:layout>
 					<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
@@ -37,7 +37,7 @@
 				type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
 				schema="edit.usedJustificationMotives"
 				action="assiduousnessParametrization.do?method=showJustificationMotives">
-				<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
+				<fr:hidden slot="modifiedBy" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 				<fr:destination name="invalid" path="/assiduousnessParametrization.do?method=sendErrorToEditJustificationMotive" />
 				<fr:layout>
 					<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
@@ -58,7 +58,7 @@
 
 <logic:notPresent name="justificationMotive">
 	<h2><bean:message key="link.createJustification" /></h2>
-	<bean:define id="employee" name="UserView" property="person.employee" />
+	<bean:define id="employee" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 	
 	<p>	
 	<span class="error0">
@@ -72,7 +72,7 @@
 		type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
 		schema="create.justificationMotives"
 		action="assiduousnessParametrization.do?method=showJustificationMotives">
-		<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
+		<fr:hidden slot="modifiedBy" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 		<fr:destination name="invalid" path="/assiduousnessParametrization.do?method=sendErrorToEditJustificationMotive" />
 		<fr:layout>
 			<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>

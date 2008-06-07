@@ -58,7 +58,7 @@ white-space: nowrap;
 </logic:present>
 
 <logic:notPresent name="bean" property="selectedVigilantGroup">
-	<fr:view name="UserView" property="person.currentExamCoordinator.vigilantGroups">
+	<fr:view name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.currentExamCoordinator.vigilantGroups">
 			<fr:layout name="flowLayout">
 				<fr:property name="htmlSeparator" value=","/>
 				<fr:property name="eachLayout" value="values"/>

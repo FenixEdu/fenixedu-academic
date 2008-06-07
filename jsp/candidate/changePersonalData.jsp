@@ -16,25 +16,25 @@
 <fr:form action="/changePersonalData.do?method=change">
 
 	<p class="infoop"><span><h2 class="inline"><bean:message key="label.person.title.personal.info" /></h2></span></p>
-	<fr:edit id="personData" name="UserView" property="person" schema="candidate.personalData-edit" >
+	<fr:edit id="personData" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="candidate.personalData-edit" >
 	    <fr:layout name="tabular">
 	    </fr:layout>
 	</fr:edit>
 
 	<p class="infoop"><span><h2 class="inline"><bean:message key="label.person.title.filiation" /></h2></span></p>
-	<fr:edit id="personFiliation" name="UserView" property="person" schema="candidate.filiation-edit" >
+	<fr:edit id="personFiliation" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="candidate.filiation-edit" >
 	    <fr:layout name="tabular">
 	    </fr:layout>
 	</fr:edit>
 
 	<p class="infoop"><span><h2 class="inline"><bean:message key="label.person.title.addressInfo" /></h2></span></p>
-	<fr:edit id="personAddress" name="UserView" property="person" schema="candidate.address-edit" >
+	<fr:edit id="personAddress" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="candidate.address-edit" >
 	    <fr:layout name="tabular">
 	    </fr:layout>
 	</fr:edit>
 	
 	<p class="infoop"><span><h2 class="inline"><bean:message key="label.person.title.contactInfo" /></h2></span></p>
-	<fr:edit id="personContacts" name="UserView" property="person" schema="candidate.contacts-edit" >
+	<fr:edit id="personContacts" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="candidate.contacts-edit" >
 	    <fr:layout name="tabular">
 	    </fr:layout>
 	</fr:edit>

@@ -8,7 +8,7 @@
 </logic:present>
 
 <h2>
-	<bean:write name="UserView" property="person.name"/>, tens a certeza que sabes o que est�s a fazer?!? 
+	<bean:write name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.name"/>, tens a certeza que sabes o que est�s a fazer?!? 
 </h2>	
 <h2>
 	Pensa bem antes de fazeres #$%&!...

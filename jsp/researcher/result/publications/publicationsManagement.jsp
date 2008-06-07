@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present role="RESEARCHER">
-	<bean:define id="publications" name="UserView" property="person.researchResultPublications"/>
+	<bean:define id="publications" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.researchResultPublications"/>
 	<bean:define id="personId" name="person" property="idInternal"/>
 	
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="label.researchPortal"/></em>

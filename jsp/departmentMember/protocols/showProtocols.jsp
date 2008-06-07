@@ -15,8 +15,8 @@
 	</logic:iterate>
 </logic:notEmpty>
 
-<logic:notEmpty name="UserView" property="person.protocols">
-	<fr:view name="UserView" property="person.protocols" schema="show.protocol.toList">
+<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.protocols">
+	<fr:view name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.protocols" schema="show.protocol.toList">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight"/>
 			<fr:property name="link(view)" value="/protocols.do?method=viewProtocol" />

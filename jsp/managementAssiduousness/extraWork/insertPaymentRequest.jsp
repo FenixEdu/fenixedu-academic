@@ -7,7 +7,7 @@
 <em><bean:message key="title.extraWork" /></em>
 <h2><bean:message key="link.paymentRequest" /></h2>
 <p class="mtop2"><span class="error0"><html:errors /></span></p>
-<bean:define id="employee" name="UserView" property="person.employee" />
+<bean:define id="employee" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 <logic:present name="employeeExtraWorkRequestFactory">
 	<fr:view name="employeeExtraWorkRequestFactory" schema="show.extraWorkRequestHeader">
 		<fr:layout>
@@ -35,7 +35,7 @@
 					<fr:layout name="flow">
 						<fr:property name="labelTerminator" value=""/>
 					</fr:layout>
-					<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
+					<fr:hidden slot="modifiedBy" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 				</fr:edit>
 			</td>
 			<td class="acenter">

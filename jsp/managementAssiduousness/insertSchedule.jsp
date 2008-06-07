@@ -8,7 +8,7 @@
 <em class="invisible"><bean:message key="title.assiduousness" /></em>
 <h2><bean:message key="label.schedule"/></h2>
 
-<bean:define id="employee" name="UserView" property="person.employee" />
+<bean:define id="employee" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 
 <span class="error0 mtop0">
 	<html:messages id="validation" message="true">
@@ -35,7 +35,7 @@
 					<fr:layout name="flow">
 						<fr:property name="labelExcluded" value="true"/>
 					</fr:layout>
-					<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
+					<fr:hidden slot="modifiedBy" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 				</fr:edit>
 			</td>
 		</tr>

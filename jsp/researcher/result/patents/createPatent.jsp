@@ -12,7 +12,7 @@
 	
 	<!-- Author name -->
 	<p>
-		<bean:message bundle="RESEARCHER_RESOURCES" key="label.author"/>: <fr:view name="UserView" property="person.name"/>
+		<bean:message bundle="RESEARCHER_RESOURCES" key="label.author"/>: <fr:view name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.name"/>
 	</p>
 	
 	<%-- Warning/Error messages --%>
@@ -26,7 +26,7 @@
 	<fr:create id="createPatent" type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent" 
 				schema="patent.create"
 				action="/resultPatents/createPatent.do">
-		<fr:hidden slot="participation" name="UserView" property="person"/>
+		<fr:hidden slot="participation" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person"/>
 	    <fr:layout name="tabular">
 	        <fr:property name="classes" value="tstyle5 thright thlight mtop05"/>
 	        <fr:property name="columnClasses" value="listClasses,,tdclear tderror1"/>

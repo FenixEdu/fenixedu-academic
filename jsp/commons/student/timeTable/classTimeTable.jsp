@@ -14,12 +14,12 @@
 		<title><bean:message key="label.studentSchedule" bundle="APPLICATION_RESOURCES"/></title>
 	</head>
 	<body>
-		<logic:present name="UserView">
+		<logic:present name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>">
 		
 			<div class="mbottom2" style="font-size: 0.85em; margin-left: 3em;">
-				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.name" bundle="APPLICATION_RESOURCES"/></strong>: <bean:write name="UserView" property="person.name"/> </p>
-				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.studentNumber" bundle="APPLICATION_RESOURCES"/> </strong>: <bean:write name="UserView" property="person.student.number"/> </p>
-				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.istUsername" bundle="APPLICATION_RESOURCES"/> </strong>: <bean:write name="UserView" property="person.istUsername"/> </p>
+				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.name" bundle="APPLICATION_RESOURCES"/></strong>: <bean:write name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.name"/> </p>
+				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.studentNumber" bundle="APPLICATION_RESOURCES"/> </strong>: <bean:write name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.student.number"/> </p>
+				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.istUsername" bundle="APPLICATION_RESOURCES"/> </strong>: <bean:write name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.istUsername"/> </p>
 			</div>	
 
 		</logic:present>

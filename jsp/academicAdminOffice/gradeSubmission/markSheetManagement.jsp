@@ -10,7 +10,7 @@
 <ul>
 	<li><html:link action="/createMarkSheet.do?method=prepareCreateMarkSheet"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.createMarkSheet"/></html:link></li>
 	<li><html:link action="/printMarkSheetWeb.do?method=choosePrinterMarkSheetsWeb"> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.print.web.markSheets"/></html:link></li>
-	<logic:equal name="UserView" property="person.employee.administrativeOffice.administrativeOfficeType" value="DEGREE">
+	<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.administrativeOffice.administrativeOfficeType" value="DEGREE">
 		<li><html:link action="/markSheetSendMail.do?method=prepareSearchSendMail"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.send.mail"/></html:link></li>
 	</logic:equal>
 </ul>

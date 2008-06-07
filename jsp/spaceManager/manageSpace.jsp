@@ -12,7 +12,7 @@
 	<em><bean:message bundle="SPACE_RESOURCES" key="space.manager.page.title"/></em>
 	<h2><bean:message bundle="SPACE_RESOURCES" key="title.manage.space"/></h2>
 	
-	<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
+	<bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 	<bean:define id="selectedSpaceInformationIDString" type="java.lang.String"><bean:write name="selectedSpaceInformation" property="idInternal"/></bean:define>	
 	<bean:define id="space" name="selectedSpaceInformation" property="space" toScope="request"/>
 	

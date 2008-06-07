@@ -27,7 +27,7 @@
 	</tr>
 </table>
 
-<bean:define id="person" name="UserView" property="person"/>
+<bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person"/>
 <logic:messagesPresent message="true" property="contacts">
 	<ul class="nobullet list6">
 		<html:messages id="messages" property="contacts" message="true">
@@ -255,7 +255,7 @@
 	<p class="mtop15">
 		<bean:message key="label.homepage.name.instructions" bundle="HOMEPAGE_RESOURCES"/>
 	</p>
-	<fr:edit id="nickname" name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.nickname">
+	<fr:edit id="nickname" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="net.sourceforge.fenixedu.domain.Person.nickname">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thleft thlight mbottom05 thwhite"/>
 			<fr:property name="columnClasses" value=",,tdclear "/>
@@ -266,7 +266,7 @@
 	</html:submit>
 </fr:form>
 
-<fr:view name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.personal.info">
+<fr:view name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="net.sourceforge.fenixedu.domain.Person.personal.info">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thleft thlight mtop15 thwhite"/>
 	</fr:layout>	
@@ -280,7 +280,7 @@
 		<td class="infoop"><strong><bean:message key="label.person.login.info" /></strong></td>
 	</tr>
 </table>
-<fr:view name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.user.info">
+<fr:view name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="net.sourceforge.fenixedu.domain.Person.user.info">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>
 	</fr:layout>	
@@ -294,7 +294,7 @@
 		<td class="infoop"><strong><bean:message key="label.person.title.filiation" /></strong></td>
 	</tr>
 </table>
-<fr:view name="UserView" property="person" schema="net.sourceforge.fenixedu.domain.Person.family">
+<fr:view name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" schema="net.sourceforge.fenixedu.domain.Person.family">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>
 	</fr:layout>	
@@ -308,7 +308,7 @@
 		<td class="infoop"><strong><bean:message key="label.person.title.addressInfo" /></strong></td>
 	</tr>
 </table>
-<logic:iterate id="address" name="UserView" property="person.physicalAddresses">
+<logic:iterate id="address" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.physicalAddresses">
 	<fr:view name="address" schema="contacts.PhysicalAddress.view-for-student">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>

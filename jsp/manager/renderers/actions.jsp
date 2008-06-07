@@ -372,7 +372,7 @@ SearchBean bean = (SearchBean) viewState.getMetaObject().getObject();
     <div>
         <p><strong>Result</strong></p>
         <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
-             <fr:edit id="case-change" name="UserView" property="person" layout="tabular" schema="person.name"/>
+             <fr:edit id="case-change" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" layout="tabular" schema="person.name"/>
         </div>
     </div>
 </div>

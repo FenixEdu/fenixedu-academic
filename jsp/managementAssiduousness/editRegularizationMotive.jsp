@@ -9,7 +9,7 @@
 
 <logic:present name="justificationMotive">
 	<h2><bean:message key="link.editRegularization" /></h2>
-	<bean:define id="employee" name="UserView" property="person.employee" />
+	<bean:define id="employee" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 
 	<p>
 		<span class="error0">
@@ -23,7 +23,7 @@
 		type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
 		schema="edit.regularizationMotives"
 		action="assiduousnessParametrization.do?method=showRegularizationMotives">
-		<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
+		<fr:hidden slot="modifiedBy" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 		<fr:destination name="invalid" path="/assiduousnessParametrization.do?method=sendErrorToEditRegularizationMotive" />
 		<fr:layout>
 			<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
@@ -33,7 +33,7 @@
 </logic:present>
 <logic:notPresent name="justificationMotive">
 	<h2><bean:message key="link.createRegularization" /></h2>
-	<bean:define id="employee" name="UserView" property="person.employee" />
+	<bean:define id="employee" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 
 	<p>
 	<span class="error0 mtop0">
@@ -47,7 +47,7 @@
 		type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
 		schema="show.regularizationMotives"
 		action="assiduousnessParametrization.do?method=showRegularizationMotives">
-		<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
+		<fr:hidden slot="modifiedBy" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 		<fr:destination name="invalid" path="/assiduousnessParametrization.do?method=sendErrorToEditRegularizationMotive" />
 		<fr:layout>
 			<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>

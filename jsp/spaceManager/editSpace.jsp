@@ -92,7 +92,7 @@
 	</fr:hasMessages>				
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 		
-		<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
+		<bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 		<%
 			if(net.sourceforge.fenixedu.domain.space.Space.personIsSpacesAdministrator(person)){
 		%>
@@ -119,7 +119,7 @@
 	</logic:equal>
 	
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.RoomSubdivision">		
-		<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>		
+		<bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" type="net.sourceforge.fenixedu.domain.Person"/>		
 		<fr:edit id="editRoomSubdivision" name="selectedSpaceInformation" schema="EditRoomSubdivisionInformation" action="<%= url %>">
 			<fr:destination name="invalid" path="<%= invalidLink %>"/>
 			<fr:destination name="exception" path="<%= invalidLink %>"/>

@@ -56,7 +56,7 @@
 	
 		<bean:define id="infoSiteStudentInformation" name="infoSiteStudentAndGroup" property="infoSiteStudentInformation"/>
 		<bean:define id="infoStudentGroup" name="infoSiteStudentAndGroup" property="infoStudentGroup"/>
-		<bean:define id="username" name="UserView" property="utilizador" type="java.lang.String"/>
+		<bean:define id="username" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="utilizador" type="java.lang.String"/>
 		<logic:equal name="infoSiteStudentInformation" property="username" value="<%= username %>">
 			<tr class="highlight">
 				<td>

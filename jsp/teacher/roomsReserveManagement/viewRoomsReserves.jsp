@@ -77,7 +77,7 @@
 		<p><bean:message key="label.rooms.reserve.teacher.instructions" bundle="APPLICATION_RESOURCES"/></p>
 	</div>
 	
-	<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
+	<bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 
 	<ul class="mvert15">
 		<li>

@@ -21,7 +21,7 @@
 		<fr:edit id="editEmployeeDayJustificationType" name="employeeJustificationFactory"
 			type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory"
 			schema="edit.employeeDayJustificationType">
-			<fr:hidden slot="modifiedBy" name="UserView" property="person.employee" />
+			<fr:hidden slot="modifiedBy" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee" />
 			<fr:destination name="justificationMotivePostBack" path="/employeeAssiduousness.do?method=chooseInsertJustificationMotivePostBack" />
 			<fr:layout>
 				<fr:property name="classes" value="tstyle5 thlight mvert0 thright thmiddle"/>

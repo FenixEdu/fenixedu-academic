@@ -16,7 +16,7 @@
 	</p>
 </logic:messagesPresent>
 
-<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
+<bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 <%
 	if(net.sourceforge.fenixedu.domain.space.Space.personIsSpacesAdministrator(person)){
 %>

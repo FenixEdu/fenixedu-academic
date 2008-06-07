@@ -21,7 +21,7 @@
 		<p>
 	</logic:messagesPresent>	
 	
-	<bean:define id="person" name="UserView" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
+	<bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 
 	<p class="mtop15 mbottom025"><b><bean:message key="label.my.rooms.reserve.requests" bundle="SOP_RESOURCES"/>:</b></p>
 	
