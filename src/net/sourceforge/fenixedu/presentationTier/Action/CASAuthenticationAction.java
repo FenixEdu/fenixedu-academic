@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 import edu.yale.its.tp.cas.client.CASReceipt;
 
@@ -55,8 +56,6 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
     }
 
     private IUserView getCurrentUserView(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        return (IUserView) ((session != null) ? session.getAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE) : null);
-
+	return UserView.getUser();
     }
 }

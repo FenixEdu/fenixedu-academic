@@ -43,8 +43,6 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
             ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
-
         HttpSession session = request.getSession();
         InfoTeacher it = (InfoTeacher)session.getAttribute(SessionConstants.INFO_TEACHER);
         

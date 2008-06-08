@@ -15,7 +15,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
@@ -25,7 +24,6 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameF
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -99,12 +97,8 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
         DynaActionForm chooseExamContextoForm = (DynaActionForm) form;
 
-        SessionUtils.removeAttributtes(session, SessionConstants.CONTEXT_PREFIX);
-
-        if (session != null) {
             String[] selectedCurricularYears = (String[]) chooseExamContextoForm
                     .get("selectedCurricularYears");
 
@@ -161,10 +155,6 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
             } else {
                 return mapping.findForward("Licenciatura execucao inexistente");
             }
-
-        } else
-            throw new Exception();
-        // nao ocorre... pedido passa pelo filtro Autorizacao
 
         return mapping.findForward("showExamsMap");
 

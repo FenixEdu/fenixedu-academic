@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -16,7 +15,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.Util;
 
 import org.apache.struts.action.ActionForm;
@@ -134,8 +132,6 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
             HttpServletResponse response) throws Exception {
 
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
-        HttpSession session = request.getSession(true);
-        SessionUtils.removeAttributtes(session, SessionConstants.CONTEXT_PREFIX);
 
         Integer executionYear = (Integer) escolherContextoForm.get("indice");
 

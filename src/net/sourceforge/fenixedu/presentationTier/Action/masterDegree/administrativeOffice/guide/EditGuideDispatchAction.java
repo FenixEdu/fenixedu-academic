@@ -52,10 +52,7 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        if (session != null) {
             DynaActionForm editGuideForm = (DynaActionForm) form;
-
-            IUserView userView = getUserView(request);
 
             // Get the Information
             Integer guideNumber = new Integer(request.getParameter("number"));
@@ -81,16 +78,13 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
             session.setAttribute(SessionConstants.GUIDE, infoGuide);
 
             return mapping.findForward("EditReady");
-        }
-        throw new Exception();
+
     }
 
     public ActionForward editGuideSituation(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession(false);
-
-        if (session != null) {
 
             IUserView userView = getUserView(request);
             Integer guideYear = new Integer(request.getParameter("year"));
@@ -169,8 +163,6 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 
             return mapping.findForward("SituationChanged");
 
-        }
-        throw new Exception();
     }
 
     public ActionForward prepareEditInformation(ActionMapping mapping, ActionForm form,
@@ -178,9 +170,6 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        if (session != null) {
-
-            IUserView userView = getUserView(request);
             Integer guideYear = new Integer(request.getParameter("year"));
             Integer guideNumber = new Integer(request.getParameter("number"));
             Integer guideVersion = new Integer(request.getParameter("version"));
@@ -215,16 +204,12 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 
             return mapping.findForward("PrepareReady");
 
-        }
-        throw new Exception();
     }
 
     public ActionForward editGuideInformation(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
             DynaActionForm editGuideForm = (DynaActionForm) form;
-
-            IUserView userView = getUserView(request);
 
             Integer guideYear = new Integer(request.getParameter("year"));
             Integer guideNumber = new Integer(request.getParameter("number"));

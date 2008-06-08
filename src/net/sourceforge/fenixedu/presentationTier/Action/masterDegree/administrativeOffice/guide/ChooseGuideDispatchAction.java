@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -37,8 +36,6 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        if (session != null) {
-
             String action = request.getParameter("action");
             DynaActionForm chooseGuide = (DynaActionForm) form;
 
@@ -55,9 +52,6 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
             chooseGuide.set("guideYear", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
             return mapping.findForward("PrepareReady");
-        }
-
-        throw new Exception();
 
     }
 
@@ -65,8 +59,6 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
             DynaActionForm chooseGuide = (DynaActionForm) form;
-
-            IUserView userView = getUserView(request);
 
             // Get the Information
             Integer guideNumber = new Integer((String) chooseGuide.get("guideNumber"));
@@ -99,10 +91,6 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
 
         HttpSession session = request.getSession(false);
 
-        if (session != null) {
-
-            IUserView userView = getUserView(request);
-
             // Get the Information
             Integer guideNumber = new Integer(request.getParameter("number"));
             Integer guideYear = new Integer(request.getParameter("year"));
@@ -130,9 +118,7 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
             request.setAttribute(SessionConstants.GUIDE_LIST, guideList);
             request.setAttribute(SessionConstants.GUIDE, infoGuide);
             return mapping.findForward("ActionReady");
-        }
 
-        throw new Exception();
     }
 
 }

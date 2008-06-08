@@ -214,11 +214,6 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
             HttpServletResponse response) throws Exception {
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-        IUserView userView = UserView.getUser();
-
-        // SessionUtils.removeAttributtes(session,
-        // SessionConstants.CONTEXT_PREFIX);
-
         String nextPage = (String) request.getAttribute(SessionConstants.NEXT_PAGE);
         if (nextPage == null) {
             nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
@@ -233,8 +228,6 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
             request.setAttribute("anoCurricular", anoCurricular);
             request.setAttribute("semestre", semestre);
 
-            // List infoExecutionDegreeList = (List)
-            // session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY);
             Object argsLerLicenciaturas[] = { ((InfoExecutionPeriod) request
                     .getAttribute(SessionConstants.EXECUTION_PERIOD)).getInfoExecutionYear() };
             List infoExecutionDegreeList = (List) ServiceUtils.executeService(

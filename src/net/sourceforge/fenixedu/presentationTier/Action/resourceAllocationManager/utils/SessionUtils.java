@@ -23,14 +23,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 
-import org.apache.struts.Globals;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
@@ -39,13 +33,6 @@ import pt.ist.fenixWebFramework.security.UserView;
  * @author jpvl
  */
 public final class SessionUtils {
-
-    public static CurricularYearAndSemesterAndInfoExecutionDegree getContext(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-
-        return (CurricularYearAndSemesterAndInfoExecutionDegree) session
-                .getAttribute(SessionConstants.CONTEXT_KEY);
-    }
 
     public static List getExecutionCourses(HttpServletRequest request) throws Exception {
 
@@ -139,29 +126,6 @@ public final class SessionUtils {
                 session.removeAttribute((String) toRemoveAtts.elementAt(i));
             }
         }
-    }
-
-    /**
-     * @deprecated
-     * @param request
-     * @param mapping
-     * @throws FenixActionException
-     */
-    public static void validSessionVerification(HttpServletRequest request, ActionMapping mapping)
-            throws FenixActionException {
-
-        HttpSession session = request.getSession(false);
-
-        if (session == null
-                || request.getSession(false).getAttribute(SessionConstants.SESSION_IS_VALID) == null) {
-
-            ActionErrors errors = new ActionErrors();
-            ActionError error = new ActionError("error.invalid.session");
-            errors.add("error.invalid.session", error);
-            request.setAttribute(Globals.ERROR_KEY, errors);
-            throw new InvalidSessionActionException();
-        }
-
     }
 
 }

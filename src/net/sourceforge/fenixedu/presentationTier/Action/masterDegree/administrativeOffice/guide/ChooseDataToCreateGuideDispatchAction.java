@@ -21,95 +21,82 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class ChooseDataToCreateGuideDispatchAction extends FenixDispatchAction {
 
-    public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
+	HttpSession session = request.getSession(false);
 
-        if (session != null) {
+	session.removeAttribute(SessionConstants.MASTER_DEGREE_LIST);
 
-            session.removeAttribute(SessionConstants.MASTER_DEGREE_LIST);
+	DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
-            IUserView userView = getUserView(request);
+	Object args[] = { degreeType };
 
-            DegreeType degreeType = DegreeType.MASTER_DEGREE;
+	List result = null;
+	try {
+	    result = (List) ServiceManagerServiceFactory.executeService("ReadAllMasterDegrees", args);
+	} catch (NonExistingServiceException e) {
+	    throw new NonExistingActionException("O Degree de Mestrado", e);
+	}
 
-            Object args[] = { degreeType };
+	if ((result != null) && (result.size() > 0)) {
+	    request.setAttribute(SessionConstants.MASTER_DEGREE_LIST, result);
+	}
 
-            List result = null;
-            try {
-                result = (List) ServiceManagerServiceFactory.executeService(
-                        "ReadAllMasterDegrees", args);
-            } catch (NonExistingServiceException e) {
-                throw new NonExistingActionException("O Degree de Mestrado", e);
-            }
+	return mapping.findForward("DisplayMasterDegreeList");
 
-            if ((result != null) && (result.size() > 0)) {
-                request.setAttribute(SessionConstants.MASTER_DEGREE_LIST, result);
-            }
-
-            return mapping.findForward("DisplayMasterDegreeList");
-        }
-
-        throw new Exception();
     }
 
-    public ActionForward chooseMasterDegreeCurricularPlanFromList(ActionMapping mapping,
-            ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward chooseMasterDegreeCurricularPlanFromList(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-            IUserView userView = getUserView(request);
+	// Get the Chosen Master Degree
+	Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
+	if (masterDegreeID == null) {
+	    masterDegreeID = (Integer) request.getAttribute("degreeID");
+	}
 
-            //Get the Chosen Master Degree
-            Integer masterDegreeID = new Integer(request.getParameter("degreeID"));
-            if (masterDegreeID == null) {
-                masterDegreeID = (Integer) request.getAttribute("degreeID");
-            }
+	Object args[] = { masterDegreeID };
+	List result = null;
 
-            Object args[] = { masterDegreeID };
-            List result = null;
+	try {
 
-            try {
+	    result = (List) ServiceManagerServiceFactory.executeService("ReadCPlanFromChosenMasterDegree", args);
 
-                result = (List) ServiceManagerServiceFactory.executeService(
-                        "ReadCPlanFromChosenMasterDegree", args);
+	} catch (NonExistingServiceException e) {
+	    throw new NonExistingActionException("O plano curricular ", e);
+	}
 
-            } catch (NonExistingServiceException e) {
-                throw new NonExistingActionException("O plano curricular ", e);
-            }
+	if ((result != null) && (result.size() > 0)) {
+	    request.setAttribute(SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
+	}
 
-            if ((result != null) && (result.size() > 0)) {
-                request.setAttribute(SessionConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST, result);
-            }
-
-            return mapping.findForward("DisplayMasterDegreeCurricularPlanList");
+	return mapping.findForward("DisplayMasterDegreeCurricularPlanList");
     }
 
-    public ActionForward chooseExecutionDegreeFromList(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward chooseExecutionDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-            IUserView userView = getUserView(request);
+	// Get execution degrees for given degree curricular plan
+	Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));
+	if (curricularPlanID == null) {
+	    curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
+	}
 
-            //Get execution degrees for given degree curricular plan
-            Integer curricularPlanID = new Integer(request.getParameter("curricularPlanID"));
-            if (curricularPlanID == null) {
-                curricularPlanID = (Integer) request.getAttribute("curricularPlanID");
-            }
+	Object args[] = { curricularPlanID };
+	List result = null;
 
-            Object args[] = { curricularPlanID };
-            List result = null;
+	result = (List) ServiceManagerServiceFactory.executeService("ReadExecutionDegreesByDegreeCurricularPlanID", args);
 
-            result = (List) ServiceManagerServiceFactory.executeService(
-                    "ReadExecutionDegreesByDegreeCurricularPlanID", args);
+	if ((result != null) && (result.size() > 0)) {
+	    request.setAttribute(SessionConstants.EXECUTION_DEGREE_LIST, result);
+	}
 
-            if ((result != null) && (result.size() > 0)) {
-                request.setAttribute(SessionConstants.EXECUTION_DEGREE_LIST, result);
-            }
-
-            return mapping.findForward("DisplayExecutionDegreeList");
+	return mapping.findForward("DisplayExecutionDegreeList");
 
     }
 

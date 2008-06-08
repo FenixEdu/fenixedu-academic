@@ -77,9 +77,6 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-	final HttpSession session = request.getSession(false);
-	SessionUtils.removeAttributtes(session, SessionConstants.CONTEXT_PREFIX);
-
 	final ActionErrors errors = new ActionErrors();
 	final DynaActionForm chooseExamContextoForm = (DynaActionForm) form;
 

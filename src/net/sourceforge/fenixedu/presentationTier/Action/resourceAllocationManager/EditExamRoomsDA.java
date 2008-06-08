@@ -53,10 +53,6 @@ public class EditExamRoomsDA
         IUserView userView = UserView.getUser();
         DynaActionForm editExamRoomsForm = (DynaActionForm) form;
 
-        //InfoExam infoExam =
-        //	((InfoViewExamByDayAndShift) session
-        //		.getAttribute(SessionConstants.INFO_EXAMS_KEY))
-        //		.getInfoExam();
         ContextUtils.setExecutionCourseContext(request);
         InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
                 .getAttribute(SessionConstants.EXECUTION_COURSE);
@@ -126,10 +122,6 @@ public class EditExamRoomsDA
         IUserView userView = UserView.getUser();
         DynaActionForm editExamRoomsForm = (DynaActionForm) form;
 
-        //InfoViewExamByDayAndShift infoViewExamByDayAndShift =
-        //	(InfoViewExamByDayAndShift) session.getAttribute(
-        //		SessionConstants.INFO_EXAMS_KEY);
-        //InfoExam infoExam = infoViewExamByDayAndShift.getInfoExam();
         ContextUtils.setExecutionCourseContext(request);
         InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
                 .getAttribute(SessionConstants.EXECUTION_COURSE);
@@ -165,7 +157,6 @@ public class EditExamRoomsDA
         }
 
         infoViewExamByDayAndShift.setInfoExam(infoExam);
-        //session.removeAttribute(SessionConstants.INFO_EXAMS_KEY);
         request.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoViewExamByDayAndShift);
 
         List horas = Util.getExamShifts();

@@ -28,6 +28,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 
 public class AuthenticationExpiredAction extends FenixDispatchAction {
@@ -74,6 +75,7 @@ public class AuthenticationExpiredAction extends FenixDispatchAction {
 		final HttpSession session = request.getSession(true);
 
 		// Store the UserView into the session and return
+		UserView.setUser(userView);
 		session.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
 		session.setAttribute(SessionConstants.SESSION_IS_VALID, Boolean.TRUE);
 

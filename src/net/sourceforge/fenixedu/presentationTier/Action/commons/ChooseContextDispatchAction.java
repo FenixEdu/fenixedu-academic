@@ -15,7 +15,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -30,7 +29,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -205,11 +203,6 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
 
-        IUserView userView = UserView.getUser();
-
-        //SessionUtils.removeAttributtes(session,
-        // SessionConstants.CONTEXT_PREFIX);
-
         String nextPage = (String) request.getAttribute(SessionConstants.NEXT_PAGE);
         if (nextPage == null) {
             nextPage = request.getParameter(SessionConstants.NEXT_PAGE);
@@ -224,8 +217,6 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
             request.setAttribute("anoCurricular", anoCurricular);
             request.setAttribute("semestre", semestre);
 
-            //List infoExecutionDegreeList = (List)
-            // session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY);
             Object argsLerLicenciaturas[] = { ((InfoExecutionPeriod) request
                     .getAttribute(SessionConstants.EXECUTION_PERIOD)).getInfoExecutionYear() };
             List infoExecutionDegreeList = (List) ServiceUtils.executeService(
@@ -265,10 +256,7 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 
     public ActionForward nextPagePublic(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        HttpSession session = request.getSession(true);
         DynaActionForm escolherContextoForm = (DynaActionForm) form;
-
-        SessionUtils.removeAttributtes(session, SessionConstants.CONTEXT_PREFIX);
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
@@ -357,8 +345,6 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
      * 
      * @param request
      */
-    // TODO When session is removed from SOP, use method with same name from
-    // RequestUtils
     private InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws Exception {
 
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request

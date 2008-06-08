@@ -4,13 +4,10 @@ import java.util.List;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 
 /**
  * 
@@ -21,13 +18,7 @@ public class ListStudentThesis {
 
     private Integer degreeCurricularPlanID;
 
-    private IUserView userView;
-
     public ListStudentThesis() {
-
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext()
-                .getSession(false);
-        userView = (IUserView) session.getAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE);
     }
 
     public Integer getDegreeCurricularPlanID() {

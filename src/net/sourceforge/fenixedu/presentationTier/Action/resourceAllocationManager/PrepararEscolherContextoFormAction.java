@@ -34,17 +34,8 @@ public class PrepararEscolherContextoFormAction extends FenixContextAction {
 
         super.execute(mapping, form, request, response);
 
-            IUserView userView = UserView.getUser();
-
             InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
 
-            /* Criar o bean de semestres */
-            //			List semestres = new ArrayList();
-            //			semestres.add(new LabelValueBean("escolher", ""));
-            //			semestres.add(new LabelValueBean("1 º", "1"));
-            //			semestres.add(new LabelValueBean("2 º", "2"));
-            //			session.setAttribute("semestres", semestres);
-            /* Criar o bean de anos curricutares */
             List anosCurriculares = new ArrayList();
             anosCurriculares.add(new LabelValueBean("escolher", ""));
             anosCurriculares.add(new LabelValueBean("1 º", "1"));

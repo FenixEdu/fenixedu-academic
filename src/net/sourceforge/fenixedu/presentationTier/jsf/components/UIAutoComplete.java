@@ -12,7 +12,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.IntegerConverter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.DomainObject;
@@ -20,7 +19,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class UIAutoComplete extends UIInput {
 
@@ -78,8 +77,7 @@ public class UIAutoComplete extends UIInput {
     }
 
     private IUserView getUserView(FacesContext context) {
-        final HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-        return (IUserView) session.getAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE);
+	return UserView.getUser();
     }
 
     private String getInputTextValue(IUserView userView, String className, Integer idInternal,

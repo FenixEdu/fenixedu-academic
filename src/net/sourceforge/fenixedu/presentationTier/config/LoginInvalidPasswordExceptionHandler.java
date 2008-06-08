@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.config.ExceptionConfig;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 
 public class LoginInvalidPasswordExceptionHandler extends FenixExceptionHandler {
@@ -46,6 +47,7 @@ public class LoginInvalidPasswordExceptionHandler extends FenixExceptionHandler 
 	sessao = request.getSession(true);
 
 	// Store the UserView into the session and return
+	UserView.setUser(userView);
 	sessao.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
 	sessao.setAttribute(SessionConstants.SESSION_IS_VALID, new Boolean(true));
 

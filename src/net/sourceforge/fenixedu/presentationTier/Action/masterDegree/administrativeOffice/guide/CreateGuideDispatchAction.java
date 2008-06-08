@@ -66,7 +66,6 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 
 	DynaActionForm createGuideForm = (DynaActionForm) form;
 
-	if (session != null) {
 	    IUserView userView = getUserView(request);
 
 	    // Transport chosen Execution Degree
@@ -102,8 +101,6 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("chooseContributorBean", new CreateReceiptBean());
 
 	    return mapping.findForward("PrepareSuccess");
-	}
-	throw new Exception();
 
     }
 
@@ -112,11 +109,6 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	    FenixFilterException {
 
 	HttpSession session = request.getSession(false);
-
-	if (session != null) {
-	    // session.removeAttribute(SessionConstants.CERTIFICATE_LIST);
-
-	    IUserView userView = getUserView(request);
 
 	    DynaActionForm createGuideForm = (DynaActionForm) form;
 
@@ -213,8 +205,6 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	    }
 
 	    throw new FenixActionException("Unknown requester type!");
-	}
-	throw new FenixActionException();
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -229,7 +219,6 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	saveToken(request);
 
 	DynaActionForm createGuideForm = (DynaActionForm) form;
-	IUserView userView = getUserView(request);
 
 	session.removeAttribute(SessionConstants.PRINT_PASSWORD);
 	session.removeAttribute(SessionConstants.PRINT_INFORMATION);
@@ -258,8 +247,6 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
 	} catch (NumberFormatException e) {
 	    throw new InvalidInformationInFormActionException(new Throwable());
 	}
-
-	// session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.FALSE);
 
 	// Check if the Guide will have a "Payed" situation and if the payment
 	// type has been chosen

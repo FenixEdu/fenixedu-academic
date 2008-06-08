@@ -122,26 +122,6 @@ public abstract class RequestUtils {
 	return infoSite;
     }
 
-    public static final InfoSite getSiteFromAnyScope(HttpServletRequest request) throws FenixActionException,
-	    FenixFilterException {
-	InfoSite infoSite = null;
-	HttpSession session = request.getSession(true);
-
-	infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-	if (infoSite == null) {
-
-	    try {
-		InfoExecutionCourse infoExecutionCourse = getExecutionCourseFromRequest(request);
-		Object[] args = { infoExecutionCourse };
-		infoSite = (InfoSite) ServiceUtils.executeService("ReadSite", args);
-
-	    } catch (FenixServiceException e) {
-		throw new FenixActionException(e);
-	    }
-	}
-	return infoSite;
-    }
-
     public static final InfoExecutionDegree getExecutionDegreeFromRequest(HttpServletRequest request,
 	    InfoExecutionYear infoExecutionYear) throws FenixActionException, FenixFilterException {
 

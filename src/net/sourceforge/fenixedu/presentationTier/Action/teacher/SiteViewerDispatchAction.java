@@ -311,10 +311,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
     private void setFromRequest(HttpServletRequest request) {
 	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
-	if (infoExecutionDegree == null) {
-	    HttpSession session = request.getSession();
-	    infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.EXECUTION_DEGREE);
-	}
 
 	String shift = request.getParameter("shift");
 	if (shift == null)

@@ -81,8 +81,6 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 	return mapping.findForward("prepare");
     }
 
-    // TODO When session is removed from SOP, use method with same name from
-    // RequestUtils
     private InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws Exception {
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
 		.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
@@ -225,8 +223,6 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 
     public ActionForward nextPagePublic(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final HttpSession session = request.getSession(false);
-	SessionUtils.removeAttributtes(session, SessionConstants.CONTEXT_PREFIX);
 
 	final ActionErrors errors = new ActionErrors();
 	final DynaActionForm escolherContextoForm = (DynaActionForm) form;

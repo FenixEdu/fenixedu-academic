@@ -164,6 +164,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	final HttpSession newSession = request.getSession(true);
 
 	// Store the UserView into the session and return
+	UserView.setUser(userView);
 	newSession.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
 	newSession.setAttribute(SessionConstants.SESSION_IS_VALID, Boolean.TRUE);
 

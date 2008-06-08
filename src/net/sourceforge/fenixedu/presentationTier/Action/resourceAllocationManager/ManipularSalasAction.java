@@ -50,7 +50,7 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction {
     /**
      * Prepares the right information about the selected sala so that it can be
      * shown to the user. Places a java bean object with information about the
-     * selected sala in the attribute "salaFormBean" of the session and fowards
+     * selected sala in the attribute "salaFormBean" of the request and fowards
      * to the mapping "VerSala".
      */
     public ActionForward prepararVerSala(ActionMapping mapping, ActionForm form,
@@ -76,7 +76,7 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction {
     /**
      * Prepares the information about the selected sala so that it can be shown
      * to the user. Places a java bean object with information about the
-     * selected sala in the attribute "salaFormBean" of the session and forwards
+     * selected sala in the attribute "salaFormBean" of the request and forwards
      * to the mapping "EditarSala".
      */
     public ActionForward prepararEditarSala(ActionMapping mapping, ActionForm form,

@@ -68,8 +68,6 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	HttpSession session = request.getSession(false);
 
-	if (session != null) {
-
 	    DynaActionForm listCandidatesForm = (DynaActionForm) form;
 
 	    String action = request.getParameter("action");
@@ -88,8 +86,6 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    // Get the chosen exectionYear
 	    String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
 	    listCandidatesForm.set("executionYear", executionYear);
-
-	    IUserView userView = getUserView(request);
 
 	    // Get the Degree List
 
@@ -118,8 +114,6 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    session.setAttribute(SessionConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());
 
 	    return mapping.findForward("PrepareReady");
-	}
-	throw new Exception();
 
     }
 
@@ -128,11 +122,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	HttpSession session = request.getSession(false);
 
-	if (session != null) {
-
 	    DynaActionForm listCandidatesForm = (DynaActionForm) form;
-
-	    IUserView userView = getUserView(request);
 
 	    // Get the Information
 	    String degreeTypeTemp = (String) listCandidatesForm.get("specialization");
@@ -205,14 +195,12 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_QUERY, query);
 
 	    return mapping.findForward("ChooseCandidate");
-	}
-	throw new Exception();
+
     }
 
     public ActionForward chooseCandidate(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	    IUserView userView = getUserView(request);
 	    Integer personID = Integer.valueOf(request.getParameter("personID"));
 	    request.setAttribute("candidateID", new Integer(request.getParameter("candidateID")));
 
@@ -268,8 +256,6 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	    DynaActionForm editCandidateForm = (DynaActionForm) form;
-
-	    IUserView userView = getUserView(request);
 
 	    Integer candidateID = (Integer) request.getAttribute("candidateID");
 	    if (candidateID == null) {
@@ -327,8 +313,6 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	    DynaActionForm editCandidateForm = (DynaActionForm) form;
-
-	    IUserView userView = getUserView(request);
 
 	    Integer candidateID = (Integer) editCandidateForm.get("candidateID");
 
@@ -476,10 +460,6 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
 	HttpSession session = request.getSession(false);
 
-	if (session != null) {
-
-	    IUserView userView = getUserView(request);
-
 	    // Read the Candidate
 
 	    final Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
@@ -505,8 +485,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
 	    session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
 	    return mapping.findForward("ChangePasswordSuccess");
-	}
-	throw new Exception();
+
     }
 
     private void populateForm(DynaActionForm editCandidateForm,
