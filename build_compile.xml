@@ -150,158 +150,6 @@
 		<sequential>
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
-				<include name="IstFtpServerConfig.properties"/>
-				<replacefilter 
-		                 token="@ftp.IST.server.user@" 
-		                 property="ftp.IST.server.user"/>
-				<replacefilter 
-	                  token="@ftp.IST.server.pass@" 
-	                  property="ftp.IST.server.pass"/>
-				<replacefilter 
-	                 token="@ftp.IST.server.address@" 
-	                 property="ftp.IST.server.address"/>
-				<replacefilter 
-	                 token="@ftp.IST.scp.command@" 
-	                 property="ftp.IST.scp.command"/>
-				<replacefilter 
-	                 token="@ftp.IST.scp.args@" 
-	                 property="ftp.IST.scp.args"/>
-			</replace>
-
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
-				<include name="DegreeGradesFtpServerConfig.properties"/>
-				<replacefilter 
-    	             token="@ftp.degree.grades.server.user@" 
-	                 property="ftp.degree.grades.server.user"/>
-				<replacefilter 
-	                  token="@ftp.degree.grades.server.pass@" 
-	                  property="ftp.degree.grades.server.pass"/>
-				<replacefilter 
-	                 token="@ftp.degree.grades.server.address@" 
-	                 property="ftp.degree.grades.server.address"/>
-			</replace>
-
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
-				<include name="logAnalyser.properties"/>
-				<include name="log4j.xml"/>
-				<replacefilter token="@log.image.directory@"
-			  				   property="log.image.directory"/>
-				<replacefilter token="@log.profile.dir@"
-			  				   property="log.profile.dir"/>
-				<replacefilter token="@log.profile.filename@"
-			  				   property="log.profile.filename"/>
-			</replace>
-
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
-				<include name="SMSConfiguration.properties"/>
-				<replacefilter token="@sms.gateway.host@"
-			    			   property="sms.gateway.host"/>
-				<replacefilter token="@sms.gateway.port@"
-			    			   property="sms.gateway.port"/>
-				<replacefilter token="@sms.gateway.uri@"
-			    			   property="sms.gateway.uri"/>
-				<replacefilter token="@sms.gateway.protocol@"
-			    			   property="sms.gateway.protocol"/>
-				<replacefilter token="@sms.gateway.username@"
-			    			   property="sms.gateway.username"/>
-				<replacefilter token="@sms.gateway.password@"
-			    			   property="sms.gateway.password"/>
-				<replacefilter token="@sms.delivery.host@"
-			    			   property="sms.delivery.host"/>
-				<replacefilter token="@sms.delivery.port@"
-			    			   property="sms.delivery.port"/>
-				<replacefilter token="@sms.delivery.uri@"
-			    			   property="sms.delivery.uri"/>
-				<replacefilter token="@sms.delivery.protocol@"
-			    			   property="sms.delivery.protocol"/>
-				<replacefilter token="@sms.delivery.username@"
-			    			   property="sms.delivery.username"/>
-				<replacefilter token="@sms.delivery.password@"
-			    			   property="sms.delivery.password"/>
-			</replace>
-
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
-				<include name="GratuitySituationCreatorTask.properties"/>
-				<replacefilter token="@gratuity.situation.creator.task.hour@"
-		    			   property="gratuity.situation.creator.task.hour"/>
-			</replace>
-
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
-				<include name="configuration.properties"/>
-				<replacefilter token="@app.name@"
-		    			   property="app.name"/>
-				<replacefilter 
-				    token="@app.context@"
-				    property="app.context"/>
-				<replacefilter token="@login.page@"
-						   value="${login.page}"/>
-				<replacefilter token="@default.persistenceSupport@"
-		    			   property="default.persistenceSupport"/>
-				<replacefilter token="@db.user@"
-							   property="db.user"/>
-				<replacefilter token="@db.pass@" 
-							   property="db.pass"/>
-				<replacefilter token="@db.alias@"
-							   property="db.alias"/>
-				<replacefilter token="@cas.enabled@"
-			  			   property="cas.enabled"/>
-				<replacefilter token="@cas.loginUrl@"
-			  			   property="cas.loginUrl"/>
-				<replacefilter token="@cas.validateUrl@"
-			  			   property="cas.validateUrl"/>
-				<replacefilter token="@cas.logoutUrl@"
-			  			   property="cas.logoutUrl"/>
-				<replacefilter token="@password.generator@"
-		    			   property="password.generator"/>	
-				<replacefilter token="@language@"
-						   property="language"/>	
-				<replacefilter token="@location@"
-						   property="location"/>
-				<replacefilter token="@variant@"
-						   property="variant"/>
-				<replacefilter token="@sibs.entityCode@"
-						   property="sibs.entityCode"/>
-				<replacefilter token="@sibs.sourceInstitutionId@"
-						   property="sibs.sourceInstitutionId"/>
-				<replacefilter token="@sibs.destinationInstitutionId@"
-						   property="sibs.destinationInstitutionId"/>
-				<replacefilter token="@externalServices.StudentInfoByUsername.externalAppPassword@"
-						   property="externalServices.StudentInfoByUsername.externalAppPassword"/>
-				<replacefilter token="@year.for.from.mark.sheet.managment@"
-						   property="year.for.from.mark.sheet.managment"/>
-				<replacefilter token="@semester.for.from.mark.sheet.managment@"
-						   property="semester.for.from.mark.sheet.managment"/>
-				<replacefilter token="@year.for.from.enrolments@"
-						   property="year.for.from.enrolments"/>
-				<replacefilter token="@semester.for.from.enrolments@"
-						   property="semester.for.from.enrolments"/>
-				<replacefilter token="@year.for.from.enrolments.leec@"
-						   property="year.for.from.enrolments.leec"/>
-				<replacefilter token="@semester.for.from.enrolments.leec@"
-						   property="semester.for.from.enrolments.leec"/>				
-				<replacefilter token="@error.if.deleted.object.not.disconnected@"
-						   property="error.if.deleted.object.not.disconnected"/>
-				<replacefilter token="@error.if.changing.deleted.object@"
-						   property="error.if.changing.deleted.object"/>				
-				<replacefilter token="@webServices.external.urls@"
-						   property="webServices.external.urls"/>
-				<replacefilter token="@merge.units.emails@"
-						   property="merge.units.emails"/>
-				<replacefilter token="@start.year.for.bolonha.degrees@"
-						   property="start.year.for.bolonha.degrees"/>
-				<replacefilter token="@start.semester.for.bolonha.degrees@"
-						   property="start.semester.for.bolonha.degrees"/>
-				<replacefilter token="@filter.request.with.digest@"
-						   property="filter.request.with.digest"/>
-			</replace>
-
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
 				<include name="log4j.xml"/>
 				<replacefilter token="@log4j.email.smtp.host@"
 							   property="log4j.email.smtp.host"/>
@@ -319,50 +167,6 @@
 			  				   property="log.profile.filename"/>
 			</replace>
 
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
-				<include name="projectsManagement.properties"/>
-				<replacefilter token="@db.projectManagement.user@"
-							   property="db.projectManagement.user"/>
-				<replacefilter token="@db.projectManagement.pass@"
-							   property="db.projectManagement.pass"/>
-				<replacefilter token="@db.projectManagement.alias@"
-							   property="db.projectManagement.alias"/>
-			</replace>
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
-				<include name="giaf.properties"/>
-				<replacefilter token="@db.giaf.user@"
-							   property="db.giaf.user"/>
-				<replacefilter token="@db.giaf.pass@"
-							   property="db.giaf.pass"/>
-				<replacefilter token="@db.giaf.alias@"
-							   property="db.giaf.alias"/>
-			</replace>
-			
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-								 propertyFile="build.properties">
-							<include name="assiduousness.properties"/>
-			<replacefilter token="@db.assiduousness.user@"
-							   property="db.assiduousness.user"/>
-			<replacefilter token="@db.assiduousness.pass@" 
-			    			   property="db.assiduousness.pass"/>
-			<replacefilter token="@db.assiduousness.name@" 
-							   property="db.assiduousness.name"/>
-			<replacefilter token="@db.assiduousness.alias@" 
-			    			   property="db.assiduousness.alias"/>
-			<replacefilter token="@db.assiduousness.platform@" 
-			    			   property="db.assiduousness.platform"/>
-			<replacefilter token="@db.assiduousness.driver@" 
-			    			   property="db.assiduousness.driver"/>
-			<replacefilter token="@db.assiduousness.protocol@" 
-			    			   property="db.assiduousness.protocol"/>
-			<replacefilter token="@db.assiduousness.subprotocol@" 
-			    			   property="db.assiduousness.subprotocol"/>
-			<replacefilter token="@db.assiduousness.validationQuery@" 
-			    			   property="db.assiduousness.validationQuery"/>
-				</replace>
-
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}/resources"
 					 propertyFile="build.properties">
 				<include name="ApplicationResources*.properties"/>
@@ -370,19 +174,6 @@
 				<include name="ManagerResources*.properties"/>
 				<replacefilter token="@login.page@"
 							   value="${login.page}"/>
-			</replace>
-
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
-				<include name="logAnalyser.properties"/>
-				<replacefilter token="@login.page@"
-					  		   value="${login.page}"/>
-				<replacefilter token="@log.image.directory@"
-			  				   property="log.image.directory"/>
-				<replacefilter token="@log.profile.dir@"
-			  				   property="log.profile.dir"/>
-				<replacefilter token="@log.profile.filename@"
-			  				   property="log.profile.filename"/>
 			</replace>
 
 			<replace encoding="${encoding}" dir="${build.home.webinf}"
@@ -437,13 +228,6 @@
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
-				<include name="berserk.properties"/>
-				<replacefilter token="@application.filterBroker@"
-			  				   property="application.filterBroker"/>
-			</replace>
-			
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
 				<include name="FileManagerConfiguration.properties"/>
 				<replacefilter token="@file.manager.factory.implementation.class@" 
 			    			   property="file.manager.factory.implementation.class"/>
@@ -478,13 +262,6 @@
 				<replacefilter token="@rmi.stream.bytes.block@" 
 							property="rmi.stream.bytes.block"/>
 				
-			</replace>
-			
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-								 propertyFile="build.properties">
-							<include name="dspace.jndi.properties"/>
-							<replacefilter token="@something@"
-								property="rmi.stream.bytes.block"/>
 			</replace>
 			
 		</sequential>

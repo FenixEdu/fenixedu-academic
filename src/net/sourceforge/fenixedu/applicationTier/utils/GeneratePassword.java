@@ -23,7 +23,7 @@ public class GeneratePassword {
 
     private static IGeneratePassword getSpecificInstance() {
 	try {
-	    String stringClass = PropertiesManager.getProperty("passGenerator");
+	    String stringClass = PropertiesManager.getProperty("password.generator");
 	    Class clazz = Class.forName(stringClass);
 	    return (IGeneratePassword) clazz.newInstance();
 	} catch (Exception e) {

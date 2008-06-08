@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.persistenceTierOracle.Oracle;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,9 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesReport;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesResume;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentOpeningProjectFileReport;
@@ -25,6 +22,8 @@ import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentReport;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentRubric;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSummaryReport;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
+
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Susana Fernandes
@@ -40,18 +39,15 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
     private static Map connectionsMap = new HashMap();
 
     public class ConnectionProperties {
-	private String resourceFileName;
-
 	private String userNamePropertyName;
 
 	private String userPassPropertyName;
 
 	private String urlPropertyName;
 
-	public ConnectionProperties(String resourceFileName, String userNamePropertyName,
+	public ConnectionProperties(String userNamePropertyName,
 		String userPassPropertyName, String urlPropertyName) {
 	    super();
-	    this.resourceFileName = resourceFileName;
 	    this.userNamePropertyName = userNamePropertyName;
 	    this.userPassPropertyName = userPassPropertyName;
 	    this.urlPropertyName = urlPropertyName;
@@ -60,16 +56,16 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 
     private static ConnectionProperties connectionProperties;
 
-    public PersistentSuportOracle(String resourceFileName, String userNamePropertyName,
+    public PersistentSuportOracle(String userNamePropertyName,
 	    String userPassPropertyName, String urlPropertyName) {
 	super();
-	connectionProperties = new ConnectionProperties(resourceFileName, userNamePropertyName,
+	connectionProperties = new ConnectionProperties(userNamePropertyName,
 		userPassPropertyName, urlPropertyName);
     }
 
     public static synchronized PersistentSuportOracle getProjectDBInstance() {
 	if (instance == null) {
-	    instance = new PersistentSuportOracle("/projectsManagement.properties",
+	    instance = new PersistentSuportOracle(
 		    "db.projectManagement.user", "db.projectManagement.pass",
 		    "db.projectManagement.alias");
 	}
@@ -78,7 +74,7 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 
     public static synchronized PersistentSuportOracle getGiafDBInstance() {
 	if (instance == null) {
-	    instance = new PersistentSuportOracle("/giaf.properties", "db.giaf.user", "db.giaf.pass",
+	    instance = new PersistentSuportOracle("db.giaf.user", "db.giaf.pass",
 		    "db.giaf.alias");
 	}
 	return instance;
@@ -86,17 +82,9 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 
     private void openConnection() throws ExcepcaoPersistencia {
 	if (databaseUrl == null) {
-	    Properties properties = new Properties();
-	    InputStream inputStream = instance.getClass().getResourceAsStream(
-		    connectionProperties.resourceFileName);
-	    try {
-		properties.load(inputStream);
-	    } catch (IOException e) {
-		throw new ExcepcaoPersistencia(e.getMessage());
-	    }
-	    String DBUserName = properties.getProperty(connectionProperties.userNamePropertyName);
-	    String DBUserPass = properties.getProperty(connectionProperties.userPassPropertyName);
-	    String DBUrl = properties.getProperty(connectionProperties.urlPropertyName);
+	    String DBUserName = PropertiesManager.getProperty(connectionProperties.userNamePropertyName);
+	    String DBUserPass = PropertiesManager.getProperty(connectionProperties.userPassPropertyName);
+	    String DBUrl = PropertiesManager.getProperty(connectionProperties.urlPropertyName);
 	    if (DBUserName == null || DBUserPass == null || DBUrl == null) {
 		throw new ExcepcaoPersistencia();
 	    }

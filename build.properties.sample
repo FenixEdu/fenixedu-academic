@@ -156,15 +156,10 @@ filter.request.with.digest=true
 #   ftp.degree.grades.server.pass: 
 #   ftp.degree.grades.server.address: 
 #
-ftp.IST.server.user=ciist
-ftp.IST.server.pass=desenvolvimento
-ftp.IST.server.address=saladd2.ist.utl.pt
-ftp.IST.scp.command=command
-ftp.IST.scp.args=args
-
 ftp.degree.grades.server.user=user
 ftp.degree.grades.server.pass=pass
 ftp.degree.grades.server.address=address
+
 #
 #
 #------------------------------------------------------------------------------
@@ -248,17 +243,6 @@ log4j.email.smtp.host=
 log4j.email.smtp.from=Me
 log4j.email.smtp.to=You
 log4j.email.smtp.subject=Hello
-#
-#
-#------------------------------------------------------------------------------
-# ServiceManager Configuration
-#------------------------------------------------------------------------------
-#
-#   application.filterBroker: name of the filter broker that will be used in the application
-#		Possible values are:	- pt.utl.ist.berserk.logic.filterManager.FilterBroker
-#								- net.sourceforge.fenixedu.applicationTier.Filtro.FenixFilterBroker
-#
-application.filterBroker=pt.utl.ist.berserk.logic.filterManager.FilterBroker
 #
 #
 #------------------------------------------------------------------------------

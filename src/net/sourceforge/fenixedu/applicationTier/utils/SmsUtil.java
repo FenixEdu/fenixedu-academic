@@ -5,13 +5,12 @@
 package net.sourceforge.fenixedu.applicationTier.utils;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.utils.exceptions.FenixUtilException;
 import net.sourceforge.fenixedu.applicationTier.utils.exceptions.SmsSendUtilException;
 
@@ -68,30 +67,19 @@ public class SmsUtil {
      * Default constructor (reads "/SMSCofiguration.properties")
      */
     private SmsUtil() {
-
-        Properties properties = new Properties();
-
-        InputStream inputStream = getClass().getResourceAsStream("/SMSConfiguration.properties");
-        try {
-            properties.load(inputStream);
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-
-        this.host = properties.getProperty("host");
-        this.uri = properties.getProperty("host.uri");
-        this.port = (new Integer(properties.getProperty("host.port"))).intValue();
-        this.protocol = properties.getProperty("protocol");
-        this.username = properties.getProperty("username").trim();
-        this.password = properties.getProperty("password").trim();
-        this.monthlySmsLimit = (new Integer(properties.getProperty("monthlySmsLimit"))).intValue();
-        this.deliveryUsername = properties.getProperty("deliveryUsername").trim();
-        this.deliveryPassword = properties.getProperty("deliveryPassword").trim();
-        this.deliveryHost = properties.getProperty("deliveryHost");
-        this.deliveryPort = (new Integer(properties.getProperty("deliveryHost.port"))).intValue();
-        this.deliveryUri = properties.getProperty("deliveryHost.uri");
-        this.deliveryProtocol = properties.getProperty("deliveryProtocol");
-
+        this.host = PropertiesManager.getProperty("sms.gateway.host");
+        this.uri = PropertiesManager.getProperty("sms.gateway.uri");
+        this.port = (new Integer(PropertiesManager.getProperty("sms.gateway.port"))).intValue();
+        this.protocol = PropertiesManager.getProperty("sms.gateway.protocol");
+        this.username = PropertiesManager.getProperty("sms.gateway.username").trim();
+        this.password = PropertiesManager.getProperty("sms.gateway.password").trim();
+        this.monthlySmsLimit = (new Integer(PropertiesManager.getProperty("monthlySmsLimit"))).intValue();
+        this.deliveryUsername = PropertiesManager.getProperty("sms.delivery.username").trim();
+        this.deliveryPassword = PropertiesManager.getProperty("sms.delivery.password").trim();
+        this.deliveryHost = PropertiesManager.getProperty("sms.delivery.host");
+        this.deliveryPort = (new Integer(PropertiesManager.getProperty("sms.delivery.port"))).intValue();
+        this.deliveryUri = PropertiesManager.getProperty("sms.delivery.uri");
+        this.deliveryProtocol = PropertiesManager.getProperty("sms.delivery.protocol");
     }
 
     /**
