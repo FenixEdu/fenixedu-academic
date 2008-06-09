@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -23,6 +25,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -66,6 +69,8 @@ public class SendEmailBean implements Serializable {
 
     private Boolean allowChangeSender = Boolean.TRUE;
 
+    private DomainReference<Campus> campusDomainReference = null;
+
     public void send() throws FenixFilterException, FenixServiceException {
 	final Object[] args = { getToList(), getCCList(), getBCCList(), getFromName(), getFrom(), getSubject(), getMessageWithFooter() };
 	ServiceUtils.executeService("commons.SendMail", args);
@@ -104,7 +109,9 @@ public class SendEmailBean implements Serializable {
 	    for (final Person person : role.getAssociatedPersons()) {
 		if (!person.hasRole(RoleType.TEACHER)) {
 		    if (person.getEmail() != null && person.getEmail().length() > 0) {
-			emails.add(person.getEmail());
+			if (passesCampusCriteria(person)) {
+			    emails.add(person.getEmail());
+			}
 		    }
 		}
 	    }
@@ -115,9 +122,9 @@ public class SendEmailBean implements Serializable {
 	if(useReachers) {
 	    final Role role = Role.getRoleByRoleType(RoleType.RESEARCHER);
 	    for(final Person person : role.getAssociatedPersons()) {
-		    if (person.getEmail() != null && person.getEmail().length() > 0) {
-			emails.add(person.getEmail());
-		    }
+		if (person.getEmail() != null && person.getEmail().length() > 0) {
+		    emails.add(person.getEmail());
+		}
 	    }
 	}
 	final boolean students = getStudents().booleanValue();
@@ -149,7 +156,9 @@ public class SendEmailBean implements Serializable {
 			    || (masterDegreeStudents && degreeType == DegreeType.MASTER_DEGREE)) {
 			final String email = registration.getPerson().getEmail();
 			if (email != null && email.length() > 0) {
-			    emails.add(email);
+			    if (passesCampusCriteria(registration)) {
+				emails.add(email);
+			    }
 			}			
 		    }
 		}
@@ -188,6 +197,7 @@ public class SendEmailBean implements Serializable {
 	    addEmailsForCoordinatorsByDegreeType(emails, DegreeType.MASTER_DEGREE);
 	}
 
+	final Campus campus = getCampus();
 	final Boolean executionCourseResponsibles = getExecutionCourseResponsibles();
 	if (executionCourseResponsibles.booleanValue()) {
 	    final Collection<ExecutionYear> executionYears = RootDomainObject.getInstance().getExecutionYearsSet();
@@ -195,11 +205,13 @@ public class SendEmailBean implements Serializable {
 		if (executionYear.isCurrent()) {
 		    for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
 			for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
-			    for (final Professorship professorship : executionCourse.getProfessorships()) {
-				if (professorship.isResponsibleFor()) {
-				    final Teacher teacher = professorship.getTeacher();
-				    final Person person = teacher.getPerson();
-				    emails.add(person.getEmail());
+			    if (campus == null || executionCourse.functionsAt(campus)) {
+				for (final Professorship professorship : executionCourse.getProfessorships()) {
+				    if (professorship.isResponsibleFor()) {
+					final Teacher teacher = professorship.getTeacher();
+					final Person person = teacher.getPerson();
+					emails.add(person.getEmail());
+				    }
 				}
 			    }
 			}
@@ -212,23 +224,47 @@ public class SendEmailBean implements Serializable {
 	return emails;
     }
 
+    private boolean passesCampusCriteria(final Registration registration) {
+	final Campus campus = getCampus();
+	return campus == null || registration.getCampus() == campus;
+    }
+
+    private boolean passesCampusCriteria(final Person person) {
+	final Campus campus = getCampus();
+	if (campus != null) {
+	    final Employee employee = person.getEmployee();
+	    if (employee != null && employee.worksAt(campus)) {
+		return true;
+	    }
+
+	    final Teacher teacher = person.getTeacher();
+	    if (teacher != null && teacher.teachesAt(campus)) {
+		return true;
+	    }
+	}
+	return true;
+    }
+
     private void addEmails(final List<String> emails, final RoleType roleType) {
 	final Role role = Role.getRoleByRoleType(roleType);
 	for (final Person person : role.getAssociatedPersons()) {
 	    if (person.getEmail() != null && person.getEmail().length() > 0) {
-		emails.add(person.getEmail());
+		if (passesCampusCriteria(person)) {		    
+		    emails.add(person.getEmail());
+		}
 	    }
 	}
     }
 
     private void addEmailsForCoordinatorsByDegreeType(final List<String> emails, final DegreeType degreeType) throws FenixServiceException,
 	    FenixFilterException {
+	final Campus campus = getCampus();
 	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
 	    if (executionYear.isCurrent()) {
 		for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
 		    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 		    final Degree degree = degreeCurricularPlan.getDegree();
-		    if (degree.getDegreeType() == degreeType) {
+		    if (degree.getDegreeType() == degreeType && (campus == null || campus == executionDegree.getCampus())) {
 			for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
 			    final Person person = coordinator.getPerson();
 			    emails.add(person.getEmail());
@@ -559,6 +595,14 @@ public class SendEmailBean implements Serializable {
 
     public void setAllowChangeSender(Boolean allowChangeSender) {
         this.allowChangeSender = allowChangeSender;
+    }
+
+    public Campus getCampus() {
+        return campusDomainReference == null ? null : campusDomainReference.getObject();
+    }
+
+    public void setCampus(Campus campus) {
+        this.campusDomainReference = campus == null ? null : new DomainReference<Campus>(campus);
     }
 
 }
