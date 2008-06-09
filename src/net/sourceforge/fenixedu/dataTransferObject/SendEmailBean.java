@@ -242,7 +242,7 @@ public class SendEmailBean implements Serializable {
 		return true;
 	    }
 	}
-	return true;
+	return false;
     }
 
     private void addEmails(final List<String> emails, final RoleType roleType) {
