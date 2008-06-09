@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
@@ -1088,4 +1089,14 @@ public class Student extends Student_Base {
 	}
 	return false;
     }
+
+    public boolean learnsAt(final Campus campus) {
+	for (final Registration registration : getActiveRegistrations()) {
+	    if (registration.getCampus() == campus) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }

@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
@@ -358,4 +359,10 @@ public class Employee extends Employee_Base {
     public boolean isActive() {
 	return getCurrentEmployeeProfessionalSituation() != null;
     }
+
+    public boolean worksAt(final Campus campus) {
+	final Assiduousness assiduousness = getAssiduousness();
+	return assiduousness == null ? false : assiduousness.worksAt(campus);
+    }
+
 }

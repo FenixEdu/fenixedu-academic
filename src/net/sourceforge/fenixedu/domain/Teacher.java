@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.Category;
@@ -40,6 +41,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.util.OrientationType;
+import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.PublicationType;
 import net.sourceforge.fenixedu.util.State;
@@ -1250,6 +1252,16 @@ public class Teacher extends Teacher_Base {
 	} else {
 	    return roleLoginAlias.get(0).getAlias();
 	}
+    }
+
+    public boolean teachesAt(final Campus campus) {
+	for (final Professorship professorship : getProfessorshipsSet()) {
+	    final ExecutionCourse executionCourse = professorship.getExecutionCourse();
+	    if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
+		return executionCourse.functionsAt(campus);
+	    }
+	}
+	return false;
     }
 
 }

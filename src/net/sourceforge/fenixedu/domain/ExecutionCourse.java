@@ -39,15 +39,13 @@ import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EntryPhase;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import net.sourceforge.fenixedu.util.ProposalState;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
@@ -61,8 +59,11 @@ import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
 
@@ -1895,6 +1896,19 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	List<AdHocEvaluation> associatedAdHocEvaluations = getAssociatedAdHocEvaluations();
 	Collections.sort(associatedAdHocEvaluations, AdHocEvaluation.AD_HOC_EVALUATION_CREATION_DATE_COMPARATOR);
 	return associatedAdHocEvaluations;
+    }
+
+    public boolean functionsAt(final Campus campus) {
+	final ExecutionYear executionYear = getExecutionYear();
+	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+	    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+	    for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+		if (executionDegree.getCampus() == campus && executionDegree.getExecutionYear() == executionYear) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 
 }
