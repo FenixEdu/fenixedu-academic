@@ -15,6 +15,7 @@
 		</layout>
 	</appender>
 
+<!-- 
 	<appender name= "profileLog" class= "org.apache.log4j.FileAppender">
 		<param name= "File" value= "@log.profile.dir@/@log.profile.filename@"/>
 		<param name= "DatePattern" value= "'.'yyyy-MM-dd"/>
@@ -28,17 +29,7 @@
 		</filter > 
 		<filter class= "org.apache.log4j.varia.DenyAllFilter"/>
 	</appender >
-
-	<appender name="EMAIL"  class="org.apache.log4j.net.SMTPAppender">
-		<param name="BufferSize" value="512" />
-		<param name="SMTPHost" value="@log4j.email.smtp.host@" />
-		<param name="From" value="@log4j.email.smtp.from@" />
-		<param name="To" value="@log4j.email.smtp.to@" />
-		<param name="Subject" value="@log4j.email.smtp.subject@" />
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="[%d{ISO8601}]%n%n%-5p%n%n%c%n%n%m%n%n" />
-		</layout>
-	</appender>
+ -->
 
 	<logger name="org.apache.ojb.broker.accesslayer.sql">
 		<level value="error"/>
@@ -61,10 +52,12 @@
 		<appender-ref ref="ConsoleAppender"/>
 	</logger>
 
+<!--
 	<logger name="com.atlassian.util.profiling" additivity="false">
 		<level value="info"/>
 		<appender-ref ref="profileLog"/>
 	</logger>
+-->
 
 	<!-- Uncomment this logger to help locate errors im struts validation forms
 	<logger name="org.apache.struts.action.ActionServlet">
