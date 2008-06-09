@@ -241,8 +241,9 @@ public class SendEmailBean implements Serializable {
 	    if (teacher != null && teacher.teachesAt(campus)) {
 		return true;
 	    }
+	    return false;
 	}
-	return false;
+	return true;
     }
 
     private void addEmails(final List<String> emails, final RoleType roleType) {
