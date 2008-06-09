@@ -49,6 +49,12 @@
 	</slot>
 </schema>
 <schema name="net.sourceforge.fenixedu.dataTransferObject.SendEmailBean.recipients" type="net.sourceforge.fenixedu.dataTransferObject.SendEmailBean" bundle="MANAGER_RESOURCES">
+	<slot name="campus" bundle="MANAGER_RESOURCES" key="label.send.email.filter.campus.field" layout="menu-select">	
+		<property name="size" value="30"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.CampusProvider"/>		
+		<property name="format"	value="${spaceInformation.presentationName}" />
+		<property name="destination" value="postBack"/>	
+	</slot>
 	<slot name="teachers" bundle="MANAGER_RESOURCES" key="label.email.teachers"/>
 	<slot name="employees" bundle="MANAGER_RESOURCES" key="label.email.employees"/>
 	<slot name="students" bundle="MANAGER_RESOURCES" key="label.email.students"/>
