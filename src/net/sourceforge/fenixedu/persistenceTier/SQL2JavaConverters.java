@@ -1,0 +1,55 @@
+package net.sourceforge.fenixedu.persistenceTier;
+
+import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
+
+public class SQL2JavaConverters {
+    public static FieldConversion JavaBibliographicReferences2SqlBibliographicReferencesFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaBibliographicReferences2SqlBibliographicReferencesFieldConversion();
+    public static FieldConversion CorrectionAvailability2EnumCorrectionAvailabilityFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.CorrectionAvailability2EnumCorrectionAvailabilityFieldConversion();
+    public static FieldConversion JavaCharacter2SqlCharFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCharacter2SqlCharFieldConversion();
+    public static FieldConversion CorrectionFormula2EnumCorrectionFormulaFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.CorrectionFormula2EnumCorrectionFormulaFieldConversion();
+    public static FieldConversion JavaFinalDegreeWorkProposalStatus2SqlFinalDegreeWorkProposalStatusFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaFinalDegreeWorkProposalStatus2SqlFinalDegreeWorkProposalStatusFieldConversion();
+    public static FieldConversion PublicationArea2SqlPublicationAreaFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.PublicationArea2SqlPublicationAreaFieldConversion();
+    public static FieldConversion DiaSemana2EnumDiaSemanaFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.DiaSemana2EnumDiaSemanaFieldConversion();
+    public static FieldConversion JavaEnrollmentLogAction2SqlEnrollmentLogActionFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrollmentLogAction2SqlEnrollmentLogActionFieldConversion();
+    public static FieldConversion ProviderRegimeTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ProviderRegimeTypeFieldConversion();
+    public static FieldConversion TestType2EnumTestTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.TestType2EnumTestTypeFieldConversion();
+    public static FieldConversion JavaMarkType2SqlMarkTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMarkType2SqlMarkTypeFieldConversion();
+    public static FieldConversion Season2EnumSeasonFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.Season2EnumSeasonFieldConversion();
+    public static FieldConversion JavaYearMonthDay2SqlStringFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion();
+    public static FieldConversion JavaLocalDate2SqlStringFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaLocalDate2SqlStringFieldConversion();
+    public static FieldConversion JavaPeriodState2SqlPeriodState = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPeriodState2SqlPeriodState();
+    public static FieldConversion PublicationTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.PublicationTypeFieldConversion();
+    public static FieldConversion EntryPhase2SqlEntryPhaseFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.EntryPhase2SqlEntryPhaseFieldConversion();
+    public static FieldConversion OldPublicationTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.OldPublicationTypeFieldConversion();
+    public static FieldConversion JavaPeriodToApplyRestriction2SqlPeriodToApplyRestrictionFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPeriodToApplyRestriction2SqlPeriodToApplyRestrictionFieldConversion();
+    public static FieldConversion OrientationTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.OrientationTypeFieldConversion();
+    public static FieldConversion JavaEnrolmentEvaluationState2SqlEnrolmentEvaluationStateFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrolmentEvaluationState2SqlEnrolmentEvaluationStateFieldConversion();
+    public static FieldConversion org$apache$ojb$broker$accesslayer$conversions$Boolean2IntFieldConversion = new org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion();
+    public static FieldConversion JavaCurricularCourseExecutionScope2SqlCurricularCourseExecutionScopeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularCourseExecutionScope2SqlCurricularCourseExecutionScopeFieldConversion();
+    public static FieldConversion Group2StringConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.Group2StringConverter();
+    public static FieldConversion JavaState2SQLStateFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaState2SQLStateFieldConversion();
+    public static FieldConversion ProposalState2EnumProposalStateFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.ProposalState2EnumProposalStateFieldConversion();
+    public static FieldConversion JavaSituationName2SqlSituationNameFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSituationName2SqlSituationNameFieldConversion();
+    public static FieldConversion MultiLanguageString2SqlMultiLanguageStringConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.MultiLanguageString2SqlMultiLanguageStringConversion();
+    public static FieldConversion JavaPartial2SqlStringFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPartial2SqlStringFieldConversion();
+    public static FieldConversion JavaPeriod2SqlStringFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPeriod2SqlStringFieldConversion();
+    public static FieldConversion JavaSecretaryEnrolmentStudentReason2sqlSecretaryEnrolmentStudentReasonFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSecretaryEnrolmentStudentReason2sqlSecretaryEnrolmentStudentReasonFieldConversion();
+    public static FieldConversion JavaEnrolmentGroupPolicyType2SqlEnrolmentGroupPolicyTypeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrolmentGroupPolicyType2SqlEnrolmentGroupPolicyTypeFieldConversion();
+    public static FieldConversion JavaByteArray2SqlByteArrayFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaByteArray2SqlByteArrayFieldConversion();
+    public static FieldConversion TimeStamp2DateTimeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateTimeFieldConversion();
+    public static FieldConversion HourMinuteSecond2TimeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.HourMinuteSecond2TimeFieldConversion();
+    public static FieldConversion TimeOfDay2TimeFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.TimeOfDay2TimeFieldConversion();
+    public static FieldConversion Duration2SqlBigIntConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.Duration2SqlBigIntConverter();
+    public static FieldConversion WorkWeek2SqlVarcharConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.WorkWeek2SqlVarcharConverter();
+    public static FieldConversion BigDecimalConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.BigDecimalConverter();
+    public static FieldConversion JavaUUID2SqlVarcharFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.JavaUUID2SqlVarcharFieldConversion();
+    public static FieldConversion TestResponse2SqlVarcharFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.TestResponse2SqlVarcharFieldConversion();
+    public static FieldConversion org$apache$ojb$broker$accesslayer$conversions$Object2ByteArrFieldConversion = new org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion();
+    public static FieldConversion accounting$JavaMoney2SqlMoneyFieldConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.accounting.JavaMoney2SqlMoneyFieldConversion();
+    public static FieldConversion EmailAddressList2SqlEmailAddressListConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.EmailAddressList2SqlEmailAddressListConversion();
+    public static FieldConversion ProtocolAction2SqlVarcharConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.ProtocolAction2SqlVarcharConverter();
+    public static FieldConversion Grade2SqlGradeStringConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.Grade2SqlGradeStringConversion();
+    public static FieldConversion PartialList2SqlVarcharConverter = new net.sourceforge.fenixedu.persistenceTier.Conversores.PartialList2SqlVarcharConverter();
+    public static FieldConversion AcademicInterval2SqlAcademicIntervalConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.AcademicInterval2SqlAcademicIntervalConversion();
+    public static FieldConversion AcademicPeriod2SqlAcademicPeriodConversion = new net.sourceforge.fenixedu.persistenceTier.Conversores.AcademicPeriod2SqlAcademicPeriodConversion();
+}

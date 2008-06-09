@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,6 +17,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.SortedSet;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
@@ -23,7 +25,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -60,8 +61,22 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
         String logDirName = (String) actionForm.get("logDirName");
         if (logDirName == null || logDirName.length() == 0 || logFileName == null
                 || logFileName.length() == 0) {
-            logDirName = PropertiesManager.getProperty("log.profile.dir");
-            logFileName = PropertiesManager.getProperty("log.profile.filename");
+            InputStream inputStream = getClass().getResourceAsStream("/logAnalyser.properties");
+
+            if (inputStream != null) {
+                Properties serProps = new Properties();
+                serProps.load(inputStream);
+
+                if (logDirName == null || logDirName.length() == 0) {
+                    logDirName = serProps.getProperty("log.profile.dir");
+                }
+                if (logFileName == null || logFileName.length() == 0) {
+                    logFileName = serProps.getProperty("log.profile.filename");
+                }
+            } else {
+                logDirName = "./";
+                logFileName = "profileing.log";
+            }
         }
 
         File logDir = new File(logDirName);
@@ -137,7 +152,15 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
     }
 
     private void setLogImageDir() {
-	logImageDir = PropertiesManager.getProperty("log.image.directory");
+        InputStream inputStream = getClass().getResourceAsStream("/logAnalyser.properties");
+        if (inputStream != null) {
+            Properties properties = new Properties();
+            try {
+                properties.load(inputStream);
+                logImageDir = properties.getProperty("log.image.directory");
+            } catch (IOException e) {
+            }
+        }
     }
 
     private SortedSet sortProfileMap(Map profileMap) {

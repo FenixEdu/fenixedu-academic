@@ -10,10 +10,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Map.Entry;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -99,14 +97,9 @@ public class SubmitMarks extends Service {
 				addMarksFileToMap(normalFileList, finalEvaluation, mapEntry.getKey().getMiddle(), mapEntry.getKey().getRight(), teacher, marksMap, executionCourse.getExecutionPeriod(), version, NORMAL);
 			}
 		}
-
-		final Properties properties = new Properties();
-		properties.setProperty("username", PropertiesManager.getProperty("ftp.degree.grades.server.user"));
-		properties.setProperty("password", PropertiesManager.getProperty("ftp.degree.grades.server.pass"));
-		properties.setProperty("address", PropertiesManager.getProperty("ftp.degree.grades.server.address"));
-
-		Ftp.enviarFicheiros(properties, normalFileList, NORMAL_DIR);
-		Ftp.enviarFicheiros(properties, improvmentFileList, IMPROVMENT_DIR);
+		
+		Ftp.enviarFicheiros("/DegreeGradesFtpServerConfig.properties", normalFileList, NORMAL_DIR);
+		Ftp.enviarFicheiros("/DegreeGradesFtpServerConfig.properties", improvmentFileList, IMPROVMENT_DIR);
 	}
 	
 	

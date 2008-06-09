@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.servlets.startup;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -30,6 +31,11 @@ import pt.ist.fenixframework.pstm.Transaction;
  */
 public class StartupServlet extends HttpServlet {
 
+    private static final String GRATUITY_SITUATION_CREATOR_TASK_CONFIG = "/GratuitySituationCreatorTask.properties";
+
+    /**
+     * @see javax.servlet.Servlet#init(javax.servlet.ServletConfig)
+     */
     public void init(ServletConfig config) throws ServletException {
 //        Custodian.registerPID();
 
@@ -143,9 +149,13 @@ public class StartupServlet extends HttpServlet {
 		}
 	    };
 
+	Properties properties = new Properties();
 	try {
+	    properties.load(this.getClass().getResourceAsStream(
+								GRATUITY_SITUATION_CREATOR_TASK_CONFIG));
+
 	    Calendar calendar = Calendar.getInstance();
-	    String hourString = PropertiesManager.getProperty("gratuity.situation.creator.task.hour");
+	    String hourString = properties.getProperty("hour");
 	    int scheduledHour = Integer.parseInt(hourString);
 	    if (scheduledHour == -1) {
 		return;
