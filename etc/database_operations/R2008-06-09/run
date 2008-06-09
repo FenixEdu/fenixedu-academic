@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "ConvertContactVisibility" ConvertContactVisibility.sql
