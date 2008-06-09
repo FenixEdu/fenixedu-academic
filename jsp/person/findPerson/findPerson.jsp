@@ -226,7 +226,7 @@ function check(e,v){
 		  			<td class="ppleft" valign="top">
 						<bean:message key="label.person.workPhone.short" /> 
 					</td>
-					<td class="ppright2">
+					<td class="ppright2">					<%--
                         <logic:iterate id="phone" name="personalInfo" property="phones">
                              <logic:equal name="show" value="true">
                                   <p class="mvert0">
@@ -241,7 +241,7 @@ function check(e,v){
                                   </logic:equal>
                              </logic:notEqual>
                         </logic:iterate>
-
+						
                        <logic:iterate id="phone" name="personalInfo" property="mobilePhones">
                            <logic:equal name="show" value="true">
                              <p class="mvert0">
@@ -255,7 +255,7 @@ function check(e,v){
                                </p>
                              </logic:equal>
                            </logic:notEqual>
-                       </logic:iterate>
+                       </logic:iterate>                       --%>
 					</td>
 					
                     <td class="ppleft_mail" valign="top">
