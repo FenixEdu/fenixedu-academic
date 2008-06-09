@@ -677,7 +677,7 @@ public class Assiduousness extends Assiduousness_Base {
 	    if (assiduousnessCampusHistory.getCampus() == campus) {
 		final YearMonthDay begin = assiduousnessCampusHistory.getBeginDate();
 		final YearMonthDay end = assiduousnessCampusHistory.getEndDate();
-		if (!begin.isAfter(now) && end == null && !end.isBefore(now)) {
+		if (!begin.isAfter(now) && (end == null || !end.isBefore(now))) {
 		    return true;
 		}
 	    }
