@@ -151,16 +151,6 @@
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="log4j.xml"/>
-				<replacefilter token="@log4j.email.smtp.host@"
-							   property="log4j.email.smtp.host"/>
-				<replacefilter token="@log4j.email.smtp.from@"
-							   property="log4j.email.smtp.from"/>
-				<replacefilter token="@log4j.email.smtp.to@"
-							   property="log4j.email.smtp.to"/>
-				<replacefilter token="@log4j.email.smtp.subject@"
-							   property="log4j.email.smtp.subject"/>
-				<replacefilter token="@log.image.directory@"
-			  				   property="log.image.directory"/>
 				<replacefilter token="@log.profile.dir@"
 			  				   property="log.profile.dir"/>
 				<replacefilter token="@log.profile.filename@"
@@ -685,6 +675,19 @@
 				>
 			<arg value="${basedir}"/>
 			<classpath>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="x" description="Compile application">
+		<java classname="net.sourceforge.fenixedu.Xtest" 
+			dir="${build.home.webinf.classes}"
+			fork="true">
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}"/>
 				<fileset dir="${lib}">
 					<include name="**/*.jar"/>
 				</fileset>
