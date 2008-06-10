@@ -154,10 +154,10 @@ public class SendEmailBean implements Serializable {
 			|| (degreeStudents && degreeType == DegreeType.DEGREE)
 			|| (masterDegreeStudents && degreeType == DegreeType.MASTER_DEGREE)) {
 		    for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-			if (passesCampusCriteria(degreeCurricularPlan)) {
+			if (passesCampusAndActiveCriteria(degreeCurricularPlan)) {
 			    for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlansSet()) {
 				final Registration registration = studentCurricularPlan.getRegistration();
-				if (registration.isActive()) {
+				if (registration != null && registration.isActive()) {
 				    final String email = registration.getPerson().getEmail();
 				    if (email != null && email.length() > 0) {
 					emails.add(email);
@@ -229,13 +229,22 @@ public class SendEmailBean implements Serializable {
 	return emails;
     }
 
-    private boolean passesCampusCriteria(final DegreeCurricularPlan degreeCurricularPlan) {
+    private boolean passesCampusAndActiveCriteria(final DegreeCurricularPlan degreeCurricularPlan) {
 	final Campus campus = getCampus();
-	if (campus == null) {
+	if (campus == null && hasActiveExecutionDegree(degreeCurricularPlan)) {
 	    return true;
 	}
 	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
 	    if (executionDegree.getCampus() == campus && executionDegree.getExecutionYear().getState().equals(PeriodState.CURRENT)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    private boolean hasActiveExecutionDegree(DegreeCurricularPlan degreeCurricularPlan) {
+	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+	    if (executionDegree.getExecutionYear().getState().equals(PeriodState.CURRENT)) {
 		return true;
 	    }
 	}
