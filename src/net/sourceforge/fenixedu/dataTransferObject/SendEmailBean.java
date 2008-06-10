@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -22,12 +21,14 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.util.PeriodState;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SendEmailBean implements Serializable {
@@ -141,25 +142,29 @@ public class SendEmailBean implements Serializable {
 		|| bolonhaMasterDegreeStudents || bolonhaPhdProgramStudents || bolonhaSpecializationDegreeStudents
 		|| degreeStudents || masterDegreeStudents) {
 
-	    final Set<Registration> registrations = RootDomainObject.getInstance().getRegistrationsSet();
-	    for (final Registration registration : registrations) {
-		if (registration.isActive()) {
-		    final DegreeType degreeType = registration.getDegreeType();
-		    if (students
-			    || (bolonhaAdvancedFormationDiplomaStudents && degreeType == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
-			    || (bolonhaDegreeStudents && degreeType == DegreeType.BOLONHA_DEGREE)
-			    || (bolonhaIntegratedMasterDegreeStudents && degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)
-			    || (bolonhaMasterDegreeStudents && degreeType == DegreeType.BOLONHA_MASTER_DEGREE)
-			    || (bolonhaPhdProgramStudents && degreeType == DegreeType.BOLONHA_PHD_PROGRAM)
-			    || (bolonhaSpecializationDegreeStudents && degreeType == DegreeType.BOLONHA_SPECIALIZATION_DEGREE)
-			    || (degreeStudents && degreeType == DegreeType.DEGREE)
-			    || (masterDegreeStudents && degreeType == DegreeType.MASTER_DEGREE)) {
-			final String email = registration.getPerson().getEmail();
-			if (email != null && email.length() > 0) {
-			    if (passesCampusCriteria(registration)) {
-				emails.add(email);
+	    for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+		final DegreeType degreeType = degree.getDegreeType();
+		if (students
+			|| (bolonhaAdvancedFormationDiplomaStudents && degreeType == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
+			|| (bolonhaDegreeStudents && degreeType == DegreeType.BOLONHA_DEGREE)
+			|| (bolonhaIntegratedMasterDegreeStudents && degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)
+			|| (bolonhaMasterDegreeStudents && degreeType == DegreeType.BOLONHA_MASTER_DEGREE)
+			|| (bolonhaPhdProgramStudents && degreeType == DegreeType.BOLONHA_PHD_PROGRAM)
+			|| (bolonhaSpecializationDegreeStudents && degreeType == DegreeType.BOLONHA_SPECIALIZATION_DEGREE)
+			|| (degreeStudents && degreeType == DegreeType.DEGREE)
+			|| (masterDegreeStudents && degreeType == DegreeType.MASTER_DEGREE)) {
+		    for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+			if (passesCampusCriteria(degreeCurricularPlan)) {
+			    for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlansSet()) {
+				final Registration registration = studentCurricularPlan.getRegistration();
+				if (registration.isActive()) {
+				    final String email = registration.getPerson().getEmail();
+				    if (email != null && email.length() > 0) {
+					emails.add(email);
+				    }			
+				}
 			    }
-			}			
+			}
 		    }
 		}
 	    }
@@ -224,9 +229,17 @@ public class SendEmailBean implements Serializable {
 	return emails;
     }
 
-    private boolean passesCampusCriteria(final Registration registration) {
+    private boolean passesCampusCriteria(final DegreeCurricularPlan degreeCurricularPlan) {
 	final Campus campus = getCampus();
-	return campus == null || registration.getCampus() == campus;
+	if (campus == null) {
+	    return true;
+	}
+	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+	    if (executionDegree.getCampus() == campus && executionDegree.getExecutionYear().getState().equals(PeriodState.CURRENT)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private boolean passesCampusCriteria(final Person person) {
