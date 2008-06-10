@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.util.PeriodState;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SendEmailBean implements Serializable {
@@ -128,6 +127,7 @@ public class SendEmailBean implements Serializable {
 		}
 	    }
 	}
+
 	final boolean students = getStudents().booleanValue();
 	final boolean bolonhaAdvancedFormationDiplomaStudents = getBolonhaAdvancedFormationDiplomaStudents().booleanValue();
 	final boolean bolonhaDegreeStudents = getBolonhaDegreeStudents().booleanValue();
@@ -142,33 +142,35 @@ public class SendEmailBean implements Serializable {
 		|| bolonhaMasterDegreeStudents || bolonhaPhdProgramStudents || bolonhaSpecializationDegreeStudents
 		|| degreeStudents || masterDegreeStudents) {
 
-	    for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
-		final DegreeType degreeType = degree.getDegreeType();
-		if (students
-			|| (bolonhaAdvancedFormationDiplomaStudents && degreeType == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
-			|| (bolonhaDegreeStudents && degreeType == DegreeType.BOLONHA_DEGREE)
-			|| (bolonhaIntegratedMasterDegreeStudents && degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)
-			|| (bolonhaMasterDegreeStudents && degreeType == DegreeType.BOLONHA_MASTER_DEGREE)
-			|| (bolonhaPhdProgramStudents && degreeType == DegreeType.BOLONHA_PHD_PROGRAM)
-			|| (bolonhaSpecializationDegreeStudents && degreeType == DegreeType.BOLONHA_SPECIALIZATION_DEGREE)
-			|| (degreeStudents && degreeType == DegreeType.DEGREE)
-			|| (masterDegreeStudents && degreeType == DegreeType.MASTER_DEGREE)) {
-		    for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-			if (passesCampusAndActiveCriteria(degreeCurricularPlan)) {
-			    for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlansSet()) {
-				final Registration registration = studentCurricularPlan.getRegistration();
-				if (registration != null && registration.isActive()) {
-				    final String email = registration.getPerson().getEmail();
-				    if (email != null && email.length() > 0) {
-					emails.add(email);
-				    }			
-				}
+	    final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+	    final Campus campus = getCampus();
+	    for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
+		if (campus == null || executionDegree.getCampus() == campus) {
+		    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+		    final Degree degree = degreeCurricularPlan.getDegree();
+		    final DegreeType degreeType = degree.getDegreeType();
+		    if (students
+			    || (bolonhaAdvancedFormationDiplomaStudents && degreeType == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
+			    || (bolonhaDegreeStudents && degreeType == DegreeType.BOLONHA_DEGREE)
+			    || (bolonhaIntegratedMasterDegreeStudents && degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)
+			    || (bolonhaMasterDegreeStudents && degreeType == DegreeType.BOLONHA_MASTER_DEGREE)
+			    || (bolonhaPhdProgramStudents && degreeType == DegreeType.BOLONHA_PHD_PROGRAM)
+			    || (bolonhaSpecializationDegreeStudents && degreeType == DegreeType.BOLONHA_SPECIALIZATION_DEGREE)
+			    || (degreeStudents && degreeType == DegreeType.DEGREE)
+			    || (masterDegreeStudents && degreeType == DegreeType.MASTER_DEGREE)) {
+			for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlansSet()) {
+			    final Registration registration = studentCurricularPlan.getRegistration();
+			    if (registration != null && registration.isActive()) {
+				final String email = registration.getPerson().getEmail();
+				if (email != null && email.length() > 0) {
+				    emails.add(email);
+				}			
 			    }
 			}
 		    }
 		}
 	    }
-	}
+	} 
 
 	if (getBolonhaAdvancedFormationDiplomaCoordinators().booleanValue()) {
 	    addEmailsForCoordinatorsByDegreeType(emails, DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
@@ -227,28 +229,6 @@ public class SendEmailBean implements Serializable {
 	}
 
 	return emails;
-    }
-
-    private boolean passesCampusAndActiveCriteria(final DegreeCurricularPlan degreeCurricularPlan) {
-	final Campus campus = getCampus();
-	if (campus == null && hasActiveExecutionDegree(degreeCurricularPlan)) {
-	    return true;
-	}
-	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-	    if (executionDegree.getCampus() == campus && executionDegree.getExecutionYear().getState().equals(PeriodState.CURRENT)) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    private boolean hasActiveExecutionDegree(DegreeCurricularPlan degreeCurricularPlan) {
-	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-	    if (executionDegree.getExecutionYear().getState().equals(PeriodState.CURRENT)) {
-		return true;
-	    }
-	}
-	return false;
     }
 
     private boolean passesCampusCriteria(final Person person) {
