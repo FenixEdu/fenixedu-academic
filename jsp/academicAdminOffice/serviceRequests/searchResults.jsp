@@ -108,7 +108,7 @@
 					<fr:property name="visibleIfNot(payments)" value="isPayed"/>
 					
 					<fr:property name="sortBy" value="<%= sortCriteria + ",creationDate=asc" %>"/>
-					<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + academicSituationType.getName() + "&year=" + bean.getServiceRequestYear() %>"/>
+					<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + academicSituationType.getName() + "&serviceRequestYear=" + bean.getServiceRequestYear() %>"/>
 					<fr:property name="sortParameter" value="sortBy"/>
 				</fr:layout>
 			</fr:view>
@@ -128,7 +128,7 @@
 	</logic:empty>
 	<logic:notEmpty name="academicServiceRequests">
 
-		<bean:define id="url" type="java.lang.String">/academicAdminOffice/academicServiceRequestsManagement.do?method=search&amp;academicSituationType=<%= academicSituationType.getName() %>&amp;serviceRequestYear=<bean:write name="bean" property="serviceRequestYear"/></bean:define>
+		<bean:define id="url" type="java.lang.String">/academicAdminOffice/academicServiceRequestsManagement.do?method=search&amp;academicSituationType=<%= academicSituationType.getName() %>&amp;serviceRequestYear=<bean:write name="bean" property="serviceRequestYear"/>&amp;sortBy=<%=sortCriteria%></bean:define>
 		<cp:collectionPages url="<%= url %>" 
 			pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="10"/>
 
@@ -156,7 +156,7 @@
 				<fr:property name="visibleIfNot(payments)" value="isPayed"/>
 				
 				<fr:property name="sortBy" value="<%= sortCriteria + ",creationDate=asc" %>"/>
-				<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + academicSituationType.getName() + "&year=" + bean.getServiceRequestYear() %>"/>
+				<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + academicSituationType.getName() + "&serviceRequestYear=" + bean.getServiceRequestYear() %>"/>
 				<fr:property name="sortParameter" value="sortBy"/>
 			</fr:layout>
 		</fr:view>
