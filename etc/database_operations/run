@@ -28,3 +28,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Change column Name in TSD Table" changeColumnNameInTSD.sql
