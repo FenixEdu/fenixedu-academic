@@ -155,14 +155,6 @@
 				    property="struts.validation.doctype.url"/>
 			</replace>
 
-			<replace encoding="${encoding}" dir="${build.home}"
-					 propertyFile="build.properties">
-				<include name="student/enrollment/warning.jsp"/>
-				<include name="degreeAdministrativeOffice/enrolment/withRules/enrollmentConfirmation.jsp"/>
-				<include name="degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseCurricularCourses.jsp"/>
-				<replacefilter token="@enrollment.faq.url@"
-			    			   property="enrollment.faq.url"/>
-			</replace>
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="services.xml"/>
