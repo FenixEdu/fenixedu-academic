@@ -53,6 +53,8 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
             defaultLanguage = getProperty("language");
             defaultLocation = getProperty("location");
             defaultVariant = getProperty("variant");
+            logProfileDir = getProperty("log.profile.dir");
+            logProfileFilename = getProperty("log.profile.filename");
         }};
     }
 }

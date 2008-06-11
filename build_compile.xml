@@ -148,15 +148,6 @@
 	<target name="replace-property-values">
 
 		<sequential>
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
-				<include name="log4j.xml"/>
-				<replacefilter token="@log.profile.dir@"
-			  				   property="log.profile.dir"/>
-				<replacefilter token="@log.profile.filename@"
-			  				   property="log.profile.filename"/>
-			</replace>
-
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}/resources"
 					 propertyFile="build.properties">
 				<include name="ApplicationResources*.properties"/>
