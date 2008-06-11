@@ -157,15 +157,6 @@
 
 			<replace encoding="${encoding}" dir="${build.home}"
 					 propertyFile="build.properties">
-				<include name="publico/index.html"/>
-				<include name="publico/degreeSite/mainNavigation_without_teaching.jsp"/>
-				<replacefilter 
-					    token="@institution.url@" 
-					    property="institution.url"/>
-			</replace>
-
-			<replace encoding="${encoding}" dir="${build.home}"
-					 propertyFile="build.properties">
 				<include name="student/enrollment/warning.jsp"/>
 				<include name="degreeAdministrativeOffice/enrolment/withRules/enrollmentConfirmation.jsp"/>
 				<include name="degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseCurricularCourses.jsp"/>
