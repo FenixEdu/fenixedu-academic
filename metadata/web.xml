@@ -167,7 +167,7 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>ManagerFilter</filter-name>
-		<url-pattern>/manager/@manager.filter.pattern@</url-pattern>
+		<url-pattern>/manager/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>ManagerFilter</filter-name>

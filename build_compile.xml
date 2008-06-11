@@ -148,17 +148,6 @@
 	<target name="replace-property-values">
 
 		<sequential>
-			<replace encoding="${encoding}" dir="${build.home.webinf}"
-					 propertyFile="build.properties">
-				<include name="web.xml"/>
-				<replacefilter 
-				    token="@app.context@"
-				    property="app.context"/>
-				<replacefilter 
-				    token="@manager.filter.pattern@"
-				    property="manager.filter.pattern"/>
-			</replace>
-
 			<replace encoding="${encoding}" dir="${build.home.webinf}/conf" propertyFile="build.properties">
 				<include name="validation*.xml"/>
 				<replacefilter 
