@@ -290,7 +290,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	AcademicServiceRequestBean bean = (AcademicServiceRequestBean) getObjectFromViewState("bean");
 	if (bean == null) {
-	    Integer year = getIntegerFromRequest(request, "year");
+	    Integer year = getIntegerFromRequest(request, "serviceRequestYear");
 	    if (year == null) {
 		year = new YearMonthDay().getYear();
 	    }
@@ -300,26 +300,28 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	}
 	request.setAttribute("bean", bean);
 
-	final Collection<AcademicServiceRequest> academicServiceRequestsNotOwnedByEmployee = bean.searchAcademicServiceRequests();
-	final Collection<AcademicServiceRequest> academicServiceRequestsOwnedByEmployee = new HashSet<AcademicServiceRequest>();
+	final Collection<AcademicServiceRequest> requestsNotOwnedByEmployee = bean.searchAcademicServiceRequests();
+	final Collection<AcademicServiceRequest> requestsOwnedByEmployee = new HashSet<AcademicServiceRequest>();
 
 	if (bean.getAcademicServiceRequestSituationType() != AcademicServiceRequestSituationType.NEW) {
-	    for (Iterator<AcademicServiceRequest> iter = academicServiceRequestsNotOwnedByEmployee.iterator(); iter.hasNext();) {
+	    for (Iterator<AcademicServiceRequest> iter = requestsNotOwnedByEmployee.iterator(); iter.hasNext();) {
 		final AcademicServiceRequest academicServiceRequest = (AcademicServiceRequest) iter.next();
 		if (academicServiceRequest.getActiveSituation().getEmployee() == getEmployee()) {
 		    iter.remove();
-		    academicServiceRequestsOwnedByEmployee.add(academicServiceRequest);
+		    requestsOwnedByEmployee.add(academicServiceRequest);
 		}
 	    }
 	}
 
-	request.setAttribute("academicServiceRequests", academicServiceRequestsNotOwnedByEmployee);
-	request.setAttribute("employeeRequests", academicServiceRequestsOwnedByEmployee);
+	request.setAttribute("academicServiceRequests", requestsNotOwnedByEmployee);
+	request.setAttribute("employeeRequests", requestsOwnedByEmployee);
 
-	CollectionPager<AcademicServiceRequest> collectionPager = new CollectionPager<AcademicServiceRequest>(academicServiceRequestsNotOwnedByEmployee, 50);
+	CollectionPager<AcademicServiceRequest> collectionPager = new CollectionPager<AcademicServiceRequest>(
+		requestsNotOwnedByEmployee, 50);
 	request.setAttribute("collectionPager", collectionPager);
 	final String pageNumberString = request.getParameter("pageNumber");
-	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);
+	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer
+		.valueOf(1);
 	request.setAttribute("pageNumber", pageNumber);
 	request.setAttribute("numberOfPages", Integer.valueOf(collectionPager.getNumberOfPages()));
 	request.setAttribute("resultPage", collectionPager.getPage(pageNumber));
