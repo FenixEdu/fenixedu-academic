@@ -100,7 +100,7 @@
           
           <tr>
             <td> <bean:message key="label.candidate.accessAddress"/> </td>
-            <td> <bean:message key="label.candidate.url"/> </td>
+            <td> <%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("label.candidate.url") %> </td>
           </tr>
 
           <tr>

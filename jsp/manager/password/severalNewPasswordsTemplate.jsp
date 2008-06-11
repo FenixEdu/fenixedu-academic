@@ -79,7 +79,7 @@
           
           <tr>
             <td> <bean:message bundle="MANAGER_RESOURCES" key="label.candidate.accessAddress"/> </td>
-            <td> <bean:message bundle="MANAGER_RESOURCES" key="label.candidate.url"/> </td>
+            <td> <%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("label.candidate.url") %> </td>
           </tr>
 
           <tr>

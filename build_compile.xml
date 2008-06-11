@@ -148,15 +148,6 @@
 	<target name="replace-property-values">
 
 		<sequential>
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}/resources"
-					 propertyFile="build.properties">
-				<include name="ApplicationResources*.properties"/>
-				<include name="ApplicationResourcesSOP*.properties"/>
-				<include name="ManagerResources*.properties"/>
-				<replacefilter token="@login.page@"
-							   value="${login.page}"/>
-			</replace>
-
 			<replace encoding="${encoding}" dir="${build.home.webinf}"
 					 propertyFile="build.properties">
 				<include name="web.xml"/>
@@ -199,13 +190,9 @@
 			  		property="authenticationService"/>
 				<replacefilter token="@changePassService@"
 					property="changePassService"/>
+                <replacefilter token="@enableExternalLoginService@"
+                        property="enableExternalLoginService"/>
 			</replace>
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-                                         propertyFile="build.properties">
-                                <include name="services.xml"/>
-                                <replacefilter token="@enableExternalLoginService@"
-                                        property="enableExternalLoginService"/>
-                        </replace>
 
 			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
