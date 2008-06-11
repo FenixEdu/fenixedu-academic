@@ -59,27 +59,21 @@ public class EMailAddress {
     }
 
     public static boolean isValid(String address) {
-	boolean result = false;
 	try {
-	    InternetAddress javaxAddress = new InternetAddress(address);
-	    result = address.matches(EMailAddress.validationPattern);
-	    result &= (address != null);
-
+	    new InternetAddress(address);
+	    return (address != null) && address.matches(EMailAddress.validationPattern);
 	} catch (AddressException e) {
-	    // thats fine
+	    return false;
 	}
-	return result;
     }
 
     public static boolean isValid(String personalName, String address) {
-	boolean result = false;
 	try {
-	    InternetAddress javaxAddress = new InternetAddress(address, personalName);
-	    result = address.matches(EMailAddress.validationPattern);
+	    new InternetAddress(address, personalName);
+	    return address.matches(EMailAddress.validationPattern);
 	} catch (UnsupportedEncodingException e) {
-	    // thats also fine
+	    return false;
 	}
-	return result;
     }
 
     public EMailAddress(String address) {
