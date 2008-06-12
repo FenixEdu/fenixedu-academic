@@ -253,8 +253,20 @@ mailingList.host.name=
 mailSender.max.recipients=50
 
 
-#----------------------------------------------
+#-----------------------------------------------------------------------------
 # Authentication Service
+#-----------------------------------------------------------------------------
+#
+#   authenticationService: Known implementations:
+#         net.sourceforge.fenixedu.applicationTier.Servico.Authenticate
+#         net.sourceforge.fenixedu.applicationTier.Servico.AuthenticateKerberos
+#   enableExternalLoginService Known implementations:
+#         net.sourceforge.fenixedu.applicationTier.Servico.publico.EnableExternalLoginWithKerberos
+#   changePassService: Known implementations:
+#         net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePasswordKerberos
+#   password.generator: Known implementations:
+#         net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordKerberos
+#
 #----------------------------------------------
 authenticationService=net.sourceforge.fenixedu.applicationTier.Servico.Authenticate
 changePassService=net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePassword
