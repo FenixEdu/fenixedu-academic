@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestYear;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.space.Campus;
@@ -62,30 +63,28 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	throw new DomainException("error.administrativeOffice.AdministrativeOffice.cannot.modify.unit");
     }
 
-    public Collection<AcademicServiceRequest> searchRegistrationAcademicServiceRequests(Integer serviceRequestYear,
-	    AcademicServiceRequestSituationType requestSituationType, Campus campus) {
+    public Collection<AcademicServiceRequest> searchRegistrationAcademicServiceRequests(final Integer year,
+	    final AcademicServiceRequestSituationType situationType, final Campus campus) {
 
-	final Collection<AcademicServiceRequest> result = new ArrayList<AcademicServiceRequest>();
+	final Collection<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
 
-	for (final AcademicServiceRequest request : getAcademicServiceRequestsSet()) {
+	for (final AcademicServiceRequest request : filterRequests(year)) {
+	    if (year != null && request.getAdministrativeOffice() != this) {
+		continue;
+	    }
+
 	    if (!request.isRequestForRegistration()) {
 		continue;
 	    }
 
-	    final RegistrationAcademicServiceRequest registrationAcademicServiceRequest = (RegistrationAcademicServiceRequest) request;
+	    final RegistrationAcademicServiceRequest registrationRequest = (RegistrationAcademicServiceRequest) request;
 
-	    if (serviceRequestYear != null
-		    && registrationAcademicServiceRequest.getServiceRequestYear().intValue() != serviceRequestYear.intValue()) {
+	    if (situationType != null && registrationRequest.getAcademicServiceRequestSituationType() != situationType) {
 		continue;
 	    }
 
-	    if (requestSituationType != null
-		    && registrationAcademicServiceRequest.getAcademicServiceRequestSituationType() != requestSituationType) {
-		continue;
-	    }
-
-	    if (campus != null && registrationAcademicServiceRequest.isDocumentRequest()) {
-		final DocumentRequest documentRequest = (DocumentRequest) registrationAcademicServiceRequest;
+	    if (campus != null && registrationRequest.isDocumentRequest()) {
+		final DocumentRequest documentRequest = (DocumentRequest) registrationRequest;
 		final Campus documentCampus = documentRequest.getCampus();
 
 		if (documentCampus != null && !documentCampus.equals(campus)) {
@@ -93,10 +92,18 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 		}
 	    }
 
-	    result.add(registrationAcademicServiceRequest);
+	    result.add(registrationRequest);
 	}
 
 	return result;
+    }
+
+    private Collection<AcademicServiceRequest> filterRequests(final Integer year) {
+	if (year == null) {
+	    return getAcademicServiceRequestsSet();
+	} else {
+	    return AcademicServiceRequestYear.readByYear(year.intValue()).getAcademicServiceRequestsSet();
+	}
     }
 
     public List<AcademicServiceRequest> getNewAcademicServiceRequests() {
