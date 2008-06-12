@@ -8,8 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -24,12 +22,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormat
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base {
 
@@ -58,7 +57,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	checkParameters(administrativeOffice, requestDate, urgentRequest, freeProcessed);
 
 	super.setServiceRequestYear(requestDate.year().get());
-	super.setServiceRequestNumber(generateServiceRequestNumber());
+	super.setAcademicServiceRequestYear(generateAcademicServiceRequestYear());
+	super.setServiceRequestNumber(getAcademicServiceRequestYear().generateServiceRequestNumber());
 	super.setRequestDate(requestDate);
 
 	super.setAdministrativeOffice(administrativeOffice);
@@ -73,17 +73,9 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	createAcademicServiceRequestSituations(bean);
     }
 
-    private Integer generateServiceRequestNumber() {
-	final SortedSet<AcademicServiceRequest> requests = new TreeSet<AcademicServiceRequest>(COMPARATOR_BY_NUMBER);
-
-	for (final AcademicServiceRequest academicServiceRequest : RootDomainObject.getInstance().getAcademicServiceRequestsSet()) {
-	    if (academicServiceRequest != this
-		    && academicServiceRequest.getServiceRequestYear().intValue() == this.getServiceRequestYear().intValue()) {
-		requests.add(academicServiceRequest);
-	    }
-	}
-
-	return requests.isEmpty() ? 1 : requests.last().getServiceRequestNumber() + 1;
+    private AcademicServiceRequestYear generateAcademicServiceRequestYear() {
+	final AcademicServiceRequestYear result = AcademicServiceRequestYear.readByYear(getServiceRequestYear());
+	return result == null ? new AcademicServiceRequestYear(getServiceRequestYear()) : result;
     }
 
     private Employee getEmployee() {
