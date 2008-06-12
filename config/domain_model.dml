@@ -3408,6 +3408,11 @@ class DomainObject {
 				DateTime receivedDate;
 			}
 	
+	class serviceRequests.AcademicServiceRequestYear extends DomainObject {
+		Integer year;
+		Integer latestServiceRequestNumber;
+	}
+	
 	class serviceRequests.AcademicServiceRequest extends DomainObject {
 		Boolean freeProcessed;
 		Boolean urgentRequest;
@@ -4741,6 +4746,20 @@ relation AcademicCalendarEntryBasedAcademicCalendarEntry {
 relation AcademicServiceRequestAcademicServiceRequestSituation {
 	serviceRequests.AcademicServiceRequest playsRole academicServiceRequest;
 	serviceRequests.AcademicServiceRequestSituation playsRole academicServiceRequestSituations {
+		multiplicity *;
+	}
+}
+
+relation AcademicServiceRequestAcademicServiceRequestYear {
+	serviceRequests.AcademicServiceRequestYear playsRole academicServiceRequestYear;
+	serviceRequests.AcademicServiceRequest playsRole academicServiceRequests {
+		multiplicity *;
+	}
+}
+
+relation AcademicServiceRequestYearRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	serviceRequests.AcademicServiceRequestYear playsRole academicServiceRequestYears {
 		multiplicity *;
 	}
 }
