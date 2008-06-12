@@ -59,10 +59,13 @@ public class AnnouncementArchive {
     }
 
     public void addAnnouncement(Announcement announcement) {
-        YearAnnouncementArchiveEntry year = entries.get(announcement.getCreationDate().getYear());
+	
+	Integer announcementYear = announcement.getReferedSubjectBegin() != null ? announcement.getReferedSubjectBegin().getYear()  : announcement.getCreationDate().getYear(); 
+	
+	YearAnnouncementArchiveEntry year = entries.get(announcementYear);
         if (year == null) {
-            year = new YearAnnouncementArchiveEntry(announcement.getCreationDate().getYear());
-            entries.put(announcement.getCreationDate().getYear(), year);
+            year = new YearAnnouncementArchiveEntry(announcementYear);
+            entries.put(announcementYear, year);
         }
         year.addAnnouncement(announcement);
     }

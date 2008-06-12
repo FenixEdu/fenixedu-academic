@@ -30,11 +30,11 @@ public class YearAnnouncementArchiveEntry {
     }
 
     public void addAnnouncement(Announcement announcement) {
-        MonthAnnouncementArchiveEntry month = entries.get(announcement.getCreationDate()
-                .getMonthOfYear());
+       int monthOfYear = announcement.getReferedSubjectBegin() != null ? announcement.getReferedSubjectBegin().getMonthOfYear() : announcement.getCreationDate().getMonthOfYear();
+	MonthAnnouncementArchiveEntry month = entries.get(monthOfYear);
         if (month == null) {
-            month = new MonthAnnouncementArchiveEntry(announcement.getCreationDate().getMonthOfYear());
-            entries.put(announcement.getCreationDate().getMonthOfYear(), month);
+            month = new MonthAnnouncementArchiveEntry(monthOfYear);
+            entries.put(monthOfYear, month);
         }
         month.addAnnouncement(announcement);
 
