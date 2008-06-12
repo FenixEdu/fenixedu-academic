@@ -107,7 +107,7 @@
 					<fr:property name="key(payments)" value="payments"/>
 					<fr:property name="visibleIfNot(payments)" value="isPayed"/>
 					
-					<fr:property name="sortBy" value="<%= sortCriteria + ",creationDate=asc" %>"/>
+					<fr:property name="sortBy" value="<%= sortCriteria + ",requestDate=asc" %>"/>
 					<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + academicSituationType.getName() + "&serviceRequestYear=" + bean.getServiceRequestYear() %>"/>
 					<fr:property name="sortParameter" value="sortBy"/>
 				</fr:layout>
@@ -155,7 +155,7 @@
 				<fr:property name="key(payments)" value="payments"/>
 				<fr:property name="visibleIfNot(payments)" value="isPayed"/>
 				
-				<fr:property name="sortBy" value="<%= sortCriteria + ",creationDate=asc" %>"/>
+				<fr:property name="sortBy" value="<%= sortCriteria + ",requestDate=asc" %>"/>
 				<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + academicSituationType.getName() + "&serviceRequestYear=" + bean.getServiceRequestYear() %>"/>
 				<fr:property name="sortParameter" value="sortBy"/>
 			</fr:layout>
