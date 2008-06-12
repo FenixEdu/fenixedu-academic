@@ -10,6 +10,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.BaseAuthenticationAction;
@@ -50,7 +51,7 @@ public class Authentication extends FenixAction {
                 	ServiceUtils.executeService("SetUserUID", new Object[] { person } );
                 }
 
-                ServiceManagerServiceFactory.executeService( "Autenticacao", argsAutenticacao);
+                ServiceManagerServiceFactory.executeService( PropertiesManager.getProperty("authenticationService"), argsAutenticacao);
                 result = true;
             }
 

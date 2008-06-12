@@ -159,7 +159,7 @@ public class StudentInfoByUsername extends FenixAction {
 	    userView = new MockUserView(username, new ArrayList<Role>(), Person.readPersonByUsername(username));
 	} else {
 	    final Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
-	    userView = (IUserView) ServiceManagerServiceFactory.executeService( "Autenticacao", argsAutenticacao);
+	    userView = (IUserView) ServiceManagerServiceFactory.executeService( PropertiesManager.getProperty("authenticationService"), argsAutenticacao);
 	}
 	UserView.setUser(userView);
     }

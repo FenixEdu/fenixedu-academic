@@ -155,17 +155,6 @@
 				    property="struts.validation.doctype.url"/>
 			</replace>
 
-			<replace encoding="${encoding}" dir="${build.home.webinf.classes}"
-					 propertyFile="build.properties">
-				<include name="services.xml"/>
-				<replacefilter token="@authenticationService@"
-			  		property="authenticationService"/>
-				<replacefilter token="@changePassService@"
-					property="changePassService"/>
-                <replacefilter token="@enableExternalLoginService@"
-                        property="enableExternalLoginService"/>
-			</replace>
-			
 		</sequential>
 	</target>
 

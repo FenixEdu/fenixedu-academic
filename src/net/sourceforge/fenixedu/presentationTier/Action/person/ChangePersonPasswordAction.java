@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.person;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
@@ -38,7 +39,7 @@ public class ChangePersonPasswordAction extends FenixAction {
             Object args[] = { userView, oldPassword, newPassword };
 
             try {
-                ServiceUtils.executeService("ChangePassword", args);
+                ServiceUtils.executeService(PropertiesManager.getProperty("changePassService"), args);
             } catch (InvalidPasswordServiceException e) {
                 throw new InvalidPasswordActionException(e);
             } catch (FenixServiceException e) {

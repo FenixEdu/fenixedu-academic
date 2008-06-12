@@ -21,10 +21,17 @@
 		<filterChains>
 			<chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization" />
 		</filterChains>
-	</service>	
+	</service>
 	<service>
-		<name>Autenticacao</name>
-		<implementationClass>@authenticationService@</implementationClass>
+		<name>Authenticate</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.Authenticate</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>
+	<service>
+		<name>AuthenticateKerberos</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.AuthenticateKerberos</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -2241,7 +2248,16 @@
 	</service>
 	<service>
 		<name>ChangePassword</name>
-		<implementationClass>@changePassService@</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePassword</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="PersonAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>ChangePasswordKerberos</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePasswordKerberos</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -11632,12 +11648,19 @@
     </service>
     <service>
     	<name>EnableExternalLogin</name>
-        <implementationClass>@enableExternalLoginService@</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publico.EnableExternalLogin</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>  
 		<filterChains/>
     </service>
-        <service>
+    <service>
+    	<name>EnableExternalLoginWithKerberos</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publico.EnableExternalLoginWithKerberos</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>  
+		<filterChains/>
+    </service>
+    <service>
     	<name>CreatePersistentGroup</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.CreatePersistentGroup</implementationClass>
         <description/>

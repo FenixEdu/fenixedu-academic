@@ -13,6 +13,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -124,7 +125,7 @@ public class InfoGroupsByExecutionCourse extends FenixAction
             String remoteHostName) throws FenixServiceException, FenixFilterException {
         Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
         IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(
-                "Autenticacao", argsAutenticacao);
+        	PropertiesManager.getProperty("authenticationService"), argsAutenticacao);
         return userView;
     }
 

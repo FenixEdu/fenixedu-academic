@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
@@ -70,7 +71,7 @@ public class LoginRequestManagement extends FenixDispatchAction {
 			return cycleLoginScreen(mapping, actionForm, request, response);
 		}
 		try {
-			executeService("EnableExternalLogin", new Object[] { bean });
+			executeService(PropertiesManager.getProperty("enableExternalLoginService"), new Object[] { bean });
 		} catch (Exception e) {
 			addActionMessage(request, e.getMessage());
 			return mapping.findForward("startRequestLoginProcess");

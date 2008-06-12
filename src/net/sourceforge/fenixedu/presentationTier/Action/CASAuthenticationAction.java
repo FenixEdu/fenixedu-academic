@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
@@ -38,7 +39,7 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
             final CASReceipt receipt = Authenticate.getCASReceipt(casTicket, requestURL);
             final Object authenticationArgs[] = { receipt, requestURL , remoteHostName};
 
-            userView = (IUserView) ServiceManagerServiceFactory.executeService( "Autenticacao",
+            userView = (IUserView) ServiceManagerServiceFactory.executeService( PropertiesManager.getProperty("authenticationService"),
                     authenticationArgs);
 
         }

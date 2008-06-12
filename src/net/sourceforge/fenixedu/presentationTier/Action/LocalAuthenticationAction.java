@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
@@ -33,7 +34,7 @@ public class LocalAuthenticationAction extends BaseAuthenticationAction {
         
         final Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
         final IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(
-                "Autenticacao", argsAutenticacao);
+        	PropertiesManager.getProperty("authenticationService"), argsAutenticacao);
 
         return userView;
     }
