@@ -192,6 +192,17 @@ margin: 0;
 padding: 0 0.25em;
 }
 
+
+.liststyle5 {
+width: 300px;
+}
+.liststyle5 li {
+background: #f5f5f5;
+padding: 0.25em;
+margin: 1px 0;
+}
+
+
 /* ----------------------
 ------- Tables ---------
 ----------------------- */
@@ -2321,7 +2332,6 @@ color: #fbb699;
 padding: 0.75em;
 text-align: center;	
 }
-
 
 
 /***********************************************************

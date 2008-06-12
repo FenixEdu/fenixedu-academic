@@ -23,14 +23,14 @@
 				<p class="mtop0 mbottom05"><strong><fr:view name="researcher" property="person" layout="values" schema="person.name.with.link"/></strong></p>
 				<p class="mtop0 mbottom05"><fr:view name="researcher" property="person.employee.currentDepartmentWorkingPlace.realName"/></p>
 				<p class="mtop0 mbottom05"><bean:message key="label.allows.contact.from" bundle="RESEARCHER_RESOURCES"/>: <fr:view name="researcher" layout="researcher-allowed-contacts"/></p>
-				<logic:present name="researcher" property="person.personWorkPhone">
-					<p class="mtop0 mbottom05"><bean:message key="label.person.telephone" bundle="APPLICATION_RESOURCES"/> <fr:view name="researcher" property="person.workPhone"/></p>
-				</logic:present>
-				<logic:present name="researcher" property="person.defaultEmailAddress">			
-					<logic:equal name="researcher" property="person.defaultEmailAddress.visible" value="true">
-							<p class="mtop0 mbottom05"><bean:message key="label.email" bundle="APPLICATION_RESOURCES"/>: <a href="mailto:<fr:view name="researcher" property="person.defaultEmailAddress.value"/>"><fr:view name="researcher" property="person.defaultEmailAddress.value"/></a></p>
-					</logic:equal>
-				</logic:present>
+				<logic:iterate id="contact" name="researcher" property="availableContacts"> 
+					<p class="mtop0 mbottom05"><fr:view name="contact" property="class">
+						<fr:layout name="label">
+							<fr:property name="bundle" value="RESEARCHER_RESOURCES"/>
+						</fr:layout>
+						</fr:view>
+					: <fr:view name="contact" property="presentationValue"/></p>
+				</logic:iterate>
 				
 				<p class="mtop0 mbottom05"><bean:message key="researcher.interests.title" bundle="RESEARCHER_RESOURCES"/>: 
 				<logic:notEmpty name="researcher"  property="researchInterests">

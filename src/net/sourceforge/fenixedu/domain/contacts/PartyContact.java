@@ -74,6 +74,8 @@ public abstract class PartyContact extends PartyContact_Base {
 	setDefaultContactInformation(defaultContact);
     }
     
+    public abstract String getPresentationValue();
+    
     public boolean isDefault() {
 	return hasDefaultContactValue() && getDefaultContact().booleanValue();
     }

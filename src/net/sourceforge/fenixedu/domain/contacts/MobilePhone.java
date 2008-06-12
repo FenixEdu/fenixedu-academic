@@ -68,4 +68,9 @@ public class MobilePhone extends MobilePhone_Base {
 	super.edit(type, visible, defaultContact);
 	edit(number);
     }
+
+    @Override
+    public String getPresentationValue() {
+	return getNumber();
+    }
 }

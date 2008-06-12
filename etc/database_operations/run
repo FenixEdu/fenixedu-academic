@@ -28,5 +28,5 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Change column Name in TSD Table" changeColumnNameInTSD.sql
-execute "AcademicServiceRequestYear" createAcademicServiceRequestYear.sql
+execute "Changing Party Contact" alterPartyContact.sql
+execute "Fixing data inconsistency in Researchers" fixResearcherData.sql

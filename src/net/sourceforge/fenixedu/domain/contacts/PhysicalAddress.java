@@ -106,4 +106,9 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 	    throw new DomainException("error.domain.contacts.PhysicalAddress.cannot.remove.last.physicalAddress");
 	}
     }
+
+    @Override
+    public String getPresentationValue() {
+	return getAddress();
+    }
 }

@@ -22,7 +22,8 @@ public class Phone extends Phone_Base {
 		result = -1;
 	    }
 	    return (result == 0) ? COMPARATOR_BY_TYPE.compare(contact, otherContact) : result;
-	}};
+	}
+    };
 
     protected Phone() {
 	super();
@@ -37,7 +38,8 @@ public class Phone extends Phone_Base {
 	this(party, type, true, defaultContact, number);
     }
 
-    public Phone(final Party party, final PartyContactType type, final Boolean visible, final Boolean defaultContact, final String number) {
+    public Phone(final Party party, final PartyContactType type, final Boolean visible, final Boolean defaultContact,
+	    final String number) {
 	this();
 	super.init(party, type, visible, defaultContact);
 	checkParameters(number);
@@ -74,5 +76,10 @@ public class Phone extends Phone_Base {
 	if (getParty().getPartyContacts(getClass()).size() == 1) {
 	    throw new DomainException("error.domain.contacts.Phone.cannot.remove.last.phone");
 	}
+    }
+
+    @Override
+    public String getPresentationValue() {
+	return getNumber();
     }
 }

@@ -8404,6 +8404,13 @@ relation ResearcherPerson {
 	research.Researcher playsRole researcher;
 }
 
+relation ResearchPartyContact {
+	contacts.PartyContact playsRole availableContacts {
+		multiplicity *;
+	} 
+	research.Researcher playsRole researcher;
+}
+
 relation ResearchResultCountry {
 	Country playsRole country;
 	research.result.ResearchResult playsRole results {

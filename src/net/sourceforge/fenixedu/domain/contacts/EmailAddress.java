@@ -118,4 +118,9 @@ public class EmailAddress extends EmailAddress_Base {
 	}
 	return null;
     }
+
+    @Override
+    public String getPresentationValue() {
+	return getValue();
+    }
 }

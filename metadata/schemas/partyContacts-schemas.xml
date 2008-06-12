@@ -187,3 +187,18 @@
 	</slot>
 	<setter signature="edit(type, visible, defaultContact, url)" />
 </schema>
+
+<schema name="contacts.WebAddress.manage-student" type="net.sourceforge.fenixedu.domain.contacts.WebAddress" extends="contacts.PartyContact.manage-student"
+		bundle="ACADEMIC_OFFICE_RESOURCES" constructor="party, type, visible, defaultContact, url">
+	<slot name="url" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.webAddress">
+		<property name="size" value="40"/>
+	</slot>
+	<setter signature="edit(type, visible, defaultContact, url)" />
+</schema>
+
+<schema name="contacts.PartyContact" type="net.sourceforge.fenixedu.domain.contacts.PartyContact">
+	<slot name="class" layout="label" bundle="RESEARCHER_RESOURCES"/>
+	<slot name="type"/>
+	<slot name="presentationValue"/>
+</schema>
+

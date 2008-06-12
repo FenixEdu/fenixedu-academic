@@ -76,4 +76,9 @@ public class WebAddress extends WebAddress_Base {
     public boolean hasUrl() {
 	return getUrl() != null && getUrl().length() > 0;
     }
+
+    @Override
+    public String getPresentationValue() {
+	return getUrl();
+    }
 }

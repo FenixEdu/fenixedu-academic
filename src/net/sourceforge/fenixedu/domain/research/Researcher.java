@@ -9,6 +9,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 
 public class Researcher extends Researcher_Base {
 
@@ -25,6 +26,10 @@ public class Researcher extends Researcher_Base {
     public Researcher(Person person) {
 	super();
 	setPerson(person);
+	setAllowsToBeSearched(Boolean.FALSE);
+	setAllowsContactByStudents(Boolean.FALSE);
+	setAllowsContactByMedia(Boolean.FALSE);
+	setAllowsContactByStudents(Boolean.FALSE);
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
@@ -62,5 +67,12 @@ public class Researcher extends Researcher_Base {
 	});
 
 	return orderedInterests;
+    }
+    
+    public void setAvailableContacts(List<PartyContact> contacts) {
+	getAvailableContacts().clear();
+	for (PartyContact contact : contacts) {
+	    addAvailableContacts(contact);
+	}
     }
 }

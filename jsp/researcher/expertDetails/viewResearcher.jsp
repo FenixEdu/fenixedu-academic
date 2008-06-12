@@ -21,6 +21,22 @@
 	<p class="mvert05"><bean:message key="label.allowsContactByMedia" bundle="RESEARCHER_RESOURCES"/>: <b><fr:view name="researcher" property="allowsContactByMedia"/></b></p>
 	<p class="mtop05"><bean:message key="label.allowsContactByOtherResearchers" bundle="RESEARCHER_RESOURCES"/>: <b><fr:view name="researcher" property="allowsContactByOtherResearchers"/></b></p>	
 	
+	<p class="mtop15 mbottom05"><strong><bean:message key="label.available.contacts" bundle="RESEARCHER_RESOURCES"/></strong></p>
+	<logic:iterate id="partyContact" name="researcher" property="availableContacts">
+		<p class="mvert05">
+			<fr:view name="partyContact" property="class">
+				<fr:layout name="label">
+					<fr:property name="bundle" value="RESEARCHER_RESOURCES"/>
+				</fr:layout>
+			</fr:view>
+			(<fr:view name="partyContact" property="type"/>) <fr:view name="partyContact" property="presentationValue"/>
+		</p>
+	</logic:iterate>
+	<logic:empty name="researcher" property="availableContacts">
+		<p class="mtop05"><em><bean:message key="label.no.availableContacts" bundle="RESEARCHER_RESOURCES"/>.</em></p>
+	</logic:empty>
+	
+		
 	<p class="mtop15 mbottom05"><strong><bean:message key="label.keywords" bundle="RESEARCHER_RESOURCES"/></strong></p>
 	<p class="mtop05"><fr:view name="researcher" property="keywords"/></p>
 		
