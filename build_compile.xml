@@ -118,7 +118,6 @@
 			<antcall target="prepare-institution"/>
 
 			<!-- Replace tokens in configuration files with local config -->
-			<antcall target="replace-property-values"/>
 			<ant antfile="build_generateStrutsMapping.xml" target="generate-struts-mapping" inheritall="false" />
 		</sequential>
 
@@ -143,19 +142,6 @@
 			<fileset dir="${institution.metadata.tiles}"/>
 		</copy>
 		
-	</target>
-
-	<target name="replace-property-values">
-
-		<sequential>
-			<replace encoding="${encoding}" dir="${build.home.webinf}/conf" propertyFile="build.properties">
-				<include name="validation*.xml"/>
-				<replacefilter 
-				    token="@validation.doctype.url@" 
-				    property="struts.validation.doctype.url"/>
-			</replace>
-
-		</sequential>
 	</target>
 
     <!-- = = = = = = = = = = = = = = = = =
