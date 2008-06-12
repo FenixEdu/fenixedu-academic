@@ -55,6 +55,23 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
             defaultVariant = getProperty("variant");
             logProfileDir = getProperty("log.profile.dir");
             logProfileFilename = getProperty("log.profile.filename");
+
+            dspaceClientTransportClass = getProperty("dspace.client.transport.class");
+            fileManagerFactoryImplementationClass = getProperty("file.manager.factory.implementation.class");
+            dspaceServerUrl = getProperty("dspace.serverUrl");
+            dspaceDownloadUriFormat = getProperty("dspace.downloadUriFormat");
+            dspaceUsername = getProperty("dspace.username");
+            dspacePassword = getProperty("dspace.password");
+            dspaceRmiServerName = getProperty("dspace.rmi.server.name");
+            jndiPropertiesFile = getProperty("jndi.properties.file");
+            rmiRegistryPort = getProperty("rmi.registry.port");
+            rmiPort = getProperty("rmi.port");
+            rmiSsl = getProperty("rmi.ssl");
+            rmiSslTruststore = getProperty("rmi.ssl.truststore");
+            rmiSslTruststorePassword = getProperty("rmi.ssl.truststore.password");
+            rmiStreamBytesMin = getProperty("rmi.stream.bytes.min");
+            rmiStreamBytesMax = getProperty("rmi.stream.bytes.max");
+            rmiStreamBytesBlock = getProperty("rmi.stream.bytes.block");
         }};
     }
 }
