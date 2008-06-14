@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-
 <project basedir="." default="generate-struts-mapping" name="Generate Struts properties file">
+
+	<property file="build.properties"/>
 
 	<!-- Source code directories -->
 	<property name="src" location="src_tools/pt/utl/ist/struts" />
 
 	<!-- Directories for compiled code -->
-	<property name="build.home" location="build" />
-	<property name="build.home.webinf" value="${build.home}/WEB-INF" />
-	<property name="build.home.webinf.classes" value="${build.home}/WEB-INF/classes" />
-	
-	<target name="compile-struts-mapping-generator">
+
+	<target name="set-properties-copy" if="institution.project"
+			description="Determine properties to use for build properties">
+		<property name="build.home" location="build"/>
+	</target>
+
+	<target name="set-properties-inplace" unless="institution.project"
+			description="Determine properties to use for build properties">
+		<property name="build.home" location="web"/>
+	</target>
+
+	<target name="set-properties" description="Determine properties to use for build properties"
+			depends="set-properties-copy, set-properties-inplace">
+		<property name="build.home.webinf" value="${build.home}/WEB-INF" />
+		<property name="build.home.webinf.classes" value="${build.home}/WEB-INF/classes" />
+	</target>
+
+	<target name="compile-struts-mapping-generator" depends="set-properties">
 		<javac destdir="${build.home.webinf.classes}">
 			<src path="${src}" />
 			<include name="StrutsMappingGenerator.java"/>
@@ -19,7 +33,7 @@
 
 	<target name="generate-struts-mapping" depends="compile-struts-mapping-generator" description="Generates property file for struts mapping auto-loading ">
 		<java classname="pt.utl.ist.struts.StrutsMappingGenerator" classpath="${build.home.webinf.classes}">
-			<arg value="metadata/conf" />
+			<arg value="${build.home.webinf}/conf" />
 			<arg value="${build.home.webinf.classes}/struts-auto-mapping.properties"/>
 		</java>
 	</target>

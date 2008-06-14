@@ -40,6 +40,15 @@
 	    </fileset>
 	  </path>
 
+	<path id="class.path.lib.ref">
+        <fileset dir="${lib}">
+   		    <include name="*.jar"/>
+   		</fileset>
+		<fileset dir="${build.home.webinf.libs}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
 	<target name="generate-domain"
 	                description="Generate java code from a DML file">
 		<echo message="Processing ${dml.definition.file.completed} ..."/>
@@ -57,13 +66,7 @@
 			<arg value="-generator"/>
 			<arg value="dml.FenixCodeGeneratorReadFromRs"/>
 			<arg value="${dml.definition.file.completed}"/>
-			<classpath>
-				<fileset dir="${lib}">
-					<include name="dml.jar"/>
-					<include name="dml-runtime.jar"/>
-					<include name="antlr.jar"/>
-				</fileset>
-			</classpath>
+			<classpath refid="class.path.lib.ref"/>
 		</java>
 		<echo level="info" message="Processing of ${dml.definition.file.completed} finished."/>
 	</target>
@@ -73,11 +76,9 @@
 		<java classname="pt.utl.ist.fenix.tools.codeGenerator.RootDomainObjectGenerator" fork="true">
 			<arg value="${src_gen}"/>
 			<arg value="${dml.definition.file.completed}"/>
+			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.temp.classes}"/>			
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
 			</classpath>
 		</java>
     	<antcall target="clean-all"/>
@@ -97,12 +98,12 @@
 		<mkdir dir="${build.home.webinf.classes}"/>
 
 		<javac destdir="${build.home.webinf.classes}"
-               extdirs="${lib}"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
                encoding="${encoding}"
 			   nowarn="true">
+			<classpath refid="class.path.lib.ref"/>
 			<src path="${src_gen}"/>
 			<src path="${src}"/>
 			<include name="net/sourceforge/fenixedu/persistenceTier/SuportePersistenteOJB.java"/>
@@ -114,12 +115,12 @@
     		depends="prepare">
 		<javac destdir="${build.home.temp.classes}"
 			   classpath="${build.home.webinf.classes}"
-               extdirs="${lib}"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
                encoding="${encoding}"
 			   nowarn="true">
+			<classpath refid="class.path.lib.ref"/>
 			<src path="${src_tools}"/>
 		</javac>
 	</target>
@@ -130,12 +131,10 @@
 		<java classname="net.sourceforge.fenixedu.tools.OJBMetadataGenerator" fork="true">
 			<arg value="${dml.definition.file.completed}"/>
 			<arg value="${class}"/>
+			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.temp.classes}"/>	
 				<pathelement path="${build.home.webinf.classes}"/>
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
 			</classpath>
 		</java>
     </target>	
@@ -148,12 +147,10 @@
 		>
 			<arg value="${dml.definition.file.completed}"/>
 			<arg value="${option}"/>
+			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.temp.classes}"/>	
 				<pathelement path="${build.home.webinf.classes}"/>
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
 			</classpath>
 		</java>
     </target>
@@ -161,11 +158,9 @@
     <target name="fixColumnsNames"
     		depends="compile">
 		<java classname="net.sourceforge.fenixedu.tools.FixColumnsNames" fork="true">
+			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
 			</classpath>
 		</java>
     </target>
@@ -175,11 +170,9 @@
 		<java classname="net.sourceforge.fenixedu.tools.FixColumnsNames" fork="true"
 			jvmargs="-Xdebug -Xnoagent -Djava.compiler=NONE  -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y"
 		>
+			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
 			</classpath>
 		</java>
     </target>
@@ -187,11 +180,9 @@
     <target name="changeVarcharColumnsToLongvarcharColumns"
     		depends="compile">
 		<java classname="net.sourceforge.fenixedu.tools.ChangeVarcharColumnsToLongvarcharColumns" fork="true">
+			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
 			</classpath>
 		</java>
     </target>
@@ -200,11 +191,9 @@
     		depends="compile">
 		<java classname="net.sourceforge.fenixedu.tools.CheckAndFixDMLDateTypes" fork="true">
 			<arg value="${dml.definition.file.completed}"/>
+			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
 			</classpath>
 		</java>
     </target>
@@ -215,11 +204,9 @@
 			jvmargs="-Xdebug -Xnoagent -Djava.compiler=NONE  -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y"			
 		>
 			<arg value="${dml.definition.file.completed}"/>
+			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
 			</classpath>
 		</java>
     </target>	
@@ -228,11 +215,9 @@
     		depends="compile">
 		<java classname="net.sourceforge.fenixedu.tools.CheckOJBConversors" fork="true">
 			<arg value="${dml.definition.file.completed}"/>
+			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
 			</classpath>
 		</java>
     </target>
@@ -243,11 +228,9 @@
 			jvmargs="-Xdebug -Xnoagent -Djava.compiler=NONE  -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y"
 		>
 			<arg value="${dml.definition.file.completed}"/>
+			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
 			</classpath>
 		</java>
     </target>
@@ -256,11 +239,9 @@
 		<java classname="pt.utl.ist.fenix.tools.codeGenerator.DeprecatedDatesGettersAndSettersGenerator" fork="true">
 			<arg value="${src_gen}"/>
 			<arg value="${dml.definition.file.completed}"/>
+			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.temp.classes}"/>			
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
 			</classpath>
 		</java>
     	<antcall target="clean-all"/>
@@ -291,11 +272,7 @@
 			depends="prepare-groups-output-dir,check-groups-language,show-groups-message"
 			if="groups.language.changed">
 		<antlr target="${groups.language.file}" outputdirectory="${groups.output.dir}">
-			<classpath>
-				<fileset dir="${lib}">
-					<include name="**/antlr.jar"/>
-				</fileset>
-			</classpath>
+			<classpath refid="class.path.lib.ref"/>
 		</antlr>
 	</target>
 	

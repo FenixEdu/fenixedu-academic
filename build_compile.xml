@@ -15,18 +15,6 @@
 	<property name="institution.metadata.tiles" location="${institution.project}/metadata/tiles"/>
 	<property name="config.web" location="metadata"/>
 	
-
-	<!-- Directories for compiled code -->
-	<property name="build.home" location="build"/>
-	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
-	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
-	<property name="build.home.webinf.classes.meta.inf" value="${build.home.webinf.classes}/META-INF"/>
-	<property name="build.home.webinf.conf" value="${build.home.webinf}/conf"/>
-	<property name="build.home.webinf.libs" value="${build.home.webinf}/lib"/>
-	<property name="build.home.jsp_gen_code" value="${build.home}/Jsp-Code"/>
-	<property name="build.home.jsp_gen_code.classes" value="${build.home.jsp_gen_code}/classes"/>
-	<property name="build.home.reports" value="${build.home.webinf.classes}/reports"/>
-
 	<!-- Directories for deploy -->
 	<property name="deploy.home" location="deploy"/>
 
@@ -37,16 +25,14 @@
 	<property name="etc" location="etc"/>
 
 	<!-- Directory with web-content -->
-	<property name="web-content" location="jsp"/>
+	<property name="web-content" location="web"/>
 	<property name="institution.web-content" location="${institution.project}/jsp"/>
 
 	<!-- DML definition file -->
 	<property name="dml.definition.file" value="${config}/domain_model.dml"/>
-	<property name="dml.definition.file.completed" value="${build.home.webinf.classes}/domain_model.dml"/>
 
 	<!-- WebServices(xfire) Directories -->
 	<property name="xfire" location="${config}/xfire" />
-	<property name="build.home.xfire" value="${build.home.webinf.classes.meta.inf}/xfire" />
 	<property name="xfire.stubsTempDir" value="${basedir}/stubsTempDir"/>
 	<property name="xfire.stubsTempDir.classes" value="${basedir}/stubsTempDir/classes"/>
 	
@@ -54,10 +40,54 @@
 	<property name="compile.debug"       value="on"/>
 	<property name="compile.deprecation" value="off"/>
 	<property name="compile.optimize"    value="on"/>
-	
-	<target name="clean-all"
-    		description="Removes any generated files">
+
+	<target name="set-properties-copy" if="institution.project"
+			description="Determine properties to use for build properties">
+		<property name="build.home" location="build"/>
+	</target>
+
+	<target name="set-properties-inplace" unless="institution.project"
+			description="Determine properties to use for build properties">
+		<property name="build.home" location="web"/>
+	</target>
+
+	<target name="set-properties" description="Determine properties to use for build properties"
+			depends="set-properties-copy, set-properties-inplace">
+		<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
+		<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
+		<property name="build.home.webinf.classes.meta.inf" value="${build.home.webinf.classes}/META-INF"/>
+		<property name="build.home.webinf.conf" value="${build.home.webinf}/conf"/>
+		<property name="build.home.webinf.libs" value="${build.home.webinf}/lib"/>
+		<property name="build.home.jsp_gen_code" value="${build.home}/Jsp-Code"/>
+		<property name="build.home.jsp_gen_code.classes" value="${build.home.jsp_gen_code}/classes"/>
+		<property name="build.home.reports" value="${build.home.webinf.classes}/reports"/>
+		<property name="dml.definition.file.completed" value="${build.home.webinf.classes}/domain_model.dml"/>
+		<property name="build.home.xfire" value="${build.home.webinf.classes.meta.inf}/xfire" />
+
+		<path id="class.path.lib.ref">
+			<fileset dir="${lib}">
+				<include name="*.jar"/>
+			</fileset>
+			<fileset dir="${build.home.webinf.libs}">
+				<include name="*.jar"/>
+			</fileset>
+		</path>
+	</target>
+
+	<target name="clean-all-copy" if="institution.project"
+			description="Removes any generated files">
 		<delete dir="${build.home}"/>
+	</target>
+
+	<target name="clean-all-inplace" unless="institution.project"
+			description="Removes any generated files">
+		<delete dir="${build.home.webinf.classes}"/>
+	</target>
+
+	<target name="clean-all" depends="set-properties, clean-all-copy, clean-all-inplace"
+			description="Removes any generated files">
+		<delete dir="${build.home.xfire}"/>
+		<delete dir="${build.home}/images/logs"/>
 		<delete dir="${deploy.home}"/>
 		<delete dir="${src_gen}"/>
 	</target>
@@ -66,60 +96,50 @@
 		<uptodate property="dml.skip-compile" targetfile="${build.home.webinf.classes}/domain_model.dml" srcfile="${config}/domain_model.dml"/>
 	</target>
 
-	<target name="prepare"
-			depends="check-dml-file"
+	<target name="prepare-copy" if="institution.project"
 			description="Copy configuration files to compile dir">
-	
 		<mkdir dir="${build.home}"/>
-		<mkdir dir="${build.home.webinf}"/>
-		<mkdir dir="${build.home.webinf.classes}"/>
-		<mkdir dir="${build.home.xfire}"/>
-		<mkdir dir="${build.home.webinf.libs}"/>
-		<mkdir dir="${build.home}/images/logs"/>
+		<copy encoding="${encoding}" todir="${build.home}">
+			<fileset dir="${web-content}" >
+				<include name="**/*.*"/>
+				<exclude name="WEB-INF//*.*"/>
+			</fileset>
+		</copy>
+	</target>
 
+	<target name="prepare-inline" unless="institution.project"
+			description="Copy configuration files to compile dir">
+	</target>
+
+	<target name="prepare"
+			depends="set-properties, check-dml-file, prepare-copy"
+			description="Copy configuration files to compile dir">
 
 		<tstamp>
 		   <format property="build.version" pattern="yyyy/MM/dd HH:mm:ss"/>
 		</tstamp>
 
+		<mkdir dir="${build.home.webinf.classes}"/>
+		<mkdir dir="${build.home.xfire}"/>
+		<mkdir dir="${build.home}/images/logs"/>
+
 		<echo file="${build.home.webinf.classes}/.build.version">${build.version}</echo>
 
-		<sequential>
-			<copy file="build.properties" tofile="${build.home.webinf.classes}/.build.properties"/>
+		<copy file="build.properties" tofile="${build.home.webinf.classes}/.build.properties"/>
 
-			<copy encoding="${encoding}" todir="${build.home}">
-				<fileset dir="${web-content}" >
-					<include name="**/*.*"/>
-					<exclude name="WEB-INF//*.*"/>
-				</fileset>
-			</copy>
+		<copy encoding="${encoding}" todir="${build.home.webinf.classes}">
+			<fileset dir="${config}"/>
+			<fileset file="build.properties"/>
+		</copy>
 
-			<copy encoding="${encoding}" todir="${build.home.webinf.classes}">
-				<fileset dir="${config}"/>
-				<fileset file="build.properties"/>
-			</copy>
+		<copy encoding="${encoding}" todir="${build.home.xfire}">
+			<fileset dir="${xfire}"/>
+		</copy>
 
-			<copy encoding="${encoding}" todir="${build.home.webinf}">
-				<fileset dir="${config.web}" >
-					<include name="**/*.*"/>
-				</fileset>
-			</copy>
+		<antcall target="prepare-institution"/>
 
-			<copy encoding="${encoding}" todir="${build.home.webinf.libs}">
-				<fileset dir="${lib}" >
-					<include name="*.jar"/>
-				</fileset>
-			</copy>
-			
-			<copy encoding="${encoding}" todir="${build.home.xfire}">
-				<fileset dir="${xfire}"/>
-			</copy>
-
-			<antcall target="prepare-institution"/>
-
-			<!-- Replace tokens in configuration files with local config -->
-			<ant antfile="build_generateStrutsMapping.xml" target="generate-struts-mapping" inheritall="false" />
-		</sequential>
+		<!-- Replace tokens in configuration files with local config -->
+		<ant antfile="build_generateStrutsMapping.xml" target="generate-struts-mapping" inheritall="false" />
 
 		<echo file="${build.home.webinf.classes}/checkIsAlive.properties" append="false">
 			script.isAlive.check.db=${script.isAlive.check.db}
@@ -279,13 +299,13 @@
           description="Compile application's domain"
           depends="generate, generate-groups-language">
 		<javac destdir="${build.home.webinf.classes}"
-           extdirs="${lib}"
            debug="${compile.debug}"
            optimize="${compile.optimize}"
            deprecation="${compile.deprecation}"
            encoding="${encoding}"
            nowarn="true"
   		   >
+			<classpath refid="class.path.lib.ref"/>
 			<src path="${src_gen}"/>
 			<src path="${src}"/>
 			<include name="net/sourceforge/fenixedu/tools/**"/>
@@ -295,18 +315,17 @@
 	</target>
 
 	<target name="base-compile" description="Compile application" depends="compile-domain,i18nDefault, write-all-properties, generate">
-		<javac destdir="${build.home.webinf.classes}" extdirs="${lib}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true" >
+		<javac destdir="${build.home.webinf.classes}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true" >
+			<classpath refid="class.path.lib.ref"/>
 			<src path="${src_gen}"/>
 			<src path="${src}"/>
 		</javac>
 		<java classname="pt.ist.fenixframework.pstm.PostProcessDomainClasses" 
 			dir="${build.home.webinf.classes}"
 			fork="true">
+			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
 			</classpath>
 			<arg value="-d"/>
 			<arg value="${dml.definition.file.completed}"/>
@@ -321,26 +340,21 @@
 
 	<target name="generateStubs">		
 		<mkdir dir="${xfire.stubsTempDir}"/>		
-		<mkdir dir="${xfire.stubsTempDir.classes}"/>		
-		<path id="fenix.lib.path">
-			<fileset dir="${lib}">
-				<include name="**/*.jar"/>
-			</fileset>
-		</path>		
-		<taskdef name="wsgen" classname="org.codehaus.xfire.gen.WsGenTask" classpathref="fenix.lib.path"/>
-		<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="fenix.lib.path"/>			
+		<mkdir dir="${xfire.stubsTempDir.classes}"/>
+		<taskdef name="wsgen" classname="org.codehaus.xfire.gen.WsGenTask" classpathref="class.path.lib.ref"/>
+		<taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="class.path.lib.ref"/>			
 		<for param="url" list="${webServices.external.urls}">
 			<sequential>
 				<wsgen outputDirectory="${xfire.stubsTempDir}" wsdl="@{url}" package="net.sourceforge.fenixedu.webServices.generatedStubs" overwrite="true"/>					
 			</sequential>			
 		</for>								
 		<javac srcdir="${xfire.stubsTempDir}" destdir="${xfire.stubsTempDir.classes}" 
-			   extdirs="${lib}" 
 			   debug="${compile.debug}" 
 			   optimize="${compile.optimize}" 
 			   deprecation="${compile.deprecation}" 
 			   encoding="${encoding}" 
-			   nowarn="true">		
+			   nowarn="true">
+			<classpath refid="class.path.lib.ref"/>
 			<exclude name="${xfire.stubsTempDir}/*.xml"/>
 		</javac>
 		<delete file="${lib}/fenix-stubs.jar" />
@@ -349,15 +363,27 @@
 		</jar>
 		<delete dir="${xfire.stubsTempDir}"/>
 	</target>
-	
-	<target name="compile" description="Compile application" depends="i18nDefault, compile-domain, write-all-properties, generate, generate-groups-language, base-compile, compile-reports">
-		<ant antfile="build_injectionCode.xml" target="inject-accessControl-code"/>
-		<ant antfile="build_injectionCode.xml" target="inject-domainObjectActionLog-code"/>
+
+	<target name="compile-base" description="Compile application" depends="i18nDefault, compile-domain, write-all-properties, generate, generate-groups-language, base-compile"/>
+
+	<target name="compile" description="Compile application" depends="compile-base">
+		<parallel threadsperprocessor="1" threadcount="2">
+			<antcall target="compile-reports"/>
+			<sequential>
+				<ant antfile="build_injectionCode.xml" target="inject-accessControl-code"/>
+				<ant antfile="build_injectionCode.xml" target="inject-domainObjectActionLog-code"/>
+			</sequential>
+		</parallel>
 	</target>
 
-	<target name="compile-without-injectionCode" description="Compile application" depends="i18nDefault, write-all-properties, compile-domain, generate, base-compile">
-		<ant antfile="build_injectionCode.xml" target="accessControl-void-inject"/>
-		<ant antfile="build_injectionCode.xml" target="domainObjectActionLog-void-inject"/>
+	<target name="compile-without-injectionCode" description="Compile application" depends="compile-base">
+		<parallel threadsperprocessor="1" threadcount="2">
+			<antcall target="compile-reports"/>
+			<sequential>
+				<ant antfile="build_injectionCode.xml" target="accessControl-void-inject"/>
+				<ant antfile="build_injectionCode.xml" target="domainObjectActionLog-void-inject"/>
+			</sequential>
+		</parallel>
 	</target>
 
 	<target name="deploy-linux"
@@ -491,12 +517,10 @@
 			   classpath="struts.jar"
                encoding="${encoding}"
 			   nowarn="true"
-	  		   >			
+	  		   >
+			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes};"/>
-				<fileset dir="${lib}">
-					<include name="*.jar"/>
-				</fileset>
 				<pathelement location="${env.CATALINA_HOME}/common/classes"/>
 				<fileset dir="${env.CATALINA_HOME}/common/lib">
 					<include name="*.jar"/>
@@ -520,11 +544,9 @@
 				failonerror="true"
 				maxmemory="1024m"
 				>
+			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
 			</classpath>
 		</java>
 	</target>
@@ -533,24 +555,18 @@
 		<mkdir dir="${build.home.reports}"/>
 		<taskdef name="jrc" 
 		      classname="net.sf.jasperreports.ant.JRAntCompileTask">
-		  <classpath>
-			<fileset dir="${lib}">
-				<include name="*.jar"/>
-			</fileset>
-		  </classpath>
+			<classpath refid="class.path.lib.ref"/>
 		</taskdef>
 		<jrc destdir="${build.home.reports}">
+			<classpath refid="class.path.lib.ref"/>
+			<classpath>
+				<pathelement path="${build.home.webinf.classes};"/>
+			</classpath>
 			<src>
 				<fileset dir="${reports}">
 				    <include name="*.jrxml"/>
 				</fileset>
 			</src>
-			<classpath>
-				<pathelement path="${build.home.webinf.classes};"/>
-				<fileset dir="${lib}">
-					<include name="*.jar"/>
-				</fileset>
-			</classpath>
 		</jrc>
 	</target>
 
@@ -561,11 +577,7 @@
 				maxmemory="1024m"
 				>
 			<arg value="${basedir}"/>
-			<classpath>
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
-			</classpath>
+			<classpath refid="class.path.lib.ref"/>
 		</java>
 	</target>
 
@@ -573,11 +585,9 @@
 		<java classname="net.sourceforge.fenixedu.Xtest" 
 			dir="${build.home.webinf.classes}"
 			fork="true">
+			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
 			</classpath>
 		</java>
 	</target>
