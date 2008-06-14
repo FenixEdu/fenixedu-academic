@@ -18,17 +18,10 @@ public class CheckIsAliveService extends Service {
     private static boolean CHECK_DB = false;
 
     static {
-        final String propertiesFilename = "/checkIsAlive.properties";
-        final Properties properties = new Properties();
-        try {
-            PropertiesManager.loadProperties(properties, propertiesFilename);
-            final String checkDB = properties.getProperty("script.isAlive.check.db");
-            if ("true".equalsIgnoreCase(checkDB)) {
-                CHECK_DB = true;
-            }
-        } catch (IOException e) {
-        	e.printStackTrace();
-        }
+	final String checkDB = PropertiesManager.getProperty("script.isAlive.check.db");
+	if ("true".equalsIgnoreCase(checkDB)) {
+	    CHECK_DB = true;
+	}
 
         if (LogLevel.INFO) {
             logger.info("CheckIsAliveService - will check db: " + CHECK_DB);
