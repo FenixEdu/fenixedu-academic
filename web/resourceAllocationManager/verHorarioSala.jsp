@@ -4,7 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <html:html xhtml="true">
-    <app:checkLogon/>
     <head>
         <title> Ver Sala </title>
         <html:base/>

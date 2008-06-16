@@ -7,7 +7,6 @@
 %>
 
 <html:html xhtml="true">
-    <app:checkLogon/>
     <head>
         <title> Página Inválida </title>
     </head>

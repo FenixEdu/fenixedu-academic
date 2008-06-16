@@ -20,10 +20,9 @@
 
     <h2>
         <fr:view name="section" property="name" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/>
-            <span class="permalink1">
-            	(<app:contentLink name="section"><bean:message key="label.link" bundle="SITE_RESOURCES"/></app:contentLink>)            
-            </span>
-        </logic:present>
+        <span class="permalink1">
+        	(<app:contentLink name="section"><bean:message key="label.link" bundle="SITE_RESOURCES"/></app:contentLink>)            
+        </span>
     </h2>
 
  	<logic:notEmpty name="section" property="orderedSubSections">

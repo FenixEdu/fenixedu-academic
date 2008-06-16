@@ -4,7 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <html:html xhtml="true">
-    <app:checkLogon/>
     <head>
         <title> Editar Horário </title>
     </head>

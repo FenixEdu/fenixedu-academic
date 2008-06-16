@@ -25,61 +25,7 @@
     Biblioteca de TAGs da aplicação do IST.
 
   </info>
-
-
-
-
-
-  <tag>
-
-    <name>checkLogon</name>
-
-    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.assiduousness.CheckLogonTag</tagclass>
-
-    <bodycontent>empty</bodycontent>
-
-    <info>
-
-      Validate that there is a currently logged on user, by checking for
-
-      the existence of a session-scope bean under the specified name.
-
-      If there is no such bean, forward control to the specified page,
-
-      which will typically be a logon form.
-
-
-
-      name - Name of the session-scope bean to check for [user]
-
-
-
-      page - Context-relative path to the logon page [/logon.jsp]
-
-    </info>
-
-    <attribute>
-
-      <name>name</name>
-
-      <required>false</required>
-
-      <rtexprvalue>true</rtexprvalue>
-
-    </attribute>
-
-    <attribute>
-
-      <name>page</name>
-
-      <required>false</required>
-
-      <rtexprvalue>true</rtexprvalue>
-
-    </attribute>
-
-  </tag>
-
+  
   <tag>
 
     <name>gerarHorario</name>
