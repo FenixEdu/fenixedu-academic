@@ -181,6 +181,16 @@ public class Authenticate extends Service implements Serializable {
 	    }
 	    return privateConstantForDigestCalculation;
 	}
+
+	@Override
+	public String getUsername() {
+	    return getUtilizador();
+	}
+
+	@Override
+	public boolean hasRole(String role) {
+	    return hasRoleType(RoleType.valueOf(role));
+	}
     }
 
     public static final boolean isValidUserView(IUserView userView) {

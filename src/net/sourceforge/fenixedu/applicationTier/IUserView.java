@@ -8,10 +8,12 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.security.User;
+
 /**
  * @author jorge
  */
-public interface IUserView extends Serializable {
+public interface IUserView extends Serializable, User {
 
     public Person getPerson();
 

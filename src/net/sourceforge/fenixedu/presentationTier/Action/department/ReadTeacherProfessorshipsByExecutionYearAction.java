@@ -103,7 +103,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
         InfoDepartment teacherDepartment = (InfoDepartment) ServiceUtils.executeService(
                 "ReadDepartmentByTeacher", args2);
 
-        if (!request.isUserInRole(RoleType.CREDITS_MANAGER.toString())) {
+        if (userView == null || !userView.hasRoleType(RoleType.CREDITS_MANAGER)) {
             Object args[] = { userView.getUtilizador() };
 
             InfoDepartment userDepartment = (InfoDepartment) ServiceUtils.executeService(

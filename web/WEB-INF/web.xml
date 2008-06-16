@@ -36,7 +36,7 @@
 	</filter>
 	<filter>
 	    <filter-name>indexFilter</filter-name>
-	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.HasRoleWrapperFilter</filter-class>
+	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter</filter-class>
 	</filter>
 	<filter>
 	    <filter-name>ManagerFilter</filter-name>
