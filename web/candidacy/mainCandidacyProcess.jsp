@@ -102,6 +102,8 @@
     	        <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "candidacyState,candidacyDate=desc" : request.getParameter("sortBy") %>"/>
 			</fr:layout>
 		</fr:view>
+		<bean:size id="childProcessesSize" name="childProcesses" />
+		<em>(<bean:message key="label.Total" bundle="APPLICATION_RESOURCES" />: <strong><bean:write name="childProcessesSize" /></strong>)</em>
 	</logic:notEmpty>
 	
 </logic:notEmpty>
