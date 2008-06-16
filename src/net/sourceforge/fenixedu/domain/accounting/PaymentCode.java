@@ -22,8 +22,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	public int compare(PaymentCode leftPaymentCode, PaymentCode rightPaymentCode) {
 	    int comparationResult = leftPaymentCode.getCode().compareTo(rightPaymentCode.getCode());
 	    if (comparationResult == 0) {
-		throw new DomainException(
-			"error.accounting.PaymentCode.data.is.corrupted.because.found.duplicate.codes");
+		throw new DomainException("error.accounting.PaymentCode.data.is.corrupted.because.found.duplicate.codes");
 	    }
 	    return comparationResult;
 	}
@@ -31,10 +30,9 @@ public abstract class PaymentCode extends PaymentCode_Base {
 
     public static Comparator<PaymentCode> COMPARATOR_BY_END_DATE = new Comparator<PaymentCode>() {
 	public int compare(PaymentCode leftPaymentCode, PaymentCode rightPaymentCode) {
-	    int comparationResult = leftPaymentCode.getEndDate()
-		    .compareTo(rightPaymentCode.getEndDate());
-	    return (comparationResult == 0) ? leftPaymentCode.getIdInternal().compareTo(
-		    rightPaymentCode.getIdInternal()) : comparationResult;
+	    int comparationResult = leftPaymentCode.getEndDate().compareTo(rightPaymentCode.getEndDate());
+	    return (comparationResult == 0) ? leftPaymentCode.getIdInternal().compareTo(rightPaymentCode.getIdInternal())
+		    : comparationResult;
 	}
     };
 
@@ -48,9 +46,8 @@ public abstract class PaymentCode extends PaymentCode_Base {
 
     }
 
-    protected void init(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
-	    final YearMonthDay endDate, final Money minAmount, final Money maxAmount,
-	    final Student student) {
+    protected void init(final PaymentCodeType paymentCodeType, final YearMonthDay startDate, final YearMonthDay endDate,
+	    final Money minAmount, final Money maxAmount, final Student student) {
 
 	checkParameters(paymentCodeType, startDate, endDate, maxAmount, maxAmount, student);
 
@@ -64,8 +61,8 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	super.setStudent(student);
     }
 
-    private void checkParameters(PaymentCodeType paymentCodeType, YearMonthDay startDate,
-	    YearMonthDay endDate, Money minAmount, Money maxAmount, final Student student) {
+    private void checkParameters(PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, Money minAmount,
+	    Money maxAmount, final Student student) {
 
 	if (paymentCodeType == null) {
 	    throw new DomainException("error.accounting.PaymentCode.paymentCodeType.cannot.be.null");
@@ -79,8 +76,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
 
     }
 
-    private void checkParameters(YearMonthDay startDate, YearMonthDay endDate, Money minAmount,
-	    Money maxAmount) {
+    private void checkParameters(YearMonthDay startDate, YearMonthDay endDate, Money minAmount, Money maxAmount) {
 	if (startDate == null) {
 	    throw new DomainException("error.accounting.PaymentCode.startDate.cannot.be.null");
 	}
@@ -110,8 +106,8 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	    i++;
 	}
 
-	return result.charAt(result.length() - 1) == ' ' ? result.deleteCharAt(result.length() - 1)
-		.toString() : result.toString();
+	return result.charAt(result.length() - 1) == ' ' ? result.deleteCharAt(result.length() - 1).toString() : result
+		.toString();
     }
 
     @Override
@@ -126,26 +122,22 @@ public abstract class PaymentCode extends PaymentCode_Base {
 
     @Override
     public void setStartDate(YearMonthDay startDate) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.startDate");
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.startDate");
     }
 
     @Override
     public void setEndDate(YearMonthDay endDate) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.endDate");
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.endDate");
     }
 
     @Override
     public void setMinAmount(Money minAmount) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.minAmount");
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.minAmount");
     }
 
     @Override
     public void setMaxAmount(Money maxAmount) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.maxAmount");
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.maxAmount");
     }
 
     @Override
@@ -166,8 +158,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
 
     @Override
     public void setStudent(Student student) {
-	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.student");
+	throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.student");
     }
 
     public boolean isNew() {
@@ -185,7 +176,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
     public boolean isCancelled() {
 	return getState() == PaymentCodeState.CANCELLED;
     }
-    
+
     public void cancel() {
 	setState(PaymentCodeState.CANCELLED);
     }
@@ -194,8 +185,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	return !isNew();
     }
 
-    public void update(final YearMonthDay startDate, final YearMonthDay endDate, final Money minAmount,
-	    final Money maxAmount) {
+    public void update(final YearMonthDay startDate, final YearMonthDay endDate, final Money minAmount, final Money maxAmount) {
 	checkParameters(startDate, endDate, maxAmount, maxAmount);
 	super.setStartDate(startDate);
 	super.setEndDate(endDate);
@@ -204,8 +194,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	super.setWhenUpdated(new DateTime());
     }
 
-    public void process(Person responsiblePerson, Money amount, DateTime whenRegistered,
-	    String sibsTransactionId, String comments) {
+    public void process(Person responsiblePerson, Money amount, DateTime whenRegistered, String sibsTransactionId, String comments) {
 
 	if (isProcessed()) {
 	    return;
@@ -225,7 +214,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	removeRootDomainObject();
 	deleteDomainObject();
     }
-    
+
     static public PaymentCode readByCode(final String code) {
 	if (StringUtils.isEmpty(code)) {
 	    return null;
@@ -238,7 +227,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	return null;
     }
 
-    abstract protected void internalProcess(final Person person, final Money amount,
-	    final DateTime whenRegistered, final String sibsTransactionId, final String comments);
+    abstract protected void internalProcess(final Person person, final Money amount, final DateTime whenRegistered,
+	    final String sibsTransactionId, final String comments);
 
 }

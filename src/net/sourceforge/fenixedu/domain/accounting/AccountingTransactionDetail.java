@@ -13,7 +13,7 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
 	super.setRootDomainObject(RootDomainObject.getInstance());
 	super.setWhenProcessed(new DateTime());
     }
-    
+
     public AccountingTransactionDetail(final DateTime whenRegistered, final PaymentMode paymentMode) {
 	this(whenRegistered, paymentMode, null);
     }
@@ -26,13 +26,11 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
     private void checkParameters(DateTime whenRegistered, PaymentMode paymentMode) {
 
 	if (whenRegistered == null) {
-	    throw new DomainException(
-		    "error.accounting.AccountingTransactionDetail.whenRegistered.cannot.be.null");
+	    throw new DomainException("error.accounting.AccountingTransactionDetail.whenRegistered.cannot.be.null");
 	}
 
 	if (paymentMode == null) {
-	    throw new DomainException(
-		    "error.accounting.AccountingTransactionDetail.paymentMode.cannot.be.null");
+	    throw new DomainException("error.accounting.AccountingTransactionDetail.paymentMode.cannot.be.null");
 	}
     }
 
@@ -47,22 +45,19 @@ public class AccountingTransactionDetail extends AccountingTransactionDetail_Bas
 
     @Override
     public void setWhenRegistered(DateTime whenRegistered) {
-	throw new DomainException(
-		"error.accounting.AccountingTransactionDetail.cannot.modify.whenRegistered");
+	throw new DomainException("error.accounting.AccountingTransactionDetail.cannot.modify.whenRegistered");
     }
 
     @Override
     public void setPaymentMode(PaymentMode paymentMode) {
-	throw new DomainException(
-		"error.accounting.AccountingTransactionDetail.cannot.modify.paymentMode");
+	throw new DomainException("error.accounting.AccountingTransactionDetail.cannot.modify.paymentMode");
     }
 
     @Override
     public void setTransaction(AccountingTransaction transaction) {
-	throw new DomainException(
-		"error.accounting.AccountingTransactionDetail.cannot.modify.transaction");
+	throw new DomainException("error.accounting.AccountingTransactionDetail.cannot.modify.transaction");
     }
-    
+
     @Checked("RolePredicates.MANAGER_PREDICATE")
     void delete() {
 	super.setTransaction(null);

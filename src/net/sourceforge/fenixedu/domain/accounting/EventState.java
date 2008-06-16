@@ -5,15 +5,15 @@ public enum EventState {
     OPEN, CLOSED, CANCELLED;
 
     public String getName() {
-        return name();
+	return name();
     }
 
     public String getQualifiedName() {
-        return EventState.class.getSimpleName() + "." + name();
+	return EventState.class.getSimpleName() + "." + name();
     }
 
     public String getFullyQualifiedName() {
-        return EventState.class.getName() + "." + name();
+	return EventState.class.getName() + "." + name();
     }
 
 }

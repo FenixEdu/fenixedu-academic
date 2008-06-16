@@ -224,11 +224,11 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
     protected boolean isToApplyPenalty(final Event event, final Installment installment) {
 	return true;
     }
-    
+
     protected void removeParameters() {
 	super.setExecutionYear(null);
     }
-    
+
     public boolean isGratuityPaymentPlan() {
 	return false;
     }

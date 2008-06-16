@@ -39,27 +39,23 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
 	super();
     }
 
-    private AccountingEventPaymentCode(final PaymentCodeType paymentCodeType,
-	    final YearMonthDay startDate, final YearMonthDay endDate, final Event event,
-	    final Money minAmount, final Money maxAmount, final Student student) {
+    private AccountingEventPaymentCode(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
+	    final YearMonthDay endDate, final Event event, final Money minAmount, final Money maxAmount, final Student student) {
 	this();
 	init(paymentCodeType, startDate, endDate, event, minAmount, maxAmount, student);
     }
 
-    public static AccountingEventPaymentCode create(final PaymentCodeType paymentCodeType,
-	    final YearMonthDay startDate, final YearMonthDay endDate, final Event event,
-	    final Money minAmount, final Money maxAmount, final Student student) {
+    public static AccountingEventPaymentCode create(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
+	    final YearMonthDay endDate, final Event event, final Money minAmount, final Money maxAmount, final Student student) {
 	return PaymentCodeGenerator.canGenerateNewCode(paymentCodeType, student) ? new AccountingEventPaymentCode(
-		paymentCodeType, startDate, endDate, event, minAmount, maxAmount, student)
-		: findAndReuseExistingCode(paymentCodeType, startDate, endDate, event, minAmount,
-			maxAmount, student);
+		paymentCodeType, startDate, endDate, event, minAmount, maxAmount, student) : findAndReuseExistingCode(
+		paymentCodeType, startDate, endDate, event, minAmount, maxAmount, student);
 
     }
 
-    private static AccountingEventPaymentCode findAndReuseExistingCode(
-	    final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
-	    final YearMonthDay endDate, final Event event, final Money minAmount, final Money maxAmount,
-	    final Student student) {
+    private static AccountingEventPaymentCode findAndReuseExistingCode(final PaymentCodeType paymentCodeType,
+	    final YearMonthDay startDate, final YearMonthDay endDate, final Event event, final Money minAmount,
+	    final Money maxAmount, final Student student) {
 	final AccountingEventPaymentCode accountingEventPaymentCode = (AccountingEventPaymentCode) student
 		.getAvailablePaymentCodeBy(paymentCodeType);
 	accountingEventPaymentCode.reuse(startDate, endDate, minAmount, maxAmount, event);
@@ -67,8 +63,8 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
 	return accountingEventPaymentCode;
     }
 
-    protected void init(final PaymentCodeType paymentCodeType, YearMonthDay startDate,
-	    YearMonthDay endDate, Event event, Money minAmount, Money maxAmount, Student student) {
+    protected void init(final PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, Event event,
+	    Money minAmount, Money maxAmount, Student student) {
 	super.init(paymentCodeType, startDate, endDate, minAmount, maxAmount, student);
 	checkParameters(event);
 	super.setAccountingEvent(event);
@@ -76,19 +72,17 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
 
     private void checkParameters(Event event) {
 	if (event == null) {
-	    throw new DomainException(
-		    "error.accounting.paymentCodes.AccountingEventPaymentCode.event.cannot.be.null");
+	    throw new DomainException("error.accounting.paymentCodes.AccountingEventPaymentCode.event.cannot.be.null");
 	}
     }
 
     @Override
     public void setAccountingEvent(Event accountingEvent) {
-	throw new DomainException(
-		"error.accounting.paymentCodes.AccountingEventPaymentCode.cannot.modify.accountingEvent");
+	throw new DomainException("error.accounting.paymentCodes.AccountingEventPaymentCode.cannot.modify.accountingEvent");
     }
 
-    public void reuse(final YearMonthDay startDate, final YearMonthDay endDate, final Money minAmount,
-	    final Money maxAmount, final Event event) {
+    public void reuse(final YearMonthDay startDate, final YearMonthDay endDate, final Money minAmount, final Money maxAmount,
+	    final Event event) {
 
 	reuseCode();
 	update(startDate, endDate, minAmount, maxAmount);
@@ -96,20 +90,20 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
     }
 
     @Override
-    protected void internalProcess(Person person, Money amount, DateTime whenRegistered,
-	    String sibsTransactionId, String comments) {
+    protected void internalProcess(Person person, Money amount, DateTime whenRegistered, String sibsTransactionId, String comments) {
 	final Event event = getAccountingEvent();
 	if (LogLevel.WARN) {
 	    if (event.isCancelled()) {
-	        logger.warn("############################ PROCESSING CODE FOR CANCELLED EVENT ###############################");
-	        logger.warn("Event " + event.getIdInternal() + " for person " + event.getPerson().getIdInternal() + " is cancelled");
-	        logger.warn("Code Number: " + getCode());
-	        logger.warn("################################################################################################");
+		logger.warn("############################ PROCESSING CODE FOR CANCELLED EVENT ###############################");
+		logger.warn("Event " + event.getIdInternal() + " for person " + event.getPerson().getIdInternal()
+			+ " is cancelled");
+		logger.warn("Code Number: " + getCode());
+		logger.warn("################################################################################################");
 	    }
 	}
 
-	event.process(person.getUser(), this, amount, new SibsTransactionDetailDTO(whenRegistered,
-		sibsTransactionId, getCode(), comments));
+	event.process(person.getUser(), this, amount, new SibsTransactionDetailDTO(whenRegistered, sibsTransactionId, getCode(),
+		comments));
     }
 
     @Override

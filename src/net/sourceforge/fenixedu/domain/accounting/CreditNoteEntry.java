@@ -26,8 +26,7 @@ public class CreditNoteEntry extends CreditNoteEntry_Base {
     private void checkRulesToCreate(Entry accountingEntry, Money amount) {
 	if (!accountingEntry.canApplyReimbursement(amount)) {
 	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.CreditNoteEntry.amount.to.reimburse.exceeds.entry.amount",
-		    accountingEntry.getDescription());
+		    "error.accounting.CreditNoteEntry.amount.to.reimburse.exceeds.entry.amount", accountingEntry.getDescription());
 
 	}
     }
@@ -47,8 +46,8 @@ public class CreditNoteEntry extends CreditNoteEntry_Base {
 
 	if (amount.lessOrEqualThan(Money.ZERO)) {
 	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.CreditNoteEntry.amount.to.reimburse.must.be.greater.than.zero",
-		    accountingEntry.getDescription());
+		    "error.accounting.CreditNoteEntry.amount.to.reimburse.must.be.greater.than.zero", accountingEntry
+			    .getDescription());
 	}
 
     }
@@ -65,8 +64,7 @@ public class CreditNoteEntry extends CreditNoteEntry_Base {
 
     @Override
     public void setAdjustmentAccountingEntry(Entry adjustmentAccountingEntry) {
-	throw new DomainException(
-		"error.accounting.CreditNoteEntry.cannot.modify.adjustmentAccountingEntry");
+	throw new DomainException("error.accounting.CreditNoteEntry.cannot.modify.adjustmentAccountingEntry");
     }
 
     @Override
@@ -75,8 +73,8 @@ public class CreditNoteEntry extends CreditNoteEntry_Base {
     }
 
     void createAdjustmentAccountingEntry(final User responsibleUser, final PaymentMode paymentMode) {
-	final AccountingTransaction transaction = getAccountingEntry().getAccountingTransaction()
-		.reimburse(responsibleUser, paymentMode, getAmount());
+	final AccountingTransaction transaction = getAccountingEntry().getAccountingTransaction().reimburse(responsibleUser,
+		paymentMode, getAmount());
 
 	super.setAdjustmentAccountingEntry(transaction.getToAccountEntry());
 

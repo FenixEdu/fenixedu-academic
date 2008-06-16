@@ -5,12 +5,13 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public abstract class Installment extends Installment_Base {
 

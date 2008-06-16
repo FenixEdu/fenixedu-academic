@@ -268,7 +268,7 @@ public abstract class PostingRule extends PostingRule_Base {
 	    final Money amount, final AccountingTransactionDetailDTO transactionDetailDTO) {
 	throw new DomainException("error.accounting.PostingRule.does.not.implement.deposit.amount");
     }
-    
+
     public void depositAmount(final User responsibleUser, final Event event, final Account fromAcount, final Account toAccount,
 	    final Money amount, final EntryType entryType, final AccountingTransactionDetailDTO transactionDetailDTO) {
 	throw new DomainException("error.accounting.PostingRule.does.not.implement.deposit.amount");

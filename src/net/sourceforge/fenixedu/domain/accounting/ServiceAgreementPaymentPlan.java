@@ -20,11 +20,11 @@ public abstract class ServiceAgreementPaymentPlan extends ServiceAgreementPaymen
 	    throw new DomainException("error.accounting.ServiceAgreementPaymentPlan.serviceAgreement.cannot.be.null");
 	}
     }
-    
+
     @Override
     protected void removeParameters() {
-        super.removeParameters();
-        super.setServiceAgreement(null);
+	super.removeParameters();
+	super.setServiceAgreement(null);
     }
 
     @Override
