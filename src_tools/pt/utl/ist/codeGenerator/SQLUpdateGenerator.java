@@ -27,14 +27,12 @@ import org.apache.ojb.broker.metadata.FieldDescriptor;
 import org.apache.ojb.broker.metadata.ObjectReferenceDescriptor;
 import org.joda.time.DateTime;
 
+import pt.ist.fenixframework.Config;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.codeGenerator.database.DatabaseDescriptorFactory;
 import pt.utl.ist.codeGenerator.database.SqlTable;
 
 import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
-
-import pt.ist.fenixframework.Config;
-import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.pstm.MetadataManager;
 
 public class SQLUpdateGenerator {
 
