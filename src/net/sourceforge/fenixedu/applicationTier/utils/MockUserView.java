@@ -79,4 +79,14 @@ public class MockUserView implements IUserView {
 	return null;
     }
 
+    @Override
+    public String getUsername() {
+	return getUtilizador();
+    }
+
+    @Override
+    public boolean hasRole(String role) {
+	return false;
+    }
+
 }
