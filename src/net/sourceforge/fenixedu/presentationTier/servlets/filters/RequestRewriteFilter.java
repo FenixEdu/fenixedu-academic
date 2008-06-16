@@ -123,7 +123,7 @@ public class RequestRewriteFilter implements Filter {
     private void continueChainAndWriteResponse(final FilterChain filterChain, final HttpServletRequest httpServletRequest,
 	    final ResponseWrapper responseWrapper) throws IOException, ServletException {
 	filterChain.doFilter(httpServletRequest, responseWrapper);
-	responseWrapper.writeRealResponse(new ContentInjectionRewriter(httpServletRequest), new ChecksumRewriter(httpServletRequest));
+	writeResponse(filterChain, httpServletRequest, responseWrapper);
     }
 
     private void continueChainAndWriteResponseWithTimeLog(final FilterChain filterChain, final HttpServletRequest httpServletRequest,
@@ -133,7 +133,7 @@ public class RequestRewriteFilter implements Filter {
 	final long end1 = System.currentTimeMillis();
 
 	final long start2 = System.currentTimeMillis();
-	responseWrapper.writeRealResponse(new ContentInjectionRewriter(httpServletRequest), new ChecksumRewriter(httpServletRequest));
+	writeResponse(filterChain, httpServletRequest, responseWrapper);
 	final long end2 = System.currentTimeMillis();
 
 	final long time1 = end1 - start1;
@@ -141,6 +141,11 @@ public class RequestRewriteFilter implements Filter {
 	final long percent = time1 == 0 ? 0 : (100 * time2) / time1;
 	System.out.println("Actual response took: " + time1 + " ms. Parse and replace took: " + time2 + " ms. Performance loss: "
 		+ percent + " %.");
+    }
+
+    private void writeResponse(final FilterChain filterChain, final HttpServletRequest httpServletRequest,
+	    final ResponseWrapper responseWrapper) throws IOException, ServletException {
+	responseWrapper.writeRealResponse(new ContentInjectionRewriter(httpServletRequest), new ChecksumRewriter(httpServletRequest));
     }
 
 }
