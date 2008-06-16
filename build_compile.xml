@@ -382,7 +382,7 @@
 		</parallel>
 	</target>
 
-	<target name="deploy-linux"
+	<target name="deploy-linux" depends="set-properties"
             description="Deploys standalone application to local web server">
 		<exec executable="rm" failonerror="false" os="Linux">
 			<arg line="-rf"/>
@@ -395,7 +395,7 @@
 		</exec>
 	</target>
 
-	<target name="deploy-win"
+	<target name="deploy-win" depends="set-properties"
             description="Deploys standalone application to local web server">
 		<ant antfile="build_tomcat.xml" target="install">
 			<property name="webapp" value="${build.home}"/>
@@ -419,7 +419,7 @@
 	<target name="install"
     		depends="compile"
             description="Deploys standalone application to web server">
-		<antcall target="install-without-depends"/>
+		<antcall target="install-without-depends" inheritall="true"/>
 	</target>
 
 	<target name="base-jar"
