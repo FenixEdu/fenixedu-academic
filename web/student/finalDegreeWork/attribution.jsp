@@ -122,7 +122,7 @@
 						<logic:present name="infoGroup" property="groupStudents">
 							<logic:iterate id="groupStudent" indexId="i" name="infoGroup" property="groupStudents">
 								<td rowspan="2">
-										<% IUserView userView = UserView.getUser(); %>
+										<% net.sourceforge.fenixedu.applicationTier.IUserView userView = pt.ist.fenixWebFramework.security.UserView.getUser(); %>
 									<bean:define id="username"><%= userView.getUtilizador() %></bean:define>
 									<logic:equal name="groupStudent" property="student.infoPerson.username" value="<%= username %>">
 										<bean:define id="onChange">
