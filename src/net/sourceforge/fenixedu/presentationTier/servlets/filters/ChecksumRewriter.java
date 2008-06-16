@@ -5,11 +5,12 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.RequestRewriteFilter.RequestRewriter;
 
 import org.apache.commons.codec.digest.DigestUtils;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class ChecksumRewriter extends RequestRewriter {
 
@@ -39,7 +40,7 @@ public class ChecksumRewriter extends RequestRewriter {
 	for (final String string : strings) {
 	    stringBuilder.append(string);
 	}
-	final IUserView userView = AccessControl.getUserView();
+	final IUserView userView = UserView.getUser();
 	if (userView != null) {
 	    stringBuilder.append(userView.getPrivateConstantForDigestCalculation());
 	}
@@ -71,7 +72,6 @@ public class ChecksumRewriter extends RequestRewriter {
 
     public ChecksumRewriter(HttpServletRequest httpServletRequest) {
 	super(httpServletRequest);
-	// TODO Auto-generated constructor stub
     }
 
     @Override
