@@ -94,7 +94,7 @@ public class StrutsAnnotationsPlugIn implements PlugIn {
 	    if (forwards != null) {
 		for (final Forward forward : forwards.value()) {
 		    actionMapping.addForwardConfig(new ActionForward(forward.name(), forward.path(), false));
-		    if (forward.path().endsWith(".jsp")) {
+		    if (forward.useTile() && forward.path().endsWith(".jsp")) {
 			FenixDefinitionsFactory.addDefinitionName(forward.path());
 		    }
 		}

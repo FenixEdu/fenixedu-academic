@@ -666,23 +666,27 @@ public abstract class Event extends Event_Base {
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    public final void depositAmount(final User responsibleUser, final Money amount,
+    public final AccountingTransaction depositAmount(final User responsibleUser, final Money amount,
 	    final AccountingTransactionDetailDTO transactionDetailDTO) {
 
-	getPostingRule().depositAmount(responsibleUser, this, getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount(),
-		amount, transactionDetailDTO);
+	final AccountingTransaction result = getPostingRule().depositAmount(responsibleUser, this,
+		getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, transactionDetailDTO);
 
 	recalculateState(transactionDetailDTO.getWhenRegistered());
+
+	return result;
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    public final void depositAmount(final User responsibleUser, final Money amount, final EntryType entryType,
+    public final AccountingTransaction depositAmount(final User responsibleUser, final Money amount, final EntryType entryType,
 	    final AccountingTransactionDetailDTO transactionDetailDTO) {
 
-	getPostingRule().depositAmount(responsibleUser, this, getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount(),
-		amount, entryType, transactionDetailDTO);
+	final AccountingTransaction result = getPostingRule().depositAmount(responsibleUser, this,
+		getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, entryType, transactionDetailDTO);
 
 	recalculateState(transactionDetailDTO.getWhenRegistered());
+
+	return result;
     }
 
     public Money calculateOtherPartiesPayedAmount() {

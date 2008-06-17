@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 public class AccountingEventsManager {
 
-    private final List<DegreeType> acceptedDegreeTypes = Arrays.asList(new DegreeType[] { DegreeType.BOLONHA_DEGREE,
-	    DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
+    private final List<DegreeType> acceptedDegreeTypes = Arrays.asList(new DegreeType[] { DegreeType.DEGREE,
+	    DegreeType.BOLONHA_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE });
 
     public InvocationResult createGratuityEvent(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionYear executionYear) {

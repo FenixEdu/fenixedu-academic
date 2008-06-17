@@ -91,6 +91,10 @@ public abstract class PostingRule extends PostingRule_Base {
     public final Set<Entry> process(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount, Account toAccount,
 	    AccountingTransactionDetailDTO transactionDetail) {
 
+	if (entryDTOs.isEmpty()) {
+	    throw new DomainException("error.accounting.PostingRule.entries.to.process.cannot.be.empty");
+	}
+
 	for (final EntryDTO entryDTO : entryDTOs) {
 	    if (entryDTO.getAmountToPay().lessOrEqualThan(Money.ZERO)) {
 		throw new DomainException("error.accounting.PostingRule.amount.to.pay.must.be.greater.than.zero");
@@ -264,13 +268,14 @@ public abstract class PostingRule extends PostingRule_Base {
 
     }
 
-    public void depositAmount(final User responsibleUser, final Event event, final Account fromAcount, final Account toAccount,
-	    final Money amount, final AccountingTransactionDetailDTO transactionDetailDTO) {
+    public AccountingTransaction depositAmount(final User responsibleUser, final Event event, final Account fromAcount,
+	    final Account toAccount, final Money amount, final AccountingTransactionDetailDTO transactionDetailDTO) {
 	throw new DomainException("error.accounting.PostingRule.does.not.implement.deposit.amount");
     }
 
-    public void depositAmount(final User responsibleUser, final Event event, final Account fromAcount, final Account toAccount,
-	    final Money amount, final EntryType entryType, final AccountingTransactionDetailDTO transactionDetailDTO) {
+    public AccountingTransaction depositAmount(final User responsibleUser, final Event event, final Account fromAcount,
+	    final Account toAccount, final Money amount, final EntryType entryType,
+	    final AccountingTransactionDetailDTO transactionDetailDTO) {
 	throw new DomainException("error.accounting.PostingRule.does.not.implement.deposit.amount");
     }
 

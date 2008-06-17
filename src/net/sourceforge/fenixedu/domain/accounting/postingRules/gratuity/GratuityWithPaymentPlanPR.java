@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -89,25 +90,33 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
     protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
 	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 
-	if (entryDTOs.size() != 1) {
-	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.postingRules.gratuity.GratuityWithPaymentConditionPR.invalid.number.of.entryDTOs", event
-			    .getDescriptionForEntryType(getEntryType()));
-	}
-
-	final EntryDTO entryDTO = entryDTOs.get(0);
 	final GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan = (GratuityEventWithPaymentPlan) event;
 
-	final AccountingTransaction accountingTransaction;
-	if (entryDTO instanceof EntryWithInstallmentDTO) {
-	    accountingTransaction = internalProcessInstallment(user, fromAccount, toAccount, entryDTO,
-		    gratuityEventWithPaymentPlan, transactionDetail);
-	} else {
-	    accountingTransaction = internalProcessTotal(user, fromAccount, toAccount, entryDTO, gratuityEventWithPaymentPlan,
-		    transactionDetail);
+	if (entryDTOs.size() > 1) {
+	    final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();
+	    for (final EntryDTO each : entryDTOs) {
+		if (!(each instanceof EntryWithInstallmentDTO)) {
+		    throw new DomainExceptionWithLabelFormatter(
+			    "error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.cannot.mix.installments.with.total.payments",
+			    event.getDescriptionForEntryType(getEntryType()));
+		}
+
+		result.add(internalProcessInstallment(user, fromAccount, toAccount, each, gratuityEventWithPaymentPlan,
+			transactionDetail));
+	    }
+
+	    return result;
 	}
 
-	return Collections.singleton(accountingTransaction);
+	final EntryDTO entryDTO = entryDTOs.iterator().next();
+
+	if (entryDTO instanceof EntryWithInstallmentDTO) {
+	    return Collections.singleton(internalProcessInstallment(user, fromAccount, toAccount, entryDTO,
+		    gratuityEventWithPaymentPlan, transactionDetail));
+	}
+
+	return Collections.singleton(internalProcessTotal(user, fromAccount, toAccount, entryDTO, gratuityEventWithPaymentPlan,
+		transactionDetail));
 
     }
 

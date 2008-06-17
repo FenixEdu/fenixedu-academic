@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.util.ReportsUtils;
+import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.log4j.Logger;
 import org.apache.struts.action.Action;

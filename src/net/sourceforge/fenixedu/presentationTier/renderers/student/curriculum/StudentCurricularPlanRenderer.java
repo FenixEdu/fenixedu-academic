@@ -825,7 +825,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    generateEnrolmentStateCell(enrolmentRow, enrolment);
 	    generateCellWithText(enrolmentRow, EMPTY_INFO, getGradeCellClass()); // grade
 	    generateCellWithText(enrolmentRow, EMPTY_INFO, getWeightCellClass()); // weight
-	    generateCellWithText(enrolmentRow, EMPTY_INFO, getEctsCreditsCellClass()); // ects
+	    generateEnrolmentEctsCell(enrolmentRow, enrolment, false);
 	    generateEnrolmentEvaluationTypeCell(enrolmentRow, enrolment);
 	    generateExecutionYearCell(enrolmentRow, enrolment);
 	    generateSemesterCell(enrolmentRow, enrolment);
@@ -934,12 +934,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	private void generateEnrolmentEctsCell(final HtmlTableRow enrolmentRow, final Enrolment enrolment,
 		final boolean isFromDetail) {
-	    final String ectsCredits;
-	    if (enrolment.isApproved()) {
-		ectsCredits = String.valueOf(isFromDetail ? enrolment.getEctsCreditsForCurriculum() : enrolment.getEctsCredits());
-	    } else {
-		ectsCredits = EMPTY_INFO;
-	    }
+	    final String ectsCredits = String.valueOf(isFromDetail ? enrolment.getEctsCreditsForCurriculum() : enrolment
+		    .getEctsCredits());
 	    generateCellWithText(enrolmentRow, ectsCredits, getEctsCreditsCellClass());
 	}
 

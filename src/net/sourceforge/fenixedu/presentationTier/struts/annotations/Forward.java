@@ -19,5 +19,7 @@ public @interface Forward {
     String name();
 
     String path();
+    
+    boolean useTile() default true;
 
 }

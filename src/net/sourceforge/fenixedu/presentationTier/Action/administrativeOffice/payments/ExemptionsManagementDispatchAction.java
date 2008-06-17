@@ -18,18 +18,32 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
+import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+@Mapping(path = "/exemptionsManagement", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
+@Forwards( {
+	@Forward(name = "showEventsToApplyExemption", path = "/academicAdminOffice/payments/exemptions/showEventsToApplyExemption.jsp"),
+	@Forward(name = "showForGratuityEvent", path = "/academicAdminOffice/payments/exemptions/showForGratuityEvent.jsp"),
+	@Forward(name = "showForImprovementOfApprovedEnrolmentEvent", path = "/academicAdminOffice/payments/exemptions/showForImprovementOfApprovedEnrolmentEvent.jsp"),
+	@Forward(name = "showForAdministrativeOfficeFeeAndInsuranceEvent", path = "/academicAdminOffice/payments/exemptions/showForAdministrativeOfficeFeeAndInsuranceEvent.jsp"),
+	@Forward(name = "createGratuityExemption", path = "/academicAdminOffice/payments/exemptions/gratuity/create.jsp"),
+	@Forward(name = "createInstallmentPenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createInstallmentExemption.jsp"),
+	@Forward(name = "createImprovementOfApprovedEnrolmentPenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createImprovementOfApprovedEnrolmentExemption.jsp"),
+	@Forward(name = "createAdministrativeOfficeFeeAndInsurancePenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createAdministrativeOfficeFeeAndInsuranceExemption.jsp")
 
-public class ExemptionsManagementDispatchAction extends
-	AcademicAdminOfficePaymentsManagementDispatchAction {
+})
+public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePaymentsManagementDispatchAction {
 
-    public ActionForward showEventsToApplyExemption(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward showEventsToApplyExemption(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	final Person person = getPerson(request);
 	request.setAttribute("person", person);
@@ -38,32 +52,30 @@ public class ExemptionsManagementDispatchAction extends
 	return mapping.findForward("showEventsToApplyExemption");
     }
 
-    public ActionForward prepareCreateGratuityExemption(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareCreateGratuityExemption(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-	request.setAttribute("createGratuityExemptionBean", new CreateGratuityExemptionBean(
-		getGratuityEvent(request)));
+	request.setAttribute("createGratuityExemptionBean", new CreateGratuityExemptionBean(getGratuityEvent(request)));
 
 	return mapping.findForward("createGratuityExemption");
     }
 
-    private ActionForward invalidCreateGratuityExemption(ActionMapping mapping,
-	    HttpServletRequest request, String propertyName, String messageKey) {
+    private ActionForward invalidCreateGratuityExemption(ActionMapping mapping, HttpServletRequest request, String propertyName,
+	    String messageKey) {
 	return invalidCreateGratuityExemption(mapping, request, propertyName, messageKey, new String[0]);
     }
 
-    private ActionForward invalidCreateGratuityExemption(ActionMapping mapping,
-	    HttpServletRequest request, String messageKey, String[] args) {
+    private ActionForward invalidCreateGratuityExemption(ActionMapping mapping, HttpServletRequest request, String messageKey,
+	    String[] args) {
 	return invalidCreateGratuityExemption(mapping, request, null, messageKey, args);
     }
 
-    private ActionForward invalidCreateGratuityExemption(ActionMapping mapping,
-	    HttpServletRequest request, String messageKey) {
+    private ActionForward invalidCreateGratuityExemption(ActionMapping mapping, HttpServletRequest request, String messageKey) {
 	return invalidCreateGratuityExemption(mapping, request, messageKey, new String[0]);
     }
 
-    private ActionForward invalidCreateGratuityExemption(ActionMapping mapping,
-	    HttpServletRequest request, String propertyName, String messageKey, String[] args) {
+    private ActionForward invalidCreateGratuityExemption(ActionMapping mapping, HttpServletRequest request, String propertyName,
+	    String messageKey, String[] args) {
 
 	if (propertyName == null) {
 	    addActionMessage(request, messageKey, args);
@@ -71,37 +83,34 @@ public class ExemptionsManagementDispatchAction extends
 	    addActionMessage(propertyName, request, messageKey, args);
 	}
 
-	request.setAttribute("createGratuityExemptionBean", RenderUtils.getViewState(
-		"createGratuityExemptionBean").getMetaObject().getObject());
+	request.setAttribute("createGratuityExemptionBean", RenderUtils.getViewState("createGratuityExemptionBean")
+		.getMetaObject().getObject());
 
 	return mapping.findForward("createGratuityExemption");
     }
 
-    public ActionForward createGratuityExemption(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward createGratuityExemption(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final CreateGratuityExemptionBean createGratuityExemptionBean = (CreateGratuityExemptionBean) RenderUtils
-		.getViewState("createGratuityExemptionBean").getMetaObject().getObject();
+	final CreateGratuityExemptionBean createGratuityExemptionBean = (CreateGratuityExemptionBean) RenderUtils.getViewState(
+		"createGratuityExemptionBean").getMetaObject().getObject();
 
-	if (!createGratuityExemptionBean.isPercentageExemption()
-		&& createGratuityExemptionBean.getAmount() == null) {
+	if (!createGratuityExemptionBean.isPercentageExemption() && createGratuityExemptionBean.getAmount() == null) {
 	    return invalidCreateGratuityExemption(mapping, request, "context",
 		    "error.payments.gratuityExemption.amount.or.percentage.are.required");
 	}
 
-	if (createGratuityExemptionBean.isPercentageExemption()
-		&& createGratuityExemptionBean.getAmount() != null) {
+	if (createGratuityExemptionBean.isPercentageExemption() && createGratuityExemptionBean.getAmount() != null) {
 	    return invalidCreateGratuityExemption(mapping, request, "context",
 		    "error.payments.gratuityExemption.cannot.select.both.amount.and.percentage");
 	}
 
 	try {
-	    executeService(request, "CreateGratuityExemption", new Object[] {
-		    getUserView(request).getPerson().getEmployee(), createGratuityExemptionBean });
+	    executeService(request, "CreateGratuityExemption", new Object[] { getUserView(request).getPerson().getEmployee(),
+		    createGratuityExemptionBean });
 	} catch (DomainExceptionWithLabelFormatter ex) {
-	    return invalidCreateGratuityExemption(mapping, request, ex.getKey(),
-		    solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
+	    return invalidCreateGratuityExemption(mapping, request, ex.getKey(), solveLabelFormatterArgs(request, ex
+		    .getLabelFormatterArgs()));
 	} catch (DomainException ex) {
 	    return invalidCreateGratuityExemption(mapping, request, ex.getKey());
 
@@ -112,9 +121,8 @@ public class ExemptionsManagementDispatchAction extends
 	return showExemptions(mapping, form, request, response);
     }
 
-    public ActionForward deleteExemption(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward deleteExemption(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final Exemption exemption = getExemption(request);
 	request.setAttribute("eventId", exemption.getEvent().getIdInternal());
@@ -122,8 +130,7 @@ public class ExemptionsManagementDispatchAction extends
 	try {
 	    executeService(request, "DeleteExemption", new Object[] { exemption });
 	} catch (DomainExceptionWithLabelFormatter ex) {
-	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex
-		    .getLabelFormatterArgs()));
+	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
 	}
@@ -132,12 +139,11 @@ public class ExemptionsManagementDispatchAction extends
 
     }
 
-    public ActionForward prepareCreateInstallmentPenaltyExemption(ActionMapping mapping,
-	    ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareCreateInstallmentPenaltyExemption(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("createInstallmentPenaltyExemptionBean",
-		new CreateInstallmentPenaltyExemptionBean(
-			(GratuityEventWithPaymentPlan) getGratuityEvent(request)));
+	request.setAttribute("createInstallmentPenaltyExemptionBean", new CreateInstallmentPenaltyExemptionBean(
+		(GratuityEventWithPaymentPlan) getGratuityEvent(request)));
 
 	// Logic to decide the view to show based on gratuity event should
 	// be placed here
@@ -145,29 +151,26 @@ public class ExemptionsManagementDispatchAction extends
 
     }
 
-    public ActionForward prepareCreateInstallmentPenaltyExemptionInvalid(ActionMapping mapping,
-	    ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward prepareCreateInstallmentPenaltyExemptionInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("createInstallmentPenaltyExemptionBean", RenderUtils.getViewState(
 		"create-installment-penalty-exemption-bean").getMetaObject().getObject());
 
 	return mapping.findForward("createInstallmentPenaltyExemption");
     }
 
-    public ActionForward createInstallmentPenaltyExemption(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-	    FenixServiceException {
+    public ActionForward createInstallmentPenaltyExemption(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final CreateInstallmentPenaltyExemptionBean createInstallmentPenaltyExemptionBean = (CreateInstallmentPenaltyExemptionBean) RenderUtils
 		.getViewState("create-installment-penalty-exemption-bean").getMetaObject().getObject();
-	request.setAttribute("eventId", createInstallmentPenaltyExemptionBean
-		.getGratuityEventWithPaymentPlan().getIdInternal());
+	request.setAttribute("eventId", createInstallmentPenaltyExemptionBean.getGratuityEventWithPaymentPlan().getIdInternal());
 
 	try {
-	    executeService(request, "CreateInstallmentPenaltyExemption", new Object[] {
-		    getLoggedPerson(request).getEmployee(), createInstallmentPenaltyExemptionBean });
+	    executeService(request, "CreateInstallmentPenaltyExemption", new Object[] { getLoggedPerson(request).getEmployee(),
+		    createInstallmentPenaltyExemptionBean });
 	} catch (DomainExceptionWithLabelFormatter ex) {
-	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex
-		    .getLabelFormatterArgs()));
+	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
 
 	    return prepareCreateInstallmentPenaltyExemptionInvalid(mapping, form, request, response);
 
@@ -184,8 +187,8 @@ public class ExemptionsManagementDispatchAction extends
 	return (GratuityEvent) getEvent(request);
     }
 
-    public ActionForward showExemptions(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward showExemptions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	final Event event = getEvent(request);
 	request.setAttribute("person", event.getPerson());
@@ -207,34 +210,29 @@ public class ExemptionsManagementDispatchAction extends
     }
 
     private Exemption getExemption(final HttpServletRequest request) {
-	return (Exemption) rootDomainObject.readExemptionByOID(getIntegerFromRequest(request,
-		"exemptionId"));
+	return (Exemption) rootDomainObject.readExemptionByOID(getIntegerFromRequest(request, "exemptionId"));
     }
 
-    public ActionForward prepareCreateImprovementOfApprovedEnrolmentPenaltyExemption(
-	    ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward prepareCreateImprovementOfApprovedEnrolmentPenaltyExemption(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("createPenaltyExemptionBean",
-		new CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean(
-			(ImprovementOfApprovedEnrolmentEvent) getEvent(request)));
+	request.setAttribute("createPenaltyExemptionBean", new CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean(
+		(ImprovementOfApprovedEnrolmentEvent) getEvent(request)));
 
 	return mapping.findForward("createImprovementOfApprovedEnrolmentPenaltyExemption");
 
     }
 
-    public ActionForward prepareCreateImprovementOfApprovedEnrolmentPenaltyExemptionInvalid(
-	    ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("createPenaltyExemptionBean",
-		RenderUtils.getViewState("create-penalty-exemption-bean").getMetaObject().getObject());
+    public ActionForward prepareCreateImprovementOfApprovedEnrolmentPenaltyExemptionInvalid(ActionMapping mapping,
+	    ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("createPenaltyExemptionBean", RenderUtils.getViewState("create-penalty-exemption-bean")
+		.getMetaObject().getObject());
 
 	return mapping.findForward("createImprovementOfApprovedEnrolmentPenaltyExemption");
     }
 
-    public ActionForward createImprovementOfApprovedEnrolmentPenaltyExemption(
-	    ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward createImprovementOfApprovedEnrolmentPenaltyExemption(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean penaltyExemptionBean = (CreateImprovementOfApprovedEnrolmentPenaltyExemptionBean) RenderUtils
 		.getViewState("create-penalty-exemption-bean").getMetaObject().getObject();
@@ -246,57 +244,49 @@ public class ExemptionsManagementDispatchAction extends
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
 
-	    return prepareCreateImprovementOfApprovedEnrolmentPenaltyExemptionInvalid(mapping,
-		    form, request, response);
+	    return prepareCreateImprovementOfApprovedEnrolmentPenaltyExemptionInvalid(mapping, form, request, response);
 	}
 
 	return showExemptions(mapping, form, request, response);
     }
 
-    public ActionForward prepareCreateAdministrativeOfficeFeeAndInsurancePenaltyExemption(
-	    ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+    public ActionForward prepareCreateAdministrativeOfficeFeeAndInsurancePenaltyExemption(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("createPenaltyExemptionBean",
-		new CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean(
-			(AdministrativeOfficeFeeAndInsuranceEvent) getEvent(request)));
+	request.setAttribute("createPenaltyExemptionBean", new CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean(
+		(AdministrativeOfficeFeeAndInsuranceEvent) getEvent(request)));
 
 	return mapping.findForward("createAdministrativeOfficeFeeAndInsurancePenaltyExemption");
 
     }
 
-    public ActionForward prepareCreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionInvalid(
-	    ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute("createPenaltyExemptionBean", RenderUtils.getViewState(
-		"create-penalty-exemption-bean").getMetaObject().getObject());
+    public ActionForward prepareCreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionInvalid(ActionMapping mapping,
+	    ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("createPenaltyExemptionBean", RenderUtils.getViewState("create-penalty-exemption-bean")
+		.getMetaObject().getObject());
 
 	return mapping.findForward("createAdministrativeOfficeFeeAndInsurancePenaltyExemption");
     }
 
-    public ActionForward createAdministrativeOfficeFeeAndInsurancePenaltyExemption(
-	    ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward createAdministrativeOfficeFeeAndInsurancePenaltyExemption(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean penaltyExemptionBean = (CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean) RenderUtils
 		.getViewState("create-penalty-exemption-bean").getMetaObject().getObject();
 	request.setAttribute("eventId", penaltyExemptionBean.getEvent().getIdInternal());
 
 	try {
-	    executeService(request, "CreateAdministrativeOfficeFeeAndInsurancePenaltyExemption",
-		    new Object[] { getLoggedPerson(request).getEmployee(), penaltyExemptionBean });
+	    executeService(request, "CreateAdministrativeOfficeFeeAndInsurancePenaltyExemption", new Object[] {
+		    getLoggedPerson(request).getEmployee(), penaltyExemptionBean });
 	} catch (DomainExceptionWithLabelFormatter ex) {
-	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex
-		    .getLabelFormatterArgs()));
+	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
 
-	    return prepareCreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionInvalid(mapping,
-		    form, request, response);
+	    return prepareCreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionInvalid(mapping, form, request, response);
 
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
 
-	    return prepareCreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionInvalid(mapping,
-		    form, request, response);
+	    return prepareCreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionInvalid(mapping, form, request, response);
 	}
 
 	return showExemptions(mapping, form, request, response);

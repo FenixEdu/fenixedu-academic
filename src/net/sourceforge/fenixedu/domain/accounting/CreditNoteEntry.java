@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -7,6 +9,15 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormat
 import net.sourceforge.fenixedu.util.Money;
 
 public class CreditNoteEntry extends CreditNoteEntry_Base {
+
+    public static Comparator<CreditNoteEntry> COMPARATOR_BY_WHEN_REGISTERED = new Comparator<CreditNoteEntry>() {
+	public int compare(CreditNoteEntry leftCreditNoteEntry, CreditNoteEntry rightCreditNoteEntry) {
+	    int comparationResult = leftCreditNoteEntry.getAccountingEntry().getWhenRegistered().compareTo(
+		    rightCreditNoteEntry.getAccountingEntry().getWhenRegistered());
+	    return (comparationResult == 0) ? leftCreditNoteEntry.getIdInternal().compareTo(rightCreditNoteEntry.getIdInternal())
+		    : comparationResult;
+	}
+    };
 
     CreditNoteEntry(final CreditNote creditNote, final Entry accountingEntry, final Money amount) {
 	super();

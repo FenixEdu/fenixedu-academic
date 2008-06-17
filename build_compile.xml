@@ -553,16 +553,12 @@
 		      classname="net.sf.jasperreports.ant.JRAntCompileTask">
 			<classpath refid="class.path.lib.ref"/>
 		</taskdef>
-		<jrc destdir="${build.home.reports}">
+		<jrc destdir="${build.home.reports}" srcdir="${reports}">
 			<classpath refid="class.path.lib.ref"/>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes};"/>
 			</classpath>
-			<src>
-				<fileset dir="${reports}">
-				    <include name="*.jrxml"/>
-				</fileset>
-			</src>
+			<include name="**/*.jrxml"/>
 		</jrc>
 	</target>
 

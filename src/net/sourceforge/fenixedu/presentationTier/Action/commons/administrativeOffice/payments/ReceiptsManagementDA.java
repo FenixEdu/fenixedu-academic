@@ -1,17 +1,16 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.payments;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -20,10 +19,12 @@ import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.docs.accounting.ReceiptDocument;
+import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -47,9 +48,14 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 
 	private String contributorNumber;
 
+	private String contributorName;
+
+	private boolean usingContributorParty;
+
 	public EditReceiptBean(final Receipt receipt, final Employee employee) {
 	    setReceipt(receipt);
 	    setEmployee(employee);
+	    setUsingContributorParty(true);
 	}
 
 	public Receipt getReceipt() {
@@ -61,11 +67,21 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 	}
 
 	public Party getContributorParty() {
-	    return (this.contributorParty != null) ? this.contributorParty.getObject() : null;
+	    return (this.contributorParty != null) ? this.contributorParty.getObject() : StringUtils
+		    .isEmpty(this.contributorNumber) ? null : Party.readByContributorNumber(this.contributorNumber);
 	}
 
-	public void setContributorParty(Party contributor) {
-	    this.contributorParty = (contributor != null) ? new DomainReference<Party>(contributor) : null;
+	public void setContributorParty(Party contributorParty) {
+	    this.contributorParty = (contributorParty != null) ? new DomainReference<Party>(contributorParty) : null;
+	}
+
+	public void setContributorPartySocialSecurityNumber(PartySocialSecurityNumber partySocialSecurityNumber) {
+	    this.contributorParty = (partySocialSecurityNumber != null) ? new DomainReference<Party>(partySocialSecurityNumber
+		    .getParty()) : null;
+	}
+
+	public PartySocialSecurityNumber getContributorPartySocialSecurityNumber() {
+	    return this.contributorParty != null ? this.contributorParty.getObject().getPartySocialSecurityNumber() : null;
 	}
 
 	public Employee getEmployee() {
@@ -84,6 +100,22 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 	    this.contributorNumber = contributorNumber;
 	}
 
+	public String getContributorName() {
+	    return contributorName;
+	}
+
+	public void setContributorName(String contributorName) {
+	    this.contributorName = contributorName;
+	}
+
+	public boolean isUsingContributorParty() {
+	    return usingContributorParty;
+	}
+
+	public void setUsingContributorParty(boolean usingContributorParty) {
+	    this.usingContributorParty = usingContributorParty;
+	}
+
     }
 
     public ActionForward showPaymentsWithoutReceipt(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -91,7 +123,7 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 
 	final Person person = getPerson(request);
 	final CreateReceiptBean receiptBean = new CreateReceiptBean();
-	final IViewState viewState = RenderUtils.getViewState("entriesToSelect");
+	IViewState viewState = RenderUtils.getViewState("entriesToSelect");
 	final Collection<Entry> entriesToSelect = (Collection<Entry>) ((viewState != null) ? viewState.getMetaObject()
 		.getObject() : null);
 
@@ -105,24 +137,19 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 	return mapping.findForward("showPaymentsWithoutReceipt");
     }
 
+    public ActionForward backToShowPaymentsWithoutReceipt(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("createReceiptBean", getRenderedObject("createReceiptBeanConfirm"));
+
+	return mapping.findForward("showPaymentsWithoutReceipt");
+    }
+
     public ActionForward confirmCreateReceipt(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
 	final CreateReceiptBean createReceiptBean = (CreateReceiptBean) RenderUtils.getViewState("createReceiptBean")
 		.getMetaObject().getObject();
-
-	if (createReceiptBean.getContributorParty() == null) {
-	    final Party contributor = Party.readByContributorNumber(createReceiptBean.getContributorNumber());
-	    if (contributor == null) {
-		addActionMessage("context", request, "error.payments.receipt.contributor.does.not.exist");
-
-		request.setAttribute("personId", createReceiptBean.getPerson().getIdInternal());
-		return showPaymentsWithoutReceipt(mapping, actionForm, request, response);
-
-	    } else {
-		createReceiptBean.setContributorParty(contributor);
-	    }
-	}
 
 	if (createReceiptBean.getSelectedEntries().isEmpty()) {
 	    addActionMessage("context", request, "error.payments.receipt.entries.selection.is.required");
@@ -142,10 +169,10 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 		.getMetaObject().getObject();
 
 	try {
-	    final Receipt receipt = (Receipt) ServiceUtils.executeService("CreateReceipt", new Object[] {
+	    final Receipt receipt = (Receipt) executeService("CreateReceipt", new Object[] {
 		    getUserView(request).getPerson().getEmployee(), createReceiptBean.getPerson(),
-		    createReceiptBean.getContributorParty(), getReceiptCreatorUnit(request), getReceiptOwnerUnit(request),
-		    createReceiptBean.getSelectedEntries() });
+		    createReceiptBean.getContributorParty(), createReceiptBean.getContributorName(), createReceiptBean.getYear(),
+		    getReceiptCreatorUnit(request), getReceiptOwnerUnit(request), createReceiptBean.getSelectedEntries() });
 
 	    request.setAttribute("personId", receipt.getPerson().getIdInternal());
 	    request.setAttribute("receiptID", receipt.getIdInternal());
@@ -178,40 +205,37 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
     }
 
     public ActionForward printReceipt(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException, JRException {
 
-	final Receipt receipt = (Receipt) RenderUtils.getViewState("receipt").getMetaObject().getObject();
-	final SortedSet<Entry> sortedEntries = new TreeSet<Entry>(Entry.COMPARATOR_BY_MOST_RECENT_WHEN_REGISTERED);
-	sortedEntries.addAll(receipt.getEntries());
-
-	request.setAttribute("receipt", receipt);
-	request.setAttribute("sortedEntries", sortedEntries);
-	request.setAttribute("currentUnit", getCurrentUnit(request));
-
+	final Receipt receipt = (Receipt) getRenderedObject("receipt");
 	try {
 
-	    ServiceUtils.executeService("RegisterReceiptPrint", new Object[] { receipt,
-		    getUserView(request).getPerson().getEmployee() });
+	    final ReceiptDocument original = new ReceiptDocument(receipt, getMessageResourceProvider(request), getServlet()
+		    .getServletContext().getRealPath("/"), true);
+	    final ReceiptDocument duplicate = new ReceiptDocument(receipt, getMessageResourceProvider(request), getServlet()
+		    .getServletContext().getRealPath("/"), false);
 
-	    return mapping.findForward("printReceipt");
+	    final byte[] data = ReportsUtils.exportMultipleToPdf(original, duplicate);
 
-	} catch (InvalidArgumentsServiceException e) {
-	    addActionMessage(request, e.getMessage());
+	    executeService("RegisterReceiptPrint", new Object[] { receipt, getUserView(request).getPerson().getEmployee() });
+
+	    response.setContentLength(data.length);
+	    response.setContentType("application/pdf");
+	    response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", original.getReportFileName()));
+
+	    response.getOutputStream().write(data);
+
+	    return null;
+
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
+
+	    request.setAttribute("personId", receipt.getPerson().getIdInternal());
+	    request.setAttribute("receiptID", receipt.getIdInternal());
 
 	    return prepareShowReceipt(mapping, actionForm, request, response);
 	}
 
-    }
-
-    @Override
-    public ActionForward backToShowOperations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final ActionForward actionForward = new ActionForward(mapping.findForward("showOperations").getPath() + "&"
-		+ buildContextParameters(request));
-
-	actionForward.setRedirect(true);
-
-	return actionForward;
     }
 
     protected String buildContextParameters(final HttpServletRequest request) {
@@ -250,34 +274,30 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 	return mapping.findForward("editReceipt");
     }
 
+    public ActionForward prepareEditReceiptInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("editReceiptBean", getObjectFromViewState("editReceiptBean"));
+
+	return mapping.findForward("editReceipt");
+    }
+
     public ActionForward editReceipt(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	final EditReceiptBean editReceiptBean = (EditReceiptBean) getObjectFromViewState("editReceiptBean");
 
 	try {
-	    if (editReceiptBean.getContributorParty() == null) {
-		final Party contributor = Party.readByContributorNumber(editReceiptBean.getContributorNumber());
-		if (contributor == null) {
-		    addActionMessage("context", request, "error.payments.receipt.contributor.does.not.exist");
-
-		    request.setAttribute("editReceiptBean", editReceiptBean);
-		    return mapping.findForward("editReceipt");
-
-		} else {
-		    editReceiptBean.setContributorParty(contributor);
-		}
-	    }
-
 	    executeService("EditReceipt", editReceiptBean.getReceipt(), editReceiptBean.getEmployee(), editReceiptBean
-		    .getContributorParty());
+		    .getContributorParty(), editReceiptBean.getContributorName());
 	} catch (DomainException e) {
-	    addActionMessage("context", request, e.getKey(), e.getArgs());
+	    request.setAttribute("editReceiptBean", editReceiptBean);
+	    addActionMessage(request, e.getKey(), e.getArgs());
 	    return mapping.findForward("editReceipt");
 	}
 
 	request.setAttribute("personId", editReceiptBean.getReceipt().getPerson().getIdInternal());
-	
+
 	return showReceipts(mapping, form, request, response);
     }
 
@@ -289,8 +309,36 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 	return (Receipt) RenderUtils.getViewState(viewStateName).getMetaObject().getObject();
     }
 
-    abstract protected Unit getReceiptOwnerUnit(HttpServletRequest request);
+    public ActionForward editUsingContributorPartyPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-    abstract protected Unit getReceiptCreatorUnit(HttpServletRequest request);
+	final EditReceiptBean editReceiptBean = (EditReceiptBean) getObjectFromViewState("editReceiptBean");
+
+	RenderUtils.invalidateViewState("editReceiptBean");
+
+	editReceiptBean.setContributorParty(null);
+	editReceiptBean.setContributorNumber(null);
+	editReceiptBean.setContributorName(null);
+
+	request.setAttribute("editReceiptBean", editReceiptBean);
+
+	return mapping.findForward("editReceipt");
+    }
+
+    public ActionForward createUsingContributorPartyPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final CreateReceiptBean createReceiptBean = (CreateReceiptBean) getObjectFromViewState("createReceiptBean");
+
+	RenderUtils.invalidateViewState("createReceiptBean");
+
+	createReceiptBean.setContributorParty(null);
+	createReceiptBean.setContributorNumber(null);
+	createReceiptBean.setContributorName(null);
+
+	request.setAttribute("createReceiptBean", createReceiptBean);
+
+	return mapping.findForward("showPaymentsWithoutReceipt");
+    }
 
 }

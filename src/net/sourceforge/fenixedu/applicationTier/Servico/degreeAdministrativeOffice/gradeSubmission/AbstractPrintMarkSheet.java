@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.UnableToPrint
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
+import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import net.sourceforge.fenixedu.util.ReportsUtils;
 
 public abstract class AbstractPrintMarkSheet extends Service {
 

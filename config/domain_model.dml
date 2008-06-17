@@ -1577,9 +1577,11 @@ class DomainObject {
 		Integer number;
 		String numberSeries;
 		ReceiptState state;
+		YearMonthDay receiptDate;
 		DateTime whenCreated;
 		DateTime whenUpdated;
 		Integer year;
+		String contributorName;
 	}
 
 	class accounting.ReceiptPrintVersion extends DomainObject {

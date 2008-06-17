@@ -16,9 +16,11 @@ public class CreateReceipt extends Service {
 	super();
     }
 
-    public Receipt run(final Employee employee, final Person person, final Party contributor,
-	    final Unit creatorUnit, final Unit ownerUnit, final List<Entry> entries) {
-	return new Receipt(employee, person, contributor, creatorUnit, ownerUnit, entries);
+    public Receipt run(final Employee employee, final Person person, final Party contributor, final String contributorName,
+	    final Integer year, final Unit creatorUnit, final Unit ownerUnit, final List<Entry> entries) {
+
+	return Receipt.createWithContributorPartyOrContributorName(employee, person, contributor, contributorName, year,
+		creatorUnit, ownerUnit, entries);
     }
 
 }

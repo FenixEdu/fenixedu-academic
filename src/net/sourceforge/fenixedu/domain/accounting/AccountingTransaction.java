@@ -61,7 +61,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
     protected void init(User responsibleUser, Event event, Entry debit, Entry credit,
 	    AccountingTransactionDetail transactionDetail, AccountingTransaction transactionToAdjust) {
 
-	checkParameters(responsibleUser, event, debit, credit);
+	checkParameters(event, debit, credit);
 
 	super.setEvent(event);
 	super.setResponsibleUser(responsibleUser);
@@ -72,12 +72,9 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 	super.setTransactionDetail(transactionDetail);
     }
 
-    private void checkParameters(User responsibleUser, Event event, Entry debit, Entry credit) {
+    private void checkParameters(Event event, Entry debit, Entry credit) {
 	if (event == null) {
 	    throw new DomainException("error.accounting.accountingTransaction.event.cannot.be.null");
-	}
-	if (responsibleUser == null) {
-	    throw new DomainException("error.accounting.accountingTransaction.responsibleUser.cannot.be.null");
 	}
 	if (debit == null) {
 	    throw new DomainException("error.accounting.accountingTransaction.debit.cannot.be.null");

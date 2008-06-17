@@ -135,17 +135,17 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
     }
 
     @Override
-    public void depositAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount, Money amount,
-	    EntryType entryType, AccountingTransactionDetailDTO transactionDetailDTO) {
+    public AccountingTransaction depositAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount,
+	    Money amount, EntryType entryType, AccountingTransactionDetailDTO transactionDetailDTO) {
 
 	final AnnualEvent annualEvent = (AnnualEvent) event;
 
 	if (entryType == EntryType.INSURANCE_FEE) {
-	    getPostingRuleForInsurance(annualEvent.getStartDate(), annualEvent.getEndDate()).depositAmount(responsibleUser,
-		    event, fromAcount, toAccount, amount, transactionDetailDTO);
+	    return getPostingRuleForInsurance(annualEvent.getStartDate(), annualEvent.getEndDate()).depositAmount(
+		    responsibleUser, event, fromAcount, toAccount, amount, transactionDetailDTO);
 
 	} else if (entryType == EntryType.ADMINISTRATIVE_OFFICE_FEE) {
-	    getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(), annualEvent.getEndDate()).depositAmount(
+	    return getPostingRuleForAdministrativeOfficeFee(annualEvent.getStartDate(), annualEvent.getEndDate()).depositAmount(
 		    responsibleUser, event, fromAcount, toAccount, amount, transactionDetailDTO);
 
 	} else {

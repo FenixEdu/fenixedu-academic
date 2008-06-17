@@ -453,6 +453,14 @@ start.year.for.bolonha.transition=2007/2008
 start.semester.for.bolonha.transition=1
 
 #---------------------------------------------------------------
+# Receipts configuration
+#---------------------------------------------------------------
+#Inclusive
+receipt.min.year.to.create=2006
+receipt.numberSeries.for.years=2006:A
+
+
+#---------------------------------------------------------------
 # Deploy notifier activation
 #--------------------------------------------------------------
 notifier.active=false

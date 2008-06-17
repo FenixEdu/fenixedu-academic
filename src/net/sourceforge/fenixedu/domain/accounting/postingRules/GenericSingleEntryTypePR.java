@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accounting.postingRules;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
+import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -45,9 +46,9 @@ public abstract class GenericSingleEntryTypePR extends GenericSingleEntryTypePR_
 
     @Override
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    public void depositAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount, Money amount,
+    public AccountingTransaction depositAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount, Money amount,
 	    AccountingTransactionDetailDTO transactionDetailDTO) {
-	makeAccountingTransaction(responsibleUser, event, fromAcount, toAccount, getEntryType(), amount, transactionDetailDTO);
+	return makeAccountingTransaction(responsibleUser, event, fromAcount, toAccount, getEntryType(), amount, transactionDetailDTO);
     }
 
 }

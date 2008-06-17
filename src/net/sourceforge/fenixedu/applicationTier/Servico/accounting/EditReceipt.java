@@ -11,8 +11,8 @@ public class EditReceipt extends Service {
 	super();
     }
 
-    public void run(final Receipt receipt, final Employee employee, final Party contributor) {
-	receipt.edit(employee, contributor);
+    public void run(final Receipt receipt, final Employee employee, final Party contributorParty, final String contributorName) {
+	receipt.edit(employee, contributorParty, contributorName);
     }
 
 }

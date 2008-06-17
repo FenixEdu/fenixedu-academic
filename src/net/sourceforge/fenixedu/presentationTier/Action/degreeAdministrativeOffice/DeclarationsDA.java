@@ -11,15 +11,14 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.RegistrationDeclaration;
-import net.sourceforge.fenixedu.util.ReportsUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DeclarationsDA extends FenixDispatchAction {
 
