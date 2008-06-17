@@ -28,3 +28,10 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Receipt: Adding column receiptDate and setting value to whenCreated" AlterTableReceipt.sql
+execute "Transaction: Data fix please delete this script after running" dataFixTransaction.sql
+execute "AccountingTransaction: Removing restriction to force responsible user" AlterAccountingTransaction.sql
+execute "Removing Treasury Portal Payments Functionalities" RemoveTreasuryPaymentsFunctionalities.sql
+
+execute "Changing Party Contact" alterPartyContact.sql
+execute "Fixing data inconsistency in Researchers" fixResearcherData.sql
