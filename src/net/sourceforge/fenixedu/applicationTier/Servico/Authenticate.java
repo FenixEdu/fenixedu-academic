@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.cas.CASServiceUrlProvider;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.authentication.cas.CASFilter;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
 
@@ -282,7 +282,7 @@ public class Authenticate extends Service implements Serializable {
 
 	try {
 	    final String casValidateUrl = PropertiesManager.getProperty("cas.validateUrl");
-	    final String casServiceUrl = URLEncoder.encode(CASServiceUrlProvider
+	    final String casServiceUrl = URLEncoder.encode(CASFilter
 		    .getServiceUrl(requestURL), URL_ENCODING);
 
 	    ProxyTicketValidator pv = new ProxyTicketValidator();

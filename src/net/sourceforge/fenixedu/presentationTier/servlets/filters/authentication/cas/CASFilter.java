@@ -35,7 +35,7 @@ public class CASFilter implements Filter {
 
     private boolean enabled;
 
-    private final Map<String, String> serviceUrlsByHostnameMap = new HashMap<String, String>();
+    private static final Map<String, String> serviceUrlsByHostnameMap = new HashMap<String, String>();
 
     public void init(final FilterConfig config) throws ServletException {
 	enabled = Boolean.valueOf(PropertiesManager.getProperty("cas.enabled"));
@@ -105,7 +105,7 @@ public class CASFilter implements Filter {
     public void destroy() {
     }
 
-    private String getServiceUrl(final String requestURL) {
+    public static String getServiceUrl(final String requestURL) {
 	URL location;
 	try {
 	    location = new URL(requestURL);
