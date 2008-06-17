@@ -15,7 +15,7 @@
 <bean:define id="processId" name="process" property="idInternal" />
 
 <fr:form action='<%="/caseHandlingOver23CandidacyProcess.do?processId=" + processId.toString() %>'>
- 	<html:hidden property="method" value="executeInsertResultsFromJury" />
+ 	<html:hidden property="method" value="executeIntroduceCandidacyResults" />
 
 	<h3 class="mtop15 mbottom025"><bean:message key="label.candidacy.introduce.results" bundle="APPLICATION_RESOURCES"/></h3>
 	<fr:edit id="over23IndividualCandidacyResultBeans"
@@ -24,7 +24,7 @@
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle4 mtop025"/>
 		</fr:layout>
-		<fr:destination name="invalid" path='<%= "/caseHandlingOver23CandidacyProcess.do?method=executeInsertResultsFromJuryInvalid&amp;processId=" + processId.toString() %>' />
+		<fr:destination name="invalid" path='<%= "/caseHandlingOver23CandidacyProcess.do?method=executeIntroduceCandidacyResultsInvalid&amp;processId=" + processId.toString() %>' />
 	</fr:edit>
 		
 	<html:submit><bean:message key="label.insert" bundle="APPLICATION_RESOURCES" /></html:submit>

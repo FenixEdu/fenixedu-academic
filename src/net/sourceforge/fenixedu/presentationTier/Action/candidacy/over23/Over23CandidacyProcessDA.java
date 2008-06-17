@@ -44,7 +44,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
 	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
 	@Forward(name = "send-to-jury", path = "/candidacy/over23/sendToJury.jsp"),
-	@Forward(name = "insert-candidacy-results-from-jury", path = "/candidacy/over23/insertCandidacyResultsFromJury.jsp"),
+	@Forward(name = "view-candidacy-results", path = "/candidacy/over23/viewCandidacyResults.jsp"),
+	@Forward(name = "insert-candidacy-results", path = "/candidacy/over23/introduceCandidacyResults.jsp"),
 	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp")
 
 })
@@ -140,36 +141,47 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 	return result;
     }
 
-    public ActionForward prepareExecuteInsertResultsFromJury(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward prepareExecuteIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
+	setInformationToIntroduceCandidacyResults(request);
+	return mapping.findForward("view-candidacy-results");
+    }
+
+    private void setInformationToIntroduceCandidacyResults(HttpServletRequest request) {
 	final Over23CandidacyProcess process = getProcess(request);
 	final List<Over23IndividualCandidacyResultBean> beans = new ArrayList<Over23IndividualCandidacyResultBean>();
 	for (final Over23IndividualCandidacyProcess candidacy : process.getOver23IndividualCandidaciesThatCanBeSendToJury()) {
 	    beans.add(new Over23IndividualCandidacyResultBean(candidacy));
 	}
 	request.setAttribute("over23IndividualCandidacyResultBeans", beans);
-	return mapping.findForward("insert-candidacy-results-from-jury");
+    }
+    
+    public ActionForward prepareIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	setInformationToIntroduceCandidacyResults(request);
+	return mapping.findForward("insert-candidacy-results");
     }
 
-    public ActionForward executeInsertResultsFromJury(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward executeIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
-	    executeActivity(getProcess(request), "InsertResultsFromJury",
+	    executeActivity(getProcess(request), "IntroduceCandidacyResults",
 		    getRenderedObject("over23IndividualCandidacyResultBeans"));
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    request.setAttribute("over23IndividualCandidacyResultBeans",
 		    getRenderedObject("over23IndividualCandidacyResultBeans"));
-	    return mapping.findForward("insert-candidacy-results-from-jury");
+	    return mapping.findForward("insert-candidacy-results");
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
 
-    public ActionForward executeInsertResultsFromJuryInvalid(ActionMapping mapping, ActionForm actionForm,
+    public ActionForward executeIntroduceCandidacyResultsInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("over23IndividualCandidacyResultBeans", getRenderedObject("over23IndividualCandidacyResultBeans"));
-	return mapping.findForward("insert-candidacy-results-from-jury");
+	return mapping.findForward("insert-candidacy-results");
     }
 
     public ActionForward prepareExecutePublishCandidacyResults(ActionMapping mapping, ActionForm actionForm,

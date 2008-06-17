@@ -43,7 +43,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	activities.add(new EditCandidacyPeriod());
 	activities.add(new SendInformationToJury());
 	activities.add(new PrintCandidacies());
-	// TODO: activities.add(new InsertResultsFromJury());
+	activities.add(new IntroduceCandidacyResults());
 	// TODO: activities.add(new PublishCandidacyResults());
 	// TODO: activities.add(new CreateRegistrations());
     }
@@ -186,7 +186,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	}
     }
 
-    static private class InsertResultsFromJury extends Activity<Over23CandidacyProcess> {
+    static private class IntroduceCandidacyResults extends Activity<Over23CandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
