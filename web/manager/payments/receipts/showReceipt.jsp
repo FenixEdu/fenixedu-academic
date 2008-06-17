@@ -45,7 +45,7 @@
 				value="tstyle4 mtop05 mbottom0 width700px" />
 			<fr:property name="columnClasses"
 				value="width8em acenter, width30em acenter,width8em acenter,width15em aright" />
-			<fr:property name="sortBy" value="whenRegistered=desc" />
+			<fr:property name="sortBy" value="whenRegistered=asc,idInternal=asc" />
 		</fr:layout>
 	</fr:view>
 	

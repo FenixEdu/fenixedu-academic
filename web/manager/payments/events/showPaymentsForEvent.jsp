@@ -25,7 +25,7 @@
 	</logic:empty>
 	
 	<logic:notEmpty name="event" property="positiveEntries">	
-		<fr:view name="event" property="positiveEntries" schema="entry.view">
+		<fr:view name="event" property="positiveEntries" schema="entry.view-with-payment-mode">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mtop05" />
 				<fr:property name="columnClasses"

@@ -50,7 +50,7 @@
 		<logic:notEmpty name="transferPaymentsBean" property="sourceEvent.positiveEntries">
 		
 			<fr:view name="transferPaymentsBean"
-			property="sourceEvent.positiveEntries" schema="entry.view">
+			property="sourceEvent.positiveEntries" schema="entry.view-with-payment-mode">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle4 mtop05" />
 					<fr:property name="columnClasses" value=",,,aright,aright,aright,acenter" />
