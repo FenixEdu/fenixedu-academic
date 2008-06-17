@@ -44,8 +44,8 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	activities.add(new SendInformationToJury());
 	activities.add(new PrintCandidacies());
 	activities.add(new IntroduceCandidacyResults());
-	// TODO: activities.add(new PublishCandidacyResults());
-	// TODO: activities.add(new CreateRegistrations());
+	activities.add(new PublishCandidacyResults());
+	activities.add(new CreateRegistrations());
     }
 
     private Over23CandidacyProcess() {
@@ -88,13 +88,13 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	final List<Over23IndividualCandidacyProcess> result = new ArrayList<Over23IndividualCandidacyProcess>();
 	for (final IndividualCandidacyProcess child : getChildProcesses()) {
 	    final Over23IndividualCandidacyProcess over23CP = (Over23IndividualCandidacyProcess) child;
-	    if (over23CP.canBeSendToJury()) {
+	    if (over23CP.isCandidacyValid()) {
 		result.add(over23CP);
 	    }
 	}
 	return result;
     }
-    
+
     public List<Over23IndividualCandidacyProcess> getAcceptedOver23IndividualCandidacies() {
 	final List<Over23IndividualCandidacyProcess> result = new ArrayList<Over23IndividualCandidacyProcess>();
 	for (final IndividualCandidacyProcess child : getChildProcesses()) {
@@ -152,11 +152,12 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	    if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
+
+	    if (!process.isInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isInStandBy()) {
+	    if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -248,7 +249,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
 	    for (final IndividualCandidacyProcess candidacyProcess : process.getChildProcesses()) {
 		final Over23IndividualCandidacyProcess over23CP = (Over23IndividualCandidacyProcess) candidacyProcess;
-		if (over23CP.isCandidacyAccepted() && !over23CP.hasRegistrationForCandidacy()) {
+		if (over23CP.isCandidacyValid() && over23CP.isCandidacyAccepted() && !over23CP.hasRegistrationForCandidacy()) {
 		    over23CP.executeActivity(userView, "CreateRegistration", null);
 		}
 	    }

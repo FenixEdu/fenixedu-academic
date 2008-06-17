@@ -27,7 +27,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	activities.add(new EditCandidacyInformation());
 	activities.add(new IntroduceCandidacyResult());
 	activities.add(new CancelCandidacy());
-	// TODO: activities.add(new CreateRegistration());
+	activities.add(new CreateRegistration());
     }
 
     protected Over23IndividualCandidacyProcess() {
@@ -96,10 +96,6 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
     public String getLanguages() {
 	return getCandidacy().getLanguages();
-    }
-
-    boolean canBeSendToJury() {
-	return !isCandidacyCancelled() && isCandidacyDebtPayed();
     }
 
     public Degree getAcceptedDegree() {
@@ -207,7 +203,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isSentToJury() && !process.isPublished()) {
+	    if (!process.isSentToJury()) {
 		throw new PreConditionNotValidException();
 	    }
 	}

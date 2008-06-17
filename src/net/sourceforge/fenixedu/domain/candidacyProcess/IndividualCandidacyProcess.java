@@ -77,6 +77,10 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     public IndividualCandidacyState getCandidacyState() {
 	return getCandidacy().getState();
     }
+    
+    public boolean isCandidacyValid() {
+	return !isCandidacyCancelled() && isCandidacyDebtPayed();
+    }
 
     public boolean isCandidacyInStandBy() {
 	return getCandidacy().isInStandBy();

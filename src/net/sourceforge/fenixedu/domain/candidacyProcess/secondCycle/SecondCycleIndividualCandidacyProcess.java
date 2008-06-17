@@ -33,9 +33,9 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	activities.add(new CandidacyPayment());
 	activities.add(new EditCandidacyPersonalInformation());
 	activities.add(new EditCandidacyInformation());
-	// TODO: activities.add(new IntroduceCandidacyResult());
+	activities.add(new IntroduceCandidacyResult());
 	activities.add(new CancelCandidacy());
-	// TODO: activities.add(new CreateRegistration());
+	activities.add(new CreateRegistration());
     }
 
     private SecondCycleIndividualCandidacyProcess() {
@@ -128,10 +128,6 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
     public String getCandidacyNotes() {
 	return getCandidacy().getNotes();
-    }
-
-    boolean isValid() {
-	return !isCandidacyCancelled() && isCandidacyDebtPayed();
     }
 
     static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {

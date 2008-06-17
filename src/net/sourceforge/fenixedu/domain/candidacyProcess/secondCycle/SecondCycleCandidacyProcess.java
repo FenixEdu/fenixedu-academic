@@ -50,9 +50,9 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	activities.add(new SendToCoordinator());
 	activities.add(new PrintCandidacies());
 	activities.add(new IntroduceCandidacyResults());
-	// TODO: activities.add(new SendToScientificCouncil());
-	// TODO: activities.add(new PublishCandidacyResults());
-	// TODO: activities.add(new CreateRegistrations());
+	activities.add(new SendToScientificCouncil());
+	activities.add(new PublishCandidacyResults());
+	activities.add(new CreateRegistrations());
     }
 
     private SecondCycleCandidacyProcess() {
@@ -96,7 +96,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
 	for (final IndividualCandidacyProcess child : getChildProcesses()) {
 	    final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
-	    if (process.isValid()) {
+	    if (process.isCandidacyValid()) {
 		result.add(process);
 	    }
 	}
@@ -110,7 +110,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
 	for (final IndividualCandidacyProcess child : getChildProcesses()) {
 	    final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
-	    if (process.isValid() && process.hasCandidacySelectedDegree(degree)) {
+	    if (process.isCandidacyValid() && process.hasCandidacySelectedDegree(degree)) {
 		result.add(process);
 	    }
 	}
@@ -122,7 +122,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 		Degree.COMPARATOR_BY_NAME_AND_ID);
 	for (final IndividualCandidacyProcess child : getChildProcesses()) {
 	    final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
-	    if (process.isValid()) {
+	    if (process.isCandidacyValid()) {
 		addCandidacy(result, process);
 	    }
 	}
@@ -199,11 +199,11 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
+	    if (!process.isInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isInStandBy()) {
+	    if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -321,7 +321,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 
 	    for (final IndividualCandidacyProcess candidacyProcess : process.getChildProcesses()) {
 		final SecondCycleIndividualCandidacyProcess secondCycleCP = (SecondCycleIndividualCandidacyProcess) candidacyProcess;
-		if (secondCycleCP.isValid() && secondCycleCP.isCandidacyAccepted()
+		if (secondCycleCP.isCandidacyValid() && secondCycleCP.isCandidacyAccepted()
 			&& !secondCycleCP.hasRegistrationForCandidacy()) {
 		    secondCycleCP.executeActivity(userView, "CreateRegistration", null);
 		}
