@@ -43,26 +43,65 @@
 </fr:view>
 
 <p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.contributor" /></strong></p>
-<fr:view name="receipt" property="contributorParty" schema="contributor.view">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
-	</fr:layout>
-</fr:view>
+<logic:present name="receipt" property="contributorParty">
+	<fr:view name="receipt" property="contributorParty" schema="contributor.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
+		</fr:layout>
+	</fr:view>
+</logic:present>
+<logic:notPresent name="receipt" property="contributorParty">
+	<fr:view name="receipt" schema="receipt.view.contributorName">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
+		</fr:layout>
+	</fr:view>
+</logic:notPresent>
 
 
 <bean:define id="personId" name="editReceiptBean" property="receipt.person.idInternal" />
 <p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.newContributor" /></strong></p>
-<fr:edit id="editReceiptBean"
-	name="editReceiptBean"
-	schema="editReceiptBean.edit"
-	action="/receipts.do?method=editReceipt">
 
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thlight" />
-		<fr:property name="columnClasses" value="nowrap," />
-		<fr:destination name="cancel" path="<%= "/receipts.do?method=showReceipts&personId=" + personId %>"/>
-	</fr:layout>
-</fr:edit>
+
+
+
+<bean:define id="receiptId" name="editReceiptBean" property="receipt.idInternal" />
+
+<fr:form action="<%="/receipts.do?personId=" + personId.toString() %>">
+	<input type="hidden" name="method" value=""/>
+	
+	<fr:edit id="editReceiptBean" name="editReceiptBean" visible="false" />
+		
+	<logic:equal name="editReceiptBean" property="usingContributorParty" value="true">
+		<fr:edit id="editReceiptBean.edit.contributorParty"
+			name="editReceiptBean"
+			schema="editReceiptBean.edit.contributorParty">
+		
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 thlight" />
+				<fr:property name="columnClasses" value="nowrap," />
+				<fr:destination name="usingContributorPartyPostback" path="/receipts.do?method=editUsingContributorPartyPostback" />
+				<fr:destination name="invalid" path="/receipts.do?method=prepareEditReceiptInvalid"/>
+			</fr:layout>
+		</fr:edit>
+	</logic:equal>
+	<logic:notEqual name="editReceiptBean" property="usingContributorParty" value="true">
+		<fr:edit 	id="editReceiptBean.edit.contributorName"
+					name="editReceiptBean"
+					schema="editReceiptBean.edit.contributorName">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 thlight" />
+				<fr:property name="columnClasses" value="nowrap," />
+				<fr:destination name="usingContributorPartyPostback" path="/receipts.do?method=editUsingContributorPartyPostback" />
+				<fr:destination name="invalid" path="/receipts.do?method=prepareEditReceiptInvalid" />
+			</fr:layout>
+		</fr:edit>	
+	</logic:notEqual>
+
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='editReceipt';"><bean:message bundle="APPLICATION_RESOURCES" key="label.edit"/></html:submit>
+	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='showReceipts';"><bean:message bundle="APPLICATION_RESOURCES" key="label.cancel"/></html:cancel>
+
+</fr:form>
 
 
 <p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments" /></strong></p>

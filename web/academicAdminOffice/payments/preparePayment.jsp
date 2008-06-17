@@ -8,10 +8,11 @@
 
 <bean:define id="personId" name="paymentsManagementDTO" property="person.idInternal"/>
 <fr:form action="<%="/payments.do?personId=" + personId %>">
-
-	<html:hidden property="errorForward" name="paymentsForm"/>
 	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="paymentsForm" property="method" />
+
+	<input type="hidden" name="method" value=""/>
+	
+	
 	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.preparePayment" /></h2>
 
@@ -39,15 +40,35 @@
 		</fr:layout>
 	</fr:view>
 	
-	<fr:edit id="paymentsManagementDTO-edit" name="paymentsManagementDTO" schema="paymentsManagementDTO.edit-with-paymentDate">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thright" />
-			<fr:property name="columnClasses" value=",,tdclear" />
-		</fr:layout>
-		<fr:destination name="invalid" path="/payments.do?method=preparePaymentInvalid"/>
-	</fr:edit>
-	
 
+	<fr:edit id="paymentsManagementDTO-edit" name="paymentsManagementDTO" visible="false" />
+	
+	<logic:equal name="paymentsManagementDTO" property="usingContributorParty" value="true">
+		<fr:edit id="paymentsManagementDTO.edit.with.contributorParty" 
+				name="paymentsManagementDTO" 
+				schema="paymentsManagementDTO.edit.with.contributorParty">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thlight thright" />
+				<fr:property name="columnClasses" value=",,tdclear" />
+			</fr:layout>
+			<fr:destination name="invalid" path="/payments.do?method=preparePaymentInvalid"/>
+			<fr:destination name="usingContributorPartyPostback" path="/payments.do?method=preparePaymentUsingContributorPartyPostback" />
+			
+		</fr:edit>
+	</logic:equal>
+	<logic:notEqual name="paymentsManagementDTO" property="usingContributorParty" value="true">
+		<fr:edit 	id="paymentsManagementDTO.edit.with.contributorName"
+					name="paymentsManagementDTO"
+					schema="paymentsManagementDTO.edit.with.contributorName">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thlight thright" />
+				<fr:property name="columnClasses" value=",,tdclear" />
+				<fr:destination name="invalid" path="/payments.do?method=preparePaymentInvalid" />
+				<fr:destination name="usingContributorPartyPostback" path="/payments.do?method=preparePaymentUsingContributorPartyPostback" />
+			</fr:layout>
+		</fr:edit>
+	</logic:notEqual>
+	
 	<fr:view name="paymentsManagementDTO" property="selectedEntries" schema="entryDTO.view">
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 mtop05 mbottom0" />
@@ -63,10 +84,10 @@
 		</tr>
 	</table>
 
-
 	
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='doPayment';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.pay"/></html:submit>
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='backToShowOperations';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:cancel>
+	
 </fr:form>
 
 </logic:present>

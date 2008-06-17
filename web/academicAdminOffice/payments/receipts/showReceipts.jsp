@@ -45,6 +45,7 @@
 			<fr:property name="linkFormat(edit)" value="<%="/receipts.do?method=prepareEditReceipt&amp;receiptID=${idInternal}&amp;personId=" + personId %>"/>
 			<fr:property name="key(edit)" value="label.payments.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
+			<fr:property name="visibleIf(edit)" value="active"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

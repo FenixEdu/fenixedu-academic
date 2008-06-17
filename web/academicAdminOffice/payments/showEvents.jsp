@@ -8,7 +8,9 @@
 
 <bean:define id="personId" name="paymentsManagementDTO" property="person.idInternal" />
 <fr:form action='<%= "/payments.do?personId=" + personId %>'>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="paymentsForm" property="method" />
+
+	<input type="hidden" name="method" value=""/>
+
 	
 	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="title.payments.currentEvents" /></h2>

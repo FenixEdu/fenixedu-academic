@@ -8,7 +8,8 @@
 
 <bean:define id="personId" name="createReceiptBean" property="person.idInternal"/>
 <fr:form action="<%="/receipts.do?personId=" + personId%>">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="receiptsForm" property="method" />
+	
+	<input type="hidden" name="method" value=""/>
 
 	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentsWithoutReceipt" /></h2>
@@ -42,13 +43,37 @@
 	<logic:notEmpty name="createReceiptBean" property="entries">
 
 		<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.contributor" /></strong></p>
-		<fr:edit id="createReceiptBean" name="createReceiptBean" schema="createReceiptBean.create">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
-				<fr:property name="columnClasses" value=",,tdclear" />
-			</fr:layout>
-			<fr:destination name="invalid" path="/receipts.do?method=prepareShowPaymentsWithoutReceiptInvalid"/>
-		</fr:edit>
+		
+		<fr:edit id="createReceiptBean" name="createReceiptBean" visible="false" />
+		
+		<logic:equal name="createReceiptBean" property="usingContributorParty" value="true">
+			
+			<fr:edit id="createReceiptBean.edit.with.contributorParty" 
+					name="createReceiptBean" 
+					schema="createReceiptBean.edit.with.contributorParty">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
+					<fr:property name="columnClasses" value=",,tdclear" />
+					<fr:destination name="usingContributorPartyPostback" path="/receipts.do?method=createUsingContributorPartyPostback" />
+					<fr:destination name="invalid" path="/receipts.do?method=prepareShowPaymentsWithoutReceiptInvalid"/>
+				</fr:layout>
+			</fr:edit>
+		
+		</logic:equal>
+		
+		<logic:notEqual name="createReceiptBean"  property="usingContributorParty" value="true">
+			<fr:edit 	id="createReceiptBean.edit.with.contributorName" 
+						name="createReceiptBean" 
+						schema="createReceiptBean.edit.with.contributorName">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
+					<fr:property name="columnClasses" value=",,tdclear" />
+					<fr:destination name="usingContributorPartyPostback" path="/receipts.do?method=createUsingContributorPartyPostback" />
+					<fr:destination name="invalid" path="/receipts.do?method=prepareShowPaymentsWithoutReceiptInvalid"/>
+				</fr:layout>
+			</fr:edit>
+		</logic:notEqual>
+		
 
 		<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments" /></strong></p>
 		<fr:edit id="createReceiptBean-entries-part" name="createReceiptBean"

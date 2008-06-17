@@ -14,7 +14,8 @@
 
 	<bean:define id="personId" name="person" property="idInternal" />
 	<fr:form action='<%= "/payments.do?personId=" + personId %>'>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="paymentsForm" property="method" />
+	
+		<input type="hidden" name="method" value=""/>
 
 		<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 		<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.management" /></h2>
@@ -41,9 +42,6 @@
 		<ul>
 			<li><html:link action="<%="/payments.do?method=showEvents&amp;personId=" + personId %>">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.currentEvents" />
-			</html:link></li>
-			<li><html:link action="<%="/payments.do?method=showEventsWithInstallments&amp;personId=" + personId%>">
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.eventsWithInstallments" />
 			</html:link></li>
 			<li><html:link
 				action="<%="/receipts.do?method=showPaymentsWithoutReceipt&amp;personId=" + personId %>">

@@ -36,11 +36,20 @@
 
 
 <p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.contributor" /></strong></p>
-<fr:view name="createReceiptBean" property="contributorParty" schema="contributor.view">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
-	</fr:layout>
-</fr:view>
+<logic:present name="createReceiptBean" property="contributorParty">
+	<fr:view name="createReceiptBean" property="contributorParty" schema="contributor.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
+		</fr:layout>
+	</fr:view>
+</logic:present>
+<logic:notPresent name="createReceiptBean" property="contributorParty">
+	<fr:view name="createReceiptBean" schema="createReceiptBean.view.contributorName">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
+		</fr:layout>
+	</fr:view>
+</logic:notPresent>
 
 
 <p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments" /></strong></p>
@@ -61,15 +70,16 @@
 <bean:define id="personId" name="createReceiptBean" property="person.idInternal"/>
 
 <fr:form action='<%= "/receipts.do?personId=" + personId %>'>
-
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="receiptsForm" property="method" />
+	
+	<input type="hidden" name="method" value=""/>
+	
 	<fr:edit id="createReceiptBeanConfirm" name="createReceiptBean" visible="false" />
 	<p>	
 		<span class="warning0"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.confirmCreateReceiptQuestion"/></span>
 	</p>
 	<p class="mtop15">
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='createReceipt';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.createReceipt"/></html:submit>
-		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='backToShowOperations';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:cancel>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='backToShowPaymentsWithoutReceipt';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:submit>
 	</p>
 </fr:form>
 

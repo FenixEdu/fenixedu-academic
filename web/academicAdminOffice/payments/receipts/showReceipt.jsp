@@ -44,11 +44,20 @@
 
 
 <p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.contributor" /></strong></p>
-<fr:view name="receipt" property="contributorParty" schema="contributor.view">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
-	</fr:layout>
-</fr:view>
+<logic:present name="receipt" property="contributorParty" >
+	<fr:view name="receipt" property="contributorParty" schema="contributor.view">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
+		</fr:layout>
+	</fr:view>
+</logic:present>
+<logic:notPresent name="receipt" property="contributorParty">
+	<fr:view name="receipt" schema="receipt.view.contributorName">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop05" />
+		</fr:layout>
+	</fr:view>
+</logic:notPresent>
 
 
 <p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments" /></strong></p>
@@ -56,7 +65,7 @@
 		<fr:layout name="tabular" >
 		<fr:property name="classes" value="tstyle4 mtop05 mbottom0 width700px" />
 		<fr:property name="columnClasses" value="width8em acenter, width30em acenter,width8em acenter,width15em aright"/>
-			<fr:property name="sortBy" value="whenRegistered=desc"/>
+			<fr:property name="sortBy" value="whenRegistered=asc,idInternal=asc"/>
 		</fr:layout>
 		</fr:view>
 
@@ -77,7 +86,6 @@
 				</html:form>
 			</td>
 
-<%--
 			<td>
 				<logic:equal name="receipt" property="active" value="true">
 				<html:form action="<%="/creditNotes.do?method=showCreditNotes&amp;personId=" + personId%>">
@@ -88,7 +96,7 @@
 				</html:form>
 				</logic:equal>
 			</td>
- --%>
+
 			<td>
 				<html:form action="<%="/receipts.do?method=showReceipts&amp;personId=" + personId%>">
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
