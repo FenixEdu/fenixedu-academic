@@ -21,10 +21,6 @@
 			<param-name>uploadThresholdSize</param-name>
 			<param-value>1m</param-value>
 		</init-param>
-		<init-param>
-			<param-name>uploadRepositoryPath</param-name>
-			<param-value>/tmp</param-value>
-		</init-param>
 	</filter>
 	<filter>
 	    <filter-name>CloseTxFilter</filter-name>
