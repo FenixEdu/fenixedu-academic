@@ -35,3 +35,6 @@ execute "Removing Treasury Portal Payments Functionalities" RemoveTreasuryPaymen
 
 execute "Changing Party Contact" alterPartyContact.sql
 execute "Fixing data inconsistency in Researchers" fixResearcherData.sql
+
+execute "updateWeightInOldEnrolments" updateWeightInOldEnrolments.sql
+
