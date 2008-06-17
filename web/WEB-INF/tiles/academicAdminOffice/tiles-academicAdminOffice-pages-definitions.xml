@@ -1,0 +1,460 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<tiles-definitions>
+    <definition name="index" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/index.jsp"></put>
+    </definition>	    
+    <definition name="student.chooseNewStudentExecutionDegreeAndIdentification" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/chooseNewStudentExecutionDegreeAndIdentification.jsp"></put>
+    </definition>
+    <definition name="student.fillNewPersonData" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/fillNewPersonData.jsp"></put>
+    </definition>  
+    <definition name="student.fillNewPersonDataForEmployee" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/fillNewPersonDataForEmployee.jsp"></put>
+    </definition>  
+    <definition name="student.createStudentSuccess" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/createStudentSuccess.jsp"></put>
+    </definition>  
+    <definition name="student.showCreateStudentConfirmation" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/showCreateStudentConfirmation.jsp"></put>
+    </definition>
+    <definition name="students.search" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/searchStudents.jsp"></put>
+    </definition> 
+    <definition name="students.manageStatutes" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/manageStatutes.jsp"></put>
+    </definition> 
+    <definition name="students.viewStudentDetails" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/student/viewStudentDetails.jsp"></put>
+    </definition>
+    <definition name="student.editPersonalData" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/editPersonalData.jsp"></put>
+    </definition>
+    <definition name="student.viewPersonalData" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/viewPersonalData.jsp"></put>
+    </definition>
+    <definition name="student.viewRegistrationDetails" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"></put>
+    </definition>
+    <definition name="student.createPartyContact" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/createPartyContact.jsp"></put>
+    </definition>
+    <definition name="student.editPartyContact" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/editPartyContact.jsp"></put>
+    </definition>
+    <definition name="chooseCycleForViewRegistrationCurriculum" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/student/registration/chooseCycleForViewRegistrationCurriculum.jsp"></put>
+    </definition>
+    <definition name="view-registration-curriculum" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/student/registration/viewRegistrationCurriculum.jsp"></put>
+    </definition>
+    <definition name="viewAttends" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/student/registration/viewAttends.jsp"></put>
+    </definition>
+    <definition name="addAttends" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/student/registration/addAttends.jsp"></put>
+    </definition>
+	<definition name="student.showStudentCurriculum" extends="academicAdminOffice.masterPage" >
+		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
+	</definition>    
+    <definition name="student.enrolment.prepareChooseExecutionPeriod" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/chooseStudentEnrolmentExecutionPeriod.jsp"></put>
+    </definition> 
+    <definition name="student.enrolment.showExtraEnrolments" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/showExtraEnrolments.jsp"></put>
+    </definition>
+    <definition name="student.enrolment.chooseExtraEnrolment" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/chooseExtraEnrolment.jsp"></put>
+    </definition>
+    <definition name="student.externalEnrolment.manageExternalEnrolments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/manageExternalEnrolments.jsp"/>
+    </definition>
+    <definition name="student.externalEnrolment.editExternalEnrolment" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/editExternalEnrolment.jsp"/>
+    </definition>
+    <definition name="student.externalEnrolment.chooseExternalUnit" extends="academicAdminOffice.masterPage">
+		<put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseExternalUnit.jsp"/>
+    </definition>
+    <definition name="student.externalEnrolment.chooseExternalCurricularCourses" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseExternalCurricularCourses.jsp"/>
+    </definition>
+    <definition name="student.externalEnrolment.createExternalEnrolments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/createExternalEnrolments.jsp"/>
+    </definition>
+    <definition name="student.showManageEnrolmentModel" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/manageEnrolmentModel.jsp"></put>
+    </definition>      
+    <definition name="student.showRegistrationStates" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/student/registration/manageRegistrationState.jsp"></put>
+    </definition>
+    <definition name="student.deleteActualInfoConfirm" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/student/registration/deleteRegistrationActualInfo.jsp"></put>
+    </definition>      
+    <definition name="chooseCycleForRegistrationConclusion" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/student/registration/chooseCycleForRegistrationConclusion.jsp"></put>
+    </definition>      
+    <definition name="registrationConclusion" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/student/registration/registrationConclusion.jsp"></put>
+    </definition>      
+    <definition name="registrationConclusionDocument" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/student/registration/registrationConclusionDocument.jsp"></put>
+    </definition>      
+    <definition name="student.showEditIngression" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/manageIngression.jsp"></put>
+    </definition>      
+    <definition name="student.manageExternalRegistrationData" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/student/registration/manageExternalRegistrationData.jsp"></put>
+    </definition>      
+    <definition name="student.showCreateNewStudentCurricularPlan" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/createStudentCurricularPlan.jsp"></put>
+    </definition>      
+
+	<definition name="show-student-equivalency.plan" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"/>
+	</definition>
+	<definition name="add-student-equivalency" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/degreeCurricularPlan/addStudentEquivalency.jsp"/>
+	</definition>
+
+	<!-- ************* Academic Service Requests Management ************* -->
+	<definition name="academicServiceRequests.management.viewRegistrationAcademicServiceRequestsHistoric" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/viewRegistrationAcademicServiceRequestsHistoric.jsp"/>
+	</definition>
+
+	<definition name="academicServiceRequests.management.viewAcademicServiceRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/viewAcademicServiceRequest.jsp"/>
+	</definition>
+	
+	<definition name="academicServiceRequests.management.prepareSendAcademicServiceRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/prepareSendAcademicServiceRequest.jsp"/>
+	</definition>
+	
+	<definition name="academicServiceRequests.management.prepareReceiveAcademicServiceRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/prepareReceiveAcademicServiceRequest.jsp"/>
+	</definition>
+	
+	<definition name="academicServiceRequests.management.prepareRejectAcademicServiceRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/prepareRejectAcademicServiceRequest.jsp"/>
+	</definition>
+
+	<definition name="academicServiceRequests.management.prepareCancelAcademicServiceRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/prepareCancelAcademicServiceRequest.jsp"/>
+	</definition>
+	
+	<definition name="academicServiceRequests.management.searchResults" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/searchResults.jsp"/>
+	</definition>
+	
+	<definition name="academicServiceRequests.management.prepareCreateServiceRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/prepareCreateServiceRequest.jsp"/>
+	</definition>
+
+	<definition name="academicServiceRequests.management.confirmCreateServiceRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/confirmCreateServiceRequest.jsp"/>
+	</definition>
+	
+	<definition name="academicServiceRequests.management.prepareConcludeServiceRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/concludeServiceRequest.jsp"/>
+	</definition>
+
+	<!-- ************* Document Requests Management ************* -->
+	<definition name="documentRequests.management.printDocument" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/printDocument.jsp"/>
+	</definition>
+	
+	<definition name="documentRequests.management.viewNewDocumentRequests" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/viewNewDocumentRequests.jsp"/>
+	</definition>
+	
+	<definition name="documentRequests.management.showDocumentRequests" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/showDocumentRequests.jsp"/>
+	</definition>
+
+	<definition name="documentRequests.management.editDocumentRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/editDocumentRequest.jsp"/>
+	</definition>	
+	
+	<definition name="documentRequests.management.prepareCreateDocumentRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/searchStudentToCreateDocumentRequest.jsp"/>
+	</definition>	
+	
+	<definition name="documentRequests.management.createDocumentRequests" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/createDocumentRequests.jsp"/>
+	</definition>	
+	
+	<definition name="documentRequests.management.chooseStudentToCreateDocumentRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/searchStudentToCreateDocumentRequest.jsp"/>
+	</definition>	
+	
+	<definition name="documentRequest.viewDocumentRequestsToCreate" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/viewDocumentRequestsToCreate.jsp"/>
+	</definition>
+	
+	<definition name="documentRequest.management.chooseExamsToCreateExamDateCertificateRequest" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/serviceRequests/documentRequests/chooseExamsToCreateExamDateCertificateRequest.jsp"/>
+	</definition>
+	
+
+	
+	<!-- ************* Contributors ************* -->
+	<definition name="contributor.createContributorSuccess" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/contributor/createContributorSuccess.jsp"/>
+	</definition>
+	<definition name="contributor.createContributor" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/contributor/createContributor.jsp"/>
+	</definition>
+	<definition name="contributor.chooseContributor" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/contributor/chooseContributor.jsp"/>
+	</definition>
+	<definition name="contributor.visualizeContributor" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/contributor/visualizeContributor.jsp"/>
+	</definition>
+	<definition name="contributor.selectContributorFromList" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/contributor/selectContributorFromList.jsp"/>
+	</definition>
+	<definition name="contributor.editContributor" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/contributor/editContributor.jsp"/>
+	</definition>
+	<definition name="contributor.editContributorSuccess" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/contributor/editContributorSuccess.jsp"/>
+	</definition>
+	
+	<!-- ************************************* -->
+	
+	<!-- ************* Prices Management ************* -->
+	<definition name="prices.management.editPrice" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/pricesManagement/editPrice.jsp"/>
+	</definition>
+
+	<definition name="prices.management.viewPrices" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/pricesManagement/viewPrices.jsp"/>
+	</definition>
+		
+	<!-- ************* Student Dismissals ************* -->
+	<definition name="studentDismissal.chooseEquivalents" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseEquivalents.jsp"/>
+	</definition>
+	<definition name="studentSubstitution.chooseEquivalents" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseSubstitutionEquivalents.jsp"/>
+	</definition>
+	<definition name="studentEquivalence.chooseEquivalents" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseEquivalenceEquivalents.jsp"/>
+	</definition>
+	<definition name="studentCredit.chooseEquivalents" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseCreditEquivalents.jsp"/>
+	</definition>	
+	<definition name="studentDismissal.chooseDismissalEnrolments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseDismissalEnrolments.jsp"/>
+	</definition>
+	<definition name="studentSubstitution.chooseDismissalEnrolments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseSubstitutionEnrolments.jsp"/>
+	</definition>
+	<definition name="studentEquivalence.chooseDismissalEnrolments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseEquivalenceEnrolments.jsp"/>
+	</definition>
+	<definition name="studentCredit.chooseDismissalEnrolments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseCreditEnrolments.jsp"/>
+	</definition>	
+	
+	<definition name="studentDismissal.management" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/managementDismissals.jsp"/>
+	</definition>
+	<definition name="studentDismissal.confirmCreateDismissals" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/confirmCreateDismissals.jsp"/>
+	</definition>
+	<definition name="studentSubstitution.confirmCreateDismissals" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/confirmCreateSubstitution.jsp"/>
+	</definition>
+	<definition name="studentEquivalence.confirmCreateDismissals" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/confirmCreateEquivalence.jsp"/>
+	</definition>
+	<definition name="studentCredit.confirmCreateDismissals" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/confirmCreateCredit.jsp"/>
+	</definition>
+	
+	<definition name="studentDismissal.prepareCreateExternalEnrolment" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/createExternalEnrolment.jsp"/>
+	</definition>
+	<definition name="studentSubstitution.chooseNotNeedToEnrol" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseSubstitutionNotNeedToEnrol.jsp"/>
+	</definition>
+	<definition name="studentEquivalence.chooseNotNeedToEnrol" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseEquivalenceNotNeedToEnrol.jsp"/>
+	</definition>
+	<definition name="studentCredit.chooseNotNeedToEnrol" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/dismissal/chooseCreditNotNeedToEnrol.jsp"/>
+	</definition>
+
+	<!-- ===================== MarkSheet Management ====================== -->
+	<definition name="show.markSheetManagement.search.page" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/markSheetManagement.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.create.page.step1" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/createMarkSheetStep1.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.create.page.step2" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/createMarkSheetStep2.jsp"></put>
+	</definition>
+	<definition name="markSheetManagement.viewMarkSheet" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/viewMarkSheet.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.remove" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/removeMarkSheet.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.rectify.page.step1" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep1.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.rectify.page.step2" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep2.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.confirm.page" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/confirmMarkSheet.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.edit.page" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/editMarkSheet.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.edit.archiveInformation" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/editMarkSheetArchiveInformation.jsp"></put>
+	</definition>
+	<definition name="show.markSheetManagement.showRectificationHistoric" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/showRectificationHistoric.jsp"></put>
+	</definition>
+	<definition name="show.printMarkSheet.choosePrinterMarkSheetsWeb" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/choosePrinterMarkSheetsWeb_bd.jsp"></put>
+	</definition>	
+	<definition name="show.printMarkSheet.choosePrinterMarkSheet" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/choosePrinterMarkSheet_bd.jsp"></put>
+	</definition>	
+	<definition name="show.markSheetSendMail.searchSendMail" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/searchSendMail.jsp"></put>
+	</definition>	
+	<definition name="show.markSheetSendMail.prepareMarkSheetsToConfirmSendMail" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/prepareMarkSheetsToConfirmSendMail.jsp"></put>
+	</definition>	
+	<definition name="show.markSheetSendMail.prepareGradesToSubmitSendMail" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/gradeSubmission/prepareGradesToSubmitSendMail.jsp"></put>
+	</definition>	
+	<definition name="view-degree-curricular-plan-execution-year" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp"></put>
+	</definition>
+	<definition name="show-active-curricular-scopes" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/commons/curriculumHistoric/showActiveCurricularCourseScopes.jsp"></put>
+	</definition>
+	<definition name="view-curriculum-historic" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/commons/curriculumHistoric/showCurriculumHistoricReport.jsp"></put>
+	</definition>
+
+	
+	<!-- ************* External Units ************* -->
+	<definition name="externalUnits.searchExternalUnits" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/searchExternalUnit.jsp"/>
+	</definition>
+	<definition name="externalUnits.viewCountryUnit" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/viewCountryUnit.jsp"/>
+	</definition>
+	<definition name="externalUnits.viewUniversityUnit" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/viewUniversityUnit.jsp"/>
+	</definition>
+	<definition name="externalUnits.viewSchoolUnit" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/viewSchoolUnit.jsp"/>
+	</definition>
+	<definition name="externalUnits.viewDepartmentUnit" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/viewDepartmentUnit.jsp"/>
+	</definition>
+	<definition name="externalUnits.viewExternalCurricularCourse" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/viewExternalCurricularCourse.jsp"/>
+	</definition>
+	<definition name="externalUnits.prepareCreateUnit" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/createExternalUnit.jsp"/>
+	</definition>
+	<definition name="externalUnits.prepareEditUnit" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/editExternalUnit.jsp"/>
+	</definition>
+	<definition name="externalUnits.prepareDeleteUnit" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/deleteExternalUnit.jsp"/>
+	</definition>
+	<definition name="externalUnits.prepareDeleteExternalCurricularCourse" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/deleteExternalCurricularCourse.jsp"/>
+	</definition>
+	<definition name="externalUnits.prepareCreateExternalCurricularCourse" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/createExternalCurricularCourse.jsp"/>
+	</definition>
+	<definition name="externalUnits.prepareEditExternalCurricularCourse" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/editExternalCurricularCourse.jsp"/>
+	</definition>
+	<definition name="externalUnits.prepareCreateExternalEnrolment" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/createExternalEnrolment.jsp"/>
+	</definition>
+	<definition name="externalUnits.prepareEditExternalEnrolment" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/externalUnits/editExternalEnrolment.jsp"/>
+	</definition>
+	
+	<!-- Bolonha Student Enrollment -->
+	<definition name="student.enrollment.bolonha.showDegreeModulesToEnrol" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"/>
+	</definition>
+	<definition name="student.enrollment.bolonha.chooseOptionalCurricularCourseEnrol" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp"/>
+	</definition>
+	<definition name="student.enrolment.bolonha.chooseCycleCourseGroupToEnrol" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseCycleCourseGroupToEnrol.jsp"/>
+	</definition>
+	<definition name="student.enrollment.bolonha.changeSpecialSeasonCode" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/student/enrollment/bolonha/chooseSpecialSeasonCode.jsp"/>
+	</definition>
+	
+	<!-- NotNeedToEnrol -->
+	<definition name="notNeedToEnrol.chooseStudent" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/notNeedToEnrol/chooseStudent.jsp"/>
+	</definition>
+	<definition name="notNeedToEnrol.chooseNotNeedToEnrol" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/notNeedToEnrol/chooseNotNeedToEnrol.jsp"/>
+	</definition>
+	<definition name="notNeedToEnrol.showAprovedEnrolments" extends="academicAdminOffice.masterPage">
+		<put name="body" value="/academicAdminOffice/notNeedToEnrol/showAprovedEnrolments.jsp"/>
+	</definition>	
+	<!-- Lists -->
+	<definition name="lists.searchRegistrationsByDegree" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/lists/searchRegistrationsByDegree.jsp"></put>
+    </definition>
+    <definition name="lists.chooseCurricularCourse" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/lists/chooseCurricularCourses.jsp"></put>
+    </definition>
+    <definition name="lists.studentByCurricularCourse" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/lists/studentsByCurricularCourses.jsp"></put>
+    </definition>
+
+    <!-- Manage Curriculum Line Groups -->
+    <definition name="curriculum.curriculumLines.location.management.showCurriculum" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/curriculum/curriculumLines/location/showCurriculum.jsp"></put>
+    </definition>
+
+    <definition name="curriculum.curriculumLines.location.management.chooseNewLocation" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/curriculum/curriculumLines/location/chooseNewLocation.jsp"></put>
+    </definition>
+
+	<!-- Manage StudentDataByExecutionYear -->    
+    <definition name="show.studentData.by.executionYear" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/student/personalDataAuthorization/studentDataByExecutionYear.jsp"></put>
+    </definition>
+    
+    <!-- Accounting Events Management -->
+    <definition name="accountingEventsManagement.chooseEventType" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/accountingEventsManagement/chooseEventType.jsp"></put>
+    </definition>
+    
+    <definition name="accountingEventsManagement.createGratuityEvent" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/accountingEventsManagement/createGratuityEvent.jsp"></put>
+    </definition>
+    
+    <definition name="accountingEventsManagement.createAdministrativeOfficeFeeAndInsuranceEvent" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/accountingEventsManagement/createAdministrativeOfficeFeeAndInsuranceEvent.jsp"></put>
+    </definition>
+    
+    <definition name="accountingEventsManagement.createEnrolmentOutOfPeriodEvent" extends="academicAdminOffice.masterPage">
+        <put name="body" value="/academicAdminOffice/accountingEventsManagement/createEnrolmentOutOfPeriodEvent.jsp"></put>
+    </definition>
+
+</tiles-definitions>
