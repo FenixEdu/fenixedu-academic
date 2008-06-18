@@ -128,7 +128,7 @@
 </schema>
 
 <schema name="createReceiptBean.create.notRequired" type="net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean" bundle="APPLICATION_RESOURCES">
-	<slot name="contributorParty" layout="autoComplete" >
+	<slot name="contributorPartySocialSecurityNumber" layout="autoComplete" >
 		<property name="size" value="70"/>
 		<property name="labelField" value="socialSecurityNumber"/>
 		<property name="format" value="${socialSecurityNumber} - ${party.name}"/>
