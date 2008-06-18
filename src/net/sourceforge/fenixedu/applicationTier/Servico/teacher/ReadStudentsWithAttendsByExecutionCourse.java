@@ -108,14 +108,20 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 		Attends attendacy = (Attends) attendsIterator.next();
 
 		// improvement student (he/she is enrolled)
-		if (improvementFilter && attendacy.getEnrolment() != null
-			&& (!attendacy.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod()))) {
+		if (improvementFilter
+			&& attendacy.getEnrolment() != null
+			&& (!attendacy.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod()) && attendacy
+				.getEnrolment().hasImprovement())) {
 		    newAttends.add(attendacy);
 
 		    // normal student (cannot be an improvement student)
-		} else if (enrolledFilter && attendacy.getEnrolment() != null
-			&& (attendacy.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod()))
-			&& !hasSpecialSeasonEnrolmentEvaluation(attendacy.getEnrolment().getEvaluations())) {
+		} else if (enrolledFilter
+			&& attendacy.getEnrolment() != null
+			&& !hasSpecialSeasonEnrolmentEvaluation(attendacy.getEnrolment().getEvaluations())
+			&& (attendacy.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod()) || (attendacy
+				.getEnrolment().getCurricularCourse().isAnual(
+					executionCourse.getExecutionPeriod().getExecutionYear()) && !attendacy.getEnrolment()
+				.getExecutionPeriod().equals(executionCourse.getExecutionPeriod())))) {
 		    newAttends.add(attendacy);
 		    // not enrolled student
 		} else if (notEnrolledFilter && attendacy.getEnrolment() == null) {
@@ -193,7 +199,8 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 		// determining the EnrolmentEvaluationType
 		if (iFrequenta.getEnrolment() != null) {
 		    EnrolmentEvaluationType enrollmentEvaluationType = null;
-		    if (!iFrequenta.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod())) {
+		    if (!iFrequenta.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod())
+			    && iFrequenta.getEnrolment().hasImprovement()) {
 			enrollmentEvaluationType = EnrolmentEvaluationType.IMPROVEMENT;
 		    } else {
 			if (hasSpecialSeasonEnrolmentEvaluation(iFrequenta.getEnrolment().getEvaluations())) {
