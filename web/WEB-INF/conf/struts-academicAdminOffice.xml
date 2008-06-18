@@ -5,6 +5,7 @@
 <struts-config>
     <!-- ========== Data Source Configuration =============================== -->
     
+    
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
 
