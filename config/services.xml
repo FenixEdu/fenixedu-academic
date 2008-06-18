@@ -5367,15 +5367,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>DeleteEnrolment</name>
-		<description>Deletes enrolment of student in a curricular course</description>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.enrollment.DeleteEnrolment</implementationClass>
-		<isTransactional>True</isTransactional>
-		<filterChains>
-			<chain name="EnrollmentAuthorization" />
-		</filterChains>		
-	</service>
-	<service>
 		<name>WriteStudentAreas</name>
 		<description>Modifies areas belonging to student curricular plan</description>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.enrollment.WriteStudentAreas</implementationClass>
