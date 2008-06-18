@@ -40,17 +40,24 @@ public class DateTimeValidator extends HtmlValidator {
 		setValid(false);
 	    } else {
 		int indexOfT = value.indexOf('T');
+		System.out.println("value: " + value);
+		String[] dateParts = value.substring(0, indexOfT).split("-");
 		String[] timeParts = value.substring(indexOfT + 1).split(":");
 
 		try {
-		    int hours = Integer.parseInt(timeParts[0]);
-		    int minutes = Integer.parseInt(timeParts[1]);
-
-		    if (inRange(hours, 0, 23) && inRange(minutes, 0, 59)) {
-			setValid(true);
-		    } else {
-			setMessage("renderers.validator.dateTime.notInRange");
+		    int year = Integer.valueOf(dateParts[0]);
+		    if (year < 1000 || year > 9999) {
+			setMessage("renderers.validator.dateTime.invalid");
 			setValid(false);
+		    } else {
+			int hours = Integer.parseInt(timeParts[0]);
+			int minutes = Integer.parseInt(timeParts[1]);
+			if (inRange(hours, 0, 23) && inRange(minutes, 0, 59)) {
+			    setValid(true);
+			} else {
+			    setMessage("renderers.validator.dateTime.notInRange");
+			    setValid(false);
+			}
 		    }
 		} catch (NumberFormatException e) {
 		    setMessage("renderers.validator.dateTime.notNumbers");
