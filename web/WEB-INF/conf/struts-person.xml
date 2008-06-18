@@ -154,7 +154,7 @@
       <!-- Action for Visualization Of the Person's Personal Information -->
       <action path="/visualizePersonalInfo"
       	      type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction"
-      	      parameter="visualize.personal.information" />
+      	      parameter="visualize.personal.information" input="visualize.personal.information"/>
       
       <!-- Action to Change Candidate's Password -->
       <action path="/changePasswordForm"
