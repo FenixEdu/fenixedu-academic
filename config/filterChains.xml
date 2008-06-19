@@ -226,20 +226,6 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>    
     <filterChain>
-		<name>ChangeStudentInfoFromDegreeAdministrativeOfficeAuthorization</name>
-        <expression>ChangeStudentInfoAuthorization</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>    
-    </filterChain>
-    <filterChain>
-        <name>EquivalenceAuthorization</name>
-        <expression>EquivalenceAuthorization</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-    <filterChain>
         <name>DegreeAdministrativeOfficeSuperUserAuthorization</name>
         <expression>DegreeAdministrativeOfficeSuperUserAuthorization</expression>
         <description/>
@@ -655,13 +641,6 @@
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
-        <name>EnrollmentLEECAuthorization</name>
-        <expression>EnrollmentLEECAuthorization</expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-    <filterChain>
         <name>ReadGratuityListAuthorization</name>
         <expression>MasterDegreeAdministrativeOfficeAuthorization || DirectiveCouncilAuthorization || CoordinatorAuthorization</expression>
         <description/>
@@ -692,13 +671,6 @@
     <filterChain>
         <name>EnrollmentWithoutRulesAuthorizationSuperUser</name>
         <expression>DegreeAdministrativeOfficeSuperUserAuthorization &amp;&amp; EnrollmentWithoutRulesAuthorization </expression>
-        <description/>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-	<filterChain>
-        <name>EnrolmentImprovmentAuthorization</name>
-        <expression>EnrolmentImprovmentAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

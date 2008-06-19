@@ -220,13 +220,6 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
-        <name>EquivalenceAuthorization</name>
-        <implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Filtro.equivalence.EquivalenceAuthorizationFilter</implementationClass>
-        <description/>
-        <isTransactional>false</isTransactional>
-    </filter>
-    <filter>
         <name>DegreeAdministrativeOfficeSuperUserAuthorization</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Filtro.DegreeAdministrativeOfficeSuperUserAuthorizationFilter</implementationClass>
@@ -624,13 +617,6 @@
         <isTransactional>true</isTransactional>
     </filter>                 
     <filter>
-        <name>EnrollmentLEECAuthorization</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentLEECAuthorizationFilter</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-    </filter>         
-    <filter>
         <name>StudentInformationOwnerAuthorization</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Filtro.student.StudentInformationOwnerAuthorizationFilter</implementationClass>
@@ -645,26 +631,12 @@
         <isTransactional>true</isTransactional>
     </filter>     
     <filter>
-        <name>EnrollmentLEECWithoutRulesAuthorization</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentLEECWithoutRulesAuthorizationFilter</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-    </filter>  
-    <filter>
         <name>EnrollmentWithoutRulesAuthorization</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentWithoutRulesAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>
-	<filter>
-        <name>EnrolmentImprovmentAuthorization</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrolmentImprovmentAuthorization</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-    </filter>  
     <filter>
         <name>MasterDegreeEnrollmentWithoutRulesAuthorization</name>
         <implementationClass> 
@@ -774,12 +746,6 @@
     <filter>
         <name>FinalDegreeWorkOrientatorForCandidacy</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.FinalDegreeWorkOrientatorForCandidacy</implementationClass>
-        <description/>
-        <isTransactional>false</isTransactional>
-    </filter>
-    <filter>
-        <name>ChangeStudentInfoAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ChangeStudentInfoAuthorization</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
