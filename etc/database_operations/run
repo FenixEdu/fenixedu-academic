@@ -29,3 +29,4 @@ function executeWithTempFile() {
 }
 
 execute "Adding new country" InsertCountry.sql
+execute "Remove Degree Admin Office Contents" removeDegreeAdminOfficeContents.sql
