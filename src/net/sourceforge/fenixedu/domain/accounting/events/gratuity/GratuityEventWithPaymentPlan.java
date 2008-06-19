@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPa
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.CustomGratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -375,6 +376,11 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 	    }
 	}
 	return result;
+    }
+
+    @Override
+    public GratuityWithPaymentPlanPR getPostingRule() {
+	return (GratuityWithPaymentPlanPR) super.getPostingRule();
     }
 
 }

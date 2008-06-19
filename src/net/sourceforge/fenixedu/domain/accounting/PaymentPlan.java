@@ -126,69 +126,95 @@ public abstract class PaymentPlan extends PaymentPlan_Base {
 	    final BigDecimal discountPercentage) {
 
 	final Map<Installment, Money> result = new HashMap<Installment, Money>();
-	final List<AccountingTransaction> transactions = event.getSortedNonAdjustingTransactions();
+	final CashFlowBox cashFlowBox = new CashFlowBox(event, when, discountPercentage);
 
 	for (final Installment installment : getInstallmentsSortedByEndDate()) {
-	    final Iterator<AccountingTransaction> iterator = transactions.iterator();
-	    boolean installmentPayed = false;
-	    Money payedAmount = Money.ZERO;
-	    while (iterator.hasNext()) {
-		final AccountingTransaction transaction = iterator.next();
-		iterator.remove();
-		final Money installmentAmount = installment.calculateAmount(transaction.getWhenRegistered(), discountPercentage,
-			isToApplyPenalty(event, installment));
-		payedAmount = payedAmount.add(transaction.getAmountWithAdjustment());
-		if (payedAmount.greaterOrEqualThan(installmentAmount)) {
-		    installmentPayed = true;
-		    result.put(installment, installmentAmount);
-		    break;
-		}
-	    }
+	    result.put(installment, cashFlowBox.calculateTotalAmountFor(installment));
 
-	    if (!installmentPayed) {
-		final Money amountToPay = installment.calculateAmount(when, discountPercentage, isToApplyPenalty(event,
-			installment));
-
-		result.put(installment, amountToPay);
-
-	    }
 	}
 
 	return result;
 
     }
 
+    private class CashFlowBox {
+	public DateTime when;
+	public Money amount;
+	public DateTime currentTransactionDate;
+	public List<AccountingTransaction> transactions;
+	public BigDecimal discountPercentage;
+	public Event event;
+
+	public CashFlowBox(final Event event, final DateTime when, final BigDecimal discountPercentage) {
+	    this.event = event;
+	    this.transactions = new ArrayList<AccountingTransaction>(event.getSortedNonAdjustingTransactions());
+	    this.when = when;
+	    this.discountPercentage = discountPercentage;
+
+	    if (transactions.isEmpty()) {
+		this.amount = Money.ZERO;
+		this.currentTransactionDate = when;
+	    } else {
+		final AccountingTransaction transaction = transactions.remove(0);
+		this.amount = transaction.getAmountWithAdjustment();
+		this.currentTransactionDate = transaction.getWhenRegistered();
+	    }
+
+	}
+
+	private boolean hasMoneyFor(final Money amount) {
+	    return this.amount.greaterOrEqualThan(amount);
+	}
+
+	public boolean subtractMoneyFor(final Installment installment) {
+	    final Money instalmentAmount = installment.calculateAmount(this.currentTransactionDate, this.discountPercentage,
+		    isToApplyPenalty(this.event, installment));
+	    if (hasMoneyFor(instalmentAmount)) {
+		this.amount = this.amount.subtract(instalmentAmount);
+
+		return true;
+	    }
+
+	    if (this.transactions.isEmpty()) {
+		return false;
+	    }
+
+	    this.amount = this.amount.add(this.transactions.get(0).getAmountWithAdjustment());
+	    this.currentTransactionDate = this.transactions.get(0).getWhenRegistered();
+	    this.transactions.remove(0);
+
+	    return subtractMoneyFor(installment);
+
+	}
+
+	public Money subtractRemaingingFor(final Installment installment) {
+	    final Money result = installment.calculateAmount(this.when, this.discountPercentage,
+		    isToApplyPenalty(this.event, installment)).subtract(this.amount);
+	    this.amount = Money.ZERO;
+
+	    return result;
+	}
+
+	public Money calculateTotalAmountFor(final Installment installment) {
+	    final DateTime dateToCalculate = !subtractMoneyFor(installment) ? this.when : this.currentTransactionDate;
+	    return installment.calculateAmount(dateToCalculate, this.discountPercentage,
+		    isToApplyPenalty(this.event, installment));
+
+	}
+
+    }
+
     public Map<Installment, Money> calculateInstallmentRemainingAmounts(final Event event, final DateTime when,
 	    final BigDecimal discountPercentage) {
-
 	final Map<Installment, Money> result = new HashMap<Installment, Money>();
-	final List<AccountingTransaction> transactions = event.getSortedNonAdjustingTransactions();
+	final CashFlowBox cashFlowBox = new CashFlowBox(event, when, discountPercentage);
 
-	Money payedAmount = Money.ZERO;
 	for (final Installment installment : getInstallmentsSortedByEndDate()) {
-	    final Iterator<AccountingTransaction> iterator = transactions.iterator();
-	    boolean installmentPayed = false;
-	    while (iterator.hasNext()) {
-		final AccountingTransaction transaction = iterator.next();
-		iterator.remove();
-		final Money installmentAmount = installment.calculateAmount(transaction.getWhenRegistered(), discountPercentage,
-			isToApplyPenalty(event, installment));
-		payedAmount = payedAmount.add(transaction.getAmountWithAdjustment());
-		if (payedAmount.greaterOrEqualThan(installmentAmount)) {
-		    payedAmount = payedAmount.subtract(installmentAmount);
-		    installmentPayed = true;
-		    break;
-		}
+
+	    if (!cashFlowBox.subtractMoneyFor(installment)) {
+		result.put(installment, cashFlowBox.subtractRemaingingFor(installment));
 	    }
 
-	    if (!installmentPayed) {
-		final Money amountToPay = installment.calculateAmount(when, discountPercentage, isToApplyPenalty(event,
-			installment));
-
-		result.put(installment, amountToPay.subtract(payedAmount));
-
-		payedAmount = Money.ZERO;
-	    }
 	}
 
 	return result;
