@@ -13,7 +13,7 @@ import org.joda.time.YearMonthDay;
 
 public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_Base {
 
-    static public Comparator<SibsPaymentFileProcessReport> COMPARATOR_BY_SIBS_PROCESS_DATE = new Comparator<SibsPaymentFileProcessReport>() {
+    static final public Comparator<SibsPaymentFileProcessReport> COMPARATOR_BY_SIBS_PROCESS_DATE = new Comparator<SibsPaymentFileProcessReport>() {
 	public int compare(SibsPaymentFileProcessReport o1, SibsPaymentFileProcessReport o2) {
 	    return o1.getWhenProcessedBySibs().compareTo(o2.getWhenProcessedBySibs());
 	}
