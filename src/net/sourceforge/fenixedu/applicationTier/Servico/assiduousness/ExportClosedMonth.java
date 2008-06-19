@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -30,17 +29,19 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.MutablePeriod;
 import org.joda.time.PeriodType;
-import org.joda.time.YearMonthDay;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ExportClosedMonth extends Service {
 
     private final static String durationZeroString = "00:00";
 
-    public String run(ClosedMonth closedMonth, YearMonthDay beginDate, YearMonthDay endDate) {
+    public String run(ClosedMonth closedMonth, LocalDate beginDate, LocalDate endDate) {
 	HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessRecords = getAssiduousnessRecord(beginDate, endDate);
 	StringBuilder result = new StringBuilder();
 	// for (Assiduousness assiduousness :
@@ -56,19 +57,19 @@ public class ExportClosedMonth extends Service {
 
     private String getMonthAssiduousnessBalance(AssiduousnessClosedMonth assiduousnessClosedMonth,
 	    List<AssiduousnessRecord> assiduousnessRecords, ClosedMonth closedMonth) {
-	YearMonthDay beginDate = assiduousnessClosedMonth.getBeginDate();
-	YearMonthDay endDate = assiduousnessClosedMonth.getEndDate();
+	LocalDate beginDate = assiduousnessClosedMonth.getBeginDate();
+	LocalDate endDate = assiduousnessClosedMonth.getEndDate();
 	StringBuilder result = new StringBuilder();
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
-	YearMonthDay lowerBeginDate = beginDate.minusDays(8);
-	HashMap<YearMonthDay, WorkSchedule> workScheduleMap = assiduousnessClosedMonth.getAssiduousnessStatusHistory()
+	LocalDate lowerBeginDate = beginDate.minusDays(8);
+	HashMap<LocalDate, WorkSchedule> workScheduleMap = assiduousnessClosedMonth.getAssiduousnessStatusHistory()
 		.getAssiduousness().getWorkSchedulesBetweenDates(lowerBeginDate, endDate);
-	HashMap<YearMonthDay, List<Leave>> leavesMap = getLeavesMap(assiduousnessRecords, beginDate, endDate);
+	HashMap<LocalDate, List<Leave>> leavesMap = getLeavesMap(assiduousnessRecords, beginDate, endDate);
 	DateTime init = getInit(lowerBeginDate, workScheduleMap);
 	DateTime end = getEnd(endDate, workScheduleMap);
-	HashMap<YearMonthDay, List<AssiduousnessRecord>> clockingsMap = getClockingsMap(assiduousnessRecords, workScheduleMap,
-		init, end);
-	for (YearMonthDay thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay.plusDays(1)) {
+	HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap = getClockingsMap(assiduousnessRecords, workScheduleMap, init,
+		end);
+	for (LocalDate thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay.plusDays(1)) {
 	    final Schedule schedule = assiduousnessClosedMonth.getAssiduousnessStatusHistory().getAssiduousness().getSchedule(
 		    thisDay);
 	    if (schedule != null
@@ -227,11 +228,11 @@ public class ExportClosedMonth extends Service {
 	return result;
     }
 
-    private DateTime getEnd(YearMonthDay endDate, HashMap<YearMonthDay, WorkSchedule> workScheduleMap) {
-	DateTime end = endDate.toDateTime(Assiduousness.defaultEndWorkDay);
+    private DateTime getEnd(LocalDate endDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
+	DateTime end = endDate.toDateTime(Assiduousness.defaultEndWorkDay.toLocalTime());
 	WorkSchedule endWorkSchedule = workScheduleMap.get(endDate);
 	if (endWorkSchedule != null) {
-	    end = endDate.toDateTime(endWorkSchedule.getWorkScheduleType().getWorkTime()).plus(
+	    end = endDate.toDateTime(endWorkSchedule.getWorkScheduleType().getWorkTime().toLocalTime()).plus(
 		    endWorkSchedule.getWorkScheduleType().getWorkTimeDuration());
 	    if (endWorkSchedule.getWorkScheduleType().isWorkTimeNextDay()) {
 		end = end.plusDays(2);
@@ -240,16 +241,16 @@ public class ExportClosedMonth extends Service {
 	return end;
     }
 
-    private DateTime getInit(YearMonthDay lowerBeginDate, HashMap<YearMonthDay, WorkSchedule> workScheduleMap) {
-	DateTime init = lowerBeginDate.toDateTime(Assiduousness.defaultStartWorkDay);
+    private DateTime getInit(LocalDate lowerBeginDate, HashMap<LocalDate, WorkSchedule> workScheduleMap) {
+	DateTime init = lowerBeginDate.toDateTime(Assiduousness.defaultStartWorkDay.toLocalTime());
 	WorkSchedule beginWorkSchedule = workScheduleMap.get(lowerBeginDate);
 	if (beginWorkSchedule != null) {
-	    init = lowerBeginDate.toDateTime(beginWorkSchedule.getWorkScheduleType().getWorkTime());
+	    init = lowerBeginDate.toDateTime(beginWorkSchedule.getWorkScheduleType().getWorkTime().toLocalTime());
 	}
 	return init;
     }
 
-    private WorkDaySheet getWorkDaySheet(Assiduousness assiduousness, List<AssiduousnessRecord> clockings, YearMonthDay thisDay,
+    private WorkDaySheet getWorkDaySheet(Assiduousness assiduousness, List<AssiduousnessRecord> clockings, LocalDate thisDay,
 	    final boolean isDayHoliday, final WorkSchedule workSchedule, WorkDaySheet workDaySheet, List<Leave> list) {
 	if (workDaySheet == null) {
 	    if (clockings == null) {
@@ -261,15 +262,15 @@ public class ExportClosedMonth extends Service {
 	return workDaySheet;
     }
 
-    private HashMap<YearMonthDay, List<AssiduousnessRecord>> getClockingsMap(List<AssiduousnessRecord> assiduousnessRecords,
-	    HashMap<YearMonthDay, WorkSchedule> workScheduleMap, DateTime init, DateTime end) {
-	HashMap<YearMonthDay, List<AssiduousnessRecord>> clockingsMap = new HashMap<YearMonthDay, List<AssiduousnessRecord>>();
+    private HashMap<LocalDate, List<AssiduousnessRecord>> getClockingsMap(List<AssiduousnessRecord> assiduousnessRecords,
+	    HashMap<LocalDate, WorkSchedule> workScheduleMap, DateTime init, DateTime end) {
+	HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap = new HashMap<LocalDate, List<AssiduousnessRecord>>();
 	if (assiduousnessRecords != null) {
 	    final List<AssiduousnessRecord> clockings = new ArrayList<AssiduousnessRecord>(assiduousnessRecords);
 	    Collections.sort(clockings, AssiduousnessRecord.COMPARATOR_BY_DATE);
 	    for (AssiduousnessRecord record : clockings) {
 		if (record.isClocking() || record.isMissingClocking()) {
-		    YearMonthDay clockDay = record.getDate().toYearMonthDay();
+		    LocalDate clockDay = record.getDate().toLocalDate();
 		    if (WorkSchedule.overlapsSchedule(record.getDate(), workScheduleMap) == 0) {
 			if (clockingsMap.get(clockDay.minusDays(1)) != null
 				&& clockingsMap.get(clockDay.minusDays(1)).size() % 2 != 0) {
@@ -291,17 +292,17 @@ public class ExportClosedMonth extends Service {
 	return clockingsMap;
     }
 
-    private HashMap<YearMonthDay, List<Leave>> getLeavesMap(List<AssiduousnessRecord> assiduousnessRecords,
-	    YearMonthDay beginDate, YearMonthDay endDate) {
-	HashMap<YearMonthDay, List<Leave>> leavesMap = new HashMap<YearMonthDay, List<Leave>>();
+    private HashMap<LocalDate, List<Leave>> getLeavesMap(List<AssiduousnessRecord> assiduousnessRecords, LocalDate beginDate,
+	    LocalDate endDate) {
+	HashMap<LocalDate, List<Leave>> leavesMap = new HashMap<LocalDate, List<Leave>>();
 	if (assiduousnessRecords != null) {
 	    for (AssiduousnessRecord record : assiduousnessRecords) {
 		if (record.isLeave() && !record.isAnulated()) {
-		    YearMonthDay endLeaveDay = record.getDate().toYearMonthDay().plusDays(1);
-		    if (((Leave) record).getEndYearMonthDay() != null) {
-			endLeaveDay = ((Leave) record).getEndYearMonthDay().plusDays(1);
+		    LocalDate endLeaveDay = record.getDate().toLocalDate().plusDays(1);
+		    if (((Leave) record).getEndLocalDate() != null) {
+			endLeaveDay = ((Leave) record).getEndLocalDate().plusDays(1);
 		    }
-		    for (YearMonthDay leaveDay = record.getDate().toYearMonthDay(); leaveDay.isBefore(endLeaveDay); leaveDay = leaveDay
+		    for (LocalDate leaveDay = record.getDate().toLocalDate(); leaveDay.isBefore(endLeaveDay); leaveDay = leaveDay
 			    .plusDays(1)) {
 			if (((Leave) record).getAplicableWeekDays() == null
 				|| ((Leave) record).getAplicableWeekDays().contains(leaveDay.toDateTimeAtMidnight())) {
@@ -319,8 +320,7 @@ public class ExportClosedMonth extends Service {
 	return leavesMap;
     }
 
-    private HashMap<JustificationMotive, List<Leave>> getDayLeaves(HashMap<YearMonthDay, List<Leave>> leavesMap,
-	    YearMonthDay thisDay) {
+    private HashMap<JustificationMotive, List<Leave>> getDayLeaves(HashMap<LocalDate, List<Leave>> leavesMap, LocalDate thisDay) {
 	HashMap<JustificationMotive, List<Leave>> leavesMapList = new HashMap<JustificationMotive, List<Leave>>();
 
 	if (leavesMap != null && leavesMap.get(thisDay) != null) {
@@ -337,7 +337,7 @@ public class ExportClosedMonth extends Service {
 	return leavesMapList;
     }
 
-    public HashMap<Assiduousness, List<AssiduousnessRecord>> getAssiduousnessRecord(YearMonthDay beginDate, YearMonthDay endDate) {
+    public HashMap<Assiduousness, List<AssiduousnessRecord>> getAssiduousnessRecord(LocalDate beginDate, LocalDate endDate) {
 	HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessLeaves = new HashMap<Assiduousness, List<AssiduousnessRecord>>();
 	Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
 		.toDateMidnight()));
@@ -368,7 +368,7 @@ public class ExportClosedMonth extends Service {
 	return assiduousnessLeaves;
     }
 
-    private StringBuilder getLine(Integer employeeNumber, String acronym, YearMonthDay beginDate, YearMonthDay endDate,
+    private StringBuilder getLine(Integer employeeNumber, String acronym, LocalDate beginDate, LocalDate endDate,
 	    String duration1, String duration2, String scheduleAcronym) {
 	StringBuilder stringBuilder = new StringBuilder();
 	stringBuilder.append(getTokens(employeeNumber.toString(), 8)).append(";");
@@ -391,7 +391,7 @@ public class ExportClosedMonth extends Service {
 	return StringUtils.rightPad(value, size);
     }
 
-    private StringBuilder getLine(Integer employeeNumber, String acronym, YearMonthDay beginDate, YearMonthDay endDate,
+    private StringBuilder getLine(Integer employeeNumber, String acronym, LocalDate beginDate, LocalDate endDate,
 	    Duration duration1, Duration duration2, String scheduleAcronym) {
 	return getLine(employeeNumber, acronym, beginDate, endDate, getDurationString(duration1), getDurationString(duration2),
 		scheduleAcronym);

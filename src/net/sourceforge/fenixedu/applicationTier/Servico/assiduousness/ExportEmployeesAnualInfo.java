@@ -26,7 +26,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 public class ExportEmployeesAnualInfo extends Service {
 
@@ -42,9 +42,9 @@ public class ExportEmployeesAnualInfo extends Service {
 	    for (; thisYearMonth.getYear().intValue() == yearMonth.getYear(); thisYearMonth.subtractMonth()) {
 		closedMonth = ClosedMonth.getClosedMonth(thisYearMonth);
 		employeeAnualInfo.setCurrentYearMonth(new YearMonth(thisYearMonth.getYear(), thisYearMonth.getMonth()));
-		YearMonthDay beginDate = new YearMonthDay(thisYearMonth.getYear(), thisYearMonth.getNumberOfMonth(), 01);
+		LocalDate beginDate = new LocalDate(thisYearMonth.getYear(), thisYearMonth.getNumberOfMonth(), 01);
 		int endDay = beginDate.dayOfMonth().getMaximumValue();
-		YearMonthDay endDate = new YearMonthDay(thisYearMonth.getYear(), thisYearMonth.getNumberOfMonth(), endDay);
+		LocalDate endDate = new LocalDate(thisYearMonth.getYear(), thisYearMonth.getNumberOfMonth(), endDay);
 		fillIn(closedMonth, employeeAnualInfo, assiduousnessStatus, beginDate, endDate);
 	    }
 	    AssiduousnessVacations assiduousnessVacations = assiduousness.getAssiduousnessVacationsByYear(employeeAnualInfo
@@ -58,7 +58,7 @@ public class ExportEmployeesAnualInfo extends Service {
     }
 
     private void fillIn(ClosedMonth closedMonth, EmployeeAnualInfo employeeAnualInfo, AssiduousnessStatus assiduousnessStatus,
-	    YearMonthDay beginDate, YearMonthDay endDate) {
+	    LocalDate beginDate, LocalDate endDate) {
 	List<Leave> leaves = employeeAnualInfo.getEmployee().getAssiduousness().getLeaves(beginDate, endDate);
 	EmployeeMonthInfo employeeMonthInfo = employeeAnualInfo.getCurrentMonthInfo();
 	// categoria - não temos
@@ -127,8 +127,7 @@ public class ExportEmployeesAnualInfo extends Service {
 	}
     }
 
-    private Integer getJustificationDays(List<Leave> leaves, YearMonthDay beginDate, YearMonthDay endDate,
-	    String... justifications) {
+    private Integer getJustificationDays(List<Leave> leaves, LocalDate beginDate, LocalDate endDate, String... justifications) {
 	int total = 0;
 	for (String justification : justifications) {
 	    Integer days = countLeaveNumberOfDays(leaves, justification, beginDate, endDate);
@@ -139,7 +138,7 @@ public class ExportEmployeesAnualInfo extends Service {
 	return total == 0 ? null : new Integer(total);
     }
 
-    private Integer getJustificationWorkingDays(List<Leave> leaves, YearMonthDay beginDate, YearMonthDay endDate,
+    private Integer getJustificationWorkingDays(List<Leave> leaves, LocalDate beginDate, LocalDate endDate,
 	    String... justifications) {
 	int total = 0;
 	for (String justification : justifications) {
@@ -152,7 +151,7 @@ public class ExportEmployeesAnualInfo extends Service {
     }
 
     private void setArticle52(EmployeeMonthInfo employeeMonthInfo, AssiduousnessClosedMonth assiduousnessClosedMonth,
-	    YearMonthDay beginDate, YearMonthDay endDate) {
+	    LocalDate beginDate, LocalDate endDate) {
 	double clinicTreatmentPercentage = getClinicTreatmentPercentage(assiduousnessClosedMonth, "T.AMB", beginDate, endDate);
 	double medicExams = getClinicTreatmentPercentage(assiduousnessClosedMonth, "IDMED", beginDate, endDate);
 	BigDecimal totalPercentage = new BigDecimal(clinicTreatmentPercentage).add(new BigDecimal(medicExams));
@@ -162,7 +161,7 @@ public class ExportEmployeesAnualInfo extends Service {
     }
 
     private void setChildClinicTreatment(EmployeeMonthInfo employeeMonthInfo, AssiduousnessClosedMonth assiduousnessClosedMonth,
-	    YearMonthDay beginDate, YearMonthDay endDate) {
+	    LocalDate beginDate, LocalDate endDate) {
 	double percentage = getClinicTreatmentPercentage(assiduousnessClosedMonth, "TAMBFM", beginDate, endDate);
 	if (percentage != 0.0) {
 	    employeeMonthInfo.setChildClinicMedicalTreatment(NumberUtils.formatDoubleWithoutRound(percentage, 1));
@@ -170,7 +169,7 @@ public class ExportEmployeesAnualInfo extends Service {
     }
 
     private void setRelativeClinicTreatment(EmployeeMonthInfo employeeMonthInfo,
-	    AssiduousnessClosedMonth assiduousnessClosedMonth, YearMonthDay beginDate, YearMonthDay endDate) {
+	    AssiduousnessClosedMonth assiduousnessClosedMonth, LocalDate beginDate, LocalDate endDate) {
 	double percentage = getClinicTreatmentPercentage(assiduousnessClosedMonth, "TAMBF", beginDate, endDate);
 	if (percentage != 0.0) {
 	    employeeMonthInfo.setRelativeClinicMedicalTreatment(NumberUtils.formatDoubleWithoutRound(percentage, 1));
@@ -178,7 +177,7 @@ public class ExportEmployeesAnualInfo extends Service {
     }
 
     private double getClinicTreatmentPercentage(AssiduousnessClosedMonth assiduousnessClosedMonth, String justificationAcronym,
-	    YearMonthDay beginDate, YearMonthDay endDate) {
+	    LocalDate beginDate, LocalDate endDate) {
 	Duration duration = Duration.ZERO;
 	for (ClosedMonthJustification closedMonthJustification : assiduousnessClosedMonth.getClosedMonthJustifications()) {
 	    if (closedMonthJustification.getJustificationMotive().getAcronym().equalsIgnoreCase(justificationAcronym)) {
@@ -194,8 +193,8 @@ public class ExportEmployeesAnualInfo extends Service {
 	return percentage;
     }
 
-    private void setVacationsInWorkDays(EmployeeMonthInfo employeeMonthInfo, List<Leave> leaves, YearMonthDay beginDate,
-	    YearMonthDay endDate) {
+    private void setVacationsInWorkDays(EmployeeMonthInfo employeeMonthInfo, List<Leave> leaves, LocalDate beginDate,
+	    LocalDate endDate) {
 	Interval dateInterval = new Interval(beginDate.toDateTimeAtMidnight(), endDate.toDateTimeAtMidnight());
 	double counter = 0;
 	for (Leave leave : leaves) {
@@ -220,7 +219,7 @@ public class ExportEmployeesAnualInfo extends Service {
 
     }
 
-    private void setAcquiredVacations(EmployeeMonthInfo employeeMonthInfo, YearMonthDay beginDate) {
+    private void setAcquiredVacations(EmployeeMonthInfo employeeMonthInfo, LocalDate beginDate) {
 	int counter = 0;
 	for (ExtraWorkRequest extraWorkRequest : employeeMonthInfo.getEmployeeAnualInfo().getEmployee().getAssiduousness()
 		.getExtraWorkRequests(beginDate)) {
@@ -229,8 +228,7 @@ public class ExportEmployeesAnualInfo extends Service {
 	employeeMonthInfo.setAcquiredExtraWorkVacations(counter != 0 ? counter : null);
     }
 
-    private void setMedicalLeaves(EmployeeMonthInfo employeeMonthInfo, List<Leave> leaves, YearMonthDay beginDate,
-	    YearMonthDay endDate) {
+    private void setMedicalLeaves(EmployeeMonthInfo employeeMonthInfo, List<Leave> leaves, LocalDate beginDate, LocalDate endDate) {
 	int sonMedicalLeave = 0;
 	int relativeMedicalLeave = 0;
 	int deficiencyLeave = 0;
@@ -341,8 +339,7 @@ public class ExportEmployeesAnualInfo extends Service {
 	return counter;
     }
 
-    private Integer countLeaveNumberOfDays(List<Leave> leaves, String justificationAcronym, YearMonthDay beginDate,
-	    YearMonthDay endDate) {
+    private Integer countLeaveNumberOfDays(List<Leave> leaves, String justificationAcronym, LocalDate beginDate, LocalDate endDate) {
 	int counter = 0;
 	for (Leave leave : leaves) {
 	    if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase(justificationAcronym)) {
@@ -352,7 +349,7 @@ public class ExportEmployeesAnualInfo extends Service {
 	return counter != 0 ? counter : null;
     }
 
-    private int countLeaveNumberOfDays(int counter, Leave leave, YearMonthDay beginDate, YearMonthDay endDate) {
+    private int countLeaveNumberOfDays(int counter, Leave leave, LocalDate beginDate, LocalDate endDate) {
 	DateTime beginDateInPeriod = leave.getDate().isBefore(beginDate.toDateTimeAtMidnight()) ? beginDate
 		.toDateTimeAtMidnight() : leave.getDate();
 	DateTime endDateInPeriod = leave.getEndDate().isAfter(endDate.toDateTimeAtMidnight()) ? endDate.toDateTimeAtMidnight()
@@ -360,8 +357,8 @@ public class ExportEmployeesAnualInfo extends Service {
 	return Days.daysBetween(beginDateInPeriod, endDateInPeriod.plusDays(1)).getDays();
     }
 
-    private Integer countLeaveNumberOfWorkDays(List<Leave> leaves, String justificationAcronym, YearMonthDay beginDate,
-	    YearMonthDay endDate) {
+    private Integer countLeaveNumberOfWorkDays(List<Leave> leaves, String justificationAcronym, LocalDate beginDate,
+	    LocalDate endDate) {
 	int countWorkDays = 0;
 	Interval dateInterval = new Interval(beginDate.toDateTimeAtMidnight(), endDate.toDateTimeAtMidnight());
 	for (Leave leave : leaves) {
@@ -373,8 +370,8 @@ public class ExportEmployeesAnualInfo extends Service {
     }
 
     private List<Assiduousness> getEmployeesAssiduousnessByStatus(AssiduousnessStatus assiduousnessStatus, YearMonth yearMonth) {
-	YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getNumberOfMonth(), 01);
-	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getNumberOfMonth(), beginDate.dayOfMonth()
+	LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getNumberOfMonth(), 01);
+	LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getNumberOfMonth(), beginDate.dayOfMonth()
 		.getMaximumValue());
 	List<Assiduousness> employeesAssiduousness = new ArrayList<Assiduousness>();
 	for (Assiduousness assiduousness : RootDomainObject.getInstance().getAssiduousnesss()) {
@@ -387,7 +384,7 @@ public class ExportEmployeesAnualInfo extends Service {
     }
 
     private boolean isAnyStatusHistoryActiveAndHasStatus(AssiduousnessStatus assiduousnessStatus,
-	    List<AssiduousnessStatusHistory> assiduousnessStatusHistories, YearMonthDay beginDate, YearMonthDay endDate) {
+	    List<AssiduousnessStatusHistory> assiduousnessStatusHistories, LocalDate beginDate, LocalDate endDate) {
 	for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousnessStatusHistories) {
 	    if (isActiveAndHasStatus(assiduousnessStatusHistory, assiduousnessStatus, beginDate, endDate)) {
 		return true;
@@ -397,7 +394,7 @@ public class ExportEmployeesAnualInfo extends Service {
     }
 
     private boolean isActiveAndHasStatus(AssiduousnessStatusHistory assiduousnessStatusHistory,
-	    AssiduousnessStatus assiduousnessStatus, YearMonthDay beginDate, YearMonthDay endDate) {
+	    AssiduousnessStatus assiduousnessStatus, LocalDate beginDate, LocalDate endDate) {
 	if (assiduousnessStatusHistory.getEndDate() != null) {
 	    Interval statusInterval = new Interval(assiduousnessStatusHistory.getBeginDate().toDateMidnight(),
 		    assiduousnessStatusHistory.getEndDate().toDateMidnight().plusDays(1));

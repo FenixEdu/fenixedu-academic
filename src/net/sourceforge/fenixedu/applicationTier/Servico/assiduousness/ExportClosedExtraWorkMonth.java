@@ -33,9 +33,9 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.Days;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
-import org.joda.time.YearMonthDay;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -50,7 +50,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 
     private String fieldSeparator = ("\t");
 
-    private List<YearMonthDay> unjustifiedDays;
+    private List<LocalDate> unjustifiedDays;
 
     private JustificationMotive a66JustificationMotive;
 
@@ -77,21 +77,21 @@ public class ExportClosedExtraWorkMonth extends Service {
     }
 
     public String run(ClosedMonth closedMonth, Boolean getWorkAbsences, Boolean getExtraWorkMovements) {
-	YearMonthDay beginDate = new YearMonthDay().withField(DateTimeFieldType.year(),
+	LocalDate beginDate = new LocalDate().withField(DateTimeFieldType.year(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear())).withField(DateTimeFieldType.dayOfMonth(),
 		1);
-	YearMonthDay endDate = new YearMonthDay().withField(DateTimeFieldType.year(),
+	LocalDate endDate = new LocalDate().withField(DateTimeFieldType.year(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear())).withField(DateTimeFieldType.dayOfMonth(),
 		beginDate.dayOfMonth().getMaximumValue());
 	StringBuilder result = new StringBuilder();
 	HashMap<Assiduousness, List<LeaveBean>> allLeaves = getLeaves(beginDate, endDate, false);
-	YearMonthDay beginUnpaidLicenseDate = new YearMonthDay().withField(DateTimeFieldType.year(),
+	LocalDate beginUnpaidLicenseDate = new LocalDate().withField(DateTimeFieldType.year(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) + 1).withField(
 		DateTimeFieldType.dayOfMonth(), 1);
-	YearMonthDay endUnpaidLicenseDate = new YearMonthDay().withField(DateTimeFieldType.year(),
+	LocalDate endUnpaidLicenseDate = new LocalDate().withField(DateTimeFieldType.year(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.year())).withField(DateTimeFieldType.monthOfYear(),
 		closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) + 1).withField(
 		DateTimeFieldType.dayOfMonth(), beginUnpaidLicenseDate.dayOfMonth().getMaximumValue());
@@ -104,7 +104,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 
 	StringBuilder extraWorkResult = new StringBuilder();
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths()) {
-	    unjustifiedDays = new ArrayList<YearMonthDay>();
+	    unjustifiedDays = new ArrayList<LocalDate>();
 	    if (!isADISTEmployee(assiduousnessClosedMonth)) {
 		String lineResult = getAssiduousnessMonthBalance(assiduousnessClosedMonth, allLeaves.get(assiduousnessClosedMonth
 			.getAssiduousnessStatusHistory().getAssiduousness()));
@@ -136,14 +136,14 @@ public class ExportClosedExtraWorkMonth extends Service {
 	return result.append(extraWorkResult).toString();
     }
 
-    private String getExtraWorkMovement(Assiduousness assiduousness, YearMonthDay beginDate, YearMonthDay endDate,
-	    String movementCode, Integer daysNumber) {
+    private String getExtraWorkMovement(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate, String movementCode,
+	    Integer daysNumber) {
 	return getExtraWorkMovement(assiduousness, beginDate.plusMonths(1).getYear(), beginDate.plusMonths(1).getMonthOfYear(),
 		beginDate, endDate, movementCode, daysNumber);
     }
 
-    private String getExtraWorkMovement(Assiduousness assiduousness, int year, int month, YearMonthDay beginDate,
-	    YearMonthDay endDate, String movementCode, Integer daysNumber) {
+    private String getExtraWorkMovement(Assiduousness assiduousness, int year, int month, LocalDate beginDate, LocalDate endDate,
+	    String movementCode, Integer daysNumber) {
 	StringBuilder result = new StringBuilder();
 	result.append(year).append(fieldSeparator);
 	result.append(monthFormat.format(month)).append(fieldSeparator);
@@ -174,9 +174,9 @@ public class ExportClosedExtraWorkMonth extends Service {
 
 	for (ExtraWorkRequest extraWorkRequest : extraWorkRequests) {
 	    if (extraWorkRequest != null) {
-		YearMonthDay begin = new YearMonthDay(extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.year()),
+		LocalDate begin = new LocalDate(extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.year()),
 			extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.monthOfYear()), 1);
-		YearMonthDay end = new YearMonthDay(extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.year()),
+		LocalDate end = new LocalDate(extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.year()),
 			extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.monthOfYear()), begin.dayOfMonth()
 				.getMaximumValue());
 
@@ -293,11 +293,11 @@ public class ExportClosedExtraWorkMonth extends Service {
 
     private StringBuilder getLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth,
 	    JustificationMotive justificationMotive, int justificationDays, List<LeaveBean> leavesBeans) {
-	List<YearMonthDay> daysToUnjustify = getJustificationDays(assiduousnessClosedMonth, justificationMotive,
-		justificationDays, leavesBeans);
+	List<LocalDate> daysToUnjustify = getJustificationDays(assiduousnessClosedMonth, justificationMotive, justificationDays,
+		leavesBeans);
 	StringBuilder line = new StringBuilder();
-	for (YearMonthDay day : daysToUnjustify) {
-	    YearMonthDay nextMontDate = day.plusMonths(1);
+	for (LocalDate day : daysToUnjustify) {
+	    LocalDate nextMontDate = day.plusMonths(1);
 	    Integer code = justificationMotive.getGiafCode(assiduousnessClosedMonth.getAssiduousnessStatusHistory());
 	    if (code != 0) {
 		line.append(nextMontDate.getYear()).append(fieldSeparator);
@@ -314,12 +314,12 @@ public class ExportClosedExtraWorkMonth extends Service {
 	return line;
     }
 
-    private List<YearMonthDay> getJustificationDays(AssiduousnessClosedMonth assiduousnessClosedMonth,
+    private List<LocalDate> getJustificationDays(AssiduousnessClosedMonth assiduousnessClosedMonth,
 	    JustificationMotive justificationMotive, int daysNumber, List<LeaveBean> leavesBeans) {
-	List<YearMonthDay> days = new ArrayList<YearMonthDay>();
+	List<LocalDate> days = new ArrayList<LocalDate>();
 	YearMonth yearMonth = new YearMonth(assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth());
 	yearMonth.addMonth();
-	YearMonthDay day = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().getNumberOfMonth(), 1).minusDays(1);
+	LocalDate day = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().getNumberOfMonth(), 1).minusDays(1);
 	while (daysNumber != 0) {
 	    day = getPreviousWorkingDay(justificationMotive, assiduousnessClosedMonth.getAssiduousnessStatusHistory()
 		    .getAssiduousness(), day, true);
@@ -333,14 +333,14 @@ public class ExportClosedExtraWorkMonth extends Service {
 	return days;
     }
 
-    private boolean existAnyLeaveForThisDay(List<LeaveBean> leavesBeans, YearMonthDay day) {
+    private boolean existAnyLeaveForThisDay(List<LeaveBean> leavesBeans, LocalDate day) {
 	if (leavesBeans != null) {
 	    for (LeaveBean leaveBean : leavesBeans) {
 		if (leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
 			JustificationType.MULTIPLE_MONTH_BALANCE)
 			|| leaveBean.getLeave().getJustificationMotive().getJustificationType().equals(
 				JustificationType.OCCURRENCE)) {
-		    if (leaveBean.getLeave().getTotalInterval().contains(day.toDateTimeAtMidnight())) {
+		    if (leaveBean.getLeave().getTotalInterval().contains(day.toDateTimeAtStartOfDay())) {
 			return true;
 		    }
 		}
@@ -355,21 +355,21 @@ public class ExportClosedExtraWorkMonth extends Service {
     }
 
     private StringBuilder getLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth, LeaveBean leaveBean,
-	    YearMonthDay beginDate, YearMonthDay endDate) {
+	    LocalDate beginDate, LocalDate endDate) {
 	StringBuilder line = new StringBuilder();
-	Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), endDate.toDateTimeAtMidnight().plusSeconds(1));
+	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay().plusDays(1));
 	if (leaveBean.getLeave().getTotalInterval().overlaps(interval)) {
-	    YearMonthDay start = getNextWorkingDay(leaveBean.getLeave(), beginDate, false);
-	    YearMonthDay end = endDate;
-	    if (leaveBean.getDate().toYearMonthDay().isAfter(beginDate)) {
-		start = getNextWorkingDay(leaveBean.getLeave(), leaveBean.getDate().toYearMonthDay(), false);
+	    LocalDate start = getNextWorkingDay(leaveBean.getLeave(), beginDate, false);
+	    LocalDate end = endDate;
+	    if (leaveBean.getDate().toLocalDate().isAfter(beginDate)) {
+		start = getNextWorkingDay(leaveBean.getLeave(), leaveBean.getDate().toLocalDate(), false);
 	    }
-	    if (leaveBean.getEndYearMonthDay() == null) {
+	    if (leaveBean.getEndLocalDate() == null) {
 		end = getPreviousWorkingDay(leaveBean.getLeave().getJustificationMotive(), leaveBean.getLeave()
-			.getAssiduousness(), leaveBean.getDate().toYearMonthDay(), false);
-	    } else if (leaveBean.getEndYearMonthDay().isBefore(endDate)) {
+			.getAssiduousness(), leaveBean.getDate().toLocalDate(), false);
+	    } else if (leaveBean.getEndLocalDate().isBefore(endDate)) {
 		end = getPreviousWorkingDay(leaveBean.getLeave().getJustificationMotive(), leaveBean.getLeave()
-			.getAssiduousness(), leaveBean.getEndYearMonthDay(), false);
+			.getAssiduousness(), leaveBean.getEndLocalDate(), false);
 	    }
 	    Integer code = leaveBean.getLeave().getJustificationMotive().getGiafCode(
 		    assiduousnessClosedMonth.getAssiduousnessStatusHistory());
@@ -382,7 +382,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 			maternityJustificationList.add(leaveBean.getLeave().getAssiduousness());
 		    }
 		}
-		YearMonthDay nextMontDate = start.plusMonths(1);
+		LocalDate nextMontDate = start.plusMonths(1);
 		line.append(nextMontDate.getYear()).append(fieldSeparator);
 		line.append(monthFormat.format(nextMontDate.getMonthOfYear())).append(fieldSeparator);
 		line.append(
@@ -394,37 +394,37 @@ public class ExportClosedExtraWorkMonth extends Service {
 		line.append(dateFormat.print(end)).append(fieldSeparator);
 		int days = Days.daysBetween(start, end).getDays() + 1;
 		line.append(days).append("00").append(fieldSeparator);
-		interval = new Interval(start.toDateTimeAtMidnight().getMillis(), end.toDateTimeAtMidnight().getMillis());
+		interval = new Interval(start.toDateTimeAtStartOfDay().getMillis(), end.toDateTimeAtStartOfDay().getMillis());
 		line.append(leaveBean.getLeave().getUtilDaysBetween(interval)).append("00\r\n");
 	    }
 	}
 	return line;
     }
 
-    private YearMonthDay getNextWorkingDay(Leave leave, YearMonthDay day, boolean putOnlyWorkingDays) {
+    private LocalDate getNextWorkingDay(Leave leave, LocalDate day, boolean putOnlyWorkingDays) {
 	if (leave.getJustificationMotive().getDayType().equals(DayType.WORKDAY) || putOnlyWorkingDays) {
 	    List<Campus> campus = leave.getAssiduousness().getCampusForInterval(day, day);
-	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtMidnight());
+	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtStartOfDay());
 	    while (((campus.size() != 0 && Holiday.isHoliday(day, campus.get(0))) || (campus.size() == 0 && Holiday
 		    .isHoliday(day)))
 		    || dayOfWeek.equals(WeekDay.SATURDAY) || dayOfWeek.equals(WeekDay.SUNDAY)) {
 		day = day.plusDays(1);
-		dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtMidnight());
+		dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtStartOfDay());
 	    }
 	}
 	return day;
     }
 
-    private YearMonthDay getPreviousWorkingDay(JustificationMotive justificationMotive, Assiduousness assiduousness,
-	    YearMonthDay day, boolean putOnlyWorkingDays) {
+    private LocalDate getPreviousWorkingDay(JustificationMotive justificationMotive, Assiduousness assiduousness, LocalDate day,
+	    boolean putOnlyWorkingDays) {
 	if (justificationMotive.getDayType().equals(DayType.WORKDAY) || putOnlyWorkingDays) {
 	    List<Campus> campus = assiduousness.getCampusForInterval(day, day);
-	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtMidnight());
+	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtStartOfDay());
 	    while (((campus.size() != 0 && Holiday.isHoliday(day, campus.get(0))) || (campus.size() == 0 && Holiday
 		    .isHoliday(day)))
 		    || dayOfWeek.equals(WeekDay.SATURDAY) || dayOfWeek.equals(WeekDay.SUNDAY)) {
 		day = day.minusDays(1);
-		dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtMidnight());
+		dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtStartOfDay());
 	    }
 	}
 	return day;
@@ -434,24 +434,23 @@ public class ExportClosedExtraWorkMonth extends Service {
 	Integer code = leave.getJustificationMotive().getGiafCode(assiduousnessClosedMonth.getAssiduousnessStatusHistory());
 	StringBuilder line = new StringBuilder();
 	if (code != 0) {
-	    YearMonthDay nextMontDate = assiduousnessClosedMonth.getBeginDate().plusMonths(1);
+	    LocalDate nextMontDate = assiduousnessClosedMonth.getBeginDate().plusMonths(1);
 	    line.append(nextMontDate.getYear()).append(fieldSeparator);
 	    line.append(monthFormat.format(nextMontDate.getMonthOfYear())).append(fieldSeparator);
 	    line.append(employeeNumberFormat.format(leave.getAssiduousness().getEmployee().getEmployeeNumber())).append(
 		    fieldSeparator);
 	    line.append("F").append(fieldSeparator);
 	    line.append(justificationCodeFormat.format(code)).append(fieldSeparator);
-	    line.append(dateFormat.print(leave.getDate().toYearMonthDay())).append(fieldSeparator);
-	    line.append(dateFormat.print(leave.getDate().toYearMonthDay())).append(fieldSeparator);
+	    line.append(dateFormat.print(leave.getDate().toLocalDate())).append(fieldSeparator);
+	    line.append(dateFormat.print(leave.getDate().toLocalDate())).append(fieldSeparator);
 	    line.append("050").append(fieldSeparator).append("050\r\n");
 	}
 	return line;
     }
 
-    private HashMap<Assiduousness, List<LeaveBean>> getLeaves(YearMonthDay beginDate, YearMonthDay endDate,
-	    Boolean unpaidLicenceLeaves) {
+    private HashMap<Assiduousness, List<LeaveBean>> getLeaves(LocalDate beginDate, LocalDate endDate, Boolean unpaidLicenceLeaves) {
 	HashMap<Assiduousness, List<Leave>> assiduousnessLeaves = new HashMap<Assiduousness, List<Leave>>();
-	Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
+	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
 		.toDateMidnight()));
 	for (AssiduousnessRecord assiduousnessRecord : rootDomainObject.getAssiduousnessRecords()) {
 	    if (assiduousnessRecord.isLeave() && !assiduousnessRecord.isAnulated()) {
@@ -516,11 +515,11 @@ public class ExportClosedExtraWorkMonth extends Service {
 			nextLeave = (Leave) iterator.next();
 		    }
 		    if (nextLeave != null) {
-			if (leave.getEndYearMonthDay().plusDays(1).isEqual(nextLeave.getDate().toYearMonthDay())) {
+			if (leave.getEndLocalDate().plusDays(1).isEqual(nextLeave.getDate().toLocalDate())) {
 			    if (leaveBean == null) {
 				leaveBean = new LeaveBean(leave, nextLeave);
 			    } else {
-				leaveBean.setEndYearMonthDay(nextLeave.getEndYearMonthDay());
+				leaveBean.setEndLocalDate(nextLeave.getEndLocalDate());
 			    }
 			    leaves.remove(nextLeave);
 			} else {
@@ -557,7 +556,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 		.equals("Contratado pela ADIST"));
     }
 
-    private Boolean isContractedEmployee(Assiduousness assiduousness, YearMonthDay start, YearMonthDay end) {
+    private Boolean isContractedEmployee(Assiduousness assiduousness, LocalDate start, LocalDate end) {
 	for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousness.getStatusBetween(start, end)) {
 	    if (assiduousnessStatusHistory.getAssiduousnessStatus().getDescription().equals("Contrato a termo certo")) {
 		return true;

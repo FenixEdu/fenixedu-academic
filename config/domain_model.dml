@@ -1659,8 +1659,8 @@ class DomainObject {
 	}
 
 	class assiduousness.AssiduousnessCampusHistory extends DomainObject {
-		YearMonthDay beginDate;
-		YearMonthDay endDate;
+		LocalDate beginDate;
+		LocalDate endDate;
 		DateTime lastModifiedDate;
 	}
 
@@ -1683,8 +1683,8 @@ class DomainObject {
 		Duration totalWorkedTime;
 		Duration finalBalance;
 		Duration finalBalanceToCompensate;
-		YearMonthDay beginDate;
-		YearMonthDay endDate;
+		LocalDate beginDate;
+		LocalDate endDate;
 	}
 
 	class assiduousness.AssiduousnessExemption extends DomainObject {
@@ -1735,8 +1735,8 @@ class DomainObject {
 	}
 
 	class assiduousness.AssiduousnessStatusHistory extends DomainObject {
-		YearMonthDay beginDate;
-		YearMonthDay endDate;
+		LocalDate beginDate;
+		LocalDate endDate;
 		DateTime lastModifiedDate;
 	}
 
@@ -1862,8 +1862,8 @@ class DomainObject {
 	}
 
 	class assiduousness.Schedule extends DomainObject {
-		YearMonthDay beginDate;
-		YearMonthDay endDate;
+		LocalDate beginDate;
+		LocalDate endDate;
 		Boolean exception;
 		DateTime lastModifiedDate;
 	}
@@ -1891,10 +1891,10 @@ class DomainObject {
 
 	class assiduousness.WorkScheduleType extends DomainObject {
 		String acronym;
-		YearMonthDay beginValidDate;
+		LocalDate beginValidDate;
 		TimeOfDay clockingTime;
 		Duration clockingTimeDuration;
-		YearMonthDay endValidDate;
+		LocalDate endValidDate;
 		DateTime lastModifiedDate;
 		ScheduleClockingType scheduleClockingType;
 		TimeOfDay workTime;

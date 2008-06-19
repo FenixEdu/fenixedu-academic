@@ -39,7 +39,7 @@ import net.sourceforge.fenixedu.util.kerberos.Script;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -346,7 +346,7 @@ public class Authenticate extends Service implements Serializable {
 
     private boolean personHasAssiduousness(Person person) {	
 	if(person.hasEmployee()) {
-	    YearMonthDay currentDate = new YearMonthDay();
+	    LocalDate currentDate = new LocalDate();
 	    if(person.getEmployee().hasAssiduousness()) {
 		return person.getEmployee().getAssiduousness().isStatusActive(currentDate, currentDate);
 	    }

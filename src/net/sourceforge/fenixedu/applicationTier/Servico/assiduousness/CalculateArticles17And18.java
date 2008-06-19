@@ -4,13 +4,13 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations;
 
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 public class CalculateArticles17And18 extends Service {
 
     public void run(int year) {
-	YearMonthDay beginDate = new YearMonthDay(year, 1, 1);
-	YearMonthDay endDate = new YearMonthDay(year, 12, 31);
+	LocalDate beginDate = new LocalDate(year, 1, 1);
+	LocalDate endDate = new LocalDate(year, 12, 31);
 	for (AssiduousnessVacations assiduousnessVacations : rootDomainObject.getAssiduousnessVacations()) {
 	    if (assiduousnessVacations.getYear().equals(year)) {
 		AssiduousnessStatusHistory assiduousnessStatusHistory = assiduousnessVacations.getAssiduousness()
