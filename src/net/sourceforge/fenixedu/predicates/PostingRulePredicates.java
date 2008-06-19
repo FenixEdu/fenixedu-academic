@@ -16,16 +16,15 @@ public class PostingRulePredicates {
 	}
 
 	private boolean postingRuleBelongsToAdministrativeOffice(PostingRule postingRule) {
-	    return AccessControl.getPerson().getEmployee().getCurrentWorkingPlace()
-		    .getAdministrativeOffice().getServiceAgreementTemplate() == postingRule
-		    .getServiceAgreementTemplate();
+	    return AccessControl.getPerson().getEmployee().getCurrentWorkingPlace().getAdministrativeOffice()
+		    .getServiceAgreementTemplate() == postingRule.getServiceAgreementTemplate();
 	}
 
 	private boolean hasValidRole() {
 	    return (AccessControl.getUserView().hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
-		    || AccessControl.getUserView().hasRoleType(
-			    RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE) || AccessControl.getUserView()
-		    .hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER));
+		    || AccessControl.getUserView().hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)
+		    || AccessControl.getUserView().hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) || AccessControl
+		    .getUserView().hasRoleType(RoleType.MANAGER));
 	}
 
     };
