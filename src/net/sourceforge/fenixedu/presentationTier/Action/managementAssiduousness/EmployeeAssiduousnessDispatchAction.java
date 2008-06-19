@@ -42,7 +42,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
@@ -61,12 +61,13 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	    yearMonth = regularizationMonthFactory.getYearMonth();
 	} else {
 	    Employee employee = Employee.readByNumber(new Integer(getFromRequest(request, "employeeNumber").toString()));
-	    YearMonthDay date = null;
+	    LocalDate date = null;
 	    if (!StringUtils.isEmpty(dateString)) {
-		date = new YearMonthDay(dateString);
+		date = new LocalDate(dateString);
 	    }
 	    yearMonth = getYearMonth(request, date);
-	    regularizationMonthFactory = new RegularizationMonthFactory(yearMonth, employee.getAssiduousness(), ((IUserView)UserView.getUser()).getPerson().getEmployee());
+	    regularizationMonthFactory = new RegularizationMonthFactory(yearMonth, employee.getAssiduousness(),
+		    ((IUserView) UserView.getUser()).getPerson().getEmployee());
 	}
 	request.setAttribute("regularizationMonthFactory", regularizationMonthFactory);
 	request.setAttribute("yearMonth", yearMonth);
@@ -92,9 +93,9 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 
 	Employee employee = Employee.readByNumber(new Integer(getFromRequest(request, "employeeNumber").toString()));
 	String dateString = request.getParameter("date");
-	YearMonthDay date = null;
+	LocalDate date = null;
 	if (!StringUtils.isEmpty(dateString)) {
-	    date = new YearMonthDay(dateString);
+	    date = new LocalDate(dateString);
 	}
 	YearMonth yearMonth = getYearMonth(request, date);
 	EmployeeJustificationFactoryCreator employeeJustificationFactory = new EmployeeJustificationFactoryCreator(employee,
@@ -189,7 +190,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	EmployeeScheduleFactory employeeScheduleFactory = null;
 	if (scheduleID != null) {
 	    Schedule schedule = (Schedule) RootDomainObject.readDomainObjectByOID(Schedule.class, scheduleID);
-	    employeeScheduleFactory = new EmployeeScheduleFactory(schedule, ((IUserView)UserView.getUser()).getPerson()
+	    employeeScheduleFactory = new EmployeeScheduleFactory(schedule, ((IUserView) UserView.getUser()).getPerson()
 		    .getEmployee());
 	} else {
 	    employeeScheduleFactory = (EmployeeScheduleFactory) getFactoryObject();
@@ -207,7 +208,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 		Employee employee = rootDomainObject.readEmployeeByOID(employeeID);
 		Schedule currentSchedule = employee.getAssiduousness() != null ? employee.getAssiduousness().getCurrentSchedule()
 			: null;
-		employeeScheduleFactory = new EmployeeScheduleFactory(employee, ((IUserView)UserView.getUser()).getPerson()
+		employeeScheduleFactory = new EmployeeScheduleFactory(employee, ((IUserView) UserView.getUser()).getPerson()
 			.getEmployee(), currentSchedule);
 	    }
 	}
@@ -224,12 +225,12 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	Integer scheduleID = getIntegerFromRequest(request, "scheduleID");
 	if (scheduleID != null) {
 	    schedule = (Schedule) rootDomainObject.readDomainObjectByOID(Schedule.class, scheduleID);
-	    employeeExceptionScheduleBean = new EmployeeExceptionScheduleBean(schedule, ((IUserView)UserView.getUser())
+	    employeeExceptionScheduleBean = new EmployeeExceptionScheduleBean(schedule, ((IUserView) UserView.getUser())
 		    .getPerson().getEmployee());
 	} else {
 	    Integer employeeID = getIntegerFromRequest(request, "employeeID");
 	    Employee employee = rootDomainObject.readEmployeeByOID(employeeID);
-	    employeeExceptionScheduleBean = new EmployeeExceptionScheduleBean(employee, ((IUserView)UserView.getUser())
+	    employeeExceptionScheduleBean = new EmployeeExceptionScheduleBean(employee, ((IUserView) UserView.getUser())
 		    .getPerson().getEmployee());
 	}
 	setWorkSchedules(employeeExceptionScheduleBean);
@@ -251,8 +252,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 		if (request.getParameter("changeDates") != null) {
 		    employeeExceptionScheduleBean.setOnlyChangeDates(Boolean.TRUE);
 		}
-		ServiceUtils.executeService("EditEmployeeExceptionSchedule",
-			new Object[] { employeeExceptionScheduleBean });
+		ServiceUtils.executeService("EditEmployeeExceptionSchedule", new Object[] { employeeExceptionScheduleBean });
 	    }
 	} else {
 	    request.setAttribute("employeeID", employeeExceptionScheduleBean.getEmployee().getIdInternal());
@@ -260,8 +260,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 		setError(request, "errorMessage", (ActionMessage) new ActionMessage("error.schedule.canNotBeNull"));
 		return mapping.getInputForward();
 	    }
-	    ServiceUtils.executeService("CreateEmployeeExceptionSchedule",
-		    new Object[] { employeeExceptionScheduleBean });
+	    ServiceUtils.executeService("CreateEmployeeExceptionSchedule", new Object[] { employeeExceptionScheduleBean });
 	}
 
 	request.setAttribute("yearMonth", getYearMonth(request, null));
@@ -379,12 +378,12 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	final Integer clockingId = getIntegerFromRequest(request, "idInternal");
 	final Clocking clocking = (Clocking) rootDomainObject.readAssiduousnessRecordByOID(clockingId);
-	final YearMonth yearMonth = new YearMonth(clocking.getDate().toYearMonthDay());
+	final YearMonth yearMonth = new YearMonth(clocking.getDate().toLocalDate());
 	request.setAttribute("yearMonth", yearMonth);
 	request.setAttribute("employeeNumber", clocking.getAssiduousness().getEmployee().getEmployeeNumber());
 
 	if (!yearMonth.getIsThisYearMonthClosed()) {
-	    final IUserView userView = ((IUserView)UserView.getUser());
+	    final IUserView userView = ((IUserView) UserView.getUser());
 	    Employee employee = userView.getPerson().getEmployee();
 	    ServiceUtils.executeService("DeleteClocking", new Object[] { clocking, employee });
 	}
@@ -395,7 +394,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	final Integer clockingId = getIntegerFromRequest(request, "idInternal");
 	final Clocking clocking = (Clocking) rootDomainObject.readAssiduousnessRecordByOID(clockingId);
-	final YearMonth yearMonth = new YearMonth(clocking.getDate().toYearMonthDay());
+	final YearMonth yearMonth = new YearMonth(clocking.getDate().toLocalDate());
 	request.setAttribute("yearMonth", yearMonth);
 	request.setAttribute("employeeNumber", clocking.getAssiduousness().getEmployee().getEmployeeNumber());
 	if (!yearMonth.getIsThisYearMonthClosed()) {
@@ -527,7 +526,7 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	saveMessages(request, actionMessages);
     }
 
-    private YearMonth getYearMonth(HttpServletRequest request, YearMonthDay date) {
+    private YearMonth getYearMonth(HttpServletRequest request, LocalDate date) {
 	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
 	if (date == null) {
 	    if (yearMonth == null) {
@@ -537,12 +536,12 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 		String month = request.getParameter("month");
 
 		if (StringUtils.isEmpty(year)) {
-		    yearMonth.setYear(new YearMonthDay().getYear());
+		    yearMonth.setYear(new LocalDate().getYear());
 		} else {
 		    yearMonth.setYear(new Integer(year));
 		}
 		if (StringUtils.isEmpty(month)) {
-		    yearMonth.setMonth(Month.values()[new YearMonthDay().getMonthOfYear() - 1]);
+		    yearMonth.setMonth(Month.values()[new LocalDate().getMonthOfYear() - 1]);
 		} else {
 		    yearMonth.setMonth(Month.valueOf(month));
 		}

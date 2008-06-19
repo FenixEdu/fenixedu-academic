@@ -332,10 +332,11 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="giafCodeContractedStatus" key="label.contractedStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="discountBonus" key="label.discountBonus" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="discountA17Vacations" key="label.discountA17Vacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="inExercise" key="label.inExercise" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
 
 <schema name="create.justificationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive"
-	constructor="acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, giafCodeOtherStatus, giafCodeContractedStatus, discountBonus, discountA17Vacations, modifiedBy">
+	constructor="acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, giafCodeOtherStatus, giafCodeContractedStatus, discountBonus, discountA17Vacations, inExercise, modifiedBy">
 	<slot name="acronym" key="label.acronym" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
@@ -354,6 +355,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>	
 	<slot name="actualWorkTime" key="label.actualWorkTime" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="inExercise" key="label.inExercise" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="giafCodeOtherStatus" key="label.permanentStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 	</slot>
@@ -384,13 +386,14 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>	
 	<slot name="actualWorkTime" key="label.actualWorkTime" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="inExercise" key="label.inExercise" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="giafCodeOtherStatus" key="label.permanentStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="giafCodeContractedStatus" key="label.contractedStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="active" key="label.active" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="discountBonus" key="label.discountBonus" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="discountA17Vacations" key="label.discountA17Vacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="modifiedBy" hidden="true"/>
-	<setter signature="editJustificationMotive(acronym,description,actualWorkTime,justificationType,dayType,justificationGroup,active,giafCodeOtherStatus,giafCodeContractedStatus,discountBonus,discountA17Vacations,modifiedBy)"/>
+	<setter signature="editJustificationMotive(acronym,description,actualWorkTime,justificationType,dayType,justificationGroup,active,giafCodeOtherStatus,giafCodeContractedStatus,discountBonus,discountA17Vacations,inExercise, modifiedBy)"/>
 </schema>
 
 <schema name="edit.usedJustificationMotives" type="net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive">
@@ -402,6 +405,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot read-only="true" name="dayType" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="justificationGroup" key="label.group" bundle="ASSIDUOUSNESS_RESOURCES" />
 	<slot read-only="true" name="actualWorkTime" key="label.actualWorkTime" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot read-only="true" name="inExercise" key="label.inExercise" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="giafCodeOtherStatus" key="label.permanentStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="giafCodeContractedStatus" key="label.contractedStaffGiafCode" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="active" key="label.active" bundle="ASSIDUOUSNESS_RESOURCES"/>

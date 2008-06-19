@@ -37,7 +37,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.joda.time.DateTimeFieldType;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
@@ -77,7 +77,6 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
-	final IUserView userView = UserView.getUser();
 	List<EmployeeWorkSheet> employeeWorkSheetList = (List<EmployeeWorkSheet>) ServiceUtils.executeService(
 		"ReadAllAssiduousnessWorkSheets", new Object[] { assiduousnessExportChoices });
 	if (employeeWorkSheetList.size() != 0) {
@@ -119,9 +118,8 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
 	assiduousnessExportChoices.setYearMonth();
-	final IUserView userView = UserView.getUser();
 	List<AssiduousnessMonthlyResume> assiduousnessMonthlyResumeList = (List<AssiduousnessMonthlyResume>) ServiceUtils
-		.executeService( "ReadMonthResume", new Object[] { assiduousnessExportChoices });
+		.executeService("ReadMonthResume", new Object[] { assiduousnessExportChoices });
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=resumoMes.xls");
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
@@ -141,9 +139,8 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
 	assiduousnessExportChoices.setYearMonth();
-	final IUserView userView = UserView.getUser();
-	StyledExcelSpreadsheet spreadsheet = (StyledExcelSpreadsheet) ServiceUtils.executeService(
-		"ExportJustifications", new Object[] { assiduousnessExportChoices });
+	StyledExcelSpreadsheet spreadsheet = (StyledExcelSpreadsheet) ServiceUtils.executeService("ExportJustifications",
+		new Object[] { assiduousnessExportChoices });
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=justificacoes.xls");
 	final ServletOutputStream writer = response.getOutputStream();
@@ -155,7 +152,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareExportAssignedEmployees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	request.setAttribute("yearMonth", new YearMonth(new YearMonthDay()));
+	request.setAttribute("yearMonth", new YearMonth(new LocalDate()));
 	request.setAttribute("employeesAnualInfo", "employeesAnualInfo");
 	request.setAttribute("action", request.getParameter("action"));
 	return mapping.findForward("choose-year-month");
@@ -163,7 +160,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareExportADISTEmployees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	request.setAttribute("yearMonth", new YearMonth(new YearMonthDay()));
+	request.setAttribute("yearMonth", new YearMonth(new LocalDate()));
 	request.setAttribute("employeesAnualInfo", "employeesAnualInfo");
 	request.setAttribute("action", request.getParameter("action"));
 	return mapping.findForward("choose-year-month");
@@ -236,7 +233,7 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 
 	Map<String, String> parameters = new HashMap<String, String>();
-	YearMonthDay now = new YearMonthDay();
+	LocalDate now = new LocalDate();
 	final String dateSeparator = " de ";
 	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	String month = bundleEnumeration.getString(Month.values()[now.getMonthOfYear() - 1].toString());

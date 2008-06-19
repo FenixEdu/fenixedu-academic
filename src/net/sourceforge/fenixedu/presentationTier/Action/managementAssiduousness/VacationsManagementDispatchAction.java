@@ -28,7 +28,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -65,19 +65,17 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 	spreadsheet.addHeader(bundle.getString("label.art17Days"));
 	spreadsheet.addHeader(bundle.getString("label.art18Days"));
 
-	final ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language
-		.getLocale());
+	final ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	for (Month month : Month.values()) {
 	    spreadsheet.addHeader(bundleEnumeration.getString(month.getName()));
 	}
 
 	spreadsheet.addHeader("Média de horas");
 
-	ServiceUtils.executeService("CalculateArticles17And18", new Object[] { yearMonth
-		.getYear() });
+	ServiceUtils.executeService("CalculateArticles17And18", new Object[] { yearMonth.getYear() });
 
-	YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear() - 1, 1, 1);
-	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear() - 1, 12, 31);
+	LocalDate beginDate = new LocalDate(yearMonth.getYear() - 1, 1, 1);
+	LocalDate endDate = new LocalDate(yearMonth.getYear() - 1, 12, 31);
 
 	for (AssiduousnessVacations assiduousnessVacations : rootDomainObject.getAssiduousnessVacations()) {
 	    if (assiduousnessVacations.getYear().equals(yearMonth.getYear())) {
@@ -134,7 +132,7 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 			    .getClosedYearMonth().get(DateTimeFieldType.monthOfYear()));
 		    yearMonth.addMonth();
 		} else {
-		    yearMonth = new YearMonth(new YearMonthDay());
+		    yearMonth = new YearMonth(new LocalDate());
 		}
 	    } else {
 		yearMonth.setYear(new Integer(year));

@@ -16,10 +16,10 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.hssf.util.Region;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.LocalDate;
 import org.joda.time.MutablePeriod;
 import org.joda.time.PeriodType;
 import org.joda.time.TimeOfDay;
-import org.joda.time.YearMonthDay;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.PeriodFormatter;
@@ -222,7 +222,7 @@ public class StyledExcelSpreadsheet {
 	cell.setCellStyle(getExcelStyle(excelStyle.getValueStyle(), wrapText));
     }
 
-    public void addDateCell(YearMonthDay value) {
+    public void addDateCell(LocalDate value) {
 	HSSFRow currentRow = getRow();
 	HSSFCell cell = currentRow.createCell((short) (currentRow.getLastCellNum() + 1));
 	cell.setCellValue(dateFormat.print(value));

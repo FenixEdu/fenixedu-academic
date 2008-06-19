@@ -44,7 +44,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.security.UserView;
 
@@ -69,14 +69,14 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	if (yearMonth == null) {
 	    return mapping.findForward("show-employee-work-sheet");
 	}
-	YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
+	LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
 	int endDay = beginDate.dayOfMonth().getMaximumValue();
-	if (yearMonth.getYear() == new YearMonthDay().getYear()
-		&& yearMonth.getMonth().ordinal() + 1 == new YearMonthDay().getMonthOfYear()) {
-	    // endDay = new YearMonthDay().getDayOfMonth();
+	if (yearMonth.getYear() == new LocalDate().getYear()
+		&& yearMonth.getMonth().ordinal() + 1 == new LocalDate().getMonthOfYear()) {
+	    // endDay = new LocalDate().getDayOfMonth();
 	    request.setAttribute("displayCurrentDayNote", "true");
 	}
-	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
+	LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
 
 	Object[] args = { employee.getAssiduousness(), beginDate, endDate };
 	EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService("ReadEmployeeWorkSheet",
@@ -119,8 +119,8 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	EmployeeScheduleFactory employeeScheduleFactory = new EmployeeScheduleFactory(employee, null, choosenSchedule);
 	request.setAttribute("employeeScheduleBean", employeeScheduleFactory);
 	if (yearMonth != null) {
-	    YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
-	    YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate
+	    LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
+	    LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate
 		    .dayOfMonth().getMaximumValue());
 	    setEmployeeStatus(request, employee, beginDate, endDate);
 	    request.setAttribute("yearMonth", yearMonth);
@@ -141,22 +141,22 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	    return mapping.findForward("show-clockings");
 	}
 
-	YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
-	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate.dayOfMonth()
+	LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
+	LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate.dayOfMonth()
 		.getMaximumValue());
 	if (employee.getAssiduousness() != null) {
 	    List<Clocking> clockings = employee.getAssiduousness().getClockingsAndAnulatedClockings(beginDate, endDate);
 	    Collections.sort(clockings, AssiduousnessRecord.COMPARATOR_BY_DATE);
-	    HashMap<YearMonthDay, ClockingsDaySheet> clockingsDaySheetList = new HashMap<YearMonthDay, ClockingsDaySheet>();
+	    HashMap<LocalDate, ClockingsDaySheet> clockingsDaySheetList = new HashMap<LocalDate, ClockingsDaySheet>();
 	    for (Clocking clocking : clockings) {
-		if (clockingsDaySheetList.containsKey(clocking.getDate().toYearMonthDay())) {
-		    ClockingsDaySheet clockingsDaySheet = clockingsDaySheetList.get(clocking.getDate().toYearMonthDay());
+		if (clockingsDaySheetList.containsKey(clocking.getDate().toLocalDate())) {
+		    ClockingsDaySheet clockingsDaySheet = clockingsDaySheetList.get(clocking.getDate().toLocalDate());
 		    clockingsDaySheet.addClocking(clocking);
 		} else {
 		    ClockingsDaySheet clockingsDaySheet = new ClockingsDaySheet();
-		    clockingsDaySheet.setDate(clocking.getDate().toYearMonthDay());
+		    clockingsDaySheet.setDate(clocking.getDate().toLocalDate());
 		    clockingsDaySheet.addClocking(clocking);
-		    clockingsDaySheetList.put(clocking.getDate().toYearMonthDay(), clockingsDaySheet);
+		    clockingsDaySheetList.put(clocking.getDate().toLocalDate(), clockingsDaySheet);
 		}
 	    }
 
@@ -183,8 +183,8 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	}
 
 	if (employee.getAssiduousness() != null) {
-	    YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
-	    YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate
+	    LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
+	    LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate
 		    .dayOfMonth().getMaximumValue());
 	    List<Justification> justifications = new ArrayList<Justification>();
 	    justifications.addAll(employee.getAssiduousness().getLeaves(beginDate, endDate));
@@ -212,8 +212,8 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	}
 
 	if (employee.getAssiduousness() != null) {
-	    YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
-	    YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate
+	    LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
+	    LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate
 		    .dayOfMonth().getMaximumValue());
 	    request.setAttribute("vacations", employee.getAssiduousness().getAssiduousnessVacationsByYear(yearMonth.getYear()));
 	    setEmployeeStatus(request, employee, beginDate, endDate);
@@ -285,8 +285,8 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	if (employee.getAssiduousness() != null) {
 	    List<EmployeeBalanceResume> employeeBalanceResumeList = new ArrayList<EmployeeBalanceResume>();
 
-	    YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
-	    YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate
+	    LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
+	    LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate
 		    .dayOfMonth().getMaximumValue());
 
 	    List<AssiduousnessStatusHistory> assiduousnessStatusHistoryList = employee.getAssiduousness().getStatusBetween(
@@ -363,7 +363,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 			    .getClosedYearMonth().get(DateTimeFieldType.monthOfYear()));
 		    yearMonth.addMonth();
 		} else {
-		    yearMonth = new YearMonth(new YearMonthDay());
+		    yearMonth = new YearMonth(new LocalDate());
 		}
 	    } else {
 		yearMonth.setYear(new Integer(year));
@@ -382,8 +382,8 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	actionMessages.add("message", new ActionMessage(message));
 	saveMessages(request, actionMessages);
 	request.setAttribute("yearMonth", yearMonth);
-	YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
-	YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate.dayOfMonth()
+	LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
+	LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate.dayOfMonth()
 		.getMaximumValue());
 	if (employee != null) {
 	    EmployeeWorkSheet employeeWorkSheet = new EmployeeWorkSheet();
@@ -394,8 +394,8 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	}
     }
 
-    private void setEmployeeStatus(HttpServletRequest request, final Employee employee, YearMonthDay beginDate,
-	    YearMonthDay endDate) {
+    private void setEmployeeStatus(HttpServletRequest request, final Employee employee, LocalDate beginDate,
+	    LocalDate endDate) {
 	List<AssiduousnessStatusHistory> employeeStatusList = employee.getAssiduousness().getStatusBetween(beginDate, endDate);
 	Collections.sort(employeeStatusList, new BeanComparator("beginDate"));
 	request.setAttribute("employeeStatusList", employeeStatusList);

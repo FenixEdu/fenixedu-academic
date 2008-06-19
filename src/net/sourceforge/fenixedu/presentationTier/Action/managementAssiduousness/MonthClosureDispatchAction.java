@@ -36,8 +36,8 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.DurationFieldType;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.PeriodType;
-import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
@@ -86,16 +86,16 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
 	RenderUtils.invalidateViewState();
 	if (yearMonth != null && yearMonth.getCanCloseMonth()) {
-	    final YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
+	    final LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
 	    int endDay = beginDate.dayOfMonth().getMaximumValue();
-	    if (yearMonth.getYear() == new YearMonthDay().getYear()
-		    && yearMonth.getMonth().ordinal() + 1 == new YearMonthDay().getMonthOfYear()) {
-		endDay = new YearMonthDay().getDayOfMonth();
+	    if (yearMonth.getYear() == new LocalDate().getYear()
+		    && yearMonth.getMonth().ordinal() + 1 == new LocalDate().getMonthOfYear()) {
+		endDay = new LocalDate().getDayOfMonth();
 	    }
-	    final YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
+	    final LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
 	    final IUserView userView = UserView.getUser();
 	    List<AssiduousnessClosedMonth> negativeAssiduousnessClosedMonths = (List<AssiduousnessClosedMonth>) ServiceUtils
-		    .executeService( "CloseAssiduousnessMonth", new Object[] { beginDate, endDate });
+		    .executeService("CloseAssiduousnessMonth", new Object[] { beginDate, endDate });
 	    request.setAttribute("negativeAssiduousnessClosedMonths", negativeAssiduousnessClosedMonths);
 	}
 
@@ -106,13 +106,13 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToExport");
 	if (yearMonth != null && yearMonth.getIsThisYearMonthClosed()) {
-	    final YearMonthDay beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
+	    final LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
 	    int endDay = beginDate.dayOfMonth().getMaximumValue();
-	    if (yearMonth.getYear() == new YearMonthDay().getYear()
-		    && yearMonth.getMonth().ordinal() + 1 == new YearMonthDay().getMonthOfYear()) {
-		endDay = new YearMonthDay().getDayOfMonth();
+	    if (yearMonth.getYear() == new LocalDate().getYear()
+		    && yearMonth.getMonth().ordinal() + 1 == new LocalDate().getMonthOfYear()) {
+		endDay = new LocalDate().getDayOfMonth();
 	    }
-	    final YearMonthDay endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
+	    final LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
 	    final IUserView userView = UserView.getUser();
 	    final ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
 	    final String result = (String) ServiceUtils.executeService("ExportClosedMonth", new Object[] { closedMonth,
@@ -185,9 +185,9 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    double thisMonthUnjustified = assiduousnessClosedMonth.getAccumulatedUnjustified() - previousUnjustified
 		    + assiduousnessClosedMonth.getUnjustifiedDays();
 
-	    YearMonthDay beginDate = new YearMonthDay(closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()), closedMonth
+	    LocalDate beginDate = new LocalDate(closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()), closedMonth
 		    .getClosedYearMonth().get(DateTimeFieldType.monthOfYear()), 01);
-	    YearMonthDay endDate = new YearMonthDay(closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()), closedMonth
+	    LocalDate endDate = new LocalDate(closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()), closedMonth
 		    .getClosedYearMonth().get(DateTimeFieldType.monthOfYear()), beginDate.dayOfMonth().getMaximumValue());
 	    double a66NextYearDays = getA66NextYearDays(assiduousnessClosedMonth.getAssiduousnessStatusHistory()
 		    .getAssiduousness(), beginDate, endDate);
@@ -210,7 +210,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	return spreadsheet;
     }
 
-    private double getA66NextYearDays(Assiduousness assiduousness, YearMonthDay beginDate, YearMonthDay endDate) {
+    private double getA66NextYearDays(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate) {
 	double countWorkDays = assiduousness.getLeavesNumberOfWorkDays(beginDate, endDate, "A 66 P.A.");
 	for (Leave leave : assiduousness.getLeaves(beginDate, endDate)) {
 	    if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase("1/2 A 66 P.A.")) {
@@ -220,7 +220,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	return countWorkDays;
     }
 
-    private int getPaternityDays(Assiduousness assiduousness, YearMonthDay beginDate, YearMonthDay endDate) {
+    private int getPaternityDays(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate) {
 	int paternityDays = assiduousness.getLeavesNumberOfWorkDays(beginDate, endDate, "L.Pat");
 	paternityDays += assiduousness.getLeavesNumberOfWorkDays(beginDate, endDate, "LP");
 	paternityDays += assiduousness.getLeavesNumberOfWorkDays(beginDate, endDate, "LMAR");
@@ -229,27 +229,27 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	return paternityDays;
     }
 
-    private int getMedicalIssuesDays(Assiduousness assiduousness, YearMonthDay beginDate, YearMonthDay endDate) {
+    private int getMedicalIssuesDays(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate) {
 	int countWorkDays = 0;
 	for (Leave leave : assiduousness.getLeaves(beginDate, endDate)) {
 	    if (leave.getJustificationMotive().getJustificationGroup() == JustificationGroup.SICKNESS
 		    && leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE) {
-		countWorkDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtMidnight(), endDate
-			.toDateTimeAtMidnight()));
+		countWorkDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtStartOfDay(), endDate
+			.toDateTimeAtStartOfDay()));
 	    }
 	}
 	return countWorkDays;
     }
 
-    private int getVacationsDays(Assiduousness assiduousness, YearMonthDay beginDate, YearMonthDay endDate) {
+    private int getVacationsDays(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate) {
 	int countWorkDays = 0;
 	for (Leave leave : assiduousness.getLeaves(beginDate, endDate)) {
 	    if ((leave.getJustificationMotive().getJustificationGroup() == JustificationGroup.CURRENT_YEAR_HOLIDAYS
 		    || leave.getJustificationMotive().getJustificationGroup() == JustificationGroup.LAST_YEAR_HOLIDAYS || leave
 		    .getJustificationMotive().getJustificationGroup() == JustificationGroup.NEXT_YEAR_HOLIDAYS)
 		    && leave.getJustificationMotive().getJustificationType() == JustificationType.OCCURRENCE) {
-		countWorkDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtMidnight(), endDate
-			.toDateTimeAtMidnight()));
+		countWorkDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtStartOfDay(), endDate
+			.toDateTimeAtStartOfDay()));
 	    }
 	}
 	return countWorkDays;
@@ -306,7 +306,6 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	final YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
 	final ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
-	final IUserView userView = UserView.getUser();
 	if (yearMonth != null && !ClosedMonth.isMonthClosedForExtraWork(yearMonth.getPartial())) {
 	    ServiceUtils.executeService("CloseExtraWorkMonth", new Object[] { closedMonth });
 	}
@@ -318,8 +317,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToOpen");
 	if (yearMonth != null && yearMonth.getIsThisYearMonthClosed()) {
-	    ServiceUtils.executeService("OpenClosedMonth", new Object[] { ClosedMonth
-		    .getClosedMonth(yearMonth) });
+	    ServiceUtils.executeService("OpenClosedMonth", new Object[] { ClosedMonth.getClosedMonth(yearMonth) });
 	}
 	RenderUtils.invalidateViewState();
 	return prepareToCloseMonth(mapping, actionForm, request, response);
@@ -329,8 +327,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToOpen");
 	if (yearMonth != null && yearMonth.getIsThisYearMonthClosedForExtraWork()) {
-	    ServiceUtils.executeService("OpenExtraWorkClosedMonth", new Object[] { ClosedMonth
-		    .getClosedMonth(yearMonth) });
+	    ServiceUtils.executeService("OpenExtraWorkClosedMonth", new Object[] { ClosedMonth.getClosedMonth(yearMonth) });
 	}
 	RenderUtils.invalidateViewState();
 	return prepareToCloseExtraWorkMonth(mapping, actionForm, request, response);
@@ -340,8 +337,8 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonthToUpdate");
 	if (yearMonth != null && yearMonth.getIsThisYearMonthClosedForExtraWork()) {
-	    ActionMessage result = (ActionMessage) ServiceUtils.executeService(
-		    "UpdateExtraWorkClosedMonth", new Object[] { ClosedMonth.getClosedMonth(yearMonth) });
+	    ActionMessage result = (ActionMessage) ServiceUtils.executeService("UpdateExtraWorkClosedMonth",
+		    new Object[] { ClosedMonth.getClosedMonth(yearMonth) });
 	    if (result == null) {
 		result = new ActionMessage("message.successUpdatingExtraWork");
 	    }
@@ -402,8 +399,6 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    return actionForward;
 	}
 	request.setAttribute("yearMonthToExport", yearMonth);
-
-	final IUserView userView = UserView.getUser();
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
 	String result = null;
 	try {
@@ -422,8 +417,8 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	String fileName = new StringBuilder().append(bundleEnumeration.getString(closedMonthDocumentType.name())).append("-")
 		.append(month).append("-").append(yearMonth.getYear()).append(".txt").toString();
 
-	ActionMessage error = (ActionMessage) ServiceUtils.executeService("ExportToGIAFAndSaveFile", new Object[] {
-		closedMonth, fileName, closedMonthDocumentType, result });
+	ActionMessage error = (ActionMessage) ServiceUtils.executeService("ExportToGIAFAndSaveFile", new Object[] { closedMonth,
+		fileName, closedMonthDocumentType, result });
 	if (error != null) {
 	    ActionMessages actionMessages = getMessages(request);
 	    actionMessages.add("message", error);
@@ -447,13 +442,10 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    return prepareToCloseMonth(mapping, actionForm, request, response);
 	}
 	request.setAttribute("yearMonthToExport", yearMonth);
-
-	final IUserView userView = UserView.getUser();
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
 	String result = null;
 	try {
-	    result = (String) ServiceUtils.executeService("ExportClosedExtraWorkMonth", new Object[] { closedMonth,
-		    true, true });
+	    result = (String) ServiceUtils.executeService("ExportClosedExtraWorkMonth", new Object[] { closedMonth, true, true });
 	} catch (InvalidGiafCodeException e) {
 	    ActionMessages actionMessages = getMessages(request);
 	    actionMessages.add("message", new ActionMessage(e.getMessage(), e.getArgs()));
@@ -488,13 +480,11 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    return prepareToCloseMonth(mapping, actionForm, request, response);
 	}
 	request.setAttribute("yearMonthToExport", yearMonth);
-
-	final IUserView userView = UserView.getUser();
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
 	String result = null;
 	try {
-	    result = (String) ServiceUtils.executeService("ExportClosedExtraWorkMonth", new Object[] { closedMonth,
-		    false, true });
+	    result = (String) ServiceUtils
+		    .executeService("ExportClosedExtraWorkMonth", new Object[] { closedMonth, false, true });
 	} catch (InvalidGiafCodeException e) {
 	    ActionMessages actionMessages = getMessages(request);
 	    actionMessages.add("message", new ActionMessage(e.getMessage(), e.getArgs()));

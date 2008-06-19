@@ -17,19 +17,19 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import oracle.jdbc.OracleTypes;
 
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.LocalDate;
 import org.joda.time.Partial;
-import org.joda.time.YearMonthDay;
 
 public class GiafInterface {
 
-    public Double getEmployeeHourValue(Employee employee, YearMonthDay day) throws ExcepcaoPersistencia {
+    public Double getEmployeeHourValue(Employee employee, LocalDate day) throws ExcepcaoPersistencia {
 	PersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getGiafDBInstance();
 	try {
 	    CallableStatement callableStatement = persistentSuportOracle.prepareCall("BEGIN ?:=ist_valor_hora(?, ?, ? ,?); END;");
 	    callableStatement.registerOutParameter(1, Types.DOUBLE);
 	    DecimalFormat f = new DecimalFormat("000000");
 	    callableStatement.setString(2, f.format(employee.getEmployeeNumber()));
-	    callableStatement.setDate(3, new Date(day.toDateTimeAtMidnight().getMillis()));
+	    callableStatement.setDate(3, new Date(day.toDateTimeAtStartOfDay().getMillis()));
 	    callableStatement.registerOutParameter(4, Types.DOUBLE);
 	    callableStatement.registerOutParameter(5, Types.VARCHAR);
 	    callableStatement.executeQuery();
@@ -44,7 +44,7 @@ public class GiafInterface {
 	return null;
     }
 
-    public Double getEmployeeSalary(Employee employee, YearMonthDay day) throws ExcepcaoPersistencia {
+    public Double getEmployeeSalary(Employee employee, LocalDate day) throws ExcepcaoPersistencia {
 	Double salary = 0.0;
 	PersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getGiafDBInstance();
 	try {
