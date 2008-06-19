@@ -1689,7 +1689,7 @@ public class Registration extends Registration_Base {
     }
 
     final public void removeAttendFor(final ExecutionCourse executionCourse) {
-	final Attends attend = getStudent().readAttendByExecutionCourse(executionCourse);
+	final Attends attend = readRegistrationAttendByExecutionCourse(executionCourse);
 	if (attend != null) {
 	    checkIfHasEnrolmentFor(attend);
 	    checkIfHasShiftsFor(executionCourse);
