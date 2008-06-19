@@ -58,7 +58,7 @@ public class InfoRoom extends InfoObject implements Comparable {
     }
 
     public int compareTo(Object obj) {
-        return getNome().compareTo(((InfoRoom) obj).getNome());
+        return getNome().compareToIgnoreCase(((InfoRoom) obj).getNome());
     }
 
     public static InfoRoom newInfoFromDomain(final AllocatableSpace room) {

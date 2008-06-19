@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.util.PeriodState;
 /**
  * @author Nuno & Joana
  */
-public class InfoExecutionPeriod extends InfoObject {
+public class InfoExecutionPeriod extends InfoObject implements Comparable {
 
     private DomainReference<ExecutionSemester> executionPeriodDomainReference;
 

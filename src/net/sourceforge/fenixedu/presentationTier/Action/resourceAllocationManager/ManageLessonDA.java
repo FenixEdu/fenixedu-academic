@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupationEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.RoomAlphabeticComparator;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -263,7 +262,7 @@ public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExec
 		manageLessonForm.set("nomeSala", infoLesson.getInfoRoomOccupation().getInfoRoom().getNome());
 	    }
 	    	   
-	    Collections.sort(emptyRoomsList, new RoomAlphabeticComparator());
+	    Collections.sort(emptyRoomsList);
 	    List<LabelValueBean> listaSalas = new ArrayList<LabelValueBean>();
 	    for (int i = 0; i < emptyRoomsList.size(); i++) {
 		InfoRoom elem = emptyRoomsList.get(i);		

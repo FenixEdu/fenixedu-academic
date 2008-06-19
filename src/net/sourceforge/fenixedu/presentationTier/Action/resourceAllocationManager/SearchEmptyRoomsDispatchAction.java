@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.RoomAlphabeticComparator;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
@@ -100,7 +99,7 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
             
             Object args[] = { startDate, endDate, startTime, endTime, weekDay, normalCapacity, FrequencyType.WEEKLY, Boolean.TRUE };            
             List<InfoRoom> emptyRoomsList = (List<InfoRoom>) ServiceUtils.executeService("ReadAvailableRoomsForExam", args);
-            Collections.sort(emptyRoomsList, new RoomAlphabeticComparator());            
+            Collections.sort(emptyRoomsList);            
             
             if (emptyRoomsList == null || emptyRoomsList.isEmpty()) {
                 ActionErrors actionErrors = new ActionErrors();
