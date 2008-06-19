@@ -28,6 +28,7 @@ import org.joda.time.Chronology;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
+import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
@@ -39,9 +40,9 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 
     private Integer oldIdInternal;
 
-    private YearMonthDay beginValidDate;
+    private LocalDate beginValidDate;
 
-    private YearMonthDay endValidDate;
+    private LocalDate endValidDate;
 
     private String acronym;
 
@@ -94,8 +95,8 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
     private DomainReference<Employee> modifiedBy;
 
     public WorkScheduleTypeFactory() {
-	setBeginValidDate(new YearMonthDay(1970, 01, 02));
-	setEndValidDate(new YearMonthDay(2036, 01, 01));
+	setBeginValidDate(new LocalDate(1970, 01, 02));
+	setEndValidDate(new LocalDate(2036, 01, 01));
 	setBeginDayTime(new TimeOfDay(03, 00, 00));
 	setEndDayTime(TimeOfDay.MIDNIGHT);
 	setEndDayNextDay(true);
@@ -175,14 +176,14 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	this.beginNormalWorkSecondPeriod = beginNormalWorkSecondPeriod;
     }
 
-    public YearMonthDay getBeginValidDate() {
+    public LocalDate getBeginValidDate() {
 	if (beginValidDate == null) {
-	    beginValidDate = new YearMonthDay(1970, 01, 02);
+	    beginValidDate = new LocalDate(1970, 01, 02);
 	}
 	return beginValidDate;
     }
 
-    public void setBeginValidDate(YearMonthDay beginValidDate) {
+    public void setBeginValidDate(LocalDate beginValidDate) {
 	this.beginValidDate = beginValidDate;
     }
 
@@ -282,11 +283,11 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	this.endNormalWorkSecondPeriodNextDay = endNormalWorkSecondPeriodNextDay;
     }
 
-    public YearMonthDay getEndValidDate() {
+    public LocalDate getEndValidDate() {
 	return endValidDate;
     }
 
-    public void setEndValidDate(YearMonthDay endValidDate) {
+    public void setEndValidDate(LocalDate endValidDate) {
 	this.endValidDate = endValidDate;
     }
 
@@ -592,7 +593,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 
 	public Object execute() {
 	    DateTime now = new DateTime();
-	    YearMonthDay firstDay = getNotClosedMonthFirstDay();
+	    LocalDate firstDay = getNotClosedMonthFirstDay();
 	    boolean changeDatesOrAcronym = false;
 	    if (!getWorkScheduleType().getBeginValidDate().equals(getBeginValidDate())) {
 		if (!getWorkScheduleType().getWorkSchedules().isEmpty() && isWorkScheduleTypeBeenUsedBeforeBeginDate()) {
@@ -869,17 +870,17 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 	}
     }
 
-    public YearMonthDay getNotClosedMonthFirstDay() {
+    public LocalDate getNotClosedMonthFirstDay() {
 	Partial yearMonth = null;
 	for (ClosedMonth closedMonth : RootDomainObject.getInstance().getClosedMonths()) {
 	    if (yearMonth == null || closedMonth.getClosedYearMonth().isAfter(yearMonth)) {
 		yearMonth = closedMonth.getClosedYearMonth();
 	    }
 	}
-	return new YearMonthDay(yearMonth.get(DateTimeFieldType.year()), yearMonth.get(DateTimeFieldType.monthOfYear()) + 1, 1);
+	return new LocalDate(yearMonth.get(DateTimeFieldType.year()), yearMonth.get(DateTimeFieldType.monthOfYear()) + 1, 1);
     }
 
-    public boolean areEndDatesEqual(YearMonthDay endDate1, YearMonthDay endDate2) {
+    public boolean areEndDatesEqual(LocalDate endDate1, LocalDate endDate2) {
 	return (endDate1 == null && endDate2 == null) || (endDate1 != null && endDate2 != null && endDate1.equals(endDate2));
     }
 }

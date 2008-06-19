@@ -8,12 +8,12 @@ import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeExtraWo
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.ExtraWorkAuthorizationFactory;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.assiduousness.util.DateInterval;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
+import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 
 public class ExtraWorkAuthorization extends ExtraWorkAuthorization_Base {
 
@@ -31,8 +31,7 @@ public class ExtraWorkAuthorization extends ExtraWorkAuthorization_Base {
 	if (getWorkingUnit() == null) {
 	    throw new DomainException("error.extraWorkAuthorization.notExist.workingUnit");
 	}
-	if (extraWorkAuthorizationFactory.getBeginDate().isAfter(
-		extraWorkAuthorizationFactory.getEndDate())) {
+	if (extraWorkAuthorizationFactory.getBeginDate().isAfter(extraWorkAuthorizationFactory.getEndDate())) {
 	    throw new DomainException("error.extraWorkAuthorization.invalidPeriod");
 	}
 	setBeginDate(extraWorkAuthorizationFactory.getBeginDate());
@@ -41,8 +40,7 @@ public class ExtraWorkAuthorization extends ExtraWorkAuthorization_Base {
 	boolean addedEmployee = false;
 	for (EmployeeExtraWorkAuthorizationBean employeeExtraWorkAuthorizationBean : extraWorkAuthorizationFactory
 		.getEmployeesExtraWorkAuthorizations()) {
-	    if (!employeeExtraWorkAuthorizationBean.getDelete()
-		    && employeeExtraWorkAuthorizationBean.getEmployee() != null) {
+	    if (!employeeExtraWorkAuthorizationBean.getDelete() && employeeExtraWorkAuthorizationBean.getEmployee() != null) {
 		new EmployeeExtraWorkAuthorization(this, employeeExtraWorkAuthorizationBean);
 		addedEmployee = true;
 	    }
@@ -65,8 +63,7 @@ public class ExtraWorkAuthorization extends ExtraWorkAuthorization_Base {
 	if (getWorkingUnit() == null) {
 	    throw new DomainException("error.extraWorkAuthorization.notExist.workingUnit");
 	}
-	if (extraWorkAuthorizationFactory.getBeginDate().isAfter(
-		extraWorkAuthorizationFactory.getEndDate())) {
+	if (extraWorkAuthorizationFactory.getBeginDate().isAfter(extraWorkAuthorizationFactory.getEndDate())) {
 	    throw new DomainException("error.extraWorkAuthorization.invalidPeriod");
 	}
 	setBeginDate(extraWorkAuthorizationFactory.getBeginDate());
@@ -76,8 +73,7 @@ public class ExtraWorkAuthorization extends ExtraWorkAuthorization_Base {
 	List<EmployeeExtraWorkAuthorizationBean> employeeExtraWorkAuthorizationBeansToDelete = new ArrayList<EmployeeExtraWorkAuthorizationBean>();
 	for (EmployeeExtraWorkAuthorizationBean employeeExtraWorkAuthorizationBean : extraWorkAuthorizationFactory
 		.getEmployeesExtraWorkAuthorizations()) {
-	    if (!employeeExtraWorkAuthorizationBean.getDelete()
-		    && employeeExtraWorkAuthorizationBean.getEmployee() != null) {
+	    if (!employeeExtraWorkAuthorizationBean.getDelete() && employeeExtraWorkAuthorizationBean.getEmployee() != null) {
 		EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization = getEmployeeExtraWorkAuthorizationByEmployee(employeeExtraWorkAuthorizationBean
 			.getEmployee());
 		if (employeeExtraWorkAuthorization != null) {
@@ -96,16 +92,16 @@ public class ExtraWorkAuthorization extends ExtraWorkAuthorization_Base {
 	deleteEmployeeExtraWorkAuthorization(employeeExtraWorkAuthorizationBeansToDelete);
     }
 
-    public boolean existsBetweenDates(YearMonthDay begin, YearMonthDay end) {
-	DateInterval dateInterval = new DateInterval(getBeginDate(), getEndDate());
+    public boolean existsBetweenDates(LocalDate begin, LocalDate end) {
+	Interval dateInterval = new Interval(getBeginDate().toDateTimeAtMidnight(), getEndDate().plusDays(1)
+		.toDateTimeAtMidnight());
 	if (begin != null && end != null) {
-	    DateInterval internalInterval = new DateInterval(begin, end);
-	    return dateInterval.containsInterval(internalInterval)
-		    || internalInterval.containsInterval(dateInterval);
+	    Interval internalInterval = new Interval(begin.toDateTimeAtStartOfDay(), end.plusDays(1).toDateTimeAtStartOfDay());
+	    return dateInterval.contains(internalInterval) || internalInterval.contains(dateInterval);
 	} else if (begin != null && end == null) {
-	    return dateInterval.containsDate(begin);
+	    return dateInterval.contains(begin.toDateTimeAtStartOfDay());
 	} else if (begin == null && end != null) {
-	    return dateInterval.containsDate(end);
+	    return dateInterval.contains(end.toDateTimeAtStartOfDay());
 	}
 	return true;
     }
@@ -130,19 +126,13 @@ public class ExtraWorkAuthorization extends ExtraWorkAuthorization_Base {
 	return null;
     }
 
-    private boolean alreadyExistsExtraWorkAuthorization(
-	    ExtraWorkAuthorizationFactory extraWorkAuthorizationFactory) {
-	for (ExtraWorkAuthorization extraWorkAuthorization : RootDomainObject.getInstance()
-		.getExtraWorkAuthorizations()) {
+    private boolean alreadyExistsExtraWorkAuthorization(ExtraWorkAuthorizationFactory extraWorkAuthorizationFactory) {
+	for (ExtraWorkAuthorization extraWorkAuthorization : RootDomainObject.getInstance().getExtraWorkAuthorizations()) {
 	    if (this != extraWorkAuthorization
-		    && extraWorkAuthorization.getWorkingUnit() == extraWorkAuthorizationFactory
-			    .getWorkingUnit()
-		    && extraWorkAuthorization.getPayingUnit() == extraWorkAuthorizationFactory
-			    .getPayingUnit()
-		    && extraWorkAuthorization.getBeginDate().equals(
-			    extraWorkAuthorizationFactory.getBeginDate())
-		    && extraWorkAuthorization.getEndDate().equals(
-			    extraWorkAuthorizationFactory.getEndDate())) {
+		    && extraWorkAuthorization.getWorkingUnit() == extraWorkAuthorizationFactory.getWorkingUnit()
+		    && extraWorkAuthorization.getPayingUnit() == extraWorkAuthorizationFactory.getPayingUnit()
+		    && extraWorkAuthorization.getBeginDate().equals(extraWorkAuthorizationFactory.getBeginDate())
+		    && extraWorkAuthorization.getEndDate().equals(extraWorkAuthorizationFactory.getEndDate())) {
 		return true;
 	    }
 	}

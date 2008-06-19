@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.TimeOfDay;
-import org.joda.time.YearMonthDay;
 
 public class Timeline {
 
@@ -38,10 +38,10 @@ public class Timeline {
 	plotList(pointList);
     }
 
-    public Timeline(YearMonthDay day, DateTime firstClocking, DateTime lastClocking) {
+    public Timeline(LocalDate day, DateTime firstClocking, DateTime lastClocking) {
 	timePoints = new ArrayList<TimePoint>();
 	timePoints.add(new TimePoint(new TimeOfDay(firstClocking.toTimeOfDay()), AttributeType.NULL, AttributeType.NULL));
-	timePoints.add(new TimePoint(lastClocking.toTimeOfDay(), day.equals(lastClocking.toYearMonthDay()) ? false : true,
+	timePoints.add(new TimePoint(lastClocking.toTimeOfDay(), day.equals(lastClocking.toLocalDate()) ? false : true,
 		AttributeType.NULL));
     }
 
@@ -793,7 +793,7 @@ public class Timeline {
     // and
     // adds it to the pointList.
     public void plotListInTimeline(List<AssiduousnessRecord> clockingList, List<Leave> leaveList,
-	    Iterator<AttributeType> attributesIt, YearMonthDay day) {
+	    Iterator<AttributeType> attributesIt, LocalDate day) {
 	List<TimePoint> pointList = new ArrayList<TimePoint>();
 
 	Iterator<AssiduousnessRecord> clockingIt = clockingList.iterator();
@@ -825,9 +825,9 @@ public class Timeline {
 	plotList(pointList);
     }
 
-    private TimePoint constructTimePoint(AssiduousnessRecord clockIn, YearMonthDay day, AttributeType attribute) {
+    private TimePoint constructTimePoint(AssiduousnessRecord clockIn, LocalDate day, AttributeType attribute) {
 	final TimeOfDay timeIn = new TimeOfDay(clockIn.getDate().getHourOfDay(), clockIn.getDate().getMinuteOfHour(), 0);
-	return new TimePoint(timeIn, clockIn.getDate().toYearMonthDay().isAfter(day), attribute);
+	return new TimePoint(timeIn, clockIn.getDate().toLocalDate().isAfter(day), attribute);
     }
 
     public TimePoint getNextWorkedPoint(TimePoint timePoint) {

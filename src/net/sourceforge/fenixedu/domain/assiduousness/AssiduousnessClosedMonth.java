@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.util.NumberUtils;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.Partial;
-import org.joda.time.YearMonthDay;
 
 public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 
@@ -22,7 +22,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	    Duration holidayRest, Duration balanceToDiscount, double vacations, double tolerance, double article17,
 	    double article66, Integer maximumWorkingDays, Integer workedDaysWithBonusDaysDiscount,
 	    Integer workedDaysWithA17VacationsDaysDiscount, Duration finalBalance, Duration finalBalanceToCompensate,
-	    YearMonthDay beginDate, YearMonthDay endDate, Duration totalWorkedTime) {
+	    LocalDate beginDate, LocalDate endDate, Duration totalWorkedTime) {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setBalance(balance);
 	setBalanceToDiscount(balanceToDiscount);
@@ -86,7 +86,7 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	return closedMonthJustificationscodesMap;
     }
 
-    private double getTotalUnjustifiedPercentage(YearMonthDay beginDate, YearMonthDay endDate) {
+    private double getTotalUnjustifiedPercentage(LocalDate beginDate, LocalDate endDate) {
 	double unjustified = 0;
 	Duration balanceWithoutDiscount = getBalance().plus(getBalanceToDiscount());
 	Duration averageWorkTimeDuration = getAssiduousnessStatusHistory().getAssiduousness().getAverageWorkTimeDuration(
@@ -158,11 +158,10 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	    previousAccumulatedA66 = lastAssiduousnessClosedMonth.getAccumulatedArticle66();
 	    previousUnjustified = lastAssiduousnessClosedMonth.getAccumulatedUnjustified();
 	}
-	YearMonthDay beginDate = new YearMonthDay(getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()),
-		getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.monthOfYear()), 01);
-	YearMonthDay endDate = new YearMonthDay(getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()),
-		getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.monthOfYear()), beginDate.dayOfMonth()
-			.getMaximumValue());
+	LocalDate beginDate = new LocalDate(getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()), getClosedMonth()
+		.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()), 01);
+	LocalDate endDate = new LocalDate(getClosedMonth().getClosedYearMonth().get(DateTimeFieldType.year()), getClosedMonth()
+		.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()), beginDate.dayOfMonth().getMaximumValue());
 	unjustified = getTotalUnjustifiedPercentage(beginDate, endDate);
 
 	unjustified = NumberUtils.formatDoubleWithoutRound(unjustified, 1);
@@ -187,8 +186,8 @@ public class AssiduousnessClosedMonth extends AssiduousnessClosedMonth_Base {
 	int countUnjustifiedWorkingDays = 0;
 	for (Leave leave : getAssiduousnessStatusHistory().getAssiduousness().getLeaves(beginDate, endDate)) {
 	    if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase("FINJUST")) {
-		countUnjustifiedWorkingDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtMidnight(), endDate
-			.toDateTimeAtMidnight()));
+		countUnjustifiedWorkingDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtStartOfDay(), endDate
+			.toDateTimeAtStartOfDay()));
 	    }
 	}
 	setUnjustifiedDays(countUnjustifiedWorkingDays);

@@ -11,14 +11,13 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.ReadableDuration;
 import org.joda.time.TimeOfDay;
-import org.joda.time.YearMonthDay;
 
 public class WorkPeriod extends WorkPeriod_Base {
 
-    public WorkPeriod(TimeOfDay firstPeriod, Duration firstPeriodDuration, TimeOfDay secondPeriod,
-	    Duration secondPeriodDuration) {
+    public WorkPeriod(TimeOfDay firstPeriod, Duration firstPeriodDuration, TimeOfDay secondPeriod, Duration secondPeriodDuration) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setFirstPeriod(firstPeriod);
@@ -55,8 +54,7 @@ public class WorkPeriod extends WorkPeriod_Base {
 
     public Duration getWorkPeriodDuration() {
 	if (getSecondPeriodInterval() != null) {
-	    return (getFirstPeriodInterval().getDuration())
-		    .plus(getSecondPeriodInterval().getDuration());
+	    return (getFirstPeriodInterval().getDuration()).plus(getSecondPeriodInterval().getDuration());
 	} else {
 	    return getFirstPeriodInterval().getDuration();
 	}
@@ -75,15 +73,13 @@ public class WorkPeriod extends WorkPeriod_Base {
 
     public boolean isFirstPeriodNextDay() {
 	DateTime now = TimeOfDay.MIDNIGHT.toDateTimeToday();
-	Duration maxDuration = new Duration(getFirstPeriod().toDateTime(now).getMillis(), now
-		.plusDays(1).getMillis());
+	Duration maxDuration = new Duration(getFirstPeriod().toDateTime(now).getMillis(), now.plusDays(1).getMillis());
 	return (getFirstPeriodDuration().compareTo(maxDuration) >= 0);
     }
 
     public boolean isSecondPeriodNextDay() {
 	DateTime now = TimeOfDay.MIDNIGHT.toDateTimeToday();
-	Duration maxDuration = new Duration(getSecondPeriod().toDateTime(now).getMillis(), now.plusDays(
-		1).getMillis());
+	Duration maxDuration = new Duration(getSecondPeriod().toDateTime(now).getMillis(), now.plusDays(1).getMillis());
 	return (getSecondPeriodDuration().compareTo(maxDuration) >= 0);
     }
 
@@ -106,23 +102,22 @@ public class WorkPeriod extends WorkPeriod_Base {
 	}
     }
 
-    public boolean equivalent(TimeOfDay firstPeriod, Duration firstPeriodDuration,
-	    TimeOfDay secondPeriod, Duration secondPeriodDuration) {
-	if (((firstPeriod != null && firstPeriodDuration != null) && (getFirstPeriod().equals(
-		firstPeriod) && getFirstPeriodDuration().equals(firstPeriodDuration)))
+    public boolean equivalent(TimeOfDay firstPeriod, Duration firstPeriodDuration, TimeOfDay secondPeriod,
+	    Duration secondPeriodDuration) {
+	if (((firstPeriod != null && firstPeriodDuration != null) && (getFirstPeriod().equals(firstPeriod) && getFirstPeriodDuration()
+		.equals(firstPeriodDuration)))
 		&& ((getSecondPeriod() == null && secondPeriod == null && secondPeriodDuration == null) || (getSecondPeriod() != null
-			&& secondPeriod != null
-			&& secondPeriodDuration != null
-			&& getSecondPeriod().equals(secondPeriod) && getSecondPeriodDuration().equals(
-			secondPeriodDuration)))) {
+			&& secondPeriod != null && secondPeriodDuration != null && getSecondPeriod().equals(secondPeriod) && getSecondPeriodDuration()
+			.equals(secondPeriodDuration)))) {
 	    return true;
 	}
 	return false;
     }
 
-    public Interval getNotWorkingPeriod(YearMonthDay day) {
+    public Interval getNotWorkingPeriod(LocalDate day) {
 	if (isSecondWorkPeriodDefined()) {
-	    return new Interval(day.toDateTime(getEndFirstPeriod()), day.toDateTime(getSecondPeriod()));
+	    return new Interval(day.toDateTime(getEndFirstPeriod().toLocalTime()), day
+		    .toDateTime(getSecondPeriod().toLocalTime()));
 	}
 	return null;
     }
@@ -148,8 +143,8 @@ public class WorkPeriod extends WorkPeriod_Base {
 
     public ReadableDuration getHalfWorkPeriodDuration() {
 	if (getSecondPeriodInterval() != null) {
-	    return new Duration((getFirstPeriodInterval().getDuration()).plus(
-		    getSecondPeriodInterval().getDuration()).getMillis() / 2);
+	    return new Duration((getFirstPeriodInterval().getDuration()).plus(getSecondPeriodInterval().getDuration())
+		    .getMillis() / 2);
 	} else {
 	    return new Duration(getFirstPeriodInterval().getDuration().getMillis() / 2);
 	}

@@ -19,9 +19,9 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.joda.time.Partial;
-import org.joda.time.TimeOfDay;
-import org.joda.time.YearMonthDay;
 
 public class Leave extends Leave_Base {
 
@@ -73,30 +73,30 @@ public class Leave extends Leave_Base {
 	return getDate().plus(getDuration());
     }
 
-    public TimeOfDay getEndTimeOfDay() {
+    public LocalTime getEndLocalTime() {
 	if (getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)
 		|| getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE)) {
 	    return null;
 	}
-	return getEndDate().toTimeOfDay();
+	return getEndDate().toLocalTime();
     }
 
-    public YearMonthDay getEndYearMonthDay() {
+    public LocalDate getEndLocalDate() {
 	if (getJustificationMotive().getJustificationType().equals(JustificationType.BALANCE)) {
 	    return null;
 	}
-	return getEndDate().toYearMonthDay();
+	return getEndDate().toLocalDate();
     }
 
     public Partial getPartialEndDate() {
 	Partial p = new Partial();
-	YearMonthDay y = getEndYearMonthDay();
+	LocalDate y = getEndLocalDate();
 	if (y != null) {
 	    for (int i = 0; i < y.getFields().length; i++) {
 		p = p.with(y.getFieldType(i), y.getValue(i));
 	    }
 	}
-	TimeOfDay t = getEndTimeOfDay();
+	LocalTime t = getEndLocalTime();
 	if (t != null) {
 	    for (int i = 0; i < t.getFields().length; i++) {
 		p = p.with(t.getFieldType(i), t.getValue(i));
@@ -110,9 +110,9 @@ public class Leave extends Leave_Base {
     }
 
     // Check if the Leave occured in a particular date
-    public boolean occuredInDate(YearMonthDay date) {
-	return ((getDate().toYearMonthDay().isBefore(date) || getDate().toYearMonthDay().isEqual(date)) && (getEndDate()
-		.toYearMonthDay().isAfter(date) || getEndDate().toYearMonthDay().isEqual(date)));
+    public boolean occuredInDate(LocalDate date) {
+	return ((getDate().toLocalDate().isBefore(date) || getDate().toLocalDate().isEqual(date)) && (getEndDate().toLocalDate()
+		.isAfter(date) || getEndDate().toLocalDate().isEqual(date)));
     }
 
     // Converts a Leave interval to TimePoint
@@ -138,8 +138,8 @@ public class Leave extends Leave_Base {
     }
 
     // Returns true if the justification is for the day
-    public boolean justificationForDay(YearMonthDay day) {
-	DateTime dayAtMidnight = day.toDateTimeAtMidnight();
+    public boolean justificationForDay(LocalDate day) {
+	DateTime dayAtMidnight = day.toDateTimeAtStartOfDay();
 	if (getDate().equals(getEndDate()) && dayAtMidnight.equals(getDate())) {
 	    return true;
 	}
@@ -157,9 +157,9 @@ public class Leave extends Leave_Base {
 
     public int getUtilDaysBetween(Interval interval) {
 	int days = 0;
-	for (YearMonthDay thisDay = interval.getStart().toYearMonthDay(); !thisDay.isAfter(interval.getEnd().toYearMonthDay()); thisDay = thisDay
+	for (LocalDate thisDay = interval.getStart().toLocalDate(); !thisDay.isAfter(interval.getEnd().toLocalDate()); thisDay = thisDay
 		.plusDays(1)) {
-	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(thisDay.toDateTimeAtMidnight());
+	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(thisDay.toDateTimeAtStartOfDay());
 	    if ((!dayOfWeek.equals(WeekDay.SATURDAY)) && (!dayOfWeek.equals(WeekDay.SUNDAY))
 		    && (!getAssiduousness().isHoliday(thisDay))) {
 		days++;
@@ -170,9 +170,9 @@ public class Leave extends Leave_Base {
 
     public int getWorkDaysBetween(Interval interval) {
 	int days = 0;
-	for (YearMonthDay thisDay = interval.getStart().toYearMonthDay(); !thisDay.isAfter(interval.getEnd().toYearMonthDay()); thisDay = thisDay
+	for (LocalDate thisDay = interval.getStart().toLocalDate(); !thisDay.isAfter(interval.getEnd().toLocalDate()); thisDay = thisDay
 		.plusDays(1)) {
-	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(thisDay.toDateTimeAtMidnight());
+	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(thisDay.toDateTimeAtStartOfDay());
 	    if ((!dayOfWeek.equals(WeekDay.SATURDAY)) && (!dayOfWeek.equals(WeekDay.SUNDAY))
 		    && (!getAssiduousness().isHoliday(thisDay)) && occuredInDate(thisDay)) {
 		days++;
@@ -182,8 +182,8 @@ public class Leave extends Leave_Base {
     }
 
     public int getWorkDaysBetween(int year) {
-	YearMonthDay begin = new YearMonthDay(year, 1, 1);
-	YearMonthDay end = new YearMonthDay(year, 12, 31);
+	LocalDate begin = new LocalDate(year, 1, 1);
+	LocalDate end = new LocalDate(year, 12, 31);
 	Interval yearInterval = new Interval(begin.toDateTimeAtMidnight(), end.toDateTimeAtMidnight());
 	Interval overlap = getTotalInterval().overlap(yearInterval);
 	if (overlap != null) {

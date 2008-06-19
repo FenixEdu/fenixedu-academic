@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Holiday;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
-import net.sourceforge.fenixedu.domain.assiduousness.util.DateInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType;
@@ -28,6 +27,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
@@ -69,16 +69,17 @@ public class Assiduousness extends Assiduousness_Base {
     }
 
     public Schedule getCurrentSchedule() {
-	YearMonthDay now = new YearMonthDay();
+	LocalDate today = new LocalDate();
 	for (final Schedule schedule : getSchedules()) {
 	    if (!schedule.getException()) {
 		if (schedule.getEndDate() == null) {
-		    if (schedule.getBeginDate().isBefore(now) || schedule.getBeginDate().isEqual(now)) {
+		    if (schedule.getBeginDate().isBefore(today) || schedule.getBeginDate().isEqual(today)) {
 			return schedule;
 		    }
 		} else {
-		    DateInterval dateInterval = new DateInterval(schedule.getBeginDate(), schedule.getEndDate());
-		    if (dateInterval.containsDate(now)) {
+		    Interval interval = new Interval(schedule.getBeginDate().toDateTimeAtStartOfDay(), schedule.getEndDate()
+			    .plusDays(1).toDateTimeAtStartOfDay());
+		    if (interval.contains(today.toDateTimeAtStartOfDay())) {
 			return schedule;
 		    }
 		}
@@ -87,7 +88,7 @@ public class Assiduousness extends Assiduousness_Base {
 	return null;
     }
 
-    public Schedule getSchedule(YearMonthDay date) {
+    public Schedule getSchedule(LocalDate date) {
 	List<Schedule> scheduleList = new ArrayList<Schedule>();
 	for (Schedule schedule : getSchedules()) {
 	    if (schedule.isDefinedInDate(date)) {
@@ -108,27 +109,28 @@ public class Assiduousness extends Assiduousness_Base {
 	}
     }
 
-    public List<Schedule> getSchedules(YearMonthDay beginDate, YearMonthDay endDate) {
+    public List<Schedule> getSchedules(LocalDate beginDate, LocalDate endDate) {
 	List<Schedule> scheduleList = new ArrayList<Schedule>();
 	for (Schedule schedule : getSchedules()) {
-	    if (schedule.isDefinedInInterval(new DateInterval(beginDate, endDate))) {
+	    Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.plusDays(1).toDateTimeAtStartOfDay());
+	    if (schedule.isDefinedInInterval(interval)) {
 		scheduleList.add(schedule);
 	    }
 	}
 	return scheduleList;
     }
 
-    public HashMap<YearMonthDay, WorkSchedule> getWorkSchedulesBetweenDates(Partial partial) {
-	YearMonthDay beginDate = new YearMonthDay(partial.get(DateTimeFieldType.year()), partial.get(DateTimeFieldType
-		.monthOfYear()), 1);
-	YearMonthDay endDate = new YearMonthDay(partial.get(DateTimeFieldType.year()), partial.get(DateTimeFieldType
-		.monthOfYear()), beginDate.dayOfMonth().getMaximumValue());
+    public HashMap<LocalDate, WorkSchedule> getWorkSchedulesBetweenDates(Partial partial) {
+	LocalDate beginDate = new LocalDate(partial.get(DateTimeFieldType.year()), partial.get(DateTimeFieldType.monthOfYear()),
+		1);
+	LocalDate endDate = new LocalDate(partial.get(DateTimeFieldType.year()), partial.get(DateTimeFieldType.monthOfYear()),
+		beginDate.dayOfMonth().getMaximumValue());
 	return getWorkSchedulesBetweenDates(beginDate, endDate);
     }
 
-    public HashMap<YearMonthDay, WorkSchedule> getWorkSchedulesBetweenDates(YearMonthDay beginDate, YearMonthDay endDate) {
-	HashMap<YearMonthDay, WorkSchedule> workScheduleMap = new HashMap<YearMonthDay, WorkSchedule>();
-	for (YearMonthDay thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay.plusDays(1)) {
+    public HashMap<LocalDate, WorkSchedule> getWorkSchedulesBetweenDates(LocalDate beginDate, LocalDate endDate) {
+	HashMap<LocalDate, WorkSchedule> workScheduleMap = new HashMap<LocalDate, WorkSchedule>();
+	for (LocalDate thisDay = beginDate; thisDay.isBefore(endDate.plusDays(1)); thisDay = thisDay.plusDays(1)) {
 	    final Schedule schedule = getSchedule(thisDay);
 	    if (schedule != null) {
 		workScheduleMap.put(thisDay, schedule.workScheduleWithDate(thisDay));
@@ -139,13 +141,13 @@ public class Assiduousness extends Assiduousness_Base {
 	return workScheduleMap;
     }
 
-    public HashMap<YearMonthDay, List<AssiduousnessRecord>> getClockingsMap(HashMap<YearMonthDay, WorkSchedule> workScheduleMap,
+    public HashMap<LocalDate, List<AssiduousnessRecord>> getClockingsMap(HashMap<LocalDate, WorkSchedule> workScheduleMap,
 	    DateTime init, DateTime end) {
-	HashMap<YearMonthDay, List<AssiduousnessRecord>> clockingsMap = new HashMap<YearMonthDay, List<AssiduousnessRecord>>();
+	HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap = new HashMap<LocalDate, List<AssiduousnessRecord>>();
 	final List<AssiduousnessRecord> clockings = getClockingsAndMissingClockings(init.minusDays(1), end);
 	Collections.sort(clockings, AssiduousnessRecord.COMPARATOR_BY_DATE);
 	for (AssiduousnessRecord record : clockings) {
-	    YearMonthDay clockDay = record.getDate().toYearMonthDay();
+	    LocalDate clockDay = record.getDate().toLocalDate();
 	    if (WorkSchedule.overlapsSchedule(record.getDate(), workScheduleMap) == 0) {
 		if (clockingsMap.get(clockDay.minusDays(1)) != null && clockingsMap.get(clockDay.minusDays(1)).size() % 2 != 0) {
 		    clockDay = clockDay.minusDays(1);
@@ -164,18 +166,18 @@ public class Assiduousness extends Assiduousness_Base {
 	return clockingsMap;
     }
 
-    public HashMap<YearMonthDay, List<Leave>> getLeavesMap(YearMonthDay beginDate, YearMonthDay endDate) {
-	HashMap<YearMonthDay, List<Leave>> leavesMap = new HashMap<YearMonthDay, List<Leave>>();
+    public HashMap<LocalDate, List<Leave>> getLeavesMap(LocalDate beginDate, LocalDate endDate) {
+	HashMap<LocalDate, List<Leave>> leavesMap = new HashMap<LocalDate, List<Leave>>();
 	final List<Leave> leaves = getLeaves(beginDate, endDate);
 	for (Leave record : leaves) {
-	    YearMonthDay endLeaveDay = record.getDate().toYearMonthDay().plusDays(1);
-	    if (record.getEndYearMonthDay() != null) {
-		endLeaveDay = record.getEndYearMonthDay().plusDays(1);
+	    LocalDate endLeaveDay = record.getDate().toLocalDate().plusDays(1);
+	    if (record.getEndLocalDate() != null) {
+		endLeaveDay = record.getEndLocalDate().plusDays(1);
 	    }
-	    for (YearMonthDay leaveDay = record.getDate().toYearMonthDay(); leaveDay.isBefore(endLeaveDay); leaveDay = leaveDay
+	    for (LocalDate leaveDay = record.getDate().toLocalDate(); leaveDay.isBefore(endLeaveDay); leaveDay = leaveDay
 		    .plusDays(1)) {
 		if (record.getAplicableWeekDays() == null
-			|| record.getAplicableWeekDays().contains(leaveDay.toDateTimeAtMidnight())) {
+			|| record.getAplicableWeekDays().contains(leaveDay.toDateTimeAtStartOfDay())) {
 		    List<Leave> leaveList = leavesMap.get(leaveDay);
 		    if (leaveList == null) {
 			leaveList = new ArrayList<Leave>();
@@ -250,7 +252,7 @@ public class Assiduousness extends Assiduousness_Base {
 			workDaySheet.getAssiduousnessRecords().size() - 1).getDate();
 		final Timeline timeline = new Timeline(workDaySheet.getDate(), firstClocking, lastClocking);
 		Iterator<AttributeType> attributesIt = DomainConstants.WORKED_ATTRIBUTES.getAttributes().iterator();
-		final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(workDaySheet.getDate().toDateTimeAtMidnight());
+		final WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(workDaySheet.getDate().toDateTimeAtStartOfDay());
 		if (dayOfWeek.equals(WeekDay.SATURDAY) || dayOfWeek.equals(WeekDay.SUNDAY) || isDayHoliday) {
 		    timeline.plotListInTimeline(workDaySheet.getAssiduousnessRecords(), new ArrayList<Leave>(), attributesIt,
 			    workDaySheet.getDate());
@@ -260,7 +262,7 @@ public class Assiduousness extends Assiduousness_Base {
 		}
 		Duration worked = timeline.calculateWorkPeriodDuration(null, timeline.getTimePoints().iterator().next(),
 			new TimePoint(defaultStartWeeklyRestDay, AttributeType.NULL), new TimePoint(lastClocking.toTimeOfDay(),
-				lastClocking.toYearMonthDay().equals(workDaySheet.getDate()) ? false : true, AttributeType.NULL),
+				lastClocking.toLocalDate().equals(workDaySheet.getDate()) ? false : true, AttributeType.NULL),
 			null, null);
 		Duration weeklyRestDuration = worked;
 		// TODO Remove coments in 2007
@@ -292,7 +294,7 @@ public class Assiduousness extends Assiduousness_Base {
 	return leavesByType;
     }
 
-    public List<Leave> getLeaves(YearMonthDay day) {
+    public List<Leave> getLeaves(LocalDate day) {
 	List<Leave> leaves = new ArrayList<Leave>();
 	for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
 	    if (assiduousnessRecord.isLeave() && !assiduousnessRecord.isAnulated()) {
@@ -317,23 +319,23 @@ public class Assiduousness extends Assiduousness_Base {
 	return clockingsList;
     }
 
-    public List<Clocking> getClockings(YearMonthDay beginDate, YearMonthDay endDate) {
-	DateInterval interval = new DateInterval(beginDate, endDate);
+    public List<Clocking> getClockings(LocalDate beginDate, LocalDate endDate) {
+	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay().plusDays(1));
 	List<Clocking> clockingsList = new ArrayList<Clocking>();
 	for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
 	    if (assiduousnessRecord.isClocking() && !assiduousnessRecord.isAnulated()
-		    && interval.containsDate(assiduousnessRecord.getDate())) {
+		    && interval.contains(assiduousnessRecord.getDate())) {
 		clockingsList.add((Clocking) assiduousnessRecord);
 	    }
 	}
 	return clockingsList;
     }
 
-    public List<Clocking> getClockingsAndAnulatedClockings(YearMonthDay beginDate, YearMonthDay endDate) {
-	DateInterval interval = new DateInterval(beginDate, endDate);
+    public List<Clocking> getClockingsAndAnulatedClockings(LocalDate beginDate, LocalDate endDate) {
+	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay().plusDays(1));
 	List<Clocking> clockingsList = new ArrayList<Clocking>();
 	for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
-	    if (assiduousnessRecord.isClocking() && interval.containsDate(assiduousnessRecord.getDate())) {
+	    if (assiduousnessRecord.isClocking() && interval.contains(assiduousnessRecord.getDate())) {
 		if (!assiduousnessRecord.isAnulated()) {
 		    clockingsList.add((Clocking) assiduousnessRecord);
 		} else {
@@ -345,12 +347,12 @@ public class Assiduousness extends Assiduousness_Base {
     }
 
     public List<Leave> getLeavesByYear(int year) {
-	return getLeaves(new YearMonthDay(year, 1, 1), new YearMonthDay(year, 12, 31));
+	return getLeaves(new LocalDate(year, 1, 1), new LocalDate(year, 12, 31));
     }
 
-    public List<Leave> getLeaves(YearMonthDay beginDate, YearMonthDay endDate) {
-	Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), defaultEndWorkDay.toDateTime(endDate
-		.toDateTimeAtMidnight()));
+    public List<Leave> getLeaves(LocalDate beginDate, LocalDate endDate) {
+	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), defaultEndWorkDay.toDateTime(endDate
+		.toDateTimeAtStartOfDay().plusDays(1)));
 	List<Leave> leavesList = new ArrayList<Leave>();
 	for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
 	    if (assiduousnessRecord.isLeave() && !assiduousnessRecord.isAnulated()) {
@@ -364,7 +366,7 @@ public class Assiduousness extends Assiduousness_Base {
 	return leavesList;
     }
 
-    public List<Leave> getLeavesByType(YearMonthDay beginDate, YearMonthDay endDate, JustificationType justificationType) {
+    public List<Leave> getLeavesByType(LocalDate beginDate, LocalDate endDate, JustificationType justificationType) {
 	List<Leave> leavesList = new ArrayList<Leave>();
 	for (Leave leave : getLeaves(beginDate, endDate)) {
 	    if (leave.getJustificationMotive().getJustificationType().equals(justificationType)) {
@@ -374,11 +376,12 @@ public class Assiduousness extends Assiduousness_Base {
 	return leavesList;
     }
 
-    public List<MissingClocking> getMissingClockings(YearMonthDay beginDate, YearMonthDay endDate) {
-	DateInterval interval = new DateInterval(beginDate, endDate);
+    public List<MissingClocking> getMissingClockings(LocalDate beginDate, LocalDate endDate) {
+	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), defaultEndWorkDay.toDateTime(endDate
+		.toDateTimeAtStartOfDay().plusDays(1)));
 	List<MissingClocking> missingClockingsList = new ArrayList<MissingClocking>();
 	for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
-	    if (assiduousnessRecord.isMissingClocking() && interval.containsDate(assiduousnessRecord.getDate())
+	    if (assiduousnessRecord.isMissingClocking() && interval.contains(assiduousnessRecord.getDate())
 		    && (!assiduousnessRecord.isAnulated())) {
 		missingClockingsList.add((MissingClocking) assiduousnessRecord);
 	    }
@@ -386,29 +389,33 @@ public class Assiduousness extends Assiduousness_Base {
 	return missingClockingsList;
     }
 
-    public boolean isHoliday(YearMonthDay thisDay) {
+    public boolean isHoliday(LocalDate thisDay) {
 	Campus campus = getAssiduousnessCampus(thisDay);
 	return Holiday.isHoliday(thisDay, campus);
     }
 
-    private Campus getAssiduousnessCampus(YearMonthDay thisDay) {
+    private Campus getAssiduousnessCampus(LocalDate thisDay) {
 	for (AssiduousnessCampusHistory assiduousnessCampusHistory : getAssiduousnessCampusHistories()) {
-	    DateInterval dateInterval = new DateInterval(assiduousnessCampusHistory.getBeginDate(), assiduousnessCampusHistory
-		    .getEndDate());
-	    if (dateInterval.containsDate(thisDay)) {
+	    if (assiduousnessCampusHistory.getEndDate() != null) {
+		Interval interval = new Interval(assiduousnessCampusHistory.getBeginDate().toDateTimeAtStartOfDay(),
+			assiduousnessCampusHistory.getEndDate().toDateTimeAtStartOfDay().plusDays(1));
+		if (interval.contains(thisDay.toDateTimeAtStartOfDay())) {
+		    return assiduousnessCampusHistory.getCampus();
+		}
+	    } else if (!assiduousnessCampusHistory.getBeginDate().isAfter(thisDay)) {
 		return assiduousnessCampusHistory.getCampus();
 	    }
 	}
 	return null;
     }
 
-    public YearMonthDay getLastActiveStatusBetween(YearMonthDay beginDate, YearMonthDay endDate) {
-	YearMonthDay lastActiveStatus = null;
+    public LocalDate getLastActiveStatusBetween(LocalDate beginDate, LocalDate endDate) {
+	LocalDate lastActiveStatus = null;
 	for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
 	    if (assiduousnessStatusHistory.getEndDate() != null) {
 		Interval statusInterval = new Interval(assiduousnessStatusHistory.getBeginDate().toDateMidnight(),
 			assiduousnessStatusHistory.getEndDate().toDateMidnight().plusDays(1));
-		Interval interval = new Interval(beginDate.toDateMidnight(), endDate.toDateMidnight().plusDays(1));
+		Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay().plusDays(1));
 		if (interval.overlaps(statusInterval)
 			&& assiduousnessStatusHistory.getAssiduousnessStatus().getState() == AssiduousnessState.ACTIVE) {
 		    if (lastActiveStatus == null || !lastActiveStatus.isAfter(assiduousnessStatusHistory.getEndDate())) {
@@ -430,18 +437,18 @@ public class Assiduousness extends Assiduousness_Base {
 	return lastActiveStatus;
     }
 
-    public AssiduousnessStatus getLastAssiduousnessStatusBetween(YearMonthDay beginDate, YearMonthDay endDate) {
+    public AssiduousnessStatus getLastAssiduousnessStatusBetween(LocalDate beginDate, LocalDate endDate) {
 	AssiduousnessStatusHistory lastActiveStatus = getLastAssiduousnessStatusHistoryBetween(beginDate, endDate);
 	return lastActiveStatus == null ? null : lastActiveStatus.getAssiduousnessStatus();
     }
 
-    public AssiduousnessStatusHistory getLastAssiduousnessStatusHistoryBetween(YearMonthDay beginDate, YearMonthDay endDate) {
+    public AssiduousnessStatusHistory getLastAssiduousnessStatusHistoryBetween(LocalDate beginDate, LocalDate endDate) {
 	AssiduousnessStatusHistory lastActiveStatus = null;
 	for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
 	    if (assiduousnessStatusHistory.getEndDate() != null) {
 		Interval statusInterval = new Interval(assiduousnessStatusHistory.getBeginDate().toDateMidnight(),
 			assiduousnessStatusHistory.getEndDate().toDateMidnight().plusDays(1));
-		Interval interval = new Interval(beginDate.toDateMidnight(), endDate.toDateMidnight().plusDays(1));
+		Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay().plusDays(1));
 		if (interval.overlaps(statusInterval)
 			&& assiduousnessStatusHistory.getAssiduousnessStatus().getState() == AssiduousnessState.ACTIVE) {
 		    if (lastActiveStatus == null
@@ -462,7 +469,7 @@ public class Assiduousness extends Assiduousness_Base {
     }
 
     public AssiduousnessStatusHistory getCurrentOrLastAssiduousnessStatusHistory() {
-	YearMonthDay today = new YearMonthDay();
+	LocalDate today = new LocalDate();
 	AssiduousnessStatusHistory lastActiveStatus = null;
 	for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
 	    if (assiduousnessStatusHistory.getEndDate() != null
@@ -503,14 +510,14 @@ public class Assiduousness extends Assiduousness_Base {
 	return lastActiveStatus;
     }
 
-    public List<AssiduousnessStatusHistory> getStatusBetween(YearMonthDay beginDate, YearMonthDay endDate) {
+    public List<AssiduousnessStatusHistory> getStatusBetween(LocalDate beginDate, LocalDate endDate) {
 	List<AssiduousnessStatusHistory> assiduousnessStatusList = new ArrayList<AssiduousnessStatusHistory>();
 	for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
 	    if (assiduousnessStatusHistory.getEndDate() != null) {
-		DateInterval statusInterval = new DateInterval(assiduousnessStatusHistory.getBeginDate(),
-			assiduousnessStatusHistory.getEndDate());
-		DateInterval interval = new DateInterval(beginDate, endDate);
-		if (interval.containsInterval(statusInterval) || statusInterval.containsInterval(interval)) {
+		Interval statusInterval = new Interval(assiduousnessStatusHistory.getBeginDate().toDateTimeAtStartOfDay(),
+			assiduousnessStatusHistory.getEndDate().toDateTimeAtStartOfDay().plusDays(1));
+		Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay().plusDays(1));
+		if (interval.contains(statusInterval) || statusInterval.contains(interval)) {
 		    assiduousnessStatusList.add(assiduousnessStatusHistory);
 		}
 	    } else {
@@ -524,12 +531,12 @@ public class Assiduousness extends Assiduousness_Base {
     }
 
     public AssiduousnessStatus getCurrentStatus() {
-	YearMonthDay now = new YearMonthDay();
-	List<AssiduousnessStatusHistory> result = getStatusBetween(now, now);
+	LocalDate today = new LocalDate();
+	List<AssiduousnessStatusHistory> result = getStatusBetween(today, today);
 	return result == null || result.isEmpty() ? null : result.get(0).getAssiduousnessStatus();
     }
 
-    public boolean isStatusActive(YearMonthDay beginDate, YearMonthDay endDate) {
+    public boolean isStatusActive(LocalDate beginDate, LocalDate endDate) {
 	for (AssiduousnessStatusHistory assiduousnessStatusHistory : getAssiduousnessStatusHistories()) {
 	    if (assiduousnessStatusHistory.getEndDate() != null) {
 		Interval statusInterval = new Interval(assiduousnessStatusHistory.getBeginDate().toDateMidnight(),
@@ -551,29 +558,36 @@ public class Assiduousness extends Assiduousness_Base {
 	return false;
     }
 
-    public List<Campus> getCampusForInterval(YearMonthDay begin, YearMonthDay end) {
+    public List<Campus> getCampusForInterval(LocalDate begin, LocalDate end) {
 
 	List<AssiduousnessCampusHistory> histories = this.getAssiduousnessCampusHistories();
 	List<Campus> campus = new ArrayList<Campus>();
-	DateInterval targetInterval = new DateInterval(begin, end);
+	Interval targetInterval = new Interval(begin.toDateTimeAtStartOfDay(), end.toDateTimeAtStartOfDay().plusDays(1));
 	for (AssiduousnessCampusHistory history : histories) {
-	    DateInterval historyInterval = new DateInterval(history.getBeginDate(), history.getEndDate());
-	    if (historyInterval.containsInterval(targetInterval)) {
-		campus.add(history.getCampus());
+	    if (history.getEndDate() != null) {
+		Interval historyInterval = new Interval(history.getBeginDate().toDateTimeAtStartOfDay(), history.getEndDate()
+			.toDateTimeAtStartOfDay().plusDays(1));
+		if (historyInterval.contains(targetInterval)) {
+		    campus.add(history.getCampus());
+		}
+	    } else {
+		if (targetInterval.contains(history.getBeginDate().toDateTimeAtStartOfDay())
+			|| history.getBeginDate().isBefore(targetInterval.getStart().toLocalDate())) {
+		    campus.add(history.getCampus());
+		}
 	    }
 	}
 	return campus;
     }
 
-    public boolean overlapsOtherSchedules(final Schedule schedule, YearMonthDay beginDate, YearMonthDay endDate) {
-	DateInterval scheduleInterval = new DateInterval(beginDate, endDate);
+    public boolean overlapsOtherSchedules(final Schedule schedule, LocalDate beginDate, LocalDate endDate) {
+	Interval scheduleInterval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay().plusDays(1));
 	for (final Schedule otherSchedule : getSchedules()) {
 	    if (schedule != otherSchedule) {
-
-		DateInterval otherScheduleInterval = new DateInterval(otherSchedule.getBeginDate(), otherSchedule.getEndDate());
+		Interval otherScheduleInterval = new Interval(otherSchedule.getBeginDate().toDateTimeAtStartOfDay(),
+			otherSchedule.getEndDate().toDateTimeAtStartOfDay().plusDays(1));
 		if ((schedule.getException().equals(otherSchedule.getException()))
-			&& (scheduleInterval.containsInterval(otherScheduleInterval) || otherScheduleInterval
-				.containsInterval(scheduleInterval))) {
+			&& (scheduleInterval.contains(otherScheduleInterval) || otherScheduleInterval.contains(scheduleInterval))) {
 		    return true;
 		}
 	    }
@@ -581,17 +595,17 @@ public class Assiduousness extends Assiduousness_Base {
 	return false;
     }
 
-    public boolean hasAnyRecordsBetweenDates(YearMonthDay begin, YearMonthDay end) {
-	DateInterval dateInterval = new DateInterval(begin, end);
+    public boolean hasAnyRecordsBetweenDates(LocalDate begin, LocalDate end) {
+	Interval dateInterval = new Interval(begin.toDateTimeAtStartOfDay(), end.toDateTimeAtStartOfDay().plusDays(1));
 	for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
-	    if (dateInterval.containsDate(assiduousnessRecord.getDate()) && (!assiduousnessRecord.isAnulated())) {
+	    if (dateInterval.contains(assiduousnessRecord.getDate()) && (!assiduousnessRecord.isAnulated())) {
 		return true;
 	    }
 	}
 	return false;
     }
 
-    public Duration getAverageWorkTimeDuration(YearMonthDay beginDate, YearMonthDay endDate) {
+    public Duration getAverageWorkTimeDuration(LocalDate beginDate, LocalDate endDate) {
 	List<Schedule> schedules = getSchedules(beginDate, endDate);
 	Duration averageWorkTimeDuration = Duration.ZERO;
 	for (Schedule schedule : schedules) {
@@ -601,12 +615,12 @@ public class Assiduousness extends Assiduousness_Base {
 	return averageWorkTimeDuration;
     }
 
-    public int getLeavesNumberOfWorkDays(YearMonthDay beginDate, YearMonthDay endDate, String justificationAcronym) {
+    public int getLeavesNumberOfWorkDays(LocalDate beginDate, LocalDate endDate, String justificationAcronym) {
 	int countWorkDays = 0;
 	for (Leave leave : getLeaves(beginDate, endDate)) {
 	    if (leave.getJustificationMotive().getAcronym().equalsIgnoreCase(justificationAcronym)) {
-		countWorkDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtMidnight(), endDate
-			.toDateTimeAtMidnight()));
+		countWorkDays += leave.getWorkDaysBetween(new Interval(beginDate.toDateTimeAtStartOfDay(), endDate
+			.toDateTimeAtStartOfDay()));
 	    }
 	}
 	return countWorkDays;
@@ -635,7 +649,7 @@ public class Assiduousness extends Assiduousness_Base {
 		&& getSchedules().isEmpty() && getExtraWorkRequests().isEmpty() && getEmployeeExtraWorkAuthorizations().isEmpty();
     }
 
-    public List<ExtraWorkRequest> getExtraWorkRequests(YearMonthDay begin) {
+    public List<ExtraWorkRequest> getExtraWorkRequests(LocalDate begin) {
 	List<ExtraWorkRequest> result = new ArrayList<ExtraWorkRequest>();
 	for (ExtraWorkRequest request : getExtraWorkRequests()) {
 	    if (request.getPartialPayingDate().get(DateTimeFieldType.year()) == begin.getYear()) {
@@ -661,8 +675,8 @@ public class Assiduousness extends Assiduousness_Base {
 	return result;
     }
 
-    public Unit getLastMailingUnitInDate(YearMonthDay beginDate, YearMonthDay endDate) {
-	Unit unit = getEmployee().getLastWorkingPlace(beginDate, endDate);
+    public Unit getLastMailingUnitInDate(LocalDate beginDate, LocalDate endDate) {
+	Unit unit = getEmployee().getLastWorkingPlace(new YearMonthDay(beginDate), new YearMonthDay(endDate));
 	EmployeeContract lastMailingContract = (EmployeeContract) getEmployee().getLastContractByContractType(
 		AccountabilityTypeEnum.MAILING_CONTRACT);
 	if (lastMailingContract != null && lastMailingContract.getMailingUnit() != null) {
@@ -672,11 +686,11 @@ public class Assiduousness extends Assiduousness_Base {
     }
 
     public boolean worksAt(final Campus campus) {
-	final YearMonthDay now = new YearMonthDay();
+	final LocalDate now = new LocalDate();
 	for (final AssiduousnessCampusHistory assiduousnessCampusHistory : getAssiduousnessCampusHistoriesSet()) {
 	    if (assiduousnessCampusHistory.getCampus() == campus) {
-		final YearMonthDay begin = assiduousnessCampusHistory.getBeginDate();
-		final YearMonthDay end = assiduousnessCampusHistory.getEndDate();
+		final LocalDate begin = assiduousnessCampusHistory.getBeginDate();
+		final LocalDate end = assiduousnessCampusHistory.getEndDate();
 		if (!begin.isAfter(now) && (end == null || !end.isBefore(now))) {
 		    return true;
 		}

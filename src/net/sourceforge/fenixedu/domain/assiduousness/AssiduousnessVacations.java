@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 public class AssiduousnessVacations extends AssiduousnessVacations_Base {
@@ -100,8 +101,8 @@ public class AssiduousnessVacations extends AssiduousnessVacations_Base {
 
     public void calculateArticles17And18() {
 	if (isInExercise()) {
-	    YearMonthDay beginDate = new YearMonthDay((getYear() - 1), 1, 1);
-	    YearMonthDay endDate = new YearMonthDay((getYear() - 1), 12, 31);
+	    LocalDate beginDate = new LocalDate((getYear() - 1), 1, 1);
+	    LocalDate endDate = new LocalDate((getYear() - 1), 12, 31);
 	    AssiduousnessStatusHistory assiduousnessStatusHistory = getAssiduousness().getLastAssiduousnessStatusHistoryBetween(
 		    beginDate, endDate);
 	    Duration totalWorkedTime = Duration.ZERO;
@@ -130,7 +131,7 @@ public class AssiduousnessVacations extends AssiduousnessVacations_Base {
     }
 
     private boolean isInExercise() {
-	YearMonthDay beginDate = new YearMonthDay(getYear(), 1, 1);
+	LocalDate beginDate = new LocalDate(getYear(), 1, 1);
 	List<AssiduousnessStatusHistory> statusList = getAssiduousness().getStatusBetween(beginDate, beginDate);
 	if (statusList.size() == 0 || statusList.get(0).getAssiduousnessStatus().getState() != AssiduousnessState.ACTIVE) {
 	    return false;

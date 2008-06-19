@@ -8,13 +8,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.LocalDate;
 import org.joda.time.Months;
-import org.joda.time.YearMonthDay;
 
 public class AssiduousnessStatusHistory extends AssiduousnessStatusHistory_Base {
 
-    public AssiduousnessStatusHistory(Assiduousness assiduousness, AssiduousnessStatus assiduousnessStatus,
-	    YearMonthDay beginDate, YearMonthDay endDate, DateTime lastModifiedDate, Employee modifiedBy) {
+    public AssiduousnessStatusHistory(Assiduousness assiduousness, AssiduousnessStatus assiduousnessStatus, LocalDate beginDate,
+	    LocalDate endDate, DateTime lastModifiedDate, Employee modifiedBy) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAssiduousness(assiduousness);
@@ -25,8 +25,8 @@ public class AssiduousnessStatusHistory extends AssiduousnessStatusHistory_Base 
 	setModifiedBy(modifiedBy);
     }
 
-    public AssiduousnessStatusHistory(Assiduousness assiduousness, AssiduousnessStatus assiduousnessStatus,
-	    YearMonthDay beginDate, YearMonthDay endDate, Employee modifiedBy) {
+    public AssiduousnessStatusHistory(Assiduousness assiduousness, AssiduousnessStatus assiduousnessStatus, LocalDate beginDate,
+	    LocalDate endDate, Employee modifiedBy) {
 	AssiduousnessStatusHistory lastAssiduousnessStatusHistory = assiduousness.getLastAssiduousnessStatusHistory();
 	if (lastAssiduousnessStatusHistory != null) {
 	    if (lastAssiduousnessStatusHistory.getAssiduousnessStatus().equals(assiduousnessStatus)) {
@@ -34,7 +34,7 @@ public class AssiduousnessStatusHistory extends AssiduousnessStatusHistory_Base 
 	    }
 
 	    if (lastAssiduousnessStatusHistory.getEndDate() == null) {
-		if (!beginDate.isAfter(ClosedMonth.getLastMonthClosed().getLastClosedYearMonthDay())) {
+		if (!beginDate.isAfter(ClosedMonth.getLastClosedLocalDate())) {
 		    throw new DomainException("error.datesInclosedMonth");
 		}
 		lastAssiduousnessStatusHistory.setEndDate(beginDate.minusDays(1));
@@ -51,10 +51,10 @@ public class AssiduousnessStatusHistory extends AssiduousnessStatusHistory_Base 
 
     }
 
-    public void editAssiduousnessStatusHistory(YearMonthDay endDate, Employee modifiedBy) {
+    public void editAssiduousnessStatusHistory(LocalDate endDate, Employee modifiedBy) {
 	if (endDate != null) {
-	    YearMonthDay lastYearMonthDayClosed = ClosedMonth.getLastMonthClosed().getLastClosedYearMonthDay();
-	    if (!endDate.isAfter(lastYearMonthDayClosed)) {
+	    LocalDate lastLocalDateClosed = ClosedMonth.getLastClosedLocalDate();
+	    if (!endDate.isAfter(lastLocalDateClosed)) {
 		throw new DomainException("error.datesInclosedMonth");
 	    }
 	    if (!endDate.isAfter(getBeginDate())) {
@@ -66,12 +66,12 @@ public class AssiduousnessStatusHistory extends AssiduousnessStatusHistory_Base 
 
     public boolean isEditable() {
 	return getAssiduousness().getLastAssiduousnessStatusHistory().getIdInternal().equals(getIdInternal())
-		&& (getEndDate() == null || !getEndDate().isBefore(ClosedMonth.getLastMonthClosed().getLastClosedYearMonthDay()));
+		&& (getEndDate() == null || !getEndDate().isBefore(ClosedMonth.getLastClosedLocalDate()));
     }
 
     public boolean isDeletable() {
 	return getAssiduousness().getLastAssiduousnessStatusHistory().equals(this)
-		&& !getBeginDate().isBefore(ClosedMonth.getLastMonthClosed().getLastClosedYearMonthDay());
+		&& !getBeginDate().isBefore(ClosedMonth.getLastClosedLocalDate());
     }
 
     private boolean canBeDeleted() {
@@ -88,7 +88,7 @@ public class AssiduousnessStatusHistory extends AssiduousnessStatusHistory_Base 
 	}
     }
 
-    public Duration getSheculeWeightedAverage(YearMonthDay beginDate, YearMonthDay endDate) {
+    public Duration getSheculeWeightedAverage(LocalDate beginDate, LocalDate endDate) {
 	Duration averageWorkPeriodDuration = Duration.ZERO;
 	if (beginDate.isBefore(getBeginDate())) {
 	    beginDate = getBeginDate();
@@ -98,8 +98,8 @@ public class AssiduousnessStatusHistory extends AssiduousnessStatusHistory_Base 
 	}
 	for (int month = beginDate.getMonthOfYear(); month <= endDate.getMonthOfYear(); month++) {
 	    Duration thisMonthWorkPeriodAverage = Duration.ZERO;
-	    YearMonthDay beginMonth = new YearMonthDay(beginDate.getYear(), month, 1);
-	    YearMonthDay endMonth = new YearMonthDay(endDate.getYear(), month, beginMonth.dayOfMonth().getMaximumValue());
+	    LocalDate beginMonth = new LocalDate(beginDate.getYear(), month, 1);
+	    LocalDate endMonth = new LocalDate(endDate.getYear(), month, beginMonth.dayOfMonth().getMaximumValue());
 	    List<Schedule> schedules = getAssiduousness().getSchedules(beginMonth, endMonth);
 	    for (Schedule schedule : schedules) {
 		thisMonthWorkPeriodAverage = thisMonthWorkPeriodAverage.plus(schedule.getAverageWorkPeriodDuration());

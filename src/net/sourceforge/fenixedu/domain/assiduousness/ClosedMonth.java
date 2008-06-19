@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocumentTyp
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.LocalDate;
 import org.joda.time.Partial;
-import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
@@ -39,7 +39,7 @@ public class ClosedMonth extends ClosedMonth_Base {
 	setClosedYearMonth(closedYearMonth);
     }
 
-    public ClosedMonth(YearMonthDay day) {
+    public ClosedMonth(LocalDate day) {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setClosedForBalance(true);
 	setClosedForExtraWork(false);
@@ -65,7 +65,7 @@ public class ClosedMonth extends ClosedMonth_Base {
 	return false;
     }
 
-    public static boolean isMonthClosed(YearMonthDay day) {
+    public static boolean isMonthClosed(LocalDate day) {
 	Partial yearMonth = new Partial().with(DateTimeFieldType.monthOfYear(), day.getMonthOfYear()).with(
 		DateTimeFieldType.year(), day.getYear());
 	return isMonthClosed(yearMonth);
@@ -75,11 +75,11 @@ public class ClosedMonth extends ClosedMonth_Base {
 	return getLastMonthClosed(false);
     }
 
-    public static YearMonthDay getLastClosedYearMonthDay() {
+    public static LocalDate getLastClosedLocalDate() {
 	Partial lastClosedYearMonth = getLastMonthClosed(false).getClosedYearMonth();
-	YearMonthDay firstDay = new YearMonthDay(lastClosedYearMonth.get(DateTimeFieldType.year()), lastClosedYearMonth
+	LocalDate firstDay = new LocalDate(lastClosedYearMonth.get(DateTimeFieldType.year()), lastClosedYearMonth
 		.get(DateTimeFieldType.monthOfYear()), 1);
-	return new YearMonthDay(lastClosedYearMonth.get(DateTimeFieldType.year()), lastClosedYearMonth.get(DateTimeFieldType
+	return new LocalDate(lastClosedYearMonth.get(DateTimeFieldType.year()), lastClosedYearMonth.get(DateTimeFieldType
 		.monthOfYear()), firstDay.dayOfMonth().getMaximumValue());
     }
 
@@ -99,12 +99,12 @@ public class ClosedMonth extends ClosedMonth_Base {
     }
 
     public static boolean getCanCloseMonth(Partial yearMonth) {
-	YearMonthDay yearMonthBefore = new YearMonthDay(yearMonth.get(DateTimeFieldType.year()), yearMonth.get(DateTimeFieldType
+	LocalDate yearMonthBefore = new LocalDate(yearMonth.get(DateTimeFieldType.year()), yearMonth.get(DateTimeFieldType
 		.monthOfYear()), 1).minusMonths(1);
 	if (isMonthClosed(yearMonthBefore) || !hasAnyMonthClosed()) {
-	    YearMonthDay yearMonthAfter = new YearMonthDay(yearMonth.get(DateTimeFieldType.year()), yearMonth
-		    .get(DateTimeFieldType.monthOfYear()), dayOfMonthToCloseLastMonth).plusMonths(1);
-	    YearMonthDay now = new YearMonthDay();
+	    LocalDate yearMonthAfter = new LocalDate(yearMonth.get(DateTimeFieldType.year()), yearMonth.get(DateTimeFieldType
+		    .monthOfYear()), dayOfMonthToCloseLastMonth).plusMonths(1);
+	    LocalDate now = new LocalDate();
 	    if (!now.isBefore(yearMonthAfter)) {
 		return true;
 	    }
@@ -154,16 +154,16 @@ public class ClosedMonth extends ClosedMonth_Base {
 	return null;
     }
 
-    public YearMonthDay getClosedMonthFirstDay() {
-	return new YearMonthDay(getClosedYearMonth().get(DateTimeFieldType.year()), getClosedYearMonth().get(
+    public LocalDate getClosedMonthFirstDay() {
+	return new LocalDate(getClosedYearMonth().get(DateTimeFieldType.year()), getClosedYearMonth().get(
 		DateTimeFieldType.monthOfYear()), 01);
     }
 
-    public YearMonthDay getClosedMonthLastDay() {
-	YearMonthDay beginDate = new YearMonthDay(getClosedYearMonth().get(DateTimeFieldType.year()), getClosedYearMonth().get(
+    public LocalDate getClosedMonthLastDay() {
+	LocalDate beginDate = new LocalDate(getClosedYearMonth().get(DateTimeFieldType.year()), getClosedYearMonth().get(
 		DateTimeFieldType.monthOfYear()), 01);
 	int endDay = beginDate.dayOfMonth().getMaximumValue();
-	return new YearMonthDay(getClosedYearMonth().get(DateTimeFieldType.year()), getClosedYearMonth().get(
+	return new LocalDate(getClosedYearMonth().get(DateTimeFieldType.year()), getClosedYearMonth().get(
 		DateTimeFieldType.monthOfYear()), endDay);
     }
 

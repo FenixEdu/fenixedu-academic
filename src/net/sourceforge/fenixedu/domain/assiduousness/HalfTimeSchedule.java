@@ -9,8 +9,9 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.joda.time.TimeOfDay;
-import org.joda.time.YearMonthDay;
 
 /**
  * @author velouria@velouria.org
@@ -20,12 +21,11 @@ public class HalfTimeSchedule extends HalfTimeSchedule_Base {
 
     public static final Duration normalHalfTimeWorkDayDuration = new Duration(14400000); // 4h
 
-    public static final TimeOfDay splitWorkDayHour = new TimeOfDay(12, 0, 0);
+    public static final LocalTime splitWorkDayHour = new LocalTime(12, 0, 0);
 
-    public HalfTimeSchedule(String acronym, ScheduleClockingType scheduleClockingType,
-	    YearMonthDay beginValidDate, YearMonthDay endValidDate, TimeOfDay dayTime,
-	    Duration dayTimeDuration, TimeOfDay clockingTime, Duration clockingTimeDuration,
-	    WorkPeriod normalWorkPeriod, WorkPeriod fixedWorkPeriod, DateTime lastModifiedDate,
+    public HalfTimeSchedule(String acronym, ScheduleClockingType scheduleClockingType, LocalDate beginValidDate,
+	    LocalDate endValidDate, TimeOfDay dayTime, Duration dayTimeDuration, TimeOfDay clockingTime,
+	    Duration clockingTimeDuration, WorkPeriod normalWorkPeriod, WorkPeriod fixedWorkPeriod, DateTime lastModifiedDate,
 	    Employee modifiedBy) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -55,20 +55,17 @@ public class HalfTimeSchedule extends HalfTimeSchedule_Base {
     }
 
     public Boolean isMorningSchedule() {
-	YearMonthDay today = new YearMonthDay();
+	LocalDate today = new LocalDate();
 	Duration beforeDuration = Duration.ZERO;
-	Interval beforeInterval = getNormalWorkPeriod().getFirstPeriodInterval().toInterval(
-		today.toDateTimeAtMidnight()).overlap(
-		new Interval(today.toDateTimeAtMidnight(), today.toDateTime(splitWorkDayHour)));
+	Interval beforeInterval = getNormalWorkPeriod().getFirstPeriodInterval().toInterval(today.toDateTimeAtStartOfDay())
+		.overlap(new Interval(today.toDateTimeAtStartOfDay(), today.toDateTime(splitWorkDayHour)));
 	if (beforeInterval != null) {
 	    beforeDuration = beforeInterval.toDuration();
 	}
 
 	Duration afterDuration = Duration.ZERO;
-	Interval afterInterval = getNormalWorkPeriod().getFirstPeriodInterval().toInterval(
-		today.toDateTimeAtMidnight()).overlap(
-		new Interval(today.toDateTime(splitWorkDayHour), today.plusDays(1)
-			.toDateTimeAtMidnight()));
+	Interval afterInterval = getNormalWorkPeriod().getFirstPeriodInterval().toInterval(today.toDateTimeAtStartOfDay())
+		.overlap(new Interval(today.toDateTime(splitWorkDayHour), today.plusDays(1).toDateTimeAtStartOfDay()));
 	if (afterInterval != null) {
 	    afterDuration = afterInterval.toDuration();
 	}

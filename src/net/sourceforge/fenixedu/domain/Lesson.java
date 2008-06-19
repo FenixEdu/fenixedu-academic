@@ -716,7 +716,7 @@ public class Lesson extends Lesson_Base {
     }
 
     private boolean isDayValid(YearMonthDay day, Campus lessonCampus) {
-	return !Holiday.isHoliday(day, lessonCampus) && getPeriod().nestedOccupationPeriodsContainsDay(day);
+	return !Holiday.isHoliday(day.toLocalDate(), lessonCampus) && getPeriod().nestedOccupationPeriodsContainsDay(day);
     }
 
     public YearMonthDay getNextPossibleLessonInstanceDate() {
