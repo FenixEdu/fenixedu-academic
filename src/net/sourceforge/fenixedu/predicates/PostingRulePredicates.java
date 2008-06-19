@@ -11,6 +11,10 @@ public class PostingRulePredicates {
 
 	public boolean evaluate(PostingRule postingRule) {
 
+	    if (AccessControl.getUserView().hasRoleType(RoleType.MANAGER)) {
+		return true;
+	    }
+
 	    return hasValidRole() && postingRuleBelongsToAdministrativeOffice(postingRule);
 
 	}
@@ -22,9 +26,8 @@ public class PostingRulePredicates {
 
 	private boolean hasValidRole() {
 	    return (AccessControl.getUserView().hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
-		    || AccessControl.getUserView().hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)
-		    || AccessControl.getUserView().hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) || AccessControl
-		    .getUserView().hasRoleType(RoleType.MANAGER));
+		    || AccessControl.getUserView().hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE) || AccessControl
+		    .getUserView().hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER));
 	}
 
     };
