@@ -56,7 +56,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
             executeService(request, "CreateUnavailablePeriod", args);
         } catch (DomainException e) {
         	request.setAttribute("bean",periodBean);
-        	addActionMessage(request, e.getMessage(), null);
+        	addActionMessage(request, e.getMessage());
             return mapping.findForward("addUnavailablePeriod");           
         }
 
@@ -90,7 +90,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
                 periodBean.getEndDate(), periodBean.getJustification());
         }catch(DomainException e) {
         	request.setAttribute("bean",periodBean);
-        	addActionMessage(request, e.getMessage(), null);
+        	addActionMessage(request, e.getMessage());
             return mapping.findForward("editUnavailablePeriod");
         }
         putRequestVigilantManagementCompliant(request, vigilant);
@@ -109,7 +109,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         	String gid =  request.getParameter("gid");
         	request.setAttribute("gid", gid);
         	request.setAttribute("bean", periodBean);
-        	addActionMessage(request, e.getMessage(), null);
+        	addActionMessage(request, e.getMessage());
             return mapping.findForward("editPeriodOfVigilant");
         }
         String gid = request.getParameter("gid");
@@ -205,7 +205,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         	String gid =  request.getParameter("gid");
         	request.setAttribute("gid", gid);
         	request.setAttribute("bean", bean);
-        	addActionMessage(request, e.getMessage(), null);
+        	addActionMessage(request, e.getMessage());
             return mapping.findForward("prepareAddPeriodToVigilant");
         }
         

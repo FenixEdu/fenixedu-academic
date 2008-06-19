@@ -29,8 +29,7 @@ public class PrepararCriarSalaFormAction extends FenixDispatchAction {
 
         request.setAttribute("publico.buildings", edificios);
         request.setAttribute("publico.types", tipos);
-        List executionPeriods = (List) ServiceUtils.executeService(
-                "ReadNotClosedExecutionPeriods", null);
+        List executionPeriods = (List) ServiceUtils.executeService("ReadNotClosedExecutionPeriods");
         request.setAttribute("publico.executionPeriods", executionPeriods);
 
         return mapping.findForward("PesquisarSalas");

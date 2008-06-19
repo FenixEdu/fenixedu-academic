@@ -101,7 +101,7 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 			bean.setEvent(event);
 			bean.setEventEdition(edition);
 		} catch (DomainException e) {
-			addActionMessage(request, e.getMessage(), null);
+			addActionMessage(request, e.getMessage());
 			return prepare(mapping, form, request, response);
 		}
 
@@ -125,7 +125,7 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 			bean.setEvent(event);
 			bean.setEventEdition(edition);
 		} catch (DomainException e) {
-			addActionMessage(request, e.getMessage(), null);
+			addActionMessage(request, e.getMessage());
 			return prepare(mapping, form, request, response);
 		}
 
@@ -149,7 +149,7 @@ public class CreateEventEditionDispatchAction extends FenixDispatchAction {
 				executeService(request, "CreateResearchActivityParticipation", new Object[] {
 						bean.getEventEdition(), bean.getEditionRole(), person, bean.getRoleMessage() });
 			} catch (DomainException e) {
-				addActionMessage(request, e.getMessage(), null);
+				addActionMessage(request, e.getMessage());
 				request.setAttribute("existentEventBean", bean);
 				request.setAttribute("eventCreationSchema", "eventCreation.existentEvent");
 				return prepare(mapping, form, request, response);

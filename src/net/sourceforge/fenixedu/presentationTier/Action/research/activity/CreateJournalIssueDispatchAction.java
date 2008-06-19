@@ -144,7 +144,7 @@ public class CreateJournalIssueDispatchAction extends FenixDispatchAction {
 						bean.getJournalIssue(), bean.getRole(), person, bean.getRoleMessage() });
 
 			} catch (DomainException e) {
-				addActionMessage(request, e.getMessage(), null);
+				addActionMessage(request, e.getMessage());
 				request.setAttribute("existentJournalBean", bean);
 				return prepare(mapping, form, request, response);
 			}
@@ -165,7 +165,7 @@ public class CreateJournalIssueDispatchAction extends FenixDispatchAction {
 			executeService(request, "CreateResearchActivityParticipation", new Object[] {
 					bean.getJournalIssue(), bean.getRole(), person, bean.getRoleMessage()});
 		} catch (DomainException e) {
-			addActionMessage(request, e.getMessage(), null);
+			addActionMessage(request, e.getMessage());
 			request.setAttribute("inexistentJournalBean", bean);
 			return prepare(mapping, form, request, response);
 		}

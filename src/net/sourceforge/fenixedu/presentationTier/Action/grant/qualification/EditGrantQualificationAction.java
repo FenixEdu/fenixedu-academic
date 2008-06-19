@@ -10,7 +10,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -24,8 +23,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 /**
  * @author Barbosa
  * @author Pica
@@ -34,15 +31,14 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
     /*
      * Fills the form with the correspondent data
      */
-    public ActionForward prepareEditGrantQualificationForm(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareEditGrantQualificationForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Integer idQualification = null;
 	if (verifyParameterInRequest(request, "idQualification")) {
 	    idQualification = new Integer(request.getParameter("idQualification"));
 	}
 
 	DynaValidatorForm grantQualificationForm = (DynaValidatorForm) form;
-	IUserView userView = UserView.getUser();
 
 	Integer idPerson = null;
 
@@ -51,15 +47,14 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 	    try {
 		//Read the qualification
 		Object[] args = { idQualification };
-		InfoQualification infoGrantQualification = (InfoQualification) ServiceUtils
-			.executeService( "ReadQualification", args);
+		InfoQualification infoGrantQualification = (InfoQualification) ServiceUtils.executeService("ReadQualification",
+			args);
 
 		//Populate the form
 		setFormGrantQualification(grantQualificationForm, infoGrantQualification);
 		idPerson = infoGrantQualification.getInfoPerson().getIdInternal();
 	    } catch (FenixServiceException e) {
-		return setError(request, mapping, "errors.grant.qualification.read",
-			"manage-grant-qualification", null);
+		return setError(request, mapping, "errors.grant.qualification.read", "manage-grant-qualification", null);
 	    }
 	} else //New
 	{
@@ -76,8 +71,7 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 	request.setAttribute("grantOwnerNumber", request.getParameter("grantOwnerNumber"));
 
 	List countryList = null;
-	countryList = (List) ServiceUtils.executeService(
-		"ReadAllCountries", null);
+	countryList = (List) ServiceUtils.executeService("ReadAllCountries");
 
 	//Adding a select country line to the list (presentation reasons)
 	InfoCountryEditor selectCountry = new InfoCountryEditor();
@@ -91,8 +85,8 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
     /*
      * Editing a qualification
      */
-    public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 	DynaValidatorForm editGrantQualificationForm = (DynaValidatorForm) form;
 
 	//Populate info from Form Bean
@@ -106,7 +100,6 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 
 	//Run Service
 	Object[] args = { infoGrantQualification.getIdInternal(), infoGrantQualification };
-	IUserView userView = UserView.getUser();
 	ServiceUtils.executeService("EditQualification", args);
 	return mapping.findForward("manage-grant-qualification");
     }
@@ -114,8 +107,8 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
     /*
      * Delete a qualification
      */
-    public ActionForward doDelete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward doDelete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 	Integer idQualification = new Integer(request.getParameter("idQualification"));
 
 	//Setting request
@@ -126,7 +119,6 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 
 	//Run Service
 	Object[] args = { idQualification };
-	IUserView userView = UserView.getUser();
 	ServiceUtils.executeService("DeleteQualification", args);
 	return mapping.findForward("manage-grant-qualification");
     }
@@ -134,8 +126,7 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
     /*
      * Populates form from InfoContract
      */
-    private void setFormGrantQualification(DynaValidatorForm form,
-	    InfoQualification infoGrantQualification) throws Exception {
+    private void setFormGrantQualification(DynaValidatorForm form, InfoQualification infoGrantQualification) throws Exception {
 	form.set("idPerson", infoGrantQualification.getInfoPerson().getIdInternal());
 
 	form.set("mark", infoGrantQualification.getMark());
@@ -158,8 +149,7 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 	    form.set("equivalenceDate", sdf.format(infoGrantQualification.getEquivalenceDate()));
     }
 
-    private InfoQualification populateInfoFromForm(DynaValidatorForm editGrantQualificationForm)
-	    throws Exception {
+    private InfoQualification populateInfoFromForm(DynaValidatorForm editGrantQualificationForm) throws Exception {
 	InfoQualification infoQualification = new InfoQualification();
 
 	infoQualification.setSchool((String) editGrantQualificationForm.get("school"));
@@ -174,26 +164,20 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 	if (verifyStringParameterInForm(editGrantQualificationForm, "branch"))
 	    infoQualification.setBranch((String) editGrantQualificationForm.get("branch"));
 	if (verifyStringParameterInForm(editGrantQualificationForm, "specializationArea"))
-	    infoQualification.setSpecializationArea((String) editGrantQualificationForm
-		    .get("specializationArea"));
+	    infoQualification.setSpecializationArea((String) editGrantQualificationForm.get("specializationArea"));
 	if (verifyStringParameterInForm(editGrantQualificationForm, "degreeRecognition"))
-	    infoQualification.setDegreeRecognition((String) editGrantQualificationForm
-		    .get("degreeRecognition"));
+	    infoQualification.setDegreeRecognition((String) editGrantQualificationForm.get("degreeRecognition"));
 	if (verifyStringParameterInForm(editGrantQualificationForm, "equivalenceSchool"))
-	    infoQualification.setEquivalenceSchool((String) editGrantQualificationForm
-		    .get("equivalenceSchool"));
+	    infoQualification.setEquivalenceSchool((String) editGrantQualificationForm.get("equivalenceSchool"));
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 	if (verifyStringParameterInForm(editGrantQualificationForm, "qualificationDate"))
-	    infoQualification.setDate(sdf.parse((String) editGrantQualificationForm
-		    .get("qualificationDate")));
+	    infoQualification.setDate(sdf.parse((String) editGrantQualificationForm.get("qualificationDate")));
 	if (verifyStringParameterInForm(editGrantQualificationForm, "equivalenceDate"))
-	    infoQualification.setEquivalenceDate(sdf.parse((String) editGrantQualificationForm
-		    .get("equivalenceDate")));
+	    infoQualification.setEquivalenceDate(sdf.parse((String) editGrantQualificationForm.get("equivalenceDate")));
 
 	//Setting person
-	final Person person = (Person) rootDomainObject
-		.readPartyByOID((Integer) editGrantQualificationForm.get("idPerson"));
+	final Person person = (Person) rootDomainObject.readPartyByOID((Integer) editGrantQualificationForm.get("idPerson"));
 	infoQualification.setInfoPerson(InfoPerson.newInfoFromDomain(person));
 
 	//Setting country

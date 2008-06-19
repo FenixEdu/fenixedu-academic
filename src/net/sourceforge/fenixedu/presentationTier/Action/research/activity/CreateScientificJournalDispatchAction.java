@@ -69,7 +69,7 @@ public class CreateScientificJournalDispatchAction extends FenixDispatchAction {
     		try {
             	executeService(request, "CreateResearchActivityParticipation", new Object[] {bean.getScientificJournal(), bean.getRole(), person, bean.getRoleMessage(), bean.getBeginDate(), bean.getEndDate() });
             } catch (DomainException e) {
-            	addActionMessage(request, e.getMessage(), null);
+            	addActionMessage(request, e.getMessage());
             	request.setAttribute("existentJournalBean", bean);
             	request.setAttribute("journalCreationSchema", "journalCreation.existentJourna");
             	return prepare(mapping,form,request,response);
@@ -92,7 +92,7 @@ public class CreateScientificJournalDispatchAction extends FenixDispatchAction {
         	journal = (ScientificJournal) executeService(request, "CreateScientificJournal", new Object[] {bean.getScientificJournalName(), (bean.getIssn()!=null ? bean.getIssn() : ""), bean.getPublisher(), bean.getLocationType() } );
         	executeService(request,"CreateResearchActivityParticipation", new Object[] { journal, bean.getRole(), person, bean.getRoleMessage()});
         } catch (DomainException e) {
-        	addActionMessage(request, e.getMessage(), null);
+        	addActionMessage(request, e.getMessage());
         	request.setAttribute("inexistentJournalBean", bean);
         	request.setAttribute("journalCreationSchema", "journalCreation.inexistentJournal");
         	return prepare(mapping,form,request,response);

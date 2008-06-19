@@ -97,7 +97,7 @@ public class VigilancyCourseGroupManagement extends FenixDispatchAction {
 	    Object[] args = { group, executionCourses };
 	    executeService(request, "RemoveExecutionCoursesFromGroup", args);
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage(), null);
+	    addActionMessage(request, e.getMessage());
 	}
 
 	request.setAttribute("bean", bean);

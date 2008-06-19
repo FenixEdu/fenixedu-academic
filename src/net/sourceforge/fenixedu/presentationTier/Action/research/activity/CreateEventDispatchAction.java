@@ -69,7 +69,7 @@ public class CreateEventDispatchAction extends FenixDispatchAction {
     		try {
             	executeService(request, "CreateResearchActivityParticipation", new Object[] {bean.getEvent(), bean.getRole(), person });
             } catch (DomainException e) {
-            	addActionMessage(request, e.getMessage(), null);
+            	addActionMessage(request, e.getMessage());
             	request.setAttribute("existentEventBean", bean);
             	request.setAttribute("eventCreationSchema", "eventCreation.existentEvent");
             	return prepare(mapping,form,request,response);
@@ -92,7 +92,7 @@ public class CreateEventDispatchAction extends FenixDispatchAction {
         	event = (ResearchEvent) executeService(request, "CreateResearchEvent", new Object[] {bean.getEventName(), bean.getEventType(), bean.getLocationType(), bean.getUrl()} );
         	executeService(request,"CreateResearchActivityParticipation", new Object[] { event, bean.getRole(), person});
         } catch (DomainException e) {
-        	addActionMessage(request, e.getMessage(), null);
+        	addActionMessage(request, e.getMessage());
         	request.setAttribute("inexistentEventBean", bean);
         	request.setAttribute("eventCreationSchema", "eventCreation.inexistentEvent");
         	return prepare(mapping,form,request,response);

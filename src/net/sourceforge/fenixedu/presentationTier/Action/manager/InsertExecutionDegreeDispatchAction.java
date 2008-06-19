@@ -375,8 +375,8 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
          */
         try {
             infoExecutionYearList = (List) ServiceUtils.executeService(
-                    "ReadAllExecutionYears", null);
-            infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus", null);
+                    "ReadAllExecutionYears");
+            infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus");
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -438,8 +438,8 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
          */
         try {
             infoExecutionYearList = (List) ServiceUtils.executeService(
-                    "ReadAllExecutionYears", null);
-            infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus", null);
+                    "ReadAllExecutionYears");
+            infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus");
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
