@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.struts.action.ActionMessage;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.LocalDate;
 import org.joda.time.Partial;
-import org.joda.time.YearMonthDay;
 
 public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
     private Integer year;
@@ -39,13 +39,13 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 
     public ExtraWorkRequestFactory() {
 	super();
-	YearMonthDay date = new YearMonthDay();
+	LocalDate date = new LocalDate();
 	setYear(date.getYear());
 	setMonth(Month.values()[date.minusMonths(1).getMonthOfYear() - 1]);
 	setYearMonthHoursDone(new YearMonth(date.getYear(), Month.values()[date.minusMonths(1).getMonthOfYear() - 1]));
     }
 
-    public ExtraWorkRequestFactory(YearMonthDay date) {
+    public ExtraWorkRequestFactory(LocalDate date) {
 	super();
 	setYear(date.getYear());
 	setMonth(Month.values()[date.getMonthOfYear() - 1]);
@@ -139,10 +139,10 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 
     private void addEmployeeExtraWorkRequest() {
 	if (getUnit() != null) {
-	    YearMonthDay begin = new YearMonthDay(getYearMonthHoursDone().getYear(),
-		    getYearMonthHoursDone().getMonth().ordinal() + 1, 1);
-	    YearMonthDay end = new YearMonthDay(getYearMonthHoursDone().getYear(),
-		    getYearMonthHoursDone().getMonth().ordinal() + 1, begin.dayOfMonth().getMaximumValue());
+	    LocalDate begin = new LocalDate(getYearMonthHoursDone().getYear(), getYearMonthHoursDone().getMonth().ordinal() + 1,
+		    1);
+	    LocalDate end = new LocalDate(getYearMonthHoursDone().getYear(), getYearMonthHoursDone().getMonth().ordinal() + 1,
+		    begin.dayOfMonth().getMaximumValue());
 	    Map<Assiduousness, ExtraWorkRequest> assiduousnessExtraWorkRequests = new HashMap<Assiduousness, ExtraWorkRequest>();
 	    for (ExtraWorkRequest extraWorkRequest : getUnit().getExtraWorkRequestsDoneIn(getYearMonthHoursDone().getYear(),
 		    getYearMonthHoursDone().getMonth())) {
@@ -233,19 +233,10 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 		.getUnitExtraWorkAmountByYear(yearMonth.getYear()).getBalance();
 	if (isPaymentConfirmed()) {
 	    return balance + getMonthAmount();
-	    //getFinalUnitBalance() + getMonthAmount();
+	    // getFinalUnitBalance() + getMonthAmount();
 	} else {
 	    return balance;
 	}
-    }
-
-    private boolean areRequestsMade() {
-	for (EmployeeExtraWorkRequestFactory employeeExtraWorkRequestFactory : getEmployeesExtraWorkRequests()) {
-	    if (employeeExtraWorkRequestFactory.getExtraWorkRequest() != null) {
-		return true;
-	    }
-	}
-	return false;
     }
 
     public boolean isPaymentConfirmed() {

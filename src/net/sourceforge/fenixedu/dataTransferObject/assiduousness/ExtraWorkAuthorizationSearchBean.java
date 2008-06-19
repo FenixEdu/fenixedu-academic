@@ -10,13 +10,13 @@ import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 public class ExtraWorkAuthorizationSearchBean implements Serializable {
 
-    YearMonthDay beginDate;
+    LocalDate beginDate;
 
-    YearMonthDay endDate;
+    LocalDate endDate;
 
     Integer workingCostCenterCode;
 
@@ -27,83 +27,72 @@ public class ExtraWorkAuthorizationSearchBean implements Serializable {
     public ExtraWorkAuthorizationSearchBean() {
     }
 
-    public YearMonthDay getBeginDate() {
-        return beginDate;
+    public LocalDate getBeginDate() {
+	return beginDate;
     }
 
-    public void setBeginDate(YearMonthDay beginDate) {
-        this.beginDate = beginDate;
+    public void setBeginDate(LocalDate beginDate) {
+	this.beginDate = beginDate;
     }
 
-    public YearMonthDay getEndDate() {
-        return endDate;
+    public LocalDate getEndDate() {
+	return endDate;
     }
 
-    public void setEndDate(YearMonthDay endDate) {
-        this.endDate = endDate;
+    public void setEndDate(LocalDate endDate) {
+	this.endDate = endDate;
     }
 
     public Integer getPayingCostCenterCode() {
-        return payingCostCenterCode;
+	return payingCostCenterCode;
     }
 
     public void setPayingCostCenterCode(Integer payingCostCenterCode) {
-        this.payingCostCenterCode = payingCostCenterCode;
+	this.payingCostCenterCode = payingCostCenterCode;
     }
 
     public Integer getWorkingCostCenterCode() {
-        return workingCostCenterCode;
+	return workingCostCenterCode;
     }
 
     public void setWorkingCostCenterCode(Integer workingCostCenterCode) {
-        this.workingCostCenterCode = workingCostCenterCode;
+	this.workingCostCenterCode = workingCostCenterCode;
     }
 
     public void doSearch() {
-        getExtraWorkAuthorizations().clear();
-        for (ExtraWorkAuthorization extraWorkAuthorization : RootDomainObject.getInstance()
-                .getExtraWorkAuthorizations()) {
-            if (satisfiedDates(extraWorkAuthorization)
-                    && satisfiedWorkingUnit(extraWorkAuthorization)
-                    && satisfiedPayingUnit(extraWorkAuthorization)) {
-                getExtraWorkAuthorizations().add(new ExtraWorkAuthorizationFactory(extraWorkAuthorization));
-            }
-        }
-        ComparatorChain comparatorChain = new ComparatorChain(new BeanComparator("extraWorkAuthorization.beginDate"));
-        comparatorChain.addComparator(new BeanComparator("extraWorkAuthorization.endDate"));
-        Collections.sort(getExtraWorkAuthorizations(), comparatorChain);
+	getExtraWorkAuthorizations().clear();
+	for (ExtraWorkAuthorization extraWorkAuthorization : RootDomainObject.getInstance().getExtraWorkAuthorizations()) {
+	    if (satisfiedDates(extraWorkAuthorization) && satisfiedWorkingUnit(extraWorkAuthorization)
+		    && satisfiedPayingUnit(extraWorkAuthorization)) {
+		getExtraWorkAuthorizations().add(new ExtraWorkAuthorizationFactory(extraWorkAuthorization));
+	    }
+	}
+	ComparatorChain comparatorChain = new ComparatorChain(new BeanComparator("extraWorkAuthorization.beginDate"));
+	comparatorChain.addComparator(new BeanComparator("extraWorkAuthorization.endDate"));
+	Collections.sort(getExtraWorkAuthorizations(), comparatorChain);
     }
 
     private boolean satisfiedPayingUnit(ExtraWorkAuthorization extraWorkAuthorization) {
-        if (getPayingCostCenterCode() == null
-                || getPayingCostCenterCode().equals(
-                        extraWorkAuthorization.getPayingUnit().getCostCenterCode())) {
-            return true;
-        }
-        return false;
+	if (getPayingCostCenterCode() == null
+		|| getPayingCostCenterCode().equals(extraWorkAuthorization.getPayingUnit().getCostCenterCode())) {
+	    return true;
+	}
+	return false;
     }
 
     private boolean satisfiedWorkingUnit(ExtraWorkAuthorization extraWorkAuthorization) {
-        if (getWorkingCostCenterCode() == null
-                || getWorkingCostCenterCode().equals(
-                        extraWorkAuthorization.getWorkingUnit().getCostCenterCode())) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean satisfiedEndDate(ExtraWorkAuthorization extraWorkAuthorization) {
-        if(getEndDate() == null || getEndDate().isEqual(extraWorkAuthorization.getEndDate())){
-            return true;
-        }
-        return false;
+	if (getWorkingCostCenterCode() == null
+		|| getWorkingCostCenterCode().equals(extraWorkAuthorization.getWorkingUnit().getCostCenterCode())) {
+	    return true;
+	}
+	return false;
     }
 
     private boolean satisfiedDates(ExtraWorkAuthorization extraWorkAuthorization) {
-        return extraWorkAuthorization.existsBetweenDates(getBeginDate(),getEndDate());
+	return extraWorkAuthorization.existsBetweenDates(getBeginDate(), getEndDate());
     }
 
     public List<ExtraWorkAuthorizationFactory> getExtraWorkAuthorizations() {
-        return extraWorkAuthorizations;
+	return extraWorkAuthorizations;
     }
 }

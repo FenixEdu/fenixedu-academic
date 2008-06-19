@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
@@ -18,11 +17,11 @@ import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.MissingClocking;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 public class AssiduousnessExportChoices implements Serializable {
@@ -39,9 +38,9 @@ public class AssiduousnessExportChoices implements Serializable {
 
     private YearMonth yearMonth;
 
-    private YearMonthDay beginDate;
+    private LocalDate beginDate;
 
-    private YearMonthDay endDate;
+    private LocalDate endDate;
 
     private Integer costCenter;
 
@@ -61,8 +60,8 @@ public class AssiduousnessExportChoices implements Serializable {
 
     public AssiduousnessExportChoices(String action) {
 	this.action = action;
-	this.endDate = new YearMonthDay();
-	this.beginDate = new YearMonthDay(endDate.getYear(), endDate.getMonthOfYear(), 01);
+	this.endDate = new LocalDate();
+	this.beginDate = new LocalDate(endDate.getYear(), endDate.getMonthOfYear(), 01);
 	this.yearMonth = new YearMonth(endDate);
 	setCanChooseDateType(false);
 	setChooseYear(false);
@@ -118,7 +117,7 @@ public class AssiduousnessExportChoices implements Serializable {
 
     private boolean satisfiedScheduleAcronym(Assiduousness assiduousness) {
 	if (getScheduleAcronym() != null && getScheduleAcronym().length() != 0) {
-	    HashMap<YearMonthDay, WorkSchedule> workSchedulesMap = assiduousness.getWorkSchedulesBetweenDates(beginDate, endDate);
+	    HashMap<LocalDate, WorkSchedule> workSchedulesMap = assiduousness.getWorkSchedulesBetweenDates(beginDate, endDate);
 	    for (WorkSchedule workSchedule : workSchedulesMap.values()) {
 		if (workSchedule != null
 			&& workSchedule.getWorkScheduleType().getAcronym().equalsIgnoreCase(getScheduleAcronym())) {
@@ -132,7 +131,7 @@ public class AssiduousnessExportChoices implements Serializable {
 
     private boolean satisfiedCostCenter(Assiduousness assiduousness) {
 	if (getCostCenter() != null) {
-	    Unit unit = assiduousness.getEmployee().getLastWorkingPlace(beginDate, endDate);
+	    Unit unit = assiduousness.getEmployee().getLastWorkingPlace(new YearMonthDay(beginDate), new YearMonthDay(endDate));
 	    if (unit != null && unit.getCostCenterCode().equals(getCostCenter())) {
 		return true;
 	    }
@@ -144,8 +143,8 @@ public class AssiduousnessExportChoices implements Serializable {
     public HashMap<Assiduousness, List<Justification>> setJustificationMap() {
 	HashMap<Assiduousness, List<Justification>> justificationsMap = new HashMap<Assiduousness, List<Justification>>();
 	if (!StringUtils.isEmpty(getJustificationMotiveAcronym())) {
-	    Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
-		    .toDateMidnight()));
+	    Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), Assiduousness.defaultEndWorkDay
+		    .toDateTime(endDate.toDateTimeAtStartOfDay()));
 	    for (AssiduousnessRecord assiduousnessRecord : RootDomainObject.getInstance().getAssiduousnessRecords()) {
 		if (assiduousnessRecord.isLeave()
 			&& !assiduousnessRecord.isAnulated()
@@ -179,8 +178,8 @@ public class AssiduousnessExportChoices implements Serializable {
 
     public HashMap<Assiduousness, List<Justification>> getAllJustificationMap() {
 	HashMap<Assiduousness, List<Justification>> justificationsMap = new HashMap<Assiduousness, List<Justification>>();
-	Interval interval = new Interval(beginDate.toDateTimeAtMidnight(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
-		.toDateMidnight()));
+	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
+		.toDateTimeAtStartOfDay()));
 	for (AssiduousnessRecord assiduousnessRecord : RootDomainObject.getInstance().getAssiduousnessRecords()) {
 	    if (assiduousnessRecord.isLeave()
 		    && !assiduousnessRecord.isAnulated()
@@ -212,11 +211,11 @@ public class AssiduousnessExportChoices implements Serializable {
 	return justificationsMap;
     }
 
-    public YearMonthDay getBeginDate() {
+    public LocalDate getBeginDate() {
 	return beginDate;
     }
 
-    public void setBeginDate(YearMonthDay beginDate) {
+    public void setBeginDate(LocalDate beginDate) {
 	this.beginDate = beginDate;
     }
 
@@ -228,11 +227,11 @@ public class AssiduousnessExportChoices implements Serializable {
 	this.costCenter = costCenter;
     }
 
-    public YearMonthDay getEndDate() {
+    public LocalDate getEndDate() {
 	return endDate;
     }
 
-    public void setEndDate(YearMonthDay endDate) {
+    public void setEndDate(LocalDate endDate) {
 	this.endDate = endDate;
     }
 
@@ -303,16 +302,16 @@ public class AssiduousnessExportChoices implements Serializable {
     public void setYearMonth() {
 	if (assiduousnessExportChoicesDatesType.equals(AssiduousnessExportChoicesDatesType.MONTHS)) {
 	    if (getChooseYear()) {
-		this.beginDate = new YearMonthDay(yearMonth.getYear(), 1, 1);
-		this.endDate = new YearMonthDay(yearMonth.getYear(), 12, 31);
+		this.beginDate = new LocalDate(yearMonth.getYear(), 1, 1);
+		this.endDate = new LocalDate(yearMonth.getYear(), 12, 31);
 	    } else {
-		this.beginDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
+		this.beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
 		int endDay = beginDate.dayOfMonth().getMaximumValue();
-		if (yearMonth.getYear() == new YearMonthDay().getYear()
-			&& yearMonth.getMonth().getNumberOfMonth() == new YearMonthDay().getMonthOfYear()) {
-		    endDay = new YearMonthDay().getDayOfMonth();
+		if (yearMonth.getYear() == new LocalDate().getYear()
+			&& yearMonth.getMonth().getNumberOfMonth() == new LocalDate().getMonthOfYear()) {
+		    endDay = new LocalDate().getDayOfMonth();
 		}
-		this.endDate = new YearMonthDay(yearMonth.getYear(), yearMonth.getMonth().getNumberOfMonth(), endDay);
+		this.endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().getNumberOfMonth(), endDay);
 	    }
 	} else {
 	    yearMonth = new YearMonth(beginDate);

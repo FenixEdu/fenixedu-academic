@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.WorkWeek;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AnulationState;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -38,18 +37,19 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
 import org.joda.time.DurationFieldType;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.joda.time.Partial;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
 import org.joda.time.TimeOfDay;
-import org.joda.time.YearMonthDay;
 import org.joda.time.chrono.GregorianChronology;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class EmployeeJustificationFactory implements Serializable, FactoryExecutor {
 
-    public static Duration dayDuration = new Duration(86400000); // 24
-
-    // hours
+    public static Duration dayDuration = new Duration(86400000); // 24 hours
 
     public enum CorrectionType {
 	JUSTIFICATION, REGULARIZATION;
@@ -67,7 +67,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
     private JustificationDayType justificationDayType;
 
-    private YearMonthDay date;
+    private LocalDate date;
 
     private DomainReference<Employee> employee;
 
@@ -77,9 +77,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
     private WorkWeek aplicableWeekDays;
 
-    private YearMonthDay beginDate;
+    private LocalDate beginDate;
 
-    private YearMonthDay endDate;
+    private LocalDate endDate;
 
     private TimeOfDay beginTime;
 
@@ -99,7 +99,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
     public static class EmployeeJustificationFactoryCreator extends EmployeeJustificationFactory {
 
-	public EmployeeJustificationFactoryCreator(Employee employee, YearMonthDay date, CorrectionType correctionType,
+	public EmployeeJustificationFactoryCreator(Employee employee, LocalDate date, CorrectionType correctionType,
 		YearMonth yearMonth) {
 	    setEmployee(employee);
 	    setDate(date);
@@ -112,7 +112,6 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	    ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	    if (getCorrectionType() != null && getCorrectionType().equals(CorrectionType.JUSTIFICATION)) {
 		if (getJustificationMotive() != null && getJustificationMotive().getJustificationType() != null) {
-		    final GregorianChronology gregorianChronology = GregorianChronology.getInstanceUTC();
 		    if (getJustificationMotive().getJustificationType().equals(JustificationType.TIME)) {
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.date"));
@@ -133,9 +132,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (actionMessage != null) {
 			    return new ActionMessage(actionMessage);
 			}
-			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(getBeginTime()), getDuration(
-				getBeginTime(), getEndTime()), getJustificationMotive(), null, getNotes(), new DateTime(),
-				getModifiedBy());
+			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(getBeginTime().toLocalTime()),
+				getDuration(getBeginTime().toDateTimeToday(), getEndTime().toDateTimeToday()),
+				getJustificationMotive(), null, getNotes(), new DateTime(), getModifiedBy());
 		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)
 			    || getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE)) {
 			if (getBeginDate() == null) {
@@ -147,7 +146,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    if (getBeginDate().isAfter(getEndDate())) {
 				return new ActionMessage("error.invalidDateInterval");
 			    }
-			    duration = getDuration(getBeginDate(), getEndDate());
+			    duration = getDuration(getBeginDate().toDateTimeAtStartOfDay(), getEndDate().toDateTimeAtStartOfDay());
 			}
 			if (isDateIntervalInClosedMonth(getBeginDate(), duration)) {
 			    return new ActionMessage("errors.datesInClosedMonth");
@@ -159,9 +158,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (isOverlapingOtherJustification(getEmployee().getAssiduousness(), duration, null)) {
 			    return new ActionMessage("errors.overlapingOtherJustification");
 			}
-			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
-				new TimeOfDay(0, 0, 0, gregorianChronology)), duration, getJustificationMotive(), null,
-				getNotes(), new DateTime(), getModifiedBy());
+			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(LocalTime.MIDNIGHT), duration,
+				getJustificationMotive(), null, getNotes(), new DateTime(), getModifiedBy());
 		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.BALANCE)) {
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.date"));
@@ -172,7 +170,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (!hasScheduleAndActive(getEmployee().getAssiduousness(), getBeginDate(), dayDuration)) {
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
 			}
-			Duration numberOfHours = getDuration(TimeOfDay.MIDNIGHT, getEndTime());
+			Duration numberOfHours = getDuration(LocalTime.MIDNIGHT.toDateTimeToday(), getEndTime().toDateTimeToday());
 			if (numberOfHours == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.hoursNumber"));
 			}
@@ -182,9 +180,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (isOverlapingAnotherBalanceLeave(getEmployee().getAssiduousness(), numberOfHours)) {
 			    return new ActionMessage("errors.overlapingOtherJustification");
 			}
-			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
-				new TimeOfDay(0, 0, 0, gregorianChronology)), numberOfHours, getJustificationMotive(), null,
-				getNotes(), new DateTime(), getModifiedBy());
+			new Leave(getEmployee().getAssiduousness(), getBeginDate().toDateTime(LocalTime.MIDNIGHT), numberOfHours,
+				getJustificationMotive(), null, getNotes(), new DateTime(), getModifiedBy());
 		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.HALF_OCCURRENCE_TIME)
 			    || getJustificationMotive().getJustificationType().equals(
 				    JustificationType.HALF_MULTIPLE_MONTH_BALANCE)) {
@@ -207,7 +204,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
 			}
 			DateTime beginDateTime = getBeginDate().toDateTime(
-				workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod());
+				workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod().toLocalTime());
 			Duration halfWorkScheduleDuration = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
 				.getFirstPeriodDuration();
 			if (getWorkPeriodType().equals(WorkPeriodType.SECOND_PERIOD)) {
@@ -215,7 +212,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 				return new ActionMessage("errors.workScheduleWithoutSecondPeriod");
 			    }
 			    beginDateTime = getBeginDate().toDateTime(
-				    workSchedule.getWorkScheduleType().getNormalWorkPeriod().getSecondPeriod());
+				    workSchedule.getWorkScheduleType().getNormalWorkPeriod().getSecondPeriod().toLocalTime());
 			    halfWorkScheduleDuration = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
 				    .getSecondPeriodDuration();
 
@@ -267,8 +264,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (isOverlapingAnotherAssiduousnessRecord(null)) {
 			    return new ActionMessage("errors.regularizationOverlapingAnotherAssiduousnessRecord");
 			}
-			new MissingClocking(getEmployee().getAssiduousness(), getBeginDate().toDateTime(getBeginTime()),
-				getJustificationMotive(), getModifiedBy());
+			new MissingClocking(getEmployee().getAssiduousness(), getBeginDate().toDateTime(
+				getBeginTime().toLocalTime()), getJustificationMotive(), getModifiedBy());
 		    } else {
 			// erro - just
 			return new ActionMessage("errors.error");
@@ -288,15 +285,15 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	    setYearMonth(yearMonth);
 	    setJustification(justification);
 	    setEmployee(justification.getAssiduousness().getEmployee());
-	    setBeginDate(justification.getDate().toYearMonthDay());
+	    setBeginDate(justification.getDate().toLocalDate());
 	    setJustificationMotive(justification.getJustificationMotive());
 	    setNotes(justification.getNotes());
 	    if (justification.isLeave()) {
 		setCorrectionType(CorrectionType.JUSTIFICATION);
 		setJustificationType(justification.getJustificationMotive().getJustificationType());
 		setBeginTime(((Leave) justification).getDate().toTimeOfDay());
-		setEndDate(((Leave) justification).getEndYearMonthDay());
-		setEndTime(((Leave) justification).getEndTimeOfDay());
+		setEndDate(((Leave) justification).getEndLocalDate());
+		setEndTime(new TimeOfDay(((Leave) justification).getEndLocalTime()));
 
 		if (justification.getJustificationMotive().getJustificationType().equals(JustificationType.HALF_OCCURRENCE_TIME)
 			|| getJustificationMotive().getJustificationType().equals(JustificationType.HALF_MULTIPLE_MONTH_BALANCE)) {
@@ -330,7 +327,6 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	    ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	    if (getCorrectionType() != null && getCorrectionType().equals(CorrectionType.JUSTIFICATION)) {
 		if (getJustificationMotive() != null) {
-		    final GregorianChronology gregorianChronology = GregorianChronology.getInstanceUTC();
 		    if (getJustificationMotive().getJustificationType().equals(JustificationType.TIME)) {
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.date"));
@@ -352,8 +348,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage(actionMessage);
 			}
 
-			((Leave) getJustification()).modify(getBeginDate().toDateTime(getBeginTime()), getDuration(
-				getBeginTime(), getEndTime()), getJustificationMotive(), null, getNotes(), getModifiedBy());
+			((Leave) getJustification()).modify(getBeginDate().toDateTime(getBeginTime().toLocalTime()), getDuration(
+				getBeginTime().toDateTimeToday(), getEndTime().toDateTimeToday()), getJustificationMotive(),
+				null, getNotes(), getModifiedBy());
 		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)
 			    || getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE)) {
 			if (getBeginDate() == null) {
@@ -364,21 +361,21 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    if (getBeginDate().isAfter(getEndDate())) {
 				return new ActionMessage("error.invalidDateInterval");
 			    }
-			    duration = getDuration(getBeginDate(), getEndDate());
+			    duration = getDuration(getBeginDate().toDateTimeAtStartOfDay(), getEndDate().toDateTimeAtStartOfDay());
 			}
 			// if (isDateIntervalInClosedMonth(getBeginDate(),
 			// duration)) {
 			// return new
 			// ActionMessage("errors.datesInClosedMonth");
 			// }
-			if ((!getBeginDate().isEqual(getJustification().getDate().toYearMonthDay()))
+			if ((!getBeginDate().isEqual(getJustification().getDate().toLocalDate()))
 				&& (ClosedMonth.isMonthClosed(getBeginDate()) || ClosedMonth.isMonthClosed(getJustification()
-					.getDate().toYearMonthDay()))) {
+					.getDate().toLocalDate()))) {
 			    return new ActionMessage("errors.datesInClosedMonth");
 			}
 
 			if (getEndDate() != null && ClosedMonth.isMonthClosed(getEndDate())
-				&& !ClosedMonth.getLastClosedYearMonthDay().equals(getEndDate())) {
+				&& !ClosedMonth.getLastClosedLocalDate().equals(getEndDate())) {
 			    return new ActionMessage("errors.datesInClosedMonth");
 			}
 
@@ -388,9 +385,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (isOverlapingOtherJustification(getEmployee().getAssiduousness(), duration, getJustification())) {
 			    return new ActionMessage("errors.overlapingOtherJustification");
 			}
-			((Leave) getJustification()).modify(getBeginDate()
-				.toDateTime(new TimeOfDay(0, 0, 0, gregorianChronology)), duration, getJustificationMotive(),
-				null, getNotes(), getModifiedBy());
+			((Leave) getJustification()).modify(getBeginDate().toDateTime(LocalTime.MIDNIGHT), duration,
+				getJustificationMotive(), null, getNotes(), getModifiedBy());
 		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.BALANCE)) {
 			if (getBeginDate() == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.date"));
@@ -401,7 +397,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (!hasScheduleAndActive(getEmployee().getAssiduousness(), getBeginDate(), dayDuration)) {
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
 			}
-			Duration numberOfHours = getDuration(TimeOfDay.MIDNIGHT, getEndTime());
+			Duration numberOfHours = getDuration(LocalTime.MIDNIGHT.toDateTimeToday(), getEndTime().toDateTimeToday());
 			if (numberOfHours == null) {
 			    return new ActionMessage("errors.required", bundle.getString("label.hoursNumber"));
 			}
@@ -411,8 +407,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (isOverlapingAnotherBalanceLeave(getEmployee().getAssiduousness(), numberOfHours, getJustification())) {
 			    return new ActionMessage("errors.overlapingOtherJustification");
 			}
-			((Leave) getJustification()).modify(getBeginDate()
-				.toDateTime(new TimeOfDay(0, 0, 0, gregorianChronology)), numberOfHours,
+			((Leave) getJustification()).modify(getBeginDate().toDateTime(LocalTime.MIDNIGHT), numberOfHours,
 				getJustificationMotive(), null, getNotes(), getModifiedBy());
 		    } else if (getJustificationMotive().getJustificationType().equals(JustificationType.HALF_OCCURRENCE_TIME)
 			    || getJustificationMotive().getJustificationType().equals(
@@ -433,7 +428,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
 			}
 			DateTime beginDateTime = getBeginDate().toDateTime(
-				workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod());
+				workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod().toLocalTime());
 			Duration halfWorkScheduleDuration = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
 				.getFirstPeriodDuration();
 			if (getWorkPeriodType().equals(WorkPeriodType.SECOND_PERIOD)) {
@@ -441,7 +436,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 				return new ActionMessage("errors.workScheduleWithoutSecondPeriod");
 			    }
 			    beginDateTime = getBeginDate().toDateTime(
-				    workSchedule.getWorkScheduleType().getNormalWorkPeriod().getSecondPeriod());
+				    workSchedule.getWorkScheduleType().getNormalWorkPeriod().getSecondPeriod().toLocalTime());
 			    halfWorkScheduleDuration = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
 				    .getSecondPeriodDuration();
 
@@ -469,7 +464,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    return new ActionMessage("errors.employeeHasNoScheduleOrInactive");
 			}
 
-			((Leave) getJustification()).modify(getBeginDate().toDateTimeAtMidnight(), null,
+			((Leave) getJustification()).modify(getBeginDate().toDateTimeAtStartOfDay(), null,
 				getJustificationMotive(), null, getNotes(), getModifiedBy());
 		    } else {
 			// error - regul
@@ -494,7 +489,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (isOverlapingAnotherAssiduousnessRecord((MissingClocking) getJustification())) {
 			    return new ActionMessage("errors.regularizationOverlapingAnotherAssiduousnessRecord");
 			}
-			((MissingClocking) getJustification()).modify(getBeginDate().toDateTime(getBeginTime()),
+			((MissingClocking) getJustification()).modify(getBeginDate().toDateTime(getBeginTime().toLocalTime()),
 				getJustificationMotive(), getModifiedBy());
 		    } else {
 			// erro - just
@@ -532,12 +527,12 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	    if (getJustification().getJustificationMotive().getJustificationType() != null
 		    && (getJustification().getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE) || getJustification()
 			    .getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE))) {
-		if (isDateIntervalInClosedMonth(getJustification().getDate().toYearMonthDay(), ((Leave) getJustification())
+		if (isDateIntervalInClosedMonth(getJustification().getDate().toLocalDate(), ((Leave) getJustification())
 			.getDuration())) {
 		    return new ActionMessage("errors.cantDelete.datesInClosedMonth");
 		}
 	    } else {
-		if (ClosedMonth.isMonthClosed(getJustification().getDate().toYearMonthDay())) {
+		if (ClosedMonth.isMonthClosed(getJustification().getDate().toLocalDate())) {
 		    return new ActionMessage("errors.cantDelete.datesInClosedMonth");
 		}
 	    }
@@ -591,8 +586,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 		    if (actionMessage != null) {
 			return new ActionMessage(actionMessage);
 		    }
-		    createJustification(getBeginDate().toDateTime(getBeginTime()), getDuration(getBeginTime(), getEndTime()),
-			    bundle);
+		    createJustification(getBeginDate().toDateTime(getBeginTime().toLocalTime()), getDuration(getBeginTime()
+			    .toDateTimeToday(), getEndTime().toDateTimeToday()), bundle);
 		} else if (getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)
 			|| getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE)) {
 		    if (getBeginDate() == null) {
@@ -604,14 +599,13 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			if (getBeginDate().isAfter(getEndDate())) {
 			    return new ActionMessage("error.invalidDateInterval");
 			}
-			duration = getDuration(getBeginDate(), getEndDate());
+			duration = getDuration(getBeginDate().toDateTimeAtStartOfDay(), getEndDate().toDateTimeAtStartOfDay());
 		    }
 		    if (isDateIntervalInClosedMonth(getBeginDate(), duration)) {
 			return new ActionMessage("errors.datesInClosedMonth");
 		    }
 
-		    String result = createJustification(getBeginDate().toDateTime(new TimeOfDay(0, 0, 0, gregorianChronology)),
-			    duration, bundle);
+		    String result = createJustification(getBeginDate().toDateTime(LocalTime.MIDNIGHT), duration, bundle);
 		    if (result != null) {
 			return new ActionMessage("errors", result);
 		    }
@@ -622,15 +616,14 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 		    if (ClosedMonth.isMonthClosed(getBeginDate())) {
 			return new ActionMessage("errors.datesInClosedMonth");
 		    }
-		    Duration numberOfHours = getDuration(TimeOfDay.MIDNIGHT, getEndTime());
+		    Duration numberOfHours = getDuration(LocalTime.MIDNIGHT.toDateTimeToday(), getEndTime().toDateTimeToday());
 		    if (numberOfHours == null) {
 			return new ActionMessage("errors.required", bundle.getString("label.hoursNumber"));
 		    }
 		    if (!numberOfHours.isShorterThan(dayDuration)) {
 			return new ActionMessage("errors.numberOfHoursLongerThanDay");
 		    }
-		    String result = createJustification(getBeginDate().toDateTime(new TimeOfDay(0, 0, 0, gregorianChronology)),
-			    numberOfHours, bundle);
+		    String result = createJustification(getBeginDate().toDateTime(LocalTime.MIDNIGHT), numberOfHours, bundle);
 		    if (result != null) {
 			return new ActionMessage("errors", result);
 		    }
@@ -669,18 +662,18 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			    && !assiduousnessRecord.isAnulated()
 			    && ((Leave) assiduousnessRecord).getJustificationMotive().getJustificationType().equals(
 				    getJustificationType())
-			    && ((Leave) assiduousnessRecord).getDate().toYearMonthDay().equals(getBeginDate())) {
+			    && ((Leave) assiduousnessRecord).getDate().toLocalDate().equals(getBeginDate())) {
 			assisuousnesssList.add(assiduousnessRecord.getAssiduousness());
 		    }
 		}
 	    }
 	    StringBuilder result = new StringBuilder();
-	    YearMonthDay end = dateTime.plus(duration).toYearMonthDay();
+	    LocalDate end = dateTime.plus(duration).toLocalDate();
 	    List<Assiduousness> assiduousnessOrderedList = new ArrayList<Assiduousness>(RootDomainObject.getInstance()
 		    .getAssiduousnesss());
 	    Collections.sort(assiduousnessOrderedList, new BeanComparator("employee.employeeNumber"));
 	    for (Assiduousness assiduousness : assiduousnessOrderedList) {
-		if (satisfiedStatus(assiduousness, dateTime.toYearMonthDay(), end)) {
+		if (satisfiedStatus(assiduousness, dateTime.toLocalDate(), end)) {
 		    if (getJustificationMotive().getJustificationType().equals(JustificationType.OCCURRENCE)
 			    || getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE)) {
 			if (!isActive(assiduousness, getBeginDate(), duration)) {
@@ -758,7 +751,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			}
 
 			dateTime = getBeginDate().toDateTime(
-				workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod());
+				workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod().toLocalTime());
 			if ((workSchedule.getWorkScheduleType() instanceof HalfTimeSchedule)) {
 
 			    if (((getWorkPeriodType().equals(WorkPeriodType.FIRST_PERIOD) && ((HalfTimeSchedule) workSchedule
@@ -776,7 +769,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			} else {
 			    duration = workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriodDuration();
 			    dateTime = getBeginDate().toDateTime(
-				    workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod());
+				    workSchedule.getWorkScheduleType().getNormalWorkPeriod().getFirstPeriod().toLocalTime());
 			    if ((workSchedule.getWorkScheduleType() instanceof ContinuousSchedule)) {
 				duration = new Duration(workSchedule.getWorkScheduleType().getNormalWorkPeriod()
 					.getWorkPeriodDuration().getMillis() / 2);
@@ -791,7 +784,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 				    continue;
 				}
 				dateTime = getBeginDate().toDateTime(
-					workSchedule.getWorkScheduleType().getNormalWorkPeriod().getSecondPeriod());
+					workSchedule.getWorkScheduleType().getNormalWorkPeriod().getSecondPeriod().toLocalTime());
 				duration = workSchedule.getWorkScheduleType().getNormalWorkPeriod().getSecondPeriodDuration();
 			    }
 			}
@@ -829,7 +822,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	    return result.toString();
 	}
 
-	private boolean satisfiedStatus(Assiduousness assiduousness, YearMonthDay begin, YearMonthDay end) {
+	private boolean satisfiedStatus(Assiduousness assiduousness, LocalDate begin, LocalDate end) {
 	    if (getAssiduousnessStatus() != null && getAssiduousnessStatus().size() != 0) {
 		List<AssiduousnessStatusHistory> assiduousnessStatusList = assiduousness.getStatusBetween(begin, end);
 		for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousnessStatusList) {
@@ -852,15 +845,15 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
     }
 
-    protected Duration getDuration(YearMonthDay begin, YearMonthDay end) {
+    protected Duration getDuration(DateTime begin, DateTime end) {
 	if (begin == null || end == null) {
 	    return null;
 	}
-	return new Duration(begin.toDateMidnight(), end.toDateMidnight());
+	return new Duration(begin, end);
     }
 
-    protected boolean isDateIntervalInClosedMonth(YearMonthDay day, Duration duration) {
-	YearMonthDay endDate = (day.plus(duration.toPeriod()));
+    protected boolean isDateIntervalInClosedMonth(LocalDate day, Duration duration) {
+	LocalDate endDate = (day.plus(duration.toPeriod()));
 	Partial end = new Partial().with(DateTimeFieldType.monthOfYear(), endDate.getMonthOfYear()).with(
 		DateTimeFieldType.year(), endDate.getYear());
 	for (Partial yearMonth = new Partial().with(DateTimeFieldType.monthOfYear(), day.getMonthOfYear()).with(
@@ -875,7 +868,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
     protected boolean isOverlapingAnotherAssiduousnessRecord(MissingClocking missingClocking) {
 	final List<Leave> leaves = getEmployee().getAssiduousness().getLeaves(getBeginDate(), getBeginDate());
-	DateTime date = getBeginDate().toDateTime(getBeginTime());
+	DateTime date = getBeginDate().toDateTime(getBeginTime().toLocalTime());
 	final List<AssiduousnessRecord> clockings = getEmployee().getAssiduousness().getClockingsAndMissingClockings(date,
 		date.plusMinutes(1));
 	if (!leaves.isEmpty()) {
@@ -884,7 +877,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 			|| leave.getJustificationMotive().getJustificationType().equals(JustificationType.MULTIPLE_MONTH_BALANCE)) {
 		    return true;
 		} else if (leave.getJustificationMotive().getJustificationType().equals(JustificationType.TIME)
-			&& leave.getTotalInterval().contains(getBeginDate().toDateTime(getBeginTime()))) {
+			&& leave.getTotalInterval().contains(getBeginDate().toDateTime(getBeginTime().toLocalTime()))) {
 		    return true;
 		}
 	    }
@@ -920,12 +913,12 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
     }
 
     protected String canInsertTimeJustification(Assiduousness assiduousness) {
-	if (getBeginDate().equals(new YearMonthDay())) {
+	if (getBeginDate().equals(new LocalDate())) {
 	    return "errors.cannotInsertTimeJustificationsInCurrentDay";
 	}
-	YearMonthDay lowerBeginDate = getBeginDate().minusDays(8);
-	HashMap<YearMonthDay, WorkSchedule> workScheduleMap = new HashMap<YearMonthDay, WorkSchedule>();
-	for (YearMonthDay thisDay = lowerBeginDate; thisDay.isBefore(getBeginDate().plusDays(1)); thisDay = thisDay.plusDays(1)) {
+	LocalDate lowerBeginDate = getBeginDate().minusDays(8);
+	HashMap<LocalDate, WorkSchedule> workScheduleMap = new HashMap<LocalDate, WorkSchedule>();
+	for (LocalDate thisDay = lowerBeginDate; thisDay.isBefore(getBeginDate().plusDays(1)); thisDay = thisDay.plusDays(1)) {
 	    final Schedule schedule = assiduousness.getSchedule(thisDay);
 	    if (schedule != null) {
 		workScheduleMap.put(thisDay, schedule.workScheduleWithDate(thisDay));
@@ -938,16 +931,16 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	    return "errors.employeeHasNoScheduleOrInactive";
 	}
 
-	DateTime init = lowerBeginDate.toDateTime(Assiduousness.defaultStartWorkDay);
+	DateTime init = lowerBeginDate.toDateTime(Assiduousness.defaultStartWorkDay.toLocalTime());
 	WorkSchedule beginWorkSchedule = workScheduleMap.get(lowerBeginDate);
 	if (beginWorkSchedule != null) {
-	    init = lowerBeginDate.toDateTime(beginWorkSchedule.getWorkScheduleType().getWorkTime());
+	    init = lowerBeginDate.toDateTime(beginWorkSchedule.getWorkScheduleType().getWorkTime().toLocalTime());
 	}
 
-	DateTime end = getBeginDate().toDateTime(Assiduousness.defaultEndWorkDay);
+	DateTime end = getBeginDate().toDateTime(Assiduousness.defaultEndWorkDay.toLocalTime());
 	WorkSchedule endWorkSchedule = workScheduleMap.get(getBeginDate());
 	if (endWorkSchedule != null) {
-	    end = getBeginDate().toDateTime(endWorkSchedule.getWorkScheduleType().getWorkTime()).plus(
+	    end = getBeginDate().toDateTime(endWorkSchedule.getWorkScheduleType().getWorkTime().toLocalTime()).plus(
 		    endWorkSchedule.getWorkScheduleType().getWorkTimeDuration());
 	    if (endWorkSchedule.getWorkScheduleType().isWorkTimeNextDay()) {
 		end = end.plusDays(2);
@@ -956,9 +949,9 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 
 	final List<AssiduousnessRecord> clockings = assiduousness.getClockingsAndMissingClockings(init.minusDays(1), end);
 	Collections.sort(clockings, AssiduousnessRecord.COMPARATOR_BY_DATE);
-	HashMap<YearMonthDay, List<AssiduousnessRecord>> clockingsMap = new HashMap<YearMonthDay, List<AssiduousnessRecord>>();
+	HashMap<LocalDate, List<AssiduousnessRecord>> clockingsMap = new HashMap<LocalDate, List<AssiduousnessRecord>>();
 	for (AssiduousnessRecord record : clockings) {
-	    YearMonthDay clockDay = record.getDate().toYearMonthDay();
+	    LocalDate clockDay = record.getDate().toLocalDate();
 	    if (WorkSchedule.overlapsSchedule(record.getDate(), workScheduleMap) == 0) {
 		if (clockingsMap.get(clockDay.minusDays(1)) != null && clockingsMap.get(clockDay.minusDays(1)).size() % 2 != 0) {
 		    clockDay = clockDay.minusDays(1);
@@ -999,15 +992,15 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	return null;
     }
 
-    protected boolean hasScheduleAndActive(Assiduousness assiduousness, YearMonthDay day, Duration duration) {
+    protected boolean hasScheduleAndActive(Assiduousness assiduousness, LocalDate day, Duration duration) {
 	Period durationPeriod = duration.toPeriod(PeriodType.dayTime());
-	YearMonthDay endDay = day.toDateTimeAtMidnight().plusDays(durationPeriod.getDays()).plusHours(durationPeriod.getHours())
-		.plusMinutes(durationPeriod.getMinutes()).toYearMonthDay();
+	LocalDate endDay = day.toDateTimeAtStartOfDay().plusDays(durationPeriod.getDays()).plusHours(durationPeriod.getHours())
+		.plusMinutes(durationPeriod.getMinutes()).toLocalDate();
 
 	if (!assiduousness.isStatusActive(day, endDay)) {
 	    return false;
 	}
-	for (YearMonthDay thisday = day; !thisday.isAfter(endDay); thisday = thisday.plusDays(1)) {
+	for (LocalDate thisday = day; !thisday.isAfter(endDay); thisday = thisday.plusDays(1)) {
 	    Schedule schedule = assiduousness.getSchedule(thisday);
 	    if (schedule != null) {
 		if (schedule.workScheduleWithDate(thisday) != null) {
@@ -1018,16 +1011,16 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	return false;
     }
 
-    protected boolean isActive(Assiduousness assiduousness, YearMonthDay day, Duration duration) {
+    protected boolean isActive(Assiduousness assiduousness, LocalDate day, Duration duration) {
 	Period durationPeriod = duration.toPeriod(PeriodType.dayTime());
-	YearMonthDay endDay = day.toDateTimeAtMidnight().plusDays(durationPeriod.getDays()).plusHours(durationPeriod.getHours())
-		.plusMinutes(durationPeriod.getMinutes()).toYearMonthDay();
+	LocalDate endDay = day.toDateTimeAtStartOfDay().plusDays(durationPeriod.getDays()).plusHours(durationPeriod.getHours())
+		.plusMinutes(durationPeriod.getMinutes()).toLocalDate();
 	return (assiduousness.isStatusActive(day, endDay));
     }
 
     protected boolean isOverlapingOtherJustification(Assiduousness assiduousness, Duration duration, Justification justitication) {
-	List<Leave> leaves = assiduousness.getLeaves(getBeginDate(), getBeginDate().toDateTimeAtMidnight().plus(duration)
-		.toYearMonthDay());
+	List<Leave> leaves = assiduousness.getLeaves(getBeginDate(), getBeginDate().toDateTimeAtStartOfDay().plus(duration)
+		.toLocalDate());
 	return !leaves.isEmpty() && (justitication == null || !leaves.contains(justitication) || leaves.size() != 1);
     }
 
@@ -1035,8 +1028,8 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	if (begin == null || end == null) {
 	    return null;
 	}
-	YearMonthDay now = new YearMonthDay();
-	return new Duration(now.toDateTime(begin), now.toDateTime(end));
+	LocalDate now = new LocalDate();
+	return new Duration(now.toDateTime(begin.toLocalTime()), now.toDateTime(end.toLocalTime()));
     }
 
     protected Duration getDuration(TimeOfDay time) {
@@ -1053,11 +1046,11 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	return false;
     }
 
-    public YearMonthDay getBeginDate() {
+    public LocalDate getBeginDate() {
 	return beginDate;
     }
 
-    public void setBeginDate(YearMonthDay beginDate) {
+    public void setBeginDate(LocalDate beginDate) {
 	this.beginDate = beginDate;
     }
 
@@ -1069,11 +1062,11 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	this.beginTime = beginTime;
     }
 
-    public YearMonthDay getEndDate() {
+    public LocalDate getEndDate() {
 	return endDate;
     }
 
-    public void setEndDate(YearMonthDay endDate) {
+    public void setEndDate(LocalDate endDate) {
 	this.endDate = endDate;
     }
 
@@ -1103,11 +1096,11 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	this.justificationType = justificationType;
     }
 
-    public YearMonthDay getDate() {
+    public LocalDate getDate() {
 	return date;
     }
 
-    public void setDate(YearMonthDay date) {
+    public void setDate(LocalDate date) {
 	this.date = date;
     }
 
@@ -1200,7 +1193,7 @@ public abstract class EmployeeJustificationFactory implements Serializable, Fact
 	this.justificationDayType = justificationDayType;
     }
 
-    protected boolean hasMoreThanOneOfTheKind(Assiduousness assiduousness, YearMonthDay date) {
+    protected boolean hasMoreThanOneOfTheKind(Assiduousness assiduousness, LocalDate date) {
 	return !(assiduousness.getLeavesByType(date, date, getJustificationType())).isEmpty();
     }
 

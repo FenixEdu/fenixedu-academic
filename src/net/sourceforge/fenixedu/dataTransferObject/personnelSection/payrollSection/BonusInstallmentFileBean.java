@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
@@ -31,8 +30,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.struts.action.ActionMessage;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.LocalDate;
 import org.joda.time.Partial;
-import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
@@ -98,8 +97,8 @@ public class BonusInstallmentFileBean implements Serializable, FactoryExecutor {
 	    Collections.sort(anualBonusInstallmentList, new BeanComparator("paymentPartialDate"));
 	    AnualBonusInstallment choosenAnualBonusInstallment = anualBonusInstallmentList.get(getInstallment() - 1);
 	    Map<Integer, ClosedMonth> closedMonthMap = new HashMap<Integer, ClosedMonth>();
-	    YearMonthDay begin = new YearMonthDay();
-	    YearMonthDay end = begin;
+	    LocalDate begin = new LocalDate();
+	    LocalDate end = begin;
 	    for (Partial partial : choosenAnualBonusInstallment.getAssiduousnessPartials().getPartials()) {
 		ClosedMonth closedMonth = ClosedMonth.getClosedMonth(partial);
 		if (closedMonth == null) {

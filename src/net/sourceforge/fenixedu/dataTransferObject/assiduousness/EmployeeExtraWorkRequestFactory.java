@@ -17,13 +17,14 @@ import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.GiafInterface;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.struts.action.ActionMessage;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
+import org.joda.time.LocalDate;
 import org.joda.time.PeriodType;
-import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExecutor {
     private Integer nightHours;
@@ -232,7 +233,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	    if (!validateRemunerationOptionFields()) {
 		return new ActionMessage("error.extraWorkRequest.invalidRemunerationOptionFields");
 	    }
-	    if (!validateWorkingDaysExtraWork()) {
+	    if (!validateWorkingDaysExtraWorkNightHours()) {
 		return new ActionMessage("error.extraWorkRequest.invalidWorkingDaysExtraWorkRemuneration");
 	    }
 	    if (validateNonWorkingDaysExtraWork()) {
@@ -269,8 +270,9 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	    Integer thisNightVacationsDays = 0;
 	    Double thisNightVacationsAmount = 0.0;
 	    Double accumulatedNightVacationsAmount = 0.0;
-	    if (validateWorkingDaysExtraWork() && (getWorkdayHours() != null || getExtraNightHours() != null)) {
-		YearMonthDay day = new YearMonthDay(getExtraWorkRequestFactory().getHoursDoneInPartialDate().get(
+
+	    if (getAddToVacations() && (getWorkdayHours() != null || getExtraNightHours() != null)) {
+		LocalDate day = new LocalDate(getExtraWorkRequestFactory().getHoursDoneInPartialDate().get(
 			DateTimeFieldType.year()), getExtraWorkRequestFactory().getHoursDoneInPartialDate().get(
 			DateTimeFieldType.monthOfYear()), 1);
 		Schedule schedule = getEmployee().getAssiduousness().getSchedule(day);
@@ -291,7 +293,9 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		    thisNightVacationsDays = ((int) total) / dayHours;
 		    accumulatedNightVacationsAmount = (total - (thisNightVacationsDays * dayHours));
 		}
-
+	    }
+	    if (!getAddToVacations() && getWorkdayHours() != null) {
+		// getRequestedWorkdayHours
 	    }
 	    setTotalVacationDays(thisNormalVacationsDays + thisNightVacationsDays);
 	    if (getExtraWorkRequest() == null) {
@@ -327,7 +331,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
     }
 
     private boolean hasNightSchedule() {
-	HashMap<YearMonthDay, WorkSchedule> workSchedules = getEmployee().getAssiduousness().getWorkSchedulesBetweenDates(
+	HashMap<LocalDate, WorkSchedule> workSchedules = getEmployee().getAssiduousness().getWorkSchedulesBetweenDates(
 		getExtraWorkRequestFactory().getPartialPayingDate());
 	for (WorkSchedule workSchedule : workSchedules.values()) {
 	    if (workSchedule != null && workSchedule.getWorkScheduleType().isNocturnal()) {
@@ -362,8 +366,8 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	return result;
     }
 
-    private boolean validateWorkingDaysExtraWork() {
-	return ((getRequestedWorkdayHours() == null && getRequestedExtraNightHours() == null) || getAddToVacations());
+    private boolean validateWorkingDaysExtraWorkNightHours() {
+	return (getRequestedExtraNightHours() == null) || getAddToVacations();
     }
 
     private boolean validateNonWorkingDaysExtraWork() {
@@ -372,9 +376,8 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 
     private Double getHourValue() throws ExcepcaoPersistencia {
 	GiafInterface giafInterface = new GiafInterface();
-	YearMonthDay day = new YearMonthDay(getExtraWorkRequestFactory().getHoursDoneInPartialDate()
-		.get(DateTimeFieldType.year()), getExtraWorkRequestFactory().getHoursDoneInPartialDate().get(
-		DateTimeFieldType.monthOfYear()), 1);
+	LocalDate day = new LocalDate(getExtraWorkRequestFactory().getHoursDoneInPartialDate().get(DateTimeFieldType.year()),
+		getExtraWorkRequestFactory().getHoursDoneInPartialDate().get(DateTimeFieldType.monthOfYear()), 1);
 	return giafInterface.getEmployeeHourValue(getEmployee(), day);
     }
 
@@ -504,6 +507,8 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		}
 	    }
 
+	    // LIMITAR A 1/3 do ordenado
+
 	    int plusHalf = 0;
 	    if (assiduousnessMonthlyResume.getTotalBalance().toPeriod(PeriodType.dayTime()).getMinutes() >= 30) {
 		plusHalf = 1;
@@ -537,9 +542,9 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 
     private EmployeeExtraWorkAuthorization getEmployeeExtraWorkAuthorization() {
 	if (getExtraWorkRequestFactory().getUnit() != null) {
-	    YearMonthDay begin = new YearMonthDay(getExtraWorkRequestFactory().getYearMonthHoursDone().getYear(),
+	    LocalDate begin = new LocalDate(getExtraWorkRequestFactory().getYearMonthHoursDone().getYear(),
 		    getExtraWorkRequestFactory().getYearMonthHoursDone().getMonth().ordinal() + 1, 1);
-	    YearMonthDay end = new YearMonthDay(getExtraWorkRequestFactory().getYearMonthHoursDone().getYear(),
+	    LocalDate end = new LocalDate(getExtraWorkRequestFactory().getYearMonthHoursDone().getYear(),
 		    getExtraWorkRequestFactory().getYearMonthHoursDone().getMonth().ordinal() + 1, begin.dayOfMonth()
 			    .getMaximumValue());
 	    for (EmployeeExtraWorkAuthorization employeeExtraWorkAuthorization : getEmployee().getAssiduousness()

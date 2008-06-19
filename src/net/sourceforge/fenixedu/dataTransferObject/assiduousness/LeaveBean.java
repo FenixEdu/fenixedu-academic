@@ -6,28 +6,28 @@ import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 public class LeaveBean implements Serializable {
 
     private DomainReference<Leave> leave;
 
     private DateTime date;
-    
-    private YearMonthDay endYearMonthDay;
-    
+
+    private LocalDate endLocalDate;
+
     public LeaveBean(Leave leave) {
 	setLeave(leave);
 	setDate(leave.getDate());
-	setEndYearMonthDay(leave.getEndYearMonthDay());
+	setEndLocalDate(leave.getEndLocalDate());
     }
-    
+
     public LeaveBean(Leave leave, Leave nextLeave) {
 	setLeave(leave);
 	setDate(leave.getDate());
-	setEndYearMonthDay(nextLeave.getEndYearMonthDay());
+	setEndLocalDate(nextLeave.getEndLocalDate());
     }
-    
+
     public Leave getLeave() {
 	return leave != null ? leave.getObject() : null;
     }
@@ -37,18 +37,18 @@ public class LeaveBean implements Serializable {
     }
 
     public DateTime getDate() {
-        return date;
+	return date;
     }
 
     public void setDate(DateTime date) {
-        this.date = date;
+	this.date = date;
     }
 
-    public YearMonthDay getEndYearMonthDay() {
-        return endYearMonthDay;
+    public LocalDate getEndLocalDate() {
+	return endLocalDate;
     }
 
-    public void setEndYearMonthDay(YearMonthDay endYearMonthDay) {
-        this.endYearMonthDay = endYearMonthDay;
+    public void setEndLocalDate(LocalDate endLocalDate) {
+	this.endLocalDate = endLocalDate;
     }
 }

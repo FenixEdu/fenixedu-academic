@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.apache.poi.hssf.util.Region;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.LocalDate;
 import org.joda.time.Partial;
-import org.joda.time.YearMonthDay;
 
 public class BonusInstallment implements Serializable {
     private Integer year;
@@ -103,7 +103,7 @@ public class BonusInstallment implements Serializable {
     }
 
     private AssiduousnessStatusHistory getLastAssiduousnessStatusHistoryBefore(EmployeeBonusInstallment employeeBonusInstallment) {
-	YearMonthDay day = new YearMonthDay(employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(
+	LocalDate day = new LocalDate(employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(
 		DateTimeFieldType.year()), employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(
 		DateTimeFieldType.monthOfYear()), 1);
 	if (!employeeBonusInstallment.getEmployee().hasAssiduousness()) {

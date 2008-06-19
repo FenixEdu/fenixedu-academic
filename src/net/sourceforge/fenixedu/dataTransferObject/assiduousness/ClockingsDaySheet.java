@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.assiduousness.Clocking;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.WeekDay;
 
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ClockingsDaySheet implements Serializable {
-    YearMonthDay date;
+    LocalDate date;
 
     List<Clocking> clockings;
 
@@ -40,11 +41,11 @@ public class ClockingsDaySheet implements Serializable {
 	this.anulatedClockings = anulatedClockings;
     }
 
-    public YearMonthDay getDate() {
+    public LocalDate getDate() {
 	return date;
     }
 
-    public void setDate(YearMonthDay date) {
+    public void setDate(LocalDate date) {
 	this.date = date;
     }
 
@@ -57,10 +58,7 @@ public class ClockingsDaySheet implements Serializable {
     }
 
     public String getWeekDay() {
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
-		Language.getLocale());
-	return bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
-		.toString()
-		+ "_ACRONYM");
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
+	return bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtStartOfDay()).toString() + "_ACRONYM");
     }
 }

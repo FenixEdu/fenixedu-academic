@@ -10,21 +10,23 @@ import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.Duration;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class WorkDaySheet implements Serializable {
     private static final DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm");
 
-    YearMonthDay date;
+    LocalDate date;
 
     WorkSchedule workSchedule;
 
@@ -64,11 +66,10 @@ public class WorkDaySheet implements Serializable {
 	setBalanceToCompensate(Duration.ZERO);
     }
 
-    public WorkDaySheet(YearMonthDay day, WorkSchedule workSchedule,
-	    List<AssiduousnessRecord> clockings, List<Leave> list) {
+    public WorkDaySheet(LocalDate day, WorkSchedule workSchedule, List<AssiduousnessRecord> clockings, List<Leave> list) {
 	setBalanceTime(Duration.ZERO.toPeriod());
 	setUnjustifiedTime(Duration.ZERO);
-        setBalanceToCompensate(Duration.ZERO);
+	setBalanceToCompensate(Duration.ZERO);
 	setDate(day);
 	setWorkSchedule(workSchedule);
 	setLeaves(list);
@@ -91,11 +92,11 @@ public class WorkDaySheet implements Serializable {
 	this.balanceTime = balanceTime;
     }
 
-    public YearMonthDay getDate() {
+    public LocalDate getDate() {
 	return date;
     }
 
-    public void setDate(YearMonthDay date) {
+    public void setDate(LocalDate date) {
 	this.date = date;
     }
 
@@ -192,11 +193,8 @@ public class WorkDaySheet implements Serializable {
 	if (getDate() == null) {
 	    return "";
 	}
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
-		Language.getLocale());
-	return bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtMidnight())
-		.toString()
-		+ "_ACRONYM");
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
+	return bundle.getString(WeekDay.fromJodaTimeToWeekDay(getDate().toDateTimeAtStartOfDay()).toString() + "_ACRONYM");
     }
 
     public void setAssiduousnessRecords(final List<AssiduousnessRecord> assiduousnessRecords) {
@@ -311,8 +309,7 @@ public class WorkDaySheet implements Serializable {
     public void discountBalanceOcurrenceLeaveInFixedPeriod(List<Leave> balanceOcurrenceLeaveList) {
 	Duration balance = Duration.ZERO;
 	if (!balanceOcurrenceLeaveList.isEmpty()) {
-	    balance = balance.plus(getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod()
-		    .getWorkPeriodDuration());
+	    balance = balance.plus(getWorkSchedule().getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration());
 	    balanceToCompensate = balanceToCompensate.plus(balance);
 	}
 	Duration newFixedPeriodAbsence = getUnjustifiedTime().minus(balance);
@@ -334,8 +331,7 @@ public class WorkDaySheet implements Serializable {
 	} else {
 	    setUnjustifiedTime(newFixedPeriodAbsence);
 	}
-	Duration currentBalance = getBalanceTime().toDurationFrom(
-		new YearMonthDay().toDateTimeAtMidnight());
+	Duration currentBalance = getBalanceTime().toDurationFrom(new LocalDate().toDateTimeAtStartOfDay());
 	setBalanceTime(currentBalance.plus(balance).toPeriod());
     }
 
@@ -365,23 +361,20 @@ public class WorkDaySheet implements Serializable {
 
     public void setIrregularDay(Boolean irregular) {
 	this.irregular = irregular;
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources",
-		Language.getLocale());
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	addNote(bundle.getString("label.irregular"));
     }
 
-    public Duration getLeaveDuration(final YearMonthDay thisDay, final WorkSchedule workSchedule,
-	    final Leave leave) {
+    public Duration getLeaveDuration(final LocalDate thisDay, final WorkSchedule workSchedule, final Leave leave) {
 	Duration leaveDuration = Duration.ZERO;
 	if (!getIrregular()) {
 	    Duration overlapsDuration = Duration.ZERO;
 
-	    Interval interval = workSchedule.getWorkScheduleType().getNormalWorkPeriod()
-		    .getNotWorkingPeriod(thisDay);
+	    Interval interval = workSchedule.getWorkScheduleType().getNormalWorkPeriod().getNotWorkingPeriod(thisDay);
 	    if (interval != null
 		    && (getTimeline() == null || ((!interval.contains(leave.getDate()) || getTimeline()
-			    .hasWorkingPointBeforeLeave(leave)) && (!interval.contains(leave
-			    .getEndDate()) || getTimeline().hasWorkingPointAfterLeave(leave)))
+			    .hasWorkingPointBeforeLeave(leave)) && (!interval.contains(leave.getEndDate()) || getTimeline()
+			    .hasWorkingPointAfterLeave(leave)))
 
 		    )) {
 		Interval overlaps = interval.overlap(leave.getTotalInterval());
@@ -390,10 +383,10 @@ public class WorkDaySheet implements Serializable {
 		}
 	    }
 
-	    if ((leave.getDuration().minus(overlapsDuration)).isLongerThan(workSchedule
-		    .getWorkScheduleType().getNormalWorkPeriod().getWorkPeriodDuration())) {
-		leaveDuration = leaveDuration.plus(workSchedule.getWorkScheduleType()
-			.getNormalWorkPeriod().getWorkPeriodDuration());
+	    if ((leave.getDuration().minus(overlapsDuration)).isLongerThan(workSchedule.getWorkScheduleType()
+		    .getNormalWorkPeriod().getWorkPeriodDuration())) {
+		leaveDuration = leaveDuration.plus(workSchedule.getWorkScheduleType().getNormalWorkPeriod()
+			.getWorkPeriodDuration());
 	    } else {
 		leaveDuration = leaveDuration.plus(leave.getDuration().minus(overlapsDuration));
 	    }
@@ -420,10 +413,8 @@ public class WorkDaySheet implements Serializable {
 		setUnjustifiedTime(newFixedPeriodAbsence);
 	    }
 	}
-	Duration currentBalance = getBalanceTime().toDurationFrom(
-		new YearMonthDay().toDateTimeAtMidnight());
-	setBalanceTime(currentBalance.plus(
-		workSchedule.getWorkScheduleType().getNormalWorkPeriod().getHalfWorkPeriodDuration())
+	Duration currentBalance = getBalanceTime().toDurationFrom(new YearMonthDay().toDateTimeAtMidnight());
+	setBalanceTime(currentBalance.plus(workSchedule.getWorkScheduleType().getNormalWorkPeriod().getHalfWorkPeriodDuration())
 		.toPeriod());
     }
 

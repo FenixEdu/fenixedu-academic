@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.LocalDate;
 import org.joda.time.Partial;
-import org.joda.time.YearMonthDay;
 
 public class YearMonth implements Serializable {
 
@@ -25,7 +25,7 @@ public class YearMonth implements Serializable {
 	setMonth(Month.values()[month - 1]);
     }
 
-    public YearMonth(YearMonthDay date) {
+    public YearMonth(LocalDate date) {
 	super();
 	setYear(date.getYear());
 	setMonth(Month.values()[date.getMonthOfYear() - 1]);
