@@ -38,7 +38,6 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	checkParameters(executionYear);
 	checkRulesToCreate(registration, executionYear, requestDate);
 	super.init(registration, executionYear, requestDate, urgentRequest, freeProcessed);
-	new StudentReingressionRequestEvent(getAdministrativeOffice(), getPerson(), this);
     }
 
     private void checkParameters(final ExecutionYear executionYear) {
@@ -117,8 +116,21 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
     }
 
     @Override
-    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
+    protected void createAcademicServiceRequestSituations(AcademicServiceRequestBean academicServiceRequestBean) {
+	super.createAcademicServiceRequestSituations(academicServiceRequestBean);
 
+	if (academicServiceRequestBean.isNew()) {
+	    if (!isFree()) {
+		new StudentReingressionRequestEvent(getAdministrativeOffice(), getPerson(), this);
+	    }
+	} else if (academicServiceRequestBean.isToConclude()) {
+	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
+		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
+	}
+    }
+
+    @Override
+    protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
 	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
 	    getEvent().cancel(academicServiceRequestBean.getEmployee());
 
@@ -129,22 +141,13 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	    academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
 
 	} else if (academicServiceRequestBean.isToConclude() && hasExecutionDegree()) {
-	    final RegistrationState state = RegistrationState.createState(getRegistration(), academicServiceRequestBean.getEmployee()
-		    .getPerson(), academicServiceRequestBean.getFinalSituationDate(), RegistrationStateType.REGISTERED);
+	    final RegistrationState state = RegistrationState.createState(getRegistration(), academicServiceRequestBean
+		    .getEmployee().getPerson(), academicServiceRequestBean.getFinalSituationDate(),
+		    RegistrationStateType.REGISTERED);
 
 	    if (getRegistration().getActiveState() != state) {
 		throw new DomainException("StudentReingressionRequest.reingression.must.be.active.state.after.request.conclusion");
 	    }
-	}
-    }
-
-    @Override
-    protected void createAcademicServiceRequestSituations(AcademicServiceRequestBean academicServiceRequestBean) {
-	super.createAcademicServiceRequestSituations(academicServiceRequestBean);
-
-	if (academicServiceRequestBean.isToConclude()) {
-	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
-		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
 	}
     }
 

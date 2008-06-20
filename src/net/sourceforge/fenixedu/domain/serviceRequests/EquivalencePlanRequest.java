@@ -25,7 +25,6 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 	this();
 	checkParameters(executionYear);
 	super.init(registration, executionYear, requestDate, urgentRequest, freeProcessed);
-	new EquivalencePlanRequestEvent(getAdministrativeOffice(), getPerson(), this);
     }
 
     private void checkParameters(final ExecutionYear executionYear) {
@@ -45,8 +44,18 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
     }
 
     @Override
-    protected void internalChangeState(final AcademicServiceRequestBean academicServiceRequestBean) {
+    protected void createAcademicServiceRequestSituations(AcademicServiceRequestBean academicServiceRequestBean) {
+	super.createAcademicServiceRequestSituations(academicServiceRequestBean);
 
+	if (academicServiceRequestBean.isNew()) {
+	    if (!isFree()) {
+		new EquivalencePlanRequestEvent(getAdministrativeOffice(), getPerson(), this);
+	    }
+	}
+    }
+
+    @Override
+    protected void internalChangeState(final AcademicServiceRequestBean academicServiceRequestBean) {
 	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
 	    getEvent().cancel(academicServiceRequestBean.getEmployee());
 

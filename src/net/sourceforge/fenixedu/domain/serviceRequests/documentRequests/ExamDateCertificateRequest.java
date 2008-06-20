@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
@@ -10,11 +12,15 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.joda.time.DateTime;
 
 public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base {
+
+    static public final List<RegistrationAgreement> FREE_PAYMENT_AGREEMENTS = Arrays.asList(RegistrationAgreement.AFA,
+	    RegistrationAgreement.MA);
 
     protected ExamDateCertificateRequest() {
 	super();
@@ -70,7 +76,8 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
 
     }
 
-    private void checkParameters(ExecutionYear executionYear, Collection<Enrolment> enrolments, ExecutionSemester executionSemester) {
+    private void checkParameters(ExecutionYear executionYear, Collection<Enrolment> enrolments,
+	    ExecutionSemester executionSemester) {
 	if (executionYear == null) {
 	    throw new DomainException(
 		    "error.serviceRequests.documentRequests.ExamDateCertificateRequest.executionYear.cannot.be.null");
@@ -109,7 +116,6 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
     }
 
     public Exam getExamFor(final Enrolment enrolment, final Season season) {
-
 	for (final Exam exam : getExams()) {
 	    if (exam.contains(enrolment.getCurricularCourse()) && exam.isForSeason(season)) {
 		return exam;
@@ -117,7 +123,14 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
 	}
 
 	return null;
+    }
 
+    @Override
+    public boolean isFree() {
+	if (FREE_PAYMENT_AGREEMENTS.contains(getRegistration().getRegistrationAgreement())) {
+	    return true;
+	}
+	return super.isFree();
     }
 
 }

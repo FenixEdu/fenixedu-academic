@@ -1,16 +1,22 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 
 import org.joda.time.DateTime;
 
 public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
+
+    static public final List<RegistrationAgreement> FREE_PAYMENT_AGREEMENTS = Arrays.asList(RegistrationAgreement.AFA,
+	    RegistrationAgreement.MA);
 
     private ProgramCertificateRequest() {
 	super();
@@ -31,7 +37,7 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
 	if (enrolments.isEmpty()) {
 	    throw new DomainException("error.CourseLoadRequest.invalid.number.of.enrolments");
 	}
-	
+
 	for (final Enrolment enrolment : enrolments) {
 	    if (!enrolment.isApproved()) {
 		throw new DomainException("error.ProgramCertificateRequest.cannot.add.not.approved.enrolments");
@@ -66,5 +72,13 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
     public void delete() {
 	getEnrolments().clear();
 	super.delete();
+    }
+
+    @Override
+    public boolean isFree() {
+	if (FREE_PAYMENT_AGREEMENTS.contains(getRegistration().getRegistrationAgreement())) {
+	    return true;
+	}
+	return super.isFree();
     }
 }
