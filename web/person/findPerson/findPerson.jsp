@@ -264,14 +264,14 @@ function check(e,v){
                             <logic:equal name="show" value="true">
                                 <p class="mvert0">
                                     <bean:define id="emailValue" name="email" property="value" />
-                                    <a href="mailto:<%= pageContext.findAttribute("emailValue").toString() %>"><bean:write name="email" property="value" /></a>
+                                    <a href="mailto:<%= pageContext.findAttribute("emailValue").toString() %>"><bean:write name="email" property="value" /></a> (<bean:message name="email" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />)
                                 </p>
                             </logic:equal>
                             <logic:notEqual name="show" value="true">
                             <logic:equal name="email" property="visible" value="true">
                                 <p class="mvert0">
                                     <bean:define id="emailValue" name="email" property="value" />
-                                    <a href="mailto:<%= pageContext.findAttribute("emailValue").toString() %>"><bean:write name="email" property="value" /></a>
+                                    <a href="mailto:<%= pageContext.findAttribute("emailValue").toString() %>"><bean:write name="email" property="value" /></a> (<bean:message name="email" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />)
                                 </p>
                             </logic:equal>
                             </logic:notEqual>
