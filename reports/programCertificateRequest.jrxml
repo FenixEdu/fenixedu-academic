@@ -54,7 +54,7 @@
 					<textElement textAlignment="Justified" isStyledText="true" lineSpacing="1_1_2">
 						<font pdfFontName="Times-Roman" size="14" isBold="false" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["A Técnica Superior da Secção de Graduação do " + $P{institutionName} + " da " + $P{universityName} + ", em cumprimento do despacho exarado em requerimento que fica arquivado nesta Secretaria, certifica que foi fornecido ao aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o número <style pdfFontName=\"Times-Bold\"> " + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, os <style pdfFontName=\"Times-Bold\">" + $P{numberOfPrograms} + "</style> programas que fazem parte integrante deste Certificado e que vão devidamente rubricados e autenticados com o carimbo a óleo em uso nesta Secretaria."]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["A Técnica Superior da Secção de Graduação do " + $P{institutionName} + " da " + $P{universityName} + ", em cumprimento do despacho exarado em requerimento que fica arquivado nesta Secretaria, certifica que foi fornecido ao aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o número <style pdfFontName=\"Times-Bold\">" + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, os <style pdfFontName=\"Times-Bold\">" + $P{numberOfPrograms} + "</style> programas que fazem parte integrante deste Certificado e que vão devidamente rubricados e autenticados com o carimbo a óleo em uso nesta Secretaria."]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement

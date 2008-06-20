@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.dataTransferObject.candidacy;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
@@ -13,6 +15,9 @@ import org.joda.time.YearMonthDay;
  * 
  */
 public class IngressionInformationBean implements Serializable {
+
+    static private final List<RegistrationAgreement> AGREEMENTS_TO_REQUEST_INFORMATION = Arrays.asList(RegistrationAgreement.AFA,
+	    RegistrationAgreement.MA);
 
     private RegistrationAgreement registrationAgreement;
 
@@ -40,7 +45,11 @@ public class IngressionInformationBean implements Serializable {
 
     public void setRegistrationAgreement(RegistrationAgreement registrationAgreement) {
 	this.registrationAgreement = registrationAgreement;
-	this.requestAgreementInformation = (registrationAgreement == RegistrationAgreement.AFA || registrationAgreement == RegistrationAgreement.MA);
+	this.requestAgreementInformation = AGREEMENTS_TO_REQUEST_INFORMATION.contains(registrationAgreement);
+    }
+
+    public boolean hasRegistrationAgreement() {
+	return getRegistrationAgreement() != null;
     }
 
     public String getAgreementInformation() {
@@ -52,7 +61,7 @@ public class IngressionInformationBean implements Serializable {
     }
 
     public boolean isRequestAgreementInformation() {
-        return requestAgreementInformation;
+	return requestAgreementInformation;
     }
 
     public Ingression getIngression() {

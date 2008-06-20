@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  * 
  */
 
-@Mapping(path = "/manageIngression", module = "academicAdminOffice", formBeanClass=FenixActionForm.class)
+@Mapping(path = "/manageIngression", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
 @Forwards( { @Forward(name = "showEditIngression", path = "/academicAdminOffice/manageIngression.jsp") })
 public class ManageIngressionDA extends FenixDispatchAction {
 
@@ -49,10 +49,8 @@ public class ManageIngressionDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	RegistrationIngressionEditor ingressionInformationBean = getRegistrationIngressionEditor();
-	if (ingressionInformationBean.getRegistrationAgreement() != null
-		&& !ingressionInformationBean.getRegistrationAgreement().isNormal()) {
-	    ingressionInformationBean.setIngression(null);
-	} else {
+	if (!ingressionInformationBean.hasRegistrationAgreement()
+		|| ingressionInformationBean.getRegistrationAgreement().isNormal()) {
 	    ingressionInformationBean.setAgreementInformation(null);
 	}
 
@@ -72,7 +70,7 @@ public class ManageIngressionDA extends FenixDispatchAction {
 	    return mapping.findForward("showEditIngression");
 	}
 
-	addActionMessage(request, "message.registration.ingression.edit.success");
+	addActionMessage(request, "message.registration.ingression.and.agreement.edit.success");
 	request.setAttribute("registrationId", getRegistrationIngressionEditor().getRegistration().getIdInternal());
 
 	return prepare(mapping, actionForm, request, response);
