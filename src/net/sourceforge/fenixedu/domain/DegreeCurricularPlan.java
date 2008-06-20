@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
@@ -166,6 +167,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
 	createDefaultCourseGroups();
 	createDefaultCurricularRules();
+	new DegreeCurricularPlanServiceAgreementTemplate(this);
+	
     }
 
     private void createDefaultCourseGroups() {
@@ -174,8 +177,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     private void createDefaultCurricularRules() {
 	new MaximumNumberOfCreditsForEnrolmentPeriod(getRoot(), ExecutionSemester.readActualExecutionSemester());
-	// new PreviousYearsEnrolmentCurricularRule(getRoot(),
-	// ExecutionPeriod.readActualExecutionPeriod());
     }
 
     private void newStructureFieldsChange(CurricularStage curricularStage, ExecutionYear beginExecutionYear) {
