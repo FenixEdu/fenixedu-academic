@@ -31,7 +31,7 @@ public class AlterExecutionPeriodState extends Service {
             executionSemester.setState(periodState);
             PeriodState currentPeriodState = periodState;
             for (final ExecutionSemester otherExecutionPeriod : executionYear.getExecutionPeriodsSet()) {
-                if (!otherExecutionPeriod.getState().getStateCode().equals(currentPeriodState.getStateCode())) {
+                if (currentPeriodState != null && !otherExecutionPeriod.getState().getStateCode().equals(currentPeriodState.getStateCode())) {
                     currentPeriodState = null;
                 }
             }
