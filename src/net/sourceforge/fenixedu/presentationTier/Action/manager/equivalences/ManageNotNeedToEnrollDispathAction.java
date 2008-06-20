@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.equivalences;
+package net.sourceforge.fenixedu.presentationTier.Action.manager.equivalences;
 
 import java.text.Collator;
 import java.util.Collections;

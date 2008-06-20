@@ -164,12 +164,12 @@
 	<definition name="df.page.prepareViewStudentCurriculumChooseStudent" 
 		extends="definition.teacher.two-column.extra-menu.tutor">
 		<put name="body" 
-			value="/degreeAdministrativeOffice/curriculum/prepareViewStudentCurriculumChooseStudent.jsp"/>
+			value="/teacher/curriculum/prepareViewStudentCurriculumChooseStudent.jsp"/>
 	</definition>
 	<definition name="df.page.viewStudentsByTutor" 
 		extends="definition.teacher.two-column.extra-menu.tutor">
 		<put name="body" 
-			value="/degreeAdministrativeOffice/curriculum/viewStudentsByTutor.jsp"/>
+			value="/teacher/tutor/viewStudentsByTutor.jsp"/>
 	</definition>
 	<definition name="df.page.showStudentCurricularPlans" 
 		extends="definition.teacher.two-column.extra-menu.tutor">

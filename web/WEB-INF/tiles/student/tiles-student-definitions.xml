@@ -19,9 +19,6 @@
 	</definition>
 	<definition name="definition.myExamRooms" page="/student/myExamRooms.jsp" controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.MyExamRooms">
 	</definition>
-	<definition name="definition.cant.enroll" extends="definition.student.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/commons/cantEnroll.jsp"/>
-	</definition>
 	<definition name="definition.viewSeminaries" extends="definition.student.masterPage">
 		<put name="body" value="/student/viewSeminaries_bd.jsp"/>
 	</definition>

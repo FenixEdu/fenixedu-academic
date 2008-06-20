@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.student;
+package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.PersonName;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.commons.lang.StringUtils;
 

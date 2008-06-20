@@ -5491,7 +5491,7 @@
 		<description>Returns a list that the first element is the degree pre-select and the tail is all 
             degrees </description>
 		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.withoutRules.PrepareDegreesListByStudentNumber</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.enrolment.withoutRules.PrepareDegreesListByStudentNumber</implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains>
 			<chain name="EnrollmentWithoutRulesAuthorization" />
@@ -5511,7 +5511,7 @@
 		<name>ReadCurricularCoursesToEnroll</name>
 		<description>Read all curricular course that can be enrolled</description>
 		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadCurricularCoursesToEnroll</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.enrolment.withoutRules.ReadCurricularCoursesToEnroll</implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains>
 			<chain name="EnrollmentWithoutRulesAuthorization" />
@@ -5538,7 +5538,7 @@
 	<service>
         <name>ReadCurricularCoursesToEnrollSuperUser</name>
         <implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadCurricularCoursesToEnrollSuperUser</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.enrolment.withoutRules.ReadCurricularCoursesToEnrollSuperUser</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentWithoutRulesAuthorizationSuperUser"/>
@@ -7319,7 +7319,7 @@
     </service>
     <service>
     	<name>InsertNotNeedToEnrollInCurricularCourses</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.equivalences.InsertNotNeedToEnrollInCurricularCourses</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.equivalences.InsertNotNeedToEnrollInCurricularCourses</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>
 		<filterChains>
@@ -7328,7 +7328,7 @@
     </service>    
         <service>
     	<name>DeleteNotNeedToEnrollInCurricularCourse</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.equivalences.DeleteNotNeedToEnrollInCurricularCourse</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.equivalences.DeleteNotNeedToEnrollInCurricularCourse</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>
 		<filterChains>
@@ -7357,7 +7357,7 @@
     </service>
 	<service>
         <name>ReadActiveDegreeCurricularPlansByDegreeType</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.ReadActiveDegreeCurricularPlansByDegreeType</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadActiveDegreeCurricularPlansByDegreeType</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
@@ -7392,7 +7392,7 @@
 	</service>
 	<service>
 		<name>CreateCurricularCourseEquivalency</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.CreateCurricularCourseEquivalency</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateCurricularCourseEquivalency</implementationClass>
 		<description/>
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -7401,7 +7401,7 @@
 	</service>
 	<service>
 		<name>DeleteCurricularCourseEquivalency</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.DeleteCurricularCourseEquivalency</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteCurricularCourseEquivalency</implementationClass>
 		<description/>
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -9548,7 +9548,7 @@
     </service>
     <service>
         <name>ChangeSpecialSeasonCode</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.specialSeason.ChangeSpecialSeasonCode</implementationClass>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.enrolment.specialSeason.ChangeSpecialSeasonCode</implementationClass>
         <description />
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -9559,7 +9559,7 @@
 		<name>ReadStudentCurricularPlanForEnrollmentsWithoutRules</name>
 		<description>read active or concluded student curricular plan from selected student</description>
 		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadStudentCurricularPlanForEnrollmentsWithoutRules</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.enrolment.withoutRules.ReadStudentCurricularPlanForEnrollmentsWithoutRules</implementationClass>
 		<isTransactional>true</isTransactional>
 		<filterChains>
 			<chain name="EnrollmentWithoutRulesAuthorization" />

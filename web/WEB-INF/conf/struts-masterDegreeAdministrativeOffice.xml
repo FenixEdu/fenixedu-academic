@@ -793,7 +793,7 @@
 
       	<!-- ****************** Enrollment Without Rules **************************** -->
 		<action path="/courseEnrolmentWithoutRulesManagerDA"
-			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.withoutRules.ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.enrolment.withoutRules.ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction"
 			input="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=MASTER_DEGREE&amp;page=0"
 			name="curricularCoursesEnrollmentWithoutRuleForm"
 			scope="request"

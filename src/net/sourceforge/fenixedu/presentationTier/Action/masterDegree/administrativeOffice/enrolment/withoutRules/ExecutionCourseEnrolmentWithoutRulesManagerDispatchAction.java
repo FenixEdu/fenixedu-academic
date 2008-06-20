@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.withoutRules;
+package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.enrolment.withoutRules;
 
 import java.util.ArrayList;
 import java.util.Arrays;

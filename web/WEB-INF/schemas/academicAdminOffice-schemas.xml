@@ -316,11 +316,11 @@
 	</slot>			
 </schema>
 
-<schema name="student.StudentsSearchBeanByNumber" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="student.StudentsSearchBeanByNumber" type="net.sourceforge.fenixedu.dataTransferObject.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="number" key="label.studentNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
-<schema name="student.StudentsSearchBeanByNumberWithExecutionYear" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="student.StudentsSearchBeanByNumberWithExecutionYear" type="net.sourceforge.fenixedu.dataTransferObject.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="number" key="label.studentNumber"/>
 	<slot name="executionYear" layout="menu-select" key="label.executionYear">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider"/>
@@ -338,7 +338,7 @@
 	</slot>
 </schema>
 
-<schema name="student.StudentsSearchBeanByIdentification" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="student.StudentsSearchBeanByIdentification" type="net.sourceforge.fenixedu.dataTransferObject.student.StudentsSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="identificationNumber" key="label.identificationNumber"/>
 	<slot name="documentType" key="label.idDocumentType"/>
 </schema>

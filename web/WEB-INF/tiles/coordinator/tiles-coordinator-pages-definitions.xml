@@ -153,7 +153,7 @@
 
 	<!-- ************************************** LEEC Enrollment **************************** -->
 	<definition name="df.page.prepareViewStudentCurriculumChooseStudent" extends="definition.coordinator.two-column">
-		<put name="body" value="/degreeAdministrativeOffice/curriculum/prepareViewStudentCurriculumChooseStudent.jsp"/>
+		<put name="body" value="/teacher/curriculum/prepareViewStudentCurriculumChooseStudent.jsp"/>
 	</definition>
 	<definition name="df.page.showStudentCurricularPlans" extends="definition.coordinator.two-column.extra-menu.student">
 		<put name="body" value="/student/curriculum/viewCurricularPlans_bd.jsp"/>

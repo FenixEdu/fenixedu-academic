@@ -2124,7 +2124,7 @@
 	
        	<!-- ==================== Curricular Course Equivalencies ================== -->
        	<action path="/curricularCourseEquivalencies"
-       			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.CurricularCourseEquivalenciesDA"
+       			type="net.sourceforge.fenixedu.presentationTier.Action.manager.CurricularCourseEquivalenciesDA"
 				input="/curricularCourseEquivalencies.do?method=prepare&amp;page=0"
 				name="curricularCourseEquivalenciesForm"
     	   		scope="request"
@@ -2139,7 +2139,7 @@
       	<!-- =================== Equivalences =================== -->
        	<action path="/showNotNeedToEnroll"
 	       	name="equivalencesForm"
-       		type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.equivalences.ManageNotNeedToEnrollDispathAction"
+       		type="net.sourceforge.fenixedu.presentationTier.Action.manager.equivalences.ManageNotNeedToEnrollDispathAction"
        		scope="request"
 			input=""
        		parameter="method">

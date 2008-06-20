@@ -194,19 +194,19 @@
 					
  	<!-- ****************** Enrollment Without Rules **************************** -->	
 	<definition name="df.page.prepareEnrollmentChooseStudentWithoutRules" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/prepareEnrollmentChooseStudentAndYearWithoutRules.jsp"/>
+		<put name="body" value="/masterDegreeAdministrativeOffice/enrolment/withoutRules/prepareEnrollmentChooseStudentAndYearWithoutRules.jsp"/>
 	</definition>
 	<definition name="df.page.curricularCourseEnrollmentList" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
-		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/withoutRules/courseEnrollmentContext.jsp"/>
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/curricularCourseEnrollmentList.jsp"/>
+		<put name="body-context" value="/masterDegreeAdministrativeOffice/enrolment/withoutRules/courseEnrollmentContext.jsp"/>
+		<put name="body" value="/masterDegreeAdministrativeOffice/enrolment/withoutRules/curricularCourseEnrollmentList.jsp"/>
 	</definition>
 	<definition name="df.page.choosesForEnrollment" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
-		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/withoutRules/courseEnrollmentContext.jsp"/>
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/chooseDegreeAndCurricularSemesterAndCurricularYear.jsp"/>
+		<put name="body-context" value="/masterDegreeAdministrativeOffice/enrolment/withoutRules/courseEnrollmentContext.jsp"/>
+		<put name="body" value="/masterDegreeAdministrativeOffice/enrolment/withoutRules/chooseDegreeAndCurricularSemesterAndCurricularYear.jsp"/>
 	</definition>	
 	<definition name="df.page.showCurricularCourseToEnroll" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
-		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/withoutRules/courseEnrollmentContext.jsp"/>
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/withoutRules/showCurricularCourseToEnroll.jsp"/>
+		<put name="body-context" value="/masterDegreeAdministrativeOffice/enrolment/withoutRules/courseEnrollmentContext.jsp"/>
+		<put name="body" value="/masterDegreeAdministrativeOffice/enrolment/withoutRules/showCurricularCourseToEnroll.jsp"/>
 	</definition>	
 		
 	<!-- ************* Certificates ************* -->

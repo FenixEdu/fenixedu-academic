@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.backBeans.degreeAdministrativeOffice;
+package net.sourceforge.fenixedu.presentationTier.backBeans.manager;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -65,7 +65,7 @@
 	
 	<managed-bean>
 		<managed-bean-name>displayCurricularPlan</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.degreeAdministrativeOffice.DisplayCurricularPlan</managed-bean-class>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.DisplayCurricularPlan</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	
@@ -551,10 +551,10 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/degreeAdministrativeOffice/curricularPlans/chooseCurricularPlan.jsp</from-view-id>
+		<from-view-id>/manager/bolonha/curricularPlans/chooseCurricularPlan.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>success</from-outcome>
-			<to-view-id>/degreeAdministrativeOffice/curricularPlans/displayCurricularPlan.jsp</to-view-id>
+			<to-view-id>/manager/bolonha/displayCurricularPlan.jsp</to-view-id>
 		</navigation-case>			
 	</navigation-rule>
 	

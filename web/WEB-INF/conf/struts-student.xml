@@ -308,7 +308,6 @@
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
 	<!-- page fronting actions -->
-		<action path="/cantEnroll" forward="definition.cant.enroll"/>
 	    <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
         	path="/index">
         	<forward name="Success" path="df.page.main"/>

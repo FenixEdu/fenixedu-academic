@@ -1,7 +1,7 @@
 /**
  * Jul 29, 2005
  */
-package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.equivalences;
+package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.equivalences;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;

@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice;
+package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import java.util.Collection;
 import java.util.List;

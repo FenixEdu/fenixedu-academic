@@ -340,7 +340,7 @@
     </slot>
 </schema>
 
-<schema name="student.StudentsSearchBean" type="net.sourceforge.fenixedu.domain.student.StudentsSearchBean" bundle="APPLICATION_RESOURCES">
+<schema name="student.StudentsSearchBean" type="net.sourceforge.fenixedu.dataTransferObject.student.StudentsSearchBean" bundle="APPLICATION_RESOURCES">
 	<slot name="number" />
 	<slot name="identificationNumber" />
 	<slot name="documentType" />

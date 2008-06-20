@@ -86,7 +86,7 @@
 	        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
 	    </action>			
 	    <action path="/viewStudentCurriculum"
-		   	type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.ViewStudentCurriculumDispatchAction"
+		   	type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ViewStudentCurriculumDispatchAction"
 	       	parameter="method">
 			<forward name="prepareViewStudentCurriculumChooseStudent" path="df.page.prepareViewStudentCurriculumChooseStudent"/>        	
     	</action>

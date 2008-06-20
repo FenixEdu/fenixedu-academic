@@ -1,8 +1,7 @@
-package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice;
+package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.student.StudentsSearchBean;
 
 public class StudentSearchBeanWithExecutionYear extends StudentsSearchBean {
 
