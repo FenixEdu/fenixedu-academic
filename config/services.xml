@@ -21,7 +21,7 @@
 		<filterChains>
 			<chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization" />
 		</filterChains>
-	</service>
+	</service>	
 	<service>
 		<name>Authenticate</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.Authenticate</implementationClass>
@@ -2053,6 +2053,7 @@
 			<chain name="MasterDegreeAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>
+
 	<service>
 		<name>EditGrantOwner</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.EditGrantOwner</implementationClass>
@@ -7300,7 +7301,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
-    </service> 
+    </service>    
     <service>
         <name>ReadDegreeCandidatesWithFilter</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeCandidatesWithFilter</implementationClass>
@@ -7389,7 +7390,7 @@
 		<filterChains>
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
-	</service>
+	</service>     
 	<service>
 		<name>CreateCurricularCourseEquivalency</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateCurricularCourseEquivalency</implementationClass>
@@ -9546,7 +9547,7 @@
             <chain name="ManagerAuthorization" />
         </filterChains>
     </service>
-    <service>
+	<service>
         <name>ChangeSpecialSeasonCode</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.enrolment.specialSeason.ChangeSpecialSeasonCode</implementationClass>
         <description />
@@ -11527,7 +11528,7 @@
         <isTransactional>true</isTransactional>  
 		<filterChains/>
     </service>
-    <service>
+        <service>
     	<name>CreatePersistentGroup</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.CreatePersistentGroup</implementationClass>
         <description/>
@@ -12271,5 +12272,32 @@
 			<chain name="AcademicAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>
+
+	<service>
+		<name>RetrieveOrCreateStudentInquiriesRegistries</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.RetrieveOrCreateStudentInquiriesRegistries</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="StudentAuthorization" />
+		</filterChains>		
+	</service>
 	
+	<service>
+		<name>WriteStudentInquiry</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.WriteStudentInquiry</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="StudentAuthorization" />
+		</filterChains>		
+	</service>	
+
+	<service>
+		<name>SubmitStudentSpentTimeInPeriod</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.SubmitStudentSpentTimeInPeriod</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="StudentAuthorization" />
+		</filterChains>		
+	</service>	
+
 </serviceDefinitions>

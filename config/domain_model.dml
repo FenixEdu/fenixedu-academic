@@ -194,7 +194,7 @@ enum      net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricul
 enum	  net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState 									 as CandidacyProcessState;
 enum	  net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState 								 as IndividualCandidacyState;
 enum	  net.sourceforge.fenixedu.domain.candidacy.Ingression														 as Ingression;
-
+enum	  net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState								 			 as InquiriesRegistryState; 
 
 /*
 *
@@ -2467,6 +2467,9 @@ class DomainObject {
 	}
 
 	class inquiries.InquiriesCourse extends DomainObject {
+    	Integer weeklyHoursSpentPercentage;
+    	Integer studyDaysSpentInExamsSeason;	
+	
 		Character approvationRatioClassification;
 		Character arithmeticMeanClassification;
 		Double classCoordination;
@@ -2480,9 +2483,34 @@ class DomainObject {
 		Integer studentFirstEnrollment;
 		Double studyElementsContribution;
 		Integer weeklySpentHours;
+		
+		String classificationInThisCU;
+		Boolean highWorkLoadReasonComplexProjects;
+		Boolean highWorkLoadReasonExtenseProjects;
+		Boolean highWorkLoadReasonManyProjects;
+		Boolean highWorkLoadReasonLackOfPreviousPreparation;
+		Boolean highWorkLoadReasonCurricularProgramExtension;
+		Boolean highWorkLoadReasonLackOfAttendanceOfLessons;
+		String highWorkLoadReasonOtherReasons;
+		Integer previousKnowledgeEnoughToCUAttendance;
+		Integer activityParticipation;
+		Integer knowledgeAndComprehensionOfCU;
+		Integer knowledgeApplicationOfCU;
+		Integer criticSenseAndReflexiveSpirit;
+		Integer cooperationAndComunicationCapacity;
+		Integer predictedProgramTeached;
+		Integer wellStructuredOfCU;
+		Integer goodGuidanceMaterial;
+		Integer recomendendBibliographyImportance;
+		Integer fairEvaluationMethods;
+		Integer globalClassificationOfCU;
+		
 	}
 
 	class inquiries.InquiriesRegistry extends DomainObject {
+		InquiriesRegistryState state;
+    	Integer weeklyHoursSpentPercentage;
+    	Integer studyDaysSpentInExamsSeason;
 	}
 
 	class inquiries.InquiriesRoom extends DomainObject {
@@ -2493,6 +2521,8 @@ class DomainObject {
 
 	class inquiries.InquiriesStudentExecutionPeriod extends DomainObject {
 		Boolean dontWantToRespond;
+		Integer weeklyHoursSpentInClassesSeason;
+		
 	}
 
 	class inquiries.InquiriesTeacher extends DomainObject {
@@ -2506,6 +2536,23 @@ class DomainObject {
 		Double teacherInterestStimulation;
 		Double teacherPunctuality;
 		Double teacherReasoningStimulation;
+		
+		Integer classesFrequency;
+		Boolean lowClassesFrequencyReasonSchedule;
+		Boolean lowClassesFrequencyReasonTeacher;
+		Boolean lowClassesFrequencyReasonContents;
+		Boolean lowClassesFrequencyReasonFlunkeeStudent;
+		Boolean lowClassesFrequencyReasonOther;
+		Integer teacherAcomplishedScheduleAndActivities;
+		Integer suitedClassesRythm;
+		Integer teacherCommited;
+		Integer teacherExposedContentsAtractively;
+		Integer teacherShowedSecurity;
+		Integer teacherExposedContentsClearly;
+		Integer teacherStimulatedParticipation;
+		Integer teacherOpenToClearDoubts;
+		Integer teacherGlobalClassification;		
+		
 	}
 
 	class inquiries.InquiryResponsePeriod extends DomainObject {
