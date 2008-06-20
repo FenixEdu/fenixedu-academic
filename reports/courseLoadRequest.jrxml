@@ -44,7 +44,7 @@
 	<parameter name="name" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="degreeDescription" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="studentNumber" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="studentNumber" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="administrativeOfficeCoordinatorName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="path" isForPrompting="false" class="java.lang.String"/>

@@ -5,7 +5,7 @@
 <html:xhtml />
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><strong><bean:message key="link.student.manageIngression" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
+<h2><strong><bean:message key="link.student.manageIngressionAndAgreement" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></h2>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p>
@@ -59,16 +59,36 @@
 </fr:view>
 </logic:notPresent>
 
-<fr:edit name="ingressionBean" schema="ingression.information" action="/manageIngression.do?method=editIngression">
-	<fr:destination name="agreementPostBack"
-		path="/manageIngression.do?method=postBack" />
-	<fr:destination name="ingressionPostBack"
-		path="/manageIngression.do?method=postBack" />
-	<fr:destination name="entryPhasePostBack"
-		path="/manageIngression.do?method=postBack" />
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thlight thright thmiddle" />
-		<fr:property name="columnClasses" value=",,tdclear tderror1" />
-	</fr:layout>
-</fr:edit>
+<bean:define id="registrationID" name="ingressionBean" property="registration.idInternal" />
 
+<fr:form action='<%= "/manageIngression.do?registrationId=" + registrationID.toString() %>'>
+	<html:hidden property="method" value="editIngression" />
+
+	<logic:equal name="ingressionBean" property="requestAgreementInformation" value="false">
+		<fr:edit name="ingressionBean" schema="ingression.information" >
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thlight thright thmiddle" />
+				<fr:property name="columnClasses" value=",,tdclear tderror1" />
+			</fr:layout>
+			<fr:destination name="agreementPostBack" path="/manageIngression.do?method=postBack" />
+			<fr:destination name="ingressionPostBack" path="/manageIngression.do?method=postBack" />
+			<fr:destination name="entryPhasePostBack" path="/manageIngression.do?method=postBack" />
+		</fr:edit>
+	</logic:equal>
+	
+	<logic:equal name="ingressionBean" property="requestAgreementInformation" value="true">
+		<fr:edit name="ingressionBean" schema="ingression.information.requestAgreementInformation">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thlight thright thmiddle" />
+				<fr:property name="columnClasses" value=",,tdclear tderror1" />
+			</fr:layout>
+			<fr:destination name="agreementPostBack" path="/manageIngression.do?method=postBack" />
+			<fr:destination name="ingressionPostBack" path="/manageIngression.do?method=postBack" />
+			<fr:destination name="entryPhasePostBack" path="/manageIngression.do?method=postBack" />
+		</fr:edit>
+	</logic:equal>
+	
+	<html:submit><bean:message key="label.submit" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:submit>
+	<html:cancel onclick="this.form.method.value='prepare'; return true;"><bean:message key="label.cancel" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:cancel>
+
+</fr:form>

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package net.sourceforge.fenixedu.dataTransferObject.candidacy;
 
 import java.io.Serializable;
@@ -17,27 +14,45 @@ import org.joda.time.YearMonthDay;
  */
 public class IngressionInformationBean implements Serializable {
 
+    private RegistrationAgreement registrationAgreement;
+
+    private String agreementInformation;
+
     private Ingression ingression;
 
     private EntryPhase entryPhase;
-
-    private RegistrationAgreement registrationAgreement;
 
     private YearMonthDay studiesStartDate;
 
     private YearMonthDay homologationDate;
 
+    private boolean requestAgreementInformation;
+
     public IngressionInformationBean() {
 	super();
 	this.registrationAgreement = RegistrationAgreement.NORMAL;
+	requestAgreementInformation = false;
     }
 
-    public EntryPhase getEntryPhase() {
-	return entryPhase;
+    public RegistrationAgreement getRegistrationAgreement() {
+	return registrationAgreement;
     }
 
-    public void setEntryPhase(EntryPhase entryPhase) {
-	this.entryPhase = entryPhase;
+    public void setRegistrationAgreement(RegistrationAgreement registrationAgreement) {
+	this.registrationAgreement = registrationAgreement;
+	this.requestAgreementInformation = (registrationAgreement == RegistrationAgreement.AFA || registrationAgreement == RegistrationAgreement.MA);
+    }
+
+    public String getAgreementInformation() {
+	return agreementInformation;
+    }
+
+    public void setAgreementInformation(String agreementInformation) {
+	this.agreementInformation = agreementInformation;
+    }
+
+    public boolean isRequestAgreementInformation() {
+        return requestAgreementInformation;
     }
 
     public Ingression getIngression() {
@@ -48,12 +63,12 @@ public class IngressionInformationBean implements Serializable {
 	this.ingression = ingression;
     }
 
-    public RegistrationAgreement getRegistrationAgreement() {
-	return registrationAgreement;
+    public EntryPhase getEntryPhase() {
+	return entryPhase;
     }
 
-    public void setRegistrationAgreement(RegistrationAgreement registrationAgreement) {
-	this.registrationAgreement = registrationAgreement;
+    public void setEntryPhase(EntryPhase entryPhase) {
+	this.entryPhase = entryPhase;
     }
 
     public void clearIngressionAndEntryPhase() {
@@ -65,6 +80,7 @@ public class IngressionInformationBean implements Serializable {
 
     public void clearAgreement() {
 	this.registrationAgreement = RegistrationAgreement.NORMAL;
+	this.agreementInformation = null;
     }
 
     public YearMonthDay getHomologationDate() {

@@ -24,7 +24,7 @@
 	<import value="net.sf.jasperreports.engine.data.*" />
 
 	<parameter name="name" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="studentNumber" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="studentNumber" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="degreeDescription" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="numberOfPrograms" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="administrativeOfficeName" isForPrompting="false" class="java.lang.String"/>

@@ -3577,6 +3577,7 @@ class DomainObject {
 		Integer number;
 		Boolean payedTuition;
 		RegistrationAgreement registrationAgreement;
+		String agreementInformation;
 		Boolean requestedChangeBranch;
 		Boolean requestedChangeDegree;
 		YearMonthDay startDate;
@@ -3584,8 +3585,8 @@ class DomainObject {
 		Integer finalAverage;
 		YearMonthDay conclusionDate;
 		String conclusionProcessNotes;
-		EntryPhase entryPhase;
 		Ingression ingression;
+		EntryPhase entryPhase;
 	}
 
 	class student.RegistrationDataByExecutionYear extends DomainObject {

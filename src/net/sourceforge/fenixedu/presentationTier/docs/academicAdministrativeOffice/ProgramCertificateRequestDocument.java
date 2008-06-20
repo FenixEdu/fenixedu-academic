@@ -14,11 +14,12 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 import pt.ist.utl.fenix.utils.NumberToWordsConverter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -43,19 +44,31 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
     }
 
     private void addParametersInformation() {
-	addParameter("studentNumber", getDocumentRequest().getRegistration().getStudent().getNumber());
+	addParameter("studentNumber", getStudentNumber());
 	addParameter("numberOfPrograms", calculateNumberOfPrograms());
 	addParameter("degreeDescription", getDegreeDescription());
 
 	final Employee employee = AccessControl.getPerson().getEmployee();
 
-	addParameter("administrativeOfficeCoordinatorName", employee.getCurrentWorkingPlace().getActiveUnitCoordinator().getName());
+	addParameter("administrativeOfficeCoordinatorName", employee.getCurrentWorkingPlace().getActiveUnitCoordinator()
+		.getName());
 	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
-	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
+	addParameter("day", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
 
 	createProgramsList();
+    }
+
+    private String getStudentNumber() {
+	final Registration registration = getDocumentRequest().getRegistration();
+	if (ProgramCertificateRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
+	    final String agreementInformation = registration.getAgreementInformation();
+	    if (!StringUtils.isEmpty(agreementInformation)) {
+		return registration.getRegistrationAgreement().toString() + " " + agreementInformation;
+	    }
+	}
+	return registration.getStudent().getNumber().toString();
     }
 
     public boolean isBolonha() {
@@ -79,10 +92,10 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
     private void createProgramsList() {
 	final List<ProgramInformation> bolonha = new ArrayList<ProgramInformation>();
 	final List<ProgramInformation> preBolonha = new ArrayList<ProgramInformation>();
-	
+
 	addParameter("bolonhaList", bolonha);
 	addParameter("preBolonhaList", preBolonha);
-	
+
 	for (final Enrolment enrolment : getDocumentRequest().getEnrolmentsSet()) {
 	    if (enrolment.isBolonhaDegree()) {
 		bolonha.add(new BolonhaProgramInformation(enrolment));
@@ -153,7 +166,8 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 	    this.weigth = curricularCourse.getWeigth().toString();
 	    this.prerequisites = curricularCourse.getPrerequisites();
 	    this.objectives = HtmlToTextConverterUtil.convertToText(curricularCourse.getObjectives(executionSemester));
-	    this.evaluationMethod = HtmlToTextConverterUtil.convertToText(curricularCourse.getEvaluationMethod(executionSemester));
+	    this.evaluationMethod = HtmlToTextConverterUtil
+		    .convertToText(curricularCourse.getEvaluationMethod(executionSemester));
 
 	    this.bibliographics = buildBibliographicInformation(curricularCourse, executionSemester);
 	}
@@ -193,7 +207,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 	    return this.bibliographics;
 	}
     }
-    
+
     static public class PreBolonhaProgramInformation extends ProgramInformation {
 	private String program;
 	private String generalObjectives;
@@ -210,7 +224,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 		this.program = this.generalObjectives = this.operationalObjectives = StringUtils.EMPTY;
 	    }
 	}
-	
+
 	public String getProgram() {
 	    return program;
 	}

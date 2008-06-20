@@ -13,9 +13,11 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-import org.joda.time.YearMonthDay;
+import org.apache.commons.lang.StringUtils;
+import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -39,27 +41,39 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
     }
 
     private void addParametersInformation() {
-	addParameter("studentNumber", getDocumentRequest().getRegistration().getStudent().getNumber());
+	addParameter("studentNumber", getStudentNumber());
 	addParameter("degreeDescription", getDegreeDescription());
-	
+
 	final Employee employee = AccessControl.getPerson().getEmployee();
-	
-	addParameter("administrativeOfficeCoordinatorName", employee.getCurrentWorkingPlace().getActiveUnitCoordinator().getName());
+
+	addParameter("administrativeOfficeCoordinatorName", employee.getCurrentWorkingPlace().getActiveUnitCoordinator()
+		.getName());
 	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
-	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
-	
+	addParameter("day", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
+
 	createCourseLoadsList();
+    }
+
+    private String getStudentNumber() {
+	final Registration registration = getDocumentRequest().getRegistration();
+	if (CourseLoadRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
+	    final String agreementInformation = registration.getAgreementInformation();
+	    if (!StringUtils.isEmpty(agreementInformation)) {
+		return registration.getRegistrationAgreement().toString() + " " + agreementInformation;
+	    }
+	}
+	return registration.getStudent().getNumber().toString();
     }
 
     private void createCourseLoadsList() {
 	final List<CourseLoadEntry> bolonha = new ArrayList<CourseLoadEntry>();
 	final List<CourseLoadEntry> preBolonha = new ArrayList<CourseLoadEntry>();
-	
+
 	addParameter("bolonhaList", bolonha);
 	addParameter("preBolonhaList", preBolonha);
-	
+
 	for (final Enrolment enrolment : getDocumentRequest().getEnrolmentsSet()) {
 	    if (enrolment.isBolonhaDegree()) {
 		bolonha.add(new BolonhaCourseLoadEntry(enrolment));
@@ -78,14 +92,14 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 
     @Override
     protected void setPersonFields() {
-        addParameter("name", getDocumentRequest().getPerson().getName());
+	addParameter("name", getDocumentRequest().getPerson().getName());
     }
 
     static abstract public class CourseLoadEntry implements Comparable<CourseLoadEntry> {
 	private String curricularCourseName;
 	private String year;
 	private Double total;
-	
+
 	protected CourseLoadEntry(final String name, final String year) {
 	    this.curricularCourseName = name;
 	    this.year = year;
@@ -110,7 +124,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	public int compareTo(CourseLoadEntry other) {
 	    return getCurricularCourseName().compareTo(other.getCurricularCourseName());
 	}
-	
+
 	public Double getTotal() {
 	    return total;
 	}
@@ -118,11 +132,11 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	public void setTotal(Double total) {
 	    this.total = total;
 	}
-	
+
 	public Boolean getCourseLoadCorrect() {
 	    return Boolean.valueOf(total.doubleValue() != 0d);
 	}
-	
+
 	static CourseLoadEntry create(final Enrolment enrolment) {
 	    if (enrolment.isBolonhaDegree()) {
 		return new BolonhaCourseLoadEntry(enrolment);
@@ -131,20 +145,20 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	    }
 	}
     }
-    
+
     static public class BolonhaCourseLoadEntry extends CourseLoadEntry {
 	private Double contactLoad;
 	private Double autonomousWork;
-	
+
 	public BolonhaCourseLoadEntry(final Enrolment enrolment) {
 	    super(enrolment.getCurricularCourse().getName(), enrolment.getExecutionYear().getYear());
-	    
+
 	    final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
 	    setContactLoad(curricularCourse.getContactLoad(enrolment.getExecutionPeriod()));
 	    setAutonomousWork(curricularCourse.getAutonomousWorkHours(enrolment.getExecutionPeriod()));
 	    setTotal(curricularCourse.getTotalLoad(enrolment.getExecutionPeriod()));
 	}
-	
+
 	public Double getAutonomousWork() {
 	    return autonomousWork;
 	}
@@ -161,13 +175,13 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	    this.contactLoad = contactLoad;
 	}
     }
-    
+
     static public class PreBolonhaCourseLoadEntry extends CourseLoadEntry {
 	private Double theoreticalHours;
 	private Double praticalHours;
 	private Double labHours;
 	private Double theoPratHours;
-	
+
 	public PreBolonhaCourseLoadEntry(final Enrolment enrolment) {
 	    super(enrolment.getCurricularCourse().getName(), enrolment.getExecutionYear().getYear());
 
@@ -177,7 +191,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 		initInformation(enrolment.getCurricularCourse());
 	    }
 	}
-	
+
 	private void initInformation(final CurricularCourse curricularCourse) {
 	    setTheoreticalHours(curricularCourse.getTheoreticalHours());
 	    setPraticalHours(curricularCourse.getPraticalHours());
@@ -185,7 +199,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	    setTheoPratHours(curricularCourse.getTheoPratHours());
 	    setTotal(calculateTotal(curricularCourse));
 	}
-	
+
 	private void initInformation(final ExecutionCourse executionCourse) {
 	    setTheoreticalHours(getWeeklyHours(executionCourse, ShiftType.TEORICA));
 	    setPraticalHours(getWeeklyHours(executionCourse, ShiftType.PRATICA));
@@ -193,7 +207,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	    setTheoPratHours(getWeeklyHours(executionCourse, ShiftType.TEORICO_PRATICA));
 	    setTotal(calculateTotal());
 	}
-	
+
 	private Double calculateTotal() {
 	    return getTheoreticalHours() + getPraticalHours() + getLabHours() + getTheoPratHours();
 	}
@@ -202,7 +216,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	    final CourseLoad courseLoad = executionCourse.getCourseLoadByShiftType(type);
 	    return courseLoad == null ? 0d : courseLoad.getWeeklyHours().doubleValue();
 	}
-	
+
 	public Double getLabHours() {
 	    return labHours;
 	}
@@ -244,5 +258,5 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	    return Double.valueOf(result);
 	}
     }
-    
+
 }

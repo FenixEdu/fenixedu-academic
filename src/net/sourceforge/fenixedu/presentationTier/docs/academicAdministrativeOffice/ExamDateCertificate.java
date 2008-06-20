@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.apache.commons.lang.StringUtils;
@@ -108,7 +109,18 @@ public class ExamDateCertificate extends AdministrativeOfficeDocument {
 	super.fillReport();
 	addDataSourceElements(getExamDateEntries());
 	addParameter("name", getDocumentRequest().getRegistration().getPerson().getName());
-	addParameter("studentNumber", getDocumentRequest().getRegistration().getStudent().getNumber().toString());
+	addParameter("studentNumber", getStudentNumber());
+    }
+    
+    private String getStudentNumber() {
+	final Registration registration = getDocumentRequest().getRegistration();
+	if (ExamDateCertificateRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
+	    final String agreementInformation = registration.getAgreementInformation();
+	    if (!StringUtils.isEmpty(agreementInformation)) {
+		return registration.getRegistrationAgreement().toString() + " "  + agreementInformation;
+	    }
+	}
+	return registration.getStudent().getNumber().toString();
     }
 
     private List<ExamDateEntry> getExamDateEntries() {
