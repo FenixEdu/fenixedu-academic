@@ -31,3 +31,4 @@ function executeWithTempFile() {
 execute "Adding new country" InsertCountry.sql
 execute "Remove Degree Admin Office Contents" removeDegreeAdminOfficeContents.sql
 execute "Add column agreement information to Registration" alterTableRegistration.sql
+execute "updateWeightInOldEnrolments" updateWeightInOldEnrolments.sql
