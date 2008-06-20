@@ -10,7 +10,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -36,8 +35,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 /**
  * @author lmac1
  */
@@ -45,7 +42,6 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	IUserView userView = UserView.getUser();
 
 	DynaActionForm dynaForm = (DynaActionForm) form;
 
@@ -64,9 +60,9 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	}
 
 	/*
-         * Needed service and creation of bean of InfoExecutionYears for use in
-         * jsp
-         */
+	 * Needed service and creation of bean of InfoExecutionYears for use in
+	 * jsp
+	 */
 	List infoExecutionYearList = null;
 	List infoCampusList;
 	try {
@@ -193,7 +189,6 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
     public ActionForward editPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
-	IUserView userView = UserView.getUser();
 
 	DynaValidatorForm dynaForm = (DynaValidatorForm) form;
 
@@ -447,9 +442,9 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	List infoExecutionYearList = null;
 	List infoCampusList = null;
 	/*
-         * Needed service and creation of bean of InfoExecutionYears for use in
-         * jsp
-         */
+	 * Needed service and creation of bean of InfoExecutionYears for use in
+	 * jsp
+	 */
 	try {
 	    infoExecutionYearList = (List) ServiceUtils.executeService("ReadAllExecutionYears");
 	    infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus");
@@ -507,9 +502,9 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	List infoExecutionYearList = null;
 	List infoCampusList = null;
 	/*
-         * Needed service and creation of bean of InfoExecutionYears for use in
-         * jsp
-         */
+	 * Needed service and creation of bean of InfoExecutionYears for use in
+	 * jsp
+	 */
 	try {
 	    infoExecutionYearList = (List) ServiceUtils.executeService("ReadAllExecutionYears");
 	    infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus");

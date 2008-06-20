@@ -42,194 +42,172 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class TeachingStaffDispatchAction extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        request.setAttribute("executionYears", getExecutionYears(userView));
+	request.setAttribute("executionYears", getExecutionYears(userView));
 
-        return mapping.findForward("chooseExecutionYearAndDegreeCurricularPlan");
+	return mapping.findForward("chooseExecutionYearAndDegreeCurricularPlan");
     }
 
-    public ActionForward selectExecutionYear(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
+    public ActionForward selectExecutionYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+	IUserView userView = UserView.getUser();
 
-        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        Integer executionYearID = executionYear.getIdInternal();
-        Object[] args = { executionYearID };
+	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+	Integer executionYearID = executionYear.getIdInternal();
+	Object[] args = { executionYearID };
 
-        List degreeCurricularPlans = (List) ServiceUtils.executeService(
-                "ReadActiveDegreeCurricularPlansByExecutionYear", args);
-        final ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
-        comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));
-        Collections.sort(degreeCurricularPlans, comparatorChain);
+	List degreeCurricularPlans = (List) ServiceUtils.executeService("ReadActiveDegreeCurricularPlansByExecutionYear", args);
+	final ComparatorChain comparatorChain = new ComparatorChain();
+	comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
+	comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));
+	Collections.sort(degreeCurricularPlans, comparatorChain);
 
-        request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
-        request.setAttribute("executionYears", getExecutionYears(userView));
-        request.setAttribute("executionYear", executionYear);
+	request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
+	request.setAttribute("executionYears", getExecutionYears(userView));
+	request.setAttribute("executionYear", executionYear);
 
-        return mapping.findForward("chooseExecutionYearAndDegreeCurricularPlan");
+	return mapping.findForward("chooseExecutionYearAndDegreeCurricularPlan");
     }
 
-    public ActionForward selectExecutionDegree(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
+    public ActionForward selectExecutionDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+	Integer degreeCurricularPlanID = (Integer) dynaActionForm.get("degreeCurricularPlanID");
+	Integer executionYearID = (Integer) dynaActionForm.get("executionYearID");
 
-        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        Integer degreeCurricularPlanID = (Integer) dynaActionForm.get("degreeCurricularPlanID");
-        Integer executionYearID = (Integer) dynaActionForm.get("executionYearID");
+	Object[] argsScopes = { degreeCurricularPlanID, executionYearID };
+	Set<DegreeModuleScope> degreeModuleScopes = (Set<DegreeModuleScope>) ServiceUtils.executeService(
+		"ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID", argsScopes);
 
-        Object[] argsScopes = { degreeCurricularPlanID, executionYearID };
-        Set<DegreeModuleScope> degreeModuleScopes = (Set<DegreeModuleScope>) ServiceUtils.executeService(
-                        "ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID", argsScopes);
-        
-        SortedSet<DegreeModuleScope> sortedScopes = new TreeSet<DegreeModuleScope>(DegreeModuleScope.COMPARATOR_BY_NAME);
-        sortedScopes.addAll(degreeModuleScopes);
+	SortedSet<DegreeModuleScope> sortedScopes = new TreeSet<DegreeModuleScope>(DegreeModuleScope.COMPARATOR_BY_NAME);
+	sortedScopes.addAll(degreeModuleScopes);
 
-        Object[] argsExecutionYear = { executionYearID };
-        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(
-                "ReadExecutionYearByID", argsExecutionYear);
+	Object[] argsExecutionYear = { executionYearID };
+	InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService("ReadExecutionYearByID",
+		argsExecutionYear);
 
-        request.setAttribute("sortedScopes", sortedScopes);
-        request.setAttribute("executionYear", infoExecutionYear.getYear());
+	request.setAttribute("sortedScopes", sortedScopes);
+	request.setAttribute("executionYear", infoExecutionYear.getYear());
 
-        return mapping.findForward("chooseExecutionCourse");
+	return mapping.findForward("chooseExecutionCourse");
     }
 
-    public ActionForward viewTeachingStaff(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
+    public ActionForward viewTeachingStaff(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+	Integer executionCourseID = Integer.valueOf(request.getParameter("executionCourseID"));
 
-        Integer executionCourseID = Integer.valueOf(request.getParameter("executionCourseID"));
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
-        ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+	List institutions = (List) ServiceUtils.executeService("ReadAllInstitutions");
+	Collections.sort(institutions, new BeanComparator("name"));
 
-        List institutions = (List) ServiceUtils.executeService("ReadAllInstitutions", null);
-        Collections.sort(institutions, new BeanComparator("name"));
+	request.setAttribute("professorships", executionCourse.getProfessorships());
+	request.setAttribute("institutions", institutions);
+	request.setAttribute("nonAffiliatedTeachers", executionCourse.getNonAffiliatedTeachers());
 
-        request.setAttribute("professorships", executionCourse.getProfessorships());
-        request.setAttribute("institutions", institutions);
-        request.setAttribute("nonAffiliatedTeachers", executionCourse.getNonAffiliatedTeachers());
+	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+	dynaActionForm.set("executionCourseID", executionCourseID);
+	dynaActionForm.set("nonAffiliatedTeacherID", null);
 
-        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        dynaActionForm.set("executionCourseID", executionCourseID);
-        dynaActionForm.set("nonAffiliatedTeacherID", null);
-
-        return mapping.findForward("viewTeachingStaff");
+	return mapping.findForward("viewTeachingStaff");
     }
 
-    public ActionForward createNewNonAffiliatedTeacher(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
+    public ActionForward createNewNonAffiliatedTeacher(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+	String nonAffiliatedTeacherName = (String) dynaActionForm.get("nonAffiliatedTeacherName");
+	Integer nonAffiliatedTeacherID = (Integer) dynaActionForm.get("nonAffiliatedTeacherID");
+	Integer nonAffiliatedTeacherInstitutionID = (Integer) dynaActionForm.get("nonAffiliatedTeacherInstitutionID");
+	String nonAffiliatedTeacherInstitutionName = (String) dynaActionForm.get("nonAffiliatedTeacherInstitutionName");
 
-        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        String nonAffiliatedTeacherName = (String) dynaActionForm.get("nonAffiliatedTeacherName");
-        Integer nonAffiliatedTeacherID = (Integer) dynaActionForm.get("nonAffiliatedTeacherID");
-        Integer nonAffiliatedTeacherInstitutionID = (Integer) dynaActionForm
-                .get("nonAffiliatedTeacherInstitutionID");
-        String nonAffiliatedTeacherInstitutionName = (String) dynaActionForm
-                .get("nonAffiliatedTeacherInstitutionName");
+	if (nonAffiliatedTeacherID == 0 && nonAffiliatedTeacherName.length() == 0) {
+	    // define a teacher name!
 
-        if (nonAffiliatedTeacherID == 0 && nonAffiliatedTeacherName.length() == 0) {
-            // define a teacher name!
+	    return viewTeachingStaff(mapping, actionForm, request, response);
+	}
 
-            return viewTeachingStaff(mapping, actionForm, request, response);
-        }
+	if (nonAffiliatedTeacherInstitutionID == 0 && nonAffiliatedTeacherInstitutionName.length() == 0) {
+	    // define an institution!
 
-        if (nonAffiliatedTeacherInstitutionID == 0 && nonAffiliatedTeacherInstitutionName.length() == 0) {
-            // define an institution!
+	    return viewTeachingStaff(mapping, actionForm, request, response);
+	}
 
-            return viewTeachingStaff(mapping, actionForm, request, response);
-        }
+	if (nonAffiliatedTeacherInstitutionID == 0) {
+	    // create institution
+	    Object[] args = { nonAffiliatedTeacherInstitutionName };
+	    try {
+		Unit institution = (Unit) ServiceUtils.executeService("InsertInstitution", args);
+		nonAffiliatedTeacherInstitutionID = institution.getIdInternal();
+	    } catch (ExistingServiceException e) {
+		// define message error...
+		InfoInstitution infoInstitution = (InfoInstitution) ServiceUtils.executeService("ReadInstitutionByName", args);
+		nonAffiliatedTeacherInstitutionID = infoInstitution.getIdInternal();
+	    }
+	}
 
-        if (nonAffiliatedTeacherInstitutionID == 0) {
-            // create institution
-            Object[] args = { nonAffiliatedTeacherInstitutionName };
-            try {
-                Unit institution = (Unit) ServiceUtils.executeService(
-                        "InsertInstitution", args);
-                nonAffiliatedTeacherInstitutionID = institution.getIdInternal();
-            } catch (ExistingServiceException e) {
-                // define message error...
-                InfoInstitution infoInstitution = (InfoInstitution) ServiceUtils.executeService(
-                        "ReadInstitutionByName", args);
-                nonAffiliatedTeacherInstitutionID = infoInstitution.getIdInternal();
-            }
-        }
+	if (nonAffiliatedTeacherID == 0) {
+	    // create non affiliated teacher
+	    Object[] args = { nonAffiliatedTeacherName, nonAffiliatedTeacherInstitutionID };
+	    try {
+		NonAffiliatedTeacher nonAffiliatedTeacher = (NonAffiliatedTeacher) ServiceUtils.executeService(
+			"InsertNonAffiliatedTeacher", args);
+		nonAffiliatedTeacherID = nonAffiliatedTeacher.getIdInternal();
+	    } catch (NotExistingServiceException e) {
+		// define message error...
+		return viewTeachingStaff(mapping, actionForm, request, response);
+	    }
 
-        if (nonAffiliatedTeacherID == 0) {
-            // create non affiliated teacher
-            Object[] args = { nonAffiliatedTeacherName, nonAffiliatedTeacherInstitutionID };
-            try {
-                NonAffiliatedTeacher nonAffiliatedTeacher = (NonAffiliatedTeacher) ServiceUtils
-                        .executeService( "InsertNonAffiliatedTeacher", args);
-                nonAffiliatedTeacherID = nonAffiliatedTeacher.getIdInternal();
-            } catch (NotExistingServiceException e) {
-                // define message error...
-                return viewTeachingStaff(mapping, actionForm, request, response);
-            }
+	}
 
-        }
+	Integer executionCourseID = (Integer) dynaActionForm.get("executionCourseID");
+	request.setAttribute("executionCourseID", executionCourseID);
+	request.setAttribute("nonAffiliatedTeacherID", nonAffiliatedTeacherID);
 
-        Integer executionCourseID = (Integer) dynaActionForm.get("executionCourseID");
-        request.setAttribute("executionCourseID", executionCourseID);
-        request.setAttribute("nonAffiliatedTeacherID", nonAffiliatedTeacherID);
-
-        return insertNonAffiliatedTeacher(mapping, actionForm, request, response);
+	return insertNonAffiliatedTeacher(mapping, actionForm, request, response);
 
     }
 
-    public ActionForward insertNonAffiliatedTeacher(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
-            FenixServiceException {
+    public ActionForward insertNonAffiliatedTeacher(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+	Integer executionCourseID = Integer.valueOf(request.getParameter("executionCourseID"));
+	request.setAttribute("executionCourseID", executionCourseID);
 
-        Integer executionCourseID = Integer.valueOf(request.getParameter("executionCourseID"));
-        request.setAttribute("executionCourseID", executionCourseID);
+	Integer nonAffiliatedTeacherID = null;
 
-        Integer nonAffiliatedTeacherID = null;
+	String nonAffiliatedTeacherIDString = request.getParameter("nonAffiliatedTeacherID");
+	if (nonAffiliatedTeacherIDString != null && nonAffiliatedTeacherIDString.length() > 0
+		&& !nonAffiliatedTeacherIDString.equals("0")) {
+	    nonAffiliatedTeacherID = Integer.valueOf(nonAffiliatedTeacherIDString);
+	} else {
+	    nonAffiliatedTeacherID = (Integer) request.getAttribute("nonAffiliatedTeacherID");
+	}
 
-        String nonAffiliatedTeacherIDString = request.getParameter("nonAffiliatedTeacherID");
-        if (nonAffiliatedTeacherIDString != null && nonAffiliatedTeacherIDString.length() > 0
-                && !nonAffiliatedTeacherIDString.equals("0")) {
-            nonAffiliatedTeacherID = Integer.valueOf(nonAffiliatedTeacherIDString);
-        } else {
-            nonAffiliatedTeacherID = (Integer) request.getAttribute("nonAffiliatedTeacherID");
-        }
+	// InsertProfessorShipNonAffiliatedTeacher
+	Object[] args = { nonAffiliatedTeacherID, executionCourseID };
 
-        // InsertProfessorShipNonAffiliatedTeacher
-        Object[] args = { nonAffiliatedTeacherID, executionCourseID };
+	try {
+	    ServiceUtils.executeService("InsertProfessorShipNonAffiliatedTeacher", args);
+	} catch (ExistingServiceException e) {
+	    // TODO Auto-generated catch block
+	    // error message!!
+	    e.printStackTrace();
+	}
 
-        try {
-            ServiceUtils.executeService("InsertProfessorShipNonAffiliatedTeacher", args);
-        } catch (ExistingServiceException e) {
-            // TODO Auto-generated catch block
-            // error message!!
-            e.printStackTrace();
-        }
-
-        return viewTeachingStaff(mapping, actionForm, request, response);
+	return viewTeachingStaff(mapping, actionForm, request, response);
     }
 
-    private List getExecutionYears(IUserView userView) throws FenixServiceException,
-            FenixFilterException {
-        List executionYears = (List) ServiceUtils.executeService(
-                "ReadNotClosedExecutionYears", null);
-        return executionYears;
+    private List getExecutionYears(IUserView userView) throws FenixServiceException, FenixFilterException {
+	List executionYears = (List) ServiceUtils.executeService("ReadNotClosedExecutionYears");
+	return executionYears;
     }
 
 }

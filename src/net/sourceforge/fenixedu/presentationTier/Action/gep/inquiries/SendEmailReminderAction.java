@@ -13,7 +13,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
@@ -36,7 +35,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 /**
@@ -48,9 +46,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	IUserView userView = UserView.getUser();
-
-	InfoExecutionYear currentExecutionYear = (InfoExecutionYear) executeService("ReadCurrentExecutionYear", null);
+	InfoExecutionYear currentExecutionYear = (InfoExecutionYear) executeService("ReadCurrentExecutionYear");
 
 	Object[] argsExecutionYearId = { currentExecutionYear.getIdInternal() };
 	List<InfoDegreeCurricularPlan> degreeCurricularPlans = (List<InfoDegreeCurricularPlan>) ServiceUtils
@@ -72,7 +68,6 @@ public class SendEmailReminderAction extends FenixDispatchAction {
     public ActionForward sendEmails(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	IUserView userView = UserView.getUser();
 	DynaActionForm form = (DynaActionForm) actionForm;
 
 	Integer[] degreeCurricularPlanIds = (Integer[]) form.get("degreeCurricularPlanIds");
@@ -81,7 +76,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 
 	// Obtaining the current execution period
 	// FIXME: THIS SHOULD BE PARAMETRIZABLE
-	InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) executeService("ReadCurrentExecutionPeriod", null);
+	InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) executeService("ReadCurrentExecutionPeriod");
 	List<InfoInquiriesEmailReminderReport> reportList = new ArrayList<InfoInquiriesEmailReminderReport>(
 		degreeCurricularPlanIds.length);
 

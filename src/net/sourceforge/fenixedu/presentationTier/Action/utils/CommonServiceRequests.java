@@ -24,53 +24,48 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
  */
 public class CommonServiceRequests {
 
-    /**
-     * @param userView
-     * @param degreeCurricularPlanOID
-     * @return
-     */
-    public static List getBranchesByDegreeCurricularPlan(IUserView userView, Integer degreeCurricularPlanOID) throws FenixActionException, FenixFilterException {        
-	
-	Object[] argsBranches = { degreeCurricularPlanOID };
-        List branches = null;
-        try {
-            branches = (List) ServiceUtils.executeService("ReadBranchesByDegreeCurricularPlanId", argsBranches);
-        } catch (FenixServiceException fse) {
-            throw new FenixActionException(fse);
-        }
+    public static List getBranchesByDegreeCurricularPlan(IUserView userView, Integer degreeCurricularPlanOID)
+	    throws FenixActionException, FenixFilterException {
 
-        List newBranches = new ArrayList();
-        if(branches != null) {
-            Iterator iterator = branches.iterator();
-            while (iterator.hasNext()) {
-                InfoBranch infoBranch = (InfoBranch) iterator.next();
-                if (infoBranch != null && infoBranch.getBranchType() != null
-                        && !infoBranch.getBranchType().equals(BranchType.COMNBR))
-                    newBranches.add(infoBranch);
-            }
-        }
-        return newBranches;
+	Object[] argsBranches = { degreeCurricularPlanOID };
+	List branches = null;
+	try {
+	    branches = (List) ServiceUtils.executeService("ReadBranchesByDegreeCurricularPlanId", argsBranches);
+	} catch (FenixServiceException fse) {
+	    throw new FenixActionException(fse);
+	}
+
+	List newBranches = new ArrayList();
+	if (branches != null) {
+	    Iterator iterator = branches.iterator();
+	    while (iterator.hasNext()) {
+		InfoBranch infoBranch = (InfoBranch) iterator.next();
+		if (infoBranch != null && infoBranch.getBranchType() != null
+			&& !infoBranch.getBranchType().equals(BranchType.COMNBR))
+		    newBranches.add(infoBranch);
+	    }
+	}
+	return newBranches;
     }
 
     /**
      * @param degreeOID
      * @return
      */
-    public static InfoExecutionDegree getInfoExecutionDegree(IUserView userView, Integer degreeOID)
-            throws FenixActionException, FenixFilterException {
-        InfoExecutionDegree infoExecutionDegree = null;
-        Object[] args = { degreeOID };
-        try {
-            infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(
-                    "ReadExecutionDegreeByOID", args);
-        } catch (FenixServiceException fse) {
-            throw new FenixActionException(fse);
-        }
-        return infoExecutionDegree;
+    public static InfoExecutionDegree getInfoExecutionDegree(IUserView userView, Integer degreeOID) throws FenixActionException,
+	    FenixFilterException {
+	InfoExecutionDegree infoExecutionDegree = null;
+	Object[] args = { degreeOID };
+	try {
+	    infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService("ReadExecutionDegreeByOID", args);
+	} catch (FenixServiceException fse) {
+	    throw new FenixActionException(fse);
+	}
+	return infoExecutionDegree;
     }
 
-	public static List<InfoExecutionYear> getInfoExecutionYears() throws FenixFilterException, FenixServiceException {
-		return (List) ServiceUtils.executeService("ReadExecutionYearsService", null);
-	}
+    public static List<InfoExecutionYear> getInfoExecutionYears() throws FenixFilterException, FenixServiceException {
+	return (List) ServiceUtils.executeService("ReadExecutionYearsService");
+    }
 
 }
