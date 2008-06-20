@@ -60,9 +60,10 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
 	    UserView.setUser(userView);
 
-	    if (isStudentAndHasInquiriesToRespond(userView)) {
-		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
-	    } else if (session != null && session.getAttribute("ORIGINAL_REQUEST") != null) {
+//	    if (isStudentAndHasInquiriesToRespond(userView)) {
+//		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
+//	    } else 
+	    if (session != null && session.getAttribute("ORIGINAL_REQUEST") != null) {
 		return handleSessionRestoreAndGetForward(request, userView, session);
 	    } else {
 		return handleSessionCreationAndGetForward(mapping, request, userView, session);

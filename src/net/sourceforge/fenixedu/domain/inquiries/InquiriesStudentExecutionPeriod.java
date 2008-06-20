@@ -11,6 +11,12 @@ public class InquiriesStudentExecutionPeriod extends InquiriesStudentExecutionPe
         setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    public InquiriesStudentExecutionPeriod(final Student student) {
+	this();
+	setStudent(student);
+	setExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
+    }
+    
     public InquiriesStudentExecutionPeriod(final Student student, final ExecutionSemester executionSemester) {
 	this();
 	setStudent(student);

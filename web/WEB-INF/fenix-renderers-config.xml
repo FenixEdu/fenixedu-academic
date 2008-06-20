@@ -1104,4 +1104,13 @@ Documentation:
 	<renderer type="net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod" layout="delegate-election-period" class="net.sourceforge.fenixedu.presentationTier.renderers.DelegateElectionPeriodRenderer" />
 	
 	<renderer type="java.lang.String" layout="slot-as-label" class="pt.ist.fenixWebFramework.renderers.SlotAsLabelRenderer"/>
+	
+	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiriesBlock" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiriesQuestionBlockRenderer"/>
+	
+	<renderer mode="input" type="java.lang.String" layout="inquiries-answer-textbox" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiriesTextBoxQuestionRenderer" />	
+	
+	<renderer mode="input" type="java.lang.String" layout="inquiries-answer-radiogroup" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiriesRadioGroupQuestionRenderer" />
+	
+	<renderer mode="input" type="java.lang.String" layout="inquiries-answer-checkbox" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiriesCheckBoxQuestionRenderer" />
+	
 </renderers-config>

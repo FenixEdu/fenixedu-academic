@@ -5,9 +5,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -34,6 +36,8 @@ import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesStudentExecutionPeriod;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
@@ -691,11 +695,37 @@ public class Student extends Student_Base {
 	}
 	return false;
     }
+    
+    public boolean isWeeklySpentHoursSubmittedForCurrentPeriod() {
+	return isWeeklySpentHoursSubmittedForPeriod(ExecutionSemester.readActualExecutionSemester());
+    }
+
+    public boolean isWeeklySpentHoursSubmittedForPeriod(ExecutionSemester executionSemester) {
+	for (final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod : getInquiriesStudentExecutionPeriodsSet()) {
+	    if (inquiriesStudentExecutionPeriod.getExecutionPeriod() == executionSemester) {
+		return inquiriesStudentExecutionPeriod.getWeeklyHoursSpentInClassesSeason() != null;
+	    }
+	}
+	return false;
+    }
+
+    public InquiriesStudentExecutionPeriod getCurrentInquiriesStudentExecutionPeriod() {
+	return getInquiriesStudentExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
+    }
+
+    public InquiriesStudentExecutionPeriod getInquiriesStudentExecutionPeriod(ExecutionSemester executionSemester) {
+	for (final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod : getInquiriesStudentExecutionPeriodsSet()) {
+	    if (inquiriesStudentExecutionPeriod.getExecutionPeriod() == executionSemester) {
+		return inquiriesStudentExecutionPeriod;
+	    }
+	}
+	return null;
+    }    
 
     /**
      * -> Temporary overrides due migrations - Filter 'InTransition'
-     * registrations -> Do not use this method to add new registrations
-     * directly (use {@link addRegistrations} method)
+     * registrations -> Do not use this method to add new registrations directly
+     * (use {@link addRegistrations} method)
      */
     @Override
     public List<Registration> getRegistrations() {
@@ -1089,7 +1119,45 @@ public class Student extends Student_Base {
 	}
 	return false;
     }
+    
+    public Map<CurricularCourse, InquiriesRegistry> getOrCreateInquiriesRegistriesForPeriod(ExecutionSemester executionSemester) {
+	final Map<CurricularCourse, InquiriesRegistry> coursesToAnswer = new HashMap<CurricularCourse, InquiriesRegistry>();
 
+	for (Registration registration : getRegistrations()) {
+	    
+	    //TODO: Chack degree types and response period!
+	    if(!registration.isAvailableDegreeTypeForInquiries()){
+		continue;
+	    }
+	    
+	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+	    if (studentCurricularPlan != null) {
+
+		final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+
+		for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistries()) {
+		    if (inquiriesRegistry.getState() != InquiriesRegistryState.NOT_ANSWERED) {
+			coursesToAnswer.put(inquiriesRegistry.getExecutionCourse().getCurricularCourseFor(degreeCurricularPlan),
+				inquiriesRegistry);
+		    }
+		}
+
+		for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
+		    final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
+		    final CurricularCourse curricularCourse = executionCourse.getCurricularCourseFor(degreeCurricularPlan);
+
+		    if (!coursesToAnswer.containsKey(curricularCourse)) {
+			final InquiriesRegistry inquiriesRegistry = new InquiriesRegistry(executionCourse,
+				executionSemester, registration);
+			coursesToAnswer.put(curricularCourse, inquiriesRegistry);
+		    }
+		}
+	    }
+
+	}
+	return coursesToAnswer;
+    }
+    
     public boolean learnsAt(final Campus campus) {
 	for (final Registration registration : getActiveRegistrations()) {
 	    if (registration.getCampus() == campus) {
@@ -1097,6 +1165,6 @@ public class Student extends Student_Base {
 	    }
 	}
 	return false;
-    }
-
+    }    
+    
 }

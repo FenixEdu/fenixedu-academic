@@ -21,3 +21,44 @@
    		<property name="config" value="advanced" />
 	</slot>
 </schema>
+
+<schema name="inquiriesQuestion.answer"
+		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiriesQuestion" >
+	<slot name="value" />
+</schema>
+
+<schema name="InquiriesBlock.answer"
+		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiriesBlock" >
+	<slot name="questions" layout="tabular-editable">
+	</slot>
+</schema>
+
+<schema name="inquiriesStudentExecutionPeriod.submitWeeklySpentHours"
+		type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" bundle="INQUIRIES_RESOURCES">
+	<slot name="integer" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="5" />
+		<property name="maxLength" value="3" />	
+	</slot>
+</schema>
+
+<schema name="curricularCourseInquiriesRegistryDTO.submitHoursAndDays"
+		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO" bundle="INQUIRIES_RESOURCES">
+	<slot name="curricularCourse.name" key="label.curricularCourse.name" read-only="true"/>
+	<slot name="curricularCourse.competenceCourse.contactLoad" key="label.contactLoad" read-only="true"/>
+	<slot name="weeklyHoursSpentPercentage" key="label.weeklyHoursSpentPercentage" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="5" />
+		<property name="maxLength" value="3" />	
+	</slot>
+	<slot name="studyDaysSpentInExamsSeason" key="label.studyDaysSpentInExamsSeason" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="5" />
+		<property name="maxLength" value="3" />	
+	</slot>
+	<slot name="curricularCourse.competenceCourse.ectsCredits" key="label.competenceCourse.ectsCredits" read-only="true"/>
+</schema>
+
+<schema name="teacherInquiry.selectShiftTypes"
+		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherInquiryDTO" bundle="INQUIRIES_RESOURCES">
+	<slot name="selectedShifts" layout="option-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ShiftTypesProvider" />
+	</slot>
+</schema>

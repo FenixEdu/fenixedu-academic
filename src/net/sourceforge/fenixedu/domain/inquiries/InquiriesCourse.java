@@ -4,9 +4,15 @@
  */
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import java.util.Collection;
+import java.util.Map;
+
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesCourse;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiriesQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherInquiryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -44,13 +50,12 @@ public class InquiriesCourse extends InquiriesCourse_Base {
      * domainObjects and its basic properties are initialized Invariants: - None
      */
     public InquiriesCourse(ExecutionCourse executionCourse, ExecutionDegree executionDegreeCourse,
-	    ExecutionDegree executionDegreeStudent, ExecutionSemester executionSemester,
-	    SchoolClass schoolClass, InfoInquiriesCourse infoInquiriesCourse,
-	    Character entryGradeClassification, Character approvationRatioClassification,
-	    Character arithmeticMeanClassification) {
+	    ExecutionDegree executionDegreeStudent, ExecutionSemester executionSemester, SchoolClass schoolClass,
+	    InfoInquiriesCourse infoInquiriesCourse, Character entryGradeClassification,
+	    Character approvationRatioClassification, Character arithmeticMeanClassification) {
 	this();
-	if ((executionCourse == null) || (executionDegreeCourse == null)
-		|| (executionDegreeStudent == null) || (executionSemester == null)) {
+	if ((executionCourse == null) || (executionDegreeCourse == null) || (executionDegreeStudent == null)
+		|| (executionSemester == null)) {
 	    throw new DomainException(
 		    "Neither the executionCourse, executionDegreeCourse, executionDegreeStudent nor executionPeriod should not be null!");
 	}
@@ -67,8 +72,17 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 
     }
 
-    public void createInquiriesTeacher(Teacher teacher, ShiftType shiftType,
-	    InfoInquiriesTeacher infoInquiriesTeacher) {
+    public InquiriesCourse(InquiriesRegistry inquiriesRegistry) {
+	this();
+	setExecutionPeriod(inquiriesRegistry.getExecutionPeriod());
+	setExecutionCourse(inquiriesRegistry.getExecutionCourse());
+	setExecutionDegreeStudent(inquiriesRegistry.getExecutionDegree());
+
+	setWeeklyHoursSpentPercentage(inquiriesRegistry.getWeeklyHoursSpentPercentage());
+	setStudyDaysSpentInExamsSeason(inquiriesRegistry.getStudyDaysSpentInExamsSeason());
+    }
+
+    public void createInquiriesTeacher(Teacher teacher, ShiftType shiftType, InfoInquiriesTeacher infoInquiriesTeacher) {
 	new InquiriesTeacher(this, teacher, shiftType, infoInquiriesTeacher);
     }
 
@@ -92,6 +106,58 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 	this.setEvaluationMethodAdequation(infoInquiriesCourse.getEvaluationMethodAdequation());
 	this.setWeeklySpentHours(infoInquiriesCourse.getWeeklySpentHours());
 	this.setGlobalAppreciation(infoInquiriesCourse.getGlobalAppreciation());
+    }
+
+    public static InquiriesCourse makeNew(StudentInquiryDTO inquiryDTO) {
+	final InquiriesRegistry inquiriesRegistry = inquiryDTO.getInquiriesRegistry();
+
+	InquiriesCourse inquiriesCourse = new InquiriesCourse(inquiriesRegistry);
+
+	setAnswers(inquiryDTO, inquiriesCourse);
+
+	inquiriesRegistry.setState(InquiriesRegistryState.ANSWERED);
+
+	Collection<TeacherInquiryDTO> teachersInquiries = inquiryDTO.getTeachersInquiries();
+	for (TeacherInquiryDTO teacherInquiryDTO : teachersInquiries) {
+	    if(teacherInquiryDTO.isFilled()){
+		inquiriesCourse.addAssociatedInquiriesTeachers(InquiriesTeacher.makeNew(teacherInquiryDTO));
+	    }
+	}
+
+	return inquiriesCourse;
+    }
+
+    private static void setAnswers(StudentInquiryDTO inquiryDTO, InquiriesCourse inquiriesCourse) {
+	Map<String, InquiriesQuestion> answersMap = inquiryDTO.buildAnswersMap(false);
+
+	inquiriesCourse.setClassificationInThisCU(answersMap.get("classificationInThisCU").getValue());
+	inquiriesCourse.setHighWorkLoadReasonComplexProjects(answersMap.get("highWorkLoadReasonComplexProjects")
+		.getValueAsBoolean());
+	inquiriesCourse.setHighWorkLoadReasonExtenseProjects(answersMap.get("highWorkLoadReasonExtenseProjects")
+		.getValueAsBoolean());
+	inquiriesCourse.setHighWorkLoadReasonManyProjects(answersMap.get("highWorkLoadReasonManyProjects").getValueAsBoolean());
+	inquiriesCourse.setHighWorkLoadReasonLackOfPreviousPreparation(answersMap.get(
+		"highWorkLoadReasonLackOfPreviousPreparation").getValueAsBoolean());
+	inquiriesCourse.setHighWorkLoadReasonCurricularProgramExtension(answersMap.get(
+		"highWorkLoadReasonCurricularProgramExtension").getValueAsBoolean());
+	inquiriesCourse.setHighWorkLoadReasonLackOfAttendanceOfLessons(answersMap.get(
+		"highWorkLoadReasonLackOfAttendanceOfLessons").getValueAsBoolean());
+	inquiriesCourse.setHighWorkLoadReasonOtherReasons(answersMap.get("highWorkLoadReasonOtherReasons").getValue());
+	inquiriesCourse.setPreviousKnowledgeEnoughToCUAttendance(answersMap.get("previousKnowledgeEnoughToCUAttendance")
+		.getValueAsInteger());
+	inquiriesCourse.setActivityParticipation(answersMap.get("activityParticipation").getValueAsInteger());
+	inquiriesCourse.setKnowledgeAndComprehensionOfCU(answersMap.get("knowledgeAndComprehensionOfCU").getValueAsInteger());
+	inquiriesCourse.setKnowledgeApplicationOfCU(answersMap.get("knowledgeApplicationOfCU").getValueAsInteger());
+	inquiriesCourse.setCriticSenseAndReflexiveSpirit(answersMap.get("criticSenseAndReflexiveSpirit").getValueAsInteger());
+	inquiriesCourse.setCooperationAndComunicationCapacity(answersMap.get("cooperationAndComunicationCapacity")
+		.getValueAsInteger());
+	inquiriesCourse.setPredictedProgramTeached(answersMap.get("predictedProgramTeached").getValueAsInteger());
+	inquiriesCourse.setWellStructuredOfCU(answersMap.get("wellStructuredOfCU").getValueAsInteger());
+	inquiriesCourse.setGoodGuidanceMaterial(answersMap.get("goodGuidanceMaterial").getValueAsInteger());
+	inquiriesCourse.setRecomendendBibliographyImportance(answersMap.get("recomendendBibliographyImportance")
+		.getValueAsInteger());
+	inquiriesCourse.setFairEvaluationMethods(answersMap.get("fairEvaluationMethods").getValueAsInteger());
+	inquiriesCourse.setGlobalClassificationOfCU(answersMap.get("globalClassificationOfCU").getValueAsInteger());
     }
 
 }

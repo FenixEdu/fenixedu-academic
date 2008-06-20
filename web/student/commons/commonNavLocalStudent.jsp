@@ -18,7 +18,7 @@
 	<li class="navheader"><bean:message key="participate"/></li>
 	<li><html:link page="/viewExecutionCourseForuns.do?method=prepare" titleKey="link.viewExecutionCourseForuns"><bean:message key="link.viewExecutionCourseForuns"/></html:link></li>
 	<li><html:link page="/weeklyWorkLoad.do?method=prepare" titleKey="link.weekly.work.load"><bean:message key="link.weekly.work.load"/></html:link></li>
-	<li><html:link page="/fillInquiries.do?method=prepareCourses&amp;page=0" titleKey="link.title.inquiry.students.courses"><bean:message key="link.inquiries" bundle="INQUIRIES_RESOURCES"/></html:link></li>
+	<li><html:link page="/studentInquiry.do?method=showCoursesToAnswer" titleKey="link.title.inquiry.students.courses"><bean:message key="link.inquiries" bundle="INQUIRIES_RESOURCES"/></html:link></li>
 	<li><html:link page="/yearDelegateManagement.do?method=prepare" titleKey="link.title.yearDelegateElections"><bean:message key="link.student.yearDelegateElections"/></html:link></li>
 
 	<li class="navheader"><bean:message key="submit"/></li>

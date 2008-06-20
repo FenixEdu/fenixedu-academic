@@ -1,20 +1,27 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
 
 public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
-    
+
+    public final static Comparator<InquiryResponsePeriod> PERIOD_COMPARATOR = new BeanComparator("executionPeriod");
+
     public InquiryResponsePeriod() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public InquiryResponsePeriod(final ExecutionSemester executionSemester, final Date inquiryResponseBegin, final Date inquiryResponseEnd) {
+    public InquiryResponsePeriod(final ExecutionSemester executionSemester, final Date inquiryResponseBegin,
+	    final Date inquiryResponseEnd) {
 	this();
 	setExecutionPeriod(executionSemester);
 	setPeriod(inquiryResponseBegin, inquiryResponseEnd);
@@ -31,6 +38,21 @@ public class InquiryResponsePeriod extends InquiryResponsePeriod_Base {
 
     public boolean insidePeriod() {
 	return !getBegin().isAfterNow() && !getEnd().isBeforeNow();
+    }
+
+    public static InquiryResponsePeriod readLastPeriod() {
+	List<InquiryResponsePeriod> inquiryResponsePeriods = RootDomainObject.getInstance().getInquiryResponsePeriods();
+	return Collections.max(inquiryResponsePeriods, PERIOD_COMPARATOR);
+    }
+
+    public static InquiryResponsePeriod readOpenPeriod() {
+	List<InquiryResponsePeriod> inquiryResponsePeriods = RootDomainObject.getInstance().getInquiryResponsePeriods();
+	for (InquiryResponsePeriod inquiryResponsePeriod : inquiryResponsePeriods) {
+	    if (inquiryResponsePeriod.getBegin().isBeforeNow() && inquiryResponsePeriod.getEnd().isAfterNow()) {
+		return inquiryResponsePeriod;
+	    }
+	}
+	return null;
     }
 
 }

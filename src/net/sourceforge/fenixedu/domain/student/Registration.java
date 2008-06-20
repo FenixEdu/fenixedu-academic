@@ -2877,8 +2877,8 @@ public class Registration extends Registration_Base {
 
     final public boolean isAvailableDegreeTypeForInquiries() {
 	final DegreeType degreeType = getDegreeType();
-	return degreeType == DegreeType.DEGREE || degreeType == DegreeType.BOLONHA_DEGREE
-		|| degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE;
+	return degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE
+		|| degreeType == DegreeType.BOLONHA_MASTER_DEGREE;
     }
 
     final public boolean hasInquiriesToRespond() {

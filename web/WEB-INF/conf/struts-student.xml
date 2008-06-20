@@ -1014,11 +1014,16 @@
       <set-property property="pathnames" 
                     value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-student.xml"/>
     </plug-in>
- <!--  -->
-	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
+	
+    <plug-in className="net.sourceforge.fenixedu.presentationTier.tiles.plugin.FenixTilesPlugin" >
 		<set-property property="definitions-config"
 					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/student/tiles-student-definitions.xml,/WEB-INF/tiles/student/tiles-student-pages-definitions.xml" />
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
+        <set-property property="factoryClassname" value="net.sourceforge.fenixedu.presentationTier.tiles.definition.FenixDefinitionsFactory" />
+        <set-property property="defaultTileDefinition" value="definition.student.masterPage" />
 	</plug-in>    
+    
+    <plug-in className="net.sourceforge.fenixedu.presentationTier.struts.plugin.StrutsAnnotationsPlugIn" />	
+	
 </struts-config> 
