@@ -517,7 +517,7 @@ public class Assiduousness extends Assiduousness_Base {
 		Interval statusInterval = new Interval(assiduousnessStatusHistory.getBeginDate().toDateTimeAtStartOfDay(),
 			assiduousnessStatusHistory.getEndDate().toDateTimeAtStartOfDay().plusDays(1));
 		Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay().plusDays(1));
-		if (interval.contains(statusInterval) || statusInterval.contains(interval)) {
+		if (interval.overlaps(statusInterval)) {
 		    assiduousnessStatusList.add(assiduousnessStatusHistory);
 		}
 	    } else {
