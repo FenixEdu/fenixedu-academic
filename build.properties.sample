@@ -229,7 +229,7 @@ gratuity.situation.creator.task.hour=-1
 #
 log.profile.dir=/tmp
 log.profile.filename=profileing.log
-log.image.directory=/home/<user>/workspace/fenix-head/build/standalone/ciapl/images/logs
+log.image.directory=/home/<user>/workspace/fenix-head/web/images/logs
 
 
 #-----------------------------------------------------------------------------
