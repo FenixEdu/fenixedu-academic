@@ -102,9 +102,6 @@
     <definition name="registrationConclusionDocument" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/student/registration/registrationConclusionDocument.jsp"></put>
     </definition>      
-    <definition name="student.showEditIngression" extends="academicAdminOffice.masterPage">
-        <put name="body" value="/academicAdminOffice/manageIngression.jsp"></put>
-    </definition>      
     <definition name="student.manageExternalRegistrationData" extends="academicAdminOffice.masterPage">
         <put name="body" value="/academicAdminOffice/student/registration/manageExternalRegistrationData.jsp"></put>
     </definition>      

@@ -266,15 +266,6 @@
 	        	<forward name="showManageEnrolmentModel" path="student.showManageEnrolmentModel"/>
 	    </action>	
 
-		<action path="/manageIngression"
-		  	type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.ManageIngressionDA"
-	        parameter="method"
-			scope="request"
-			validate="true"
-			input="/manageIngression.do?method=prepare">
-	        	<forward name="showEditIngression" path="student.showEditIngression"/>
-	    </action>		
-
 		<action path="/manageExternalRegistrationData"
 		  	type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.ManageExternalRegistrationDataDA"
 	        parameter="method"
