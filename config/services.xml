@@ -8704,7 +8704,7 @@
 	</service>
 	<service>
 		<name>CreateMarkSheet</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.CreateMarkSheet</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.CreateMarkSheet</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -8713,7 +8713,7 @@
 	</service>
 	<service>
 		<name>EditMarkSheet</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.EditMarkSheet</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.EditMarkSheet</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -8722,7 +8722,7 @@
 	</service>
 	<service>
 		<name>SearchMarkSheets</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.SearchMarkSheets</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.SearchMarkSheets</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -8731,7 +8731,7 @@
 	</service>
 	<service>
 		<name>DeleteMarkSheet</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.DeleteMarkSheet</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.DeleteMarkSheet</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -8740,7 +8740,7 @@
 	</service>
 	<service>
 		<name>CreateRectificationMarkSheet</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.CreateRectificationMarkSheet</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.CreateRectificationMarkSheet</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -8749,7 +8749,7 @@
 	</service>	
 	<service>
 		<name>ConfirmMarkSheet</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.ConfirmMarkSheet</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.ConfirmMarkSheet</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -8758,7 +8758,7 @@
 	</service>	
 	<service>
 		<name>PrintMarkSheet</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.PrintMarkSheet</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.PrintMarkSheet</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -8767,7 +8767,7 @@
 	</service>		
 	<service>
 		<name>PrintMarkSheets</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.PrintMarkSheets</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.PrintMarkSheets</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -8776,7 +8776,7 @@
 	</service>			
 	<service>
 		<name>CreateMarkSheetByTeacher</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.CreateMarkSheetByTeacher</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.CreateMarkSheetByTeacher</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -9479,14 +9479,14 @@
 	</service>
 	<service>
 		<name>MarkSheetsToConfirmSendMail</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.MarkSheetsToConfirmSendMail</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.MarkSheetsToConfirmSendMail</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>	
 	<service>
 		<name>GradesToSubmitSendMail</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission.GradesToSubmitSendMail</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.GradesToSubmitSendMail</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />

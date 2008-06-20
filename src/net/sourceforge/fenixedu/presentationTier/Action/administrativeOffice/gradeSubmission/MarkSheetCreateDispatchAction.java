@@ -1,7 +1,7 @@
 /*
  * Created on May 5, 2006
  */
-package net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission;
+package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission;
 
 import java.util.ArrayList;
 import java.util.Collection;

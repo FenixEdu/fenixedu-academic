@@ -2466,7 +2466,7 @@
 		
 		<!-- Marksheet Management -->
 		<action path="/markSheetManagement"
-				type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.gradeSubmission.MarkSheetSearchDispatchAction"
+				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.MarkSheetSearchDispatchAction"
 				input="show.markSheetManagement.search.page"
 				parameter="method"
 				name="markSheetManagementForm"

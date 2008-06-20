@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission;
+package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission;
 
 import java.util.Collection;
 

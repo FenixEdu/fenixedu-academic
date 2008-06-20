@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.gradeSubmission;
+package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.MarkSheet;
