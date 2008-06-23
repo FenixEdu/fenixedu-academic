@@ -47,7 +47,6 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
     public ActionForward prepareInsert(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
         DynaActionForm dynaForm = (DynaActionForm) form;
 
         Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
@@ -108,8 +107,7 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
         // obtain execution periods to show in jsp
         List<InfoExecutionPeriod> infoExecutionPeriods = null;
         try {
-            infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods",
-                    null);
+            infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods");
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -135,8 +133,6 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
 
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
-
-        IUserView userView = UserView.getUser();
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 

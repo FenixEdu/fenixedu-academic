@@ -140,8 +140,8 @@ public class DefineContentPathTag extends BodyTagSupport {
     public static Object getObject(final Object object, final String property) {
 	final String methodName = "get" + StringUtils.capitalize(property);
 	try {
-	    final Method method = object.getClass().getMethod(methodName, null);
-	    return method.invoke(object, null);
+	    final Method method = object.getClass().getMethod(methodName);
+	    return method.invoke(object);
 	} catch (final NoSuchMethodException e) {
 	    throw new Error(e);
 	} catch (final IllegalArgumentException e) {

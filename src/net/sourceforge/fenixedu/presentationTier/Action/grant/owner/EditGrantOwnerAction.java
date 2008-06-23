@@ -13,7 +13,6 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountryEditor;
@@ -36,8 +35,6 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 /**
  * @author Barbosa
  * @author Pica
@@ -47,8 +44,8 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
     /*
      * Fills the form with the correspondent data
      */
-    public ActionForward prepareEditGrantOwnerForm(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareEditGrantOwnerForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Integer loaddb = null;
 	Integer personId = null;
 	Integer idInternal = null;
@@ -69,17 +66,17 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 	 * not null --> edit grant owner from manageGrantOwner
 	 */
 	InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
-	if (loaddb != null && loaddb.equals(new Integer(1))) //Load contents
+	if (loaddb != null && loaddb.equals(new Integer(1))) // Load contents
 	// from database
 	{
-	    if (idInternal != null) //Comes from manageGrantOwner
+	    if (idInternal != null) // Comes from manageGrantOwner
 	    {
-		//Read the grant owner
+		// Read the grant owner
 		Object[] args = { idInternal };
 		infoGrantOwner = (InfoGrantOwner) executeService("ReadGrantOwner", args);
 		request.setAttribute("toShow", "toShow");
 	    } else if (personId != null) {
-		//Read the person (grant owner doesn't exist)
+		// Read the person (grant owner doesn't exist)
 		Object[] args = { personId };
 		InfoPerson infoPerson = null;
 		infoPerson = (InfoPerson) executeService("ReadPersonByID", args);
@@ -96,10 +93,8 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 		return mapping.findForward("edit-grant-owner-form");
 	    }
 	    String documentIdNumber = grantOwnerInformationForm.getString("idNumber");
-	    IDDocumentType idDocumentType = IDDocumentType.valueOf((String) grantOwnerInformationForm
-		    .get("idType"));
-	    Person person = Person.readByDocumentIdNumberAndIdDocumentType(documentIdNumber,
-		    idDocumentType);
+	    IDDocumentType idDocumentType = IDDocumentType.valueOf((String) grantOwnerInformationForm.get("idType"));
+	    Person person = Person.readByDocumentIdNumberAndIdDocumentType(documentIdNumber, idDocumentType);
 	    if (person != null) {
 		infoGrantOwner.setPersonInfo(new InfoPerson(person));
 		ActionMessages actionMessages = getMessages(request);
@@ -113,12 +108,11 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 	    request.setAttribute("toShow", "toShow");
 	}
 
-	//Fill the form (grant owner e person information)        
+	// Fill the form (grant owner e person information)
 	if (infoGrantOwner.getIdInternal() != null) {
 	    setFormGrantOwnerInformation(grantOwnerInformationForm, infoGrantOwner);
 	}
-	if (infoGrantOwner.getPersonInfo() != null
-		&& infoGrantOwner.getPersonInfo().getIdInternal() != null
+	if (infoGrantOwner.getPersonInfo() != null && infoGrantOwner.getPersonInfo().getIdInternal() != null
 		&& !infoGrantOwner.getPersonInfo().getIdInternal().equals(new Integer(0))) {
 	    setFormPersonalInformation(grantOwnerInformationForm, infoGrantOwner);
 	}
@@ -130,9 +124,9 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 	List maritalStatusList = Arrays.asList(MaritalStatus.values());
 	request.setAttribute("maritalStatusList", maritalStatusList);
 
-	List countryList = (List) executeService("ReadAllCountries", null);
+	List countryList = (List) executeService("ReadAllCountries");
 
-	//Adding a select country line to the list (presentation reasons)             
+	// Adding a select country line to the list (presentation reasons)
 	InfoCountryEditor selectCountry = new InfoCountryEditor();
 	selectCountry.setIdInternal(null);
 	selectCountry.setName("[Escolha um país]");
@@ -141,8 +135,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 	return mapping.findForward("edit-grant-owner-form");
     }
 
-    private ActionMessages validateDocumentIDInfo(DynaValidatorForm grantOwnerInformationForm,
-	    HttpServletRequest request) {
+    private ActionMessages validateDocumentIDInfo(DynaValidatorForm grantOwnerInformationForm, HttpServletRequest request) {
 	ActionMessages actionMessages = getActionMessages(request);
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.FacultyAdmOfficeResources");
 
@@ -157,8 +150,8 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 	return actionMessages;
     }
 
-    public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward doEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 
 	DynaValidatorForm editGrantOwnerForm = (DynaValidatorForm) form;
 	InfoGrantOwner infoGrantOwner = null;
@@ -171,9 +164,8 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 		return setError(request, mapping, "errors.grant.owner.idtype", null, null);
 	    }
 
-	    //Edit Grant Owner
+	    // Edit Grant Owner
 	    Object[] args = { infoGrantOwner };
-	    IUserView userView = UserView.getUser();
 	    grantOwnerId = (Integer) ServiceUtils.executeService("EditGrantOwner", args);
 
 	} catch (DomainException e) {
@@ -185,7 +177,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 	}
 
 	try {
-	    //Read the grant owner by person
+	    // Read the grant owner by person
 	    Object[] args2 = { grantOwnerId };
 	    infoGrantOwner = (InfoGrantOwner) executeService("ReadGrantOwner", args2);
 	} catch (FenixServiceException e) {
@@ -203,8 +195,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
     /*
      * Populates form from InfoPerson
      */
-    private void setFormPersonalInformation(DynaValidatorForm form, InfoGrantOwner infoGrantOwner)
-	    throws Exception {
+    private void setFormPersonalInformation(DynaValidatorForm form, InfoGrantOwner infoGrantOwner) throws Exception {
 	InfoPerson infoPerson = infoGrantOwner.getPersonInfo();
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -278,8 +269,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
     /*
      * Populates form from InfoGrantOwner
      */
-    private void setFormGrantOwnerInformation(DynaValidatorForm form, InfoGrantOwner infoGrantOwner)
-	    throws Exception {
+    private void setFormGrantOwnerInformation(DynaValidatorForm form, InfoGrantOwner infoGrantOwner) throws Exception {
 	form.set("idGrantOwner", infoGrantOwner.getIdInternal().toString());
 	form.set("grantOwnerNumber", infoGrantOwner.getGrantOwnerNumber().toString());
 	if (infoGrantOwner.getCardCopyNumber() != null)
@@ -293,45 +283,37 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
     /*
      * Populate infoGrantOwner from form
      */
-    private InfoGrantOwner populateInfoFromForm(DynaValidatorForm editGrantOwnerForm)
-	    throws FenixServiceException {
+    private InfoGrantOwner populateInfoFromForm(DynaValidatorForm editGrantOwnerForm) throws FenixServiceException {
 
 	InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
 	InfoPersonEditor infoPerson = new InfoPersonEditor();
 
-	//Format of date in the form
+	// Format of date in the form
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 	try {
 	    if (editGrantOwnerForm.get("idDate") != null && !editGrantOwnerForm.get("idDate").equals(""))
-		infoPerson.setDataEmissaoDocumentoIdentificacao(sdf.parse((String) editGrantOwnerForm
-			.get("idDate")));
-	    if (editGrantOwnerForm.get("idValidDate") != null
-		    && !editGrantOwnerForm.get("idValidDate").equals(""))
-		infoPerson.setDataValidadeDocumentoIdentificacao(sdf.parse((String) editGrantOwnerForm
-			.get("idValidDate")));
-	    if (editGrantOwnerForm.get("birthdate") != null
-		    && !editGrantOwnerForm.get("birthdate").equals(""))
+		infoPerson.setDataEmissaoDocumentoIdentificacao(sdf.parse((String) editGrantOwnerForm.get("idDate")));
+	    if (editGrantOwnerForm.get("idValidDate") != null && !editGrantOwnerForm.get("idValidDate").equals(""))
+		infoPerson.setDataValidadeDocumentoIdentificacao(sdf.parse((String) editGrantOwnerForm.get("idValidDate")));
+	    if (editGrantOwnerForm.get("birthdate") != null && !editGrantOwnerForm.get("birthdate").equals(""))
 		infoPerson.setNascimento(sdf.parse((String) editGrantOwnerForm.get("birthdate")));
-	    if (editGrantOwnerForm.get("dateSendCGD") != null
-		    && !editGrantOwnerForm.get("dateSendCGD").equals(""))
+	    if (editGrantOwnerForm.get("dateSendCGD") != null && !editGrantOwnerForm.get("dateSendCGD").equals(""))
 		infoGrantOwner.setDateSendCGD(sdf.parse((String) editGrantOwnerForm.get("dateSendCGD")));
 	} catch (ParseException e) {
 	    throw new FenixServiceException();
 	}
 
-	//GrantOwner
+	// GrantOwner
 	if (!((String) editGrantOwnerForm.get("idGrantOwner")).equals(""))
 	    infoGrantOwner.setIdInternal(new Integer((String) editGrantOwnerForm.get("idGrantOwner")));
 
 	if (!((String) editGrantOwnerForm.get("grantOwnerNumber")).equals(""))
-	    infoGrantOwner.setGrantOwnerNumber(new Integer((String) editGrantOwnerForm
-		    .get("grantOwnerNumber")));
+	    infoGrantOwner.setGrantOwnerNumber(new Integer((String) editGrantOwnerForm.get("grantOwnerNumber")));
 	if (!((String) editGrantOwnerForm.get("cardCopyNumber")).equals(""))
-	    infoGrantOwner.setCardCopyNumber(new Integer((String) editGrantOwnerForm
-		    .get("cardCopyNumber")));
+	    infoGrantOwner.setCardCopyNumber(new Integer((String) editGrantOwnerForm.get("cardCopyNumber")));
 
-	//Person
+	// Person
 	if (!((String) editGrantOwnerForm.get("idInternalPerson")).equals(""))
 	    infoPerson.setIdInternal(new Integer((String) editGrantOwnerForm.get("idInternalPerson")));
 	infoPerson.setNumeroDocumentoIdentificacao((String) editGrantOwnerForm.get("idNumber"));
@@ -364,12 +346,10 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 	infoPerson.setAvailablePhoto(Boolean.FALSE);
 	infoPerson.setAvailableWebSite(Boolean.FALSE);
 
-	if ((editGrantOwnerForm.get("idType")).equals("")
-		|| ((String) editGrantOwnerForm.get("idType")).equals(null)) {
+	if ((editGrantOwnerForm.get("idType")).equals("") || ((String) editGrantOwnerForm.get("idType")).equals(null)) {
 	    infoPerson.setTipoDocumentoIdentificacao(null);
 	} else {
-	    infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf((String) editGrantOwnerForm
-		    .get("idType")));
+	    infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf((String) editGrantOwnerForm.get("idType")));
 	}
 	Gender sexo = Gender.valueOf((String) editGrantOwnerForm.get("sex"));
 	infoPerson.setSexo(sexo);
