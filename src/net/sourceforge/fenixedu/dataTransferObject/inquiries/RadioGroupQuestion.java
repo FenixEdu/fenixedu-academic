@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-
 import org.apache.commons.lang.math.NumberUtils;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
