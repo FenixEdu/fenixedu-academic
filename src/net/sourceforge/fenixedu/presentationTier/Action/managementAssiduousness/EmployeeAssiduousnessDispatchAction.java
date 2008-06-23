@@ -302,8 +302,9 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 
 	EmployeeScheduleFactory employeeScheduleFactory = (EmployeeScheduleFactory) getFactoryObject();
 	Schedule schedule = employeeScheduleFactory.getSchedule();
-	if (employeeScheduleFactory.getEmployee().getAssiduousness().overlapsOtherSchedules(schedule,
-		employeeScheduleFactory.getBeginDate(), employeeScheduleFactory.getEndDate())) {
+	if (schedule != null
+		&& employeeScheduleFactory.getEmployee().getAssiduousness().overlapsOtherSchedules(schedule,
+			employeeScheduleFactory.getBeginDate(), employeeScheduleFactory.getEndDate())) {
 	    setError(request, "errorMessage", (ActionMessage) new ActionMessage("error.schedule.overlapsWithOther"));
 	    return mapping.getInputForward();
 	}

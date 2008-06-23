@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTyp
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.berserk.ServiceRequest;
@@ -15,19 +16,18 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 public class AssiduousnessResponsibleAuthorizationFilter extends Filtro {
 
-    final public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
-	    Exception {
+    final public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
 
 	Assiduousness assiduousness = (Assiduousness) request.getServiceParameters().parametersArray()[0];
-	YearMonthDay beginDate = (YearMonthDay) request.getServiceParameters().parametersArray()[1];
-	YearMonthDay endDate = (YearMonthDay) request.getServiceParameters().parametersArray()[2];
+	YearMonthDay beginDate = new YearMonthDay((LocalDate) request.getServiceParameters().parametersArray()[1]);
+	YearMonthDay endDate = new YearMonthDay((LocalDate) request.getServiceParameters().parametersArray()[2]);
 	IUserView userView = getRemoteUser(request);
 
 	for (PersonFunction personFunction : userView.getPerson().getPersonFuntions(
 		AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE, beginDate, endDate)) {
 	    if (personFunction.getFunction().getFunctionType() == FunctionType.ASSIDUOUSNESS_RESPONSIBLE
-		    && personFunction.getFunction().getUnit().getAllWorkingEmployees(beginDate, endDate)
-			    .contains(assiduousness.getEmployee())) {
+		    && personFunction.getFunction().getUnit().getAllWorkingEmployees(beginDate, endDate).contains(
+			    assiduousness.getEmployee())) {
 		return;
 	    }
 

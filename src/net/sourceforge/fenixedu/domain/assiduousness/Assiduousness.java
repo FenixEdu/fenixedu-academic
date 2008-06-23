@@ -352,7 +352,7 @@ public class Assiduousness extends Assiduousness_Base {
 
     public List<Leave> getLeaves(LocalDate beginDate, LocalDate endDate) {
 	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), defaultEndWorkDay.toDateTime(endDate
-		.toDateTimeAtStartOfDay().plusDays(1)));
+		.toDateTimeAtStartOfDay()));
 	List<Leave> leavesList = new ArrayList<Leave>();
 	for (AssiduousnessRecord assiduousnessRecord : getAssiduousnessRecords()) {
 	    if (assiduousnessRecord.isLeave() && !assiduousnessRecord.isAnulated()) {
