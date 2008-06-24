@@ -28,5 +28,5 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Altering Inquiries Tables" alterInquiriesTables.sql
 
