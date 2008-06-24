@@ -21,6 +21,7 @@ public abstract class DegreeModuleScope {
 
     private static final String KEY_SEPARATOR = ":";
     public static final Comparator<DegreeModuleScope> COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME = new ComparatorChain();
+    public static final Comparator<DegreeModuleScope> COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH = new ComparatorChain();
     public static final Comparator<DegreeModuleScope> COMPARATOR_BY_NAME = new ComparatorChain();
     static {
 	((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME)
@@ -31,6 +32,18 @@ public abstract class DegreeModuleScope {
 		.addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
 	((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME)
 		.addComparator(DegreeModuleScope.COMPARATOR_BY_ID);
+
+	((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH)
+		.addComparator(new BeanComparator("curricularYear"));
+	((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH)
+		.addComparator(new BeanComparator("curricularSemester"));
+	((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH)
+		.addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH)
+		.addComparator(new BeanComparator("branch", Collator.getInstance()));
+	((ComparatorChain) COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH)
+		.addComparator(DegreeModuleScope.COMPARATOR_BY_ID);
+
 	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(new BeanComparator("curricularCourse.name", Collator.getInstance()));
 	((ComparatorChain) COMPARATOR_BY_NAME).addComparator(DegreeModuleScope.COMPARATOR_BY_ID);
     }
