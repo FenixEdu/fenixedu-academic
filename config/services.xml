@@ -11482,14 +11482,6 @@
 		</filterChains>
     </service>      
     <service>
-    	<name>SearchStudentByCriteria</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.lists.SearchStudentByCriteria</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        </filterChains>     
-    </service>    
-    <service>
     	<name>SearchStudents</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.lists.SearchStudents</implementationClass>
         <description></description>
@@ -11497,14 +11489,6 @@
         <filterChains>
         </filterChains>     
     </service>   
-    <service>
-    	<name>ReadCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.lists.ReadCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        </filterChains>     
-    </service>       
 	<service>
         <name>RegisterStudentInquiryResponseIntention</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.RegisterStudentInquiryResponseIntention</implementationClass>
