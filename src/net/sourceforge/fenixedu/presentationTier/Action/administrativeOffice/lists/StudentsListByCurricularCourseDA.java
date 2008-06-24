@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -67,9 +68,9 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 
 	final SearchStudentsByCurricularCourseParametersBean searchBean = (SearchStudentsByCurricularCourseParametersBean) getRenderedObject();
 
-	final SortedSet<DegreeModuleScope> degreeModuleScopes = (SortedSet<DegreeModuleScope>) executeService(
-		"ReadCurricularCourseScopeByDegreeCurricularPlanAndExecutionYear", searchBean.getDegreeCurricularPlan()
-			.getIdInternal(), searchBean.getExecutionYear().getIdInternal());
+	final SortedSet<DegreeModuleScope> degreeModuleScopes = new TreeSet<DegreeModuleScope>(
+		DegreeModuleScope.COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME_AND_BRANCH);
+	degreeModuleScopes.addAll(searchBean.getDegreeCurricularPlan().getDegreeModuleScopesFor(searchBean.getExecutionYear()));
 
 	if (degreeModuleScopes.isEmpty()) {
 	    addActionMessage("message", request, "error.nonExisting.AssociatedCurricularCourses");
@@ -198,7 +199,6 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 	return null;
     }
 
-
     private void addStatisticsHeaders(final Spreadsheet spreadsheet) {
 	spreadsheet.setHeader("Sigla do Curso");
 	spreadsheet.setHeader("Nome do Curso");
@@ -206,7 +206,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 	spreadsheet.setHeader("Número de Inscritos");
     }
 
-    private void addStatisticsInformation(final Spreadsheet spreadsheet, final ExecutionYear executionYear, final Set<Degree> degreesToInclude) {
+    private void addStatisticsInformation(final Spreadsheet spreadsheet, final ExecutionYear executionYear,
+	    final Set<Degree> degreesToInclude) {
 	for (final DegreeCurricularPlan degreeCurricularPlan : executionYear.getDegreeCurricularPlans()) {
 	    final Degree degree = degreeCurricularPlan.getDegree();
 	    if (degreesToInclude == null || degreesToInclude.contains(degree)) {
@@ -240,14 +241,14 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 
     private Set<Degree> getDegreesToInclude() {
 	final Person person = AccessControl.getPerson();
-	return person == null || !person.isAdministrativeOfficeEmployee() ? null :
-	    	person.getEmployee().getAdministrativeOffice().getAdministratedDegrees();
+	return person == null || !person.isAdministrativeOfficeEmployee() ? null : person.getEmployee().getAdministrativeOffice()
+		.getAdministratedDegrees();
     }
 
     private ExecutionYear getExecutionYearParameter(final HttpServletRequest request) {
 	final String executionYearIdString = request.getParameter("executionYearId");
-	final Integer executionYearId = executionYearIdString != null && executionYearIdString.length() > 0 ?
-		Integer.valueOf(executionYearIdString) :  null;
+	final Integer executionYearId = executionYearIdString != null && executionYearIdString.length() > 0 ? Integer
+		.valueOf(executionYearIdString) : null;
 	return executionYearId == null ? null : rootDomainObject.readExecutionYearByOID(executionYearId);
     }
 
