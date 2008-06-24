@@ -45,7 +45,6 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.SituationName;
@@ -56,6 +55,8 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
@@ -168,7 +169,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	createDefaultCourseGroups();
 	createDefaultCurricularRules();
 	new DegreeCurricularPlanServiceAgreementTemplate(this);
-	
+
     }
 
     private void createDefaultCourseGroups() {
@@ -462,6 +463,19 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
 	for (final DegreeModuleScope each : getDegreeModuleScopes()) {
 	    if (each.isActive(year, semester)) {
+		result.add(each);
+	    }
+	}
+
+	return result;
+    }
+
+    public Set<DegreeModuleScope> getDegreeModuleScopesFor(final ExecutionYear executionYear) {
+	final Set<DegreeModuleScope> result = new TreeSet<DegreeModuleScope>(
+		DegreeModuleScope.COMPARATOR_BY_CURRICULAR_YEAR_AND_SEMESTER_AND_CURRICULAR_COURSE_NAME);
+
+	for (final DegreeModuleScope each : getDegreeModuleScopes()) {
+	    if (each.isActiveForExecutionYear(executionYear)) {
 		result.add(each);
 	    }
 	}
