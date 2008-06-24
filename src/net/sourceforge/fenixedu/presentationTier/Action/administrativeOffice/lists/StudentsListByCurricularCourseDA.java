@@ -5,6 +5,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.li
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -34,6 +36,7 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -83,7 +86,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
     }
 
     public ActionForward searchByCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) throws FenixFilterException {
 
 	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject
 		.readDegreeModuleByOID(getIntegerFromRequest(request, "curricularCourseCode"));
@@ -91,16 +94,26 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(getIntegerFromRequest(request,
 		"executionYearID"));
 
-	final List<Enrolment> enrolments = (List<Enrolment>) executeService("SearchStudentByCriteria", executionYear,
-		curricularCourse, semester);
-
 	request.setAttribute("semester", semester);
 	request.setAttribute("year", getIntegerFromRequest(request, "year"));
 	request.setAttribute("curricularYear", executionYear);
-	request.setAttribute("enrolmentList", enrolments);
+	request.setAttribute("enrolmentList", searchStudentByCriteria(executionYear, curricularCourse, semester));
 	request.setAttribute("searchBean", new SearchStudentsByCurricularCourseParametersBean(executionYear, curricularCourse));
 
 	return mapping.findForward("studentByCurricularCourse");
+    }
+
+    private List<Enrolment> searchStudentByCriteria(final ExecutionYear executionYear, final CurricularCourse curricularCourse,
+	    final Integer semester) {
+	final List<Enrolment> result = new ArrayList<Enrolment>();
+
+	final ExecutionSemester executionSemester = executionYear.readExecutionPeriodForSemester(semester);
+	for (final Enrolment enrolment : curricularCourse.getEnrolmentsByExecutionPeriod(executionSemester)) {
+	    result.add(enrolment);
+	}
+	Collections.sort(result, new BeanComparator("studentCurricularPlan.registration.number"));
+
+	return result;
     }
 
     public ActionForward exportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -113,9 +126,6 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 		"curricularYear"));
 	final String year = (String) getFromRequest(request, "year");
 
-	final List<Enrolment> enrolments = (List<Enrolment>) executeService("SearchStudentByCriteria", executionYear,
-		curricularCourse, semester);
-
 	try {
 	    String filename;
 
@@ -125,8 +135,8 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
 	    ServletOutputStream writer = response.getOutputStream();
 
-	    exportToXls(enrolments, writer, executionYear, curricularCourse.getDegreeCurricularPlan().getDegree(), year, semester
-		    .toString());
+	    exportToXls(searchStudentByCriteria(executionYear, curricularCourse, semester), writer, executionYear,
+		    curricularCourse.getDegreeCurricularPlan().getDegree(), year, semester.toString());
 	    writer.flush();
 	    response.flushBuffer();
 
