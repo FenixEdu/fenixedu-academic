@@ -45,26 +45,25 @@
 		
 		<p class="mtop05"><html:submit><bean:message key="button.visualize" /></html:submit></p>
 		
-		
-		<logic:empty name="assiduousnessStructureSearch" property="personFunctionList">
+		<logic:equal name="assiduousnessStructureSearch" property="anyActivePersonFunction" value="false">
 			<logic:equal name="assiduousnessStructureSearch" property="hasEmployeeInSearch" value="true">
-			
-				<p class="mvert15"><em><bean:message key="message.noResults"/></em></p>
-				
+				<logic:empty name="assiduousnessStructureSearch" property="personFunctionList">
+					<p class="mvert15"><em><bean:message key="message.noResults"/></em></p>
+				</logic:empty>
 				<logic:notEmpty name="assiduousnessStructureSearch" property="responsible">
 					<p class="mtop15"><html:submit property="addPerson"><bean:message key="button.join"/></html:submit></p>			
 				</logic:notEmpty>
 			</logic:equal>
 			<logic:equal name="assiduousnessStructureSearch" property="hasUnitInSearch"  value="true">
-				
-				<p class="mvert15"><em><bean:message key="message.noResults"/></em></p>
-				
+				<logic:empty name="assiduousnessStructureSearch" property="personFunctionList">
+					<p class="mvert15"><em><bean:message key="message.noResults"/></em></p>
+				</logic:empty>
 				<logic:notEmpty name="assiduousnessStructureSearch" property="responsible">
 					<p><html:submit property="addUnit"><bean:message key="label.addUnit"/></html:submit></p>
 					<p><html:submit property="addPersons"><bean:message key="label.addPersons"/></html:submit></p>				
 				</logic:notEmpty>
 			</logic:equal>
-		</logic:empty>
+		</logic:equal>
 		<logic:notEmpty name="assiduousnessStructureSearch" property="personFunctionList">
 			<fr:view name="assiduousnessStructureSearch" property="personFunctionList" schema="show.personFunctionList">
 				<fr:layout name="tabular">

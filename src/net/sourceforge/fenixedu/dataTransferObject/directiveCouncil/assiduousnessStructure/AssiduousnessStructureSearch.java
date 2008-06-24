@@ -132,6 +132,15 @@ public class AssiduousnessStructureSearch implements Serializable {
 	return ((getSearchPerson() != null && !getSearchPerson()) && getUnit() != null) ? true : false;
     }
 
+    public boolean getAnyActivePersonFunction() {
+	for (PersonFunction personFunction : getPersonFunctionList()) {
+	    if (!personFunction.isFinished()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     public void setSearch() {
 	getPersonFunctionList().clear();
 	List<PersonFunction> personFunctionList = new ArrayList<PersonFunction>();
