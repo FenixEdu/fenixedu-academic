@@ -55,6 +55,7 @@
 		<li class="navheader"><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></li>
 		<li><html:link page="/caseHandlingOver23CandidacyProcess.do?method=intro"><bean:message key="label.candidacy.over23" bundle="APPLICATION_RESOURCES"/></html:link></li>
 		<li><html:link page="/caseHandlingSecondCycleCandidacyProcess.do?method=intro"><bean:message key="label.candidacy.secondCycle" bundle="APPLICATION_RESOURCES"/></html:link></li>
+<%-- 		<li><html:link page="/caseHandlingDegreeCandidacyForGraduatedPersonProcess.do?method=intro"><bean:message key="label.candidacy.graduatedPerson" bundle="APPLICATION_RESOURCES"/></html:link></li> --%>
 	</ul>
 
 </logic:present>

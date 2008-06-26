@@ -23,12 +23,12 @@
 <fr:form action='<%= "/caseHandlingOver23IndividualCandidacyProcess.do?parentProcessId=" + parentProcessId.toString() %>'>
  	<html:hidden property="method" value="createNewProcess" />
 
-	<fr:edit id="over23IndividualCandidacyProcessBean" name="over23IndividualCandidacyProcessBean" visible="false" />
+	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 
-	<logic:notEmpty name="over23IndividualCandidacyProcessBean" property="candidacyProcess">
+	<logic:notEmpty name="individualCandidacyProcessBean" property="candidacyProcess">
 	
-		<fr:edit id="over23IndividualCandidacyProcessBean.candidacyDate" 
-			 name="over23IndividualCandidacyProcessBean"
+		<fr:edit id="individualCandidacyProcessBean.candidacyDate" 
+			 name="individualCandidacyProcessBean"
 			 schema="Over23IndividualCandidacyProcessBean.candidacyDate">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
@@ -37,8 +37,8 @@
 			<fr:destination name="invalid" path='<%= "/caseHandlingOver23IndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>' />
 		</fr:edit>
 	
-		<fr:edit id="Over23IndividualCandidacyProcessBean.degrees"
-			name="over23IndividualCandidacyProcessBean"
+		<fr:edit id="individualCandidacyProcessBean.degrees"
+			name="individualCandidacyProcessBean"
 			schema="Over23IndividualCandidacyProcessBean.degrees">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright"/>
@@ -48,18 +48,18 @@
 		</fr:edit>
 		<html:submit onclick="this.form.method.value='addDegreeToCandidacy';return true;"><bean:message key="label.add" bundle="APPLICATION_RESOURCES" /></html:submit>
 		
-		<logic:empty name="over23IndividualCandidacyProcessBean" property="selectedDegrees">
+		<logic:empty name="individualCandidacyProcessBean" property="selectedDegrees">
 			<br/>
 			<br/>
 			<em><bean:message key="label.candidacy.over23.no.associated.degrees" bundle="APPLICATION_RESOURCES"/>.<span class="highlight1"><bean:message key="label.candidacy.over23.must.select.at.least.one.degree" bundle="APPLICATION_RESOURCES"/></span>.</em>
 			<br/>
 		</logic:empty>
-		<logic:notEmpty name="over23IndividualCandidacyProcessBean" property="selectedDegrees">
+		<logic:notEmpty name="individualCandidacyProcessBean" property="selectedDegrees">
 			<br/>
 			<br/>
 			<bean:message key="label.candidacy.choosen.degrees" bundle="APPLICATION_RESOURCES"/>:
 			<table class="tstyle1 mtop025">
-			<logic:iterate id="degree" name="over23IndividualCandidacyProcessBean" property="selectedDegrees">
+			<logic:iterate id="degree" name="individualCandidacyProcessBean" property="selectedDegrees">
 				<tr>
 					<td><bean:write name="degree" property="name" /> - <bean:write name="degree" property="sigla" /></td>
 					<td>
@@ -73,8 +73,8 @@
 			<br/>
 		</logic:notEmpty>
 		
-		<fr:edit id="Over23IndividualCandidacyProcessBean.optionalInformation"
-			name="over23IndividualCandidacyProcessBean"
+		<fr:edit id="individualCandidacyProcessBean.optionalInformation"
+			name="individualCandidacyProcessBean"
 			schema="Over23IndividualCandidacyProcessBean.optionalInformation">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>

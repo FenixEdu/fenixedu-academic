@@ -34,9 +34,20 @@
 		</ul>
 	</logic:notEmpty>
 	
+	<%-- student information --%>
+	<logic:notEmpty name="process" property="candidacyPerson.student">
+		<br/>
+		<strong><bean:message key="label.studentDetails" bundle="APPLICATION_RESOURCES"/>:</strong>
+		<fr:view name="process" property="candidacyPerson.student" schema="student.show.number.information">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+	
 	<%-- show candidacy information --%>
 	<br />
-	<bean:message key="label.candidacy.candidacyInformation" bundle="APPLICATION_RESOURCES"/>:
+	<strong><bean:message key="label.candidacy.candidacyInformation" bundle="APPLICATION_RESOURCES"/>:</strong>
 	<fr:view name="process" schema='<%= processName.toString() +  ".view" %>'>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
@@ -46,7 +57,7 @@
 	
 	<%-- show person information --%>
 	<br />
-	<bean:message key="label.candidacy.personalData" bundle="APPLICATION_RESOURCES"/>:
+	<strong><bean:message key="label.candidacy.personalData" bundle="APPLICATION_RESOURCES" />:</strong>
 	<fr:view name="process" property="candidacyPerson" schema="CandidacyProcess.personalData">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>

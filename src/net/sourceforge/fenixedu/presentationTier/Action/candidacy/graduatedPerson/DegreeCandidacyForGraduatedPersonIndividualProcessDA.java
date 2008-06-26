@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.candidacy.secondCycle;
+package net.sourceforge.fenixedu.presentationTier.Action.candidacy.graduatedPerson;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
@@ -29,55 +29,52 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
-@Mapping(path = "/caseHandlingSecondCycleIndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/caseHandlingDegreeCandidacyForGraduatedPersonIndividualProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
 @Forwards( { @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
 	@Forward(name = "list-allowed-activities", path = "/candidacy/listIndividualCandidacyActivities.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp"),
 	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),
-	@Forward(name = "fill-candidacy-information", path = "/candidacy/secondCycle/fillCandidacyInformation.jsp"),
+	
+	@Forward(name = "fill-candidacy-information", path = "/candidacy/graduatedPerson/fillCandidacyInformation.jsp"),
+	
 	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp"),
-	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/editPersonalInformation.jsp"),
+	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/editCandidacyPersonalInformation.jsp"),
+	
 	@Forward(name = "edit-candidacy-information", path = "/candidacy/secondCycle/editCandidacyInformation.jsp"),
-	@Forward(name = "introduce-candidacy-result", path = "/candidacy/secondCycle/introduceCandidacyResult.jsp"),
-	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
-	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp")
+	
+	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp")
 
 })
-public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
-
-    @Override
-    protected Class getParentProcessType() {
-	return SecondCycleCandidacyProcess.class;
-    }
+public class DegreeCandidacyForGraduatedPersonIndividualProcessDA extends IndividualCandidacyProcessDA {
 
     @Override
     protected Class getProcessType() {
-	return SecondCycleIndividualCandidacyProcess.class;
+	return DegreeCandidacyForGraduatedPersonIndividualProcess.class;
     }
 
     @Override
-    protected SecondCycleCandidacyProcess getParentProcess(HttpServletRequest request) {
-	return (SecondCycleCandidacyProcess) super.getParentProcess(request);
+    protected Class getParentProcessType() {
+	return DegreeCandidacyForGraduatedPersonProcess.class;
     }
 
     @Override
-    protected SecondCycleIndividualCandidacyProcess getProcess(HttpServletRequest request) {
-	return (SecondCycleIndividualCandidacyProcess) super.getProcess(request);
+    protected DegreeCandidacyForGraduatedPersonProcess getParentProcess(HttpServletRequest request) {
+	return (DegreeCandidacyForGraduatedPersonProcess) super.getParentProcess(request);
     }
 
     @Override
-    protected SecondCycleIndividualCandidacyProcessBean getIndividualCandidacyProcessBean() {
-	return (SecondCycleIndividualCandidacyProcessBean) super.getIndividualCandidacyProcessBean();
+    protected DegreeCandidacyForGraduatedPersonIndividualProcessBean getIndividualCandidacyProcessBean() {
+	return (DegreeCandidacyForGraduatedPersonIndividualProcessBean) super.getIndividualCandidacyProcessBean();
     }
 
     @Override
     protected void setStartInformation(ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	final SecondCycleIndividualCandidacyProcessBean bean = new SecondCycleIndividualCandidacyProcessBean();
+	final DegreeCandidacyForGraduatedPersonIndividualProcessBean bean = new DegreeCandidacyForGraduatedPersonIndividualProcessBean();
 	bean.setCandidacyProcess(getParentProcess(request));
 	bean.setChoosePersonBean(new ChoosePersonBean());
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
     }
-
+    
     public ActionForward fillCandidacyInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
@@ -90,6 +87,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	return mapping.findForward("fill-candidacy-information");
     }
 
+    /*
     public ActionForward fillCandidacyInformationPostback(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
@@ -137,11 +135,10 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("fill-candidacy-information");
     }
-
+    */
     public ActionForward prepareExecuteEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-
-	final SecondCycleIndividualCandidacyProcessBean bean = new SecondCycleIndividualCandidacyProcessBean();
+	final DegreeCandidacyForGraduatedPersonIndividualProcessBean bean = new DegreeCandidacyForGraduatedPersonIndividualProcessBean();
 	bean.setPersonBean(new PersonBean(getProcess(request).getCandidacyPerson()));
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("edit-candidacy-personal-information");
@@ -155,7 +152,6 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 
     public ActionForward executeEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
 	try {
 	    executeActivity(getProcess(request), "EditCandidacyPersonalInformation", getIndividualCandidacyProcessBean());
 	} catch (final DomainException e) {
@@ -165,83 +161,5 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
-
-    public ActionForward prepareExecuteEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	final SecondCycleIndividualCandidacyProcessBean bean = new SecondCycleIndividualCandidacyProcessBean(getProcess(request));
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
-	final PersonBean personBean = new PersonBean();
-	personBean.setPerson(getProcess(request).getCandidacyPerson());
-	bean.setPersonBean(personBean);
-	return mapping.findForward("edit-candidacy-information");
-    }
-
-    public ActionForward executeEditCandidacyInformationInvalid(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-	return mapping.findForward("edit-candidacy-information");
-    }
-
-    public ActionForward executeEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	try {
-	    executeActivity(getProcess(request), "EditCandidacyInformation", getIndividualCandidacyProcessBean());
-	} catch (final DomainException e) {
-	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-	    return mapping.findForward("edit-candidacy-information");
-	}
-	return listProcessAllowedActivities(mapping, actionForm, request, response);
-    }
-
-    public ActionForward prepareExecuteIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("secondCycleIndividualCandidacyResultBean", new SecondCycleIndividualCandidacyResultBean(
-		getProcess(request)));
-	return mapping.findForward("introduce-candidacy-result");
-    }
-
-    public ActionForward executeIntroduceCandidacyResultInvalid(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("secondCycleIndividualCandidacyResultBean", getCandidacyResultBean());
-	return mapping.findForward("introduce-candidacy-result");
-    }
-
-    public ActionForward executeIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	try {
-	    executeActivity(getProcess(request), "IntroduceCandidacyResult", getCandidacyResultBean());
-	} catch (final DomainException e) {
-	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    request.setAttribute("secondCycleIndividualCandidacyResultBean", getCandidacyResultBean());
-	    return mapping.findForward("introduce-candidacy-result");
-	}
-
-	return listProcessAllowedActivities(mapping, actionForm, request, response);
-    }
-
-    private SecondCycleIndividualCandidacyResultBean getCandidacyResultBean() {
-	return (SecondCycleIndividualCandidacyResultBean) getRenderedObject("secondCycleIndividualCandidacyResultBean");
-    }
-
-    public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	final SecondCycleIndividualCandidacyProcess process = getProcess(request);
-	request.setAttribute("degree", process.getCandidacySelectedDegree());
-	return mapping.findForward("create-registration");
-    }
-
-    public ActionForward executeCreateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	try {
-	    executeActivity(getProcess(request), "CreateRegistration");
-	} catch (final DomainException e) {
-	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    return mapping.findForward("create-registration");
-	}
-	return listProcessAllowedActivities(mapping, actionForm, request, response);
-    }
-
+    
 }

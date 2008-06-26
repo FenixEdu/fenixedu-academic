@@ -33,7 +33,7 @@ public class Over23CandidacyPeriod extends Over23CandidacyPeriod_Base {
     }
 
     private void checkIfCanCreate(final ExecutionInterval executionInterval) {
-	if (executionInterval.getOver23CandidacyPeriod() != null) {
+	if (executionInterval.hasOver23CandidacyPeriod()) {
 	    throw new DomainException("error.Over23CandidacyPeriod.executionInterval.already.contains.candidacyPeriod.type",
 		    executionInterval.getName());
 	}

@@ -306,6 +306,12 @@
 	</slot>
 </schema>
 
+<schema name="student.show.number.information"
+		type="net.sourceforge.fenixedu.domain.student.Student" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="person.istUsername" key="label.username"/>
+	<slot name="number" key="label.studentNumber"/>
+</schema>
+
 <schema name="student.show.ingressionInformation" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="registrationAgreement" key="label.registrationAgreement" />
 	<slot name="ingression" layout="format"  >

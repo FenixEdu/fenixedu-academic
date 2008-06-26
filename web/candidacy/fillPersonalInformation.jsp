@@ -26,24 +26,25 @@
 </fr:hasMessages>
 
 <bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
+<bean:define id="processName" name="processName" />
 
-<fr:form action='<%= "/caseHandlingOver23IndividualCandidacyProcess.do?parentProcessId=" + parentProcessId.toString() %>'>
+<fr:form action='<%= "/caseHandling" + processName + ".do?parentProcessId=" + parentProcessId.toString() %>'>
  	<html:hidden property="method" value="searchPersonForCandidacy" />
 
-	<fr:edit id="over23IndividualCandidacyProcessBean" name="over23IndividualCandidacyProcessBean" visible="false" />
+	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 
-	<logic:notEmpty name="over23IndividualCandidacyProcessBean" property="candidacyProcess">
-		<logic:notEmpty name="over23IndividualCandidacyProcessBean" property="personBean">
+	<logic:notEmpty name="individualCandidacyProcessBean" property="candidacyProcess">
+		<logic:notEmpty name="individualCandidacyProcessBean" property="personBean">
 			<h3 class="mtop15 mbottom025"><bean:message key="label.person.title.personal.info" bundle="APPLICATION_RESOURCES"/>:</h3>
-			<fr:edit id="candidacyProcess.personalDataBean"
-				name="over23IndividualCandidacyProcessBean" property="personBean"
-				schema="CandidacyProcess.personalDataBean">
+			<fr:edit id="candidacyProcess.personalDataBean" 
+					 name="individualCandidacyProcessBean" property="personBean"
+					 schema="CandidacyProcess.personalDataBean">
 				<fr:layout name="tabular-editable">
 					<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 			        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			        <fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
-				<fr:destination name="invalid" path='<%= "/caseHandlingOver23IndividualCandidacyProcess.do?method=fillPersonalInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>' />
+				<fr:destination name="invalid" path='<%= "/caseHandling" + processName + ".do?method=fillPersonalInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>' />
 			</fr:edit>
 			<html:submit onclick="this.form.method.value='fillCandidacyInformation';return true;"><bean:message key="label.continue" bundle="APPLICATION_RESOURCES" /></html:submit>
 		</logic:notEmpty>

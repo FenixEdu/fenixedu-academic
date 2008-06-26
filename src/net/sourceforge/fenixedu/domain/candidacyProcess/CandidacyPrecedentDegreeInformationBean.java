@@ -3,6 +3,9 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 
@@ -31,6 +34,33 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
 	setConclusionDate(precedentDegreeInformation.getConclusionDate());
 	setConclusionGrade(precedentDegreeInformation.getConclusionGrade());
 	setInstitutionValue(precedentDegreeInformation);
+    }
+
+    public CandidacyPrecedentDegreeInformationBean(final StudentCurricularPlan studentCurricularPlan) {
+	if (studentCurricularPlan.isBolonhaDegree() || !studentCurricularPlan.getRegistration().isRegistrationConclusionProcessed()) {
+	    throw new IllegalArgumentException("error.studentCurricularPlan.must.be.pre.bolonha.and.concluded");
+	}
+
+	setDegreeDesignation(studentCurricularPlan.getName());
+	setConclusionDate(new LocalDate(studentCurricularPlan.getRegistration().getConclusionDate()));
+	setConclusionGrade(studentCurricularPlan.getRegistration().getFinalAverage());
+	setInstitutionUnitName(RootDomainObject.getInstance().getInstitutionUnit().getUnitName());
+    }
+
+    public CandidacyPrecedentDegreeInformationBean(final StudentCurricularPlan studentCurricularPlan, final CycleType cycleType) {
+	if (!studentCurricularPlan.isBolonhaDegree() || cycleType == null) {
+	    throw new IllegalArgumentException();
+	}
+
+	setDegreeDesignation(studentCurricularPlan.getName());
+	setInstitutionUnitName(RootDomainObject.getInstance().getInstitutionUnit().getUnitName());
+	
+	if (studentCurricularPlan.getConclusionDate(cycleType) != null) {
+	    setConclusionDate(new LocalDate(studentCurricularPlan.getConclusionDate(cycleType)));
+	}
+	if (studentCurricularPlan.getFinalAverage(cycleType) != null) {
+	    setConclusionGrade(studentCurricularPlan.getFinalAverage(cycleType));
+	}
     }
 
     private void setInstitutionValue(final CandidacyPrecedentDegreeInformation precedentDegreeInformation) {

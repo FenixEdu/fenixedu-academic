@@ -57,15 +57,16 @@ import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Month;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Unit extends Unit_Base {
 
@@ -641,6 +642,17 @@ public class Unit extends Unit_Base {
 
     public Collection<Unit> getSubUnits() {
 	return (Collection<Unit>) getChildParties(Unit.class);
+    }
+
+    public boolean hasSubUnit(final Unit unit) {
+	if (unit != null) {
+	    for (final Unit child : getSubUnits()) {
+		if (child.equals(unit)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 
     public Collection<Unit> getSubUnits(AccountabilityTypeEnum accountabilityTypeEnum) {

@@ -20,6 +20,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 
+import org.apache.commons.collections.comparators.ReverseComparator;
+
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -182,6 +184,20 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	cycleCurriculumGroups.addAll(getInternalCycleCurriculumGroups());
 
 	return cycleCurriculumGroups.isEmpty() ? null : cycleCurriculumGroups.last();
+    }
+
+    public CycleCurriculumGroup getLastConcludedCycleCurriculumGroup() {
+	final SortedSet<CycleCurriculumGroup> cycleCurriculumGroups = new TreeSet<CycleCurriculumGroup>(new ReverseComparator(
+		CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID));
+	cycleCurriculumGroups.addAll(getInternalCycleCurriculumGroups());
+
+	for (final CycleCurriculumGroup curriculumGroup : cycleCurriculumGroups) {
+	    if (curriculumGroup.isConcluded()) {
+		return curriculumGroup;
+	    }
+	}
+
+	return null;
     }
 
     public Collection<CycleCurriculumGroup> getCycleCurriculumGroups() {

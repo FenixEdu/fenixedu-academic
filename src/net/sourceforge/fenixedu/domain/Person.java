@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy;
+import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacy;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch;
@@ -2838,6 +2839,10 @@ public class Person extends Person_Base {
 
     public boolean hasValidSecondCycleIndividualCandidacy(final ExecutionInterval executionInterval) {
 	return hasValidIndividualCandidacy(SecondCycleIndividualCandidacy.class, executionInterval);
+    }
+
+    public boolean hasValidDegreeCandidacyForGraduatedPerson(final ExecutionInterval executionInterval) {
+	return hasValidIndividualCandidacy(DegreeCandidacyForGraduatedPerson.class, executionInterval);
     }
 
 }

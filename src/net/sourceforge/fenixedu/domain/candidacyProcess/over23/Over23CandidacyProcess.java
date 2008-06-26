@@ -220,9 +220,10 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isSentToJury()) {
-		throw new PreConditionNotValidException();
-	    }
+	    // if (!process.isSentToJury()) {
+	    // throw new PreConditionNotValidException();
+	    // }
+	    throw new PreConditionNotValidException();
 	}
 
 	@Override
@@ -240,9 +241,13 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isPublished()) {
+	    if (!process.isSentToJury()) {
 		throw new PreConditionNotValidException();
 	    }
+
+	    // if (!process.isPublished()) {
+	    // throw new PreConditionNotValidException();
+	    // }
 	}
 
 	@Override

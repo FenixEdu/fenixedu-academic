@@ -19,6 +19,13 @@
 	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty"/>
 </schema>
 
+<schema name="DegreeCandidacyForGraduatedPersonPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
+</schema>
+
 <schema name="FixedAmountPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
@@ -131,6 +138,14 @@
 	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
 	<slot name="fixedAmountPenalty" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountWithPenaltyPR.fixedAmountPenalty" />
 	<setter signature="edit(fixedAmount,fixedAmountPenalty)"/>
+</schema>
+
+<schema name="DegreeCandidacyForGraduatedPersonPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
+	<setter signature="edit(amountForInstitutionStudent,amountForExternalStudent)"/>
 </schema>
 
 <schema name="FixedAmountPR.edit"
@@ -308,7 +323,6 @@
 	</slot>
 </schema>
 
-
 <schema name="EnrolmentOutOfPeriodPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
@@ -324,7 +338,6 @@
 	<slot name="amountPerDay"/>
 	<slot name="maxAmount"/>
 </schema>
-
 
 <schema name="EnrolmentOutOfPeriodPR.edit" 
 		type="net.sourceforge.fenixedu.domain.accounting.postingRules.EnrolmentOutOfPeriodPR"
@@ -344,4 +357,9 @@
 	<setter signature="edit(baseAmount,amountPerDay,maxAmount)"/>
 </schema>
 
-
+<schema name="DegreeCandidacyForGraduatedPersonPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
+</schema>

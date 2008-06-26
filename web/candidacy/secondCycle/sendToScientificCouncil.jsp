@@ -16,7 +16,7 @@
 <bean:define id="processName" name="processName"/>
 
 <fr:form action='<%= "/caseHandling" + processName.toString() + ".do?processId=" + processId.toString() %>'>
- 	<html:hidden property="method" value="executeSendToCoordinator" />
+ 	<html:hidden property="method" value="executeSendToScientificCouncil" />
 
 	<strong><bean:message key="label.candidacy.secondCycle.send.to.scientificCouncil.confirm.message" bundle="APPLICATION_RESOURCES" />?</strong>
 	<br/>

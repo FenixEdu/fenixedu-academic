@@ -1,27 +1,17 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.over23;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.joda.time.YearMonthDay;
-
-import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 
-public class Over23IndividualCandidacyProcessBean implements Serializable {
+import org.joda.time.LocalDate;
 
-    private DomainReference<Over23CandidacyProcess> candidacyProcess;
-
-    private ChoosePersonBean choosePersonBean;
-
-    private PersonBean personBean;
-
-    private YearMonthDay candidacyDate;
+public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyProcessBean {
 
     private DomainReference<Degree> degreeToAdd;
 
@@ -34,7 +24,7 @@ public class Over23IndividualCandidacyProcessBean implements Serializable {
     private String languages;
 
     public Over23IndividualCandidacyProcessBean() {
-	setCandidacyDate(new YearMonthDay());
+	setCandidacyDate(new LocalDate());
 	setSelectedDegrees(new ArrayList<Degree>());
     }
 
@@ -47,40 +37,9 @@ public class Over23IndividualCandidacyProcessBean implements Serializable {
 	setLanguages(process.getLanguages());
     }
 
+    @Override
     public Over23CandidacyProcess getCandidacyProcess() {
-	return (this.candidacyProcess != null) ? this.candidacyProcess.getObject() : null;
-    }
-
-    public void setCandidacyProcess(Over23CandidacyProcess candidacyProcess) {
-	this.candidacyProcess = (candidacyProcess != null) ? new DomainReference<Over23CandidacyProcess>(candidacyProcess) : null;
-    }
-
-    public boolean hasCandidacyProcess() {
-	return getCandidacyProcess() != null;
-    }
-
-    public ChoosePersonBean getChoosePersonBean() {
-	return choosePersonBean;
-    }
-
-    public void setChoosePersonBean(ChoosePersonBean choosePersonBean) {
-	this.choosePersonBean = choosePersonBean;
-    }
-
-    public PersonBean getPersonBean() {
-	return personBean;
-    }
-
-    public void setPersonBean(PersonBean personBean) {
-	this.personBean = personBean;
-    }
-
-    public YearMonthDay getCandidacyDate() {
-	return candidacyDate;
-    }
-
-    public void setCandidacyDate(final YearMonthDay candidacyDate) {
-	this.candidacyDate = candidacyDate;
+	return (Over23CandidacyProcess) super.getCandidacyProcess();
     }
 
     public Degree getDegreeToAdd() {
@@ -169,13 +128,5 @@ public class Over23IndividualCandidacyProcessBean implements Serializable {
 
     public void setLanguages(String languages) {
 	this.languages = languages;
-    }
-    
-    public boolean hasChoosenPerson() {
-	return getChoosePersonBean().hasPerson();
-    }
-
-    public void removeChoosePersonBean() {
-	setChoosePersonBean(null);
     }
 }

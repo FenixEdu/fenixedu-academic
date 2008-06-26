@@ -38,7 +38,8 @@ import org.joda.time.LocalDate;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "academicAdminOffice", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
-@Forwards( { @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
+@Forwards( {
+	@Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
 	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
 	@Forward(name = "send-to-coordinator", path = "/candidacy/secondCycle/sendToCoordinator.jsp"),
@@ -168,7 +169,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	    return mapping.findForward("introduce-candidacy-results-for-degree");
 	}
 
-	return listProcessAllowedActivities(mapping, actionForm, request, response);
+	return prepareExecuteIntroduceCandidacyResults(mapping, actionForm, request, response);
     }
 
     public ActionForward prepareExecuteSendToScientificCouncil(ActionMapping mapping, ActionForm actionForm,
@@ -178,7 +179,6 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     public ActionForward executeSendToScientificCouncil(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
 	try {
 	    executeActivity(getProcess(request), "SendToScientificCouncil");
 	} catch (final DomainException e) {

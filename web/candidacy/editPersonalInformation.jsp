@@ -20,23 +20,23 @@
 </fr:hasMessages>
 
 <bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processName" name="processName" />
 
-<fr:form action='<%="/caseHandlingOver23IndividualCandidacyProcess.do?processId=" + processId.toString() %>'>
+<fr:form action='<%="/caseHandling" + processName + ".do?processId=" + processId.toString() %>'>
 
  	<html:hidden property="method" value="executeEditCandidacyPersonalInformation" />
-	<fr:edit id="over23IndividualCandidacyProcessBean" name="over23IndividualCandidacyProcessBean" visible="false" />
+	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 
-	<logic:notEmpty name="over23IndividualCandidacyProcessBean" property="personBean">
-		
+	<logic:notEmpty name="individualCandidacyProcessBean" property="personBean">
 		<h3 class="mtop15 mbottom025"><bean:message key="label.person.title.personal.info" bundle="APPLICATION_RESOURCES"/>:</h3>
 		<fr:edit id="candidacyProcess.personalDataBean"
-			name="over23IndividualCandidacyProcessBean" property="personBean"
+			name="individualCandidacyProcessBean" property="personBean"
 			schema="CandidacyProcess.personalDataBean">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
-			<fr:destination name="invalid" path='<%= "/caseHandlingOver23IndividualCandidacyProcess.do?method=executeEditCandidacyPersonalInformationInvalid&amp;processId=" + processId.toString() %>' />
+			<fr:destination name="invalid" path='<%= "/caseHandling" + processName + ".do?method=executeEditCandidacyPersonalInformationInvalid&amp;processId=" + processId.toString() %>' />
 		</fr:edit>
 		
 		<html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES" /></html:submit>

@@ -7,16 +7,12 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.Activity;
 import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.EntryPhase;
 
 public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyProcess_Base {
 
@@ -38,16 +34,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	this();
 	checkParameters(bean.getCandidacyProcess());
 	setCandidacyProcess(bean.getCandidacyProcess());
-	new Over23IndividualCandidacy(this, getPersonFromBean(bean), bean.getCandidacyDate(), bean.getSelectedDegrees(), bean
-		.getDisabilities(), bean.getEducation(), bean.getLanguages());
-    }
-
-    private Person getPersonFromBean(final Over23IndividualCandidacyProcessBean bean) {
-	if (bean.getPersonBean().hasPerson()) {
-	    return bean.getPersonBean().getPerson().edit(bean.getPersonBean());
-	} else {
-	    return new Person(bean.getPersonBean());
-	}
+	new Over23IndividualCandidacy(this, bean);
     }
 
     private void checkParameters(final Over23CandidacyProcess process) {
@@ -69,11 +56,6 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     @Override
     public List<Activity> getActivities() {
 	return activities;
-    }
-
-    private Over23IndividualCandidacyProcess editPersonalCandidacyInformation(final PersonBean personBean) {
-	getCandidacy().editPersonalCandidacyInformation(personBean);
-	return this;
     }
 
     private Over23IndividualCandidacyProcess editCandidacyInformation(final Over23IndividualCandidacyProcessBean bean) {
@@ -101,7 +83,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     public Degree getAcceptedDegree() {
 	return getCandidacy().getAcceptedDegree();
     }
-    
+
     public boolean hasAcceptedDegree() {
 	return getAcceptedDegree() != null;
     }
@@ -144,7 +126,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
 		Object object) {
 	    return process; // nothing to be done, for now payment is being
-                                // done by existing interface
+	    // done by existing interface
 	}
     }
 
@@ -164,7 +146,8 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
 		Object object) {
 	    final Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) object;
-	    return process.editPersonalCandidacyInformation(bean.getPersonBean());
+	    process.editPersonalCandidacyInformation(bean.getPersonBean());
+	    return process;
 	}
     }
 
@@ -198,7 +181,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
 	    }
-	    
+
 	    if (!process.hasAnyPaymentForCandidacy()) {
 		throw new PreConditionNotValidException();
 	    }
@@ -254,9 +237,6 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isPublished()) {
-		throw new PreConditionNotValidException();
-	    }
 	}
 
 	@Override
@@ -267,10 +247,8 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	}
 
 	private void createRegistration(final Over23IndividualCandidacyProcess candidacyProcess) {
-	    final Registration registration = new Registration(candidacyProcess.getCandidacyPerson(),
-		    getDegreeCurricularPlan(candidacyProcess), CycleType.FIRST_CYCLE);
-	    registration.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
-	    registration.setIngression(Ingression.CM23);
+	    candidacyProcess.getCandidacy().createRegistration(candidacyProcess.getCandidacyPerson(),
+		    getDegreeCurricularPlan(candidacyProcess), CycleType.FIRST_CYCLE, Ingression.CM23);
 	}
 
 	private DegreeCurricularPlan getDegreeCurricularPlan(final Over23IndividualCandidacyProcess candidacyProcess) {

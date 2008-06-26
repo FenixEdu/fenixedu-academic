@@ -2,11 +2,12 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 abstract public class IndividualCandidacyProcess extends IndividualCandidacyProcess_Base {
 
@@ -30,7 +31,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyEnd() : null;
     }
 
-    public YearMonthDay getCandidacyDate() {
+    public LocalDate getCandidacyDate() {
 	return getCandidacy().getCandidacyDate();
     }
 
@@ -113,5 +114,9 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     @Override
     public String getDisplayName() {
 	return ResourceBundle.getBundle("resources/CaseHandlingResources").getString(getClass().getSimpleName());
+    }
+    
+    protected void editPersonalCandidacyInformation(final PersonBean personBean) {
+	getCandidacy().editPersonalCandidacyInformation(personBean);
     }
 }

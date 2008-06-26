@@ -426,7 +426,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public Registration getStudent() {
 	return this.getRegistration();
     }
-    
+
     public void setStartDate(YearMonthDay startDate) {
 	super.setStartDateYearMonthDay(startDate);
     }
@@ -2546,6 +2546,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public CycleCurriculumGroup getLastOrderedCycleCurriculumGroup() {
 	return isBoxStructure() ? getRoot().getLastOrderedCycleCurriculumGroup() : null;
+    }
+
+    public CycleCurriculumGroup getLastConcludedCycleCurriculumGroup() {
+	return isBoxStructure() ? getRoot().getLastConcludedCycleCurriculumGroup() : null;
     }
 
     public Collection<CycleCurriculumGroup> getCycleCurriculumGroups() {

@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.Activity;
 import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
@@ -17,8 +16,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegree
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.EntryPhase;
 
 public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividualCandidacyProcess_Base {
 
@@ -69,11 +66,6 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     @Override
     public SecondCycleIndividualCandidacy getCandidacy() {
 	return (SecondCycleIndividualCandidacy) super.getCandidacy();
-    }
-
-    private SecondCycleIndividualCandidacyProcess editPersonalCandidacyInformation(final PersonBean personBean) {
-	getCandidacy().editPersonalCandidacyInformation(personBean);
-	return this;
     }
 
     private SecondCycleIndividualCandidacyProcess editCandidacyInformation(final SecondCycleIndividualCandidacyProcessBean bean) {
@@ -188,7 +180,8 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
 	    final SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) object;
-	    return process.editPersonalCandidacyInformation(bean.getPersonBean());
+	    process.editPersonalCandidacyInformation(bean.getPersonBean());
+	    return process;
 	}
     }
 
@@ -276,10 +269,6 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isPublished()) {
-		throw new PreConditionNotValidException();
-	    }
-
 	    // TODO: check if can create registration when first cycle is
 	    // not concluded
 	}
@@ -292,10 +281,8 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	}
 
 	private void createRegistration(final SecondCycleIndividualCandidacyProcess candidacyProcess) {
-	    final Registration registration = new Registration(candidacyProcess.getCandidacyPerson(),
-		    getDegreeCurricularPlan(candidacyProcess), CycleType.SECOND_CYCLE);
-	    registration.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
-	    registration.setIngression(Ingression.CIA2C);
+	    candidacyProcess.getCandidacy().createRegistration(candidacyProcess.getCandidacyPerson(),
+		    getDegreeCurricularPlan(candidacyProcess), CycleType.SECOND_CYCLE, Ingression.CIA2C);
 	}
 
 	private DegreeCurricularPlan getDegreeCurricularPlan(final SecondCycleIndividualCandidacyProcess candidacyProcess) {

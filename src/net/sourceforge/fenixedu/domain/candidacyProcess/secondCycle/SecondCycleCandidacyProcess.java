@@ -289,9 +289,10 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isSentToScientificCouncil()) {
-		throw new PreConditionNotValidException();
-	    }
+	    // if (!process.isSentToScientificCouncil()) {
+	    // throw new PreConditionNotValidException();
+	    // }
+	    throw new PreConditionNotValidException();
 	}
 
 	@Override
@@ -310,9 +311,13 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isPublished()) {
+	    if (!process.isSentToCoordinator() && !process.isSentToScientificCouncil()) {
 		throw new PreConditionNotValidException();
 	    }
+
+	    // if (!process.isPublished()) {
+	    // throw new PreConditionNotValidException();
+	    // }
 	}
 
 	@Override

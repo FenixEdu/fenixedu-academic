@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.LocalDate;
-import org.joda.time.YearMonthDay;
 
 public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentDegreeInformation_Base {
 

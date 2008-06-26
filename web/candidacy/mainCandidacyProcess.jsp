@@ -10,24 +10,26 @@
 <logic:empty name="process">
 	<h2><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></h2>
 	
-	<bean:message key="label.candidacy.no.candidacies.for.current.year" bundle="APPLICATION_RESOURCES" />
-	: <logic:equal name="canCreateProcess" value="true">
+	<bean:message key="label.candidacy.no.candidacies.for.current.year" bundle="APPLICATION_RESOURCES" />:
+	 <logic:equal name="canCreateProcess" value="true">
 		<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareCreateNewProcess"%>'>
 		<bean:message key='<%= "link.create.new.process." + processName.toString()%>' bundle="APPLICATION_RESOURCES"/>	
 		</html:link>
 	</logic:equal>
 	<%-- previous years candidacy --%>
-	<br/>
-	<br/>
-	<html:form action='<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>'>
-		<html:select bundle="HTMLALT_RESOURCES" property="executionIntervalId">
-			<html:option value=""><!-- w3c complient --></html:option>
-			<html:options collection="executionIntervals" property="idInternal" labelProperty="name"/>
-		</html:select>
-		<html:submit><bean:message key="label.choose"/> </html:submit>
-	</html:form>
-	<br/>
-	<br/>
+	<logic:notEmpty name="executionIntervals">
+		<br/>
+		<br/>
+		<html:form action='<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>'>
+			<html:select bundle="HTMLALT_RESOURCES" property="executionIntervalId">
+				<html:option value=""><!-- w3c complient --></html:option>
+				<html:options collection="executionIntervals" property="idInternal" labelProperty="name"/>
+			</html:select>
+			<html:submit><bean:message key="label.choose"/> </html:submit>
+		</html:form>
+		<br/>
+		<br/>
+	</logic:notEmpty>
 </logic:empty>
 
 <%-- candidacy process of current year --%>

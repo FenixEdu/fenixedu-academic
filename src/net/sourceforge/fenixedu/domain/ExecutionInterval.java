@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
+import net.sourceforge.fenixedu.domain.period.DegreeCandidacyForGraduatedPersonCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
@@ -78,6 +79,15 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
 
     public boolean hasSecondCycleCandidacyPeriod() {
 	return getSecondCycleCandidacyPeriod() != null;
+    }
+
+    public DegreeCandidacyForGraduatedPersonCandidacyPeriod getDegreeCandidacyForGraduatedPersonCandidacyPeriod() {
+	final List<DegreeCandidacyForGraduatedPersonCandidacyPeriod> candidacyPeriods = (List<DegreeCandidacyForGraduatedPersonCandidacyPeriod>) getCandidacyPeriods(DegreeCandidacyForGraduatedPersonCandidacyPeriod.class);
+	return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+    }
+
+    public boolean hasDegreeCandidacyForGraduatedPersonCandidacyPeriod() {
+	return getDegreeCandidacyForGraduatedPersonCandidacyPeriod() != null;
     }
 
     static public List<ExecutionInterval> readExecutionIntervalsWithCandidacyPeriod(final Class<? extends CandidacyPeriod> clazz) {

@@ -484,4 +484,9 @@ public class PersonBean implements Serializable {
     public boolean hasPerson() {
 	return getPerson() != null;
     }
+
+    public boolean hasStudent() {
+	return hasPerson() && getPerson().hasStudent();
+    }
+
 }

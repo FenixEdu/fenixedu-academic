@@ -1351,7 +1351,9 @@ class DomainObject {
 			
 			class accounting.events.candidacy.SecondCycleIndividualCandidacyEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
 			}
-
+			
+			class accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
+			}
 
 	class accounting.Exemption extends DomainObject {
 		DateTime whenCreated;
@@ -1572,6 +1574,10 @@ class DomainObject {
 			class accounting.postingRules.serviceRequests.PastFreeSolicitationAcademicRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
 			}
 
+			class accounting.postingRules.DegreeCandidacyForGraduatedPersonPR extends accounting.postingRules.GenericSingleEntryTypePR {
+				Money amountForInstitutionStudent;
+				Money amountForExternalStudent;
+			}
 
 	class accounting.Receipt extends DomainObject {
 		Integer number;
@@ -4712,7 +4718,10 @@ class period.CandidacyPeriod extends DomainObject {
 	
 	class period.SecondCycleCandidacyPeriod extends period.CandidacyPeriod {
 	}
-
+	
+	class period.DegreeCandidacyForGraduatedPersonCandidacyPeriod extends period.CandidacyPeriod {
+	}
+	
 class candidacyProcess.CandidacyProcess extends caseHandling.Process {
 	CandidacyProcessState state;
 }
@@ -4721,6 +4730,9 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
 	}
 	
 	class candidacyProcess.secondCycle.SecondCycleCandidacyProcess extends candidacyProcess.CandidacyProcess {
+	}
+	
+	class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonProcess extends candidacyProcess.CandidacyProcess {
 	}
 	
 class candidacyProcess.IndividualCandidacyProcess extends caseHandling.Process {
@@ -4732,9 +4744,12 @@ class candidacyProcess.IndividualCandidacyProcess extends caseHandling.Process {
 	class candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
 	}
 	
+	class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcess extends candidacyProcess.IndividualCandidacyProcess {
+	}
+		
 class candidacyProcess.IndividualCandidacy extends DomainObject {
 	DateTime whenCreated;
-	YearMonthDay candidacyDate;
+	LocalDate candidacyDate;
 	IndividualCandidacyState state;
 	String responsible;
 	String notes;
@@ -4755,6 +4770,9 @@ class candidacyProcess.IndividualCandidacy extends DomainObject {
 		Double candidacyGrade;
 		String interviewGrade;
 		Double seriesCandidacyGrade;
+	}
+	
+	class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson extends candidacyProcess.IndividualCandidacy {
 	}
 
 class candidacyProcess.CandidacyPrecedentDegreeInformation extends DomainObject {
@@ -12665,6 +12683,13 @@ relation Over23IndividualCandidacyAcceptedDegree {
 relation SecondCycleIndividualCandidacySelectedDegree {
 	Degree playsRole selectedDegree;
 	candidacyProcess.secondCycle.SecondCycleIndividualCandidacy playsRole selectedSecondCycleIndividualCandidacies {
+		multiplicity *;
+	}
+}
+
+relation DegreeCandidacyForGraduatedPersonSelectedDegree {
+	Degree playsRole selectedDegree;
+	candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson playsRole selectedDegreeCandidacyForGraduatedPersonCandidacies {
 		multiplicity *;
 	}
 }

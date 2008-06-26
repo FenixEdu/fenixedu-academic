@@ -17,7 +17,7 @@
 	<span class="error0"> <bean:write name="message" /> </span>
 	<br />
 </html:messages>
-<fr:hasMessages for="SecondCycleIndividualCandidacyProcess.choosePersonBean.edit" type="conversion">
+<fr:hasMessages for="individualCandidacyProcessBean.choosePersonBean.edit" type="conversion">
 	<ul class="nobullet list6">
 		<fr:messages>
 			<li><span class="error0"><fr:message/></span></li>
@@ -26,49 +26,50 @@
 </fr:hasMessages>
 
 <bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
+<bean:define id="processName" name="processName" />
 
-<fr:form action='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?parentProcessId=" + parentProcessId.toString() %>'>
+<fr:form action='<%= "/caseHandling" + processName + ".do?parentProcessId=" + parentProcessId.toString() %>'>
+
  	<html:hidden property="method" value="searchPersonForCandidacy" />
+	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 
-	<fr:edit id="secondCycleIndividualCandidacyProcessBean" name="secondCycleIndividualCandidacyProcessBean" visible="false" />
-
-	<logic:notEmpty name="secondCycleIndividualCandidacyProcessBean" property="candidacyProcess">
+	<logic:notEmpty name="individualCandidacyProcessBean" property="candidacyProcess">
+		<logic:equal name="individualCandidacyProcessBean" property="choosePersonBean.firstTimeSearch" value="true">
 		
-		<logic:equal name="secondCycleIndividualCandidacyProcessBean" property="choosePersonBean.firstTimeSearch" value="true">
-			<fr:edit id="SecondCycleIndividualCandidacyProcess.choosePersonBean.edit"
-				name="secondCycleIndividualCandidacyProcessBean" property="choosePersonBean"
-				schema="SecondCycleIndividualCandidacyProcess.choosePersonBean.edit" nested="true">
+			<fr:edit id="individualCandidacyProcessBean.choosePersonBean.edit"
+				name="individualCandidacyProcessBean" property="choosePersonBean"
+				schema="CandidacyProcess.choosePersonBean.edit">
 				<fr:layout name="tabular-editable">
 					<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 			        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			        <fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
-				<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=prepareCreateNewProcessInvalid&amp;parentProcessId=" + parentProcessId.toString() %>' />
+				<fr:destination name="invalid" path='<%= "/caseHandling" + processName + ".do?method=prepareCreateNewProcessInvalid&amp;parentProcessId=" + parentProcessId.toString() %>' />
 			</fr:edit>
 			<html:submit><bean:message key="label.continue" bundle="APPLICATION_RESOURCES" /></html:submit>
 		</logic:equal>
 		
-		<logic:equal name="secondCycleIndividualCandidacyProcessBean" property="choosePersonBean.firstTimeSearch" value="false">
-			<fr:view name="secondCycleIndividualCandidacyProcessBean" property="choosePersonBean" schema="CandidacyProcess.choosePersonBean.view">
+		<logic:equal name="individualCandidacyProcessBean" property="choosePersonBean.firstTimeSearch" value="false">
+			<fr:view name="individualCandidacyProcessBean" property="choosePersonBean" schema="CandidacyProcess.choosePersonBean.view">
 				<fr:layout name="tabular-editable">
 					<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 			        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 				</fr:layout>
-				<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=prepareCreateNewProcessInvalid&amp;parentProcessId=" + parentProcessId.toString() %>' />
+				<fr:destination name="invalid" path='<%= "/caseHandling" + processName + ".do?method=prepareCreateNewProcessInvalid&amp;parentProcessId=" + parentProcessId.toString() %>' />
 			</fr:view>
 			<html:submit onclick="this.form.method.value='searchAgainPersonForCandidacy';return true;"><bean:message key="label.change" bundle="APPLICATION_RESOURCES" /></html:submit>
 			
 			<br/>
 			<br/>
 			<bean:message key="label.candidacy.similar.persons" bundle="APPLICATION_RESOURCES" />:
-			<fr:edit id="SecondCycleIndividualCandidacyProcess.choosePersonBean.selectPerson"
-				name="secondCycleIndividualCandidacyProcessBean" property="choosePersonBean"
-				schema="SecondCycleIndividualCandidacyProcess.choosePersonBean.selectPerson" nested="true">
+			<fr:edit id="individualCandidacyProcessBean.choosePersonBean.selectPerson"
+				name="individualCandidacyProcessBean" property="choosePersonBean"
+				schema="CandidacyProcess.choosePersonBean.selectPerson">
 				<fr:layout name="tabular-editable">
 					<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 			        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 				</fr:layout>
-				<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=prepareCreateNewProcessInvalid&amp;parentProcessId=" + parentProcessId.toString() %>' />
+				<fr:destination name="invalid" path='<%= "/caseHandling" + processName + ".do?method=prepareCreateNewProcessInvalid&amp;parentProcessId=" + parentProcessId.toString() %>' />
 			</fr:edit>
 			<bean:message key="label.candidacy.use.similar.person" bundle="APPLICATION_RESOURCES" />:
 			<br/>
@@ -84,7 +85,6 @@
 	</logic:notEmpty>
 
 	<html:cancel onclick="this.form.method.value='listProcesses';return true;"><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
-	
 </fr:form>
 
 <br/>

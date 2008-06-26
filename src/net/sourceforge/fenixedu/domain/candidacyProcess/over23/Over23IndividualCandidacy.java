@@ -10,9 +10,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.Over23IndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 
 public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 
@@ -20,48 +19,38 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	super();
     }
 
-    Over23IndividualCandidacy(final Over23IndividualCandidacyProcess process, final Person person,
-	    final YearMonthDay candidacyDate, final List<Degree> degrees, final String disabilities, final String education,
-	    final String languages) {
+    Over23IndividualCandidacy(final Over23IndividualCandidacyProcess process, final Over23IndividualCandidacyProcessBean bean) {
 	this();
-	checkParameters(person, process, candidacyDate, degrees);
 
-	setPerson(person);
-	setCandidacyProcess(process);
-	setDisabilities(disabilities);
-	setEducation(education);
-	setLanguages(languages);
-	setState(IndividualCandidacyState.STAND_BY);
-	setCandidacyDate(candidacyDate);
+	final Person person = bean.getOrCreatePersonFromBean();
+	checkParameters(person, process, bean.getCandidacyDate(), bean.getSelectedDegrees());
 
-	createDegreeEntries(degrees);
+	init(person, process, bean.getCandidacyDate());
+
+	setDisabilities(bean.getDisabilities());
+	setEducation(bean.getEducation());
+	setLanguages(bean.getLanguages());
+
+	createDegreeEntries(bean.getSelectedDegrees());
 	createDebt(person);
     }
 
     private void checkParameters(final Person person, final Over23IndividualCandidacyProcess process,
-	    final YearMonthDay candidacyDate, final List<Degree> degrees) {
-	if (person == null || person.hasStudent()) {
+	    final LocalDate candidacyDate, final List<Degree> degrees) {
+
+	checkParameters(person, process, candidacyDate);
+
+	if (person.hasStudent()) {
 	    throw new DomainException("error.Over23IndividualCandidacy.invalid.person");
 	}
-	if (process == null) {
-	    throw new DomainException("error.Over23IndividualCandidacy.invalid.process");
-	}
+
 	if (person.hasValidOver23IndividualCandidacy(process.getCandidacyExecutionInterval())) {
 	    throw new DomainException("error.Over23IndividualCandidacy.person.already.has.candidacy", process
 		    .getCandidacyExecutionInterval().getName());
 	}
-	checkParameters(process, candidacyDate, degrees);
-    }
 
-    private void checkParameters(final Over23IndividualCandidacyProcess process, final YearMonthDay candidacyDate,
-	    final List<Degree> degrees) {
 	if (degrees == null || degrees.isEmpty()) {
 	    throw new DomainException("error.Over23IndividualCandidacy.invalid.degrees");
-	}
-	if (candidacyDate == null || !process.hasOpenCandidacyPeriod(candidacyDate.toDateTimeAtMidnight())) {
-	    throw new DomainException("error.Over23IndividualCandidacy.invalid.candidacyDate", process.getCandidacyStart()
-		    .toString(DateFormatUtil.DEFAULT_DATE_FORMAT), process.getCandidacyEnd().toString(
-		    DateFormatUtil.DEFAULT_DATE_FORMAT));
 	}
     }
 
@@ -81,19 +70,6 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	new Over23IndividualCandidacyEvent(this, person);
     }
 
-    public void cancel(final Person person) {
-	checkRulesToCancel();
-	setState(IndividualCandidacyState.CANCELLED);
-	setResponsible(person.getUsername());
-	getEvent().cancel("Over23IndividualCandidacy.canceled");
-    }
-
-    private void checkRulesToCancel() {
-	if (hasAnyPayment()) {
-	    throw new DomainException("error.Over23IndividualCandidacy.cannot.cancel.candidacy.with.payments");
-	}
-    }
-
     void saveChoosedDegrees(final List<Degree> degrees) {
 	if (!degrees.isEmpty()) {
 	    removeExistingDegreeEntries();
@@ -106,9 +82,9 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	return (Over23IndividualCandidacyProcess) super.getCandidacyProcess();
     }
 
-    void editCandidacyInformation(final YearMonthDay candidacyDate, final List<Degree> degrees, final String disabilities,
+    void editCandidacyInformation(final LocalDate candidacyDate, final List<Degree> degrees, final String disabilities,
 	    final String education, final String languages) {
-	checkParameters(getCandidacyProcess(), candidacyDate, degrees);
+	checkParameters(getPerson(), getCandidacyProcess(), candidacyDate, degrees);
 	setCandidacyDate(candidacyDate);
 	saveChoosedDegrees(degrees);
 	setDisabilities(disabilities);
@@ -136,23 +112,28 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	return result;
     }
 
-    Person getResponsiblePerson() {
-	return Person.readPersonByUsername(getResponsible());
-    }
-
     void editCandidacyResult(final IndividualCandidacyState state, final Degree acceptedDegree) {
 	checkParameters(state, acceptedDegree);
-	setState(state);
 	setAcceptedDegree(acceptedDegree);
+	if (isStateValid(state)) {
+	    setState(state);
+	}
+    }
+
+    private boolean isStateValid(final IndividualCandidacyState state) {
+	return state == IndividualCandidacyState.ACCEPTED || state == IndividualCandidacyState.REJECTED;
     }
 
     private void checkParameters(final IndividualCandidacyState state, final Degree acceptedDegree) {
-	if (state == null) {
-	    throw new DomainException("error.Over23IndividualCandidacy.invalid.state");
-	}
-	if (state == IndividualCandidacyState.ACCEPTED
-		&& (acceptedDegree == null || !getSelectedDegrees().contains(acceptedDegree))) {
-	    throw new DomainException("error.Over23IndividualCandidacy.invalid.acceptedDegree");
+	if (state != null) {
+	    if (state == IndividualCandidacyState.ACCEPTED
+		    && (acceptedDegree == null || !getSelectedDegrees().contains(acceptedDegree))) {
+		throw new DomainException("error.Over23IndividualCandidacy.invalid.acceptedDegree");
+	    }
+
+	    if (isAccepted() && state != IndividualCandidacyState.ACCEPTED && hasRegistration()) {
+		throw new DomainException("error.Over23IndividualCandidacy.cannot.change.state.from.accepted.candidacies");
+	    }
 	}
     }
 }

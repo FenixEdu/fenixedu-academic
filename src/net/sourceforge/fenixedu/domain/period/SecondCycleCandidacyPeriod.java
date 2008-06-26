@@ -33,7 +33,7 @@ public class SecondCycleCandidacyPeriod extends SecondCycleCandidacyPeriod_Base 
     }
 
     private void checkIfCanCreate(final ExecutionInterval executionInterval) {
-	if (executionInterval.getSecondCycleCandidacyPeriod() != null) {
+	if (executionInterval.hasSecondCycleCandidacyPeriod()) {
 	    throw new DomainException("error.SecondCycleCandidacyPeriod.executionInterval.already.contains.candidacyPeriod.type",
 		    executionInterval.getName());
 	}

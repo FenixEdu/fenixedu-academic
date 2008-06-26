@@ -84,7 +84,9 @@ public enum EventType {
 
     OVER23_INDIVIDUAL_CANDIDACY,
 
-    SECOND_CYCLE_INDIVIDUAL_CANDIDACY;
+    SECOND_CYCLE_INDIVIDUAL_CANDIDACY,
+    
+    DEGREE_CANDIDACY_FOR_GRADUATED_PERSON;
 
     public String getName() {
 	return name();
