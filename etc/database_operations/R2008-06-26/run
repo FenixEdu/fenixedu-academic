@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Add new columns to PostingRule table related to new candidacy" alterTablePostingRules.sql
