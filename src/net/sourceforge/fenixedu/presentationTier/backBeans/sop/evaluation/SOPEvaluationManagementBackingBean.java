@@ -59,6 +59,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.util.MessageResources;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -431,7 +432,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     // BEGIN Drop down menu logic
     public List<SelectItem> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
 	List<InfoExecutionPeriod> infoExecutionPeriods = (List<InfoExecutionPeriod>) ServiceUtils.executeService(
-		"ReadNotClosedExecutionPeriods", null);
+		"ReadNotClosedExecutionPeriods");
 
 	ComparatorChain chainComparator = new ComparatorChain();
 	chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
@@ -822,7 +823,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	    int totalCapacity = 0;
 	    final StringBuilder buffer = new StringBuilder(20);
 	    for (final AllocatableSpace room : writtenTest.getAssociatedRooms()) {
-		buffer.append(room.getName()).append("; ");
+		buffer.append(room.getIdentification()).append("; ");
 		totalCapacity += room.getCapacidadeExame();
 	    }
 	    if (buffer.length() > 0) {
@@ -1015,7 +1016,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
 	    for (Integer chosenRoomID : this.getChosenRoomsIDs()) {
 		AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(chosenRoomID);
-		result.append(room.getName());
+		result.append(room.getIdentification());
 		result.append("; ");
 	    }
 
@@ -1506,7 +1507,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public String getSelectedDateString() throws FenixFilterException, FenixServiceException {
-	return new YearMonthDay(getYear(), getMonth(), getDay()).toString("dd/MM/yyyy");
+	return new LocalDate(getYear(), getMonth(), getDay()).toString("dd/MM/yyyy");
     }
 
     public String getSelectedBeginHourString() throws FenixFilterException, FenixServiceException {

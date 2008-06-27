@@ -24,45 +24,45 @@ public class ListFirstTimeEnrolmentMasterDegreeStudents extends FenixBackingBean
     private String selectedExecutionYear;
 
     public ListFirstTimeEnrolmentMasterDegreeStudents() {
-        super();
+	super();
     }
 
     public Collection getStudentCurricularPlans() throws FenixFilterException, FenixServiceException {
 
-        if (getSelectedExecutionYear() == null || getSelectedExecutionYear().length() == 0) {
-            return new ArrayList();
-        }
+	if (getSelectedExecutionYear() == null || getSelectedExecutionYear().length() == 0) {
+	    return new ArrayList();
+	}
 
-        Object[] args = { getSelectedExecutionYear() };
-        return (Collection) ServiceUtils.executeService("ListMasterDegreeStudents", args);
+	Object[] args = { getSelectedExecutionYear() };
+	return (Collection) ServiceUtils.executeService("ListMasterDegreeStudents", args);
     }
 
     public List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
-        List<SelectItem> result = new ArrayList<SelectItem>();
-        List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils.executeService(
-                "ReadNotClosedExecutionYears", null);
+	List<SelectItem> result = new ArrayList<SelectItem>();
+	List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils
+		.executeService("ReadNotClosedExecutionYears");
 
-        Collections.sort(executionYears, new Comparator<InfoExecutionYear>() {
+	Collections.sort(executionYears, new Comparator<InfoExecutionYear>() {
 
-            public int compare(InfoExecutionYear o1, InfoExecutionYear o2) {
-                return o1.getYear().compareTo(o2.getYear()) * (-1);
-            }
+	    public int compare(InfoExecutionYear o1, InfoExecutionYear o2) {
+		return o1.getYear().compareTo(o2.getYear()) * (-1);
+	    }
 
-        });
+	});
 
-        for (InfoExecutionYear executionYear : executionYears) {
-            result.add(new SelectItem(executionYear.getYear(), executionYear.getYear()));
-        }
+	for (InfoExecutionYear executionYear : executionYears) {
+	    result.add(new SelectItem(executionYear.getYear(), executionYear.getYear()));
+	}
 
-        return result;
+	return result;
     }
 
     public String getSelectedExecutionYear() {
-        return selectedExecutionYear;
+	return selectedExecutionYear;
     }
 
     public void setSelectedExecutionYear(String selectedExecutionYear) {
-        this.selectedExecutionYear = selectedExecutionYear;
+	this.selectedExecutionYear = selectedExecutionYear;
     }
 
 }

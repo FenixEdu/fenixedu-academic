@@ -22,15 +22,12 @@ import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResultMessage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -86,7 +83,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
     protected Object executeService(final String serviceName, final Object... serviceArgs) throws FenixFilterException,
 	    FenixServiceException {
-	return ServiceUtils.executeService( serviceName, serviceArgs);
+	return ServiceUtils.executeService(serviceName, serviceArgs);
     }
 
     protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz, final Integer idInternal) {
@@ -111,29 +108,24 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-         * Sets an error to display later in the Browser and sets the mapping
-         * forward.
-         */
+     * Sets an error to display later in the Browser and sets the mapping
+     * forward.
+     */
     protected ActionForward setError(HttpServletRequest request, ActionMapping mapping, String errorMessage, String forwardPage,
 	    Object actionArg) {
-	ActionErrors errors = new ActionErrors();
-	String notMessageKey = errorMessage;
-	ActionError error = new ActionError(notMessageKey, actionArg);
-	errors.add(notMessageKey, error);
-	saveErrors(request, errors);
 
+	addErrorMessage(request, errorMessage, errorMessage, actionArg);
 	if (forwardPage != null) {
 	    return mapping.findForward(forwardPage);
 	}
 
 	return mapping.getInputForward();
-
     }
 
     /*
-         * Verifies if a property of type String in a FormBean is not empty.
-         * Returns true if the field is present and not empty. False otherwhise.
-         */
+     * Verifies if a property of type String in a FormBean is not empty. Returns
+     * true if the field is present and not empty. False otherwhise.
+     */
     protected boolean verifyStringParameterInForm(DynaValidatorForm dynaForm, String field) {
 	if (dynaForm.get(field) != null && !dynaForm.get(field).equals("")) {
 	    return true;
@@ -142,9 +134,9 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-         * Verifies if a parameter in a Http Request is not empty. Return true
-         * if the field is not empty. False otherwise.
-         */
+     * Verifies if a parameter in a Http Request is not empty. Return true if
+     * the field is not empty. False otherwise.
+     */
     protected boolean verifyParameterInRequest(HttpServletRequest request, String field) {
 	if (request.getParameter(field) != null && !request.getParameter(field).equals("")) {
 	    return true;
@@ -180,12 +172,12 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /**
-         * Searches in request parameters first and next in request attributed
-         * 
-         * @param request
-         * @param name
-         * @return
-         */
+     * Searches in request parameters first and next in request attributed
+     * 
+     * @param request
+     * @param name
+     * @return
+     */
     protected Object getFromRequest(HttpServletRequest request, String name) {
 	final String requestParameter = request.getParameter(name);
 	return (requestParameter != null) ? requestParameter : request.getAttribute(name);
@@ -401,7 +393,6 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     protected void addErrorMessage(HttpServletRequest request, String property, String key, Object... args) {
 	ActionMessages messages = getErrors(request);
 	messages.add(property, new ActionMessage(key, args));
-
 	saveErrors(request, messages);
     }
 }

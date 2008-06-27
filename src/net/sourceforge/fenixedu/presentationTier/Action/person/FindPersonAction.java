@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,11 +20,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -71,10 +67,9 @@ public class FindPersonAction extends FenixDispatchAction {
 	    if (roleType.equals(RoleType.EMPLOYEE.getName())
 		    || roleType.equals(RoleType.TEACHER.getName())) {
 		if (roleType.equals(RoleType.TEACHER.getName())) {
-		    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments", null);
+		    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments");
 		    request.setAttribute("departments", departments);
 		}
-		// request.removeAttribute("degreeType");
 	    }
 
 	    if (roleType.equals(RoleType.STUDENT.getName())) {
@@ -121,7 +116,6 @@ public class FindPersonAction extends FenixDispatchAction {
 
     public ActionForward findPerson(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	ActionErrors errors = new ActionErrors();
 
 	IUserView userView = UserView.getUser();
 
@@ -175,7 +169,7 @@ public class FindPersonAction extends FenixDispatchAction {
 	}
 
 	if (roleType.equals(RoleType.TEACHER.getName())) {
-	    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments", null);
+	    List<InfoDepartment> departments = (List<InfoDepartment>) ServiceUtils.executeService("ReadAllDepartments");
 	    request.setAttribute("departments", departments);
 	}
 
@@ -198,22 +192,17 @@ public class FindPersonAction extends FenixDispatchAction {
 	    result = (CollectionPager) ServiceManagerServiceFactory.executeService( "SearchPerson", args);
 
 	} catch (FenixServiceException e) {
-	    errors.add("impossibleFindPerson", new ActionError(e.getMessage()));
-	    saveErrors(request, errors);
+	    addErrorMessage(request, "impossibleFindPerson", e.getMessage());
 	    return preparePerson(mapping, actionForm, request, response);
 	}
 
 	if (result == null) {
-	    errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
+	    addErrorMessage(request, "impossibleFindPerson", "error.manager.implossible.findPerson");
+	    return preparePerson(mapping, actionForm, request, response);
 	}
 
 	if (result.getCollection().isEmpty()) {
-	    errors.add("impossibleFindPerson", new ActionError("error.manager.implossible.findPerson"));
-	    saveErrors(request, errors);
-
-	}
-	if (!errors.isEmpty()) {
-	    saveErrors(request, errors);
+	    addErrorMessage(request, "impossibleFindPerson", "error.manager.implossible.findPerson");
 	    return preparePerson(mapping, actionForm, request, response);
 	}
 
@@ -265,22 +254,5 @@ public class FindPersonAction extends FenixDispatchAction {
 	}
 	return Boolean.FALSE;
 
-    }
-
-    private List getPageList(Integer totalPersons) {
-	List pagesList = new ArrayList();
-	int numberOfPages;
-
-	if ((totalPersons % SessionConstants.LIMIT_FINDED_PERSONS) != 0) {
-	    numberOfPages = (totalPersons / SessionConstants.LIMIT_FINDED_PERSONS) + 1;
-	} else {
-	    numberOfPages = (totalPersons / SessionConstants.LIMIT_FINDED_PERSONS);
-	}
-
-	for (int i = 1; i <= numberOfPages; i++) {
-	    pagesList.add(i);
-	}
-
-	return pagesList;
     }
 }
