@@ -611,8 +611,8 @@ public class Assiduousness extends Assiduousness_Base {
 	for (Schedule schedule : schedules) {
 	    averageWorkTimeDuration = averageWorkTimeDuration.plus(schedule.getAverageWorkPeriodDuration());
 	}
-	averageWorkTimeDuration = new Duration(averageWorkTimeDuration.getMillis() / schedules.size());
-	return averageWorkTimeDuration;
+//	averageWorkTimeDuration = new Duration(averageWorkTimeDuration.getMillis() / schedules.size());
+	return schedules.isEmpty() ? new Duration(0) : new Duration(averageWorkTimeDuration.getMillis() / schedules.size());
     }
 
     public int getLeavesNumberOfWorkDays(LocalDate beginDate, LocalDate endDate, String justificationAcronym) {
