@@ -822,13 +822,6 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	addErrorMessage(request, ActionMessages.GLOBAL_MESSAGE, key);
     }
 
-    private void addErrorMessage(HttpServletRequest request, String property, String key, Object... args) {
-	ActionMessages messages = getErrors(request);
-	messages.add(property, new ActionMessage(key, args));
-
-	saveErrors(request, messages);
-    }
-
     public ActionForward editSectionPermissions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	selectSection(request);

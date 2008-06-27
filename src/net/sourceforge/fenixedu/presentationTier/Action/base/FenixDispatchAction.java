@@ -398,4 +398,10 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	}
     }
 
+    protected void addErrorMessage(HttpServletRequest request, String property, String key, Object... args) {
+	ActionMessages messages = getErrors(request);
+	messages.add(property, new ActionMessage(key, args));
+
+	saveErrors(request, messages);
+    }
 }

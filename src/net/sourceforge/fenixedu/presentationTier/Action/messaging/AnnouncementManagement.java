@@ -355,12 +355,6 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	return fileContent;
     }
 
-    private void addErrorMessage(HttpServletRequest request, String property, String key, Object... args) {
-	ActionMessages messages = getErrors(request);
-	messages.add(property, new ActionMessage(key, args));
-
-	saveErrors(request, messages);
-    }
 
     /**
      * Method to override in action specific context, to allow specification of
