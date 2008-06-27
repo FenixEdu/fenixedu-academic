@@ -22,30 +22,30 @@
 
 <bean:define id="processId" name="process" property="idInternal" />
 
-<fr:form action='<%="/caseHandlingSecondCycleIndividualCandidacyProcess.do?processId=" + processId.toString() %>'>
+<fr:form action='<%="/caseHandlingDegreeCandidacyForGraduatedPersonIndividualProcess.do?processId=" + processId.toString() %>'>
  	<html:hidden property="method" value="executeEditCandidacyInformation" />
 
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 	
 	<fr:edit id="individualCandidacyProcessBean.candidacyDate" 
 		 name="individualCandidacyProcessBean"
-		 schema="SecondCycleIndividualCandidacyProcessBean.candidacyDate">
+		 schema="DegreeCandidacyForGraduatedPersonIndividualProcessBean.candidacyDate">
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
-		<fr:destination name="invalid" path="<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=executeEditCandidacyInformationInvalid&amp;processId=" + processId.toString() %>" />
+		<fr:destination name="invalid" path="<%= "/caseHandlingDegreeCandidacyForGraduatedPersonIndividualProcess.do?method=executeEditCandidacyInformationInvalid&amp;processId=" + processId.toString() %>" />
 	</fr:edit>
 
 	<h3 class="mtop15 mbottom025"><bean:message key="label.selectDegree" bundle="APPLICATION_RESOURCES"/>:</h3>
 	<fr:edit id="individualCandidacyProcessBean.degree"
 		name="individualCandidacyProcessBean"
-		schema="SecondCycleIndividualCandidacyProcessBean.selectDegree.manage">
+		schema="DegreeCandidacyForGraduatedPersonIndividualProcessBean.selectDegree.manage">
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
-		<fr:destination name="invalid" path="<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=executeEditCandidacyInformationInvalid&amp;processId=" + processId.toString() %>" />
+		<fr:destination name="invalid" path="<%= "/caseHandlingDegreeCandidacyForGraduatedPersonIndividualProcess.do?method=executeEditCandidacyInformationInvalid&amp;processId=" + processId.toString() %>" />
 	</fr:edit>
 		
 	<h3 class="mtop15 mbottom025"><bean:message key="label.candidacy.precedentDegreeInformation" bundle="APPLICATION_RESOURCES"/>:</h3>
@@ -57,23 +57,12 @@
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	    	<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
-		<fr:destination name="invalid" path="<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=executeEditCandidacyInformationInvalid&amp;processId=" + processId.toString() %>" />
+		<fr:destination name="invalid" path="<%= "/caseHandlingDegreeCandidacyForGraduatedPersonIndividualProcess.do?method=executeEditCandidacyInformationInvalid&amp;processId=" + processId.toString() %>" />
 	</fr:edit>
 	<logic:equal name="individualCandidacyProcessBean" property="externalPrecedentDegreeType" value="true">
 		<em><bean:message key="label.candidacy.precedentDegree.externalPrecedentDegreeType" bundle="APPLICATION_RESOURCES"/></em> (<html:link action="/externalUnits.do?method=prepareSearch" target="_blank"><bean:message key="label.externalUnits" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link>)
 	</logic:equal>
 
-	<h3 class="mtop15 mbottom025"><bean:message key="label.candidacy.information" bundle="APPLICATION_RESOURCES"/>:</h3>
-	<fr:edit id="individualCandidacyProcessBean.optionalInformation"
-		name="individualCandidacyProcessBean"
-		schema="SecondCycleIndividualCandidacyProcessBean.optionalInformation">
-		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
-		</fr:layout>
-		<fr:destination name="invalid" path="<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=executeEditCandidacyInformationInvalid&amp;processId=" + processId.toString() %>" />
-	</fr:edit>
-		
 	<html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES" /></html:submit>
 	<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>
 

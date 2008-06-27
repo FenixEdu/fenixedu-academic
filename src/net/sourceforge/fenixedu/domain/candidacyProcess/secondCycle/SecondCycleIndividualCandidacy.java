@@ -56,7 +56,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     }
 
     private boolean personHasDegree(final Person person, final Degree degree) {
-	return person.hasStudent() ? person.getStudent().hasRegistrationFor(degree) : false;
+	return person.hasStudent() && person.getStudent().hasRegistrationFor(degree);
     }
 
     @Override

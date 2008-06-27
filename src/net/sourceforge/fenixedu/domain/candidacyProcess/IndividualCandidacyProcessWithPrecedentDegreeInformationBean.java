@@ -78,6 +78,11 @@ abstract public class IndividualCandidacyProcessWithPrecedentDegreeInformationBe
 	return studentCurricularPlans;
     }
 
+    /**
+     * If cycle is not concluded, this represents the minimum number of ects
+     * that student must have to candidate in order to conclude the degree with
+     * current semester
+     */
     protected double getMinimumEcts(final CycleType cycleType) {
 	return cycleType.getDefaultEcts();
     }

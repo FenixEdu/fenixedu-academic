@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.EntryPhase;
 
 import org.joda.time.DateTime;
@@ -121,19 +122,48 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     protected void createInstitutionPrecedentDegreeInformation(final StudentCurricularPlan studentCurricularPlan) {
 	if (studentCurricularPlan.isBolonhaDegree()) {
-	    new InstitutionPrecedentDegreeInformation(this, studentCurricularPlan, studentCurricularPlan
-		    .getLastOrderedCycleCurriculumGroup().getCycleType());
+	    final CycleType cycleType;
+	    if (studentCurricularPlan.hasConcludedAnyInternalCycle()) {
+		cycleType = studentCurricularPlan.getLastConcludedCycleCurriculumGroup().getCycleType();
+	    } else {
+		cycleType = studentCurricularPlan.getLastOrderedCycleCurriculumGroup().getCycleType();
+	    }
+	    new InstitutionPrecedentDegreeInformation(this, studentCurricularPlan, cycleType);
 	} else {
 	    new InstitutionPrecedentDegreeInformation(this, studentCurricularPlan);
 	}
     }
 
-    public Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
-	    final CycleType cycleType, final Ingression ingression) {
-	final Registration registration = new Registration(person, degreeCurricularPlan, cycleType);
+    public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
+	    final Ingression ingression) {
+
+	if (hasRegistration()) {
+	    throw new DomainException("error.IndividualCandidacy.person.with.registration", degreeCurricularPlan
+		    .getPresentationName());
+	}
+
+	if (hasRegistration(degreeCurricularPlan)) {
+	    final Registration registration = getStudent().getActiveRegistrationFor(degreeCurricularPlan);
+	    if (registration.getStartDate().isBefore(getCandidacyDate())) {
+		throw new DomainException("error.IndividualCandidacy.person.with.registration.previous.candidacy",
+			degreeCurricularPlan.getPresentationName());
+	    }
+	    setRegistration(registration);
+	    return registration;
+	}
+
+	final Registration registration = new Registration(getPerson(), degreeCurricularPlan, cycleType);
 	registration.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
 	registration.setIngression(ingression);
 	setRegistration(registration);
 	return registration;
+    }
+
+    private boolean hasRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
+	return getPerson().hasStudent() && getPerson().getStudent().hasRegistrationFor(degreeCurricularPlan);
+    }
+
+    private Student getStudent() {
+	return getPerson().hasStudent() ? getPerson().getStudent() : null;
     }
 }

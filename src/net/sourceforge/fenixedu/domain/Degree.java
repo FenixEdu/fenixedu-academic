@@ -40,14 +40,14 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.MarkType;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
 import pt.utl.ist.fenix.tools.util.StringAppender;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Degree extends Degree_Base implements Comparable<Degree> {
 
@@ -207,12 +207,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    ois.delete();
 	}
 
-	//        Iterator<Delegate> delegatesIterator = getDelegatesIterator();
-	//        while (delegatesIterator.hasNext()) {
-	//            Delegate delegate = delegatesIterator.next();
-	//            delegatesIterator.remove();          
-	//            delegate.delete();
-	//        }
+	// Iterator<Delegate> delegatesIterator = getDelegatesIterator();
+	// while (delegatesIterator.hasNext()) {
+	// Delegate delegate = delegatesIterator.next();
+	// delegatesIterator.remove();
+	// delegate.delete();
+	// }
 
 	Iterator<DegreeInfo> degreeInfosIterator = getDegreeInfosIterator();
 	while (degreeInfosIterator.hasNext()) {
@@ -466,10 +466,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     final public String getPresentationName() {
-	final ResourceBundle enumResourceBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language
-		.getLocale());
-	final ResourceBundle appResourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language
-		.getLocale());
+	final ResourceBundle enumResourceBundle = ResourceBundle
+		.getBundle("resources.EnumerationResources", Language.getLocale());
+	final ResourceBundle appResourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 	return enumResourceBundle.getString(getDegreeType().toString()) + " " + appResourceBundle.getString("label.in") + " "
 		+ getNome();
     }
@@ -581,6 +580,23 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	}
 
 	return result;
+    }
+
+    public DegreeCurricularPlan getLastDegreeCurricularPlan() {
+	DegreeCurricularPlan result = null;
+	ExecutionDegree mostRecentExecutionDegree = null;
+
+	for (final DegreeCurricularPlan degreeCurricularPlan : getActiveDegreeCurricularPlans()) {
+	    final ExecutionDegree executionDegree = degreeCurricularPlan.getMostRecentExecutionDegree();
+
+	    if (executionDegree == null) {
+		result = degreeCurricularPlan;
+	    } else if (mostRecentExecutionDegree == null || mostRecentExecutionDegree.isBefore(executionDegree)) {
+		mostRecentExecutionDegree = executionDegree;
+	    }
+	}
+
+	return (mostRecentExecutionDegree == null) ? result : mostRecentExecutionDegree.getDegreeCurricularPlan();
     }
 
     // -------------------------------------------------------------
@@ -814,7 +830,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
      * of the execution year.
      * 
      * @param person
-     *            the person to check
+     *                the person to check
      * @return <code>true</code> if the person was a coordinator for a certain
      *         execution degree
      */
@@ -998,7 +1014,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return hasAnyThesis();
     }
 
-    /* 
+    /*
      * DELEGATE ELECTIONS
      */
     public List<YearDelegateElection> getYearDelegateElectionsGivenExecutionYear(ExecutionYear executionYear) {
@@ -1174,7 +1190,13 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    for (Registration registration : getActiveRegistrations()) {
 		final int studentCurricularYear = registration.getCurricularYear(executionYear);
 
-		if (studentCurricularYear >= 4 && studentCurricularYear <= 5) { //TODO: how to make this not hardcoded?
+		if (studentCurricularYear >= 4 && studentCurricularYear <= 5) { // TODO:
+		    // how
+		    // to
+		    // make
+		    // this
+		    // not
+		    // hardcoded?
 		    result.add(registration.getStudent());
 		}
 	    }
@@ -1191,7 +1213,13 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    for (Registration registration : getActiveRegistrations()) {
 		final int studentCurricularYear = registration.getCurricularYear(executionYear);
 
-		if (studentCurricularYear >= 1 && studentCurricularYear <= 3) { //TODO: how to make this not hardcoded?
+		if (studentCurricularYear >= 1 && studentCurricularYear <= 3) { // TODO:
+		    // how
+		    // to
+		    // make
+		    // this
+		    // not
+		    // hardcoded?
 		    result.add(registration.getStudent());
 		}
 	    }
@@ -1224,7 +1252,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public Set<CurricularCourse> getFirstCycleCurricularCourses(ExecutionYear executionYear) {
 	Set<CurricularCourse> result = new HashSet<CurricularCourse>();
 	for (DegreeCurricularPlan dcp : getActiveDegreeCurricularPlans()) {
-	    for (int i = 1; i <= 3; i++) { //TODO: how to make this not hardcoded?
+	    for (int i = 1; i <= 3; i++) { // TODO: how to make this not
+		// hardcoded?
 		result.addAll(dcp.getCurricularCoursesByExecutionYearAndCurricularYear(executionYear, i));
 	    }
 	}
@@ -1237,7 +1266,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public Set<CurricularCourse> getSecondCycleCurricularCourses(ExecutionYear executionYear) {
 	Set<CurricularCourse> result = new HashSet<CurricularCourse>();
 	for (DegreeCurricularPlan dcp : getActiveDegreeCurricularPlans()) {
-	    for (int i = 4; i <= 5; i++) { //TODO: how to make this not hardcoded?
+	    for (int i = 4; i <= 5; i++) { // TODO: how to make this not
+		// hardcoded?
 		result.addAll(dcp.getCurricularCoursesByExecutionYearAndCurricularYear(executionYear, i));
 	    }
 	}
@@ -1256,7 +1286,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     /**
-     * @return <code>true</code> if any of the thesis associated with this degree is not final
+     * @return <code>true</code> if any of the thesis associated with this
+     *         degree is not final
      */
     public boolean hasPendingThesis() {
 	for (Thesis thesis : getThesis()) {

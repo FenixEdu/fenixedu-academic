@@ -140,7 +140,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    throw new DomainException("degreeCurricularPlan.minimalYearForOptionalCourses.not.null");
 	}
 
-	this.setInitialDateYearMonthDay(inicialDate != null ? new YearMonthDay(inicialDate) : null);
+	this.setInitialDateYearMonthDay(inicialDate != null ? new YearMonthDay(inicialDate) : new YearMonthDay());
 	this.setEndDateYearMonthDay(endDate != null ? new YearMonthDay(endDate) : null);
 	this.setDegreeDuration(degreeDuration);
 	this.setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);

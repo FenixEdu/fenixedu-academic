@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.over23;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,12 +26,12 @@ public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyPro
 
     public Over23IndividualCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
-	setSelectedDegrees(new ArrayList<Degree>());
+	setSelectedDegrees(Collections.EMPTY_LIST);
     }
 
     public Over23IndividualCandidacyProcessBean(Over23IndividualCandidacyProcess process) {
-	this();
 	setCandidacyDate(process.getCandidacyDate());
+	setSelectedDegrees(Collections.EMPTY_LIST);
 	addDegrees(process.getSelectedDegreesSortedByOrder());
 	setDisabilities(process.getDisabilities());
 	setEducation(process.getEducation());

@@ -281,12 +281,12 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	}
 
 	private void createRegistration(final SecondCycleIndividualCandidacyProcess candidacyProcess) {
-	    candidacyProcess.getCandidacy().createRegistration(candidacyProcess.getCandidacyPerson(),
-		    getDegreeCurricularPlan(candidacyProcess), CycleType.SECOND_CYCLE, Ingression.CIA2C);
+	    candidacyProcess.getCandidacy().createRegistration(getDegreeCurricularPlan(candidacyProcess), CycleType.SECOND_CYCLE,
+		    Ingression.CIA2C);
 	}
 
 	private DegreeCurricularPlan getDegreeCurricularPlan(final SecondCycleIndividualCandidacyProcess candidacyProcess) {
-	    return candidacyProcess.getCandidacySelectedDegree().getMostRecentDegreeCurricularPlan();
+	    return candidacyProcess.getCandidacySelectedDegree().getLastDegreeCurricularPlan();
 	}
     }
 }

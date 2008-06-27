@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy.secondCycle;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,6 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean;
@@ -26,8 +25,6 @@ import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 @Mapping(path = "/caseHandlingSecondCycleIndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
 @Forwards( { @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
@@ -78,43 +75,9 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
     }
 
-    public ActionForward fillCandidacyInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-	return mapping.findForward("fill-candidacy-information");
-    }
-
-    public ActionForward fillCandidacyInformationInvalid(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-	return mapping.findForward("fill-candidacy-information");
-    }
-
-    public ActionForward fillCandidacyInformationPostback(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	final SecondCycleIndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
-	RenderUtils.invalidateViewState();
-
-	if (bean.hasPrecedentDegreeType()) {
-	    if (bean.isExternalPrecedentDegreeType()) {
-		bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean());
-	    } else if (bean.hasPrecedentStudentCurricularPlan()) {
-		createCandidacyPrecedentDegreeInformation(bean, bean.getPrecedentStudentCurricularPlan());
-	    } else {
-		final List<StudentCurricularPlan> scps = bean.getPrecedentStudentCurricularPlans();
-		if (scps.size() == 1) {
-		    createCandidacyPrecedentDegreeInformation(bean, scps.get(0));
-		    bean.setPrecedentStudentCurricularPlan(scps.get(0));
-		}
-	    }
-	}
-
-	return mapping.findForward("fill-candidacy-information");
-    }
-
-    private void createCandidacyPrecedentDegreeInformation(final SecondCycleIndividualCandidacyProcessBean bean,
+    @Override
+    protected void createCandidacyPrecedentDegreeInformation(
+	    final IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean,
 	    final StudentCurricularPlan studentCurricularPlan) {
 	if (!studentCurricularPlan.isBolonhaDegree()) {
 	    bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean(studentCurricularPlan));
@@ -122,20 +85,6 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	    bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean(studentCurricularPlan,
 		    CycleType.FIRST_CYCLE));
 	}
-    }
-
-    public ActionForward fillCandidacyInformationStudentCurricularPlanPostback(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	final SecondCycleIndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
-
-	if (bean.hasPrecedentStudentCurricularPlan()) {
-	    createCandidacyPrecedentDegreeInformation(bean, bean.getPrecedentStudentCurricularPlan());
-	}
-
-	RenderUtils.invalidateViewState();
-	return mapping.findForward("fill-candidacy-information");
     }
 
     public ActionForward prepareExecuteEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,
@@ -168,11 +117,8 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 
     public ActionForward prepareExecuteEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	final SecondCycleIndividualCandidacyProcessBean bean = new SecondCycleIndividualCandidacyProcessBean(getProcess(request));
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
-	final PersonBean personBean = new PersonBean();
-	personBean.setPerson(getProcess(request).getCandidacyPerson());
-	bean.setPersonBean(personBean);
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), new SecondCycleIndividualCandidacyProcessBean(
+		getProcess(request)));
 	return mapping.findForward("edit-candidacy-information");
     }
 
@@ -239,6 +185,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	    executeActivity(getProcess(request), "CreateRegistration");
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute("degree", getProcess(request).getCandidacySelectedDegree());
 	    return mapping.findForward("create-registration");
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);

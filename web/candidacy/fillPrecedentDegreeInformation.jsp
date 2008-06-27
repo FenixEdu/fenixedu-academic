@@ -10,8 +10,8 @@ This page must be included using <%@ include file="/candidacy/fillPrecedentDegre
 To use this jsp your action must implement the following methods:
 
 - fillCandidacyInformationInvalid: when validation errors occur
-- fillCandidacyInformationPostback: when selecting between 'Internal' and 'External' degree information
-- fillCandidacyInformationStudentCurricularPlanPostback: having more than one precedent SCP and when choosing one
+- fillPrecedentInformationPostback: when selecting between 'Internal' and 'External' degree information
+- fillPrecedentInformationStudentCurricularPlanPostback: having more than one precedent SCP and when choosing one
 
 --%>
 
@@ -32,7 +32,7 @@ To use this jsp your action must implement the following methods:
    		    	<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= "/caseHandling" + processName + ".do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
-			<fr:destination name="precedentDegreeTypePostback" path='<%= "/caseHandling" + processName + ".do?method=fillCandidacyInformationPostback&amp;parentProcessId=" + parentProcessId.toString() %>' />
+			<fr:destination name="precedentDegreeTypePostback" path='<%= "/caseHandling" + processName + ".do?method=fillPrecedentInformationPostback&amp;parentProcessId=" + parentProcessId.toString() %>' />
 		</fr:edit>
 		<logic:equal name="individualCandidacyProcessBean" property="externalPrecedentDegreeType" value="true">
 			<em><bean:message key="label.candidacy.precedentDegree.externalPrecedentDegreeType" bundle="APPLICATION_RESOURCES"/></em> (<html:link action="/externalUnits.do?method=prepareSearch" target="_blank"><bean:message key="label.externalUnits" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link>)
@@ -51,7 +51,7 @@ To use this jsp your action must implement the following methods:
    			    	<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 				</fr:layout>
 				<fr:destination name="invalid" path='<%= "/caseHandling" + processName + ".do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
-				<fr:destination name="precedentDegreeTypePostback" path='<%= "/caseHandling" + processName + ".do?method=fillCandidacyInformationPostback&amp;parentProcessId=" + parentProcessId.toString() %>' />
+				<fr:destination name="precedentDegreeTypePostback" path='<%= "/caseHandling" + processName + ".do?method=fillPrecedentInformationPostback&amp;parentProcessId=" + parentProcessId.toString() %>' />
 			</fr:edit>
 			<strong><em><bean:message key="label.candidacy.invalid.precedentDegree" bundle="APPLICATION_RESOURCES"/></em></strong>
 		</logic:equal>
@@ -66,8 +66,8 @@ To use this jsp your action must implement the following methods:
    			    	<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 				</fr:layout>
 				<fr:destination name="invalid" path='<%= "/caseHandling" + processName + ".do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
-				<fr:destination name="precedentDegreeTypePostback" path='<%= "/caseHandling" + processName + ".do?method=fillCandidacyInformationPostback&amp;parentProcessId=" + parentProcessId.toString() %>' />
-				<fr:destination name="precedentStudentCurricularPlanPostback" path='<%= "/caseHandling" + processName + ".do?method=fillCandidacyInformationStudentCurricularPlanPostback&amp;parentProcessId=" + parentProcessId.toString() %>' />
+				<fr:destination name="precedentDegreeTypePostback" path='<%= "/caseHandling" + processName + ".do?method=fillPrecedentInformationPostback&amp;parentProcessId=" + parentProcessId.toString() %>' />
+				<fr:destination name="precedentStudentCurricularPlanPostback" path='<%= "/caseHandling" + processName + ".do?method=fillPrecedentInformationStudentCurricularPlanPostback&amp;parentProcessId=" + parentProcessId.toString() %>' />
 			</fr:edit>
 		</logic:greaterThan>
 		
@@ -84,6 +84,6 @@ To use this jsp your action must implement the following methods:
   		    	<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
 		<fr:destination name="invalid" path='<%= "/caseHandling" + processName +".do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
-		<fr:destination name="precedentDegreeTypePostback" path='<%= "/caseHandling" + processName + ".do?method=fillCandidacyInformationPostback&amp;parentProcessId=" + parentProcessId.toString() %>' />
+		<fr:destination name="precedentDegreeTypePostback" path='<%= "/caseHandling" + processName + ".do?method=fillPrecedentInformationPostback&amp;parentProcessId=" + parentProcessId.toString() %>' />
 	</fr:edit>
 </logic:empty>

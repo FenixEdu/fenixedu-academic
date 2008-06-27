@@ -74,19 +74,6 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
     }
 
-    public ActionForward fillCandidacyInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final Over23IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
-	return mapping.findForward("fill-candidacy-information");
-    }
-
-    public ActionForward fillCandidacyInformationInvalid(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-	return mapping.findForward("fill-candidacy-information");
-    }
-
     public ActionForward addDegreeToCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return addDegreeToCandidacy(mapping, actionForm, request, response, "fill-candidacy-information");
@@ -233,6 +220,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	    executeActivity(getProcess(request), "CreateRegistration");
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute("degree", getProcess(request).getAcceptedDegree());
 	    return mapping.findForward("create-registration");
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);

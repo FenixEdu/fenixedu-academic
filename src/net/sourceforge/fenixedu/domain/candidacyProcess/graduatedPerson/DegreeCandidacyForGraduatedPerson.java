@@ -2,11 +2,8 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.InstitutionPrecedentDegreeInformation;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.LocalDate;
@@ -56,22 +53,6 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	return person.hasStudent() ? person.getStudent().hasRegistrationFor(selectedDegree) : false;
     }
 
-    @Override
-    protected void createInstitutionPrecedentDegreeInformation(final StudentCurricularPlan studentCurricularPlan) {
-	if (studentCurricularPlan.isBolonhaDegree()) {
-	    final CycleType cycleType;
-	    if (studentCurricularPlan.hasConcludedAnyInternalCycle()) {
-		cycleType = studentCurricularPlan.getLastConcludedCycleCurriculumGroup().getCycleType();
-	    } else {
-		cycleType = studentCurricularPlan.getLastOrderedCycleCurriculumGroup().getCycleType();
-	    }
-	    new InstitutionPrecedentDegreeInformation(this, studentCurricularPlan, cycleType);
-
-	} else {
-	    new InstitutionPrecedentDegreeInformation(this, studentCurricularPlan);
-	}
-    }
-
     private void createDebt() {
 	new DegreeCandidacyForGraduatedPersonEvent(this, getPerson());
     }
@@ -79,6 +60,11 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
     @Override
     public DegreeCandidacyForGraduatedPersonIndividualProcess getCandidacyProcess() {
 	return (DegreeCandidacyForGraduatedPersonIndividualProcess) super.getCandidacyProcess();
+    }
+
+    public void editCandidacyInformation(DegreeCandidacyForGraduatedPersonIndividualProcessBean bean) {
+	// TODO Auto-generated method stub
+	
     }
 
 }

@@ -27,50 +27,36 @@
 
 <bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
 
-<fr:form action='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?parentProcessId=" + parentProcessId.toString() %>'>
-
+<fr:form action='<%= "/caseHandlingDegreeCandidacyForGraduatedPersonIndividualProcess.do?parentProcessId=" + parentProcessId.toString() %>'>
  	<html:hidden property="method" value="createNewProcess" />
- 	
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 
 	<logic:notEmpty name="individualCandidacyProcessBean" property="candidacyProcess">
 	
 		<fr:edit id="individualCandidacyProcessBean.candidacyDate" 
 			 name="individualCandidacyProcessBean"
-			 schema="SecondCycleIndividualCandidacyProcessBean.candidacyDate">
+			 schema="DegreeCandidacyForGraduatedPersonIndividualProcessBean.candidacyDate">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
-			<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
+			<fr:destination name="invalid" path='<%= "/caseHandlingDegreeCandidacyForGraduatedPersonIndividualProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
 		</fr:edit>
 	
 		<h3 class="mtop15 mbottom025"><bean:message key="label.selectDegree" bundle="APPLICATION_RESOURCES"/>:</h3>
 		<fr:edit id="individualCandidacyProcessBean.degree"
 			name="individualCandidacyProcessBean"
-			schema="SecondCycleIndividualCandidacyProcessBean.selectDegree.manage">
+			schema="DegreeCandidacyForGraduatedPersonIndividualProcessBean.selectDegree.manage">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
-			<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
+			<fr:destination name="invalid" path='<%= "/caseHandlingDegreeCandidacyForGraduatedPersonIndividualProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
 		</fr:edit>
 		
 		<%-- Candidacy PrecedentDegreeInformation page --%>
 		<%@ include file="/candidacy/fillPrecedentDegreeInformation.jsp" %>	
 		<%-- --%>
-
-		<h3 class="mtop15 mbottom025"><bean:message key="label.candidacy.information" bundle="APPLICATION_RESOURCES"/>:</h3>
-		<fr:edit id="individualCandidacyProcessBean.optionalInformation"
-			name="individualCandidacyProcessBean"
-			schema="SecondCycleIndividualCandidacyProcessBean.optionalInformation">
-			<fr:layout name="tabular-editable">
-				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
-			</fr:layout>
-			<fr:destination name="invalid" path='<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
-		</fr:edit>
-			
 	</logic:notEmpty>
 	
 	<html:submit><bean:message key="label.create" bundle="APPLICATION_RESOURCES" /></html:submit>

@@ -247,12 +247,12 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	}
 
 	private void createRegistration(final Over23IndividualCandidacyProcess candidacyProcess) {
-	    candidacyProcess.getCandidacy().createRegistration(candidacyProcess.getCandidacyPerson(),
-		    getDegreeCurricularPlan(candidacyProcess), CycleType.FIRST_CYCLE, Ingression.CM23);
+	    candidacyProcess.getCandidacy().createRegistration(getDegreeCurricularPlan(candidacyProcess), CycleType.FIRST_CYCLE,
+		    Ingression.CM23);
 	}
 
 	private DegreeCurricularPlan getDegreeCurricularPlan(final Over23IndividualCandidacyProcess candidacyProcess) {
-	    return candidacyProcess.getAcceptedDegree().getMostRecentDegreeCurricularPlan();
+	    return candidacyProcess.getAcceptedDegree().getLastDegreeCurricularPlan();
 	}
     }
 }

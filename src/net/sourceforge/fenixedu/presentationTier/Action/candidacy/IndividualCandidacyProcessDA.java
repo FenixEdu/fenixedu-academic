@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,9 +12,13 @@ import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
@@ -23,6 +28,33 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
+/**
+ * INFO: when extending this class pay attention to the following aspects
+ * 
+ * Common methods to all candidacies: SearchPersonForCandidacy (used to
+ * select/create person for candidacy), FillCandidacyInformation (forward to
+ * candidacy page), CreateNewProcess (used to create a new process),
+ * CancelCandidacy (must exist an activity with this name in
+ * IndividualCandidacyProcess)
+ * 
+ * <p>
+ * Common methods to candidacies with precedent degree information:
+ * FillPrecedentInformationPostback (used to select between internal and
+ * external information), FillPrecedentInformationStudentCurricularPlanPostback
+ * (used to set choosed precedent studentCurricularPlan)
+ * 
+ * <p>
+ * Must configure the following forwards: intro (common value:
+ * /candidacy/mainCandidacyProcess.jsp), list-allowed-activities (common value:
+ * /candidacy/listIndividualCandidacyActivities.jsp), prepare-create-new-process
+ * (common value: /candidacy/selectPersonForCandidacy.jsp),
+ * fill-personal-information (common value:
+ * /candidacy/fillPersonalInformation.jsp), fill-candidacy-information (jsp used
+ * by each candidacy), cancel-candidacy (common value:
+ * /candidacy/cancelCandidacy.jsp)
+ * 
+ */
 
 public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchAction {
 
@@ -67,6 +99,9 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	return (IndividualCandidacyProcess) super.getProcess(request);
     }
 
+    /**
+     * Set context information used by intro page
+     */
     protected void setMainCandidacyProcessInformation(final HttpServletRequest request, final CandidacyProcess process) {
 	request.setAttribute("process", process);
 	request.setAttribute("processName", getParentProcessType().getSimpleName());
@@ -194,6 +229,77 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	    HttpServletResponse response) {
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	return mapping.findForward("fill-personal-information");
+    }
+
+    public ActionForward fillCandidacyInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	return mapping.findForward("fill-candidacy-information");
+    }
+
+    public ActionForward fillCandidacyInformationInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	return mapping.findForward("fill-candidacy-information");
+    }
+
+    public ActionForward fillPrecedentInformationPostback(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	// assuming that when using this method each individual candidacy bean
+	// extends IndividualCandidacyProcessWithPrecedentDegreeInformationBean
+	final IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean = (IndividualCandidacyProcessWithPrecedentDegreeInformationBean) getIndividualCandidacyProcessBean();
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+	RenderUtils.invalidateViewState();
+
+	if (bean.hasPrecedentDegreeType()) {
+	    if (bean.isExternalPrecedentDegreeType()) {
+		bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean());
+	    } else if (bean.hasPrecedentStudentCurricularPlan()) {
+		createCandidacyPrecedentDegreeInformation(bean, bean.getPrecedentStudentCurricularPlan());
+	    } else {
+		final List<StudentCurricularPlan> scps = bean.getPrecedentStudentCurricularPlans();
+		if (scps.size() == 1) {
+		    createCandidacyPrecedentDegreeInformation(bean, scps.get(0));
+		    bean.setPrecedentStudentCurricularPlan(scps.get(0));
+		}
+	    }
+	}
+
+	return mapping.findForward("fill-candidacy-information");
+    }
+
+    protected void createCandidacyPrecedentDegreeInformation(
+	    final IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean,
+	    final StudentCurricularPlan studentCurricularPlan) {
+
+	if (studentCurricularPlan.isBolonhaDegree()) {
+	    final CycleType cycleType;
+	    if (studentCurricularPlan.hasConcludedAnyInternalCycle()) {
+		cycleType = studentCurricularPlan.getLastConcludedCycleCurriculumGroup().getCycleType();
+	    } else {
+		cycleType = studentCurricularPlan.getLastOrderedCycleCurriculumGroup().getCycleType();
+	    }
+	    bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean(studentCurricularPlan, cycleType));
+	} else {
+	    bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean(studentCurricularPlan));
+	}
+    }
+
+    public ActionForward fillPrecedentInformationStudentCurricularPlanPostback(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	// assuming that when using this method each individual candidacy bean
+	// extends IndividualCandidacyProcessWithPrecedentDegreeInformationBean
+	final IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean = (IndividualCandidacyProcessWithPrecedentDegreeInformationBean) getIndividualCandidacyProcessBean();
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
+	if (bean.hasPrecedentStudentCurricularPlan()) {
+	    createCandidacyPrecedentDegreeInformation(bean, bean.getPrecedentStudentCurricularPlan());
+	}
+
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("fill-candidacy-information");
     }
 
     @Override
