@@ -116,13 +116,9 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	setInterviewGrade(bean.getInterviewGrade());
 	setSeriesCandidacyGrade(bean.getSeriesGrade());
 	setNotes(bean.getNotes());
-	if (isStateValid(bean.getState())) {
+	if (isCandidacyResultStateValid(bean.getState())) {
 	    setState(bean.getState());
 	}
-    }
-
-    private boolean isStateValid(final IndividualCandidacyState state) {
-	return state == IndividualCandidacyState.ACCEPTED || state == IndividualCandidacyState.REJECTED;
     }
 
     private void checkParameters(final SecondCycleIndividualCandidacyResultBean bean) {

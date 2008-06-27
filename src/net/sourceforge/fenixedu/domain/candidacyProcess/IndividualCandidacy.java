@@ -101,6 +101,10 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     public boolean isFor(final ExecutionInterval executionInterval) {
 	return hasCandidacyProcess() && getCandidacyProcess().isFor(executionInterval);
     }
+    
+    protected boolean isCandidacyResultStateValid(final IndividualCandidacyState state) {
+	return state == IndividualCandidacyState.ACCEPTED || state == IndividualCandidacyState.REJECTED;
+    }
 
     protected void createPrecedentDegreeInformation(final IndividualCandidacyProcessWithPrecedentDegreeInformationBean processBean) {
 	final CandidacyPrecedentDegreeInformationBean bean = processBean.getPrecedentDegreeInformation();

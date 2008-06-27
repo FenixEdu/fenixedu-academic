@@ -49,6 +49,10 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 		    .getCandidacyExecutionInterval().getName());
 	}
 
+	checkDegrees(degrees);
+    }
+
+    private void checkDegrees(final List<Degree> degrees) {
 	if (degrees == null || degrees.isEmpty()) {
 	    throw new DomainException("error.Over23IndividualCandidacy.invalid.degrees");
 	}
@@ -84,7 +88,10 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 
     void editCandidacyInformation(final LocalDate candidacyDate, final List<Degree> degrees, final String disabilities,
 	    final String education, final String languages) {
-	checkParameters(getPerson(), getCandidacyProcess(), candidacyDate, degrees);
+
+	checkParameters(getPerson(), getCandidacyProcess(), candidacyDate);
+	checkDegrees(degrees);
+
 	setCandidacyDate(candidacyDate);
 	saveChoosedDegrees(degrees);
 	setDisabilities(disabilities);
@@ -115,13 +122,9 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
     void editCandidacyResult(final IndividualCandidacyState state, final Degree acceptedDegree) {
 	checkParameters(state, acceptedDegree);
 	setAcceptedDegree(acceptedDegree);
-	if (isStateValid(state)) {
+	if (isCandidacyResultStateValid(state)) {
 	    setState(state);
 	}
-    }
-
-    private boolean isStateValid(final IndividualCandidacyState state) {
-	return state == IndividualCandidacyState.ACCEPTED || state == IndividualCandidacyState.REJECTED;
     }
 
     private void checkParameters(final IndividualCandidacyState state, final Degree acceptedDegree) {

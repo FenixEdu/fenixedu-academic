@@ -62,9 +62,28 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	return (DegreeCandidacyForGraduatedPersonIndividualProcess) super.getCandidacyProcess();
     }
 
-    public void editCandidacyInformation(DegreeCandidacyForGraduatedPersonIndividualProcessBean bean) {
-	// TODO Auto-generated method stub
+    public void editCandidacyInformation(final DegreeCandidacyForGraduatedPersonIndividualProcessBean bean) {
+	checkParameters(bean.getCandidacyDate(), bean.getSelectedDegree(), bean.getPrecedentDegreeInformation());
+
+	setCandidacyDate(bean.getCandidacyDate());
+	setSelectedDegree(bean.getSelectedDegree());
 	
+	if (getPrecedentDegreeInformation().isExternal()) {
+	    getPrecedentDegreeInformation().edit(bean.getPrecedentDegreeInformation());
+	}
+    }
+
+    private void checkParameters(final LocalDate candidacyDate, final Degree selectedDegree,
+	    CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
+
+	checkParameters(getPerson(), getCandidacyProcess(), candidacyDate);
+	if (selectedDegree == null || personHasDegree(getPerson(), selectedDegree)) {
+	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.degrees");
+	}
+
+	if (precedentDegreeInformation == null) {
+	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.precedentDegreeInformation");
+	}
     }
 
 }
