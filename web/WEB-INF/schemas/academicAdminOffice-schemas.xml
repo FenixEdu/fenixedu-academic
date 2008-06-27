@@ -309,7 +309,9 @@
 <schema name="student.show.number.information"
 		type="net.sourceforge.fenixedu.domain.student.Student" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="person.istUsername" key="label.username"/>
-	<slot name="number" key="label.studentNumber"/>
+	<slot name="number" key="label.studentNumber">
+		<property name="classes" value="bold" />
+	</slot>
 </schema>
 
 <schema name="student.show.ingressionInformation" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES">
