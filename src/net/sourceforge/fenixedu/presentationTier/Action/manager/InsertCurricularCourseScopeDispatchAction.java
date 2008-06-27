@@ -11,7 +11,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -36,8 +35,6 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 /**
  * @author lmac1
  */
@@ -46,8 +43,6 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 
     public ActionForward prepareInsert(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-
-        IUserView userView = UserView.getUser();
 
         Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 
@@ -84,8 +79,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 
         List<InfoExecutionPeriod> infoExecutionPeriods = null;
         try {
-            infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods",
-                    null);
+            infoExecutionPeriods = (List) ServiceUtils.executeService("ReadExecutionPeriods");
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -111,8 +105,6 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
-
-        IUserView userView = UserView.getUser();
 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 

@@ -44,18 +44,13 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
     public ActionForward prepareInsert(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-        IUserView userView = UserView.getUser();
-
         List infoExecutionYearList = null;
         List infoCampusList = null;
-        /*
-         * Needed service and creation of bean of InfoExecutionYears for use in
-         * jsp
-         */
+
         try {
             infoExecutionYearList = (List) ServiceUtils.executeService(
-                    "ReadAllExecutionYears", null);
-            infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus", null);
+                    "ReadAllExecutionYears");
+            infoCampusList = (List) ServiceUtils.executeService("ReadAllCampus");
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -98,8 +93,6 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        IUserView userView = UserView.getUser();
 
         Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
         final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
