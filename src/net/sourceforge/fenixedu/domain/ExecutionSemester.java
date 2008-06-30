@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFill
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE;
 import net.sourceforge.fenixedu.injectionCode.Checked;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -37,6 +36,7 @@ import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * Created on 11/Fev/2003
@@ -464,6 +464,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     static transient private ExecutionSemester firstEnrolmentsExecutionPeriod = null;
 
+    static transient private ExecutionSemester startExecutionPeriodForCredits = null;
+
     public static ExecutionSemester readActualExecutionSemester() {
 	if (currentExecutionPeriod == null || currentExecutionPeriod.getRootDomainObject() != RootDomainObject.getInstance()
 		|| !currentExecutionPeriod.isCurrent()) {
@@ -515,6 +517,12 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	firstEnrolmentsExecutionPeriod = readFromProperties(firstEnrolmentsExecutionPeriod, "year.for.from.enrolments",
 		"semester.for.from.enrolments");
 	return firstEnrolmentsExecutionPeriod;
+    }
+
+    static public ExecutionSemester readStartExecutionSemesterForCredits() {
+	startExecutionPeriodForCredits = readFromProperties(startExecutionPeriodForCredits, "startYearForCredits",
+		"startSemesterForCredits");
+	return startExecutionPeriodForCredits;
     }
 
     public static ExecutionSemester readFirstExecutionSemester() {
