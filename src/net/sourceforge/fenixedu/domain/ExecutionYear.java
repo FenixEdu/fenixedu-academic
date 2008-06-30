@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
@@ -300,12 +301,30 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     static public ExecutionYear readCurrentExecutionYear() {
-	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
-	    if (executionYear.isCurrent()) {
-		return executionYear;
+	return ExecutionSemester.readActualExecutionSemester().getExecutionYear();
+    }
+
+    static transient private ExecutionYear startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments = null;
+
+    static private ExecutionYear readFromProperties(ExecutionYear executionYear, String yearKey) {
+	if (executionYear == null || executionYear.getRootDomainObject() != RootDomainObject.getInstance()) {
+
+	    final String yearString = PropertiesManager.getProperty(yearKey);
+	    if (yearString == null || yearString.length() == 0) {
+		executionYear = null;
+	    } else {
+		executionYear = readExecutionYearByName(yearKey);
 	    }
 	}
-	return null;
+
+	return executionYear;
+    }
+
+    public static ExecutionYear readStartExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments() {
+	startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments = readFromProperties(
+		startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments,
+		"startExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments");
+	return startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments;
     }
 
     static public List<ExecutionYear> readOpenExecutionYears() {
