@@ -1732,24 +1732,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadAllContributors</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.contributor.ReadAllContributors</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>ReadContributorList</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.contributor.ReadContributorList</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="AcademicOrMasterAdministrativeOfficeAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>EditContributor</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.contributor.EditContributor</implementationClass>
