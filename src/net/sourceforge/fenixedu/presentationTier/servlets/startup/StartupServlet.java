@@ -31,117 +31,112 @@ import pt.ist.fenixframework.pstm.Transaction;
 public class StartupServlet extends HttpServlet {
 
     public void init(ServletConfig config) throws ServletException {
-//        Custodian.registerPID();
+	//        Custodian.registerPID();
 
-        super.init(config);
+	super.init(config);
 
-        String domainModelPath = getServletContext().getRealPath(getInitParameter("domainmodel"));
-        FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig(domainModelPath));
+	String domainModelPath = getServletContext().getRealPath(getInitParameter("domainmodel"));
+	FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig(domainModelPath));
 
-        Service.init(RootDomainObject.getInstance());
+	Service.init(RootDomainObject.getInstance());
 
-        try {
-            try {
-                InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
-                        .executeService( "ReadCurrentExecutionPeriod", null);
-                config.getServletContext().setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-                        infoExecutionPeriod);
+	try {
+	    try {
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
+			.executeService("ReadCurrentExecutionPeriod");
+		config.getServletContext().setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
 
-                setScheduleForGratuitySituationCreation();
+		setScheduleForGratuitySituationCreation();
 
-            } catch (Throwable e) {
-                throw new ServletException("Error reading actual execution period!", e);
-            }
-            
-            try {
-        	long start = System.currentTimeMillis();
-        	ServiceUtils.executeService("CreateMetaDomainObectTypes", null);
-                long end = System.currentTimeMillis();
-                System.out.println("CreateMetaDomainObectTypes: " + (end - start) + "ms.");
-            } catch(Throwable throwable) {
-        	throw new ServletException("Error creating MetaDomainObject!", throwable);
-            }
+	    } catch (Throwable e) {
+		throw new ServletException("Error reading actual execution period!", e);
+	    }
 
-            try {
-                final Boolean result = (Boolean) ServiceManagerServiceFactory.executeService(
-                        "CheckIsAliveService", null);
+	    try {
+		long start = System.currentTimeMillis();
+		ServiceUtils.executeService("CreateMetaDomainObectTypes");
+		long end = System.currentTimeMillis();
+		System.out.println("CreateMetaDomainObectTypes: " + (end - start) + "ms.");
+	    } catch (Throwable throwable) {
+		throw new ServletException("Error creating MetaDomainObject!", throwable);
+	    }
 
-                if (result != null && result.booleanValue()) {
-                    System.out.println("Check is alive is working.");
-                } else {
-                    System.out.println("Check is alive is not working.");
-                }
-            } catch (Exception ex) {
-                System.out.println("Check is alive is not working. Caught excpetion.");
-                ex.printStackTrace();
-            }
+	    try {
+		final Boolean result = (Boolean) ServiceManagerServiceFactory.executeService("CheckIsAliveService", null);
 
-            loadLogins();
-            loadPersonNames();
-            loadUnitNames();
-            loadRoles();
-        } finally {
-            Transaction.forceFinish();
-        }
+		if (result != null && result.booleanValue()) {
+		    System.out.println("Check is alive is working.");
+		} else {
+		    System.out.println("Check is alive is not working.");
+		}
+	    } catch (Exception ex) {
+		System.out.println("Check is alive is not working. Caught excpetion.");
+		ex.printStackTrace();
+	    }
+
+	    loadLogins();
+	    loadPersonNames();
+	    loadUnitNames();
+	    loadRoles();
+	} finally {
+	    Transaction.forceFinish();
+	}
     }
 
     private void loadLogins() {
-        long start = System.currentTimeMillis();
-        Login.readLoginByUsername("...PlaceANonExistingLoginHere...");
-        long end = System.currentTimeMillis();
-        System.out.println("Load of all logins took: " + (end - start) + "ms.");
+	long start = System.currentTimeMillis();
+	Login.readLoginByUsername("...PlaceANonExistingLoginHere...");
+	long end = System.currentTimeMillis();
+	System.out.println("Load of all logins took: " + (end - start) + "ms.");
     }
 
     private void loadPersonNames() {
-        long start = System.currentTimeMillis();
-        PersonNamePart.find("...PlaceANonExistingPersonNameHere...");
-        long end = System.currentTimeMillis();
-        System.out.println("Load of all person names took: " + (end - start) + "ms.");
+	long start = System.currentTimeMillis();
+	PersonNamePart.find("...PlaceANonExistingPersonNameHere...");
+	long end = System.currentTimeMillis();
+	System.out.println("Load of all person names took: " + (end - start) + "ms.");
     }
 
     private void loadUnitNames() {
-        long start = System.currentTimeMillis();
-        UnitNamePart.find("...PlaceANonExistingUnitNameHere...");
-        long end = System.currentTimeMillis();
-        System.out.println("Load of all unit names took: " + (end - start) + "ms.");
+	long start = System.currentTimeMillis();
+	UnitNamePart.find("...PlaceANonExistingUnitNameHere...");
+	long end = System.currentTimeMillis();
+	System.out.println("Load of all unit names took: " + (end - start) + "ms.");
     }
 
     private void loadRoles() {
-        long start = System.currentTimeMillis();
-        Role.getRoleByRoleType(null);
-        long end = System.currentTimeMillis();
-        System.out.println("Load of all roles took: " + (end - start) + "ms.");
+	long start = System.currentTimeMillis();
+	Role.getRoleByRoleType(null);
+	long end = System.currentTimeMillis();
+	System.out.println("Load of all roles took: " + (end - start) + "ms.");
     }
-    
+
     private void setScheduleForGratuitySituationCreation() {
 
-        TimerTask gratuitySituationCreatorTask = new TimerTask() {
+	TimerTask gratuitySituationCreatorTask = new TimerTask() {
 
-		public void run() {
+	    public void run() {
+		try {
 		    try {
-			try {
-			    Object[] args = { "" };
-			    ServiceManagerServiceFactory.executeService(
-									"CreateGratuitySituationsForCurrentExecutionYear",
-									args);
-			    
-			} catch (Exception e) {
-			}
-			
-			// temporary
-			try {
-			    Object[] args2003_2004 = { "2003/2004" };
-			    ServiceManagerServiceFactory.executeService(
-									"CreateGratuitySituationsForCurrentExecutionYear",
-									args2003_2004);
-			    
-			} catch (Exception e) {
-			}
-		    } finally {
-			Transaction.forceFinish();
+			Object[] args = { "" };
+			ServiceManagerServiceFactory.executeService("CreateGratuitySituationsForCurrentExecutionYear", args);
+
+		    } catch (Exception e) {
 		    }
+
+		    // temporary
+		    try {
+			Object[] args2003_2004 = { "2003/2004" };
+			ServiceManagerServiceFactory.executeService("CreateGratuitySituationsForCurrentExecutionYear",
+				args2003_2004);
+
+		    } catch (Exception e) {
+		    }
+		} finally {
+		    Transaction.forceFinish();
 		}
-	    };
+	    }
+	};
 
 	try {
 	    Calendar calendar = Calendar.getInstance();
@@ -164,8 +159,7 @@ public class StartupServlet extends HttpServlet {
 
 	    Timer timer = new Timer();
 
-	    timer.schedule(gratuitySituationCreatorTask, firstTimeDate,
-			   3600 * 24 * 1000);
+	    timer.schedule(gratuitySituationCreatorTask, firstTimeDate, 3600 * 24 * 1000);
 
 	} catch (Exception e) {
 	}
