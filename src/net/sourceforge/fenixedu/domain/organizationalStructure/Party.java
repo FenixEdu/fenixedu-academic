@@ -11,7 +11,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Country;
@@ -54,15 +53,14 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class Party extends Party_Base {
 
@@ -363,20 +361,6 @@ public abstract class Party extends Party_Base {
 
     private boolean canBeDeleted() {
 	return !hasAnyResourceResponsibility() && !hasAnyVehicleAllocations() && !hasAnyPayedReceipts();
-    }
-
-    public static Set<Party> readContributors() {
-	final ComparatorChain chain = new ComparatorChain();
-	chain.addComparator(COMPARATOR_BY_NAME);
-	chain.addComparator(new BeanComparator("socialSecurityNumber"));
-
-	final Set<Party> result = new TreeSet<Party>(chain);
-	for (final PartySocialSecurityNumber socialSecurityNumber : RootDomainObject.getInstance()
-		.getPartySocialSecurityNumbers()) {
-	    result.add(socialSecurityNumber.getParty());
-	}
-
-	return result;
     }
 
     public static Party readByContributorNumber(String contributorNumber) {
