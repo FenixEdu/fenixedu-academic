@@ -27,3 +27,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "This is a ugly hack data fix, please remove it after running in the production servers" dataFix.sql
