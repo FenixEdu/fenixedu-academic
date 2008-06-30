@@ -9,15 +9,27 @@
 DB=$1
 USER=$2
 DB_HOST=$3
+INSTITUTION=`grep "institution=" ../../build.properties | cut -d '=' -f2`
 
 echo Using host=$DB_HOST
 echo Using database: $DB
 echo Using user $USER:
+echo Institution: $INSTITUTION
 
 function execute() {
-	echo ---------------------------------------- $1
-	mysql -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < $2
-	echo
+	if [ -z $3 ] 
+		then  
+			echo ---------------------------------------- $1 
+			mysql -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < $2 
+			echo 
+		else 
+			if [ "$INSTITUTION" == "$3" ]
+			then 
+				echo ---------------------------------------- $1 specific for $4
+				mysql -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < $2 
+				echo 
+			fi
+	fi
 }
 
 function executeWithTempFile() {
@@ -28,4 +40,5 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "This is a ugly hack data fix, please remove it after running in the production servers" dataFix.sql
+execute "This is a ugly hack data fix" dataFix.sql IST
+

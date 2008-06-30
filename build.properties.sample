@@ -24,6 +24,7 @@ login.html.link.<cidhcp000>=http://<cidhcp000>:8080/ciapl/privado
 
 login.page=http://localhost:8080/ciapl/privado
 institution.url=http://www.ist.utl.pt
+institution=IST
 
 #institution.project=/home/<user>/workspace/fenix-ist
 
