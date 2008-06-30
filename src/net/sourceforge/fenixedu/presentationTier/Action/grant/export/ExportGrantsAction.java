@@ -67,6 +67,11 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	spreadsheet.newRow();
 	spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getNumber());
 	spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getName());
+	if (grantContractRegime.getGrantContract().getGrantOwner().getPerson().getCountry() != null) {
+	    spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getCountry().getName());
+	} else {
+	    spreadsheet.addCell("");
+	}
 	spreadsheet.addCell(grantContractRegime.getGrantContract().getContractNumber());
 	spreadsheet.addCell(grantContractRegime.getDateBeginContractYearMonthDay().toString());
 
@@ -111,42 +116,44 @@ public class ExportGrantsAction extends FenixDispatchAction {
 		    .addCell(
 			    grantContractRegime.getGrantContract().getGrantInsurance().getDateBeginInsuranceYearMonthDay() != null ? grantContractRegime
 				    .getGrantContract().getGrantInsurance().getDateBeginInsuranceYearMonthDay().toString()
-				    : "", 12);
+				    : "", 13);
 	    spreadsheet
 		    .addCell(
 			    grantContractRegime.getGrantContract().getGrantInsurance().getDateEndInsuranceYearMonthDay() != null ? grantContractRegime
 				    .getGrantContract().getGrantInsurance().getDateEndInsuranceYearMonthDay().toString()
-				    : "", 13);
+				    : "", 14);
 	    spreadsheet.addCell(Days.daysBetween(
 		    grantContractRegime.getGrantContract().getGrantInsurance().get$dateBeginInsuranceYearMonthDay(),
-		    grantContractRegime.getGrantContract().getGrantInsurance().get$dateEndInsuranceYearMonthDay()).getDays(), 14);
-	    spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantInsurance().getTotalValue(), 15);
+		    grantContractRegime.getGrantContract().getGrantInsurance().get$dateEndInsuranceYearMonthDay()).getDays(), 15);
+	    spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantInsurance().getTotalValue(), 16);
 	    spreadsheet
 		    .addCell(
 			    grantContractRegime.getGrantContract().getGrantInsurance().getGrantPaymentEntity().getNumber()
 				    + " - "
 				    + grantContractRegime.getGrantContract().getGrantInsurance().getGrantPaymentEntity()
-					    .getDesignation(), 16, true);
+					    .getDesignation(), 17, true);
 	}
     }
 
     public void getExcelHeader(StyledExcelSpreadsheet spreadsheet, ResourceBundle bundle) {
 	spreadsheet.newHeaderRow();
 	spreadsheet.addHeader(0, bundle.getString("label.grant.owner.information"));
-	spreadsheet.addHeader(2, bundle.getString("label.grant.contract.information"));
-	spreadsheet.addHeader(7, bundle.getString("label.list.grant.contract.subsidies"));
-	spreadsheet.addHeader(12, bundle.getString("label.grant.insurance.information"));
+	spreadsheet.addHeader(3, bundle.getString("label.grant.contract.information"));
+	spreadsheet.addHeader(8, bundle.getString("label.list.grant.contract.subsidies"));
+	spreadsheet.addHeader(13, bundle.getString("label.grant.insurance.information"));
 
 	spreadsheet.newHeaderRow();
-	spreadsheet.mergeCells(0, 1, 0, 1);
-	spreadsheet.mergeCells(0, 1, 2, 6);
-	spreadsheet.mergeCells(0, 1, 7, 11);
-	spreadsheet.mergeCells(0, 1, 12, 16);
+	spreadsheet.mergeCells(0, 1, 0, 2);
+	spreadsheet.mergeCells(0, 1, 3, 7);
+	spreadsheet.mergeCells(0, 1, 8, 12);
+	spreadsheet.mergeCells(0, 1, 13, 17);
 
 	spreadsheet.newHeaderRow();
 	spreadsheet.getRow().setHeight((short) 750);
 	spreadsheet.addHeader(bundle.getString("label.grant.owner.number"));
 	spreadsheet.addHeader(bundle.getString("label.grant.owner.name"), 10000);
+	spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.nationality"), 5000);
+
 	spreadsheet.addHeader(bundle.getString("label.grant.contract.contractnumber"));
 	spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateBeginSubsidy"));
 	spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateEndSubsidy"));
