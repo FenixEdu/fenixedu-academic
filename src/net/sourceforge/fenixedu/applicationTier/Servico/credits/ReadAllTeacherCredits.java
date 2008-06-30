@@ -24,28 +24,29 @@ public class ReadAllTeacherCredits extends Service {
     public List<CreditLineDTO> run(Integer teacherID) throws ExcepcaoPersistencia, ParseException {
 
 	List<CreditLineDTO> creditLines = new ArrayList<CreditLineDTO>();
-        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
-        
-        ExecutionSemester executionSemester = TeacherService.getStartExecutionPeriodForCredits();                              
-                
-        while (executionSemester != null) {
-                        
-            double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
-            double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionSemester);
-            double thesesCredits = teacher.getThesesCredits(executionSemester);
-            int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);                               
-            TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-            
-            CreditLineDTO creditLineDTO = new CreditLineDTO(executionSemester, teacherService, managementCredits, serviceExemptionsCredits, mandatoryLessonHours, teacher, thesesCredits);
-            creditLines.add(creditLineDTO);
-            
-            if (executionSemester.isCurrent()) {
-                break;
-            }
-                        
-            executionSemester = executionSemester.getNextExecutionPeriod();
-        }
-        
-        return creditLines;
+	final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+
+	ExecutionSemester executionSemester = ExecutionSemester.readStartExecutionSemesterForCredits();
+
+	while (executionSemester != null) {
+
+	    double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
+	    double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionSemester);
+	    double thesesCredits = teacher.getThesesCredits(executionSemester);
+	    int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
+	    TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+
+	    CreditLineDTO creditLineDTO = new CreditLineDTO(executionSemester, teacherService, managementCredits,
+		    serviceExemptionsCredits, mandatoryLessonHours, teacher, thesesCredits);
+	    creditLines.add(creditLineDTO);
+
+	    if (executionSemester.isCurrent()) {
+		break;
+	    }
+
+	    executionSemester = executionSemester.getNextExecutionPeriod();
+	}
+
+	return creditLines;
     }
 }

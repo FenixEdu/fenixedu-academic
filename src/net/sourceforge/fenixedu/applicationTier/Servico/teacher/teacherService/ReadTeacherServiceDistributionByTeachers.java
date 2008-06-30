@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.ProfessionalSituationType;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -42,7 +41,7 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 	    executionPeriodList.add(rootDomainObject.readExecutionSemesterByOID(executionPeriodID));
 	}
 
-	final ExecutionSemester startPeriod = TeacherService.getStartExecutionPeriodForCredits();
+	final ExecutionSemester startPeriod = ExecutionSemester.readStartExecutionSemesterForCredits();
 
 	ExecutionSemester endPeriod = findEndPeriod(executionPeriodList, startPeriod);
 

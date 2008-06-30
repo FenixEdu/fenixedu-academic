@@ -852,7 +852,7 @@ public class Teacher extends Teacher_Base {
     public double getBalanceOfCreditsUntil(ExecutionSemester executionSemester) throws ParseException {
 
 	double balanceCredits = 0.0;
-	ExecutionSemester firstExecutionPeriod = TeacherService.getStartExecutionPeriodForCredits();
+	ExecutionSemester firstExecutionPeriod = ExecutionSemester.readStartExecutionSemesterForCredits();
 
 	TeacherService firstTeacherService = getTeacherServiceByExecutionPeriod(firstExecutionPeriod);
 	if (firstTeacherService != null) {
