@@ -2,11 +2,16 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.Activity;
 import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
@@ -43,9 +48,9 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
 	activities.add(new EditCandidacyPeriod());
-	activities.add(new SendToCoordinator()); // TODO
-	activities.add(new SendToScientificCouncil()); // TODO
-	activities.add(new PrintCandidacies()); // TODO
+	activities.add(new SendToCoordinator());
+	activities.add(new SendToScientificCouncil());
+	activities.add(new PrintCandidacies());
 	activities.add(new IntroduceCandidacyResults()); // TODO
 	activities.add(new PublishCandidacyResults());
 	activities.add(new CreateRegistrations()); // TODO
@@ -86,6 +91,29 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
     @Override
     public List<Activity> getActivities() {
 	return activities;
+    }
+
+    public Map<Degree, SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess>> getValidDegreeCandidaciesForGraduatedPersonsByDegree() {
+	final Map<Degree, SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess>> result = new TreeMap<Degree, SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess>>(
+		Degree.COMPARATOR_BY_NAME_AND_ID);
+	for (final IndividualCandidacyProcess child : getChildProcesses()) {
+	    final DegreeCandidacyForGraduatedPersonIndividualProcess process = (DegreeCandidacyForGraduatedPersonIndividualProcess) child;
+	    if (process.isCandidacyValid()) {
+		addCandidacy(result, process);
+	    }
+	}
+	return result;
+    }
+
+    private void addCandidacy(final Map<Degree, SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess>> result,
+	    final DegreeCandidacyForGraduatedPersonIndividualProcess process) {
+	SortedSet<DegreeCandidacyForGraduatedPersonIndividualProcess> values = result.get(process.getCandidacySelectedDegree());
+	if (values == null) {
+	    result.put(process.getCandidacySelectedDegree(),
+		    values = new TreeSet<DegreeCandidacyForGraduatedPersonIndividualProcess>(
+			    DegreeCandidacyForGraduatedPersonIndividualProcess.COMPARATOR_BY_CANDIDACY_PERSON));
+	}
+	values.add(process);
     }
 
     // static methods

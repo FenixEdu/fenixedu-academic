@@ -29,4 +29,8 @@ abstract public class CandidacyPrecedentDegreeInformation extends CandidacyPrece
     abstract public String getConclusionGrade();
 
     abstract public void edit(final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation);
+
+    public String getDegreeAndInstitutionName() {
+	return getDegreeDesignation() + " / " + getInstitution().getName();
+    }
 }
