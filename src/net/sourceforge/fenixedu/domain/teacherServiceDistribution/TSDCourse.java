@@ -10,6 +10,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -535,4 +536,12 @@ public abstract class TSDCourse extends TSDCourse_Base {
 	return loads;
     }
 
+    public Set<Degree> getDegrees() {
+	Set<Degree> degrees = new HashSet<Degree>();
+	for (CurricularCourse course : getAssociatedCurricularCourses()) {
+	    degrees.add(course.getDegree());
+	}
+	
+	return degrees;
+    }
 }

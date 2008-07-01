@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDCourseDTOEntry;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDTeacherDTOEntry;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TeacherServiceDistributionDTOEntry;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
@@ -26,10 +28,12 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcessPhas
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 import net.sourceforge.fenixedu.util.teacherServiceDistribution.report.TeacherServiceDistributionChart;
 import net.sourceforge.fenixedu.util.teacherServiceDistribution.report.TeacherServiceDistributionSpreadsheet;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -37,6 +41,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.Pair;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class TSDProcessValuationAction extends FenixDispatchAction {
 
@@ -205,6 +210,116 @@ public class TSDProcessValuationAction extends FenixDispatchAction {
 	} else {
 	    return mapping.findForward("showTSDProcessValuation");
 	}
+    }
+
+    public ActionForward exportTeacherServiceDistributionPlanningToExcel(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	IUserView userView = UserView.getUser();
+	DynaActionForm dynaForm = (DynaActionForm) form;
+
+	TSDProcess tsdProcess = getTSDProcess(userView, dynaForm);
+	TSDProcessPhase selectedTSDProcessPhase = getSelectedTSDProcessPhase(userView, dynaForm);
+
+	List<ShiftType> selectedShiftTypes = getSelectedShiftTypes(dynaForm);
+	List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>(tsdProcess.getExecutionPeriods());
+	ExecutionSemester selectedExecutionPeriod = getSelectedExecutionPeriod(userView, dynaForm, null);
+	List<ExecutionSemester> selectedExecutionPeriodList = new ArrayList<ExecutionSemester>();
+	if (selectedExecutionPeriod == null) {
+	    selectedExecutionPeriodList.addAll(executionPeriodList);
+	} else {
+	    selectedExecutionPeriodList.add(selectedExecutionPeriod);
+	}
+
+	if (selectedTSDProcessPhase == null) {
+	    selectedTSDProcessPhase = tsdProcess.getCurrentTSDProcessPhase();
+	    dynaForm.set("tsdProcessPhase", selectedTSDProcessPhase.getIdInternal());
+	}
+	TeacherServiceDistribution rootTeacherServiceDistribution = selectedTSDProcessPhase.getRootTSD();
+	TeacherServiceDistribution selectedTSD = getSelectedTeacherServiceDistribution(userView, dynaForm,
+		rootTeacherServiceDistribution);
+
+	List<TSDCourseDTOEntry> tsdCourseDTOEntryList = getTSDCourseDTOEntries(userView, selectedTSDProcessPhase, selectedTSD,
+		selectedExecutionPeriod);
+
+	Collections.sort(tsdCourseDTOEntryList, new BeanComparator("TSDCourse.name"));
+	try {
+	    response.setContentType("application/vnd.ms-excel");
+	    response.setHeader("Content-disposition", "attachment; filename=" + tsdProcess.getName().replace(" ", "") + ".xls");
+
+	    ServletOutputStream writer = response.getOutputStream();
+
+	    export(writer, tsdCourseDTOEntryList, selectedShiftTypes, tsdProcess.getName());
+	    writer.flush();
+	    response.flushBuffer();
+	} catch (IOException e) {
+	    throw new RuntimeException(e);
+	}
+
+	return null;
+    }
+
+    private void export(ServletOutputStream writer, List<TSDCourseDTOEntry> entries, List<ShiftType> selectedShiftType,
+	    String name) throws IOException {
+
+	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(name, false);
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.DepartmentAdmOfficeResources", Language.getLocale());
+
+	spreadsheet.newHeaderRow();
+	spreadsheet.addHeader(bundle.getString("label.teacherService.course.name"), 10000);
+	spreadsheet.addHeader(bundle.getString("label.teacherServiceDistribution.acronym"));
+	spreadsheet.addHeader(bundle.getString("label.teacherServiceDistribution.courses"), 5000);
+	spreadsheet.addHeader(bundle.getString("label.teacherService.course.semester"));
+
+	spreadsheet.mergeCells(0, 1, 0, 0);
+	spreadsheet.mergeCells(0, 1, 1, 1);
+	spreadsheet.mergeCells(0, 1, 2, 2);
+	spreadsheet.mergeCells(0, 1, 3, 3);
+
+	if (!selectedShiftType.isEmpty()) {
+	    int i = 0;
+	    spreadsheet.newHeaderRow();
+
+	    for (ShiftType shiftType : selectedShiftType) {
+		int colNumber = 4 + (4 * i);
+		spreadsheet.addHeader(0, colNumber, shiftType.getFullNameTipoAula());
+		spreadsheet.addHeader(1, colNumber, bundle
+			.getString("label.teacherServiceDistribution.numberOfSchoolClasses.acronym"));
+		spreadsheet.addHeader(1, colNumber + 1, bundle
+			.getString("label.teacherServiceDistribution.shiftDuration.acronym"));
+		spreadsheet.addHeader(1, colNumber + 2, bundle
+			.getString("label.teacherServiceDistribution.shiftFrequency.acronym"));
+		spreadsheet.addHeader(1, colNumber + 3, bundle
+			.getString("label.teacherServiceDistribution.numberOfShifts.acronym"));
+
+		spreadsheet.mergeCells(0, 0, colNumber, colNumber + 3);
+		i++;
+	    }
+	}
+	for (TSDCourseDTOEntry entry : entries) {
+
+	    spreadsheet.newRow();
+	    TSDCourse tsdCourse = entry.getTSDCourse();
+	    spreadsheet.addCell(tsdCourse.getName());
+	    spreadsheet.addCell(tsdCourse.getAcronym());
+	    StringBuffer buffer = new StringBuffer("");
+	    for (Degree degree : tsdCourse.getDegrees()) {
+		if (buffer.length() > 0) {
+		    buffer.append(", ");
+		}
+		buffer.append(degree.getSigla());
+	    }
+	    spreadsheet.addCell(buffer.toString());
+	    spreadsheet.addCell(tsdCourse.getExecutionPeriod().getSemester());
+	    for (ShiftType shiftType : selectedShiftType) {
+		spreadsheet.addCell(tsdCourse.getNumberOfSchoolClasses(shiftType));
+		spreadsheet.addCell(tsdCourse.getHoursPerShift(shiftType));
+		spreadsheet.addCell(tsdCourse.getShiftFrequency(shiftType));
+		spreadsheet.addCell(tsdCourse.getNumberOfShifts(shiftType));
+	    }
+	}
+
+	spreadsheet.getWorkbook().write(writer);
     }
 
     public ActionForward exportTSDProcessValuationToExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request,

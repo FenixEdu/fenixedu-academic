@@ -86,6 +86,14 @@
 	</tr>
 </table>
 
+
+<ul>
+	<li>
+		<html:link href="javascript:void(0)" onclick="document.forms[0].method.value='exportTeacherServiceDistributionPlanningToExcel'; document.forms[0].submit();">
+			<bean:message key="label.teacherService.exportToExcel"/>
+		</html:link>
+	</li>
+</ul>
 <p class="mtop15 mbottom1">
 	<html:link href="javascript:void(0)" onclick="document.forms[0].method.value='changeToViewCourses'; document.forms[0].submit();">
 		<bean:message key="label.teacherService.navigateByCourse"/> 
@@ -113,6 +121,8 @@
 <tr>
 <th rowspan="2"><bean:message key="label.teacherService.course.name"/></th>
 <th rowspan="2"><bean:message key="label.teacherServiceDistribution.acronym"/></th>
+<th rowspan="2"><bean:message key="label.teacherServiceDistribution.courses"/></th>
+<th rowspan="2"><bean:message key="label.teacherService.course.semester"/></th>
 <logic:iterate id="shift" name="selectedShiftTypes">
 	<th colspan="4"><fr:view name="shift" property="fullNameTipoAula"/></th>
 </logic:iterate>
@@ -130,6 +140,8 @@
 			<bean:define id="tsdCourse" name="dto" property="TSDCourse" type="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse"/>
 			<td><fr:view name="tsdCourse" property="name"/></td>
 			<td><fr:view name="tsdCourse" property="acronym"/></td>
+			<td><fr:view name="tsdCourse" property="degrees" layout="values-comma" schema="presentDegree"/></td>
+			<td><fr:view name="tsdCourse" property="executionPeriod.semester"/></td>
 			
 			<logic:iterate id="shift" name="selectedShiftTypes" type="net.sourceforge.fenixedu.domain.ShiftType">
 			<td><%= tsdCourse.getNumberOfSchoolClasses(shift)%></td>

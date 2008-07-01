@@ -96,6 +96,14 @@ public class StyledExcelSpreadsheet {
 	cell.setCellStyle(excelStyle.getHeaderStyle());
     }
 
+
+    public void addHeader(int rowNumber, int columnNumber, String value) {
+	HSSFRow currentRow = getRow(rowNumber);
+	HSSFCell cell = currentRow.createCell((short) columnNumber);
+	cell.setCellValue(value);
+	cell.setCellStyle(excelStyle.getHeaderStyle());
+    }
+    
     public void addHeader(int columnNumber, String value) {
 	HSSFRow currentRow = getRow();
 	HSSFCell cell = currentRow.createCell((short) columnNumber);
@@ -157,6 +165,10 @@ public class StyledExcelSpreadsheet {
 	return sheet.getRow(sheet.getLastRowNum());
     }
 
+    public HSSFRow getRow(int rowNumber) {
+	return sheet.getRow(rowNumber);
+    }
+    
     public void addCell(Object value) {
 	addCell(value, getDefaultExcelStyle(value), (getRow().getLastCellNum() + 1));
     }

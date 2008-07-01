@@ -136,7 +136,7 @@ public class ExcelStyle extends FenixUtil {
 	font.setFontHeightInPoints((short) 8);
 	style.setFont(font);
 	style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-	style.setDataFormat(wb.createDataFormat().getFormat("#"));
+	style.setDataFormat(wb.createDataFormat().getFormat("0"));
 	integerStyle = style;
     }
 
