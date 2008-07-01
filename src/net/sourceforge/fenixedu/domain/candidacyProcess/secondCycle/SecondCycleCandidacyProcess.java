@@ -199,7 +199,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isInStandBy()) {
+	    if (!process.isInStandBy() && !process.isSentToScientificCouncil()) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -267,7 +267,11 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isSentToCoordinator()) {
+	    if (!process.isInStandBy() && !process.isSentToCoordinator()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -278,20 +282,12 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	    process.setState(CandidacyProcessState.SENT_TO_SCIENTIFIC_COUNCIL);
 	    return process;
 	}
-
     }
 
     static private class PublishCandidacyResults extends Activity<SecondCycleCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    // if (!process.isSentToScientificCouncil()) {
-	    // throw new PreConditionNotValidException();
-	    // }
 	    throw new PreConditionNotValidException();
 	}
 

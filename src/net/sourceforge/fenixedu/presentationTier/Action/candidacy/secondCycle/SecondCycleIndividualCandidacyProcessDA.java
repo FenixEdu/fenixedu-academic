@@ -174,8 +174,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 
     public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	final SecondCycleIndividualCandidacyProcess process = getProcess(request);
-	request.setAttribute("degree", process.getCandidacySelectedDegree());
+	request.setAttribute("degree", getProcess(request).getCandidacySelectedDegree());
 	return mapping.findForward("create-registration");
     }
 

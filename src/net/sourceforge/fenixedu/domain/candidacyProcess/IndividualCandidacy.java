@@ -101,7 +101,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     public boolean isFor(final ExecutionInterval executionInterval) {
 	return hasCandidacyProcess() && getCandidacyProcess().isFor(executionInterval);
     }
-    
+
     protected boolean isCandidacyResultStateValid(final IndividualCandidacyState state) {
 	return state == IndividualCandidacyState.ACCEPTED || state == IndividualCandidacyState.REJECTED;
     }
@@ -156,10 +156,17 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	    return registration;
 	}
 
-	final Registration registration = new Registration(getPerson(), degreeCurricularPlan, cycleType);
+	return createRegistration(getPerson(), degreeCurricularPlan, cycleType, ingression);
+    }
+
+    private Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
+	    final CycleType cycleType, final Ingression ingression) {
+	
+	final Registration registration = new Registration(person, degreeCurricularPlan, cycleType);
 	registration.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
 	registration.setIngression(ingression);
 	setRegistration(registration);
+	
 	return registration;
     }
 

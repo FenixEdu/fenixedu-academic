@@ -294,9 +294,9 @@
 		<property name="eachLayout" value="values" />
 		<property name="eachSchema" value="Degree.name.and.sigla" />
 	</slot>
-	<slot name="disabilities" layout="null-as-label" key="label.over23Candidacy.disabilities"/>
-	<slot name="education" layout="null-as-label" key="label.over23Candidacy.education" />
-	<slot name="languages" layout="null-as-label" key="label.over23Candidacy.languages" />
+	<slot name="disabilities" layout="null-as-label" key="label.candidacy.over23.disabilities"/>
+	<slot name="education" layout="null-as-label" key="label.candidacy.over23.education" />
+	<slot name="languages" layout="null-as-label" key="label.candidacy.over23.languages" />
 </schema>
 
 <schema name="Over23IndividualCandidacyProcessBean.candidacyDate" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
@@ -312,15 +312,15 @@
 </schema>
 
 <schema name="Over23IndividualCandidacyProcessBean.optionalInformation" type="net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
-	<slot name="disabilities" layout="longText" key="label.over23Candidacy.disabilities">
+	<slot name="disabilities" layout="longText" key="label.candidacy.over23.disabilities">
     	<property name="columns" value="40" />
     	<property name="rows" value="3" />
     </slot>
-    <slot name="education" layout="longText" key="label.over23Candidacy.education">
+    <slot name="education" layout="longText" key="label.candidacy.over23.education">
     	<property name="columns" value="40" />
     	<property name="rows" value="3" />
     </slot>
-    <slot name="languages" layout="longText" key="label.over23Candidacy.languages">
+    <slot name="languages" layout="longText" key="label.candidacy.over23.languages">
     	<property name="columns" value="40" />
     	<property name="rows" value="3" />
     </slot>
@@ -574,4 +574,42 @@
         <property name="format" value="${presentationName}" />
         <property name="sortBy" value="degreeType, name"/>
     </slot>
+</schema>
+
+<schema name="DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean.introduce.result" type="net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
+	<slot name="candidacyProcess.candidacyPerson.name" key="label.name" read-only="true" />
+	<slot name="candidacyProcess.candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
+		<property name="format" value="${degreeDesignation} / ${institution.name}" />
+	</slot>
+	<slot name="candidacyProcess.candidacyPrecedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
+	<slot name="affinity" key="label.candidacy.affinity">
+		<property name="size" value="6"/>
+		<property name="maxLength" value="6"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(([0-9]+(\.[0-9]+)?)|)"/>
+            <property name="message" value="error.conclusionGrade.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+	</slot>
+	<slot name="degreeNature" key="label.candidacy.degreeNature">
+		<property name="size" value="2"/>
+		<property name="maxLength" value="2"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{1,}|)"/>
+            <property name="message" value="error.conclusionGrade.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+	</slot>
+	<slot name="grade" key="label.candidacy.grade">
+		<property name="size" value="6"/>
+		<property name="maxLength" value="6"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(([0-9]+(\.[0-9]+)?)|)"/>
+            <property name="message" value="error.conclusionGrade.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+	</slot>
+	<slot name="state" key="label.candidacy.individual.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="excludedValues" value="STAND_BY, CANCELLED" />
+	</slot>
 </schema>

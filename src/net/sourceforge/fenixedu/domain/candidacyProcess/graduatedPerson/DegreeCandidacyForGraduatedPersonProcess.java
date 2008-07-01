@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.DegreeCandidacyForGraduatedPersonCandidacyPeriod;
@@ -42,6 +43,12 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
 	activities.add(new EditCandidacyPeriod());
+	activities.add(new SendToCoordinator()); // TODO
+	activities.add(new SendToScientificCouncil()); // TODO
+	activities.add(new PrintCandidacies()); // TODO
+	activities.add(new IntroduceCandidacyResults()); // TODO
+	activities.add(new PublishCandidacyResults());
+	activities.add(new CreateRegistrations()); // TODO
     }
 
     private DegreeCandidacyForGraduatedPersonProcess() {
@@ -120,6 +127,142 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
 		IUserView userView, Object object) {
 	    final CandidacyProcessBean bean = (CandidacyProcessBean) object;
 	    process.edit(bean.getStart(), bean.getEnd());
+	    return process;
+	}
+    }
+
+    static private class SendToCoordinator extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isInStandBy() && !process.isSentToScientificCouncil()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
+		IUserView userView, Object object) {
+	    process.setState(CandidacyProcessState.SENT_TO_COORDINATOR);
+	    return process;
+	}
+    }
+
+    static private class SendToScientificCouncil extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isInStandBy() && !process.isSentToCoordinator()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.hasCandidacyPeriod() || !process.hasStarted() || process.hasOpenCandidacyPeriod()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
+		IUserView userView, Object object) {
+	    process.setState(CandidacyProcessState.SENT_TO_SCIENTIFIC_COUNCIL);
+	    return process;
+	}
+    }
+
+    static private class PrintCandidacies extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	    if (process.isInStandBy()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
+		IUserView userView, Object object) {
+	    return process; // for now, nothing to be done
+	}
+    }
+
+    static private class IntroduceCandidacyResults extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (process.isInStandBy()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
+		IUserView userView, Object object) {
+	    final List<DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean> beans = (List<DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean>) object;
+	    for (final DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean bean : beans) {
+		bean.getCandidacyProcess().executeActivity(userView, "IntroduceCandidacyResult", bean);
+	    }
+	    return process;
+	}
+    }
+
+    static private class PublishCandidacyResults extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
+	    throw new PreConditionNotValidException();
+	}
+
+	@Override
+	protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
+		IUserView userView, Object object) {
+	    process.setState(CandidacyProcessState.PUBLISHED);
+	    return process;
+	}
+    }
+
+    static private class CreateRegistrations extends Activity<DegreeCandidacyForGraduatedPersonProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeCandidacyForGraduatedPersonProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isSentToCoordinator() && !process.isSentToScientificCouncil()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
+		IUserView userView, Object object) {
+
+	    for (final IndividualCandidacyProcess child : process.getChildProcesses()) {
+		final DegreeCandidacyForGraduatedPersonIndividualProcess childProcess = (DegreeCandidacyForGraduatedPersonIndividualProcess) child;
+		if (child.isCandidacyValid() && child.isCandidacyAccepted() && !child.hasRegistrationForCandidacy()) {
+		    childProcess.executeActivity(userView, "CreateRegistration", null);
+		}
+	    }
+
 	    return process;
 	}
     }

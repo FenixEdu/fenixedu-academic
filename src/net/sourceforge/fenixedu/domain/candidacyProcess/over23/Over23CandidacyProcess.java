@@ -216,13 +216,6 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    // if (!process.isSentToJury()) {
-	    // throw new PreConditionNotValidException();
-	    // }
 	    throw new PreConditionNotValidException();
 	}
 

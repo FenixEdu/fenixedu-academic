@@ -113,12 +113,16 @@ public class SecondCycleIndividualCandidacyResultBean implements Serializable {
 	this.state = state;
     }
 
+    // this method can be used instead of grade field, when necessary
+    // information is present
     public Double calculateGrade() {
 	final CandidacyPrecedentDegreeInformation information = getCandidacyProcess().getCandidacyPrecedentDegreeInformation();
 	final Double mfc = Double.valueOf(information.getConclusionGrade());
 	return (0.4 * getAffinity() + 0.3 * getDegreeNature() / 5 + 0.3 * (mfc * 10 + getProfessionalExperience()) / 200) * 200;
     }
 
+    // this method can be used instead of seriesGrade field, when necessary
+    // information is present
     public Double calculateSeriesGrade() {
 	final Double grade = calculateGrade();
 	return hasInterviewGrade() ? (0.7 * grade + 0.3 * Double.valueOf(getInterviewGrade())) : grade;

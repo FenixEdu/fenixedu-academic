@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.LocalDate;
@@ -67,7 +68,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 
 	setCandidacyDate(bean.getCandidacyDate());
 	setSelectedDegree(bean.getSelectedDegree());
-	
+
 	if (getPrecedentDegreeInformation().isExternal()) {
 	    getPrecedentDegreeInformation().edit(bean.getPrecedentDegreeInformation());
 	}
@@ -83,6 +84,24 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 
 	if (precedentDegreeInformation == null) {
 	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.precedentDegreeInformation");
+	}
+    }
+
+    void editCandidacyResult(final DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean bean) {
+	checkParameters(bean);
+
+	setAffinity(bean.getAffinity());
+	setDegreeNature(bean.getDegreeNature());
+	setCandidacyGrade(bean.getGrade());
+
+	if (isCandidacyResultStateValid(bean.getState())) {
+	    setState(bean.getState());
+	}
+    }
+
+    private void checkParameters(final DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean bean) {
+	if (isAccepted() && bean.getState() != IndividualCandidacyState.ACCEPTED && hasRegistration()) {
+	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.cannot.change.state.from.accepted.candidacies");
 	}
     }
 

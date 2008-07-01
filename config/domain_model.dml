@@ -4773,6 +4773,9 @@ class candidacyProcess.IndividualCandidacy extends DomainObject {
 	}
 	
 	class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson extends candidacyProcess.IndividualCandidacy {
+		Double affinity;
+		Integer degreeNature;
+		Double candidacyGrade;
 	}
 
 class candidacyProcess.CandidacyPrecedentDegreeInformation extends DomainObject {
