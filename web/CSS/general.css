@@ -768,6 +768,10 @@ table.ppdetails td.ppleft {
 text-align: right;
 width: 10em;
 }
+table.ppdetails td.ppleft2 {
+text-align: left;
+width: 10em;
+}
 table.ppdetails td.ppright {
 }
 table.ppdetails td.ppright2 {
