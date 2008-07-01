@@ -172,13 +172,17 @@ public class ReportsUtils extends PropertiesManager {
 	}
 	return null;
     }
-
+    
     static public byte[] exportToPdf(final FenixReport report) throws JRException {
 	return exportToPdfWithPreProcessing(report.getReportTemplateKey(), report.getParameters(), report.getResourceBundle(),
 		report.getDataSource(), report.getPreProcessor());
     }
 
     static public byte[] exportMultipleToPdf(final FenixReport... reports) throws JRException {
+	return exportMultipleToPdf(null, reports);
+    }
+
+    static public byte[] exportMultipleToPdf(final String encoding, final FenixReport... reports) throws JRException {
 
 	final List<JasperPrint> partials = new ArrayList<JasperPrint>();
 	for (final FenixReport report : reports) {
@@ -200,6 +204,10 @@ public class ReportsUtils extends PropertiesManager {
 	exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
 
 	exporter.setParameter(JRExporterParameter.FONT_MAP, createFontMap());
+
+	if (encoding != null) {
+	    exporter.setParameter(JRExporterParameter.CHARACTER_ENCODING, encoding);
+	}
 
 	exporter.exportReport();
 

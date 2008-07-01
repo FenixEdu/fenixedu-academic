@@ -145,7 +145,7 @@ public abstract class CreditNotesManagementDA extends PaymentsManagementDispatch
 	    final CreditNoteDocument duplicate = new CreditNoteDocument(creditNote, getMessageResourceProvider(request),
 		    getServlet().getServletContext().getRealPath("/"), false);
 
-	    final byte[] data = ReportsUtils.exportMultipleToPdf(original, duplicate);
+	    final byte[] data = ReportsUtils.exportMultipleToPdf("UTF-8", original, duplicate);
 
 	    response.setContentLength(data.length);
 	    response.setContentType("application/pdf");
