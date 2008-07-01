@@ -215,7 +215,7 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 	    final ReceiptDocument duplicate = new ReceiptDocument(receipt, getMessageResourceProvider(request), getServlet()
 		    .getServletContext().getRealPath("/"), false);
 
-	    final byte[] data = ReportsUtils.exportMultipleToPdf("UTF-8", original, duplicate);
+	    final byte[] data = ReportsUtils.exportMultipleToPdf(original, duplicate);
 
 	    executeService("RegisterReceiptPrint", new Object[] { receipt, getUserView(request).getPerson().getEmployee() });
 
