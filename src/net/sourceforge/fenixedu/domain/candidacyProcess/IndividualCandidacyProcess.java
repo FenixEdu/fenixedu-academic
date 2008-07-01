@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
@@ -10,6 +11,12 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 abstract public class IndividualCandidacyProcess extends IndividualCandidacyProcess_Base {
+
+    static final public Comparator<IndividualCandidacyProcess> COMPARATOR_BY_CANDIDACY_PERSON = new Comparator<IndividualCandidacyProcess>() {
+	public int compare(IndividualCandidacyProcess o1, IndividualCandidacyProcess o2) {
+	    return Person.COMPARATOR_BY_NAME_AND_ID.compare(o1.getCandidacyPerson(), o2.getCandidacyPerson());
+	}
+    };
 
     protected IndividualCandidacyProcess() {
 	super();
@@ -78,7 +85,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     public IndividualCandidacyState getCandidacyState() {
 	return getCandidacy().getState();
     }
-    
+
     public boolean isCandidacyValid() {
 	return !isCandidacyCancelled() && isCandidacyDebtPayed();
     }
@@ -115,7 +122,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     public String getDisplayName() {
 	return ResourceBundle.getBundle("resources/CaseHandlingResources").getString(getClass().getSimpleName());
     }
-    
+
     protected void editPersonalCandidacyInformation(final PersonBean personBean) {
 	getCandidacy().editPersonalCandidacyInformation(personBean);
     }
