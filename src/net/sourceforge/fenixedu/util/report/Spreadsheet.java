@@ -40,6 +40,10 @@ public class Spreadsheet {
 	public void setCell(final Integer cellValue) {
 	    cells.add((cellValue != null) ? cellValue.toString() : "");
 	}
+	
+	public void setCell(final Double cellValue) {
+	    cells.add((cellValue != null) ? cellValue.toString() : "");
+	}
 
 	public void setValues(final String[] values) {
 	    for (int i = 0; i < values.length; i++) {
