@@ -40,5 +40,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "This is a ugly hack data fix" dataFix.sql IST
-execute "updateWeightInOldEnrolments" updateWeightInOldEnrolments.sql IST
+
