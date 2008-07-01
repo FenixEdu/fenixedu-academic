@@ -420,7 +420,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     static public List<ExecutionYear> readExecutionYearsByCivilYear(int civilYear) {
 	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
-	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
+
+	for (final ExecutionYear executionYear : executionYearSearchCache.map.get(civilYear)) {
 	    if (executionYear.belongsToCivilYear(civilYear)) {
 		result.add(executionYear);
 	    }
