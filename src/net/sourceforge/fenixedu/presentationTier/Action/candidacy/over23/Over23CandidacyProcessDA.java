@@ -35,7 +35,6 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -104,8 +103,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 	    HttpServletResponse response) throws IOException {
 
 	response.setContentType("application/vnd.ms-excel");
-	response.setHeader("Content-disposition", "attachment; filename=Candidaturas_Maiores_23_"
-		+ new LocalDate().toString("ddMMyyyy") + ".xls");
+	response.setHeader("Content-disposition", "attachment; filename=" + getReportFilename());
 
 	final ServletOutputStream writer = response.getOutputStream();
 	final Over23CandidacyProcess process = getProcess(request);
@@ -156,7 +154,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 	}
 	request.setAttribute("over23IndividualCandidacyResultBeans", beans);
     }
-    
+
     public ActionForward prepareIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
@@ -164,8 +162,8 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 	return mapping.findForward("insert-candidacy-results");
     }
 
-    public ActionForward executeIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward executeIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
 	    executeActivity(getProcess(request), "IntroduceCandidacyResults",
 		    getRenderedObject("over23IndividualCandidacyResultBeans"));
@@ -237,6 +235,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 	public Over23CandidacyDegreeBean(final Over23IndividualCandidacyProcess process) {
 	    setPerson(process.getCandidacyPerson());
 	    setDegree(process.getAcceptedDegree());
+	    setState(process.getCandidacyState());
 	    setRegistrationCreated(process.hasRegistrationForCandidacy());
 	}
     }

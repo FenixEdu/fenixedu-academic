@@ -28,13 +28,20 @@
 	</logic:notEmpty>
 	
 	<logic:empty name="candidacyDegreeBeans">
-		<bean:message key="label.candidacy.no.accepted.candidacies" bundle="APPLICATION_RESOURCES" />
+		<strong><em><bean:message key="label.candidacy.no.accepted.candidacies" bundle="APPLICATION_RESOURCES" /></em></strong>
 	</logic:empty>
 	
  	<br/>
  	
 	<logic:notEmpty name="candidacyDegreeBeans">
+		<strong><bean:message key="label.candidacy.create.registrations.question" bundle="APPLICATION_RESOURCES" /></strong>
+		<br/>
+		<br/>
 		<html:submit><bean:message key="label.yes.capitalized" bundle="APPLICATION_RESOURCES" /></html:submit>
+		<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.no.capitalized" bundle="APPLICATION_RESOURCES" /></html:cancel>
 	</logic:notEmpty>
-	<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.no.capitalized" bundle="APPLICATION_RESOURCES" /></html:cancel>
+	<logic:empty name="candidacyDegreeBeans">
+		<br/>
+		<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>
+	</logic:empty>
 </fr:form>

@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -110,8 +109,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	    HttpServletResponse response) throws IOException {
 
 	response.setContentType("application/vnd.ms-excel");
-	response.setHeader("Content-disposition", "attachment; filename=Candidaturas_2_Ciclo_"
-		+ new LocalDate().toString("ddMMyyyy") + ".xls");
+	response.setHeader("Content-disposition", "attachment; filename=" + getReportFilename());
 
 	final ServletOutputStream writer = response.getOutputStream();
 	writeReport(getProcess(request), writer);
@@ -198,21 +196,19 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     private Spreadsheet buildReport(final Degree degree, final SortedSet<SecondCycleIndividualCandidacyProcess> name) {
-	final Spreadsheet spreadsheet = new CandidacyReport(degree.getSigla(), getHeader());
+	final Spreadsheet spreadsheet = new Spreadsheet(degree.getSigla(), getHeader());
 
 	for (final SecondCycleIndividualCandidacyProcess process : name) {
 	    final Row row = spreadsheet.addRow();
 	    row.setCell(process.getCandidacyPerson().getName());
 	    row.setCell(process.getCandidacyPrecedentDegreeInformation().getConclusionGrade());
-	    row.setCell(process.getCandidacyProfessionalExperience() != null ? process.getCandidacyProfessionalExperience()
-		    .toString() : " ");
-	    row.setCell(process.getCandidacyPrecedentDegreeInformation().getDegreeDesignation() + " / "
-		    + process.getCandidacyPrecedentDegreeInformation().getInstitution().getName());
-	    row.setCell(process.getCandidacyAffinity() != null ? process.getCandidacyAffinity().toString() : " ");
-	    row.setCell(process.getCandidacyDegreeNature() != null ? process.getCandidacyDegreeNature().toString() : " ");
-	    row.setCell(process.getCandidacyGrade() != null ? process.getCandidacyGrade().toString() : " ");
+	    row.setCell(process.getCandidacyProfessionalExperience());
+	    row.setCell(process.getCandidacyPrecedentDegreeInformation().getDegreeAndInstitutionName());
+	    row.setCell(process.getCandidacyAffinity());
+	    row.setCell(process.getCandidacyDegreeNature());
+	    row.setCell(process.getCandidacyGrade());
 	    row.setCell(process.getCandidacyInterviewGrade() != null ? process.getCandidacyInterviewGrade() : " ");
-	    row.setCell(process.getCandidacySeriesGrade() != null ? process.getCandidacySeriesGrade().toString() : " ");
+	    row.setCell(process.getCandidacySeriesGrade());
 	    if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
 		row.setCell(ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale()).getString(
 			process.getCandidacyState().getQualifiedName()));
@@ -240,19 +236,23 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	return result;
     }
 
-    private class CandidacyReport extends Spreadsheet {
-
-	public CandidacyReport(final String name, final List<Object> header) {
-	    super(name, header);
-	}
-    }
-
     static public class SecondCycleCandidacyDegreeBean extends CandidacyDegreeBean {
+	private String notes;
 
 	public SecondCycleCandidacyDegreeBean(final SecondCycleIndividualCandidacyProcess process) {
 	    setPerson(process.getCandidacyPerson());
 	    setDegree(process.getCandidacySelectedDegree());
+	    setState(process.getCandidacyState());
 	    setRegistrationCreated(process.hasRegistrationForCandidacy());
+	    setNotes(process.getCandidacyNotes());
+	}
+
+	public String getNotes() {
+	    return notes;
+	}
+
+	private void setNotes(String notes) {
+	    this.notes = notes;
 	}
     }
 

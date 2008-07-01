@@ -271,6 +271,7 @@
 		<property name="format" value="${name} (${documentIdNumber})" />
 	</slot>
 	<slot name="degree.presentationName" key="label.Degree" />
+	<slot name="state" key="label.candidacy.individual.state" />
 	<slot name="registrationCreated" key="label.candidacy.isRegistrationCreated">
 		<property name="trueLabel" value="label.yes" />
 		<property name="falseLabel" value="label.empty" />
@@ -556,6 +557,7 @@
 <schema name="SecondCycleCandidacyProcess.candidacyDegreeBean" 
 		type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.secondCycle.SecondCycleCandidacyProcessDA$SecondCycleCandidacyDegreeBean"
 		extends="CandidacyProcess.candidacyDegreeBean" bundle="APPLICATION_RESOURCES">
+	<slot name="notes" key="label.candidacy.notes" />
 </schema>
 
 <!-- DegreeCandidacyForGraduatedPerson -->

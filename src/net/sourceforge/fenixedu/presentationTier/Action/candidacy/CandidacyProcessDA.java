@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy;
 
 import java.io.Serializable;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -23,6 +25,9 @@ import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.LocalDate;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 
@@ -108,39 +113,52 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	}
     }
 
+    /**
+     * This bean is used to show summary about created registrations for
+     * candidates
+     */
     static public class CandidacyDegreeBean implements Serializable, Comparable<CandidacyDegreeBean> {
-    
-        private DomainReference<Person> person;
-        private DomainReference<Degree> degree;
-        private boolean isRegistrationCreated;
-    
-        public Person getPerson() {
-            return (this.person != null) ? this.person.getObject() : null;
-        }
-    
-        public void setPerson(Person person) {
-            this.person = (person != null) ? new DomainReference<Person>(person) : null;
-        }
-    
-        public Degree getDegree() {
-            return (this.degree != null) ? this.degree.getObject() : null;
-        }
-    
-        public void setDegree(Degree degree) {
-            this.degree = (degree != null) ? new DomainReference<Degree>(degree) : null;
-        }
-    
-        public boolean isRegistrationCreated() {
-            return isRegistrationCreated;
-        }
-    
-        public void setRegistrationCreated(boolean isRegistrationCreated) {
-            this.isRegistrationCreated = isRegistrationCreated;
-        }
-    
-        public int compareTo(CandidacyDegreeBean other) {
-            return Party.COMPARATOR_BY_NAME_AND_ID.compare(getPerson(), other.getPerson());
-        }
+
+	private DomainReference<Person> person;
+	private DomainReference<Degree> degree;
+	private IndividualCandidacyState state;
+	private boolean isRegistrationCreated;
+
+	public Person getPerson() {
+	    return (this.person != null) ? this.person.getObject() : null;
+	}
+
+	public void setPerson(Person person) {
+	    this.person = (person != null) ? new DomainReference<Person>(person) : null;
+	}
+
+	public Degree getDegree() {
+	    return (this.degree != null) ? this.degree.getObject() : null;
+	}
+
+	public void setDegree(Degree degree) {
+	    this.degree = (degree != null) ? new DomainReference<Degree>(degree) : null;
+	}
+	
+	public IndividualCandidacyState getState() {
+	    return state;
+	}
+
+	public void setState(IndividualCandidacyState state) {
+	    this.state = state;
+	}
+
+	public boolean isRegistrationCreated() {
+	    return isRegistrationCreated;
+	}
+
+	public void setRegistrationCreated(boolean isRegistrationCreated) {
+	    this.isRegistrationCreated = isRegistrationCreated;
+	}
+
+	public int compareTo(CandidacyDegreeBean other) {
+	    return Party.COMPARATOR_BY_NAME_AND_ID.compare(getPerson(), other.getPerson());
+	}
     }
 
     @Override
@@ -194,4 +212,9 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	return mapping.findForward("prepare-edit-candidacy-period");
     }
 
+    protected String getReportFilename() {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
+	return bundle.getString("label.candidacy." + getProcessType().getSimpleName() + ".report.filename") + "_"
+		+ new LocalDate().toString("ddMMyyyy") + ".xls";
+    }
 }
