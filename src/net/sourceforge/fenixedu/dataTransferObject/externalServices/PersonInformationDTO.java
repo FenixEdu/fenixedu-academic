@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -60,7 +59,7 @@ public class PersonInformationDTO {
 
     private String teacherDepartment;
 
-    private String employeeDepartment;
+    private String employeeUnit;
 
     private List<String> studentDegrees;
 
@@ -88,11 +87,11 @@ public class PersonInformationDTO {
 	}
 
 	if (person.hasTeacher() && person.getTeacher().getCurrentWorkingDepartment() != null) {
-	    this.teacherDepartment = person.getTeacher().getCurrentWorkingDepartment().getName();
+	    this.teacherDepartment = person.getTeacher().getCurrentWorkingDepartment().getRealName();
 	}
 
 	if (person.hasEmployee() && person.getEmployee().getCurrentWorkingPlace() != null) {
-	    this.employeeDepartment = person.getEmployee().getCurrentWorkingPlace().getName();
+	    this.employeeUnit = person.getEmployee().getCurrentWorkingPlace().getName();
 	}
 
 	this.studentDegrees = new ArrayList<String>();
@@ -261,12 +260,12 @@ public class PersonInformationDTO {
 	this.teacherDepartment = teacherDepartment;
     }
 
-    public String getEmployeeDepartment() {
-	return employeeDepartment;
+    public String getEmployeeUnit() {
+	return employeeUnit;
     }
 
-    public void setEmployeeDepartment(String employeeDepartment) {
-	this.employeeDepartment = employeeDepartment;
+    public void setEmployeeUnit(String employeeUnit) {
+	this.employeeUnit = employeeUnit;
     }
 
     public List<String> getStudentDegrees() {
