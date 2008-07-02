@@ -40,4 +40,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Deleting empty web addresses" deleteInvalidWebAddresses.sql
