@@ -110,7 +110,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
 	for (final IndividualCandidacyProcess child : getChildProcesses()) {
 	    final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
-	    if (process.isCandidacyValid() && process.hasCandidacySelectedDegree(degree)) {
+	    if (process.isCandidacyValid() && process.hasCandidacyForSelectedDegree(degree)) {
 		result.add(process);
 	    }
 	}

@@ -70,7 +70,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	return getCandidacy().getSelectedDegree();
     }
 
-    public boolean hasCandidacySelectedDegree(final Degree degree) {
+    public boolean hasCandidacyForSelectedDegree(final Degree degree) {
 	return getCandidacySelectedDegree() == degree;
     }
 
