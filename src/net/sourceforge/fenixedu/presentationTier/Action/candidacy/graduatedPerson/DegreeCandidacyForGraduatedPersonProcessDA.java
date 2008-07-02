@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.candidacy.graduatedPers
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.SortedSet;
@@ -40,7 +41,10 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
 	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
 	@Forward(name = "send-to-coordinator", path = "/candidacy/graduatedPerson/sendToCoordinator.jsp"),
-	@Forward(name = "send-to-scientificCouncil", path = "/candidacy/graduatedPerson/sendToScientificCouncil.jsp")
+	@Forward(name = "send-to-scientificCouncil", path = "/candidacy/graduatedPerson/sendToScientificCouncil.jsp"),
+	@Forward(name = "introduce-candidacy-results", path = "/candidacy/graduatedPerson/introduceCandidacyResults.jsp"),
+	@Forward(name = "introduce-candidacy-results-for-degree", path = "/candidacy/graduatedPerson/introduceCandidacyResultsForDegree.jsp"),
+	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp")
 
 })
 public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcessDA {
@@ -172,6 +176,27 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
 	result.add(bundle.getString("label.candidacy.grade"));
 	result.add(bundle.getString("label.candidacy.result"));
 	return result;
+    }
+
+    static public class DegreeCandidacyForGraduatedPersonDegreeBean extends CandidacyDegreeBean {
+	public DegreeCandidacyForGraduatedPersonDegreeBean(final DegreeCandidacyForGraduatedPersonIndividualProcess process) {
+	    setPerson(process.getCandidacyPerson());
+	    setDegree(process.getCandidacySelectedDegree());
+	    setState(process.getCandidacyState());
+	    setRegistrationCreated(process.hasRegistrationForCandidacy());
+	}
+    }
+
+    @Override
+    protected List<CandidacyDegreeBean> createCandidacyDegreeBeans(HttpServletRequest request) {
+	final DegreeCandidacyForGraduatedPersonProcess process = getProcess(request);
+	final List<CandidacyDegreeBean> candidacyDegreeBeans = new ArrayList<CandidacyDegreeBean>();
+	for (final DegreeCandidacyForGraduatedPersonIndividualProcess child : process
+		.getAcceptedDegreeCandidacyForGraduatedPersonIndividualCandidacies()) {
+	    candidacyDegreeBeans.add(new DegreeCandidacyForGraduatedPersonDegreeBean(child));
+	}
+	Collections.sort(candidacyDegreeBeans);
+	return candidacyDegreeBeans;
     }
 
 }

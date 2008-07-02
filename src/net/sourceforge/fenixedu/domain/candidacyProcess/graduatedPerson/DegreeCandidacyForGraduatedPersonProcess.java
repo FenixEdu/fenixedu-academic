@@ -53,7 +53,7 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
 	activities.add(new PrintCandidacies());
 	activities.add(new IntroduceCandidacyResults()); // TODO
 	activities.add(new PublishCandidacyResults());
-	activities.add(new CreateRegistrations()); // TODO
+	activities.add(new CreateRegistrations());
     }
 
     private DegreeCandidacyForGraduatedPersonProcess() {
@@ -114,6 +114,16 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
 			    DegreeCandidacyForGraduatedPersonIndividualProcess.COMPARATOR_BY_CANDIDACY_PERSON));
 	}
 	values.add(process);
+    }
+
+    public List<DegreeCandidacyForGraduatedPersonIndividualProcess> getAcceptedDegreeCandidacyForGraduatedPersonIndividualCandidacies() {
+	final List<DegreeCandidacyForGraduatedPersonIndividualProcess> result = new ArrayList<DegreeCandidacyForGraduatedPersonIndividualProcess>();
+	for (final IndividualCandidacyProcess child : getChildProcesses()) {
+	    if (child.isCandidacyValid() && child.isCandidacyAccepted()) {
+		result.add((DegreeCandidacyForGraduatedPersonIndividualProcess) child);
+	    }
+	}
+	return result;
     }
 
     // static methods
@@ -294,4 +304,5 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
 	    return process;
 	}
     }
+
 }
