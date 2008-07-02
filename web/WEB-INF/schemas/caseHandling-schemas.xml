@@ -397,74 +397,6 @@
 </schema>
 
 <schema name="SecondCycleIndividualCandidacyResultBean.introduce.result" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
-	<slot name="candidacyProcess.candidacyPerson.name" key="label.name" read-only="true" />
-	<slot name="candidacyProcess.candidacyPrecedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
-	<slot name="professionalExperience" key="label.candidacy.professionalExperience" >
-		<property name="size" value="2"/>
-		<property name="maxLength" value="2"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{1,}|)"/>
-            <property name="message" value="error.conclusionGrade.invalidFormat"/>
-            <property name="key" value="true"/>
-        </validator>
-	</slot>
-	<slot name="candidacyProcess.candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
-		<property name="format" value="${degreeDesignation} / ${institution.name}" />
-	</slot>
-	<slot name="affinity" key="label.candidacy.affinity">
-		<property name="size" value="6"/>
-		<property name="maxLength" value="6"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(([0-9]+(\.[0-9]+)?)|)"/>
-            <property name="message" value="error.conclusionGrade.invalidFormat"/>
-            <property name="key" value="true"/>
-        </validator>
-	</slot>
-	<slot name="degreeNature" key="label.candidacy.degreeNature">
-		<property name="size" value="2"/>
-		<property name="maxLength" value="2"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{1,}|)"/>
-            <property name="message" value="error.conclusionGrade.invalidFormat"/>
-            <property name="key" value="true"/>
-        </validator>
-	</slot>
-	<slot name="grade" key="label.candidacy.grade">
-		<property name="size" value="6"/>
-		<property name="maxLength" value="6"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(([0-9]+(\.[0-9]+)?)|)"/>
-            <property name="message" value="error.conclusionGrade.invalidFormat"/>
-            <property name="key" value="true"/>
-        </validator>
-	</slot>
-	<slot name="interviewGrade" key="label.candidacy.interviewGrade">
-		<property name="size" value="6"/>
-		<property name="maxLength" value="6"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(([0-9]+(\.[0-9]+)?)|NA|)"/>
-            <property name="message" value="error.conclusionGrade.invalidFormat"/>
-            <property name="key" value="true"/>
-        </validator>
-	</slot>
-	<slot name="seriesGrade" key="label.candidacy.seriesGrade">
-		<property name="size" value="6"/>
-		<property name="maxLength" value="6"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="([0-9]+(\.[0-9]+)?|)"/>
-            <property name="message" value="error.conclusionGrade.invalidFormat"/>
-            <property name="key" value="true"/>
-        </validator>
-	</slot>
-	<slot name="state" key="label.candidacy.individual.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="excludedValues" value="STAND_BY, CANCELLED" />
-	</slot>
-	<slot name="notes" key="label.candidacy.notes">
-		<property name="size" value="20"/>
-	</slot>
-</schema>
-
-<schema name="SecondCycleIndividualCandidacyResultBean.introduce.results" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
 	<slot name="candidacyProcess.candidacyPerson.name" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
@@ -522,12 +454,12 @@
 		<property name="size" value="6"/>
 		<property name="maxLength" value="6"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(([0-9]+(\.[0-9]+)?)|)"/>
+            <property name="regexp" value="([0-9]+(\.[0-9]+)?|)"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
 	</slot>
-	<slot name="state" key="label.candidacy.individual.state">
+	<slot name="state" key="label.candidacy.individual.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="STAND_BY, CANCELLED" />
 	</slot>
 	<slot name="notes" key="label.candidacy.notes">
@@ -535,7 +467,7 @@
 	</slot>
 </schema>
 
-<schema name="SecondCycleIndividualCandidacy.introduce.results.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacy" bundle="APPLICATION_RESOURCES">
+<schema name="SecondCycleIndividualCandidacy.introduce.results.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
 	<slot name="candidacyPerson.name" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
@@ -579,8 +511,11 @@
 </schema>
 
 <schema name="DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean.introduce.result" type="net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
-	<slot name="candidacyProcess.candidacyPerson.name" key="label.name" read-only="true" />
+	<slot name="candidacyProcess.candidacyPerson.name" key="label.name" read-only="true">
+		<property name="classes" value="nowrap" />
+	</slot>
 	<slot name="candidacyProcess.candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
+		<property name="classes" value="nowrap" />
 		<property name="format" value="${degreeDesignation} / ${institution.name}" />
 	</slot>
 	<slot name="candidacyProcess.candidacyPrecedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
@@ -614,4 +549,19 @@
 	<slot name="state" key="label.candidacy.individual.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="STAND_BY, CANCELLED" />
 	</slot>
+</schema>
+
+<schema name="DegreeCandidacyForGraduatedPersonIndividual.introduce.result.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcess" bundle="APPLICATION_RESOURCES">
+	<slot name="candidacyPerson.name" key="label.name" read-only="true">
+		<property name="classes" value="nowrap" />
+	</slot>
+	<slot name="candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
+		<property name="classes" value="nowrap" />
+		<property name="format" value="${degreeDesignation} / ${institution.name}" />
+	</slot>
+	<slot name="candidacyPrecedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
+	<slot name="candidacyAffinity" key="label.candidacy.affinity" read-only="true" />
+	<slot name="candidacyDegreeNature" key="label.candidacy.degreeNature" read-only="true" />
+	<slot name="candidacyGrade" key="label.candidacy.grade" read-only="true" />
+	<slot name="candidacyState" key="label.candidacy.individual.state" read-only="true" />
 </schema>

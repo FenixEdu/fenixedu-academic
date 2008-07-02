@@ -31,7 +31,7 @@
 	<h3 class="mtop15 mbottom025"><bean:message key="label.candidacy.introduce.results" bundle="APPLICATION_RESOURCES"/></h3>
 	<fr:edit id="secondCycleIndividualCandidacyResultBeans"
 		name="secondCycleIndividualCandidacyResultBeans"
-		schema="SecondCycleIndividualCandidacyResultBean.introduce.results">
+		schema="SecondCycleIndividualCandidacyResultBean.introduce.result">
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle4 mtop025"/>
 		</fr:layout>
