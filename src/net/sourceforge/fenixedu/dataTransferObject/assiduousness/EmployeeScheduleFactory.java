@@ -39,29 +39,54 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
     List<EmployeeWorkWeekScheduleBean> employeeWorkWeekScheduleList = new ArrayList<EmployeeWorkWeekScheduleBean>();
 
     public EmployeeScheduleFactory(Schedule schedule, Employee modifiedBy) {
-	setModifiedBy(modifiedBy);
-	setEmployee(schedule.getAssiduousness().getEmployee());
-	setSchedule(schedule);
-	setEmployeeWorkWeekScheduleList(schedule, this);
-	setBeginDate(schedule.getBeginDate());
-	setEndDate(schedule.getEndDate());
+	init(schedule.getAssiduousness().getEmployee(), modifiedBy, schedule, schedule.getBeginDate(), schedule.getEndDate());
+    }
+
+    public EmployeeScheduleFactory(Employee employee, Employee modifiedBy) {
+	LocalDate beginDate = null;
+	LocalDate endDate = null;
+	Schedule schedule = employee.getAssiduousness() != null ? employee.getAssiduousness().getCurrentSchedule() : null;
+	if (schedule != null) {
+	    beginDate = schedule.getBeginDate();
+	    endDate = schedule.getEndDate();
+	} else {
+	    Contract currentContract = employee.getCurrentWorkingContract();
+	    if (currentContract != null) {
+		beginDate = currentContract.getBeginDate().toLocalDate();
+	    }
+	}
+	init(employee, modifiedBy, schedule, beginDate, endDate);
     }
 
     public EmployeeScheduleFactory(Employee employee, Employee modifiedBy, Schedule schedule) {
-	setModifiedBy(modifiedBy);
-	setEmployee(employee);
+	LocalDate beginDate = null;
+	LocalDate endDate = null;
+	if (schedule == null) {
+	    schedule = employee.getAssiduousness() != null ? employee.getAssiduousness().getCurrentSchedule() : null;
+	}
 	if (schedule != null) {
-	    setSchedule(schedule);
-	    setEmployeeWorkWeekScheduleList(schedule, this);
-	    setBeginDate(schedule.getBeginDate());
-	    setEndDate(schedule.getEndDate());
+	    beginDate = schedule.getBeginDate();
+	    endDate = schedule.getEndDate();
 	} else {
-	    addEmployeeWorkWeekSchedule();
 	    Contract currentContract = employee.getCurrentWorkingContract();
 	    if (currentContract != null) {
-		setBeginDate(currentContract.getBeginDate().toLocalDate());
+		beginDate = currentContract.getBeginDate().toLocalDate();
 	    }
 	}
+	init(employee, modifiedBy, schedule, beginDate, endDate);
+    }
+
+    protected void init(Employee employee, Employee modifiedBy, Schedule schedule, LocalDate beginDate, LocalDate endDate) {
+	setModifiedBy(modifiedBy);
+	setEmployee(employee);
+	setSchedule(schedule);
+	if (schedule != null) {
+	    setEmployeeWorkWeekScheduleList(schedule, this);
+	} else {
+	    addEmployeeWorkWeekSchedule();
+	}
+	setBeginDate(beginDate);
+	setEndDate(endDate);
     }
 
     public Object execute() {

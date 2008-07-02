@@ -504,6 +504,15 @@ public class Schedule extends Schedule_Base {
 	return true;
     }
 
+    public boolean getIsDeletable() {
+	ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
+	LocalDate endClosedMonth = closedMonth.getClosedMonthLastDay();
+	if (getBeginDate().isBefore(endClosedMonth.plusDays(1))) {
+	    return true;
+	}
+	return false;
+    }
+
     public void delete() {
 	removeRootDomainObject();
 	removeAssiduousness();

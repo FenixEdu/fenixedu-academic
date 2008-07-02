@@ -581,14 +581,21 @@ public class Assiduousness extends Assiduousness_Base {
     }
 
     public boolean overlapsOtherSchedules(final Schedule schedule, LocalDate beginDate, LocalDate endDate) {
-	Interval scheduleInterval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay().plusDays(1));
 	for (final Schedule otherSchedule : getSchedules()) {
-	    if (schedule != otherSchedule) {
-		Interval otherScheduleInterval = new Interval(otherSchedule.getBeginDate().toDateTimeAtStartOfDay(),
-			otherSchedule.getEndDate().toDateTimeAtStartOfDay().plusDays(1));
-		if ((schedule.getException().equals(otherSchedule.getException()))
-			&& (scheduleInterval.contains(otherScheduleInterval) || otherScheduleInterval.contains(scheduleInterval))) {
-		    return true;
+	    if ((!schedule.equals(otherSchedule)) && schedule.getException().equals(otherSchedule.getException())) {
+		if (endDate == null) {
+		    if (otherSchedule.getBeginDate().isAfter(beginDate) || otherSchedule.getEndDate() == null
+			    || (otherSchedule.getEndDate().isAfter(beginDate))) {
+			return true;
+		    }
+		} else {
+		    Interval scheduleInterval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay()
+			    .plusDays(1));
+		    if (otherSchedule.getEndDate() == null
+			    || scheduleInterval.contains(otherSchedule.getBeginDate().toDateTimeAtStartOfDay())
+			    || scheduleInterval.contains(otherSchedule.getEndDate().toDateTimeAtStartOfDay())) {
+			return true;
+		    }
 		}
 	    }
 	}
@@ -611,7 +618,6 @@ public class Assiduousness extends Assiduousness_Base {
 	for (Schedule schedule : schedules) {
 	    averageWorkTimeDuration = averageWorkTimeDuration.plus(schedule.getAverageWorkPeriodDuration());
 	}
-//	averageWorkTimeDuration = new Duration(averageWorkTimeDuration.getMillis() / schedules.size());
 	return schedules.isEmpty() ? new Duration(0) : new Duration(averageWorkTimeDuration.getMillis() / schedules.size());
     }
 

@@ -55,23 +55,24 @@
 					<logic:notEmpty name="schedule" property="endDate"><bean:write name="schedule" property="endDate"/></logic:notEmpty>
 				</td>
 				<td>
-					<logic:equal name="schedule" property="isEditable" value="true">
-						<html:link page="<%="/viewEmployeeAssiduousness.do?method=showSchedule&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
-							<bean:message key="label.view" bundle="ASSIDUOUSNESS_RESOURCES"/>
-						</html:link>
-						<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
-        		            .getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
-						if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
-						,<html:link page="<%="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;employeeID="+employeeID.toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()%>">
-							<bean:message key="label.edit" bundle="ASSIDUOUSNESS_RESOURCES"/>
-						</html:link>
-						<% } %>
-					</logic:equal>
-					<logic:equal name="schedule" property="isEditable" value="false">
-						<html:link page="<%="/viewEmployeeAssiduousness.do?method=showSchedule&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
-							<bean:message key="label.view" bundle="ASSIDUOUSNESS_RESOURCES"/>
-						</html:link>
-					</logic:equal>
+					<html:link page="<%="/viewEmployeeAssiduousness.do?method=showSchedule&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
+						<bean:message key="label.view" bundle="ASSIDUOUSNESS_RESOURCES"/>
+					</html:link>
+					<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
+    		            .getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
+					if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
+
+						<logic:equal name="schedule" property="isEditable" value="true">
+							,<html:link page="<%="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;employeeID="+employeeID.toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()%>">
+								<bean:message key="label.edit" bundle="ASSIDUOUSNESS_RESOURCES"/>
+							</html:link>
+						</logic:equal>
+						<logic:equal name="schedule" property="isDeletable" value="false">
+							,<html:link page="<%="/employeeAssiduousness.do?method=deleteSchedule&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
+								<bean:message key="label.delete" bundle="ASSIDUOUSNESS_RESOURCES"/>
+							</html:link>
+						</logic:equal>
+					<% } %>
 				</td>
 			</tr>
 			</logic:iterate>	
@@ -80,7 +81,7 @@
 		<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
 	            .getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
 		if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
-		<logic:empty name="employeeScheduleBean" property="schedule">
+		<logic:empty name="employeeScheduleBean" property="employee.assiduousness.currentSchedule">
 			<ul>
 				<li>
 				<html:link page="<%="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule&amp;employeeID="+employeeID.toString()%>">

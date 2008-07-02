@@ -9308,6 +9308,15 @@
 		</filterChains>
     </service>
     <service>
+		<name>DeleteSchedule</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.DeleteSchedule</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="AssiduousnessManagementAuthorization" />
+		</filterChains>		
+	</service>
+    <service>
 		<name>ExportEmployeesAnualInfo</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ExportEmployeesAnualInfo</implementationClass>
 		<description />

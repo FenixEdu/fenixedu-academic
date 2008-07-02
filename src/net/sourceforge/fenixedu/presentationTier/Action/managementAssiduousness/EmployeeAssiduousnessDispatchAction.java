@@ -206,10 +206,8 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	    } else {
 		Integer employeeID = getIntegerFromRequest(request, "employeeID");
 		Employee employee = rootDomainObject.readEmployeeByOID(employeeID);
-		Schedule currentSchedule = employee.getAssiduousness() != null ? employee.getAssiduousness().getCurrentSchedule()
-			: null;
 		employeeScheduleFactory = new EmployeeScheduleFactory(employee, ((IUserView) UserView.getUser()).getPerson()
-			.getEmployee(), currentSchedule);
+			.getEmployee());
 	    }
 	}
 	request.setAttribute("yearMonth", getYearMonth(request, null));
@@ -373,6 +371,17 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	RenderUtils.invalidateViewState();
 	request.setAttribute("employeeID", employeeScheduleFactory.getEmployee().getIdInternal());
 	return prepareAssociateEmployeeWorkSchedule(mapping, form, request, response);
+    }
+
+    public ActionForward deleteSchedule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	final Integer scheduleId = getIntegerFromRequest(request, "scheduleID");
+	final Schedule schedule = (Schedule) rootDomainObject.readScheduleByOID(scheduleId);
+	final YearMonth yearMonth = getYearMonth(request, null);
+	request.setAttribute("yearMonth", yearMonth);
+	request.setAttribute("employeeNumber", new Integer(getFromRequest(request, "employeeNumber").toString()));
+	ServiceUtils.executeService("DeleteSchedule", new Object[] { schedule });
+	return new ViewEmployeeAssiduousnessDispatchAction().showSchedule(mapping, form, request, response);
     }
 
     public ActionForward deleteClocking(ActionMapping mapping, ActionForm form, HttpServletRequest request,

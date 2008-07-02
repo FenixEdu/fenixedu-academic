@@ -79,8 +79,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
 
 	Object[] args = { employee.getAssiduousness(), beginDate, endDate };
-	EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService("ReadEmployeeWorkSheet",
-		args);
+	EmployeeWorkSheet employeeWorkSheet = (EmployeeWorkSheet) ServiceUtils.executeService("ReadEmployeeWorkSheet", args);
 
 	request.setAttribute("employeeWorkSheet", employeeWorkSheet);
 	setEmployeeStatus(request, employee, beginDate, endDate);
@@ -112,16 +111,13 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 		}
 	    }
 	}
-	if (choosenSchedule == null) {
-	    choosenSchedule = employee.getAssiduousness() != null ? employee.getAssiduousness().getCurrentSchedule() : null;
-	}
 	request.setAttribute("scheduleList", schedules);
 	EmployeeScheduleFactory employeeScheduleFactory = new EmployeeScheduleFactory(employee, null, choosenSchedule);
 	request.setAttribute("employeeScheduleBean", employeeScheduleFactory);
 	if (yearMonth != null) {
 	    LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
-	    LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate
-		    .dayOfMonth().getMaximumValue());
+	    LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate.dayOfMonth()
+		    .getMaximumValue());
 	    setEmployeeStatus(request, employee, beginDate, endDate);
 	    request.setAttribute("yearMonth", yearMonth);
 	    request.setAttribute("employee", employee);
@@ -184,8 +180,8 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 
 	if (employee.getAssiduousness() != null) {
 	    LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
-	    LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate
-		    .dayOfMonth().getMaximumValue());
+	    LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate.dayOfMonth()
+		    .getMaximumValue());
 	    List<Justification> justifications = new ArrayList<Justification>();
 	    justifications.addAll(employee.getAssiduousness().getLeaves(beginDate, endDate));
 	    justifications.addAll(employee.getAssiduousness().getMissingClockings(beginDate, endDate));
@@ -213,8 +209,8 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 
 	if (employee.getAssiduousness() != null) {
 	    LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
-	    LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate
-		    .dayOfMonth().getMaximumValue());
+	    LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate.dayOfMonth()
+		    .getMaximumValue());
 	    request.setAttribute("vacations", employee.getAssiduousness().getAssiduousnessVacationsByYear(yearMonth.getYear()));
 	    setEmployeeStatus(request, employee, beginDate, endDate);
 	}
@@ -286,8 +282,8 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	    List<EmployeeBalanceResume> employeeBalanceResumeList = new ArrayList<EmployeeBalanceResume>();
 
 	    LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
-	    LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate
-		    .dayOfMonth().getMaximumValue());
+	    LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, beginDate.dayOfMonth()
+		    .getMaximumValue());
 
 	    List<AssiduousnessStatusHistory> assiduousnessStatusHistoryList = employee.getAssiduousness().getStatusBetween(
 		    beginDate, endDate);
@@ -394,8 +390,7 @@ public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction
 	}
     }
 
-    private void setEmployeeStatus(HttpServletRequest request, final Employee employee, LocalDate beginDate,
-	    LocalDate endDate) {
+    private void setEmployeeStatus(HttpServletRequest request, final Employee employee, LocalDate beginDate, LocalDate endDate) {
 	List<AssiduousnessStatusHistory> employeeStatusList = employee.getAssiduousness().getStatusBetween(beginDate, endDate);
 	Collections.sort(employeeStatusList, new BeanComparator("beginDate"));
 	request.setAttribute("employeeStatusList", employeeStatusList);
