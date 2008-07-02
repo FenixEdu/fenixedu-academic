@@ -118,9 +118,11 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 			studentCurricularPlans.add(studentCurricularPlan);
 		    } else {
 			final RegistrationState registrationState = registration.getActiveState();
-			final DateTime dateTime = registrationState.getStateDate();
-			if (!dateTime.isBefore(begin) && !dateTime.isAfter(end)) {
-			    studentCurricularPlans.add(studentCurricularPlan);
+			if (registrationState != null) {
+			    final DateTime dateTime = registrationState.getStateDate();
+			    if (!dateTime.isBefore(begin) && !dateTime.isAfter(end)) {
+				studentCurricularPlans.add(studentCurricularPlan);
+			    }
 			}
 		    }
 		}
