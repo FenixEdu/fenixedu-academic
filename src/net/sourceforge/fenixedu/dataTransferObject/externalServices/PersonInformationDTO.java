@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -86,12 +87,12 @@ public class PersonInformationDTO {
 	    roles.add(role.getRoleType().name());
 	}
 
-	if (person.hasTeacher()) {
+	if (person.hasTeacher() && person.getTeacher().getCurrentWorkingDepartment() != null) {
 	    this.teacherDepartment = person.getTeacher().getCurrentWorkingDepartment().getName();
 	}
 
-	if (person.hasEmployee()) {
-	    this.employeeDepartment = person.getEmployee().getCurrentDepartmentWorkingPlace().getName();
+	if (person.hasEmployee() && person.getEmployee().getCurrentWorkingPlace() != null) {
+	    this.employeeDepartment = person.getEmployee().getCurrentWorkingPlace().getName();
 	}
 
 	this.studentDegrees = new ArrayList<String>();
