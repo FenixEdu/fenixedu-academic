@@ -161,10 +161,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 		    getRenderedObject("secondCycleIndividualCandidacyResultBeans"));
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    getAndSetDegree(request);
-	    request.setAttribute("secondCycleIndividualCandidacyResultBeans",
-		    getRenderedObject("secondCycleIndividualCandidacyResultBeans"));
-	    return mapping.findForward("introduce-candidacy-results-for-degree");
+	    return executeIntroduceCandidacyResultsInvalid(mapping, actionForm, request, response);
 	}
 
 	return prepareExecuteIntroduceCandidacyResults(mapping, actionForm, request, response);
