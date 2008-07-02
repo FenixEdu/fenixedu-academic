@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -42,8 +43,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
 	@Forward(name = "send-to-coordinator", path = "/candidacy/graduatedPerson/sendToCoordinator.jsp"),
 	@Forward(name = "send-to-scientificCouncil", path = "/candidacy/graduatedPerson/sendToScientificCouncil.jsp"),
+	@Forward(name = "view-candidacy-results", path = "/candidacy/graduatedPerson/viewCandidacyResults.jsp"),
 	@Forward(name = "introduce-candidacy-results", path = "/candidacy/graduatedPerson/introduceCandidacyResults.jsp"),
-	@Forward(name = "introduce-candidacy-results-for-degree", path = "/candidacy/graduatedPerson/introduceCandidacyResultsForDegree.jsp"),
 	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp")
 
 })
@@ -176,6 +177,51 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
 	result.add(bundle.getString("label.candidacy.grade"));
 	result.add(bundle.getString("label.candidacy.result"));
 	return result;
+    }
+
+    public ActionForward prepareExecuteIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("individualCandidaciesByDegree", getProcess(request)
+		.getValidDegreeCandidaciesForGraduatedPersonsByDegree());
+	return mapping.findForward("view-candidacy-results");
+    }
+
+    public ActionForward prepareExecuteIntroduceCandidacyResultsForDegree(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final List<DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean> beans = new ArrayList<DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean>();
+	for (final DegreeCandidacyForGraduatedPersonIndividualProcess process : getProcess(request)
+		.getValidDegreeCandidaciesForGraduatedPersons(getAndSetDegree(request))) {
+	    beans.add(new DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean(process));
+	}
+
+	request.setAttribute("individualCandidacyResultBeans", beans);
+	return mapping.findForward("introduce-candidacy-results");
+    }
+
+    private Degree getAndSetDegree(final HttpServletRequest request) {
+	final Degree degree = rootDomainObject.readDegreeByOID(getIntegerFromRequest(request, "degreeId"));
+	request.setAttribute("degree", degree);
+	return degree;
+    }
+
+    public ActionForward executeIntroduceCandidacyResultsInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	getAndSetDegree(request);
+	request.setAttribute("individualCandidacyResultBeans", getRenderedObject("individualCandidacyResultBeans"));
+	return mapping.findForward("introduce-candidacy-results");
+    }
+
+    public ActionForward executeIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	try {
+	    executeActivity(getProcess(request), "IntroduceCandidacyResults", getRenderedObject("individualCandidacyResultBeans"));
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    return executeIntroduceCandidacyResultsInvalid(mapping, actionForm, request, response);
+	}
+	return prepareExecuteIntroduceCandidacyResults(mapping, actionForm, request, response);
     }
 
     static public class DegreeCandidacyForGraduatedPersonDegreeBean extends CandidacyDegreeBean {

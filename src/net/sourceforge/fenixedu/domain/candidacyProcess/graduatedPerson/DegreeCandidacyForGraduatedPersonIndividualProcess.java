@@ -87,6 +87,10 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     private void editCandidacyInformation(final DegreeCandidacyForGraduatedPersonIndividualProcessBean bean) {
 	getCandidacy().editCandidacyInformation(bean);
     }
+    
+    public boolean hasCandidacyForSelectedDegree(final Degree degree) {
+	return getCandidacySelectedDegree() == degree;
+    }
 
     // static information
 
@@ -250,4 +254,5 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	    return candidacyProcess.getCandidacySelectedDegree().getLastDegreeCurricularPlan();
 	}
     }
+
 }

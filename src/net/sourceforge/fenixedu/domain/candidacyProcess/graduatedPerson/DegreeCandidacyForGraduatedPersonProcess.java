@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -51,7 +52,7 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
 	activities.add(new SendToCoordinator());
 	activities.add(new SendToScientificCouncil());
 	activities.add(new PrintCandidacies());
-	activities.add(new IntroduceCandidacyResults()); // TODO
+	activities.add(new IntroduceCandidacyResults());
 	activities.add(new PublishCandidacyResults());
 	activities.add(new CreateRegistrations());
     }
@@ -121,6 +122,23 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
 	for (final IndividualCandidacyProcess child : getChildProcesses()) {
 	    if (child.isCandidacyValid() && child.isCandidacyAccepted()) {
 		result.add((DegreeCandidacyForGraduatedPersonIndividualProcess) child);
+	    }
+	}
+	return result;
+    }
+
+    public List<DegreeCandidacyForGraduatedPersonIndividualProcess> getValidDegreeCandidaciesForGraduatedPersons(
+	    final Degree degree) {
+
+	if (degree == null) {
+	    return Collections.emptyList();
+	}
+
+	final List<DegreeCandidacyForGraduatedPersonIndividualProcess> result = new ArrayList<DegreeCandidacyForGraduatedPersonIndividualProcess>();
+	for (final IndividualCandidacyProcess child : getChildProcesses()) {
+	    final DegreeCandidacyForGraduatedPersonIndividualProcess process = (DegreeCandidacyForGraduatedPersonIndividualProcess) child;
+	    if (process.isCandidacyValid() && process.hasCandidacyForSelectedDegree(degree)) {
+		result.add(process);
 	    }
 	}
 	return result;
@@ -304,5 +322,4 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
 	    return process;
 	}
     }
-
 }
