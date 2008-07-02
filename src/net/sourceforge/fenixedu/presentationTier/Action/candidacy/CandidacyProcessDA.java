@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -139,7 +140,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	public void setDegree(Degree degree) {
 	    this.degree = (degree != null) ? new DomainReference<Degree>(degree) : null;
 	}
-	
+
 	public IndividualCandidacyState getState() {
 	    return state;
 	}
@@ -217,4 +218,29 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	return bundle.getString("label.candidacy." + getProcessType().getSimpleName() + ".report.filename") + "_"
 		+ new LocalDate().toString("ddMMyyyy") + ".xls";
     }
+
+    public ActionForward prepareExecuteCreateRegistrations(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("candidacyDegreeBeans", createCandidacyDegreeBeans(request));
+	return mapping.findForward("create-registrations");
+    }
+
+    /**
+     * Creates list of CandidacyDegreeBeans with information related to accepted
+     * candidacies
+     */
+    abstract protected List<CandidacyDegreeBean> createCandidacyDegreeBeans(final HttpServletRequest request);
+
+    public ActionForward executeCreateRegistrations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    executeActivity(getProcess(request), "CreateRegistrations");
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute("candidacyDegreeBeans", createCandidacyDegreeBeans(request));
+	    return mapping.findForward("create-registrations");
+	}
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+
 }

@@ -231,7 +231,6 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
     }
 
     static public class Over23CandidacyDegreeBean extends CandidacyDegreeBean {
-
 	public Over23CandidacyDegreeBean(final Over23IndividualCandidacyProcess process) {
 	    setPerson(process.getCandidacyPerson());
 	    setDegree(process.getAcceptedDegree());
@@ -240,30 +239,14 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 	}
     }
 
-    public ActionForward prepareExecuteCreateRegistrations(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-
+    protected List<CandidacyDegreeBean> createCandidacyDegreeBeans(final HttpServletRequest request) {
 	final Over23CandidacyProcess process = getProcess(request);
 	final List<CandidacyDegreeBean> candidacyDegreeBeans = new ArrayList<CandidacyDegreeBean>();
-
 	for (final Over23IndividualCandidacyProcess child : process.getAcceptedOver23IndividualCandidacies()) {
 	    candidacyDegreeBeans.add(new Over23CandidacyDegreeBean(child));
 	}
-
 	Collections.sort(candidacyDegreeBeans);
-	request.setAttribute("candidacyDegreeBeans", candidacyDegreeBeans);
-	return mapping.findForward("create-registrations");
-    }
-
-    public ActionForward executeCreateRegistrations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	try {
-	    executeActivity(getProcess(request), "CreateRegistrations");
-	} catch (final DomainException e) {
-	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    return mapping.findForward("create-registrations");
-	}
-	return listProcessAllowedActivities(mapping, actionForm, request, response);
+	return candidacyDegreeBeans;
     }
 
 }

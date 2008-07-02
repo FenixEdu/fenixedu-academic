@@ -256,29 +256,15 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	}
     }
 
-    public ActionForward prepareExecuteCreateRegistrations(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-
+    @Override
+    protected List<CandidacyDegreeBean> createCandidacyDegreeBeans(HttpServletRequest request) {
 	final SecondCycleCandidacyProcess process = getProcess(request);
 	final List<CandidacyDegreeBean> candidacyDegreeBeans = new ArrayList<CandidacyDegreeBean>();
-
 	for (final SecondCycleIndividualCandidacyProcess child : process.getAcceptedSecondCycleIndividualCandidacies()) {
 	    candidacyDegreeBeans.add(new SecondCycleCandidacyDegreeBean(child));
 	}
-
 	Collections.sort(candidacyDegreeBeans);
-	request.setAttribute("candidacyDegreeBeans", candidacyDegreeBeans);
-	return mapping.findForward("create-registrations");
+	return candidacyDegreeBeans;
     }
 
-    public ActionForward executeCreateRegistrations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	try {
-	    executeActivity(getProcess(request), "CreateRegistrations");
-	} catch (final DomainException e) {
-	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    return mapping.findForward("create-registrations");
-	}
-	return listProcessAllowedActivities(mapping, actionForm, request, response);
-    }
 }
