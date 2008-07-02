@@ -142,9 +142,8 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
     public List<SecondCycleIndividualCandidacyProcess> getAcceptedSecondCycleIndividualCandidacies() {
 	final List<SecondCycleIndividualCandidacyProcess> result = new ArrayList<SecondCycleIndividualCandidacyProcess>();
 	for (final IndividualCandidacyProcess child : getChildProcesses()) {
-	    final SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) child;
-	    if (process.isCandidacyDebtPayed() && process.isCandidacyAccepted()) {
-		result.add(process);
+	    if (child.isCandidacyValid() && child.isCandidacyAccepted()) {
+		result.add((SecondCycleIndividualCandidacyProcess) child);
 	    }
 	}
 	return result;
