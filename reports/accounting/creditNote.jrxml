@@ -85,7 +85,7 @@
 						key="staticText-41"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Left">
-						<font fontName="SansSerif" pdfFontName="Times-Bold" size="16" isBold="true"/>
+						<font fontName="SansSerif" pdfFontName="Times-Bold" size="16" isBold="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[INSTITUTO SUPERIOR TÉCNICO]]></text>
 				</staticText>
@@ -120,7 +120,7 @@
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right" lineSpacing="Single">
-						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
+						<font pdfFontName="Times-Bold" size="12" isBold="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Nota de Crédito Nº " + $P{creditNoteNumber}]]></textFieldExpression>
 				</textField>
@@ -133,7 +133,7 @@
 						key="staticText-43"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement>
-						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
+						<font pdfFontName="Times-Bold" size="12" isBold="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[Processo de]]></text>
 				</staticText>
@@ -146,7 +146,7 @@
 						key="textField-12"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement>
-						<font/>
+						<font isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{name}]]></textFieldExpression>
 				</textField>
@@ -159,7 +159,7 @@
 						key="textField-13"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement>
-						<font/>
+						<font isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{documentIdType}]]></textFieldExpression>
 				</textField>
@@ -172,7 +172,7 @@
 						key="textField-14"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement>
-						<font/>
+						<font isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{documentIdNumber}]]></textFieldExpression>
 				</textField>
@@ -185,7 +185,7 @@
 						key="staticText-44"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement>
-						<font/>
+						<font isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[Nome:]]></text>
 				</staticText>
@@ -198,7 +198,7 @@
 						key="staticText-45"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement>
-						<font/>
+						<font isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[Tipo de Documento:]]></text>
 				</staticText>
@@ -211,7 +211,7 @@
 						key="staticText-46"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement>
-						<font/>
+						<font isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[Número de Documento:]]></text>
 				</staticText>
@@ -225,7 +225,7 @@
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right">
-						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
+						<font pdfFontName="Times-Bold" size="12" isBold="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{original} ? "ORIGINAL" : "DUPLICADO"]]></textFieldExpression>
 				</textField>
@@ -242,7 +242,7 @@
 						</reportElement>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right" lineSpacing="Single">
-						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
+						<font pdfFontName="Times-Bold" size="12" isBold="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["*****DOCUMENTO ANULADO*****"]]></textFieldExpression>
 				</textField>
@@ -255,7 +255,7 @@
 						key="textField-26"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
+						<font pdfFontName="Times-Bold" size="12" isBold="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Referente ao Recibo Nº " + $P{receiptNumber}]]></textFieldExpression>
 				</textField>
@@ -268,7 +268,7 @@
 						key="textField-28"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement>
-						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
+						<font pdfFontName="Times-Bold" size="12" isBold="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{ownerUnit}]]></textFieldExpression>
 				</textField>
@@ -281,7 +281,7 @@
 						key="textField-29"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement>
-						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
+						<font pdfFontName="Times-Bold" size="12" isBold="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Centro de Custo " + $P{ownerUnitCostCenter}]]></textFieldExpression>
 				</textField>
@@ -313,7 +313,7 @@
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom">
-						<font pdfFontName="Times-Roman" size="12"/>
+						<font pdfFontName="Times-Roman" size="12" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
 				</textField>
@@ -359,7 +359,7 @@
 						positionType="FixRelativeToBottom"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font pdfFontName="Times-Roman" size="6"/>
+						<font pdfFontName="Times-Roman" size="6" isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[Documento processado por computador.]]></text>
 				</staticText>
@@ -373,7 +373,7 @@
 						positionType="FixRelativeToBottom"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center">
-						<font pdfFontName="Times-Roman" size="6"/>
+						<font pdfFontName="Times-Roman" size="6" isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[Av. Rovisco Pais, 1 1049-001 Lisboa Codex Telefone: 218417336 Fax: 218419531 Contribuinte Nº: 501507930]]></text>
 				</staticText>
@@ -387,7 +387,7 @@
 						positionType="FixRelativeToBottom"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="8" isItalic="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[Pág.]]></text>
 				</staticText>
@@ -401,7 +401,7 @@
 						positionType="FixRelativeToBottom"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="8" isItalic="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[de]]></text>
 				</staticText>
@@ -415,7 +415,7 @@
 						positionType="FixRelativeToBottom"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="8" isItalic="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
@@ -429,7 +429,7 @@
 						positionType="FixRelativeToBottom"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="8" isItalic="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
@@ -447,7 +447,7 @@
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement>
-						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
+						<font pdfFontName="Times-Bold" size="12" isBold="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[O Funcionário]]></text>
 				</staticText>
@@ -483,7 +483,7 @@
 						positionType="FixRelativeToBottom"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom">
-						<font pdfFontName="Times-Roman" size="6"/>
+						<font pdfFontName="Times-Roman" size="6" isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[Documento processado por computador.]]></text>
 				</staticText>
@@ -497,7 +497,7 @@
 						positionType="FixRelativeToBottom"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center">
-						<font pdfFontName="Times-Roman" size="6"/>
+						<font pdfFontName="Times-Roman" size="6" isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[Av. Rovisco Pais, 1 1049-001 Lisboa Codex Telefone: 218417336 Fax: 218419531 Contribuinte Nº: 501507930]]></text>
 				</staticText>
@@ -513,7 +513,7 @@
 						positionType="FixRelativeToBottom"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="8" isItalic="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[Pág.]]></text>
 				</staticText>
@@ -527,7 +527,7 @@
 						positionType="FixRelativeToBottom"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="8" isItalic="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[de]]></text>
 				</staticText>
@@ -541,7 +541,7 @@
 						positionType="FixRelativeToBottom"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="8" isItalic="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
@@ -555,7 +555,7 @@
 						positionType="FixRelativeToBottom"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="8" isItalic="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
@@ -569,7 +569,7 @@
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement>
-						<font pdfFontName="Times-Roman" size="10"/>
+						<font pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Lisboa, " + $P{creditNoteDate}]]></textFieldExpression>
 				</textField>
@@ -587,7 +587,7 @@
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right" verticalAlignment="Bottom">
-						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
+						<font pdfFontName="Times-Bold" size="12" isBold="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<text><![CDATA[A liquidar a importância de]]></text>
 				</staticText>
@@ -601,7 +601,7 @@
 						positionType="Float"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement verticalAlignment="Bottom">
-						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
+						<font pdfFontName="Times-Bold" size="12" isBold="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{total} + "€"]]></textFieldExpression>
 				</textField>
