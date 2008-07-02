@@ -9,7 +9,7 @@
 DB=$1
 USER=$2
 DB_HOST=$3
-INSTITUTION=`grep "institution.acronym=" ../../build.properties | cut -d '=' -f2`
+INSTITUTION=$4
 
 echo Using host=$DB_HOST
 echo Using database: $DB
