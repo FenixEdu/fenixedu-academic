@@ -17,6 +17,7 @@ import java.util.WeakHashMap;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
+import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.functionalities.exceptions.IllegalOrderInModuleException;
 import net.sourceforge.fenixedu.domain.functionalities.exceptions.MatchPathConflictException;
@@ -539,6 +540,11 @@ public class Functionality extends Functionality_Base implements IFunctionality 
 	for (final FunctionalityParameter functionalityParameter : getParametersSet()) {
 	    functionalityParameter.delete();
 	}
+
+	for (FunctionalityCall functionalityCall : getFunctionalityCallsSet()) {
+	    functionalityCall.delete();
+	}
+	
 	super.disconnect();
     }
 
