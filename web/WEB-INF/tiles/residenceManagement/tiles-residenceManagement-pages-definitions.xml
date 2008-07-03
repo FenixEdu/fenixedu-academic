@@ -1,0 +1,13 @@
+<!DOCTYPE tiles-definitions 
+	PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+	
+<!-- Tiles definitions -->
+
+<tiles-definitions>
+
+	<definition name="residenceManagement-index" extends="definition.residenceManagement.master">
+		<put name="body" value="/residenceManagement/index.jsp"/>
+	</definition>	
+
+</tiles-definitions>
