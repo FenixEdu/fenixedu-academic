@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
-import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation;
+import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfECTSInSpecialSeasonEvaluation;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
@@ -75,7 +75,7 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 		    if (!enrolment.hasSpecialSeason()) {
 			curricularRules.add(new EnrolmentInSpecialSeasonEvaluation(enrolment));
 		    }
-		    curricularRules.add(new MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation());
+		    curricularRules.add(new MaximumNumberOfECTSInSpecialSeasonEvaluation());
 
 		    result.put(degreeModuleToEvaluate, curricularRules);
 		} else {

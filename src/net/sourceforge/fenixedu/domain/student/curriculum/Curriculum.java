@@ -284,10 +284,13 @@ public class Curriculum implements Serializable, ICurriculum {
 	    return Integer.valueOf(1);
 	}
 
-	final int curricularYears = getTotalCurricularYears();
+	Integer curricularYears = getTotalCurricularYears();
+	if (curricularYears == null) {
+	    curricularYears = 0;
+	}
 	final BigDecimal ectsCreditsCurricularYear = sumEctsCredits.add(BigDecimal.valueOf(24)).divide(BigDecimal.valueOf(60),
 		SCALE * SCALE + 1).add(BigDecimal.valueOf(1));
-	return Math.min(ectsCreditsCurricularYear.intValue(), curricularYears);
+	return Math.min(ectsCreditsCurricularYear.intValue(), curricularYears.intValue());
     }
 
     public Integer getTotalCurricularYears() {

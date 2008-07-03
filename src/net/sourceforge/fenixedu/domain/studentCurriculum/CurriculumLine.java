@@ -233,4 +233,14 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     abstract public ExecutionSemester getExecutionPeriod();
 
+    @Override
+    public boolean hasEnrolment(ExecutionSemester executionSemester) {
+	return false;
+    }
+
+    @Override
+    public boolean hasEnrolment(ExecutionYear executionYear) {
+	return false;
+    }
+
 }

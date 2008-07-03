@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors;
 
+import java.math.BigDecimal;
+
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SpecialSeasonCode;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
@@ -8,7 +11,7 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-public class MaximumNumberOfEnrolmentsInSpecialSeasonEvaluationExecutor extends CurricularRuleExecutor {
+public class MaximumNumberOfECTSInSpecialSeasonEvaluationExecutor extends CurricularRuleExecutor {
 
     @Override
     protected RuleResult executeEnrolmentVerificationWithRules(final ICurricularRule curricularRule,
@@ -34,16 +37,27 @@ public class MaximumNumberOfEnrolmentsInSpecialSeasonEvaluationExecutor extends 
 		    "curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.no.specialSeason.code");
 	}
 
-	final Integer maxEnrolments = specialSeasonCode.getMaxEnrolments();
-	final int sum = enrolmentContext.getDegreeModulesToEvaluate().size();
+	final BigDecimal totalEcts = getTotalEcts(registration, enrolmentContext);
 
-	if (maxEnrolments < sum) {
-	    return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
-		    "curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.too.many.specialSeason.enrolments",
-		    specialSeasonCode.getSituation(), maxEnrolments.toString());
+	if (specialSeasonCode.getMaxEcts().compareTo(totalEcts) < 0) {
+	    return RuleResult.createWarning(sourceDegreeModuleToEvaluate.getDegreeModule(),
+		    "curricularRules.ruleExecutors.EnrolmentInSpecialSeasonEvaluationExecutor.too.many.specialSeason.ects",
+		    specialSeasonCode.getSituation(), specialSeasonCode.getMaxEcts().toPlainString());
 	}
 
 	return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
+    }
+
+    private BigDecimal getTotalEcts(Registration registration, EnrolmentContext enrolmentContext) {
+	boolean isSecondCycle = registration.getDegreeType().isSecondCycle();
+	BigDecimal result = BigDecimal.ZERO;
+	for (IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
+	    final CurricularCourse curricularCourse = (CurricularCourse) degreeModuleToEvaluate.getDegreeModule();
+	    if (!isSecondCycle || (isSecondCycle && !curricularCourse.isDissertation())) {
+		result = result.add(BigDecimal.valueOf(degreeModuleToEvaluate.getEctsCredits()));
+	    }
+	}
+	return result;
     }
 
     @Override

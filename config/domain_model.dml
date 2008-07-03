@@ -1065,7 +1065,7 @@ class DomainObject {
 
 	class SpecialSeasonCode extends DomainObject {
 		Integer code;
-		Integer maxEnrolments;
+		BigDecimal maxEcts;
 		String situation;
 	}
 

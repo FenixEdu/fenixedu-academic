@@ -43,3 +43,4 @@ function executeWithTempFile() {
 execute "Deleting empty web addresses" deleteInvalidWebAddresses.sql
 execute "Initiating the new Residence Portal" initializeResidencePortal.sql
 execute "Residence Portal Access Control setup" residencePortalAvailabilityPolicySetup.sql
+execute "Alter Special Season Code" alterSpecialSeasonCodeTable.sql

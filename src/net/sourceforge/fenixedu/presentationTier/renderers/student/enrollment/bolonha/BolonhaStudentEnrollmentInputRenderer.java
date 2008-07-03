@@ -49,8 +49,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
     private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", Language
 	    .getLocale());
 
-    private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", Language
-	    .getLocale());
+    private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
 
     private final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", Language
 	    .getLocale());
@@ -269,7 +268,7 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    // !studentCurriculumGroupBean.isRoot()
 	    // &&
 	    // studentCurriculumGroupBean.getCurriculumModule().isConcluded())
-                // {
+	    // {
 	    // return;
 	    // }
 
@@ -509,8 +508,9 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 	    ectsCell.setClasses(enrolmentEctsClasses);
 
 	    final StringBuilder ects = new StringBuilder();
-	    final double ectsCredits = enrolment.isBolonhaDegree() ? enrolment.getAccumulatedEctsCredits(enrolment
-		    .getExecutionPeriod()) : enrolment.getEctsCredits();
+	    final double ectsCredits = (enrolment.isBolonhaDegree() && bolonhaStudentEnrollmentBean.getCurricularRuleLevel()
+		    .isNormal()) ? enrolment.getAccumulatedEctsCredits(enrolment.getExecutionPeriod()) : enrolment
+		    .getEctsCredits();
 	    ects.append(ectsCredits).append(" ").append(studentResources.getString("label.credits.abbreviation"));
 
 	    ectsCell.setBody(new HtmlText(ects.toString()));
@@ -634,8 +634,8 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
     private static class OptionalCurricularCourseLinkController extends HtmlActionLinkController {
 
 	/**
-         * 
-         */
+	 * 
+	 */
 	private static final long serialVersionUID = 2760270166511466030L;
 
 	private IDegreeModuleToEvaluate degreeModuleToEnrol;
@@ -659,8 +659,8 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
     private static class CycleSelectionLinkController extends HtmlActionLinkController {
 	/**
-         * 
-         */
+	 * 
+	 */
 	private static final long serialVersionUID = -5469571160954095720L;
 
 	private CycleType cycleTypeToEnrol;

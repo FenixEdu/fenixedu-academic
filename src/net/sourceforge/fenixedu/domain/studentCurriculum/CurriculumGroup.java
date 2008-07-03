@@ -88,7 +88,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	addChildCurriculumGroups(courseGroup, executionSemester);
     }
 
-    private void checkParameters(CurriculumGroup parentCurriculumGroup, CourseGroup courseGroup, ExecutionSemester executionSemester) {
+    private void checkParameters(CurriculumGroup parentCurriculumGroup, CourseGroup courseGroup,
+	    ExecutionSemester executionSemester) {
 	if (parentCurriculumGroup == null) {
 	    throw new DomainException("error.studentCurriculum.curriculumGroup.parentCurriculumGroup.cannot.be.null");
 	}
@@ -267,7 +268,8 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
     public Collection<CurricularCourse> getCurricularCoursesToDismissal() {
 	final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
-	for (final Context context : this.getDegreeModule().getValidChildContexts(CurricularCourse.class, (ExecutionSemester) null)) {
+	for (final Context context : this.getDegreeModule().getValidChildContexts(CurricularCourse.class,
+		(ExecutionSemester) null)) {
 	    final CurricularCourse curricularCourse = (CurricularCourse) context.getChildDegreeModule();
 	    if (!getStudentCurricularPlan().getRoot().isApproved(curricularCourse, null)) {
 		result.add(curricularCourse);
@@ -883,6 +885,26 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    }
 	}
 	return null;
+    }
+
+    @Override
+    public boolean hasEnrolment(ExecutionYear executionYear) {
+	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (curriculumModule.hasEnrolment(executionYear)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    @Override
+    public boolean hasEnrolment(ExecutionSemester executionSemester) {
+	for (CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (curriculumModule.hasEnrolment(executionSemester)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }

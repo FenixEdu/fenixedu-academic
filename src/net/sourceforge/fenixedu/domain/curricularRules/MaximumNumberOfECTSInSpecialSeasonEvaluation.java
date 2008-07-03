@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 
-public class MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation extends CurricularRuleNotPersistent {
+public class MaximumNumberOfECTSInSpecialSeasonEvaluation extends CurricularRuleNotPersistent {
 
     public List<GenericPair<Object, Boolean>> getLabel() {
 	return Collections.singletonList(new GenericPair<Object, Boolean>(
@@ -29,7 +29,7 @@ public class MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation extends Curricul
     }
 
     public CurricularRuleType getCurricularRuleType() {
-	return CurricularRuleType.MAXIMUM_NUMBER_OF_ENROLMENTS_IN_SPECIAL_SEASON_EVALUATION;
+	return CurricularRuleType.MAXIMUM_NUMBER_OF_ECTS_IN_SPECIAL_SEASON_EVALUATION;
     }
 
     public ExecutionSemester getBegin() {
@@ -42,7 +42,7 @@ public class MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation extends Curricul
 
     @Override
     public boolean equals(Object obj) {
-	return obj instanceof MaximumNumberOfEnrolmentsInSpecialSeasonEvaluation;
+	return obj instanceof MaximumNumberOfECTSInSpecialSeasonEvaluation;
     }
 
     public VerifyRuleExecutor createVerifyRuleExecutor() {

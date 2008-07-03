@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -1830,6 +1831,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		    && enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
 		result.add(enrolment);
 	    }
+	}
+	return result;
+    }
+
+    public BigDecimal getSpecialSeasonEcts(ExecutionYear executionYear) {
+	Collection<Enrolment> specialSeasonEnrolments = getSpecialSeasonEnrolments(executionYear);
+	BigDecimal result = BigDecimal.ZERO;
+	for (Enrolment enrolment : specialSeasonEnrolments) {
+	    result = result.add(BigDecimal.valueOf(enrolment.getEctsCredits()));
 	}
 	return result;
     }

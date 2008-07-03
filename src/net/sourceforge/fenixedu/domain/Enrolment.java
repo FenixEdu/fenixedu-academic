@@ -1404,4 +1404,14 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    throw new DomainException("error.Enrolment.invalid.curriculumGroup");
 	}
     }
+
+    @Override
+    public boolean hasEnrolment(ExecutionSemester executionSemester) {
+	return isValid(executionSemester);
+    }
+
+    @Override
+    public boolean hasEnrolment(ExecutionYear executionYear) {
+	return isValid(executionYear);
+    }
 }

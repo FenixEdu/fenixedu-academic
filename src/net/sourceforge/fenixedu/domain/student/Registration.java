@@ -1440,8 +1440,7 @@ public class Registration extends Registration_Base {
 		deleteYearSpecialSeasonCode(executionYear);
 	    }
 	} else {
-	    if (specialSeasonCode.getMaxEnrolments() < getLastStudentCurricularPlan().getSpecialSeasonEnrolments(executionYear)
-		    .size()) {
+	    if (specialSeasonCode.getMaxEcts().compareTo(getLastStudentCurricularPlan().getSpecialSeasonEcts(executionYear)) < 0) {
 		throw new DomainException("error.cannot.change.specialSeasonCode");
 	    } else {
 		changeYearSpecialSeasonCode(executionYear, specialSeasonCode);
