@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Set;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
@@ -27,6 +29,12 @@ public class CurrentDegreeCoordinatorsGroup extends DegreeGroup {
         super(degree);
     }
 
+    @Override
+    public String getName() {
+	String name = RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(), new Object[]{getDegree().getName()});
+	return name != null ? name : getExpression();
+    }
+    
     @Override
     public Set<Person> getElements() {
         Degree degree = getDegree();
