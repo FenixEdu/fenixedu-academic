@@ -653,6 +653,9 @@ public class Installer extends Task implements TaskContainer {
 
 		if (!txFinished) {
 		    Transaction.abort();
+                    // This shouldn't be here, or should it?
+                    Transaction.begin();
+                    Transaction.currentFenixTransaction().setReadOnly();
 		}
 	    }
 

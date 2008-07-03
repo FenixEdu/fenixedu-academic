@@ -372,12 +372,6 @@ public class Converter {
 	}
 
 	public static void main(String[] args) throws Exception {
-		try {
-			Transaction.abort();
-			Transaction.commit();
-		} catch (Exception e) {
-
-		}
 		Transaction.begin();
 		//DomainObject.turnOffLockMode();
 		RootDomainObject.initTests();

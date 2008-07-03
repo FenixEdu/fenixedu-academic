@@ -34,6 +34,8 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public void cancelarTransaccao() {
         Transaction.abort();
+        Transaction.begin();
+        Transaction.currentFenixTransaction().setReadOnly();
     }
 
     public void beginTransaction() {
