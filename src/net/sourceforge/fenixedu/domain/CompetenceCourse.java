@@ -782,6 +782,10 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	return false;
     }
 
+    public boolean hasDepartmentUnit() {
+	return getDepartmentUnit() != null;
+    }
+
     public DepartmentUnit getDepartmentUnit() {
 	final CompetenceCourseGroupUnit competenceCourseGroupUnit = getCompetenceCourseGroupUnit();
 	return competenceCourseGroupUnit == null ? null : competenceCourseGroupUnit.getDepartmentUnit();
