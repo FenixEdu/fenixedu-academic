@@ -738,7 +738,7 @@ public class Person extends Person_Base {
 	}
 	if (!hasAnyPartyContact(MobilePhone.class) && !StringUtils.isEmpty(infoPerson.getTelemovel()))
 	    new MobilePhone(this, PartyContactType.PERSONAL, Boolean.FALSE, infoPerson.getTelemovel());
-	if (!hasAnyPartyContact(EmailAddress.class) && !EmailSender.emailAddressFormatIsValid(infoPerson.getEmail()))
+	if (!hasAnyPartyContact(EmailAddress.class) && EmailSender.emailAddressFormatIsValid(infoPerson.getEmail()))
 	    new EmailAddress(this, PartyContactType.PERSONAL, false, Boolean.FALSE, infoPerson.getEmail());
 	if (!hasAnyPartyContact(WebAddress.class) && !StringUtils.isEmpty(infoPerson.getEnderecoWeb()))
 	    new WebAddress(this, PartyContactType.PERSONAL, Boolean.FALSE, infoPerson.getEnderecoWeb());
