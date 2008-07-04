@@ -1476,23 +1476,6 @@ public class Registration extends Registration_Base {
 
     // end Special Season
 
-    // Improvement
-
-    final public List<Enrolment> getEnrolmentsToImprov(ExecutionSemester executionSemester) {
-
-	if (executionSemester == null) {
-	    throw new DomainException("error.executionPeriod.notExist");
-	}
-
-	final List<Enrolment> enrolmentsToImprov = new ArrayList<Enrolment>();
-	for (final StudentCurricularPlan scp : getStudentCurricularPlans()) {
-	    if (!scp.isBoxStructure() && scp.getDegreeCurricularPlan().getDegree().getDegreeType().equals(DegreeType.DEGREE)) {
-		enrolmentsToImprov.addAll(scp.getEnrolmentsToImprov(executionSemester));
-	    }
-	}
-	return enrolmentsToImprov;
-    }
-
     final public List<Enrolment> getEnroledImprovements() {
 	final List<Enrolment> enroledImprovements = new ArrayList<Enrolment>();
 	for (final StudentCurricularPlan scp : getStudentCurricularPlans()) {

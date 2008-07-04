@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1923,105 +1922,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    }
 	}
 	return result;
-    }
-
-    final public List<Enrolment> getEnrolmentsToImprov(ExecutionSemester executionSemester) {
-	List<Enrolment> previousExecPeriodAprovedEnrol = new ArrayList<Enrolment>();
-	List<Enrolment> beforePreviousExecPeriodAprovedEnrol = new ArrayList<Enrolment>();
-	List<Enrolment> beforeBeforePreviousExecPeriodAprovedEnrol = new ArrayList<Enrolment>();
-
-	ExecutionSemester previousExecPeriod = executionSemester.getPreviousExecutionPeriod();
-	ExecutionSemester beforePreviousExecPeriod = previousExecPeriod.getPreviousExecutionPeriod();
-	ExecutionSemester beforeBeforePreviousExecPeriod = beforePreviousExecPeriod.getPreviousExecutionPeriod();
-
-	if (previousExecPeriod != null) {
-	    previousExecPeriodAprovedEnrol.addAll(getAprovedEnrolmentsNotImprovedInExecutionPeriod(previousExecPeriod));
-	}
-
-	if (beforePreviousExecPeriod != null) {
-	    beforePreviousExecPeriodAprovedEnrol
-		    .addAll(getAprovedEnrolmentsNotImprovedInExecutionPeriod(beforePreviousExecPeriod));
-	}
-
-	if (beforeBeforePreviousExecPeriod != null) {
-	    beforeBeforePreviousExecPeriodAprovedEnrol
-		    .addAll(getAprovedEnrolmentsNotImprovedInExecutionPeriod(beforeBeforePreviousExecPeriod));
-	}
-
-	// From Before Before Previous ExecutionPeriod remove the ones with
-	// scope in
-	// Previous ExecutionPeriod
-	removeFromBeforeBeforePreviousExecutionPeriod(beforeBeforePreviousExecPeriodAprovedEnrol, previousExecPeriod);
-
-	// From previous OccupationPeriod remove the ones that not take place in
-	// the
-	// Current OccupationPeriod
-	previousExecPeriodAprovedEnrol = removeNotInCurrentExecutionPeriod(previousExecPeriodAprovedEnrol, executionSemester);
-
-	List<Enrolment> res = (List<Enrolment>) CollectionUtils.union(beforePreviousExecPeriodAprovedEnrol,
-		previousExecPeriodAprovedEnrol);
-
-	res = (List<Enrolment>) CollectionUtils.union(beforeBeforePreviousExecPeriodAprovedEnrol, res);
-
-	return res;
-    }
-
-    private List<Enrolment> getAprovedEnrolmentsNotImprovedInExecutionPeriod(ExecutionSemester executionSemester) {
-	List<Enrolment> result = new ArrayList<Enrolment>();
-	for (Enrolment enrolment : getEnrolmentsSet()) {
-	    if (enrolment.canBeImproved() && enrolment.getExecutionPeriod().equals(executionSemester)) {
-		result.add(enrolment);
-	    }
-	}
-	return result;
-    }
-
-    private void removeFromBeforeBeforePreviousExecutionPeriod(List beforeBeforePreviousExecPeriodAprovedEnrol,
-	    final ExecutionSemester previousExecPeriod) {
-	CollectionUtils.filter(beforeBeforePreviousExecPeriodAprovedEnrol, new Predicate() {
-
-	    final public boolean evaluate(Object arg0) {
-		Enrolment enrolment = (Enrolment) arg0;
-		for (CurricularCourseScope curricularCourseScope : enrolment.getCurricularCourse().getScopes()) {
-		    if (curricularCourseScope.isActiveForExecutionPeriod(previousExecPeriod)) {
-			return false;
-		    }
-		}
-
-		return true;
-	    }
-
-	});
-    }
-
-    private List<Enrolment> removeNotInCurrentExecutionPeriod(List<Enrolment> enrolments,
-	    final ExecutionSemester currentExecutionPeriod) {
-	final List<Enrolment> res = new ArrayList<Enrolment>();
-	for (final Enrolment enrolment : enrolments) {
-	    final CurricularCourse curricularCourse = enrolment.getCurricularCourse();
-	    Set<CurricularCourseScope> scopes = curricularCourse.findCurricularCourseScopesIntersectingPeriod(
-		    currentExecutionPeriod.getBeginDate(), currentExecutionPeriod.getEndDate());
-	    if (scopes != null && !scopes.isEmpty()) {
-		CurricularCourseScope curricularCourseScope = (CurricularCourseScope) CollectionUtils.find(scopes,
-			new Predicate() {
-
-			    final public boolean evaluate(Object arg0) {
-				CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
-				if (curricularCourseScope.getCurricularSemester().getSemester().equals(
-					currentExecutionPeriod.getSemester())
-					&& (curricularCourseScope.getEndDate() == null || (curricularCourseScope.getEnd()
-						.compareTo(new Date())) >= 0))
-				    return true;
-				return false;
-			    }
-			});
-
-		if (curricularCourseScope != null)
-		    res.add(enrolment);
-	    }
-
-	}
-	return res;
     }
 
     final public void createFirstTimeStudentEnrolmentsFor(ExecutionSemester executionSemester, String createdBy) {
