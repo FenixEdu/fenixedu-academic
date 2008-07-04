@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -142,7 +144,6 @@ public class Context extends Context_Base implements Comparable<Context> {
 
     public void edit(final CourseGroup parent, final CurricularPeriod curricularPeriod, final ExecutionSemester begin,
 	    final ExecutionSemester end) {
-
 	setParentCourseGroup(parent);
 	setCurricularPeriod(curricularPeriod);
 	edit(begin, end);
@@ -153,6 +154,19 @@ public class Context extends Context_Base implements Comparable<Context> {
 	checkExistingCourseGroupContexts(getParentCourseGroup(), getChildDegreeModule(), getCurricularPeriod(), begin, end);
 	setBeginExecutionPeriod(begin);
 	setEndExecutionPeriod(end);
+	checkCurriculumLines();
+    }
+
+    private void checkCurriculumLines() {
+	for (final CurriculumModule curriculumModule : getChildDegreeModule().getCurriculumModules()) {
+	    if (curriculumModule.isCurriculumLine()) {
+		final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
+		if (curriculumLine.hasExecutionPeriod()
+			&& !getChildDegreeModule().hasAnyParentContexts(curriculumLine.getExecutionPeriod())) {
+		    throw new DomainException("error.Context.cannot.modify.begin.and.end.because.of.enroled.curriculumLines");
+		}
+	    }
+	}
     }
 
     public void delete() {
