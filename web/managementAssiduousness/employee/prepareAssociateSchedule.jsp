@@ -77,13 +77,22 @@ function removeExistingWorkWeek(iter){
 		</html:messages>
 	</span>
 	
-	<fr:edit id="dates" name="employeeScheduleBean" schema="edit.employeeScheduleFactory.dates" layout="tabular">
-		<fr:layout>
-			<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
-			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-		</fr:layout>
-	</fr:edit>
-
+	<logic:empty name="employeeScheduleBean" property="schedule">
+		<fr:edit id="dates" name="employeeScheduleBean" schema="edit.employeeScheduleFactory.dates" layout="tabular">
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
+		</fr:edit>
+	</logic:empty>
+	<logic:notEmpty name="employeeScheduleBean" property="schedule">
+		<fr:view name="employeeScheduleBean" schema="edit.employeeScheduleFactory.dates" layout="tabular">
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
 	<ul>
 		<li>		
 		<html:link href="javascript:addWorkWeek()"><bean:message key="link.addNewWorkWeek" /></html:link>

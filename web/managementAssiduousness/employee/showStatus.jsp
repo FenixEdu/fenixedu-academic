@@ -38,23 +38,20 @@
 			</li>
 		</ul>
 		<%}%>
-		<logic:present name="statusList">
-			<fr:view name="statusList" schema="show.employeeStatus">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle1 thbold tdcenter" />
-					<%if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {  %>
-						<fr:property name="link(edit)" value="<%="/employeeAssiduousness.do?method=prepareEditEmployeeStatus&month="+month.toString()+"&year="+year.toString()%>" />
-						<fr:property name="key(edit)" value="label.edit" />
-						<fr:property name="param(edit)" value="idInternal" />
-						<fr:property name="visibleIf(edit)" value="editable" />
-						<fr:property name="link(delete)" value="<%="/employeeAssiduousness.do?method=deleteEmployeeStatus&month="+month.toString()+"&year="+year.toString()%>" />
-						<fr:property name="key(delete)" value="label.delete" />
-						<fr:property name="param(delete)" value="idInternal" />
-						<fr:property name="visibleIf(delete)" value="deletable" />
-					<%}%>
-				</fr:layout>
-			</fr:view>
-		</logic:present>
-		
+		<fr:view name="employee" property="assiduousness.assiduousnessStatusHistoriesOrdered" schema="show.employeeStatus">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1 thbold tdcenter" />
+				<%if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {  %>
+					<fr:property name="link(edit)" value="<%="/employeeAssiduousness.do?method=prepareEditEmployeeStatus&month="+month.toString()+"&year="+year.toString()%>" />
+					<fr:property name="key(edit)" value="label.edit" />
+					<fr:property name="param(edit)" value="idInternal" />
+					<fr:property name="visibleIf(edit)" value="editable" />
+					<fr:property name="link(delete)" value="<%="/employeeAssiduousness.do?method=deleteEmployeeStatus&month="+month.toString()+"&year="+year.toString()%>" />
+					<fr:property name="key(delete)" value="label.delete" />
+					<fr:property name="param(delete)" value="idInternal" />
+					<fr:property name="visibleIf(delete)" value="deletable" />
+				<%}%>
+			</fr:layout>
+		</fr:view>
 	</logic:present>
 </logic:present>

@@ -183,6 +183,15 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	return new ViewEmployeeAssiduousnessDispatchAction().showJustifications(mapping, form, request, response);
     }
 
+    public ActionForward prepareToChangeScheduleDates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	final Schedule schedule = (Schedule) rootDomainObject.readScheduleByOID(getIntegerFromRequest(request, "scheduleID"));
+	request.setAttribute("schedule", schedule);
+	request.setAttribute("yearMonth", getYearMonth(request, null));
+	request.setAttribute("employee", schedule.getAssiduousness().getEmployee());
+	return mapping.findForward("edit-schedule-dates");
+    }
+
     public ActionForward prepareAssociateEmployeeWorkSchedule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -365,10 +374,12 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	} else {
 	    setError(request, "errorMessage", (ActionMessage) new ActionMessage("error.schedule.canNotDeleteAllDays"));
 	    RenderUtils.invalidateViewState();
+	    request.setAttribute("scheduleID", schedule.getIdInternal());
+	    request.setAttribute("employeeID", employeeScheduleFactory.getEmployee().getIdInternal());
 	    return mapping.getInputForward();
 	}
-	request.setAttribute("scheduleID", schedule.getIdInternal());
 	RenderUtils.invalidateViewState();
+	request.setAttribute("scheduleID", schedule.getIdInternal());
 	request.setAttribute("employeeID", employeeScheduleFactory.getEmployee().getIdInternal());
 	return prepareAssociateEmployeeWorkSchedule(mapping, form, request, response);
     }
@@ -469,16 +480,9 @@ public class EmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	AssiduousnessStatusHistory assiduousnessStatusHistory = (AssiduousnessStatusHistory) rootDomainObject
 		.readAssiduousnessStatusHistoryByOID(new Integer(getFromRequest(request, "idInternal").toString()));
-	Employee employee = assiduousnessStatusHistory.getAssiduousness().getEmployee();
-	IUserView userView = UserView.getUser();
 	ServiceUtils.executeService("DeleteAssiduousnessStatusHistory", new Object[] { assiduousnessStatusHistory });
-	YearMonth yearMonth = getYearMonth(request, null);
-	request.setAttribute("yearMonth", yearMonth);
-	List<AssiduousnessStatusHistory> employeeStatusList = new ArrayList<AssiduousnessStatusHistory>(employee
-		.getAssiduousness().getAssiduousnessStatusHistories());
-	Collections.sort(employeeStatusList, new BeanComparator("beginDate"));
-	request.setAttribute("statusList", employeeStatusList);
-	request.setAttribute("employee", employee);
+	request.setAttribute("yearMonth", getYearMonth(request, null));
+	request.setAttribute("employee", assiduousnessStatusHistory.getAssiduousness().getEmployee());
 	return mapping.findForward("show-status");
     }
 

@@ -66,6 +66,9 @@
 							,<html:link page="<%="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;employeeID="+employeeID.toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()%>">
 								<bean:message key="label.edit" bundle="ASSIDUOUSNESS_RESOURCES"/>
 							</html:link>
+							,<html:link page="<%="/employeeAssiduousness.do?method=prepareToChangeScheduleDates&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;employeeID="+employeeID.toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()%>">
+								<bean:message key="button.changeDates" bundle="ASSIDUOUSNESS_RESOURCES"/>
+							</html:link>
 						</logic:equal>
 						<logic:equal name="schedule" property="isDeletable" value="false">
 							,<html:link page="<%="/employeeAssiduousness.do?method=deleteSchedule&amp;scheduleID=" + schedule.getIdInternal().toString() + "&amp;month="+month.toString()+"&amp;year="+year.toString()+"&amp;employeeNumber="+employeeNumber.toString()%>">
@@ -81,7 +84,6 @@
 		<%net.sourceforge.fenixedu.applicationTier.IUserView user = (net.sourceforge.fenixedu.applicationTier.IUserView) session
 	            .getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
 		if (net.sourceforge.fenixedu.domain.ManagementGroups.isAssiduousnessManagerMember(user.getPerson())) {%>
-		<logic:empty name="employeeScheduleBean" property="employee.assiduousness.currentSchedule">
 			<ul>
 				<li>
 				<html:link page="<%="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule&amp;employeeID="+employeeID.toString()%>">
@@ -89,7 +91,6 @@
 				</html:link>
 				</li>
 			</ul>	
-		</logic:empty>
 		<% } %>
 
 <logic:notEmpty name="employeeScheduleBean" property="schedule">

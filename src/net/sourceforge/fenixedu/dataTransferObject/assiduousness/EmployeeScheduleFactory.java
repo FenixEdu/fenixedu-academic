@@ -44,18 +44,16 @@ public class EmployeeScheduleFactory implements Serializable, FactoryExecutor {
 
     public EmployeeScheduleFactory(Employee employee, Employee modifiedBy) {
 	LocalDate beginDate = null;
-	LocalDate endDate = null;
-	Schedule schedule = employee.getAssiduousness() != null ? employee.getAssiduousness().getCurrentSchedule() : null;
+	Schedule schedule = employee.getAssiduousness() != null ? employee.getAssiduousness().getLastSchedule() : null;
 	if (schedule != null) {
-	    beginDate = schedule.getBeginDate();
-	    endDate = schedule.getEndDate();
+	    beginDate = schedule.getEndDate() != null ? schedule.getEndDate().plusDays(1) : null;
 	} else {
 	    Contract currentContract = employee.getCurrentWorkingContract();
 	    if (currentContract != null) {
 		beginDate = currentContract.getBeginDate().toLocalDate();
 	    }
 	}
-	init(employee, modifiedBy, schedule, beginDate, endDate);
+	init(employee, modifiedBy, null, beginDate, null);
     }
 
     public EmployeeScheduleFactory(Employee employee, Employee modifiedBy, Schedule schedule) {

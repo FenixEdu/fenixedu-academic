@@ -93,12 +93,10 @@
 			</div>
 		</logic:notEqual>
 	</logic:present>
-</logic:present>
-
-<logic:present name="employeeStatusList">	
-	<fr:view name="employeeStatusList" schema="show.employeeStatus">
+	
+	<fr:view name="employee" property="assiduousness.assiduousnessStatusHistoriesOrdered" schema="show.employeeStatus">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thbold tdcenter" />
 		</fr:layout>
 	</fr:view>
-</logic:present>		
+</logic:present>	

@@ -980,7 +980,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	</slot>
 </schema>
 	
-<schema name="edit.employeeScheduleFactory.dates" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeScheduleFactory">
+<schema name="edit.schedule.dates" type="net.sourceforge.fenixedu.domain.assiduousness.Schedule">
 	<slot name="beginDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES">
 	    <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 			<property name="format" value="dd/MM/yyyy"/>
@@ -992,6 +992,41 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	    <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 		<property name="format" value="dd/MM/yyyy" />
 		<property name="size" value="10"/>
+	</slot>
+	<setter signature="editScheduleDates(beginDate, endDate)"/>
+</schema>
+
+<schema name="edit.schedule.endDate" type="net.sourceforge.fenixedu.domain.assiduousness.Schedule">
+	<slot name="beginDate" read-only="true" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES">
+	    <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+			<property name="format" value="dd/MM/yyyy"/>
+			<property name="size" value="10"/>
+		</validator>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+	<slot name="endDate" key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES">
+	    <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
+		<property name="format" value="dd/MM/yyyy" />
+		<property name="size" value="10"/>
+	</slot>
+	<setter signature="editScheduleDates(beginDate, endDate)"/>
+</schema>
+
+
+	
+<schema name="edit.employeeScheduleFactory.dates" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeScheduleFactory">
+	<slot name="beginDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES">
+	    <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+			<property name="format" value="dd/MM/yyyy"/>
+			<property name="size" value="10"/>
+		</validator>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+	<slot name="endDate" key="label.endDate" bundle="ASSIDUOUSNESS_RESOURCES">
+	    <validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
+			<property name="format" value="dd/MM/yyyy" />
+			<property name="size" value="10"/>
+		</validator>
 	</slot>
 </schema>
 		

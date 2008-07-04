@@ -101,6 +101,9 @@
 	<definition name="associate-exception-schedule" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/employee/associateExceptionSchedule.jsp"/>
 	</definition>
+	<definition name="edit-schedule-dates" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/employee/editScheduleDates.jsp"/>
+	</definition>
 	<definition name="edit-status" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/employee/editStatus.jsp"/>
 	</definition>
