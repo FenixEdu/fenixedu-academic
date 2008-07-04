@@ -43,10 +43,12 @@ import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
+import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
@@ -104,6 +106,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.smtp.EmailSender;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -727,15 +730,18 @@ public class Person extends Person_Base {
 	setProfession(valueToUpdateIfNewNotNull(getProfession(), infoPerson.getProfissao()));
 	setGender((Gender) valueToUpdateIfNewNotNull(getGender(), infoPerson.getSexo()));
 
-	setWebAddress(valueToUpdate(getWebAddress(), infoPerson.getEnderecoWeb()));
-	setEmail(valueToUpdate(getEmail(), infoPerson.getEmail()));
-	setPhone(valueToUpdate(getPhone(), infoPerson.getTelefone()));
-	setMobile(valueToUpdate(getMobile(), infoPerson.getTelemovel()));
-	if (!StringUtils.isNumeric(getWorkPhone())) {
-	    setWorkPhone(infoPerson.getWorkPhone());
-	} else {
-	    setWorkPhone(valueToUpdate(getWorkPhone(), infoPerson.getWorkPhone()));
+	if (!hasAnyPartyContact(Phone.class)) {
+	    if (!StringUtils.isEmpty(infoPerson.getTelefone()))
+		new Phone(this, PartyContactType.PERSONAL, Boolean.FALSE, infoPerson.getTelefone());
+	    if (!StringUtils.isEmpty(infoPerson.getWorkPhone()))
+		new Phone(this, PartyContactType.WORK, Boolean.TRUE, infoPerson.getWorkPhone());
 	}
+	if (!hasAnyPartyContact(MobilePhone.class) && !StringUtils.isEmpty(infoPerson.getTelemovel()))
+	    new MobilePhone(this, PartyContactType.PERSONAL, Boolean.FALSE, infoPerson.getTelemovel());
+	if (!hasAnyPartyContact(EmailAddress.class) && !EmailSender.emailAddressFormatIsValid(infoPerson.getEmail()))
+	    new EmailAddress(this, PartyContactType.PERSONAL, false, Boolean.FALSE, infoPerson.getEmail());
+	if (!hasAnyPartyContact(WebAddress.class) && !StringUtils.isEmpty(infoPerson.getEnderecoWeb()))
+	    new WebAddress(this, PartyContactType.PERSONAL, Boolean.FALSE, infoPerson.getEnderecoWeb());
     }
 
     private String valueToUpdate(String actualValue, String newValue) {
@@ -922,13 +928,13 @@ public class Person extends Person_Base {
      * PersonFunctions that selection indicated in the parameters.
      * 
      * @param unit
-     *                filter all PersonFunctions to this unit, or
-     *                <code>null</code> for all PersonFunctions
+     *            filter all PersonFunctions to this unit, or <code>null</code>
+     *            for all PersonFunctions
      * @param includeSubUnits
-     *                if even subunits of the given unit are considered
+     *            if even subunits of the given unit are considered
      * @param active
-     *                the state of the function, <code>null</code> for all
-     *                PersonFunctions
+     *            the state of the function, <code>null</code> for all
+     *            PersonFunctions
      */
     public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active, Boolean virtual,
 	    AccountabilityTypeEnum accountabilityTypeEnum) {
@@ -1060,17 +1066,17 @@ public class Person extends Person_Base {
     }
 
     private boolean canBeDeleted() {
-	return !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs() 
-		&& !hasAnyExportGroupingReceivers() && !hasAnyPersistentGroups() && !hasAnyPersonSpaceOccupations()
-		&& !hasAnyPunctualRoomsOccupationComments() && !hasAnyVehicleAllocations()
-		&& !hasAnyPunctualRoomsOccupationRequests() && !hasAnyPunctualRoomsOccupationRequestsToProcess()
-		&& !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations()
-		&& !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
-		&& !hasAnyGuides() && !hasAnyProjectAccesses() && !hasEmployee() && !hasTeacher()
-		&& !hasGrantOwner() && !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasParking()
-		&& !hasAnyResearchInterests() && !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
-		&& !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable()) && !hasLibraryCard()
-		&& !hasAnyAcademicServiceRequests() && !hasAnyCardGenerationEntries();
+	return !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs() && !hasAnyExportGroupingReceivers()
+		&& !hasAnyPersistentGroups() && !hasAnyPersonSpaceOccupations() && !hasAnyPunctualRoomsOccupationComments()
+		&& !hasAnyVehicleAllocations() && !hasAnyPunctualRoomsOccupationRequests()
+		&& !hasAnyPunctualRoomsOccupationRequestsToProcess() && !hasAnyAssociatedQualifications()
+		&& !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations() && !hasAnyExportGroupingSenders()
+		&& !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates() && !hasAnyGuides()
+		&& !hasAnyProjectAccesses() && !hasEmployee() && !hasTeacher() && !hasGrantOwner() && !hasAnyPayedGuides()
+		&& !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests() && !hasAnyProjectParticipations()
+		&& !hasAnyParticipations() && !hasAnyBoards() && !hasAnyPersonFunctions()
+		&& (!hasHomepage() || getHomepage().isDeletable()) && !hasLibraryCard() && !hasAnyAcademicServiceRequests()
+		&& !hasAnyCardGenerationEntries();
     }
 
     private boolean hasParking() {
@@ -2417,7 +2423,7 @@ public class Person extends Person_Base {
 	final Phone phone = getPersonWorkPhone();
 	if (phone == null) {
 	    if (!StringUtils.isEmpty(workPhone)) {
-		PartyContact.createPhone(this, PartyContactType.INSTITUTIONAL, true, false, workPhone);
+		PartyContact.createPhone(this, PartyContactType.WORK, true, false, workPhone);
 	    }
 	} else {
 	    phone.setNumber(workPhone);

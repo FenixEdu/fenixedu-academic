@@ -720,11 +720,15 @@ public abstract class Party extends Party_Base {
 
     public boolean hasAnyPartyContact(final Class<? extends PartyContact> clazz, final PartyContactType type) {
 	for (final PartyContact contact : getPartyContactsSet()) {
-	    if (clazz.isAssignableFrom(contact.getClass()) && contact.getType() == type) {
+	    if (clazz.isAssignableFrom(contact.getClass()) && (type == null || contact.getType() == type)) {
 		return true;
 	    }
 	}
 	return false;
+    }
+
+    public boolean hasAnyPartyContact(final Class<? extends PartyContact> clazz) {
+	return hasAnyPartyContact(clazz, null);
     }
 
     public PartyContact getDefaultPartyContact(final Class<? extends PartyContact> clazz) {
