@@ -30,6 +30,14 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 
     private Double ectsCredits;
 
+    private Double theoreticalHours;
+
+    private Double labHours;
+
+    private Double praticalHours;
+
+    private Double theoPratHours;
+
     public String getAcronym() {
 	if (getCurricularCourse() != null) {
 	    acronym = getCurricularCourse().getAcronym();
@@ -74,6 +82,50 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 	this.ectsCredits = ectsCredits;
     }
 
+    public Double getTheoreticalHours() {
+	if (theoreticalHours == null) {
+	    theoreticalHours = (getCurricularCourse() != null) ? getCurricularCourse().getTheoreticalHours() : Double.valueOf(0);
+	}
+	return theoreticalHours;
+    }
+
+    public void setTheoreticalHours(final Double theoreticalHours) {
+	this.theoreticalHours = theoreticalHours;
+    }
+
+    public Double getLabHours() {
+	if (labHours == null) {
+	    labHours = (getCurricularCourse() != null) ? getCurricularCourse().getLabHours() : Double.valueOf(0);
+	}
+	return labHours;
+    }
+
+    public void setLabHours(Double labHours) {
+	this.labHours = labHours;
+    }
+
+    public Double getPraticalHours() {
+	if (praticalHours == null) {
+	    praticalHours = (getCurricularCourse() != null) ? getCurricularCourse().getPraticalHours() : Double.valueOf(0);
+	}
+	return praticalHours;
+    }
+
+    public void setPraticalHours(Double praticalHours) {
+	this.praticalHours = praticalHours;
+    }
+
+    public Double getTheoPratHours() {
+	if (theoPratHours == null) {
+	    theoPratHours = (getCurricularCourse() != null) ? getCurricularCourse().getTheoPratHours() : Double.valueOf(0);
+	}
+	return theoPratHours;
+    }
+
+    public void setTheoPratHours(Double theoPratHours) {
+	this.theoPratHours = theoPratHours;
+    }
+
     public Integer getEnrollmentWeigth() {
 	if (enrollmentWeigth == null) {
 	    enrollmentWeigth = (getCurricularCourse() != null) ? getCurricularCourse().getEnrollmentWeigth() : Integer.valueOf(0);
@@ -114,7 +166,7 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 	    checkCourseGroup();
 	    checkCurricularSemesterAndYear();
 
-	    ServiceUtils.executeService( "CreateOldCurricularCourse", getArgumentsToCreate());
+	    ServiceUtils.executeService("CreateOldCurricularCourse", getArgumentsToCreate());
 
 	} catch (FenixActionException e) {
 	    this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
@@ -145,7 +197,7 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
 
     public String editOldCurricularCourse() throws FenixFilterException {
 	try {
-	    ServiceUtils.executeService( "EditOldCurricularCourse", getArgumentsToEdit());
+	    ServiceUtils.executeService("EditOldCurricularCourse", getArgumentsToEdit());
 	    setContextID(0); // resetContextID
 	} catch (FenixServiceException e) {
 	    addErrorMessage(bolonhaBundle.getString(e.getMessage()));
@@ -157,7 +209,8 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
     private Object[] getArgumentsToEdit() {
 	return new Object[] { getCurricularCourseID(), getName(), getNameEn(), getCode(), getAcronym(),
 		getMinimumValueForAcumulatedEnrollments(), getMaximumValueForAcumulatedEnrollments(), getWeight(),
-		getEnrollmentWeigth(), getCredits(), getEctsCredits() };
+		getEnrollmentWeigth(), getCredits(), getEctsCredits(), getTheoreticalHours(), getLabHours(), getPraticalHours(),
+		getTheoPratHours() };
     }
 
     @Override

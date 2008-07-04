@@ -38,7 +38,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -48,6 +47,8 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class CurricularCourse extends CurricularCourse_Base {
 
@@ -205,7 +206,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     /**
      * - Edit Pre-Bolonha CurricularCourse
      */
-    public void edit(String name, String nameEn, String code, String acronym, Double weigth, Double credits, Double ectsCredits) {
+    public void edit(String name, String nameEn, String code, String acronym, Double weigth, Double credits, Double ectsCredits,
+	    Integer enrolmentWeigth, Integer minimumValueForAcumulatedEnrollments, Integer maximumValueForAcumulatedEnrollments,
+	    final Double theoreticalHours, final Double labHours, final Double praticalHours, final Double theoPratHours) {
 	checkForCurricularCourseWithSameAttributes(getDegreeCurricularPlan(), name, code, acronym);
 	setName(name);
 	setNameEn(nameEn);
@@ -214,6 +217,15 @@ public class CurricularCourse extends CurricularCourse_Base {
 	setWeigth(weigth);
 	setCredits(credits);
 	setEctsCredits(ectsCredits);
+
+	setEnrollmentWeigth(enrolmentWeigth);
+	setMinimumValueForAcumulatedEnrollments(minimumValueForAcumulatedEnrollments);
+	setMaximumValueForAcumulatedEnrollments(maximumValueForAcumulatedEnrollments);
+
+	setTheoreticalHours(theoreticalHours);
+	setLabHours(labHours);
+	setPraticalHours(praticalHours);
+	setTheoPratHours(theoPratHours);
     }
 
     private void checkForCurricularCourseWithSameAttributes(DegreeCurricularPlan degreeCurricularPlan, String name, String code,
@@ -1315,8 +1327,8 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getAcronym(ExecutionSemester period) {
-	return (super.getAcronym() == null || super.getAcronym().length() == 0) && hasCompetenceCourse() ?
-		getCompetenceCourse().getAcronym(period) : super.getAcronym();
+	return (super.getAcronym() == null || super.getAcronym().length() == 0) && hasCompetenceCourse() ? getCompetenceCourse()
+		.getAcronym(period) : super.getAcronym();
     }
 
     @Override

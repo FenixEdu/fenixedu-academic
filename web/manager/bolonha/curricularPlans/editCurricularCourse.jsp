@@ -91,7 +91,7 @@
 		<%-- Pre-Bolonha DCP --%>
 		<h:panelGroup rendered="#{!ManagerCurricularCourseManagement.degreeCurricularPlan.bolonhaDegree}">
 			<h:outputText value="<div class='simpleblock4'>" escape="false"/>
-			<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
+			<h:outputText value="<fieldset class='lfloat4'>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['name']} (pt):</label>" escape="false"/>
 			<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="namePB" size="40" maxlength="40" value="#{ManagerCurricularCourseManagement.name}"/>
@@ -141,6 +141,26 @@
 			<h:outputText value="<p><label>#{managerBundle['message.manager.curricular.course.ectsCredits']}</label>" escape="false"/>
 			<h:inputText alt="#{htmlAltBundle['inputText.ectsCredits']}" id="ectsCredits" size="10" maxlength="10" value="#{ManagerCurricularCourseManagement.ectsCredits}"/>
 			<h:message for="ectsCredits" styleClass="error0"/>
+			<h:outputText value="</p>" escape="false"/>
+			
+			<h:outputText value="<p><label>#{managerBundle['message.manager.theoreticalHours']}</label>" escape="false"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.theoreticalHours']}" id="theoreticalHours" size="10" maxlength="10" value="#{ManagerCurricularCourseManagement.theoreticalHours}"/>
+			<h:message for="theoreticalHours" styleClass="error0"/>
+			<h:outputText value="</p>" escape="false"/>
+			
+			<h:outputText value="<p><label>#{managerBundle['message.manager.labHours']}</label>" escape="false"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.labHours']}" id="labHours" size="10" maxlength="10" value="#{ManagerCurricularCourseManagement.labHours}"/>
+			<h:message for="labHours" styleClass="error0"/>
+			<h:outputText value="</p>" escape="false"/>
+			
+			<h:outputText value="<p><label>#{managerBundle['message.manager.praticalHours']}</label>" escape="false"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.praticalHours']}" id="praticalHours" size="10" maxlength="10" value="#{ManagerCurricularCourseManagement.praticalHours}"/>
+			<h:message for="praticalHours" styleClass="error0"/>
+			<h:outputText value="</p>" escape="false"/>
+			
+			<h:outputText value="<p><label>#{managerBundle['message.manager.theoPratHours']}</label>" escape="false"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.theoPratHours']}" id="theoPratHours" size="10" maxlength="10" value="#{ManagerCurricularCourseManagement.theoPratHours}"/>
+			<h:message for="theoPratHours" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>

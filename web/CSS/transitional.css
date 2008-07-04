@@ -411,6 +411,7 @@ padding-right: 0.5em;
 .lfloat label { float: left; text-align: right; width: 10em; }
 .lfloat2 label { float: left; text-align: right; width: 12em; }
 .lfloat3 label { float: left; text-align: right; width: 15em; }
+.lfloat4 label { float: left; text-align: right; width: 20em; }
 
 .lempty { color: #fff; }
 .lfloat .indent105 { margin-left: 10.5em; }
