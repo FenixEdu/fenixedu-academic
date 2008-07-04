@@ -139,7 +139,7 @@
 					<p class="pleft1 mvert05"><b class="highlight1"><bean:write name="registrationCurriculumBean" property="conclusionDate"/></b></p>
 				</logic:equal>
 				<logic:equal name="registrationCurriculumBean" property="conclusionProcessed" value="false">
-					<logic:equal name="registration" property="concluded" value="true">
+					<logic:equal name="registrationCurriculumBean" property="concluded" value="true">
 						<p class="mvert05"><span class="error0"><strong><bean:message key="missing.final.average.info" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></span></p>
 					</logic:equal>
 
