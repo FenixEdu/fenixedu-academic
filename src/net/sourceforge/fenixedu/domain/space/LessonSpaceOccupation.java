@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.space;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
@@ -12,6 +13,7 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
@@ -154,4 +156,19 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
     public Boolean getDailyFrequencyMarkSunday() {
 	return null;
     }
+
+    @Override
+    public boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, final DateTime start, final DateTime end) {
+	final Lesson lesson = getLesson();
+	if (lesson.getExecutionCourse() == executionCourse) {
+	    final List<Interval> intervals = getEventSpaceOccupationIntervals(start.toYearMonthDay(), end.toYearMonthDay().plusDays(1));
+	    for (final Interval interval : intervals) {
+		if (start.isBefore(interval.getEnd()) && end.isAfter(interval.getStart())) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
 }

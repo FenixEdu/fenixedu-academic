@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -8,6 +9,7 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Base {
@@ -91,5 +93,10 @@ public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Bas
     @Override
     public DiaSemana getDayOfWeek() {
 	return null;
+    }
+
+    @Override
+    public boolean isOccupiedByExecutionCourse(ExecutionCourse executionCourse, DateTime start, DateTime end) {
+	return false;
     }
 }

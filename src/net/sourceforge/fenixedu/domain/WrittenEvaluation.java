@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
@@ -33,6 +32,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
@@ -771,4 +772,5 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public abstract boolean canBeAssociatedToRoom(AllocatableSpace room);
+
 }

@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.domain.space;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FrequencyType;
+import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -40,8 +42,10 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 	}
 
 	AllocatableSpace space = (AllocatableSpace) getResource();
-	if(!space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(), 
-		lessonInstance.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)) {
+	final ExecutionCourse executionCourse = lessonInstance.getLesson().getExecutionCourse();
+	if(!space.isOccupiedByExecutionCourse(executionCourse, lessonInstance.getBeginDateTime(), lessonInstance.getEndDateTime())
+		&& !space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(), 
+			lessonInstance.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)) {
 
 	    throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free",
 		    space.getIdentification(), lessonInstance.getDay().toString("dd-MM-yy"));
@@ -133,5 +137,19 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
     @Override
     public Group getAccessGroup() {
 	return null;
-    }                
+    }
+
+    @Override
+    public boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, final DateTime start, final DateTime end) {
+	for (final LessonInstance lessonInstance : getLessonInstancesSet()) {
+	    final Lesson lesson = lessonInstance.getLesson();
+	    if (lesson.getExecutionCourse() == executionCourse &&
+		    start.isBefore(lessonInstance.getEndDateTime()) &&
+		    end.isAfter(lessonInstance.getBeginDateTime())) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }

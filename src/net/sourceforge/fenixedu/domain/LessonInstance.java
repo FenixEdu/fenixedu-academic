@@ -207,4 +207,5 @@ public class LessonInstance extends LessonInstance_Base {
 	result.append(getRoom() != null ? getRoom().getIdentification() : "");
 	return result.toString();
     }
+
 }

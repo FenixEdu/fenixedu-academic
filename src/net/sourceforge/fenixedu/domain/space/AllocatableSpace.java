@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -21,6 +22,7 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public abstract class AllocatableSpace extends AllocatableSpace_Base {
@@ -253,7 +255,21 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	}		
 	return true;
     }
-    
+
+    public boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, 
+	    final DateTime start, final DateTime end) {
+	
+	for (final ResourceAllocation spaceOccupation : getResourceAllocationsForCheck()) {
+	    if(spaceOccupation.isEventSpaceOccupation()) {
+		final EventSpaceOccupation occupation = (EventSpaceOccupation) spaceOccupation;
+		if (occupation.isOccupiedByExecutionCourse(executionCourse, start, end)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
     public boolean isFree(EventSpaceOccupation occupationToNotCheck) {	
 	for (ResourceAllocation spaceOccupation : getResourceAllocationsForCheck()) {
 	    if(spaceOccupation.isEventSpaceOccupation()) {

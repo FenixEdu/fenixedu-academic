@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.space;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -12,6 +13,7 @@ import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
@@ -128,4 +130,17 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     public FrequencyType getFrequency() {
 	return null;
     }
+
+    @Override
+    public boolean isOccupiedByExecutionCourse(final ExecutionCourse executionCourse, final DateTime start, final DateTime end) {
+	for (final WrittenEvaluation writtenEvaluation : getWrittenEvaluationsSet()) {
+	    if (writtenEvaluation.getAssociatedExecutionCoursesSet().contains(executionCourse)
+		    && start.isBefore(writtenEvaluation.getEndDateTime())
+		    && end.isAfter(writtenEvaluation.getBeginningDateTime())) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }

@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.Person;
@@ -46,13 +45,13 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.EvaluationType;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import dml.runtime.RelationAdapter;
 
 public class Thesis extends Thesis_Base {
@@ -240,7 +239,7 @@ public class Thesis extends Thesis_Base {
 
     @Override
     @Checked("ThesisPredicates.student")
-    public void setDiscussed(DateTime discussed) {	
+    public void setDiscussed(DateTime discussed) {
 	if(discussed != null && getEnrolment().getCreationDateDateTime().isAfter(discussed)) {
 	    throw new DomainException("thesis.invalid.discussed.date.time");
 	}	
