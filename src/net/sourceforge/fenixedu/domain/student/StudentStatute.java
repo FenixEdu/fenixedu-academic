@@ -58,6 +58,16 @@ public class StudentStatute extends StudentStatute_Base {
 	return true;
     }
 
+    public boolean isValidOnAnyExecutionPeriodFor(final ExecutionYear executionYear) {
+	for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+	    if (isValidInExecutionPeriod(executionSemester)) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
     public boolean isValidInCurrentExecutionPeriod() {
 	return this.isValidInExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
     }
@@ -85,8 +95,8 @@ public class StudentStatute extends StudentStatute_Base {
 
 	ExecutionSemester statuteBegin = statute.getBeginExecutionPeriod() != null ? statute.getBeginExecutionPeriod()
 		: ExecutionSemester.readFirstExecutionSemester();
-	ExecutionSemester statuteEnd = statute.getEndExecutionPeriod() != null ? statute.getEndExecutionPeriod() : ExecutionSemester
-		.readLastExecutionSemester();
+	ExecutionSemester statuteEnd = statute.getEndExecutionPeriod() != null ? statute.getEndExecutionPeriod()
+		: ExecutionSemester.readLastExecutionSemester();
 
 	return overlapsWith(statute.getStatuteType(), statuteBegin, statuteEnd);
 
@@ -137,7 +147,7 @@ public class StudentStatute extends StudentStatute_Base {
 	}
 
     }
-    
+
     public boolean isGrantOwnerStatute() {
 	return getStatuteType() == StudentStatuteType.SAS_GRANT_OWNER;
     }
@@ -146,7 +156,5 @@ public class StudentStatute extends StudentStatute_Base {
 	return (getBeginExecutionPeriod() != null ? getBeginExecutionPeriod().getQualifiedName() : " - ") + " ..... "
 		+ (getEndExecutionPeriod() != null ? getEndExecutionPeriod().getQualifiedName() : " - ");
     }
-    
-
 
 }
