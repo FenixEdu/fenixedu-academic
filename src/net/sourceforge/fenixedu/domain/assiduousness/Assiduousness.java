@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.WeekDay;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
@@ -86,6 +87,22 @@ public class Assiduousness extends Assiduousness_Base {
 	    }
 	}
 	return null;
+    }
+
+    public Schedule getLastSchedule() {
+	Schedule lastSchedule = null;
+	for (final Schedule schedule : getSchedules()) {
+	    if (!schedule.getException()) {
+		if (schedule.getEndDate() == null) {
+		    return schedule;
+		} else {
+		    if (lastSchedule == null || schedule.getEndDate().isAfter(lastSchedule.getEndDate())) {
+			lastSchedule = schedule;
+		    }
+		}
+	    }
+	}
+	return lastSchedule;
     }
 
     public Schedule getSchedule(LocalDate date) {
@@ -703,6 +720,13 @@ public class Assiduousness extends Assiduousness_Base {
 	    }
 	}
 	return false;
+    }
+
+    public List<AssiduousnessStatusHistory> getAssiduousnessStatusHistoriesOrdered() {
+	List<AssiduousnessStatusHistory> employeeStatusList = new ArrayList<AssiduousnessStatusHistory>(
+		getAssiduousnessStatusHistories());
+	Collections.sort(employeeStatusList, new BeanComparator("beginDate"));
+	return employeeStatusList;
     }
 
 }
