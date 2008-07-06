@@ -2092,15 +2092,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ShowGrantOwner</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.list.ShowGrantOwner</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="GrantOwnerManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadGrantOwnerByPerson</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.grant.owner.ReadGrantOwnerByPerson</implementationClass>
