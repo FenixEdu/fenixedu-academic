@@ -20,13 +20,14 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import net.sourceforge.fenixedu.util.NameUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
+
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ListGrantContractAndInsuranceByCriteria extends Service {
     private static final double dayValueOfInsurance = 0.17;
@@ -119,19 +120,8 @@ public class ListGrantContractAndInsuranceByCriteria extends Service {
 	    InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner, List<InfoListGrantOwnerByOrder> result)
 	    throws ExcepcaoPersistencia, ParseException {
 
-	InfoListGrantOwnerByOrder infoListGrantOwnerByOrder = new InfoListGrantOwnerByOrder();
-	infoListGrantOwnerByOrder.setGrantOwnerId(grantContractRegime.getGrantContract().getGrantOwner().getIdInternal());
-	infoListGrantOwnerByOrder.setGrantOwnerNumber(grantContractRegime.getGrantContract().getGrantOwner().getNumber());
-
-	if (!(grantContractRegime.getGrantContract().getGrantOwner().getPerson() == null)) {
-	    infoListGrantOwnerByOrder.setFirstName(NameUtils.getFirstName(grantContractRegime.getGrantContract().getGrantOwner()
-		    .getPerson().getName()));
-	    infoListGrantOwnerByOrder.setLastName(NameUtils.getLastName(grantContractRegime.getGrantContract().getGrantOwner()
-		    .getPerson().getName()));
-	} else {
-	    infoListGrantOwnerByOrder.setFirstName("");
-	    infoListGrantOwnerByOrder.setLastName("");
-	}
+	final GrantOwner grantOwner = grantContractRegime.getGrantContract().getGrantOwner();
+	InfoListGrantOwnerByOrder infoListGrantOwnerByOrder = new InfoListGrantOwnerByOrder(grantOwner);
 
 	infoListGrantOwnerByOrder.setContractNumber(grantContractRegime.getGrantContract().getContractNumber());
 
