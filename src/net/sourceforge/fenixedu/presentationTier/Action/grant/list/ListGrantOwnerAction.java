@@ -71,7 +71,7 @@ public class ListGrantOwnerAction extends FenixDispatchAction {
 
     public ActionForward showGrantOwner(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final Integer oid = new Integer(request.getParameter("grantOwnerId"));
+	final Integer oid = Integer.valueOf(request.getParameter("grantOwnerId"));
 
 	if (oid != null) {
 	    final InfoListGrantOwnerComplete info = new InfoListGrantOwnerComplete(rootDomainObject.readGrantOwnerByOID(oid));
@@ -86,5 +86,4 @@ public class ListGrantOwnerAction extends FenixDispatchAction {
 
 	return mapping.findForward("show-grant-owner");
     }
-
 }
