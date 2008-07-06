@@ -4,10 +4,23 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.list;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
+import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegime;
+import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegimeWithTeacherAndContract;
+import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
+import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
+import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPart;
+import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity;
+import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidyWithContract;
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 
 /**
  * @author Pica
@@ -15,58 +28,60 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContr
  */
 public class InfoListGrantContract extends InfoObject {
 
-    private InfoGrantContract infoGrantContract;
+    private final DomainReference<GrantContract> domainReference;
 
-    private List infoGrantContractRegimes; //The actual regime is in the first
+    public InfoListGrantContract(final GrantContract domainObject) {
+	domainReference = new DomainReference<GrantContract>(domainObject);
+    }
 
-    // position
+    private GrantContract getGrantContract() {
+	return domainReference == null ? null : domainReference.getObject();
+    }
 
-    private List infoListGrantSubsidys; // The actual subsidy is in the first
+    @Override
+    public boolean equals(Object obj) {
+	return obj != null && getGrantContract() == ((InfoListGrantContract) obj).getGrantContract();
+    }
 
-    // position
-
-    /**
-     * @return Returns the infoGrantContract.
-     */
     public InfoGrantContract getInfoGrantContract() {
-        return infoGrantContract;
+	final InfoGrantContract result = InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(getGrantContract());
+	result.setGrantOrientationTeacherInfo(InfoGrantOrientationTeacherWithTeacherAndGrantContract
+		.newInfoFromDomain(getGrantContract().readActualGrantOrientationTeacher()));
+
+	return result;
     }
 
-    /**
-     * @param infoGrantContract
-     *            The infoGrantContract to set.
-     */
-    public void setInfoGrantContract(InfoGrantContract infoGrantContract) {
-        this.infoGrantContract = infoGrantContract;
+    public List<InfoGrantContractRegime> getInfoGrantContractRegimes() {
+	// The actual regime is in the first position
+
+	final List<InfoGrantContractRegime> result = new ArrayList<InfoGrantContractRegime>();
+	for (final GrantContractRegime grantContractRegime : getGrantContract().readGrantContractRegimeByGrantContract()) {
+	    final InfoGrantContractRegime info = InfoGrantContractRegimeWithTeacherAndContract
+		    .newInfoFromDomain(grantContractRegime);
+	    result.add(info);
+	}
+
+	return result;
     }
 
-    /**
-     * @return Returns the infoGrantContractRegimes.
-     */
-    public List getInfoGrantContractRegimes() {
-        return infoGrantContractRegimes;
+    public List<InfoListGrantSubsidy> getInfoListGrantSubsidys() {
+	// The actual subsidy is in the first position
+
+	final List<InfoListGrantSubsidy> result = new ArrayList<InfoListGrantSubsidy>();
+	for (GrantSubsidy grantSubsidy : getGrantContract().getAssociatedGrantSubsidies()) {
+	    final InfoListGrantSubsidy info = new InfoListGrantSubsidy();
+	    info.setInfoGrantSubsidy(InfoGrantSubsidyWithContract.newInfoFromDomain(grantSubsidy));
+
+	    final List<InfoGrantPart> infoSubsidyParts = new ArrayList<InfoGrantPart>();
+	    for (final GrantPart grantPart : grantSubsidy.getAssociatedGrantParts()) {
+		infoSubsidyParts.add(InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity.newInfoFromDomain(grantPart));
+	    }
+	    info.setInfoGrantParts(infoSubsidyParts);
+
+	    result.add(info);
+	}
+
+	return result;
     }
 
-    /**
-     * @param infoGrantContractRegimes
-     *            The infoGrantContractRegimes to set.
-     */
-    public void setInfoGrantContractRegimes(List infoGrantContractRegimes) {
-        this.infoGrantContractRegimes = infoGrantContractRegimes;
-    }
-
-    /**
-     * @return Returns the infoListGrantSubsidys.
-     */
-    public List getInfoListGrantSubsidys() {
-        return infoListGrantSubsidys;
-    }
-
-    /**
-     * @param infoListGrantSubsidys
-     *            The infoListGrantSubsidys to set.
-     */
-    public void setInfoListGrantSubsidys(List infoListGrantSubsidys) {
-        this.infoListGrantSubsidys = infoListGrantSubsidys;
-    }
 }
