@@ -72,6 +72,9 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
             rmiStreamBytesMin = getProperty("rmi.stream.bytes.min");
             rmiStreamBytesMax = getProperty("rmi.stream.bytes.max");
             rmiStreamBytesBlock = getProperty("rmi.stream.bytes.block");
+
+            casEnabled = Boolean.valueOf(getProperty("cas.enabled"));
+            casLoginUrl = getProperty("cas.loginUrl");
         }};
     }
 }
