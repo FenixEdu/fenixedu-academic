@@ -63,3 +63,9 @@
 	<slot name="value" key="label.list.byCriteria.grant.owner.valueOfGrantPayment"/>
   	<slot name="totalCost" key="label.list.byCriteria.grant.owner.totalOfGrantPayment"/>
 </schema>
+
+<schema name="InfoListGrantOwnerByOrder.list" type="net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoListGrantOwnerByOrder">
+	<slot name="grantOwnerNumber" key="label.list.grant.owner.number"/>
+	<slot name="firstName" key="label.list.grant.owner.first.name"/>
+	<slot name="lastName" key="label.list.grant.owner.last.name"/>
+</schema>

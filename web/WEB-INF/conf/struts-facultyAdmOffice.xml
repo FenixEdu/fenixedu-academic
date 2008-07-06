@@ -600,7 +600,7 @@
 
     <!-- ===================== USE CASE: LIST GRANT OWNER============================== -->
 	<action path="/listGrantOwner" 
-			input="/listGrantOwner.do?page=0&amp;method=prepareFirstTimeListGrantOwner"
+			input="/listGrantOwner.do?page=0&amp;method=listGrantOwners"
 			name="listGrantOwnerForm" 
 			scope="request"
    			parameter="method"

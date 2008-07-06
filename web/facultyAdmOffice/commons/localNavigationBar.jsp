@@ -39,7 +39,7 @@
 
 		<li class="navheader"><bean:message key="link.grant.list"/></li>
 		<li>
-			<html:link page="/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=1&amp;orderBy=orderByNumber">
+			<html:link page="/listGrantOwner.do?method=listGrantOwners&amp;orderBy=grantOwnerNumber=asc">
 		    	<bean:message key="link.grant.owner.list"/>
 		    </html:link>
 		</li>

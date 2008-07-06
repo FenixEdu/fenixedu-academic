@@ -4,155 +4,106 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.grant.list;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoListGrantOwnerByOrder;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoListGrantOwnerComplete;
-import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoSpanListGrantOwner;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.validator.DynaValidatorForm;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
  * @author Pica
  * @author Barbosa
  */
 public class ListGrantOwnerAction extends FenixDispatchAction {
-    public ActionForward prepareFirstTimeListGrantOwner(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	Integer spanNumber = null;
-	String orderBy = null;
 
-	if (verifyParameterInRequest(request, "spanNumber")) {
-	    spanNumber = new Integer(request.getParameter("spanNumber"));
-	}
-	if (verifyParameterInRequest(request, "orderBy")) {
-	    orderBy = request.getParameter("orderBy");
-	}
-	if (spanNumber != null && orderBy != null && !orderBy.equals("")) {
+    private static final String ORDER_PARAMETER = "orderBy";
+    private static final String DEFAULT_ORDER_GETTER = "grantOwnerNumber";
+    private static final String ORDER_MARKER = "=";
 
-	    InfoSpanListGrantOwner infoSpanListGrantOwner = new InfoSpanListGrantOwner();
-	    infoSpanListGrantOwner.setOrderBy(orderBy);
-	    infoSpanListGrantOwner.setSpanNumber(spanNumber);
-	    return listGrantOwner(mapping, request, form, response, infoSpanListGrantOwner);
-	}
-	// If fails the if, than throw error
-	return setError(request, mapping, "errors.grant.unrecoverable", "list-grant-owner", null);
-    }
+    public ActionForward listGrantOwners(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
-    public ActionForward prepareListGrantOwner(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	DynaValidatorForm listForm = (DynaValidatorForm) form;
+	final String orderParameter = request.getParameter(ORDER_PARAMETER);
+	final String orderGetter = StringUtils.isEmpty(orderParameter) ? DEFAULT_ORDER_GETTER : orderParameter.substring(0,
+		orderParameter.indexOf(ORDER_MARKER));
 
-	InfoSpanListGrantOwner infoSpanListGrantOwner = populateInfoFromForm(listForm);
-	if (infoSpanListGrantOwner.getSpanNumber().intValue() > infoSpanListGrantOwner
-		.getNumberOfSpans().intValue()) {
-	    return setError(request, mapping, "errors.grant.list.invalidSpan", "list-grant-owner", null);
-	}
-	return listGrantOwner(mapping, request, form, response, infoSpanListGrantOwner);
-    }
+	final List<InfoListGrantOwnerByOrder> grantOwners = getInfoListGrantOwnerByOrder();
+	Collections.sort(grantOwners, new BeanComparator(orderGetter));
+	request.setAttribute("listGrantOwners", grantOwners);
 
-    private ActionForward listGrantOwner(ActionMapping mapping, HttpServletRequest request,
-	    ActionForm form, HttpServletResponse response, InfoSpanListGrantOwner infoSpanListGrantOwner)
-	    throws Exception {
+	final CollectionPager<InfoListGrantOwnerByOrder> pager = new CollectionPager<InfoListGrantOwnerByOrder>(grantOwners, 100);
+	request.setAttribute("collectionPager", pager);
+	request.setAttribute("numberOfPages", Integer.valueOf(pager.getNumberOfPages()));
 
-	IUserView userView = UserView.getUser();
-
-	// Read the grant owners
-	Object[] args = { infoSpanListGrantOwner };
-
-	Object[] result = (Object[]) ServiceUtils.executeService("ListGrantOwners", args);
-	List listGrantOwners = (List) result[0];
-	infoSpanListGrantOwner = (InfoSpanListGrantOwner) result[1];
-
-	if (listGrantOwners != null && listGrantOwners.size() != 0) {
-	    // Setting the request
-	    DynaValidatorForm listForm = (DynaValidatorForm) form;
-	    setForm(listForm, infoSpanListGrantOwner);
-	    request.setAttribute("listGrantOwner", listGrantOwners);
-	    request.setAttribute("spanNumber", infoSpanListGrantOwner.getSpanNumber());
-	    request.setAttribute("orderBy", infoSpanListGrantOwner.getOrderBy());
-	    request.setAttribute("totalElements", infoSpanListGrantOwner.getTotalElements());
-
-	    if (infoSpanListGrantOwner.hasBeforeSpan()) {
-		request.setAttribute("beforeSpan", infoSpanListGrantOwner.getBeforeSpan());
-	    }
-	    if (infoSpanListGrantOwner.hasAfterSpan()) {
-		request.setAttribute("afterSpan", infoSpanListGrantOwner.getAfterSpan());
-	    }
-	    request.setAttribute("numberOfSpans", infoSpanListGrantOwner.getNumberOfSpans());
-	} else {
-	    throw new Exception();
-	}
+	final String pageParameter = request.getParameter("pageNumber");
+	final Integer page = StringUtils.isEmpty(pageParameter) ? Integer.valueOf(1) : Integer.valueOf(pageParameter);
+	request.setAttribute("pageNumber", page);
+	request.setAttribute("resultPage", pager.getPage(page));
 
 	return mapping.findForward("list-grant-owner");
     }
 
-    public ActionForward showGrantOwner(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    private List<InfoListGrantOwnerByOrder> getInfoListGrantOwnerByOrder() {
+	final List<InfoListGrantOwnerByOrder> result = new ArrayList<InfoListGrantOwnerByOrder>();
+
+	for (final GrantOwner grantOwner : rootDomainObject.getGrantOwnersSet()) {
+	    if (grantOwner.hasPerson()) {
+		result.add(new InfoListGrantOwnerByOrder(grantOwner));
+	    }
+	}
+
+	return result;
+    }
+
+    public ActionForward showGrantOwner(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Integer grantOwnerId = null;
 	if (verifyParameterInRequest(request, "grantOwnerId")) {
 	    grantOwnerId = new Integer(request.getParameter("grantOwnerId"));
 	}
 
-	IUserView userView = UserView.getUser();
-
 	if (grantOwnerId != null) {
 	    // Read all the information about the grant owner
 	    Object[] args = { grantOwnerId };
-	    InfoListGrantOwnerComplete listGrantOwnerCompleteInfo = (InfoListGrantOwnerComplete) ServiceUtils
-		    .executeService( "ShowGrantOwner", args);
+	    InfoListGrantOwnerComplete listGrantOwnerCompleteInfo = (InfoListGrantOwnerComplete) ServiceUtils.executeService(
+		    "ShowGrantOwner", args);
 
 	    if (listGrantOwnerCompleteInfo != null) {
 		// Set the request
 		if (listGrantOwnerCompleteInfo.getInfoGrantOwner() != null) {
-		    request.setAttribute("infoGrantOwner", listGrantOwnerCompleteInfo
-			    .getInfoGrantOwner());
+		    request.setAttribute("infoGrantOwner", listGrantOwnerCompleteInfo.getInfoGrantOwner());
 		} else {
 		    throw new FenixServiceException();
 		}
 		if (listGrantOwnerCompleteInfo.getInfoQualifications() != null
 			&& !listGrantOwnerCompleteInfo.getInfoQualifications().isEmpty()) {
-		    request.setAttribute("infoQualificationList", listGrantOwnerCompleteInfo
-			    .getInfoQualifications());
+		    request.setAttribute("infoQualificationList", listGrantOwnerCompleteInfo.getInfoQualifications());
 		}
 		if (listGrantOwnerCompleteInfo.getInfoListGrantContracts() != null
 			&& !listGrantOwnerCompleteInfo.getInfoListGrantContracts().isEmpty()) {
-		    request.setAttribute("infoListGrantContractList", listGrantOwnerCompleteInfo
-			    .getInfoListGrantContracts());
+		    request.setAttribute("infoListGrantContractList", listGrantOwnerCompleteInfo.getInfoListGrantContracts());
 		}
 	    }
 	} else {
 	    return setError(request, mapping, "errors.grant.unrecoverable", "show-grant-owner", null);
 	}
 	return mapping.findForward("show-grant-owner");
-    }
-
-    private void setForm(DynaValidatorForm form, InfoSpanListGrantOwner infoSpanListGrantOwner)
-	    throws Exception {
-	form.set("spanNumber", infoSpanListGrantOwner.getSpanNumber());
-	form.set("totalElements", infoSpanListGrantOwner.getTotalElements());
-	form.set("orderBy", infoSpanListGrantOwner.getOrderBy());
-    }
-
-    private InfoSpanListGrantOwner populateInfoFromForm(DynaValidatorForm form) throws Exception {
-	InfoSpanListGrantOwner infoSpanListGrantOwner = new InfoSpanListGrantOwner();
-
-	infoSpanListGrantOwner.setSpanNumber((Integer) form.get("spanNumber"));
-	infoSpanListGrantOwner.setTotalElements((Integer) form.get("totalElements"));
-	infoSpanListGrantOwner.setOrderBy((String) form.get("orderBy"));
-
-	return infoSpanListGrantOwner;
     }
 
 }
