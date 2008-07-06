@@ -4,10 +4,17 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.list;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
+import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwnerWithPerson;
+import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Qualification;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 
 /**
  * @author Pica
@@ -15,54 +22,38 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
  */
 public class InfoListGrantOwnerComplete extends InfoObject {
 
-    private InfoGrantOwner infoGrantOwner;
+    private final DomainReference<GrantOwner> domainReference;
 
-    private List infoQualifications;
+    public InfoListGrantOwnerComplete(final GrantOwner domainObject) {
+	domainReference = new DomainReference<GrantOwner>(domainObject);
+    }
 
-    private List infoListGrantContracts;
+    private GrantOwner getGrantOwner() {
+	return domainReference == null ? null : domainReference.getObject();
+    }
 
-    /**
-     * @return Returns the infoGrantOwner.
-     */
+    @Override
+    public boolean equals(Object obj) {
+	return obj != null && getGrantOwner() == ((InfoListGrantOwnerComplete) obj).getGrantOwner();
+    }
+
     public InfoGrantOwner getInfoGrantOwner() {
-        return infoGrantOwner;
+	return InfoGrantOwnerWithPerson.newInfoFromDomain(getGrantOwner());
     }
 
-    /**
-     * @param infoGrantOwner
-     *            The infoGrantOwner to set.
-     */
-    public void setInfoGrantOwner(InfoGrantOwner infoGrantOwner) {
-        this.infoGrantOwner = infoGrantOwner;
+    public List<InfoListGrantContract> getInfoListGrantContracts() {
+	final List<InfoListGrantContract> result = new ArrayList<InfoListGrantContract>();
+
+	for (GrantContract grantContract : getGrantOwner().getGrantContracts()) {
+	    result.add(new InfoListGrantContract(grantContract));
+	}
+
+	Collections.reverse(result);
+	return result;
     }
 
-    /**
-     * @return Returns the infoListGrantContracts.
-     */
-    public List getInfoListGrantContracts() {
-        return infoListGrantContracts;
+    public List<Qualification> getInfoQualifications() {
+	return getGrantOwner().getPerson().getAssociatedQualifications();
     }
 
-    /**
-     * @param infoListGrantContracts
-     *            The infoListGrantContracts to set.
-     */
-    public void setInfoListGrantContracts(List infoListGrantContracts) {
-        this.infoListGrantContracts = infoListGrantContracts;
-    }
-
-    /**
-     * @return Returns the infoQualifications.
-     */
-    public List getInfoQualifications() {
-        return infoQualifications;
-    }
-
-    /**
-     * @param infoQualifications
-     *            The infoQualifications to set.
-     */
-    public void setInfoQualifications(List infoQualifications) {
-        this.infoQualifications = infoQualifications;
-    }
 }
