@@ -11,12 +11,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoListGrantOwnerByOrder;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoListGrantOwnerComplete;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -73,36 +71,19 @@ public class ListGrantOwnerAction extends FenixDispatchAction {
 
     public ActionForward showGrantOwner(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	Integer grantOwnerId = null;
-	if (verifyParameterInRequest(request, "grantOwnerId")) {
-	    grantOwnerId = new Integer(request.getParameter("grantOwnerId"));
-	}
+	final Integer oid = new Integer(request.getParameter("grantOwnerId"));
 
-	if (grantOwnerId != null) {
-	    // Read all the information about the grant owner
-	    Object[] args = { grantOwnerId };
-	    InfoListGrantOwnerComplete listGrantOwnerCompleteInfo = (InfoListGrantOwnerComplete) ServiceUtils.executeService(
-		    "ShowGrantOwner", args);
-
-	    if (listGrantOwnerCompleteInfo != null) {
-		// Set the request
-		if (listGrantOwnerCompleteInfo.getInfoGrantOwner() != null) {
-		    request.setAttribute("infoGrantOwner", listGrantOwnerCompleteInfo.getInfoGrantOwner());
-		} else {
-		    throw new FenixServiceException();
-		}
-		if (listGrantOwnerCompleteInfo.getInfoQualifications() != null
-			&& !listGrantOwnerCompleteInfo.getInfoQualifications().isEmpty()) {
-		    request.setAttribute("infoQualificationList", listGrantOwnerCompleteInfo.getInfoQualifications());
-		}
-		if (listGrantOwnerCompleteInfo.getInfoListGrantContracts() != null
-			&& !listGrantOwnerCompleteInfo.getInfoListGrantContracts().isEmpty()) {
-		    request.setAttribute("infoListGrantContractList", listGrantOwnerCompleteInfo.getInfoListGrantContracts());
-		}
+	if (oid != null) {
+	    final InfoListGrantOwnerComplete info = new InfoListGrantOwnerComplete(rootDomainObject.readGrantOwnerByOID(oid));
+	    if (info != null) {
+		request.setAttribute("infoGrantOwner", info.getInfoGrantOwner());
+		request.setAttribute("infoQualificationList", info.getInfoQualifications());
+		request.setAttribute("infoListGrantContractList", info.getInfoListGrantContracts());
 	    }
 	} else {
 	    return setError(request, mapping, "errors.grant.unrecoverable", "show-grant-owner", null);
 	}
+
 	return mapping.findForward("show-grant-owner");
     }
 
