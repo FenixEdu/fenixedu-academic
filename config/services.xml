@@ -2064,15 +2064,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ListGrantOwners</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.list.ListGrantOwners</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="GrantOwnerManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ListGrantContractByCriteria</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.grant.list.ListGrantContractByCriteria</implementationClass>
 		<description />
