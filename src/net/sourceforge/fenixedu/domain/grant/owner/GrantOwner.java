@@ -38,18 +38,16 @@ public class GrantOwner extends GrantOwner_Base {
 
     public GrantContract readGrantContractWithMaximumContractNumber() {
 	List<GrantContract> grantContracts = this.getGrantContracts();
-	return (!grantContracts.isEmpty()) ? Collections.max(this.getGrantContractsSet(),
-		new Comparator<GrantContract>() {
-		    public int compare(GrantContract o1, GrantContract o2) {
-			return o1.getContractNumber().compareTo(o2.getContractNumber());
-		    }
-		}) : null;
+	return (!grantContracts.isEmpty()) ? Collections.max(this.getGrantContractsSet(), new Comparator<GrantContract>() {
+	    public int compare(GrantContract o1, GrantContract o2) {
+		return o1.getContractNumber().compareTo(o2.getContractNumber());
+	    }
+	}) : null;
     }
 
     public static Integer readMaxGrantOwnerNumber() {
 	List<GrantOwner> grantOwners = RootDomainObject.getInstance().getGrantOwners();
-	return (!grantOwners.isEmpty()) ? Collections.max(grantOwners, NUMBER_COMPARATOR).getNumber()
-		: null;
+	return (!grantOwners.isEmpty()) ? Collections.max(grantOwners, NUMBER_COMPARATOR).getNumber() : null;
     }
 
     public static GrantOwner readGrantOwnerByNumber(Integer grantOwnerNumber) {
@@ -65,8 +63,7 @@ public class GrantOwner extends GrantOwner_Base {
 	return readAllGrantOwnersByName(name).size();
     }
 
-    public static List<GrantOwner> readGrantOwnerByName(String personName, Integer startIndex,
-	    Integer numberOfElementsInSpan) {
+    public static List<GrantOwner> readGrantOwnerByName(String personName, Integer startIndex, Integer numberOfElementsInSpan) {
 	List<GrantOwner> grantOwners = readAllGrantOwnersByName(personName);
 	if (startIndex != null && numberOfElementsInSpan != null && !grantOwners.isEmpty()) {
 	    int finalIndex = Math.min(grantOwners.size(), startIndex + numberOfElementsInSpan);
@@ -76,7 +73,7 @@ public class GrantOwner extends GrantOwner_Base {
     }
 
     private static List<GrantOwner> readAllGrantOwnersByName(String name) {
-	List<GrantOwner> grantOwners = new ArrayList();	
+	List<GrantOwner> grantOwners = new ArrayList();
 	for (final GrantOwner grantOwner : RootDomainObject.getInstance().getGrantOwnersSet()) {
 	    final Person person = grantOwner.getPerson();
 	    if (person != null && StringUtils.verifyContainsWithEquality(person.getName(), name)) {
@@ -86,22 +83,8 @@ public class GrantOwner extends GrantOwner_Base {
 	return grantOwners;
     }
 
-    public static List<GrantOwner> readAllGrantOwnersBySpan(Integer spanNumber,
-	    Integer numberOfElementsInSpan, String orderBy) {
-	List<GrantOwner> grantOwners = new ArrayList<GrantOwner>();
-	grantOwners.addAll(RootDomainObject.getInstance().getGrantOwners());
-	if (!grantOwners.isEmpty()) {
-	    Collections.sort(grantOwners, new BeanComparator(orderBy));
-	    int begin = (spanNumber - 1) * numberOfElementsInSpan;
-	    int end = Math.min(grantOwners.size(), begin + numberOfElementsInSpan);
-	    grantOwners.subList(begin, end);
-	}
-	return grantOwners;
-    }
-
-    public static Integer countAllByCriteria(Boolean justActiveContracts,
-	    Boolean justDesactiveContracts, Date dateBeginContract, Date dateEndContract,
-	    GrantType grantType) {
+    public static Integer countAllByCriteria(Boolean justActiveContracts, Boolean justDesactiveContracts, Date dateBeginContract,
+	    Date dateEndContract, GrantType grantType) {
 
 	Date currentDate = Calendar.getInstance().getTime();
 	int counter = 0;
@@ -121,12 +104,10 @@ public class GrantOwner extends GrantOwner_Base {
 				&& grantContract.getEndContractMotive().equals("")) {
 			    continue;
 			}
-			if (dateBeginContract != null
-				&& grantContractRegime.getDateBeginContract().before(dateBeginContract)) {
+			if (dateBeginContract != null && grantContractRegime.getDateBeginContract().before(dateBeginContract)) {
 			    continue;
 			}
-			if (dateEndContract != null
-				&& grantContractRegime.getDateEndContract().after(dateEndContract)) {
+			if (dateEndContract != null && grantContractRegime.getDateEndContract().after(dateEndContract)) {
 			    continue;
 			}
 			counter++;
@@ -157,25 +138,25 @@ public class GrantOwner extends GrantOwner_Base {
 	for (GrantContract grantContract : getGrantContracts()) {
 	    for (GrantContractRegime grantContractRegime : grantContract.getContractRegimes()) {
 		if (!today.isBefore(grantContractRegime.getDateBeginContractYearMonthDay())
-			&& (grantContractRegime.getDateEndContractYearMonthDay() != null && !today
-				.isAfter(grantContractRegime.getDateEndContractYearMonthDay()))) {
+			&& (grantContractRegime.getDateEndContractYearMonthDay() != null && !today.isAfter(grantContractRegime
+				.getDateEndContractYearMonthDay()))) {
 		    return Boolean.TRUE;
 		}
 	    }
 	}
 	return Boolean.FALSE;
     }
-    
-    public void delete() {	
-	if(!canBeDeleted()) {
+
+    public void delete() {
+	if (!canBeDeleted()) {
 	    throw new DomainException("error.GrantOwner.cannot.be.deleted");
-	}	
+	}
 	removePerson();
 	removeRootDomainObject();
 	deleteDomainObject();
-    }    
-    
+    }
+
     private boolean canBeDeleted() {
 	return !hasAnyGrantContracts();
-    } 
+    }
 }
