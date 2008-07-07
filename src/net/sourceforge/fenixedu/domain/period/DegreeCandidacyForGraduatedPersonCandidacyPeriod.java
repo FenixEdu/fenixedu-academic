@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.period;
 
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -13,9 +14,9 @@ public class DegreeCandidacyForGraduatedPersonCandidacyPeriod extends DegreeCand
     }
 
     public DegreeCandidacyForGraduatedPersonCandidacyPeriod(final DegreeCandidacyForGraduatedPersonProcess candidacyProcess,
-	    final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
+	    final ExecutionYear executionYear, final DateTime start, final DateTime end) {
 	this();
-	init(candidacyProcess, executionInterval, start, end);
+	init(candidacyProcess, executionYear, start, end);
     }
 
     private void init(final DegreeCandidacyForGraduatedPersonProcess candidacyProcess, final ExecutionInterval executionInterval,
@@ -42,5 +43,10 @@ public class DegreeCandidacyForGraduatedPersonCandidacyPeriod extends DegreeCand
 
     public DegreeCandidacyForGraduatedPersonProcess getDegreeCandidacyForGraduatedPersonProcess() {
 	return (DegreeCandidacyForGraduatedPersonProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().get(0) : null);
+    }
+    
+    @Override
+    public ExecutionYear getExecutionInterval() {
+        return (ExecutionYear) super.getExecutionInterval();
     }
 }

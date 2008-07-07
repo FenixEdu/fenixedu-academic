@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
@@ -59,11 +60,11 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	super();
     }
 
-    private SecondCycleCandidacyProcess(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
+    private SecondCycleCandidacyProcess(final ExecutionYear executionYear, final DateTime start, final DateTime end) {
 	this();
-	checkParameters(executionInterval, start, end);
+	checkParameters(executionYear, start, end);
 	setState(CandidacyProcessState.STAND_BY);
-	new SecondCycleCandidacyPeriod(this, executionInterval, start, end);
+	new SecondCycleCandidacyPeriod(this, executionYear, start, end);
     }
 
     private void checkParameters(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
@@ -90,6 +91,11 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
     @Override
     public List<Activity> getActivities() {
 	return activities;
+    }
+    
+    @Override
+    public ExecutionYear getCandidacyExecutionInterval() {
+        return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
 
     public List<SecondCycleIndividualCandidacyProcess> getValidSecondCycleIndividualCandidacies() {
@@ -168,7 +174,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
 		Object object) {
 	    final CandidacyProcessBean bean = (CandidacyProcessBean) object;
-	    return new SecondCycleCandidacyProcess(bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
+	    return new SecondCycleCandidacyProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
 	}
     }
 

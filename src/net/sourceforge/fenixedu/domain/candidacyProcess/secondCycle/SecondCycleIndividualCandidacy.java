@@ -1,14 +1,18 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
+import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.InstitutionPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.LocalDate;
 
@@ -125,5 +129,19 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	if (isAccepted() && bean.getState() != IndividualCandidacyState.ACCEPTED && hasRegistration()) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.cannot.change.state.from.accepted.candidacies");
 	}
+    }
+
+    @Override
+    protected ExecutionYear getCandidacyExecutionInterval() {
+	return (ExecutionYear) super.getCandidacyExecutionInterval();
+    }
+
+    @Override
+    protected Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
+	    final CycleType cycleType, final Ingression ingression) {
+	final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
+	registration.setRegistrationYear(getCandidacyExecutionInterval().hasNextExecutionYear() ? getCandidacyExecutionInterval()
+		.getNextExecutionYear() : getCandidacyExecutionInterval());
+	return registration;
     }
 }

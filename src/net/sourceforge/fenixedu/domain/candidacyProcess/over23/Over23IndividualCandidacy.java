@@ -6,10 +6,15 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.Over23IndividualCandidacyEvent;
+import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.LocalDate;
 
@@ -139,4 +144,19 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	    }
 	}
     }
+    
+    @Override
+    protected ExecutionYear getCandidacyExecutionInterval() {
+        return (ExecutionYear) super.getCandidacyExecutionInterval();
+    }
+    
+    @Override
+    protected Registration createRegistration(Person person, DegreeCurricularPlan degreeCurricularPlan, CycleType cycleType,
+	    Ingression ingression) {
+	final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
+	registration.setRegistrationYear(getCandidacyExecutionInterval().hasNextExecutionYear() ? getCandidacyExecutionInterval()
+		.getNextExecutionYear() : getCandidacyExecutionInterval());
+	return registration;
+    }
+
 }

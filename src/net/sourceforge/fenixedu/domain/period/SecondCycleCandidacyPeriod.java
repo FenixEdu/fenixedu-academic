@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.period;
 
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -13,7 +14,7 @@ public class SecondCycleCandidacyPeriod extends SecondCycleCandidacyPeriod_Base 
     }
 
     public SecondCycleCandidacyPeriod(final SecondCycleCandidacyProcess candidacyProcess,
-	    final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
+	    final ExecutionYear executionInterval, final DateTime start, final DateTime end) {
 	this();
 	init(candidacyProcess, executionInterval, start, end);
     }
@@ -41,5 +42,10 @@ public class SecondCycleCandidacyPeriod extends SecondCycleCandidacyPeriod_Base 
 
     public SecondCycleCandidacyProcess getSecondCycleCandidacyProcess() {
 	return (SecondCycleCandidacyProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().get(0) : null);
+    }
+    
+    @Override
+    public ExecutionYear getExecutionInterval() {
+        return (ExecutionYear) super.getExecutionInterval();
     }
 }

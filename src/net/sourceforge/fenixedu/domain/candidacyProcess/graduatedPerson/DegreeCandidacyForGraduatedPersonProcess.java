@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
@@ -61,12 +62,11 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
 	super();
     }
 
-    private DegreeCandidacyForGraduatedPersonProcess(final ExecutionInterval executionInterval, final DateTime start,
-	    final DateTime end) {
+    private DegreeCandidacyForGraduatedPersonProcess(final ExecutionYear executionYear, final DateTime start, final DateTime end) {
 	this();
-	checkParameters(executionInterval, start, end);
+	checkParameters(executionYear, start, end);
 	setState(CandidacyProcessState.STAND_BY);
-	new DegreeCandidacyForGraduatedPersonCandidacyPeriod(this, executionInterval, start, end);
+	new DegreeCandidacyForGraduatedPersonCandidacyPeriod(this, executionYear, start, end);
     }
 
     private void checkParameters(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
@@ -165,7 +165,8 @@ public class DegreeCandidacyForGraduatedPersonProcess extends DegreeCandidacyFor
 	protected DegreeCandidacyForGraduatedPersonProcess executeActivity(DegreeCandidacyForGraduatedPersonProcess process,
 		IUserView userView, Object object) {
 	    final CandidacyProcessBean bean = (CandidacyProcessBean) object;
-	    return new DegreeCandidacyForGraduatedPersonProcess(bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
+	    return new DegreeCandidacyForGraduatedPersonProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(),
+		    bean.getEnd());
 	}
     }
 

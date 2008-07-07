@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -112,6 +113,11 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
     public String getCandidacyNotes() {
 	return getCandidacy().getNotes();
+    }
+    
+    @Override
+    public ExecutionYear getCandidacyExecutionInterval() {
+        return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
 
     static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {

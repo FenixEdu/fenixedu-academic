@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.period;
 
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -12,10 +13,10 @@ public class Over23CandidacyPeriod extends Over23CandidacyPeriod_Base {
 	super();
     }
 
-    public Over23CandidacyPeriod(final Over23CandidacyProcess candidacyProcess, final ExecutionInterval executionInterval,
+    public Over23CandidacyPeriod(final Over23CandidacyProcess candidacyProcess, final ExecutionYear executionYear,
 	    final DateTime start, final DateTime end) {
 	this();
-	init(candidacyProcess, executionInterval, start, end);
+	init(candidacyProcess, executionYear, start, end);
     }
 
     private void init(final Over23CandidacyProcess candidacyProcess, final ExecutionInterval executionInterval,
@@ -41,5 +42,10 @@ public class Over23CandidacyPeriod extends Over23CandidacyPeriod_Base {
 
     public Over23CandidacyProcess getOver23CandidacyProcess() {
 	return (Over23CandidacyProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().get(0) : null);
+    }
+    
+    @Override
+    public ExecutionYear getExecutionInterval() {
+        return (ExecutionYear) super.getExecutionInterval();
     }
 }

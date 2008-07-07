@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.caseHandling.Activity;
 import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
@@ -52,11 +53,11 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	super();
     }
 
-    private Over23CandidacyProcess(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
+    private Over23CandidacyProcess(final ExecutionYear executionYear, final DateTime start, final DateTime end) {
 	this();
-	checkParameters(executionInterval, start, end);
+	checkParameters(executionYear, start, end);
 	setState(CandidacyProcessState.STAND_BY);
-	new Over23CandidacyPeriod(this, executionInterval, start, end);
+	new Over23CandidacyPeriod(this, executionYear, start, end);
     }
 
     private void checkParameters(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
@@ -123,7 +124,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	@Override
 	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
 	    final CandidacyProcessBean bean = (CandidacyProcessBean) object;
-	    return new Over23CandidacyProcess(bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
+	    return new Over23CandidacyProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
 	}
     }
 

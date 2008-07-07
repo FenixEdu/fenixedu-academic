@@ -159,14 +159,14 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	return createRegistration(getPerson(), degreeCurricularPlan, cycleType, ingression);
     }
 
-    private Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
+    protected Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
 	    final CycleType cycleType, final Ingression ingression) {
-	
+
 	final Registration registration = new Registration(person, degreeCurricularPlan, cycleType);
 	registration.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
 	registration.setIngression(ingression);
 	setRegistration(registration);
-	
+
 	return registration;
     }
 
@@ -176,5 +176,9 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     private Student getStudent() {
 	return getPerson().hasStudent() ? getPerson().getStudent() : null;
+    }
+
+    protected ExecutionInterval getCandidacyExecutionInterval() {
+	return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyExecutionInterval() : null;
     }
 }

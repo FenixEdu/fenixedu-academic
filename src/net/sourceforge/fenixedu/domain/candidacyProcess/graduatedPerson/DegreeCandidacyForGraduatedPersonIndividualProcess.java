@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -87,9 +88,14 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     private void editCandidacyInformation(final DegreeCandidacyForGraduatedPersonIndividualProcessBean bean) {
 	getCandidacy().editCandidacyInformation(bean);
     }
-    
+
     public boolean hasCandidacyForSelectedDegree(final Degree degree) {
 	return getCandidacySelectedDegree() == degree;
+    }
+
+    @Override
+    public ExecutionYear getCandidacyExecutionInterval() {
+	return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
 
     // static information
