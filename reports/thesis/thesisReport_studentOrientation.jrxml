@@ -54,7 +54,11 @@
 						height="51"
 						key="textField-1"
 						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
 						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
@@ -70,7 +74,11 @@
 						height="68"
 						key="textField-2"
 						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
 						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
@@ -87,7 +95,11 @@
 						height="51"
 						key="textField-3"
 						positionType="Float"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
 						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
@@ -103,7 +115,9 @@
 						height="0"
 						key="line-1"
 						positionType="Float"/>
-					<graphicElement stretchType="NoStretch" pen="Thin"/>
+					<graphicElement stretchType="NoStretch">
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+</graphicElement>
 				</line>
 				<line direction="BottomUp">
 					<reportElement
@@ -113,7 +127,9 @@
 						height="0"
 						key="line-2"
 						positionType="Float"/>
-					<graphicElement stretchType="NoStretch" pen="Thin"/>
+					<graphicElement stretchType="NoStretch">
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+</graphicElement>
 				</line>
 				<line direction="BottomUp">
 					<reportElement
@@ -123,7 +139,9 @@
 						height="0"
 						key="line-3"
 						positionType="Float"/>
-					<graphicElement stretchType="NoStretch" pen="Thin"/>
+					<graphicElement stretchType="NoStretch">
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+</graphicElement>
 				</line>
 				<line direction="BottomUp">
 					<reportElement
@@ -133,7 +151,9 @@
 						height="0"
 						key="line-4"
 						positionType="Float"/>
-					<graphicElement stretchType="NoStretch" pen="Thin"/>
+					<graphicElement stretchType="NoStretch">
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+</graphicElement>
 				</line>
 				<line direction="BottomUp">
 					<reportElement
@@ -143,7 +163,9 @@
 						height="0"
 						key="line-5"
 						positionType="Float"/>
-					<graphicElement stretchType="NoStretch" pen="Thin"/>
+					<graphicElement stretchType="NoStretch">
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+</graphicElement>
 				</line>
 				<line direction="BottomUp">
 					<reportElement
@@ -153,7 +175,9 @@
 						height="0"
 						key="line-6"
 						positionType="Float"/>
-					<graphicElement stretchType="NoStretch" pen="Thin"/>
+					<graphicElement stretchType="NoStretch">
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+</graphicElement>
 				</line>
 				<line direction="BottomUp">
 					<reportElement
@@ -163,7 +187,9 @@
 						height="0"
 						key="line-7"
 						positionType="Float"/>
-					<graphicElement stretchType="NoStretch" pen="Thin"/>
+					<graphicElement stretchType="NoStretch">
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+</graphicElement>
 				</line>
 				<line direction="BottomUp">
 					<reportElement
@@ -173,7 +199,9 @@
 						height="0"
 						key="line-8"
 						positionType="Float"/>
-					<graphicElement stretchType="NoStretch" pen="Thin"/>
+					<graphicElement stretchType="NoStretch">
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+</graphicElement>
 				</line>
 			</band>
 		</columnHeader>
