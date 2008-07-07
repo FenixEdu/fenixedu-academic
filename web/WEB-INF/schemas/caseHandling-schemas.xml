@@ -565,3 +565,14 @@
 	<slot name="candidacyGrade" key="label.candidacy.grade" read-only="true" />
 	<slot name="candidacyState" key="label.candidacy.individual.state" read-only="true" />
 </schema>
+
+<schema name="DegreeCandidacyForGraduatedPersonIndividualProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcess" bundle="APPLICATION_RESOURCES"
+		extends="IndividualCandidacyProcess.view">
+	<slot name="candidacySelectedDegree" key="label.candidacy.choosed.degree">
+		<property name="format" value="${name} - ${sigla}" />
+	</slot>
+	<slot name="candidacyPrecedentDegreeInformation.degreeDesignation" key="label.candidacy.previous.degree" read-only="true" />
+	<slot name="candidacyPrecedentDegreeInformation.conclusionDate" key="label.conclusionDate" read-only="true" />
+	<slot name="candidacyPrecedentDegreeInformation.institution.name" key="label.candidacy.institution" read-only="true" />
+	<slot name="candidacyPrecedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
+</schema>
