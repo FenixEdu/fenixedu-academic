@@ -576,3 +576,8 @@
 	<slot name="candidacyPrecedentDegreeInformation.institution.name" key="label.candidacy.institution" read-only="true" />
 	<slot name="candidacyPrecedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
 </schema>
+
+<schema name="DegreeCandidacyForGraduatedPersonProcess.candidacyDegreeBean" 
+		type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.graduatedPerson.DegreeCandidacyForGraduatedPersonProcessDA$DegreeCandidacyForGraduatedPersonDegreeBean"
+		extends="CandidacyProcess.candidacyDegreeBean" bundle="APPLICATION_RESOURCES">
+</schema>
