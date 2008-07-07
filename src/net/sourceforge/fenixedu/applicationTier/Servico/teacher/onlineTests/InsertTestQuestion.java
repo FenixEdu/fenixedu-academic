@@ -73,8 +73,10 @@ public class InsertTestQuestion extends Service {
 			thisQuestionValue = infoQuestion.getQuestionValue();
 		    } else {
 			for (SubQuestion subQuestion : question.getSubQuestions()) {
-			    thisQuestionValue = new Double(thisQuestionValue.doubleValue()
-				    + subQuestion.getQuestionValue().doubleValue());
+			    if (subQuestion.getQuestionValue() != null) {
+				thisQuestionValue = new Double(thisQuestionValue.doubleValue()
+					+ subQuestion.getQuestionValue().doubleValue());
+			    }
 			}
 		    }
 
