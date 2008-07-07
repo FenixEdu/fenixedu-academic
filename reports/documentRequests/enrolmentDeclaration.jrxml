@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="EnrolmentDeclaration"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="595"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="ISO-8859-1" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="imageUrl" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="documentRequest" isForPrompting="false" class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest"/>
+	<parameter name="registration" isForPrompting="false" class="net.sourceforge.fenixedu.domain.student.Registration"/>
+	<parameter name="administrativeOfficeCoordinator" isForPrompting="false" class="net.sourceforge.fenixedu.domain.Person"/>
+	<parameter name="administrativeOfficeName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="name" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="documentIdNumber" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="birthLocale" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="nationality" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="situation" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="curricularYear" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="numberEnrolments" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="documentPurpose" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="degreeDescription" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="approvementInfo" isForPrompting="false" class="java.lang.String"/>
+
+
+		<group  name="endLine" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="130"  isSplitAllowed="true" >
+				<line direction="TopDown">
+					<reportElement
+						x="284"
+						y="30"
+						width="249"
+						height="0"
+						key="line-1"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="64"
+						y="31"
+						width="469"
+						height="22"
+						key="textField-17"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom" lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator}.getName()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="64"
+						y="54"
+						width="469"
+						height="20"
+						key="textField-18"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Right" lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Coordenador" + ($P{administrativeOfficeCoordinator}.isMale() ? "" : "a") + " do " + $P{administrativeOfficeName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="72"
+						y="93"
+						width="469"
+						height="22"
+						key="textField-7"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{institutionName} + ", em " + $P{employeeLocation} + ", " + $P{day}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="227"  isSplitAllowed="true" >
+				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="65"
+						y="3"
+						width="77"
+						height="168"
+						key="image-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.lang.String"><![CDATA[$P{imageUrl}]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement
+						x="246"
+						y="175"
+						width="131"
+						height="21"
+						key="staticText-10"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left">
+						<font pdfFontName="Helvetica-BoldOblique" size="16" isBold="true" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[DECLARAÇÃO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="336"
+						y="64"
+						width="233"
+						height="19"
+						key="staticText-11"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement lineSpacing="1_1_2">
+						<font/>
+					</textElement>
+				<text><![CDATA[SUPERVISÃO DOS SERVIÇOS ACADÉMICOS]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="141"
+						y="82"
+						width="425"
+						height="0"
+						key="line-1"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="336"
+						y="81"
+						width="233"
+						height="20"
+						key="staticText-12"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement lineSpacing="1_1_2">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeName}]]></textFieldExpression>
+				</textField>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="264"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="65"
+						y="9"
+						width="469"
+						height="22"
+						key="textField-16"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified" lineSpacing="1_1_2">
+						<font pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["      " + $P{administrativeOfficeCoordinator}.getName() + ", Coordenador" + ($P{administrativeOfficeCoordinator}.isMale() ? "" : "a") + " do " + $P{administrativeOfficeName}.toUpperCase() + " do " + $P{institutionName}.toUpperCase() + " da " + $P{universityName}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="64"
+						y="33"
+						width="469"
+						height="22"
+						key="staticText-14"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["    DECLARA, a pedido do interessado, que " + ($P{registration}.getPerson().isMale() ? "o" : "a") + " alun" + ($P{registration}.getPerson().isMale() ? "o" : "a") + " Nº " + $P{documentRequest}.getRegistration().getNumber()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="65"
+						y="56"
+						width="523"
+						height="22"
+						key="textField-1"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" lineSpacing="1_1_2">
+						<font pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="65"
+						y="79"
+						width="469"
+						height="22"
+						key="textField-2"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{documentIdNumber}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="65"
+						y="102"
+						width="469"
+						height="22"
+						key="textField-3"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{birthLocale}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="65"
+						y="125"
+						width="469"
+						height="22"
+						key="textField-19"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nationality}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="65"
+						y="148"
+						width="469"
+						height="82"
+						key="textField-6"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Justified" lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{situation} + " INSCRIT" + ($P{registration}.getPerson().isMale() ? "O" : "A") + " no ano lectivo " + $P{documentRequest}.getExecutionYear().getYear() + ", no " + $P{curricularYear} + $P{degreeDescription} + ", em " + $P{numberEnrolments} + " disciplinas" + $P{approvementInfo} + "."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="64"
+						y="239"
+						width="468"
+						height="22"
+						key="textField-18"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{documentPurpose}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="51"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="80"
+						y="23"
+						width="121"
+						height="10"
+						key="textField-14"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Registo Nº " + $P{documentRequest}.getServiceRequestNumber().toString().trim()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="80"
+						y="34"
+						width="271"
+						height="11"
+						key="staticText-11"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement lineSpacing="Single">
+						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[Conferido por: _______________________________]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="81"
+						y="5"
+						width="295"
+						height="21"
+						key="textField-7"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement lineSpacing="Double">
+						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Alun" + ($P{registration}.getPerson().isMale() ? "o" : "a") + " Nº " + $P{registration}.getNumber()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="460"
+						y="18"
+						width="25"
+						height="19"
+						key="staticText-5"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[Pág.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="498"
+						y="18"
+						width="14"
+						height="19"
+						key="staticText-6"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
+					</textElement>
+				<text><![CDATA[de]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="485"
+						y="18"
+						width="13"
+						height="19"
+						key="textField-10"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="512"
+						y="18"
+						width="13"
+						height="19"
+						key="textField-11"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>
