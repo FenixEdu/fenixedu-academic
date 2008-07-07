@@ -193,6 +193,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	final IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	bean.getChoosePersonBean().setFirstTimeSearch(true);
+	bean.getChoosePersonBean().setPerson(null);
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("prepare-create-new-process");
     }
