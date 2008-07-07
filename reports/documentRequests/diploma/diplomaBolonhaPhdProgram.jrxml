@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="diplomaBolonhaPhdProgram"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="595"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="ISO-8859-1" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="documentRequest" isForPrompting="false" class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest"/>
+	<parameter name="graduateTitle" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="name" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="birthLocale" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="nameOfFather" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="nameOfMother" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="conclusionDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="universityPrincipalName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="dissertationTitle" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="classificationResult" isForPrompting="false" class="java.lang.String"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="780"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="59"
+						y="295"
+						width="468"
+						height="15"
+						key="staticText-10"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[faz saber que]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="309"
+						width="468"
+						height="27"
+						key="textField-19"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="Quadraat-BoldItalic" pdfFontName="QUAD____.ttf" size="21" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="354"
+						width="468"
+						height="17"
+						key="textField-22"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nameOfFather}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="378"
+						width="468"
+						height="16"
+						key="textField-23"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nameOfMother}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="281"
+						width="468"
+						height="15"
+						key="textField-25"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="10" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["O Reitor da " + $P{universityName} + ", Professor Doutor " + $P{universityPrincipalName}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="59"
+						y="340"
+						width="468"
+						height="14"
+						key="staticText-11"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[filho de]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="59"
+						y="366"
+						width="468"
+						height="14"
+						key="staticText-12"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[e de]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="59"
+						y="391"
+						width="468"
+						height="15"
+						key="staticText-13"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[natural de]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="404"
+						width="468"
+						height="15"
+						key="textField-26"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{birthLocale}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="59"
+						y="462"
+						width="468"
+						height="16"
+						key="staticText-14"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[e submeteu para discussão uma dissertação com o título]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="545"
+						width="468"
+						height="16"
+						key="textField-27"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Bold" pdfFontName="QUAD____.ttf" size="11" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{conclusionDate}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="122"
+						y="480"
+						width="341"
+						height="48"
+						key="textField-28"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="Quadraat-Bold" pdfFontName="QUAD____.ttf" size="13" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["\"" + $P{dissertationTitle} + "\""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="439"
+						width="468"
+						height="20"
+						key="textField-29"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Bold" pdfFontName="QUAD____.ttf" size="15" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{institutionName}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="59"
+						y="530"
+						width="468"
+						height="15"
+						key="staticText-15"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[Tendo certificado de que, após a conclusão das provas em]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="618"
+						width="468"
+						height="27"
+						key="textField-30"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="Quadraat-BoldItalic" pdfFontName="QUAD____.ttf" size="20" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{graduateTitle}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="59"
+						y="592"
+						width="468"
+						height="16"
+						key="staticText-16"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[Tendo ainda verificado que foram cumpridos no processo todos os preceitos das leis vigentes da República Portuguesa,]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="576"
+						width="468"
+						height="15"
+						key="textField-31"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Bold" pdfFontName="QUAD____.ttf" size="12" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{classificationResult}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="59"
+						y="645"
+						width="468"
+						height="16"
+						key="staticText-17"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="11" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="692"
+						width="468"
+						height="18"
+						key="textField-32"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="10" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{universityName} + ", em " + $P{day}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="59"
+						y="560"
+						width="468"
+						height="15"
+						key="staticText-19"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[O júri considerou o candidato]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="59"
+						y="420"
+						width="468"
+						height="16"
+						key="staticText-20"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[Apresentou o seu pedido de admissão às provas de doutoramento no]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="59"
+						y="648"
+						width="468"
+						height="28"
+						key="textField-33"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["pela " + $P{universityName} + ", pelo que, em conformidade com as disposições legais em vigor,"
++ "\nlhe manda passar a presente Carta Doutoral."]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="59"
+						y="605"
+						width="468"
+						height="16"
+						key="staticText-21"
+						positionType="Float"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[decido outorgar-lhe todos os direitos académicos inerentes ao grau de]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="112"
+						y="754"
+						width="156"
+						height="0"
+						key="line-1"
+						positionType="FixRelativeToBottom"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="330"
+						y="754"
+						width="156"
+						height="0"
+						key="line-3"
+						positionType="FixRelativeToBottom"/>
+					<graphicElement stretchType="NoStretch" pen="Thin"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="389"
+						y="758"
+						width="36"
+						height="16"
+						key="staticText-22"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[O Reitor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="122"
+						y="758"
+						width="139"
+						height="16"
+						key="staticText-23"
+						positionType="FixRelativeToBottom"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[O Presidente do Instituto Superior Técnico]]></text>
+				</staticText>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>
