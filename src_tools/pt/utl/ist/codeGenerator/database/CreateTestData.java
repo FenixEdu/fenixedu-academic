@@ -138,7 +138,6 @@ import net.sourceforge.fenixedu.domain.vigilancy.OtherCourseVigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.MarkType;
@@ -359,16 +358,16 @@ public class CreateTestData {
 	}
 
 	private AggregateUnit createAggregateUnit(final Unit parentUnit, final String unitName) {
-	    return AggregateUnit.createNewAggregateUnit(new MultiLanguageString(Language.getDefaultLanguage(), unitName),
-		    null, null, new YearMonthDay(), null, parentUnit, AccountabilityType
+	    return AggregateUnit.createNewAggregateUnit(new MultiLanguageString(Language.getDefaultLanguage(), unitName), null,
+		    null, new YearMonthDay(), null, parentUnit, AccountabilityType
 			    .readAccountabilityTypeByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null, null,
 		    Boolean.FALSE, null);
 	}
 
 	private SchoolUnit createSchoolUnit(final UniversityUnit universityUnit, final String universityName,
 		final String universityAcronym) {
-	    return SchoolUnit.createNewSchoolUnit(new MultiLanguageString(Language.getDefaultLanguage(), universityName),
-		    null, universityAcronym, new YearMonthDay(), null, universityUnit, null, null, Boolean.FALSE, null);
+	    return SchoolUnit.createNewSchoolUnit(new MultiLanguageString(Language.getDefaultLanguage(), universityName), null,
+		    universityAcronym, new YearMonthDay(), null, universityUnit, null, null, Boolean.FALSE, null);
 	}
 
 	private void createServiceUnits(final AggregateUnit serviceUnits) {
@@ -1577,6 +1576,17 @@ public class CreateTestData {
 
 	public String getPrivateConstantForDigestCalculation() {
 	    return null;
+	}
+
+	@Override
+	public String getUsername() {
+	    return null;
+	}
+
+	@Override
+	public boolean hasRole(String arg0) {
+	    // TODO Auto-generated method stub
+	    return false;
 	}
     }
 
