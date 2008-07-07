@@ -270,8 +270,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
 		    && person.getPersonRole(RoleType.EMPLOYEE) != null
 		    && employee.getCurrentContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT) != null
-	     && !person.isPersonResearcher()
-	    ) {
+		    && !person.isPersonResearcher()) {
 		StringBuilder stringBuilder = new StringBuilder();
 		Unit currentUnit = employee.getCurrentWorkingPlace();
 		if (currentUnit != null) {
@@ -280,15 +279,17 @@ public class ParkingParty extends ParkingParty_Base {
 		} else {
 		    stringBuilder.append("<strong>Funcionário</strong><br/> Nº " + employee.getEmployeeNumber());
 		}
-		AssiduousnessStatusHistory assiduousnessStatusHistory = employee.getAssiduousness()
-			.getCurrentOrLastAssiduousnessStatusHistory();
-		if (assiduousnessStatusHistory != null) {
-		    DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
-		    stringBuilder.append("<br/> (Data inicio: ").append(fmt.print(assiduousnessStatusHistory.getBeginDate()));
-		    if (assiduousnessStatusHistory.getEndDate() != null) {
-			stringBuilder.append(" - Data fim: ").append(fmt.print(assiduousnessStatusHistory.getEndDate()));
+		if (employee.getAssiduousness() != null) {
+		    AssiduousnessStatusHistory assiduousnessStatusHistory = employee.getAssiduousness()
+			    .getCurrentOrLastAssiduousnessStatusHistory();
+		    if (assiduousnessStatusHistory != null) {
+			DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
+			stringBuilder.append("<br/> (Data inicio: ").append(fmt.print(assiduousnessStatusHistory.getBeginDate()));
+			if (assiduousnessStatusHistory.getEndDate() != null) {
+			    stringBuilder.append(" - Data fim: ").append(fmt.print(assiduousnessStatusHistory.getEndDate()));
+			}
+			stringBuilder.append(")<br/>");
 		    }
-		    stringBuilder.append(")<br/>");
 		}
 		occupations.add(stringBuilder.toString());
 	    }
@@ -407,8 +408,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    Employee employee = person.getEmployee();
 	    if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
 		    && employee.getCurrentContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT) != null
-	     && !person.isPersonResearcher()
-	    ) {
+		    && !person.isPersonResearcher()) {
 		StringBuilder stringBuilder = new StringBuilder();
 		AssiduousnessStatusHistory assiduousnessStatusHistory = employee.getAssiduousness()
 			.getCurrentOrLastAssiduousnessStatusHistory();
