@@ -67,7 +67,7 @@
 			</html:link>
 		</li>
 		<li>
-			<html:link page="/studentsByCurricularCourse.do?method=prepare" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+			<html:link page="/searchECAttends.do?method=prepare" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="link.students"/>
 			</html:link>
 		</li>

@@ -1079,11 +1079,12 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ReadCurricularCourseListAction">
             <forward name="success" path="/viewCurricularCourseListOfStudents.jsp" />
         </action>
-        <action path="/studentsByCurricularCourse" input="/teacherAdministrationViewerError.jsp" 
+        <action path="/searchECAttends" input="/teacherAdministrationViewerError.jsp" 
             name="studentsByCurricularCourseForm" scope="request" parameter="method" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.StudentsWithAttendsByCurricularCourseListAction">
-            <forward name="success" path="/viewStudents.jsp" />
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.SearchExecutionCourseAttendsAction">
+            <forward name="search" path="viewSearch" />
         </action>
+        
         <!-- End Students list -->
         <!-- Marks List -->
         <action path="/showMarksListOptions" 

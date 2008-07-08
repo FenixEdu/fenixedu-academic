@@ -7,39 +7,36 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsSummary;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoForReadStudentsWithAttendsByExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
-import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
 import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author Andre Fernandes / Joao Brito
@@ -74,7 +71,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
     private static final String EMAIL = "E-Mail";
 
-    private static final String SHIFT = "Shift ";
+    private static final String SHIFT = "Turno ";
 
     private static final String THEORETICAL = "Teórico";
 
@@ -90,76 +87,17 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
     private static final String NUMBER_STUDENTS = "Número de alunos";
 
+    private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", Language
+	    .getLocale());
+
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException, FenixServiceException {
-	Integer executionCourseID = null;
-	List coursesIDs = null;
-	List enrollmentTypeList = null;
-	List shiftIDs = null;
-	List<WorkingStudentSelectionType> wsSelectionTypes = new ArrayList<WorkingStudentSelectionType>();
 
-	try {
-	    executionCourseID = Integer.valueOf(request.getParameter("objectCode"));
+	SearchExecutionCourseAttendsBean executionCourseAttendsBean = getBean(request);
+	executionCourseAttendsBean.getExecutionCourse().searchAttends(executionCourseAttendsBean);
 
-	} catch (NumberFormatException ex) {
-	    // ok, we don't want to view a shift's student list
-	}
-
-	IUserView userView = getUserView(request);
-
-	String checkedCoursesIds[] = request.getParameterValues("coursesIDs");
-	String enrollmentType[] = request.getParameterValues("enrollmentType");
-	String checkedShiftIds[] = request.getParameterValues("shiftIDs");
-
-	enrollmentTypeList = new ArrayList();
-	for (int i = 0; i < enrollmentType.length; i++) {
-	    if (enrollmentType[i].equals(AttendacyStateSelectionType.ALL.toString())) {
-		enrollmentTypeList = null;
-		break;
-	    }
-	    enrollmentTypeList.add(new AttendacyStateSelectionType(enrollmentType[i]));
-	}
-
-	coursesIDs = new ArrayList();
-	for (int i = 0; i < checkedCoursesIds.length; i++) {
-	    if (checkedCoursesIds[i].equals("0")) {
-		coursesIDs = null;
-		break;
-	    }
-	    Integer courseID = new Integer(Integer.parseInt(checkedCoursesIds[i]));
-	    coursesIDs.add(courseID);
-	}
-
-	shiftIDs = new ArrayList();
-	for (int i = 0; i < checkedShiftIds.length; i++) {
-	    if (checkedShiftIds[i].equals("0")) {
-		shiftIDs = null;
-		break;
-	    }
-	    Integer shiftID = new Integer(Integer.parseInt(checkedShiftIds[i]));
-	    shiftIDs.add(shiftID);
-	}
-
-	String[] wsSelected = request.getParameterValues("workingStudentType");
-	for (int i = 0; i < wsSelected.length; i++) {
-	    if (wsSelected[i].equals(WorkingStudentSelectionType.ALL.toString())) {
-		wsSelectionTypes = null;
-		break;
-	    }
-	    wsSelectionTypes.add(WorkingStudentSelectionType.valueOf(wsSelected[i]));
-	}
-
-	Object args[] = { executionCourseID, coursesIDs, enrollmentTypeList, shiftIDs, wsSelectionTypes };
-	TeacherAdministrationSiteView siteView = null;
-
-	InfoForReadStudentsWithAttendsByExecutionCourse infoDTO;
-
-	siteView = (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
-		"ReadStudentsWithAttendsByExecutionCourse", args);
-
-	infoDTO = (InfoForReadStudentsWithAttendsByExecutionCourse) siteView.getComponent();
-
-	Collections.sort(infoDTO.getInfoAttends(), new BeanComparator("infoAttends.aluno.number"));
+	List<Attends> attendsResult = new ArrayList<Attends>(executionCourseAttendsBean.getAttendsResult());
+	Collections.sort(attendsResult, Attends.COMPARATOR_BY_STUDENT_NUMBER);
 
 	String fileContents = new String();
 
@@ -170,136 +108,68 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 	fileContents += COURSE + SEPARATOR;
 	fileContents += NAME + SEPARATOR;
 
-	List groupProperties = infoDTO.getInfoGroupProperties();
-	if (groupProperties != null && !groupProperties.isEmpty()) {
-	    Iterator gpIterator = groupProperties.iterator();
-	    while (gpIterator.hasNext()) {
-		InfoGrouping gp = (InfoGrouping) gpIterator.next();
-		fileContents += GROUP + gp.getName() + SEPARATOR;
+	List<Grouping> groupings = new ArrayList<Grouping>(executionCourseAttendsBean.getExecutionCourse().getGroupings());
+	Collections.sort(groupings, Grouping.COMPARATOR_BY_ENROLMENT_BEGIN_DATE);
+
+	if (!groupings.isEmpty()) {
+	    for (Grouping grouping : groupings) {
+		fileContents += GROUP + grouping.getName() + SEPARATOR;
 	    }
 	}
 
 	fileContents += EMAIL + SEPARATOR;
 
-	Collection classTypes = infoDTO.getClassTypes();
-	if (classTypes != null && !classTypes.isEmpty()) {
-	    Iterator ctIterator = classTypes.iterator();
-	    while (ctIterator.hasNext()) {
-		ShiftType classType = (ShiftType) ctIterator.next();
-
-		String classTypeString = new String();
-		if (classType.equals(ShiftType.TEORICA)) {
-		    classTypeString = THEORETICAL;
-		} else if (classType.equals(ShiftType.PRATICA)) {
-		    classTypeString = PRACTICAL;
-		} else if (classType.equals(ShiftType.LABORATORIAL)) {
-		    classTypeString = LABORATORIAL;
-		} else if (classType.equals(ShiftType.TEORICO_PRATICA)) {
-		    classTypeString = THEO_PRACTICAL;
-		}
-
-		fileContents += SHIFT + classTypeString + SEPARATOR;
-	    }
+	List<ShiftType> shiftTypes = new ArrayList<ShiftType>(executionCourseAttendsBean.getExecutionCourse().getShiftTypes());
+	Collections.sort(shiftTypes);
+	for (ShiftType shiftType : shiftTypes) {
+	    fileContents += SHIFT + enumerationResources.getString(shiftType.getName()) + SEPARATOR;
 	}
 
 	fileContents += NEWLINE;
 
 	// building each line
-	List attends = infoDTO.getInfoAttends();
-	Iterator attendsIterator = attends.iterator();
-	while (attendsIterator.hasNext()) {
-	    InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups attendacy = (InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups) attendsIterator
-		    .next();
-	    InfoFrequenta infoAttends = attendacy.getInfoAttends();
-
-	    // student number
-	    fileContents += infoAttends.getAluno().getNumber() + SEPARATOR;
-
-	    // number of enrollments
-	    fileContents += (attendacy.getNumberOfEnrollments().intValue() == 0 ? NULL : attendacy.getNumberOfEnrollments()
-		    .toString())
-		    + SEPARATOR;
-
-	    // attendacy type (normal, improvement, not enrolled)
-	    String attendacyType = "";
-	    if (infoAttends.getInfoEnrolment() != null) {
-
-		if (infoAttends.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)) {
-		    attendacyType = ATTENDACY_TYPE_NORMAL;
-
-		} else if (infoAttends.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT)) {
-		    attendacyType = ATTENDACY_TYPE_IMPROVEMENT;
-		}
+	for (Attends attends : attendsResult) {
+	    fileContents += attends.getRegistration().getStudent().getNumber().toString() + SEPARATOR;
+	    if (attends.getEnrolment() == null) {
+		fileContents += NULL + SEPARATOR;
 	    } else {
-		attendacyType = ATTENDACY_TYPE_NOT_ENROLLED;
+		fileContents += attends.getEnrolment().getNumberOfTotalEnrolmentsInThisCourse(
+			attends.getEnrolment().getExecutionPeriod())
+			+ SEPARATOR;
 	    }
-
-	    fileContents += attendacyType + SEPARATOR;
-
-	    // course name
-	    InfoDegreeCurricularPlan infoDCP = attendacy.getAttendingStudentInfoDCP();
-
-	    fileContents += infoDCP.getName() + SEPARATOR;
-
-	    // student name
-	    String shortName = infoAttends.getAluno().getInfoPerson().getNome();
-	    fileContents += shortName + SEPARATOR;
-
-	    // student groups
-	    if (groupProperties != null && !groupProperties.isEmpty()) {
-		Iterator gpIterator = groupProperties.iterator();
-		Map studentGroups = attendacy.getInfoStudentGroups();
-		while (gpIterator.hasNext()) {
-		    InfoGrouping gp = (InfoGrouping) gpIterator.next();
-		    String groupNumber = "";
-		    InfoStudentGroup infoStudentGroup = (InfoStudentGroup) studentGroups.get(gp.getName());
-
-		    if (infoStudentGroup != null)
-			groupNumber = infoStudentGroup.getGroupNumber().toString();
-		    else
-			groupNumber = NOT_AVAILABLE;
-
-		    fileContents += groupNumber + SEPARATOR;
+	    fileContents += enumerationResources.getString(attends.getAttendsStateType().getQualifiedName()) + SEPARATOR;
+	    fileContents += attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan().getName() + SEPARATOR;
+	    fileContents += attends.getRegistration().getStudent().getPerson().getFirstAndLastName() + SEPARATOR;
+	    for (Grouping grouping : groupings) {
+		StudentGroup studentGroup = attends.getStudentGroupByGrouping(grouping);
+		if (studentGroup == null) {
+		    fileContents += NOT_AVAILABLE + SEPARATOR;
+		} else {
+		    fileContents += studentGroup.getGroupNumber() + SEPARATOR;
 		}
 	    }
 
-	    // student e-mail
-	    fileContents += infoAttends.getAluno().getInfoPerson().getEmail() + SEPARATOR;
+	    String email = attends.getRegistration().getStudent().getPerson().getEmail();
+	    fileContents += (email != null ? email : "") + SEPARATOR;
 
-	    // student shifts
-	    if (classTypes != null && !classTypes.isEmpty()) {
-		Iterator ctIterator = classTypes.iterator();
-		Map studentShifts = attendacy.getInfoShifts();
-		while (ctIterator.hasNext()) {
-		    ShiftType classType = (ShiftType) ctIterator.next();
-		    String shiftNameString = "";
-		    InfoShift shift = (InfoShift) studentShifts.get(classType.getSiglaTipoAula());
-
-		    if (shift != null)
-			shiftNameString = shift.getNome();
-		    else
-			shiftNameString = NOT_AVAILABLE;
-
-		    fileContents += shiftNameString + SEPARATOR;
+	    for (ShiftType shiftType : shiftTypes) {
+		Shift shift = attends.getRegistration().getShiftFor(executionCourseAttendsBean.getExecutionCourse(), shiftType);
+		if (shift == null) {
+		    fileContents += NOT_AVAILABLE + SEPARATOR;
+		} else {
+		    fileContents += shift.getNome() + SEPARATOR;
 		}
 	    }
-
 	    fileContents += NEWLINE;
-
 	}
 
 	fileContents += NEWLINE;
 	fileContents += SUMMARY + NEWLINE;
 
-	// statistics table
-	InfoAttendsSummary infoAttendsSummary = infoDTO.getInfoAttendsSummary();
-	List keys = infoAttendsSummary.getNumberOfEnrollments();
-	Iterator keysIterator = keys.iterator();
-
 	fileContents += NUMBER_ENROLLMENTS + SEPARATOR + NUMBER_STUDENTS + NEWLINE;
-	while (keysIterator.hasNext()) {
-	    Integer key = (Integer) keysIterator.next();
-	    fileContents += key + SEPARATOR + infoAttendsSummary.getEnrollmentDistribution().get(key) + NEWLINE;
+	SortedSet<Integer> keys = new TreeSet<Integer>(executionCourseAttendsBean.getEnrolmentsNumberMap().keySet());
+	for (Integer key : keys) {
+	    fileContents += key + SEPARATOR + executionCourseAttendsBean.getEnrolmentsNumberMap().get(key) + NEWLINE;
 	}
 
 	try {
@@ -308,7 +178,8 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 	    StringBuilder fileName = new StringBuilder();
 	    YearMonthDay currentDate = new YearMonthDay();
 	    fileName.append("listaDeAlunos_");
-	    fileName.append(infoDTO.getInfoExecutionCourse().getSigla()).append("_").append(currentDate.getDayOfMonth());
+	    fileName.append(executionCourseAttendsBean.getExecutionCourse().getSigla()).append("_").append(
+		    currentDate.getDayOfMonth());
 	    fileName.append("-").append(currentDate.getMonthOfYear()).append("-").append(currentDate.getYear());
 	    fileName.append(".tsv");
 	    response.setHeader("Content-disposition", "attachment; filename=" + fileName);
@@ -320,6 +191,57 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 	}
 
 	return null;
+    }
+
+    private SearchExecutionCourseAttendsBean getBean(HttpServletRequest request) {
+	SearchExecutionCourseAttendsBean attendsBean = new SearchExecutionCourseAttendsBean(rootDomainObject
+		.readExecutionCourseByOID(Integer.valueOf(request.getParameter("objectCode"))));
+
+	String checkedCoursesIds[] = request.getParameterValues("coursesIDs");
+	if (checkedCoursesIds != null) {
+	    Collection<DegreeCurricularPlan> dcps = new HashSet<DegreeCurricularPlan>();
+	    for (String dcpID : checkedCoursesIds) {
+		dcps.add(rootDomainObject.readDegreeCurricularPlanByOID(Integer.valueOf(dcpID)));
+	    }
+	    attendsBean.setDegreeCurricularPlans(dcps);
+	} else {
+	    attendsBean.setDegreeCurricularPlans(Collections.EMPTY_LIST);
+	}
+
+	String enrollmentTypes[] = request.getParameterValues("enrollmentType");
+	if (enrollmentTypes != null) {
+	    Collection<StudentAttendsStateType> attendsStateTypes = new HashSet<StudentAttendsStateType>();
+	    for (String enrolmentType : enrollmentTypes) {
+		attendsStateTypes.add(StudentAttendsStateType.valueOf(enrolmentType));
+	    }
+	    attendsBean.setAttendsStates(attendsStateTypes);
+	} else {
+	    attendsBean.setAttendsStates(Collections.EMPTY_LIST);
+	}
+
+	String checkedShiftIds[] = request.getParameterValues("shiftIDs");
+	if (checkedShiftIds != null) {
+	    Collection<Shift> shifts = new HashSet<Shift>();
+	    for (String shiftID : checkedShiftIds) {
+		shifts.add(rootDomainObject.readShiftByOID(Integer.valueOf(shiftID)));
+	    }
+	    attendsBean.setShifts(shifts);
+	} else {
+	    attendsBean.setShifts(Collections.EMPTY_LIST);
+	}
+
+	String[] wsSelected = request.getParameterValues("workingStudentType");
+	if (wsSelected != null) {
+	    Collection<WorkingStudentSelectionType> wsSelectionTypes = new HashSet<WorkingStudentSelectionType>();
+	    for (String ws : wsSelected) {
+		wsSelectionTypes.add(WorkingStudentSelectionType.valueOf(ws));
+	    }
+	    attendsBean.setWorkingStudentTypes(wsSelectionTypes);
+	} else {
+	    attendsBean.setWorkingStudentTypes(Collections.EMPTY_LIST);
+	}
+
+	return attendsBean;
     }
 
 }

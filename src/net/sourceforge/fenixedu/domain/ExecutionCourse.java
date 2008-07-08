@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -45,6 +46,7 @@ import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.ProposalState;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
@@ -58,6 +60,7 @@ import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.StringAppender;
@@ -1909,6 +1912,55 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    }
 	}
 	return false;
+    }
+
+    public Set<DegreeCurricularPlan> getAttendsDegreeCurricularPlans() {
+	Set<DegreeCurricularPlan> dcps = new HashSet<DegreeCurricularPlan>();
+	for (Attends attends : this.getAttendsEnrolledOrWithActiveSCP()) {
+	    dcps.add(attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan());
+	}
+	return dcps;
+    }
+
+    @Checked("ExecutionCoursePredicates.executionCourseLecturingTeacherOrDegreeCoordinator")
+    public void searchAttends(SearchExecutionCourseAttendsBean attendsBean) {
+	Predicate<Attends> filter = attendsBean.getFilters();
+	Collection<Attends> validAttends = new HashSet<Attends>();
+	Map<Integer, Integer> enrolmentNumberMap = new HashMap<Integer, Integer>();
+	for (Attends attends : getAttends()) {
+	    if (attends.isEnrolledOrWithActiveSCP() && filter.eval(attends)) {
+		validAttends.add(attends);
+		addAttendsToEnrolmentNumberMap(attends, enrolmentNumberMap);
+	    }
+	}
+	attendsBean.setAttendsResult(validAttends);
+	attendsBean.setEnrolmentsNumberMap(enrolmentNumberMap);
+    }
+
+    private void addAttendsToEnrolmentNumberMap(final Attends attends, Map<Integer, Integer> enrolmentNumberMap) {
+	Integer enrolmentsNumber;
+	if (attends.getEnrolment() == null) {
+	    enrolmentsNumber = 0;
+	} else {
+	    enrolmentsNumber = attends.getEnrolment().getNumberOfTotalEnrolmentsInThisCourse(
+		    attends.getEnrolment().getExecutionPeriod());
+	}
+
+	Integer mapValue = enrolmentNumberMap.get(enrolmentsNumber);
+	if (mapValue == null) {
+	    mapValue = 1;
+	} else {
+	    mapValue += 1;
+	}
+	enrolmentNumberMap.put(enrolmentsNumber, mapValue);
+    }
+
+    public Collection<DegreeCurricularPlan> getAssociatedDegreeCurricularPlans() {
+	Collection<DegreeCurricularPlan> result = new HashSet<DegreeCurricularPlan>();
+	for (CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+	    result.add(curricularCourse.getDegreeCurricularPlan());
+	}
+	return result;
     }
 
 }

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -35,7 +36,15 @@ import org.joda.time.YearMonthDay;
  */
 public class Attends extends Attends_Base {
 
-    public static final Comparator<Attends> COMPARATOR_BY_STUDENT_NUMBER = new BeanComparator("aluno.number");
+    public static final Comparator<Attends> COMPARATOR_BY_STUDENT_NUMBER = new Comparator<Attends>() {
+
+	@Override
+	public int compare(Attends attends1, Attends attends2) {
+	    return attends1.getRegistration().getStudent().getNumber().compareTo(
+		    attends2.getRegistration().getStudent().getNumber());
+	}
+
+    };
 
     public static final Comparator<Attends> ATTENDS_COMPARATOR = new Comparator<Attends>() {
 	public int compare(final Attends attends1, final Attends attends2) {
@@ -73,24 +82,29 @@ public class Attends extends Attends_Base {
 
     public void delete() throws DomainException {
 	if (canDelete()) {
-	    
+
 	    getProjectSubmissionLogsSet().clear();
 	    getGroupingsSet().clear();
 	    removeAluno();
 	    removeDisciplinaExecucao();
-	    removeEnrolment();	    
-	    
+	    removeEnrolment();
+
 	    removeRootDomainObject();
 	    deleteDomainObject();
 	}
     }
 
     private boolean canDelete() {
-	if (hasAnyShiftEnrolments()) throw new DomainException("error.attends.cant.delete");
-	if (hasAnyStudentGroups()) throw new DomainException("error.attends.cant.delete");
-	if (hasAnyAssociatedMarks()) throw new DomainException("error.attends.cant.delete");
-	if (hasAnyProjectSubmissions()) throw new DomainException("error.attends.cant.delete");
-	if (hasAnyWeeklyWorkLoads()) throw new DomainException("error.attends.cant.delete");
+	if (hasAnyShiftEnrolments())
+	    throw new DomainException("error.attends.cant.delete");
+	if (hasAnyStudentGroups())
+	    throw new DomainException("error.attends.cant.delete");
+	if (hasAnyAssociatedMarks())
+	    throw new DomainException("error.attends.cant.delete");
+	if (hasAnyProjectSubmissions())
+	    throw new DomainException("error.attends.cant.delete");
+	if (hasAnyWeeklyWorkLoads())
+	    throw new DomainException("error.attends.cant.delete");
 	return true;
     }
 
@@ -122,8 +136,7 @@ public class Attends extends Attends_Base {
     }
 
     public List<Mark> getAssociatedMarksOrderedByEvaluationDate() {
-	final List<Evaluation> orderedEvaluations = getExecutionCourse()
-		.getOrderedAssociatedEvaluations();
+	final List<Evaluation> orderedEvaluations = getExecutionCourse().getOrderedAssociatedEvaluations();
 	final List<Mark> orderedMarks = new ArrayList<Mark>(orderedEvaluations.size());
 	for (int i = 0; i < orderedEvaluations.size(); i++) {
 	    orderedMarks.add(null);
@@ -136,23 +149,25 @@ public class Attends extends Attends_Base {
     }
 
     public WeeklyWorkLoad createWeeklyWorkLoad(final Integer contact, final Integer autonomousStudy, final Integer other) {
-	
-	if(contact.intValue() < 0 || autonomousStudy.intValue() < 0 || other.intValue() < 0) {
+
+	if (contact.intValue() < 0 || autonomousStudy.intValue() < 0 || other.intValue() < 0) {
 	    throw new DomainException("weekly.work.load.creation.invalid.data");
 	}
-	
+
 	if (getEnrolment() == null) {
 	    throw new DomainException("weekly.work.load.creation.requires.enrolment");
 	}
 
 	final int currentWeekOffset = calculateCurrentWeekOffset();
-	if (currentWeekOffset < 1 || new YearMonthDay(getEndOfExamsPeriod()).plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK).isBefore(new YearMonthDay())) {
+	if (currentWeekOffset < 1
+		|| new YearMonthDay(getEndOfExamsPeriod()).plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK).isBefore(new YearMonthDay())) {
 	    throw new DomainException("outside.weekly.work.load.response.period");
 	}
 
 	final int previousWeekOffset = currentWeekOffset - 1;
 
-	final WeeklyWorkLoad lastExistentWeeklyWorkLoad = getWeeklyWorkLoads().isEmpty() ? null : Collections.max(getWeeklyWorkLoads());
+	final WeeklyWorkLoad lastExistentWeeklyWorkLoad = getWeeklyWorkLoads().isEmpty() ? null : Collections
+		.max(getWeeklyWorkLoads());
 	if (lastExistentWeeklyWorkLoad != null && lastExistentWeeklyWorkLoad.getWeekOffset().intValue() == previousWeekOffset) {
 	    throw new DomainException("weekly.work.load.for.previous.week.already.exists");
 	}
@@ -164,8 +179,7 @@ public class Attends extends Attends_Base {
 	final DateTime beginningOfSemester = new DateTime(getBegginingOfLessonPeriod());
 	final DateTime firstMonday = beginningOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
 	final DateTime endOfSemester = new DateTime(getEndOfExamsPeriod());
-	final DateTime nextLastMonday = endOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1)
-		.plusWeeks(1);
+	final DateTime nextLastMonday = endOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1).plusWeeks(1);
 	return new Interval(firstMonday, nextLastMonday);
     }
 
@@ -207,8 +221,8 @@ public class Attends extends Attends_Base {
 	final DateMidnight lastMonday = endOfSemester.withField(DateTimeFieldType.dayOfWeek(), 1);
 	final DateMidnight endOfResponsePeriod = lastMonday.plusWeeks(2);
 
-	return (secondMonday.isEqualNow() || secondMonday.isBeforeNow())
-		&& endOfResponsePeriod.isAfterNow() ? getPreviousWeek() : null;
+	return (secondMonday.isEqualNow() || secondMonday.isBeforeNow()) && endOfResponsePeriod.isAfterNow() ? getPreviousWeek()
+		: null;
     }
 
     public int getCalculatePreviousWeek() {
@@ -217,8 +231,7 @@ public class Attends extends Attends_Base {
 
     public int calculateCurrentWeekOffset() {
 	final DateMidnight beginningOfLessonPeriod = new DateMidnight(getBegginingOfLessonPeriod());
-	final DateMidnight firstMonday = beginningOfLessonPeriod.withField(
-		DateTimeFieldType.dayOfWeek(), 1);
+	final DateMidnight firstMonday = beginningOfLessonPeriod.withField(DateTimeFieldType.dayOfWeek(), 1);
 	final DateMidnight thisMonday = new DateMidnight().withField(DateTimeFieldType.dayOfWeek(), 1);
 
 	final Interval interval = new Interval(firstMonday, thisMonday);
@@ -242,8 +255,7 @@ public class Attends extends Attends_Base {
     public int getWeeklyWorkLoadAutonomousStudy() {
 	int result = 0;
 	for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoads()) {
-	    final int contact = weeklyWorkLoad.getAutonomousStudy() != null ? weeklyWorkLoad
-		    .getAutonomousStudy() : 0;
+	    final int contact = weeklyWorkLoad.getAutonomousStudy() != null ? weeklyWorkLoad.getAutonomousStudy() : 0;
 	    result += contact;
 	}
 	return result;
@@ -270,8 +282,8 @@ public class Attends extends Attends_Base {
     public Date getBegginingOfLessonPeriod() {
 	final ExecutionSemester executionSemester = getExecutionCourse().getExecutionPeriod();
 	final StudentCurricularPlan studentCurricularPlan = getEnrolment().getStudentCurricularPlan();
-	final ExecutionDegree executionDegree = studentCurricularPlan.getDegreeCurricularPlan()
-		.getExecutionDegreeByYear(executionSemester.getExecutionYear());
+	final ExecutionDegree executionDegree = studentCurricularPlan.getDegreeCurricularPlan().getExecutionDegreeByYear(
+		executionSemester.getExecutionYear());
 	if (executionSemester.getSemester().intValue() == 1) {
 	    return executionDegree.getPeriodLessonsFirstSemester().getStart();
 	} else if (executionSemester.getSemester().intValue() == 2) {
@@ -284,8 +296,8 @@ public class Attends extends Attends_Base {
     public Date getEndOfExamsPeriod() {
 	final ExecutionSemester executionSemester = getExecutionCourse().getExecutionPeriod();
 	final StudentCurricularPlan studentCurricularPlan = getEnrolment().getStudentCurricularPlan();
-	final ExecutionDegree executionDegree = studentCurricularPlan.getDegreeCurricularPlan()
-		.getExecutionDegreeByYear(executionSemester.getExecutionYear());
+	final ExecutionDegree executionDegree = studentCurricularPlan.getDegreeCurricularPlan().getExecutionDegreeByYear(
+		executionSemester.getExecutionYear());
 	if (executionSemester.getSemester().intValue() == 1) {
 	    return executionDegree.getPeriodExamsFirstSemester().getEnd();
 	} else if (executionSemester.getSemester().intValue() == 2) {
@@ -294,7 +306,6 @@ public class Attends extends Attends_Base {
 	    throw new DomainException("unsupported.execution.period.semester");
 	}
     }
-
 
     public EnrolmentEvaluationType getEnrolmentEvaluationType() {
 	if (getEnrolment().getExecutionPeriod() != getExecutionCourse().getExecutionPeriod()) {
@@ -321,44 +332,45 @@ public class Attends extends Attends_Base {
     @Override
     @Deprecated
     public Registration getAluno() {
-        return getRegistration();
+	return getRegistration();
     }
-    
+
     public Registration getRegistration() {
-        return super.getAluno();
+	return super.getAluno();
     }
-    
+
     public void setRegistration(final Registration registration) {
 	super.setAluno(registration);
     }
-    
+
     @Override
     @Deprecated
     public ExecutionCourse getDisciplinaExecucao() {
 	return getExecutionCourse();
     }
-    
+
     public ExecutionCourse getExecutionCourse() {
 	return super.getDisciplinaExecucao();
     }
-    
+
     public ExecutionSemester getExecutionPeriod() {
 	return getExecutionCourse().getExecutionPeriod();
     }
 
     public boolean isEnrolledOrWithActiveSCP() {
-	if(!hasEnrolment()) {
-	    final RegistrationState lastRegistrationState = getRegistration().getLastRegistrationState(getExecutionCourse().getExecutionYear());
-	    if(lastRegistrationState != null && !lastRegistrationState.isActive()) {
+	if (!hasEnrolment()) {
+	    final RegistrationState lastRegistrationState = getRegistration().getLastRegistrationState(
+		    getExecutionCourse().getExecutionYear());
+	    if (lastRegistrationState != null && !lastRegistrationState.isActive()) {
 		return false;
 	    }
 	}
 	return true;
     }
-    
+
     public void removeShifts() {
 	for (final Shift shift : getRegistration().getShiftsSet()) {
-	    if(shift.getExecutionCourse() == getExecutionCourse()) {
+	    if (shift.getExecutionCourse() == getExecutionCourse()) {
 		getRegistration().removeShifts(shift);
 	    }
 	}
@@ -366,6 +378,39 @@ public class Attends extends Attends_Base {
 
     public boolean hasAnyAssociatedMarkSheetOrFinalGrade() {
 	return getEnrolment().hasAnyAssociatedMarkSheetOrFinalGrade();
+    }
+
+    public StudentCurricularPlan getStudentCurricularPlanFromAttends() {
+	final Enrolment enrolment = getEnrolment();
+	return enrolment == null ? getRegistration().getLastStudentCurricularPlan() : enrolment.getStudentCurricularPlan();
+    }
+
+    public StudentAttendsStateType getAttendsStateType() {
+	if (getEnrolment() == null) {
+	    return StudentAttendsStateType.NOT_ENROLED;
+	}
+
+	if ((!getEnrolment().getExecutionPeriod().equals(getExecutionPeriod()) && getEnrolment().hasImprovement())) {
+	    return StudentAttendsStateType.IMPROVEMENT;
+	}
+
+	if (getEnrolment().isValid(getExecutionPeriod())) {
+	    if (getEnrolment().hasSpecialSeason()) {
+		return StudentAttendsStateType.SPECIAL_SEASON;
+	    }
+	    return StudentAttendsStateType.ENROLED;
+	}
+
+	return null;
+    }
+
+    public StudentGroup getStudentGroupByGrouping(final Grouping grouping) {
+	for (StudentGroup studentGroup : getStudentGroupsSet()) {
+	    if (studentGroup.getGrouping().equals(grouping)) {
+		return studentGroup;
+	    }
+	}
+	return null;
     }
 
 }

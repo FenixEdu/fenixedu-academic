@@ -1113,4 +1113,6 @@ Documentation:
 	
 	<renderer mode="input" type="java.lang.String" layout="inquiries-answer-checkbox" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiriesCheckBoxQuestionRenderer" />
 	
+	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean" layout="search-execution-course-attends" class="net.sourceforge.fenixedu.presentationTier.renderers.SearchExecutionCourseAttendsRenderer" />
+	
 </renderers-config>

@@ -27,11 +27,14 @@ public class Shift extends Shift_Base {
 
     public static final Comparator<Shift> SHIFT_COMPARATOR_BY_NAME = new BeanComparator("nome", Collator.getInstance());
     public static final Comparator<Shift> SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS = new ComparatorChain();
-        
+
     static {
-        ((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("executionCourse.nome"));
-	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("shiftTypesIntegerComparator"));
-	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator("lessonsStringComparator"));
+	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS)
+		.addComparator(new BeanComparator("executionCourse.nome"));
+	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator(
+		"shiftTypesIntegerComparator"));
+	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(new BeanComparator(
+		"lessonsStringComparator"));
 	((ComparatorChain) SHIFT_COMPARATOR_BY_TYPE_AND_ORDERED_LESSONS).addComparator(DomainObject.COMPARATOR_BY_ID);
 
 	Registration.ShiftStudent.addListener(new ShiftStudentListener());
@@ -39,58 +42,61 @@ public class Shift extends Shift_Base {
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
     public Shift(final ExecutionCourse executionCourse, Collection<ShiftType> types, final Integer lotacao) {
-	
+
 	super();
-	
-	setRootDomainObject(RootDomainObject.getInstance());	
+
+	setRootDomainObject(RootDomainObject.getInstance());
 	shiftTypeManagement(types, executionCourse);
-	setLotacao(lotacao);		
+	setLotacao(lotacao);
 	executionCourse.setShiftNames();
-	
-	if(!hasAnyCourseLoads()) {
+
+	if (!hasAnyCourseLoads()) {
 	    throw new DomainException("error.Shift.empty.courseLoads");
 	}
     }
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
-    public void edit(List<ShiftType> newTypes, Integer newCapacity, ExecutionCourse newExecutionCourse, String newName) {	
+    public void edit(List<ShiftType> newTypes, Integer newCapacity, ExecutionCourse newExecutionCourse, String newName) {
 
 	ExecutionCourse beforeExecutionCourse = getExecutionCourse();
 
 	final Shift otherShiftWithSameNewName = newExecutionCourse.findShiftByName(newName);
 	if (otherShiftWithSameNewName != null && otherShiftWithSameNewName != this) {
 	    throw new DomainException("error.Shift.with.this.name.already.exists");
-	}	
-	
-	if(newCapacity != null && getStudentsCount() > newCapacity.intValue()) {
+	}
+
+	if (newCapacity != null && getStudentsCount() > newCapacity.intValue()) {
 	    throw new DomainException("errors.exception.invalid.finalAvailability");
 	}
-		
-	setLotacao(newCapacity);		
+
+	setLotacao(newCapacity);
 	shiftTypeManagement(newTypes, newExecutionCourse);
-		
+
 	beforeExecutionCourse.setShiftNames();
-	if(!beforeExecutionCourse.equals(newExecutionCourse)) {
-	    newExecutionCourse.setShiftNames();   
-	}	
-	
-	if(!hasAnyCourseLoads()) {
+	if (!beforeExecutionCourse.equals(newExecutionCourse)) {
+	    newExecutionCourse.setShiftNames();
+	}
+
+	if (!hasAnyCourseLoads()) {
 	    throw new DomainException("error.Shift.empty.courseLoads");
 	}
     }
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
     public void delete() {
-	if (canBeDeleted()) {	    
+	if (canBeDeleted()) {
 
 	    final ExecutionCourse executionCourse = getExecutionCourse();
 
-	    for (; hasAnyAssociatedLessons(); getAssociatedLessons().get(0).delete());
-	    for (; hasAnyAssociatedShiftProfessorship(); getAssociatedShiftProfessorship().get(0).delete());
-	    for (; hasAnyShiftDistributionEntries(); getShiftDistributionEntries().get(0).delete());
-	    
+	    for (; hasAnyAssociatedLessons(); getAssociatedLessons().get(0).delete())
+		;
+	    for (; hasAnyAssociatedShiftProfessorship(); getAssociatedShiftProfessorship().get(0).delete())
+		;
+	    for (; hasAnyShiftDistributionEntries(); getShiftDistributionEntries().get(0).delete())
+		;
+
 	    getAssociatedClasses().clear();
-	    getCourseLoads().clear();	    
+	    getCourseLoads().clear();
 	    removeRootDomainObject();
 	    deleteDomainObject();
 
@@ -103,43 +109,43 @@ public class Shift extends Shift_Base {
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkRequiredParameters() {
-	return getLotacao() != null && !StringUtils.isEmpty(getNome());		 
+	return getLotacao() != null && !StringUtils.isEmpty(getNome());
     }
 
     @Deprecated
     public ExecutionCourse getDisciplinaExecucao() {
 	return getExecutionCourse();
     }
-    
+
     public ExecutionCourse getExecutionCourse() {
 	return getCourseLoads().get(0).getExecutionCourse();
     }
-    
+
     public ExecutionSemester getExecutionPeriod() {
 	return getExecutionCourse().getExecutionPeriod();
     }
-    
+
     private void shiftTypeManagement(Collection<ShiftType> types, ExecutionCourse executionCourse) {
-	if(executionCourse != null) {
+	if (executionCourse != null) {
 	    getCourseLoads().clear();
 	    for (ShiftType shiftType : types) {
 		CourseLoad courseLoad = executionCourse.getCourseLoadByShiftType(shiftType);
-		if(courseLoad != null) {
+		if (courseLoad != null) {
 		    addCourseLoads(courseLoad);
-		}	    		
+		}
 	    }
 	}
     }
-    
-    public List<ShiftType> getTypes(){
+
+    public List<ShiftType> getTypes() {
 	List<ShiftType> result = new ArrayList<ShiftType>();
 	for (CourseLoad courseLoad : getCourseLoads()) {
 	    result.add(courseLoad.getType());
 	}
 	return result;
     }
-    
-    public SortedSet<ShiftType> getSortedTypes(){
+
+    public SortedSet<ShiftType> getSortedTypes() {
 	SortedSet<ShiftType> result = new TreeSet<ShiftType>();
 	for (CourseLoad courseLoad : getCourseLoads()) {
 	    result.add(courseLoad.getType());
@@ -148,17 +154,17 @@ public class Shift extends Shift_Base {
     }
 
     public boolean containsType(ShiftType shiftType) {
-	if(shiftType != null) {
+	if (shiftType != null) {
 	    for (CourseLoad courseLoad : getCourseLoads()) {
-		if(courseLoad.getType().equals(shiftType)) {
+		if (courseLoad.getType().equals(shiftType)) {
 		    return true;
 		}
 	    }
 	}
 	return false;
     }
-    
-    public boolean canBeDeleted() {	
+
+    public boolean canBeDeleted() {
 	if (hasAnyAssociatedStudentGroups()) {
 	    throw new DomainException("error.deleteShift.with.studentGroups", getNome());
 	}
@@ -173,13 +179,13 @@ public class Shift extends Shift_Base {
 	}
 	return true;
     }
-        
+
     public BigDecimal getTotalHours() {
 	List<Lesson> lessons = getAssociatedLessons();
 	BigDecimal lessonTotalHours = BigDecimal.ZERO;
 	for (Lesson lesson : lessons) {
 	    lessonTotalHours = lessonTotalHours.add(lesson.getTotalHours());
-	}	
+	}
 	return lessonTotalHours;
     }
 
@@ -187,13 +193,13 @@ public class Shift extends Shift_Base {
 	BigDecimal maxHours = BigDecimal.ZERO;
 	for (Lesson lesson : getAssociatedLessons()) {
 	    BigDecimal lessonHours = lesson.getUnitHours();
-	    if(maxHours.compareTo(lessonHours) == -1) {
+	    if (maxHours.compareTo(lessonHours) == -1) {
 		maxHours = lessonHours;
 	    }
-	}	
+	}
 	return maxHours;
     }
-    
+
     public BigDecimal getUnitHours() {
 	BigDecimal hours = BigDecimal.ZERO;
 	List<Lesson> lessons = getAssociatedLessons();
@@ -233,7 +239,7 @@ public class Shift extends Shift_Base {
 	     * if shift's type is LABORATORIAL the shift professorship
 	     * percentage can exceed 100%
 	     */
-	    if (degreeTeachingService.getProfessorship().getTeacher() != teacher 
+	    if (degreeTeachingService.getProfessorship().getTeacher() != teacher
 		    && (getCourseLoadsCount() != 1 || !containsType(ShiftType.LABORATORIAL))) {
 		availablePercentage -= degreeTeachingService.getPercentage();
 	    }
@@ -255,10 +261,10 @@ public class Shift extends Shift_Base {
 	}
 	return stringBuilder.toString();
     }
-    
+
     public Integer getShiftTypesIntegerComparator() {
 	final StringBuilder stringBuilder = new StringBuilder();
-	for (ShiftType shiftType : getSortedTypes()) {	       
+	for (ShiftType shiftType : getSortedTypes()) {
 	    stringBuilder.append(shiftType.ordinal() + 1);
 	}
 	return Integer.valueOf(stringBuilder.toString());
@@ -285,7 +291,7 @@ public class Shift extends Shift_Base {
 	for (SchoolClass schoolClass : getAssociatedClasses()) {
 	    builder.append(schoolClass.getNome());
 	    index++;
-	    if(index < getAssociatedClassesCount()) {
+	    if (index < getAssociatedClassesCount()) {
 		builder.append(", ");
 	    }
 	}
@@ -293,44 +299,44 @@ public class Shift extends Shift_Base {
     }
 
     public String getShiftTypesPrettyPrint() {
-	StringBuilder builder = new StringBuilder();	
+	StringBuilder builder = new StringBuilder();
 	int index = 0;
 	SortedSet<ShiftType> sortedTypes = getSortedTypes();
 	for (ShiftType shiftType : sortedTypes) {
 	    builder.append(enumerationResourcesBundle.getString(shiftType.getName()));
 	    index++;
-	    if(index < sortedTypes.size()) {
+	    if (index < sortedTypes.size()) {
 		builder.append(", ");
 	    }
 	}
 	return builder.toString();
     }
-    
+
     public String getShiftTypesCodePrettyPrint() {
-	StringBuilder builder = new StringBuilder();	
+	StringBuilder builder = new StringBuilder();
 	int index = 0;
 	SortedSet<ShiftType> sortedTypes = getSortedTypes();
 	for (ShiftType shiftType : sortedTypes) {
 	    builder.append(shiftType.getSiglaTipoAula());
-	    index++;	    
-	    if(index < sortedTypes.size()) {
+	    index++;
+	    if (index < sortedTypes.size()) {
 		builder.append(", ");
 	    }
 	}
 	return builder.toString();
     }
-    
-    public List<Summary> getExtraSummaries(){
+
+    public List<Summary> getExtraSummaries() {
 	List<Summary> result = new ArrayList<Summary>();
 	Set<Summary> summaries = getAssociatedSummariesSet();
 	for (Summary summary : summaries) {
-	    if(summary.isExtraSummary()) {
+	    if (summary.isExtraSummary()) {
 		result.add(summary);
 	    }
-	} 
+	}
 	return result;
     }
-    
+
     private static class ShiftStudentListener extends dml.runtime.RelationAdapter<Registration, Shift> {
 
 	@Override
@@ -359,16 +365,16 @@ public class Shift extends Shift_Base {
 	}
 	return null;
     }
-    
+
     public int getCapacityBasedOnSmallestRoom() {
 	int capacity = 0;
 
 	for (final Lesson lesson : getAssociatedLessonsSet()) {
 	    if (lesson.hasSala()) {
 		if (capacity == 0) {
-		    capacity = ((AllocatableSpace)lesson.getSala()).getNormalCapacity();
+		    capacity = ((AllocatableSpace) lesson.getSala()).getNormalCapacity();
 		} else {
-		    capacity = Math.min(capacity, ((AllocatableSpace)lesson.getSala()).getNormalCapacity());
+		    capacity = Math.min(capacity, ((AllocatableSpace) lesson.getSala()).getNormalCapacity());
 		}
 	    }
 	}
@@ -376,4 +382,12 @@ public class Shift extends Shift_Base {
 	return capacity + (capacity / 10);
     }
 
+    public boolean hasShiftType(final ShiftType shiftType) {
+	for (CourseLoad courseLoad : getCourseLoadsSet()) {
+	    if (courseLoad.getType() == shiftType) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }

@@ -1557,6 +1557,15 @@ public class Registration extends Registration_Base {
 	return result;
     }
 
+    final public Shift getShiftFor(final ExecutionCourse executionCourse, final ShiftType shiftType) {
+	for (final Shift shift : getShiftsSet()) {
+	    if (shift.getExecutionCourse() == executionCourse && shift.hasShiftType(shiftType)) {
+		return shift;
+	    }
+	}
+	return null;
+    }
+
     private int countNumberOfDistinctExecutionCoursesOfShiftsFor(final ExecutionSemester executionSemester) {
 	final Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
 	for (final Shift shift : getShiftsSet()) {

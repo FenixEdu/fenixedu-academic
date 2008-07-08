@@ -834,5 +834,10 @@
 	</definition>			
 	<definition name="see-specified-rooms-reserve" extends="df.page.teacher-index">
 		<put name="body" value="/teacher/roomsReserveManagement/seeSpecifiedRoomsReserve.jsp" />
-	</definition>			
+	</definition>
+	
+	<definition name="viewSearch" extends="execution-course-administration">
+		<put name="body" value="/teacher/viewAttendsSearch.jsp" />
+	</definition>		
+				
 </tiles-definitions>

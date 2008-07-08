@@ -87,10 +87,6 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
 
 	String[] wsSelected = (String[]) formBean.get("workingStudentType");
 	for (int i = 0; i < wsSelected.length; i++) {
-	    if (wsSelected[i].equals(WorkingStudentSelectionType.ALL.toString())) {
-		wsSelectionTypes = null;
-		break;
-	    }
 	    wsSelectionTypes.add(WorkingStudentSelectionType.valueOf(wsSelected[i]));
 	}
 
@@ -226,8 +222,7 @@ public class StudentsWithAttendsByCurricularCourseListAction extends FenixDispat
 	cbFilters[3] = AttendacyStateSelectionType.NOT_ENROLLED.toString();
 	cbFilters[4] = AttendacyStateSelectionType.IMPROVEMENT.toString();
 
-	String[] wsFilters = { WorkingStudentSelectionType.ALL.toString(),
-		WorkingStudentSelectionType.WORKING_STUDENT.toString(),
+	String[] wsFilters = { WorkingStudentSelectionType.WORKING_STUDENT.toString(),
 		WorkingStudentSelectionType.NOT_WORKING_STUDENT.toString() };
 
 	formBean.set("coursesIDs", cbCourses);

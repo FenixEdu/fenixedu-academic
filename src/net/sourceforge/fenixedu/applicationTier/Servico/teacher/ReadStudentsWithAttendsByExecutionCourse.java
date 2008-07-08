@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -43,7 +44,6 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
 import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -97,10 +97,10 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
 	// filter by Enrollment type
 	if (enrollmentTypeFilters != null) {
-	    boolean enrolledFilter = enrollmentTypeFilters.contains(AttendacyStateSelectionType.ENROLLED);
-	    boolean notEnrolledFilter = enrollmentTypeFilters.contains(AttendacyStateSelectionType.NOT_ENROLLED);
-	    boolean improvementFilter = enrollmentTypeFilters.contains(AttendacyStateSelectionType.IMPROVEMENT);
-	    boolean specialSeasonFilter = enrollmentTypeFilters.contains(AttendacyStateSelectionType.SPECIAL_SEASON);
+	    boolean enrolledFilter = enrollmentTypeFilters.contains(StudentAttendsStateType.ENROLED);
+	    boolean notEnrolledFilter = enrollmentTypeFilters.contains(StudentAttendsStateType.NOT_ENROLED);
+	    boolean improvementFilter = enrollmentTypeFilters.contains(StudentAttendsStateType.IMPROVEMENT);
+	    boolean specialSeasonFilter = enrollmentTypeFilters.contains(StudentAttendsStateType.SPECIAL_SEASON);
 
 	    List newAttends = new ArrayList();
 	    Iterator attendsIterator = attends.iterator();
@@ -162,7 +162,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	    attends = collectedAttends;
 	}
 
-	if (wsSelectionType != null && !wsSelectionType.contains(WorkingStudentSelectionType.ALL)) {
+	if (wsSelectionType != null && allWSSelected(wsSelectionType)) {
 	    boolean workingStudentSelected = wsSelectionType.contains(WorkingStudentSelectionType.WORKING_STUDENT);
 	    boolean notWorkingStudentSelected = wsSelectionType.contains(WorkingStudentSelectionType.NOT_WORKING_STUDENT);
 	    List<Attends> attendsList = new ArrayList<Attends>();
@@ -276,6 +276,10 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	TeacherAdministrationSiteView siteView = createSiteView(infoDTO, site);
 
 	return siteView;
+    }
+
+    private boolean allWSSelected(List<WorkingStudentSelectionType> wsSelectionType) {
+	return WorkingStudentSelectionType.values().length == wsSelectionType.size();
     }
 
     private int countAllEnrolmentsForSameStudent(StudentCurricularPlan studentCurricularPlan, String curricularCourseName) {
