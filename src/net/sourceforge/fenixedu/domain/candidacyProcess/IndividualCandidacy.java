@@ -146,7 +146,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 		    .getPresentationName());
 	}
 
-	if (hasRegistration(degreeCurricularPlan)) {
+	if (hasActiveRegistration(degreeCurricularPlan)) {
 	    final Registration registration = getStudent().getActiveRegistrationFor(degreeCurricularPlan);
 	    if (registration.getStartDate().isBefore(getCandidacyDate())) {
 		throw new DomainException("error.IndividualCandidacy.person.with.registration.previous.candidacy",
@@ -170,8 +170,8 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	return registration;
     }
 
-    private boolean hasRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
-	return getPerson().hasStudent() && getPerson().getStudent().hasRegistrationFor(degreeCurricularPlan);
+    private boolean hasActiveRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
+	return getPerson().hasStudent() && getPerson().getStudent().hasActiveRegistrationFor(degreeCurricularPlan);
     }
 
     private Student getStudent() {
