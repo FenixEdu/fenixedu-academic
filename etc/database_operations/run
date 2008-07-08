@@ -40,3 +40,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "fixAcademicServiceRequestDates" fixAcademicServiceRequestDates.sql
