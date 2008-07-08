@@ -1769,12 +1769,16 @@ public class Registration extends Registration_Base {
 	final Degree degree = getDegree();
 	final DegreeType degreeType = degree.getDegreeType();
 
-	if (cycleType != null) {
+	if (cycleType != null && getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
 	    result.append(cycleType.getDescription()).append(" do ");
 	}
 
 	result.append(degreeType.getPrefix());
 	result.append(degreeType.getFilteredName().toUpperCase());
+
+	if (cycleType != null && getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
+	    result.append(" (").append(cycleType.getDescription()).append(")");
+	}
 	result.append(" em ").append(degree.getFilteredName().toUpperCase());
 
 	return result.toString();
