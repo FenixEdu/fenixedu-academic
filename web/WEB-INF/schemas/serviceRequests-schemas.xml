@@ -35,27 +35,26 @@
 
 <schema name="AcademicServiceRequest.view-for-given-registration" extends="AcademicServiceRequest.view"  type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
-                                                          
 </schema>
 
 <schema name="AcademicServiceRequestSituation.view" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation"  bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="situationDate" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.creationDate"/>
-	<slot name="employee.person.name" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.employee.person.name" />
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
+	<slot name="situationDate" key="label.date"/>
+	<slot name="employee.person.name" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.employee.person.name" />
 	<slot name="justification" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.justification" />
 </schema>
 
 <schema name="SentToExternalEntityAcademicServiceRequestSituation.view" type="net.sourceforge.fenixedu.domain.serviceRequests.SentToExternalEntityAcademicServiceRequestSituation" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 	<slot name="sentDate" key="label.sentDate"/>
 	<slot name="employee.person.name" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.employee.person.name" />
-	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 	<slot name="justification" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.justification" />
 </schema>
 
 <schema name="ReceivedFromExternalEntityAcademicServiceRequestSituation.view" type="net.sourceforge.fenixedu.domain.serviceRequests.ReceivedFromExternalEntityAcademicServiceRequestSituation" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 	<slot name="receivedDate" key="label.receiveDate"/>
 	<slot name="employee.person.name" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.employee.person.name" />
-	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 	<slot name="justification" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.justification" />
 </schema>
 
