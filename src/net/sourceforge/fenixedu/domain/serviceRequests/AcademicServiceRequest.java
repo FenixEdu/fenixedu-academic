@@ -295,6 +295,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 		AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_CREATION_DATE_AND_ID) : null;
     }
 
+    final public DateTime getActiveSituationDate() {
+	return getActiveSituation().getSituationDate();
+    }
+
     final public AcademicServiceRequestSituation getCreationSituation() {
 	return getSituationByType(AcademicServiceRequestSituationType.NEW);
     }
