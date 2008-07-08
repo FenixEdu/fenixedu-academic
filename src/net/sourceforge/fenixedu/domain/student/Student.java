@@ -838,6 +838,10 @@ public class Student extends Student_Base {
     public boolean hasRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
 	return getRegistrationFor(degreeCurricularPlan) != null;
     }
+    
+    public boolean hasActiveRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
+	return getActiveRegistrationFor(degreeCurricularPlan) != null;
+    }
 
     public Registration getRegistrationFor(Degree degree) {
 	for (Registration registration : super.getRegistrations()) {
