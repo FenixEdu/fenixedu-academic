@@ -1221,7 +1221,15 @@ class DomainObject {
 		YearMonthDay whenSentLetter;
 	}
 
-		class accounting.events.AnnualEvent extends accounting.Event {
+		class accounting.AcademicEvent extends accounting.Event {
+		
+		}
+	
+		class accounting.ResidenceEvent extends accounting.Event {
+			Money roomValue;
+		}
+		
+		class accounting.events.AnnualEvent extends accounting.AcademicEvent {
 		}
 
 			class accounting.events.AdministrativeOfficeFeeAndInsuranceEvent extends accounting.events.AnnualEvent {
@@ -1248,16 +1256,16 @@ class DomainObject {
 			class accounting.events.insurance.InsuranceEvent extends accounting.events.AnnualEvent {
 			}
 
-		class accounting.events.ImprovementOfApprovedEnrolmentEvent extends accounting.Event {
+		class accounting.events.ImprovementOfApprovedEnrolmentEvent extends accounting.AcademicEvent {
 		}
 
-		class accounting.events.dfa.DFACandidacyEvent extends accounting.Event {
+		class accounting.events.dfa.DFACandidacyEvent extends accounting.AcademicEvent {
 		}
 
-		class accounting.events.dfa.DfaRegistrationEvent extends accounting.Event {
+		class accounting.events.dfa.DfaRegistrationEvent extends accounting.AcademicEvent {
 		}
 
-		class accounting.events.serviceRequests.AcademicServiceRequestEvent extends accounting.Event {
+		class accounting.events.serviceRequests.AcademicServiceRequestEvent extends accounting.AcademicEvent {
 		}
 		
 			class accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent extends accounting.events.serviceRequests.AcademicServiceRequestEvent {
@@ -1333,17 +1341,17 @@ class DomainObject {
 			YearMonthDay creationDate;
 		}
 		
-		class accounting.events.phd.PhDCandidacyEvent extends accounting.Event {
+		class accounting.events.phd.PhDCandidacyEvent extends accounting.AcademicEvent {
 		}
 		
-		class accounting.events.phd.PhDRegistrationEvent extends accounting.Event { 
+		class accounting.events.phd.PhDRegistrationEvent extends accounting.AcademicEvent { 
 		}
 
-		class accounting.events.EnrolmentOutOfPeriodEvent extends accounting.Event {
+		class accounting.events.EnrolmentOutOfPeriodEvent extends accounting.AcademicEvent {
 			Integer numberOfDelayDays;
 		}
 		
-		class accounting.events.candidacy.IndividualCandidacyEvent extends accounting.Event {
+		class accounting.events.candidacy.IndividualCandidacyEvent extends accounting.AcademicEvent {
 		}
 		
 			class accounting.events.candidacy.Over23IndividualCandidacyEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
@@ -1579,6 +1587,10 @@ class DomainObject {
 				Money amountForExternalStudent;
 			}
 
+			class accounting.postingRules.ResidencePR extends accounting.postingRules.GenericSingleEntryTypePR {
+				Money penaltyPerDay;
+			}
+			
 	class accounting.Receipt extends DomainObject {
 		Integer number;
 		String numberSeries;
@@ -2884,6 +2896,9 @@ class DomainObject {
 			YearMonthDay endDateYearMonthDay;						
 		}
 
+			class organizationalStructure.ResidenceManagementUnit extends organizationalStructure.Unit {
+			}
+			
 			class organizationalStructure.TutorUnit extends organizationalStructure.Unit {
 			}
 
@@ -4795,6 +4810,14 @@ class candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry extends Domai
 	Integer degreeOrder;
 }
 
+class residence.ResidenceYear extends DomainObject {
+	Integer year;
+}
+
+class residence.ResidenceMonth extends DomainObject {
+	Month month;
+}
+
 /*
  * Relations definitions
  * 
@@ -5028,7 +5051,7 @@ relation AdministrativeOfficeAdministrativeOfficeServiceAgreementTemplate {
 
 relation AdministrativeOfficeEvent {
 	administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
-	accounting.Event playsRole events {
+	accounting.AcademicEvent playsRole events {
 		multiplicity *;
 	}
 }
@@ -12733,6 +12756,41 @@ relation DegreeContextRootDomainObject {
 relation DegreeContextDegreeCurricularPlan {
 	DegreeCurricularPlan playsRole degreeCurricularPlan;
 	DegreeContext playsRole degreeContexts {
+		multiplicity *;
+	}
+}
+
+relation ResidenceYearResidenceMonth {
+	residence.ResidenceYear playsRole year;
+	residence.ResidenceMonth playsRole months {
+		multiplicity *;
+	}
+}
+
+relation ResidenceMonthResidenceEvent {
+	residence.ResidenceMonth playsRole residenceMonth;
+	accounting.ResidenceEvent playsRole events {
+		multiplicity *;
+	}
+}
+
+relation ResidenceYearRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	residence.ResidenceYear playsRole residenceYears {
+		multiplicity *;
+	}
+}
+
+relation ResidenceMonthRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	residence.ResidenceMonth playsRole residenceMonths0 {
+		multiplicity *;
+	}
+}
+
+relation ResidenceManagementUnitResidenceEvent {
+	organizationalStructure.ResidenceManagementUnit playsRole unit;
+	residence.ResidenceYear playsRole residenceYears {
 		multiplicity *;
 	}
 }

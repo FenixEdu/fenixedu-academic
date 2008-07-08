@@ -86,7 +86,9 @@ public enum EventType {
 
     SECOND_CYCLE_INDIVIDUAL_CANDIDACY,
     
-    DEGREE_CANDIDACY_FOR_GRADUATED_PERSON;
+    DEGREE_CANDIDACY_FOR_GRADUATED_PERSON,
+    
+    RESIDENCE_PAYMENT;
 
     public String getName() {
 	return name();

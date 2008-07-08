@@ -50,6 +50,8 @@
 	<!ENTITY contentSchemas SYSTEM "content-schemas.xml">
 	<!ENTITY caseHandlingSchemas SYSTEM "caseHandling-schemas.xml">
 	<!ENTITY email SYSTEM "email-schemas.xml">
+	<!ENTITY residenceManagement SYSTEM "residenceManagement-schemas.xml">
+	
 ]>
 
 <schemas>
@@ -715,4 +717,5 @@
     &contentSchemas;    
     &caseHandlingSchemas;
     &email;
+    &residenceManagement;
 </schemas>

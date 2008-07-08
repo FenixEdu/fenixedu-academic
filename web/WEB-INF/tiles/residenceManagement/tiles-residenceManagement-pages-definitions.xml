@@ -10,4 +10,9 @@
 		<put name="body" value="/residenceManagement/index.jsp"/>
 	</definition>	
 
+	<definition name="residenceManagement-importData" extends="definition.residenceManagement.master">
+		<put name="body" value="/residenceManagement/importData.jsp"/>
+	</definition>	
+	
+
 </tiles-definitions>

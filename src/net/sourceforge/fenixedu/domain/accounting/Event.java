@@ -38,12 +38,7 @@ public abstract class Event extends Event_Base {
     }
 
     protected void init(EventType eventType, Person person) {
-	init(null, eventType, person);
-    }
-
-    protected void init(AdministrativeOffice administrativeOffice, EventType eventType, Person person) {
 	checkParameters(eventType, person);
-	super.setAdministrativeOffice(administrativeOffice);
 	super.setEventType(eventType);
 	super.setPerson(person);
     }
@@ -208,12 +203,7 @@ public abstract class Event extends Event_Base {
     public void setEventState(EventState eventState) {
 	throw new DomainException("error.accounting.Event.cannot.modify.eventState");
     }
-
-    @Override
-    public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
-	throw new DomainException("error.accounting.Event.cannot.modify.administrativeOffice");
-    }
-
+    
     @Override
     public void setEmployeeResponsibleForCancel(Employee employee) {
 	throw new DomainException("error.accounting.Event.cannot.modify.employeeResponsibleForCancel");
@@ -445,10 +435,6 @@ public abstract class Event extends Event_Base {
 
     public List<EntryDTO> calculateEntries(DateTime when) {
 	return getPostingRule().calculateEntries(this, when);
-    }
-
-    public final boolean isPayableOnAdministrativeOffice(AdministrativeOffice administrativeOffice) {
-	return (!hasAdministrativeOffice() || getAdministrativeOffice() == administrativeOffice);
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
@@ -749,7 +735,6 @@ public abstract class Event extends Event_Base {
 	}
 
 	super.setPerson(null);
-	super.setAdministrativeOffice(null);
 	super.setEmployeeResponsibleForCancel(null);
 	removeRootDomainObject();
 	deleteDomainObject();
@@ -919,4 +904,7 @@ public abstract class Event extends Event_Base {
 	return getReimbursableAmount().greaterOrEqualThan(amount);
     }
 
+    public boolean isPayableOnAdministrativeOffice(AdministrativeOffice administrativeOffice) {
+	return false;
+    }
 }

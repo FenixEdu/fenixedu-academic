@@ -41,3 +41,6 @@ function executeWithTempFile() {
 }
 
 execute "fixAcademicServiceRequestDates" fixAcademicServiceRequestDates.sql
+execute "Creating import xls data for residence management" importDataFunctionalityInResidenceManagement.sql
+execute "Modifiying specific unit type" modifySpecificUnitType.sql IST
+execute "Create Residence Domain" createResidenceDomain.sql

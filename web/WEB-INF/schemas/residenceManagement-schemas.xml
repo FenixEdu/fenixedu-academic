@@ -1,0 +1,9 @@
+<schema  name="import.residence.data" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.SimpleFileBean">
+<slot name="file">
+ 	<property name="fileNameSlot" value="name"/>
+    <property name="fileSizeSlot" value="size"/>
+	<property name="fileContentTypeSlot" value="contentType"/>
+	<property name="size" value="30"/>
+	</slot>
+</schema>
+	
