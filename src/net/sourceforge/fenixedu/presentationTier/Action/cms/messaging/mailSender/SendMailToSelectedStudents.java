@@ -62,8 +62,9 @@ public class SendMailToSelectedStudents extends ExecutionCourseSendMail {
     }
 
     private SearchExecutionCourseAttendsBean getBean(Map parameters) {
+	String[] objectCodes = (String[]) parameters.get("objectCode");
 	SearchExecutionCourseAttendsBean attendsBean = new SearchExecutionCourseAttendsBean(rootDomainObject
-		.readExecutionCourseByOID(Integer.valueOf((String) parameters.get("objectCode"))));
+		.readExecutionCourseByOID(Integer.valueOf(objectCodes[0])));
 
 	String checkedCoursesIds[] = (String[]) parameters.get("coursesIDs");
 	if (checkedCoursesIds != null) {
@@ -72,8 +73,9 @@ public class SendMailToSelectedStudents extends ExecutionCourseSendMail {
 		dcps.add(rootDomainObject.readDegreeCurricularPlanByOID(Integer.valueOf(dcpID)));
 	    }
 	    attendsBean.setDegreeCurricularPlans(dcps);
+	} else {
+	    attendsBean.setDegreeCurricularPlans(Collections.EMPTY_LIST);
 	}
-	attendsBean.setDegreeCurricularPlans(Collections.EMPTY_LIST);
 
 	String enrollmentTypes[] = (String[]) parameters.get("enrollmentType");
 	if (enrollmentTypes != null) {
@@ -110,5 +112,4 @@ public class SendMailToSelectedStudents extends ExecutionCourseSendMail {
 
 	return attendsBean;
     }
-
 }
