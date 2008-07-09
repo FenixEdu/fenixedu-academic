@@ -41,7 +41,7 @@
 	<fr:view name="academicServiceRequest" property="activeSituation" schema="AcademicServiceRequestSituation.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thright thlight mtop025 mbottom05"/>
-	  		<fr:property name="rowClasses" value=",,tdhl1,"/>
+	  		<fr:property name="rowClasses" value="tdhl1,,,"/>
 		</fr:layout>
 	</fr:view>
 </logic:present>
