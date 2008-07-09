@@ -340,7 +340,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Bottom" markup="styled">
 						<font pdfFontName="Times-Roman" size="12" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{amountToPay} + "€"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{amountToPay} + "Eur"]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>
@@ -702,7 +702,7 @@
 					<textElement verticalAlignment="Bottom">
 						<font pdfFontName="Times-Bold" size="12" isBold="true" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{total} + "€"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{total} + "Eur"]]></textFieldExpression>
 				</textField>
 				<line direction="TopDown">
 					<reportElement
