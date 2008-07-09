@@ -47,7 +47,7 @@
 	<%
 		String sortCriteria = request.getParameter("sortBy");
 	    if (sortCriteria == null) {
-	    	sortCriteria = "activeSituation.situationDate=desc";
+	    	sortCriteria = "activeSituationDate=desc";
 	    }
 	%>
 	
@@ -70,63 +70,67 @@
 	</fr:form>
 	
 	<p class="mtop5">
+	<logic:equal name="academicSituationType" value="NEW">
+		<p class="mtop2 mbottom05">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="academic.service.requests.requested.in.student.portal"/>
+		</p>
+	</logic:equal>
 	<logic:notEqual name="academicSituationType" value="NEW">
 		<p class="mtop2 mbottom05">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="academic.service.requests.treated.by.employee"/> <bean:write name="bean" property="employee.roleLoginAlias"/>:
 		</p>
-
-		<logic:empty name="employeeRequests">
-			<p class="mtop05">
-				<em>
-					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="no.academic.service.requests.found" />
-				</em>
-			</p>
-		</logic:empty>
-		
-		<logic:notEmpty name="employeeRequests">
-			<fr:view name="employeeRequests" schema="DocumentRequest.view-documentPurposeTypeInformation">
-				<fr:layout name="tabular-sortable">
-					<fr:property name="classes" value="tstyle4 tdcenter mtop05" />
-					<fr:property name="rowClasses" value="bgwhite," />
-					<fr:property name="groupLinks" value="true" />
-					<fr:property name="columnClasses" value="smalltxt,smalltxt,smalltxt  aleft nowrap,smalltxt,smalltxt,smalltxt nowrap,smalltxt nowrap," />
-					
-					<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
-					<fr:property name="key(processing)" value="processing"/>
-					<fr:property name="visibleIf(processing)" value="newRequest"/>
-
-					<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
-					<fr:property name="key(concluded)" value="conclude"/>
-					<fr:property name="visibleIf(concluded)" value="processing"/>
-
-					<fr:property name="linkFormat(delivered)" value="<%= deliveredRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
-					<fr:property name="key(delivered)" value="deliver"/>
-					<fr:property name="visibleIf(delivered)" value="concluded"/>
-
-					<fr:property name="linkFormat(payments)" value="<%= paymentsUrl + "&personId=${registration.person.idInternal}" %>"/>
-					<fr:property name="key(payments)" value="payments"/>
-					<fr:property name="visibleIfNot(payments)" value="isPayed"/>
-					
-					<fr:property name="sortBy" value="<%= sortCriteria %>"/>
-					<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + academicSituationType.getName() + "&serviceRequestYear=" + bean.getServiceRequestYear() %>"/>
-					<fr:property name="sortParameter" value="sortBy"/>
-				</fr:layout>
-			</fr:view>
-		</logic:notEmpty>
-
-		<p class="mtop2 mbottom05">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="academic.service.requests.treated.by.others"/>:
-		</p>
 	</logic:notEqual>
 
-	<logic:empty name="academicServiceRequests">
+	<logic:empty name="specificRequests">
+		<p class="mtop05">
+			<em>
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="no.academic.service.requests.found" />
+			</em>
+		</p>
+	</logic:empty>
+		
+	<logic:notEmpty name="specificRequests">
+		<fr:view name="specificRequests" schema="DocumentRequest.view-documentPurposeTypeInformation">
+			<fr:layout name="tabular-sortable">
+				<fr:property name="classes" value="tstyle4 tdcenter mtop05" />
+				<fr:property name="rowClasses" value="bgwhite," />
+				<fr:property name="groupLinks" value="true" />
+				<fr:property name="columnClasses" value="smalltxt,smalltxt,smalltxt  aleft nowrap,smalltxt,smalltxt,smalltxt nowrap,smalltxt nowrap," />
+				
+				<fr:property name="linkFormat(processing)" value="<%= newRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
+				<fr:property name="key(processing)" value="processing"/>
+				<fr:property name="visibleIf(processing)" value="newRequest"/>
+
+				<fr:property name="linkFormat(concluded)" value="<%= processRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
+				<fr:property name="key(concluded)" value="conclude"/>
+				<fr:property name="visibleIf(concluded)" value="processing"/>
+
+				<fr:property name="linkFormat(delivered)" value="<%= deliveredRequestUrl + "&academicServiceRequestId=${idInternal}" %>"/>
+				<fr:property name="key(delivered)" value="deliver"/>
+				<fr:property name="visibleIf(delivered)" value="concluded"/>
+
+				<fr:property name="linkFormat(payments)" value="<%= paymentsUrl + "&personId=${registration.person.idInternal}" %>"/>
+				<fr:property name="key(payments)" value="payments"/>
+				<fr:property name="visibleIfNot(payments)" value="isPayed"/>
+				
+				<fr:property name="sortBy" value="<%= sortCriteria %>"/>
+				<fr:property name="sortUrl" value="<%= "/academicServiceRequestsManagement.do?method=search&academicSituationType=" + academicSituationType.getName() + "&serviceRequestYear=" + bean.getServiceRequestYear() %>"/>
+				<fr:property name="sortParameter" value="sortBy"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+
+	<p class="mtop2 mbottom05">
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="academic.service.requests.treated.by.others"/>:
+	</p>
+	<logic:empty name="remainingRequests">
 		<p>
 			<em>
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="no.academic.service.requests.found" />
 			</em>
 		</p>
 	</logic:empty>
-	<logic:notEmpty name="academicServiceRequests">
+	<logic:notEmpty name="remainingRequests">
 
 		<bean:define id="url" type="java.lang.String">/academicAdminOffice/academicServiceRequestsManagement.do?method=search&amp;academicSituationType=<%= academicSituationType.getName() %>&amp;serviceRequestYear=<bean:write name="bean" property="serviceRequestYear"/>&amp;sortBy=<%=sortCriteria%></bean:define>
 		<cp:collectionPages url="<%= url %>" 
