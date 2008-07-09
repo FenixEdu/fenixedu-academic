@@ -231,7 +231,7 @@
 						key="subreport-1"
 						isPrintWhenDetailOverflows="true"/>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource((Collection) $P{bolonhaList})]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/courseLoad/courseLoadBolonhaRequest.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/courseLoadRequest/courseLoadBolonhaRequest.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport  isUsingCache="true">
 					<reportElement
@@ -243,7 +243,7 @@
 						positionType="Float"
 						isPrintWhenDetailOverflows="true"/>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource((Collection) $P{preBolonhaList})]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/courseLoad/courseLoadPreBolonhaRequest.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/courseLoadRequest/courseLoadPreBolonhaRequest.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</detail>

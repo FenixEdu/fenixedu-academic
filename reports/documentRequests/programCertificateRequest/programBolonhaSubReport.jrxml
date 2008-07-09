@@ -407,7 +407,7 @@
 						height="39"
 						key="subreport-1"/>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$F{contexts}))]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/program/programContextsSubReport.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/programCertificateRequest/programContextsSubReport.jasper"]]></subreportExpression>
 				</subreport>
 				</elementGroup><!-- End 12 !-->
 				<elementGroup><!--  Start: 13 !-->
@@ -424,7 +424,7 @@
 							<printWhenExpression><![CDATA[!$F{bibliographics}.isEmpty()]]></printWhenExpression>
 						</reportElement>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$F{bibliographics}))]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/program/programBibliographicsSubReport.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/programCertificateRequest/programBibliographicsSubReport.jasper"]]></subreportExpression>
 				</subreport>
 				</elementGroup><!-- End 13 !-->
 			</band>
