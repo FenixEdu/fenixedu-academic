@@ -12255,6 +12255,12 @@
 		<filterChains>
 			<chain name="StudentAuthorization" />
 		</filterChains>		
+	</service>
+	
+	<service>
+		<name>CreateNewResidenceYear</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement.CreateNewResidenceYear</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
 	</service>	
-
 </serviceDefinitions>

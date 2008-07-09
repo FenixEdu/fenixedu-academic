@@ -6,10 +6,22 @@
 
 <html:xhtml/>
 
-<fr:form action="/residenceManagement.do?method=importData" encoding="multipart/form-data">
-	<fr:edit id="importFile" name="fileBean" visible="false"/>
+<p>
+	<html:link page="/residenceManagement.do?method=createYear">cRIAR ANO</html:link>
+</p>
+<fr:form action="/residenceManagement.do">
+	<fr:edit id="editBean" name="importFileBean" schema="edit.import.residence.bean">
+		<fr:layout name="tabular">
+			<fr:destination name="postback" path="/residenceManagement.do?method=postBack"/>
+		</fr:layout>
+	</fr:edit>
 	
-	<fr:edit id="file" name="fileBean" slot="file"/>
+</fr:form>
+
+<fr:form action="/residenceManagement.do?method=importData" encoding="multipart/form-data">
+	<fr:edit id="importFile" name="importFileBean" visible="false"/>
+	
+	<fr:edit id="file" name="importFileBean" slot="file"/>
 	
 	<html:submit>Submeter</html:submit>
 </fr:form>

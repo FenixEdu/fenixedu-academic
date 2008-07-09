@@ -1,19 +1,22 @@
 package net.sourceforge.fenixedu.domain.residence;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.joda.time.DateTime;
 
 public class ResidenceYear extends ResidenceYear_Base {
 
-    public ResidenceYear() {
-	this(getNextYear());
+    public ResidenceYear(ResidenceManagementUnit residenceManagementUnit) {
+	this(getNextYear(), residenceManagementUnit);
     }
 
-    public ResidenceYear(Integer year) {
+    public ResidenceYear(Integer year, ResidenceManagementUnit residenceManagementUnit) {
 	super();
 	setYear(year);
+	setUnit(residenceManagementUnit);
+	setRootDomainObject(RootDomainObject.getInstance());
 	for (Month month : Month.values()) {
 	    new ResidenceMonth(month, this);
 	}
@@ -27,6 +30,6 @@ public class ResidenceYear extends ResidenceYear_Base {
 	    }
 	}
 
-	return next != null ? next : new DateTime().getYear();
+	return next != null ? next + 1 : new DateTime().getYear();
     }
 }
