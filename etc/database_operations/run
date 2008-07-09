@@ -40,3 +40,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fix RESIDENCE_YEAR table" fixResidenceYearTable.sql
+
