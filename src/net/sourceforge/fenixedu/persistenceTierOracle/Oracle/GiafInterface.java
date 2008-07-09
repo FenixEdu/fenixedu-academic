@@ -49,7 +49,7 @@ public class GiafInterface {
 
     public BigDecimal getEmployeeSalary(Employee employee, LocalDate day) throws ExcepcaoPersistencia {
 	BigDecimal salary = new BigDecimal(0.0);
-	DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+	DateTimeFormatter fmt = DateTimeFormat.forPattern("dd-MM-yyyy");
 	PersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getGiafDBInstance();
 	try {
 	    StringBuilder stringBuilder = new StringBuilder();
@@ -62,7 +62,6 @@ public class GiafInterface {
 	    stringBuilder.append(fmt.print(day));
 	    stringBuilder.append("', 'DD-MM-YYYY') between emp_venc_dt and emp_venc_dt_fim and emp_num=");
 	    stringBuilder.append(employee.getEmployeeNumber());
-
 	    PreparedStatement stmt = persistentSuportOracle.prepareStatement(stringBuilder.toString());
 	    ResultSet rs = stmt.executeQuery();
 	    if (rs.next()) {
