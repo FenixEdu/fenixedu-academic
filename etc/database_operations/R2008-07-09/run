@@ -44,4 +44,5 @@ execute "Fix RESIDENCE_YEAR table" fixResidenceYearTable.sql
 execute "Alter Table ExtraWorkRequest" alterTableExtraWorkRequest.sql
 execute "Alter Table AssiduousnessExtraWork" alterTableAssiduousnessExtraWork.sql
 
+execute "Adding Limit pay day to residence month" addPaymentLimitDayToResidenceMonth.sql
 

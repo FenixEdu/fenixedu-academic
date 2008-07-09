@@ -40,5 +40,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Adding Limit pay day to residence month" addPaymentLimitDayToResidenceMonth.sql
 
