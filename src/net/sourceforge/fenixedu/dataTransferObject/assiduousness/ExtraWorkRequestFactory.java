@@ -144,8 +144,8 @@ public class ExtraWorkRequestFactory implements Serializable, FactoryExecutor {
 	    LocalDate end = new LocalDate(getYearMonthHoursDone().getYear(), getYearMonthHoursDone().getMonth().ordinal() + 1,
 		    begin.dayOfMonth().getMaximumValue());
 	    Map<Assiduousness, ExtraWorkRequest> assiduousnessExtraWorkRequests = new HashMap<Assiduousness, ExtraWorkRequest>();
-	    for (ExtraWorkRequest extraWorkRequest : getUnit().getExtraWorkRequestsDoneIn(getYearMonthHoursDone().getYear(),
-		    getYearMonthHoursDone().getMonth())) {
+	    for (ExtraWorkRequest extraWorkRequest : getUnit().getExtraWorkRequestsByDoneAndPayingDates(
+		    getYearMonthHoursDone().getYear(), getYearMonthHoursDone().getMonth(), getYear(), getMonth())) {
 		assiduousnessExtraWorkRequests.put(extraWorkRequest.getAssiduousness(), extraWorkRequest);
 	    }
 	    for (ExtraWorkAuthorization extraWorkAuthorization : getUnit().getExtraPayingUnitAuthorizations()) {

@@ -1195,12 +1195,16 @@ public class Unit extends Unit_Base {
 	return this.equals(RootDomainObject.getInstance().getEarthUnit());
     }
 
-    public List<ExtraWorkRequest> getExtraWorkRequestsDoneIn(Integer year, Month month) {
-	Partial partialDate = new Partial().with(DateTimeFieldType.year(), year).with(DateTimeFieldType.monthOfYear(),
-		month.ordinal() + 1);
+    public List<ExtraWorkRequest> getExtraWorkRequestsByDoneAndPayingDates(Integer doneYear, Month doneMonth, Integer payingYear,
+	    Month payingMonth) {
+	Partial donePartialDate = new Partial().with(DateTimeFieldType.year(), doneYear).with(DateTimeFieldType.monthOfYear(),
+		doneMonth.ordinal() + 1);
+	Partial payingPartialDate = new Partial().with(DateTimeFieldType.year(), payingYear).with(
+		DateTimeFieldType.monthOfYear(), payingMonth.ordinal() + 1);
 	List<ExtraWorkRequest> extraWorkRequestList = new ArrayList<ExtraWorkRequest>();
 	for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
-	    if (extraWorkRequest.getHoursDoneInPartialDate().equals(partialDate)) {
+	    if (extraWorkRequest.getHoursDoneInPartialDate().equals(donePartialDate)
+		    && extraWorkRequest.getPartialPayingDate().equals(payingPartialDate)) {
 		extraWorkRequestList.add(extraWorkRequest);
 	    }
 	}

@@ -112,12 +112,12 @@ public class AssiduousnessMonthlyResume implements Serializable {
 	}
 	for (ExtraWorkRequest extraWorkRequest : employee.getAssiduousness().getExtraWorkRequests()) {
 	    if ((thisExtraWorkRequest == null || (!thisExtraWorkRequest.equals(extraWorkRequest)))
-		    && extraWorkRequest.getPartialPayingDate().equals(closedMonth.getClosedYearMonth())) {
-		addPayedSaturdaysBalance(extraWorkRequest.getSaturdayHours());
-		addPayedSundaysBalance(extraWorkRequest.getSundayHours());
-		addPayedHolidayBalance(extraWorkRequest.getHolidayHours());
-		addPayedNightlyBalance(extraWorkRequest.getNightHours());
-		addPayedWorkWeekBalance(extraWorkRequest.getWorkdayHours());
+		    && extraWorkRequest.getHoursDoneInPartialDate().equals(closedMonth.getClosedYearMonth())) {
+		addPayedSaturdaysBalance(extraWorkRequest.getSaturdayHours() == null ? 0 : extraWorkRequest.getSaturdayHours());
+		addPayedSundaysBalance(extraWorkRequest.getSundayHours() == null ? 0 : extraWorkRequest.getSundayHours());
+		addPayedHolidayBalance(extraWorkRequest.getHolidayHours() == null ? 0 : extraWorkRequest.getHolidayHours());
+		addPayedNightlyBalance(extraWorkRequest.getNightHours() == null ? 0 : extraWorkRequest.getNightHours());
+		addPayedWorkWeekBalance(extraWorkRequest.getWorkdayHours() == null ? 0 : extraWorkRequest.getWorkdayHours());
 	    }
 	}
     }
