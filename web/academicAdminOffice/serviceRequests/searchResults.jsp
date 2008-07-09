@@ -54,6 +54,7 @@
 	<fr:form action="/academicServiceRequestsManagement.do">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="academicSituationType" value="<%=academicSituationType.getName()%>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="serviceRequestYear" value="<%=bean.getServiceRequestYear().toString()%>"/>
 
 		<fr:edit id="bean" 
 			name="bean"
