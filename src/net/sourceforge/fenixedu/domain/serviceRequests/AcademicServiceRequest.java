@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -34,9 +35,33 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     private static final String SERVICE_REQUEST_NUMBER_YEAR_SEPARATOR = "/";
 
-    static final Comparator<AcademicServiceRequest> COMPARATOR_BY_NUMBER = new Comparator<AcademicServiceRequest>() {
+    public static final Comparator<AcademicServiceRequest> COMPARATOR_BY_NUMBER = new Comparator<AcademicServiceRequest>() {
 	public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
 	    return o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber());
+	}
+    };
+
+    public static final Comparator<AcademicServiceRequest> EXECUTION_YEAR_COMPARATOR = new Comparator<AcademicServiceRequest>() {
+	public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
+	    if (!o1.hasExecutionYear() && !o2.hasExecutionYear()) {
+		return 0;
+	    } else if (o1.hasExecutionYear() && !o2.hasExecutionYear()) {
+		return 1;
+	    } else if (!o1.hasExecutionYear() && o2.hasExecutionYear()) {
+		return -1;
+	    }
+
+	    return ExecutionYear.COMPARATOR_BY_YEAR.compare(o1.getExecutionYear(), o2.getExecutionYear());
+	}
+    };
+
+    public static final Comparator<AcademicServiceRequest> EXECUTION_YEAR_AND_OID_COMPARATOR = new Comparator<AcademicServiceRequest>() {
+	public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
+	    final ComparatorChain comparatorChain = new ComparatorChain();
+	    comparatorChain.addComparator(EXECUTION_YEAR_COMPARATOR);
+	    comparatorChain.addComparator(COMPARATOR_BY_ID);
+
+	    return comparatorChain.compare(o1, o2);
 	}
     };
 
