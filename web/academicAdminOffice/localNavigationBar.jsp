@@ -2,9 +2,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@page import="org.joda.time.YearMonthDay"%>
+
 <html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+
+
 	<ul>
 		<li class="navheader"><bean:message key="link.studentOperations" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/createStudent.do?method=prepareCreateStudent"><bean:message key="link.studentOperations.createStudent" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
@@ -21,9 +25,18 @@
 		</li>
 
 		<li class="navheader"><bean:message key="academic.services" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
-		<li><html:link action="/academicServiceRequestsManagement.do?method=search&amp;academicSituationType=NEW"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="new.requests" /></html:link></li>
-		<li><html:link action="/academicServiceRequestsManagement.do?method=search&amp;academicSituationType=PROCESSING"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="processing.requests" /></html:link></li>
-		<li><html:link action="/academicServiceRequestsManagement.do?method=search&amp;academicSituationType=CONCLUDED"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="concluded.requests"/></html:link></li>
+		<%
+			String serviceRequestYear = request.getParameter("serviceRequestYear");
+		    if (serviceRequestYear == null) {
+				serviceRequestYear = (String) request.getAttribute("serviceRequestYear");
+				if (serviceRequestYear == null) {
+					serviceRequestYear = String.valueOf(new YearMonthDay().year().get());
+				}
+		    }
+		%>
+		<li><html:link action="<%="/academicServiceRequestsManagement.do?method=search&amp;serviceRequestYear=" + serviceRequestYear + "&amp;academicSituationType=NEW"%>"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="new.requests" /></html:link></li>
+		<li><html:link action="<%="/academicServiceRequestsManagement.do?method=search&amp;serviceRequestYear=" + serviceRequestYear + "&amp;academicSituationType=PROCESSING"%>"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="processing.requests" /></html:link></li>
+		<li><html:link action="<%="/academicServiceRequestsManagement.do?method=search&amp;serviceRequestYear=" + serviceRequestYear + "&amp;academicSituationType=CONCLUDED"%>"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="concluded.requests"/></html:link></li>
 
 		<li class="navheader"><bean:message key="label.navheader.marksSheet" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 		<li><html:link page="/markSheetManagement.do?method=prepareSearchMarkSheet"><bean:message key="link.markSheet.management" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
