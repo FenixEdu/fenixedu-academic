@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixframework.pstm.Transaction;
-
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
 /**
@@ -19,61 +18,61 @@ import pt.utl.ist.fenix.tools.util.StringAppender;
  */
 public abstract class DomainObject extends DomainObject_Base {
 
-    static final protected Comparator<DomainObject> COMPARATOR_BY_ID = new Comparator<DomainObject>() {
-        public int compare(DomainObject o1, DomainObject o2) {
+    static final public Comparator<DomainObject> COMPARATOR_BY_ID = new Comparator<DomainObject>() {
+	public int compare(DomainObject o1, DomainObject o2) {
 	    return o1.getIdInternal().compareTo(o2.getIdInternal());
-        }
+	}
     };
 
-    private static final boolean ERROR_IF_DELETED_OBJECT_NOT_DISCONNECTED = 
-		PropertiesManager.getBooleanProperty("error.if.deleted.object.not.disconnected");
+    private static final boolean ERROR_IF_DELETED_OBJECT_NOT_DISCONNECTED = PropertiesManager
+	    .getBooleanProperty("error.if.deleted.object.not.disconnected");
 
     public class UnableToDetermineIdException extends DomainException {
-        public UnableToDetermineIdException(Throwable cause) {
-            super("unable.to.determine.idException", cause);
-        }
+	public UnableToDetermineIdException(Throwable cause) {
+	    super("unable.to.determine.idException", cause);
+	}
     }
 
     public DomainObject() {
-        super();
+	super();
     }
-    
+
     @Override
     protected final void ensureIdInternal() {
-        try {
-            super.ensureIdInternal();
-        } catch (Throwable t) {
-            if (LogLevel.WARN) {
-                System.out.println("Something went wrong when initializing the idInternal.  Not setting it...");
-            }
-            throw new UnableToDetermineIdException(t);
-        }
+	try {
+	    super.ensureIdInternal();
+	} catch (Throwable t) {
+	    if (LogLevel.WARN) {
+		System.out.println("Something went wrong when initializing the idInternal.  Not setting it...");
+	    }
+	    throw new UnableToDetermineIdException(t);
+	}
     }
 
     public boolean isDeleted() {
-        return getRootDomainObject() == null;
+	return getRootDomainObject() == null;
     }
 
     protected abstract RootDomainObject getRootDomainObject();
 
     protected final void deleteDomainObject() {
-        if (! checkDisconnected()) {
-            if (ERROR_IF_DELETED_OBJECT_NOT_DISCONNECTED) {
-                throw new Error("Trying to delete a DomainObject that is still connected to other objects: " + this);
-            } else {
-                System.err.println("WARNING: Deleting a DomainObject that is still connected to other objects: " + this);
-            }
-        }
+	if (!checkDisconnected()) {
+	    if (ERROR_IF_DELETED_OBJECT_NOT_DISCONNECTED) {
+		throw new Error("Trying to delete a DomainObject that is still connected to other objects: " + this);
+	    } else {
+		System.err.println("WARNING: Deleting a DomainObject that is still connected to other objects: " + this);
+	    }
+	}
 
-        Transaction.deleteObject(this);
+	Transaction.deleteObject(this);
     }
 
     protected String getCurrentUser() {
-    	if(AccessControl.getUserView() != null) {
-    	    return AccessControl.getUserView().getUtilizador();
-    	} else {
-    	    return System.getProperty("user.name", "FENIX");
-    	}
+	if (AccessControl.getUserView() != null) {
+	    return AccessControl.getUserView().getUtilizador();
+	} else {
+	    return System.getProperty("user.name", "FENIX");
+	}
     }
 
     @Override
@@ -89,6 +88,6 @@ public abstract class DomainObject extends DomainObject_Base {
      * @return the {@link MetaDomainObject} that represents this object's type.
      */
     public MetaDomainObject getMeta() {
-        return MetaDomainObject.getMeta(getClass());
-    }    
+	return MetaDomainObject.getMeta(getClass());
+    }
 }
