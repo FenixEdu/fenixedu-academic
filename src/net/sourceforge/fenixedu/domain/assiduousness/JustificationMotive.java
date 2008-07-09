@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
@@ -171,4 +174,16 @@ public class JustificationMotive extends JustificationMotive_Base {
 	}
 	return null;
     }
+
+    public static List<JustificationMotive> getJustificationMotivesByGroup(JustificationGroup justificationGroup) {
+	List<JustificationMotive> result = new ArrayList<JustificationMotive>();
+	for (JustificationMotive justificationMotive : RootDomainObject.getInstance().getJustificationMotives()) {
+	    if (justificationMotive.getJustificationGroup() != null
+		    && justificationMotive.getJustificationGroup().equals(justificationGroup)) {
+		result.add(justificationMotive);
+	    }
+	}
+	return result;
+    }
+
 }

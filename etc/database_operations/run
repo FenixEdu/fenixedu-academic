@@ -41,4 +41,7 @@ function executeWithTempFile() {
 }
 
 execute "Fix RESIDENCE_YEAR table" fixResidenceYearTable.sql
+execute "Alter Table ExtraWorkRequest" alterTableExtraWorkRequest.sql
+execute "Alter Table AssiduousnessExtraWork" alterTableAssiduousnessExtraWork.sql
+
 

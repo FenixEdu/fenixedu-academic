@@ -72,6 +72,10 @@ public class ExportClosedExtraWorkMonth extends Service {
 
     public static String extraWorkHolidayMovementCode = "212";
 
+    public static String extraWorkWeekDayFirstLevelMovementCode = "200";
+
+    public static String extraWorkWeekDaySecondLevelMovementCode = "201";
+
     public String run(ClosedMonth closedMonth) {
 	return run(closedMonth, true, true);
     }
@@ -212,6 +216,20 @@ public class ExportClosedExtraWorkMonth extends Service {
 			    .getAssiduousness(), assiduousnessClosedMonth.getBeginDate().plusMonths(1).getYear(),
 			    assiduousnessClosedMonth.getBeginDate().plusMonths(1).getMonthOfYear(), begin, end,
 			    extraWorkHolidayMovementCode, extraWorkRequest.getHolidayHours()));
+		}
+
+		if (extraWorkRequest.getWorkdayFirstLevelHours() != null && extraWorkRequest.getWorkdayFirstLevelHours() != 0.0) {
+		    result.append(getExtraWorkMovement(assiduousnessClosedMonth.getAssiduousnessStatusHistory()
+			    .getAssiduousness(), assiduousnessClosedMonth.getBeginDate().plusMonths(1).getYear(),
+			    assiduousnessClosedMonth.getBeginDate().plusMonths(1).getMonthOfYear(), begin, end,
+			    extraWorkWeekDayFirstLevelMovementCode, extraWorkRequest.getWorkdayFirstLevelHours()));
+		}
+
+		if (extraWorkRequest.getWorkdaySecondLevelHours() != null && extraWorkRequest.getWorkdaySecondLevelHours() != 0.0) {
+		    result.append(getExtraWorkMovement(assiduousnessClosedMonth.getAssiduousnessStatusHistory()
+			    .getAssiduousness(), assiduousnessClosedMonth.getBeginDate().plusMonths(1).getYear(),
+			    assiduousnessClosedMonth.getBeginDate().plusMonths(1).getMonthOfYear(), begin, end,
+			    extraWorkWeekDaySecondLevelMovementCode, extraWorkRequest.getWorkdaySecondLevelHours()));
 		}
 	    }
 	}

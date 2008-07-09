@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthJustification;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
+import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
 import net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup;
@@ -78,7 +79,9 @@ public class ExportEmployeesAnualInfo extends Service {
 	    employeeMonthInfo.setMarriageLeave(countLeaveNumberOfDays(leaves, "LPC", beginDate, endDate));
 	    employeeMonthInfo.setChildbirthLeave(countLeaveNumberOfDays(leaves, "LP", beginDate, endDate));
 	    employeeMonthInfo.setLeaveWithoutPayment(countLeaveNumberOfDays(leaves, "LS/V", beginDate, endDate));
-	    employeeMonthInfo.setPointTolerance(getJustificationWorkingDays(leaves, beginDate, endDate, "TOL", "T1306"));
+	    List<JustificationMotive> justificationMotives = JustificationMotive
+		    .getJustificationMotivesByGroup(JustificationGroup.TOLERANCES);
+	    employeeMonthInfo.setPointTolerance(getJustificationWorkingDays(leaves, beginDate, endDate, justificationMotives));
 	    employeeMonthInfo.setArticle17(getJustificationDays(leaves, beginDate, endDate, "A17", "A1306"));
 	    setAcquiredVacations(employeeMonthInfo, beginDate);
 	    employeeMonthInfo.setUsedVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FER", "F1306", "FA42"));
@@ -125,6 +128,18 @@ public class ExportEmployeesAnualInfo extends Service {
 	    Double totalStrike = countLeaveNumberOfHalfDays(leaves, "1/2GREVE") + strikeDays;
 	    employeeMonthInfo.setStrike(totalStrike != 0 ? totalStrike : null);
 	}
+    }
+
+    private Integer getJustificationWorkingDays(List<Leave> leaves, LocalDate beginDate, LocalDate endDate,
+	    List<JustificationMotive> justificationMotives) {
+	int total = 0;
+	for (JustificationMotive justificationMotive : justificationMotives) {
+	    Integer days = countLeaveNumberOfDays(leaves, justificationMotive.getAcronym(), beginDate, endDate);
+	    if (days != null) {
+		total += days.intValue();
+	    }
+	}
+	return total == 0 ? null : new Integer(total);
     }
 
     private Integer getJustificationDays(List<Leave> leaves, LocalDate beginDate, LocalDate endDate, String... justifications) {

@@ -5,7 +5,9 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExtraWork;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.joda.time.Duration;
@@ -30,8 +32,21 @@ public class AssiduousnessMonthlyResume implements Serializable {
 
     Duration nightlyBalance;
 
-    public AssiduousnessMonthlyResume() {
-    }
+    Duration firstLevelBalance;
+
+    Duration secondLevelBalance;
+
+    Duration secondLevelBalanceWithoutLimits;
+
+    Integer payedSaturdaysBalance;
+
+    Integer payedSundaysBalance;
+
+    Integer payedHolidayBalance;
+
+    Integer payedNightlyBalance;
+
+    Integer payedWorkWeekBalance;
 
     public AssiduousnessMonthlyResume(Employee employee, Duration totalBalance, Duration totalComplementaryWeeklyRestBalance,
 	    Duration totalWeeklyRestBalance, Duration holidayRest, Duration nightWork, Duration unjustified) {
@@ -54,14 +69,8 @@ public class AssiduousnessMonthlyResume implements Serializable {
 	setNightlyBalance(assiduousnessClosedMonth.getTotalNightBalance());
     }
 
-    public AssiduousnessMonthlyResume(Employee employee, ClosedMonth closedMonth) {
+    public AssiduousnessMonthlyResume(Employee employee, ClosedMonth closedMonth, ExtraWorkRequest thisExtraWorkRequest) {
 	setEmployee(employee);
-	setTotalBalance(Duration.ZERO);
-	setUnjustifiedBalance(Duration.ZERO);
-	setSaturdaysBalance(Duration.ZERO);
-	setSundaysBalance(Duration.ZERO);
-	setHolidayBalance(Duration.ZERO);
-	setNightlyBalance(Duration.ZERO);
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths(employee
 		.getAssiduousness())) {
 	    setTotalBalance(getTotalBalance().plus(assiduousnessClosedMonth.getBalance()));
@@ -70,6 +79,46 @@ public class AssiduousnessMonthlyResume implements Serializable {
 	    setSundaysBalance(getSundaysBalance().plus(assiduousnessClosedMonth.getSundayBalance()));
 	    setHolidayBalance(getHolidayBalance().plus(assiduousnessClosedMonth.getHolidayBalance()));
 	    setNightlyBalance(getNightlyBalance().plus(assiduousnessClosedMonth.getTotalNightBalance()));
+
+	    for (AssiduousnessExtraWork assiduousnessExtraWork : assiduousnessClosedMonth.getAssiduousnessExtraWorks()) {
+		Duration firstLevelBalance = assiduousnessExtraWork.getFirstLevelBalance() == null ? Duration.ZERO
+			: assiduousnessExtraWork.getFirstLevelBalance();
+		Duration secondLevelBalance = assiduousnessExtraWork.getSecondLevelBalanceWithLimit() == null ? Duration.ZERO
+			: assiduousnessExtraWork.getSecondLevelBalanceWithLimit();
+		Duration secondLevelBalanceWithoutLimits = assiduousnessExtraWork.getSecondLevelBalance() == null ? Duration.ZERO
+			: assiduousnessExtraWork.getSecondLevelBalance();
+		if (assiduousnessClosedMonth.getBalance().isLongerThan(Duration.ZERO)) {
+		    Duration total = firstLevelBalance.plus(secondLevelBalance);
+		    Duration totalWithoutLimits = firstLevelBalance.plus(secondLevelBalanceWithoutLimits);
+		    if (assiduousnessClosedMonth.getBalance().isShorterThan(total)) {
+			Duration diference = total.minus(assiduousnessClosedMonth.getBalance().getMillis());
+			if (diference.isLongerThan(Duration.ZERO)) {
+			    if (diference.isShorterThan(secondLevelBalance)) {
+				secondLevelBalance = secondLevelBalance.minus(diference);
+				secondLevelBalanceWithoutLimits = secondLevelBalance;
+			    } else {
+				firstLevelBalance = firstLevelBalance.minus(diference.minus(secondLevelBalance));
+			    }
+			}
+		    } else if (assiduousnessClosedMonth.getBalance().isShorterThan(totalWithoutLimits)) {
+			Duration diference = totalWithoutLimits.minus(assiduousnessClosedMonth.getBalance().getMillis());
+			secondLevelBalanceWithoutLimits = secondLevelBalanceWithoutLimits.minus(diference);
+		    }
+		    addFirstLevelBalance(firstLevelBalance);
+		    addSecondLevelBalance(secondLevelBalance);
+		    addSecondLevelBalanceWithoutLimits(secondLevelBalanceWithoutLimits);
+		}
+	    }
+	}
+	for (ExtraWorkRequest extraWorkRequest : employee.getAssiduousness().getExtraWorkRequests()) {
+	    if ((thisExtraWorkRequest == null || (!thisExtraWorkRequest.equals(extraWorkRequest)))
+		    && extraWorkRequest.getPartialPayingDate().equals(closedMonth.getClosedYearMonth())) {
+		addPayedSaturdaysBalance(extraWorkRequest.getSaturdayHours());
+		addPayedSundaysBalance(extraWorkRequest.getSundayHours());
+		addPayedHolidayBalance(extraWorkRequest.getHolidayHours());
+		addPayedNightlyBalance(extraWorkRequest.getNightHours());
+		addPayedWorkWeekBalance(extraWorkRequest.getWorkdayHours());
+	    }
 	}
     }
 
@@ -82,8 +131,7 @@ public class AssiduousnessMonthlyResume implements Serializable {
     }
 
     public Duration getTotalBalance() {
-
-	return totalBalance;
+	return totalBalance == null ? Duration.ZERO : totalBalance;
     }
 
     public void setTotalBalance(Duration totalBalance) {
@@ -91,7 +139,7 @@ public class AssiduousnessMonthlyResume implements Serializable {
     }
 
     public Duration getUnjustifiedBalance() {
-	return unjustifiedBalance;
+	return unjustifiedBalance == null ? Duration.ZERO : unjustifiedBalance;
     }
 
     public void setUnjustifiedBalance(Duration unjustifiedBalance) {
@@ -99,7 +147,7 @@ public class AssiduousnessMonthlyResume implements Serializable {
     }
 
     public Duration getSaturdaysBalance() {
-	return saturdaysBalance;
+	return saturdaysBalance == null ? Duration.ZERO : saturdaysBalance;
     }
 
     public void setSaturdaysBalance(Duration saturdaysBalance) {
@@ -107,7 +155,7 @@ public class AssiduousnessMonthlyResume implements Serializable {
     }
 
     public Duration getSundaysBalance() {
-	return sundaysBalance;
+	return sundaysBalance == null ? Duration.ZERO : sundaysBalance;
     }
 
     public void setSundaysBalance(Duration sundaysRest) {
@@ -115,7 +163,7 @@ public class AssiduousnessMonthlyResume implements Serializable {
     }
 
     public Duration getNightlyBalance() {
-	return nightlyBalance;
+	return nightlyBalance == null ? Duration.ZERO : nightlyBalance;
     }
 
     public void setNightlyBalance(Duration nightlyBalance) {
@@ -123,7 +171,7 @@ public class AssiduousnessMonthlyResume implements Serializable {
     }
 
     public Duration getHolidayBalance() {
-	return holidayBalance;
+	return holidayBalance == null ? Duration.ZERO : holidayBalance;
     }
 
     public void setHolidayBalance(Duration holidayWork) {
@@ -166,4 +214,99 @@ public class AssiduousnessMonthlyResume implements Serializable {
 	return fmt.print(finalDuration);
     }
 
+    public Duration getFirstLevelBalance() {
+	return firstLevelBalance == null ? Duration.ZERO : firstLevelBalance;
+    }
+
+    public void setFirstLevelBalance(Duration firstLevelBalance) {
+	this.firstLevelBalance = firstLevelBalance;
+    }
+
+    public void addFirstLevelBalance(Duration firstLevelBalance) {
+	setFirstLevelBalance(getFirstLevelBalance().plus(firstLevelBalance));
+    }
+
+    public Duration getSecondLevelBalance() {
+	return secondLevelBalance == null ? Duration.ZERO : secondLevelBalance;
+    }
+
+    public void setSecondLevelBalance(Duration secondLevelBalance) {
+	this.secondLevelBalance = secondLevelBalance;
+    }
+
+    public void addSecondLevelBalance(Duration secondLevelBalance) {
+	setSecondLevelBalance(getSecondLevelBalance().plus(secondLevelBalance));
+    }
+
+    public Duration getSecondLevelBalanceWithoutLimits() {
+	return secondLevelBalanceWithoutLimits == null ? Duration.ZERO : secondLevelBalanceWithoutLimits;
+    }
+
+    public void setSecondLevelBalanceWithoutLimits(Duration secondLevelBalanceWithoutLimits) {
+	this.secondLevelBalanceWithoutLimits = secondLevelBalanceWithoutLimits;
+    }
+
+    public void addSecondLevelBalanceWithoutLimits(Duration secondLevelBalanceWithoutLimits) {
+	setSecondLevelBalanceWithoutLimits(getSecondLevelBalanceWithoutLimits().plus(secondLevelBalanceWithoutLimits));
+    }
+
+    public Integer getPayedSaturdaysBalance() {
+	return payedSaturdaysBalance == null ? 0 : payedSaturdaysBalance;
+    }
+
+    public void setPayedSaturdaysBalance(Integer payedSaturdaysBalance) {
+	this.payedSaturdaysBalance = payedSaturdaysBalance;
+    }
+
+    public void addPayedSaturdaysBalance(Integer payedSaturdaysBalance) {
+	setPayedSaturdaysBalance(getPayedSaturdaysBalance() + payedSaturdaysBalance);
+    }
+
+    public Integer getPayedSundaysBalance() {
+	return payedSundaysBalance == null ? 0 : payedSundaysBalance;
+    }
+
+    public void setPayedSundaysBalance(Integer payedSundaysBalance) {
+	this.payedSundaysBalance = payedSundaysBalance;
+    }
+
+    public void addPayedSundaysBalance(Integer payedSundaysBalance) {
+	setPayedSundaysBalance(getPayedSundaysBalance() + payedSundaysBalance);
+    }
+
+    public Integer getPayedHolidayBalance() {
+	return payedHolidayBalance == null ? 0 : payedHolidayBalance;
+    }
+
+    public void setPayedHolidayBalance(Integer payedHolidayBalance) {
+	this.payedHolidayBalance = payedHolidayBalance;
+    }
+
+    public void addPayedHolidayBalance(Integer payedHolidayBalance) {
+	setPayedHolidayBalance(getPayedHolidayBalance() + payedHolidayBalance);
+    }
+
+    public Integer getPayedNightlyBalance() {
+	return payedNightlyBalance == null ? 0 : payedNightlyBalance;
+    }
+
+    public void setPayedNightlyBalance(Integer payedNightlyBalance) {
+	this.payedNightlyBalance = payedNightlyBalance;
+    }
+
+    public void addPayedNightlyBalance(Integer payedNightlyBalance) {
+	setPayedNightlyBalance(getPayedNightlyBalance() + payedNightlyBalance);
+    }
+
+    public Integer getPayedWorkWeekBalance() {
+	return payedWorkWeekBalance == null ? 0 : payedWorkWeekBalance;
+    }
+
+    public void setPayedWorkWeekBalance(Integer payedWorkWeekBalance) {
+	this.payedWorkWeekBalance = payedWorkWeekBalance;
+    }
+
+    public void addPayedWorkWeekBalance(Integer payedWorkWeekBalance) {
+	setPayedWorkWeekBalance(getPayedWorkWeekBalance() + payedWorkWeekBalance);
+    }
 }

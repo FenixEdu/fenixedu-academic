@@ -336,6 +336,9 @@ public class WorkDaySheet implements Serializable {
     }
 
     public Duration getHolidayRest() {
+	if (holidayRest == null) {
+	    return Duration.ZERO;
+	}
 	return holidayRest;
     }
 

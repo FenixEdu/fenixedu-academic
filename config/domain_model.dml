@@ -1718,6 +1718,7 @@ class DomainObject {
 		Duration firstLevelBalance;
 		Duration nightBalance;
 		Duration secondLevelBalance;
+		Duration secondLevelBalanceWithLimit;
 		Duration unjustified;
 	}
 
@@ -1849,6 +1850,10 @@ class DomainObject {
 		Double sundayAmount;
 		Integer sundayHours;
 		Integer workdayHours;
+		Integer workdayFirstLevelHours;
+		Integer workdaySecondLevelHours;
+		Double workdayFirstLevelAmount;
+		Double workdaySecondLevelAmount;
 	}
 
 	class assiduousness.JustificationMotive extends DomainObject {

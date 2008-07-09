@@ -6,15 +6,16 @@ import org.joda.time.Duration;
 
 public class AssiduousnessExtraWork extends AssiduousnessExtraWork_Base {
 
-    public AssiduousnessExtraWork(AssiduousnessClosedMonth assiduousnessClosedMonth,
-	    WorkScheduleType workScheduleType, Duration nightBalance, Duration firstLevelBalance,
-	    Duration secondLevelBalance, Duration unjustified) {
+    public AssiduousnessExtraWork(AssiduousnessClosedMonth assiduousnessClosedMonth, WorkScheduleType workScheduleType,
+	    Duration nightBalance, Duration firstLevelBalance, Duration secondLevelBalance, Duration secondLevelBalanceWithLimit,
+	    Duration unjustified) {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAssiduousnessClosedMonth(assiduousnessClosedMonth);
 	setWorkScheduleType(workScheduleType);
 	setNightBalance(nightBalance);
 	setFirstLevelBalance(firstLevelBalance);
 	setSecondLevelBalance(secondLevelBalance);
+	setSecondLevelBalanceWithLimit(secondLevelBalanceWithLimit);
 	setUnjustified(unjustified);
     }
 

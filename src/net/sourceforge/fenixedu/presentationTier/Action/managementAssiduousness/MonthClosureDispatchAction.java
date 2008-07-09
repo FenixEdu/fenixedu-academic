@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -9,12 +11,12 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthDocument;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
@@ -40,7 +42,6 @@ import org.joda.time.LocalDate;
 import org.joda.time.PeriodType;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class MonthClosureDispatchAction extends FenixDispatchAction {
@@ -93,13 +94,47 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 		endDay = new LocalDate().getDayOfMonth();
 	    }
 	    final LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
-	    final IUserView userView = UserView.getUser();
+	    HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessRecords = getAssiduousnessRecord(beginDate, endDate
+		    .plusDays(1));
+
 	    List<AssiduousnessClosedMonth> negativeAssiduousnessClosedMonths = (List<AssiduousnessClosedMonth>) ServiceUtils
-		    .executeService("CloseAssiduousnessMonth", new Object[] { beginDate, endDate });
+		    .executeService("CloseAssiduousnessMonth", new Object[] { assiduousnessRecords, beginDate, endDate });
+
 	    request.setAttribute("negativeAssiduousnessClosedMonths", negativeAssiduousnessClosedMonths);
 	}
 
 	return prepareToCloseMonth(mapping, actionForm, request, response);
+    }
+
+    public HashMap<Assiduousness, List<AssiduousnessRecord>> getAssiduousnessRecord(LocalDate beginDate, LocalDate endDate) {
+	HashMap<Assiduousness, List<AssiduousnessRecord>> assiduousnessLeaves = new HashMap<Assiduousness, List<AssiduousnessRecord>>();
+	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), Assiduousness.defaultEndWorkDay.toDateTime(endDate
+		.toDateTimeAtStartOfDay()));
+	for (AssiduousnessRecord assiduousnessRecord : rootDomainObject.getAssiduousnessRecords()) {
+	    if (assiduousnessRecord.isLeave() && !assiduousnessRecord.isAnulated()) {
+		Interval leaveInterval = new Interval(assiduousnessRecord.getDate(), ((Leave) assiduousnessRecord).getEndDate()
+			.plusSeconds(1));
+		if (leaveInterval.overlaps(interval)) {
+		    List<AssiduousnessRecord> leavesList = assiduousnessLeaves.get(assiduousnessRecord.getAssiduousness());
+		    if (leavesList == null) {
+			leavesList = new ArrayList<AssiduousnessRecord>();
+		    }
+		    leavesList.add(assiduousnessRecord);
+		    assiduousnessLeaves.put(assiduousnessRecord.getAssiduousness(), leavesList);
+		}
+	    } else if ((assiduousnessRecord.isClocking() || assiduousnessRecord.isMissingClocking())
+		    && (!assiduousnessRecord.isAnulated())) {
+		if (interval.contains(assiduousnessRecord.getDate().getMillis())) {
+		    List<AssiduousnessRecord> list = assiduousnessLeaves.get(assiduousnessRecord.getAssiduousness());
+		    if (list == null) {
+			list = new ArrayList<AssiduousnessRecord>();
+		    }
+		    list.add(assiduousnessRecord);
+		    assiduousnessLeaves.put(assiduousnessRecord.getAssiduousness(), list);
+		}
+	    }
+	}
+	return assiduousnessLeaves;
     }
 
     public ActionForward exportClosedMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -113,7 +148,6 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 		endDay = new LocalDate().getDayOfMonth();
 	    }
 	    final LocalDate endDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, endDay);
-	    final IUserView userView = UserView.getUser();
 	    final ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
 	    final String result = (String) ServiceUtils.executeService("ExportClosedMonth", new Object[] { closedMonth,
 		    beginDate, endDate });

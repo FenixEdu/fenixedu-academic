@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.assiduousness;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,6 +22,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTyp
 import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.GiafInterface;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -729,4 +732,13 @@ public class Assiduousness extends Assiduousness_Base {
 	return employeeStatusList;
     }
 
+    public BigDecimal getEmployeeSalary(LocalDate date) throws ExcepcaoPersistencia {
+	GiafInterface giafInterface = new GiafInterface();
+	return giafInterface.getEmployeeSalary(getEmployee(), date);
+    }
+
+    public BigDecimal getEmployeeHourValue(LocalDate date) throws ExcepcaoPersistencia {
+	GiafInterface giafInterface = new GiafInterface();
+	return giafInterface.getEmployeeHourValue(getEmployee(), date);
+    }
 }

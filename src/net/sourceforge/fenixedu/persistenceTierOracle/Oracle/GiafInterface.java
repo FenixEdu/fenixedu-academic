@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTierOracle.Oracle;
 
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -19,10 +20,12 @@ import oracle.jdbc.OracleTypes;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 public class GiafInterface {
 
-    public Double getEmployeeHourValue(Employee employee, LocalDate day) throws ExcepcaoPersistencia {
+    public BigDecimal getEmployeeHourValue(Employee employee, LocalDate day) throws ExcepcaoPersistencia {
 	PersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getGiafDBInstance();
 	try {
 	    CallableStatement callableStatement = persistentSuportOracle.prepareCall("BEGIN ?:=ist_valor_hora(?, ?, ? ,?); END;");
@@ -34,7 +37,7 @@ public class GiafInterface {
 	    callableStatement.registerOutParameter(5, Types.VARCHAR);
 	    callableStatement.executeQuery();
 	    if (callableStatement.getString(5) == null) {
-		return new Double(callableStatement.getDouble(4));
+		return new BigDecimal(callableStatement.getDouble(4));
 	    }
 	    callableStatement.close();
 	} catch (SQLException e) {
@@ -44,36 +47,26 @@ public class GiafInterface {
 	return null;
     }
 
-    public Double getEmployeeSalary(Employee employee, LocalDate day) throws ExcepcaoPersistencia {
-	Double salary = 0.0;
+    public BigDecimal getEmployeeSalary(Employee employee, LocalDate day) throws ExcepcaoPersistencia {
+	BigDecimal salary = new BigDecimal(0.0);
+	DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 	PersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getGiafDBInstance();
 	try {
-	    PreparedStatement stmt = persistentSuportOracle.prepareStatement("SELECT ano, mes FROM sltinfdivs");
+	    StringBuilder stringBuilder = new StringBuilder();
+	    stringBuilder
+		    .append("select emp_venc from(select a.emp_num, a.emp_venc, a.emp_venc_dt, min(b.emp_venc_dt) as emp_venc_dt_fim");
+	    stringBuilder
+		    .append("from sldempvenc a,sldempvenc b where b.emp_venc_dt > to_date(a.emp_venc_dt, 'DD-MM-YYYY') and a.emp_num = b.emp_num and nvl(a.tipo_alt,'@') != 'A' and nvl(b.tipo_alt,'@') != 'A'");
+	    stringBuilder
+		    .append("group by a.emp_num, a.emp_venc, a.emp_venc_dt union SELECT c.emp_num, c.emp_venc, c.emp_venc_dt, sysdate FROM sldemp04 c )where to_date('");
+	    stringBuilder.append(fmt.print(day));
+	    stringBuilder.append("', 'DD-MM-YYYY') between emp_venc_dt and emp_venc_dt_fim and emp_num=");
+	    stringBuilder.append(employee.getEmployeeNumber());
+
+	    PreparedStatement stmt = persistentSuportOracle.prepareStatement(stringBuilder.toString());
 	    ResultSet rs = stmt.executeQuery();
-	    Integer year = 0;
-	    Integer month = 0;
 	    if (rs.next()) {
-		year = rs.getInt("ano");
-		month = rs.getInt("mes");
-	    }
-	    rs.close();
-	    StringBuilder query = new StringBuilder();
-	    query.append("select emp_venc ");
-	    if (day.getYear() == year && day.getMonthOfYear() == month) {
-		query.append("from sldemp04 where sldemp04.emp_num = ");
-		query.append(employee.getEmployeeNumber());
-	    } else {
-		query.append("from slhemp04 where slhemp04.emp_num = ");
-		query.append(employee.getEmployeeNumber());
-		query.append(" and slhemp04.ano = ");
-		query.append(day.getYear());
-		query.append(" and slhemp04.mes = ");
-		query.append(day.getMonthOfYear());
-	    }
-	    stmt = persistentSuportOracle.prepareStatement(query.toString());
-	    rs = stmt.executeQuery();
-	    if (rs.next()) {
-		salary = rs.getDouble("emp_venc");
+		salary = rs.getBigDecimal("emp_venc");
 	    }
 	    rs.close();
 	    stmt.close();
@@ -106,7 +99,9 @@ public class GiafInterface {
 		query.append(" and a.mov_cod in (");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode).append(",");
-		query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode);
+		query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode).append(",");
+		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDayFirstLevelMovementCode).append(",");
+		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDaySecondLevelMovementCode);
 		query.append(") and extract(year from data_mov)=");
 		query.append(extraWorkRequest.getHoursDoneInPartialDate().get(DateTimeFieldType.year()));
 		query.append(" and extract(month from data_mov)=");
@@ -123,7 +118,9 @@ public class GiafInterface {
 		query.append(" and a.mov_cod in (");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode).append(",");
-		query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode);
+		query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode).append(",");
+		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDayFirstLevelMovementCode).append(",");
+		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDaySecondLevelMovementCode);
 		query.append(") and a.emp_num =");
 		query.append(extraWorkRequest.getAssiduousness().getEmployee().getEmployeeNumber());
 	    }
@@ -136,6 +133,10 @@ public class GiafInterface {
 		    extraWorkRequest.setSaturdayAmount(rs.getDouble("sal_val_brt"));
 		} else if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode)) {
 		    extraWorkRequest.setHolidayAmount(rs.getDouble("sal_val_brt"));
+		} else if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraWorkWeekDayFirstLevelMovementCode)) {
+		    extraWorkRequest.setWorkdayFirstLevelAmount(rs.getDouble("sal_val_brt"));
+		} else if (rs.getInt("mov_cod") == new Integer(ExportClosedExtraWorkMonth.extraWorkWeekDaySecondLevelMovementCode)) {
+		    extraWorkRequest.setWorkdaySecondLevelAmount(rs.getDouble("sal_val_brt"));
 		}
 
 		extraWorkRequest.updateAmount();
@@ -168,7 +169,9 @@ public class GiafInterface {
 		query.append("SELECT sum(a.sal_val_brt) as value FROM sldsalario a where a.mov_cod in (");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode).append(",");
-		query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode);
+		query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode).append(",");
+		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDayFirstLevelMovementCode).append(",");
+		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDaySecondLevelMovementCode);
 		query.append(") and a.ano_pag=");
 		query.append(yearMonth.getYear());
 		query.append(" and a.mes_pag=");
@@ -181,7 +184,9 @@ public class GiafInterface {
 		query.append(" and a.mov_cod in (");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSundayMovementCode).append(",");
 		query.append(ExportClosedExtraWorkMonth.extraWorkSaturdayMovementCode).append(",");
-		query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode);
+		query.append(ExportClosedExtraWorkMonth.extraWorkHolidayMovementCode).append(",");
+		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDayFirstLevelMovementCode).append(",");
+		query.append(ExportClosedExtraWorkMonth.extraWorkWeekDaySecondLevelMovementCode);
 		query.append(")");
 	    }
 	    stmt = persistentSuportOracle.prepareStatement(query.toString());
@@ -265,4 +270,5 @@ public class GiafInterface {
 	}
 	persistentSuportOracle.commitTransaction();
     }
+
 }
