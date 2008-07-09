@@ -54,9 +54,9 @@ public class GiafInterface {
 	try {
 	    StringBuilder stringBuilder = new StringBuilder();
 	    stringBuilder
-		    .append("select emp_venc from(select a.emp_num, a.emp_venc, a.emp_venc_dt, min(b.emp_venc_dt) as emp_venc_dt_fim");
+		    .append("select emp_venc from(select a.emp_num, a.emp_venc, a.emp_venc_dt, min(b.emp_venc_dt) as emp_venc_dt_fim ");
 	    stringBuilder
-		    .append("from sldempvenc a,sldempvenc b where b.emp_venc_dt > to_date(a.emp_venc_dt, 'DD-MM-YYYY') and a.emp_num = b.emp_num and nvl(a.tipo_alt,'@') != 'A' and nvl(b.tipo_alt,'@') != 'A'");
+		    .append("from sldempvenc a,sldempvenc b where b.emp_venc_dt > to_date(a.emp_venc_dt, 'DD-MM-YYYY') and a.emp_num = b.emp_num and nvl(a.tipo_alt,'@') != 'A' and nvl(b.tipo_alt,'@') != 'A' ");
 	    stringBuilder
 		    .append("group by a.emp_num, a.emp_venc, a.emp_venc_dt union SELECT c.emp_num, c.emp_venc, c.emp_venc_dt, sysdate FROM sldemp04 c )where to_date('");
 	    stringBuilder.append(fmt.print(day));
