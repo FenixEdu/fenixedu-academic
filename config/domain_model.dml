@@ -4821,6 +4821,7 @@ class residence.ResidenceYear extends DomainObject {
 
 class residence.ResidenceMonth extends DomainObject {
 	Month month;
+	Integer paymentLimitDay;
 }
 
 /*

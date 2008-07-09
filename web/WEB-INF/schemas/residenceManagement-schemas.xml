@@ -1,4 +1,4 @@
-<schema  name="import.residence.data" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.SimpleFileBean">
+<schema  name="import.residence.data" type="net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.SimpleFileBean" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
 	<slot name="file">
 	 	<property name="fileNameSlot" value="name"/>
 	    <property name="fileSizeSlot" value="size"/>
@@ -7,17 +7,35 @@
 	</slot>
 </schema>
 
-<schema  name="edit.import.residence.bean" type="net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportResidenceEventBean">
-	<slot name="residenceYear" label="label.residenceYear" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+
+<schema  name="residence.bean.selectYear" type="net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportResidenceEventBean" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
+	<slot name="residenceYear" key="label.residenceYear" layout="menu-select-postback">
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.residence.ResidenceYear" />
 		<property name="format" value="${year}"/>
+		<property name="sortBy" value="year"/>
 	</slot>
-	<slot name="residenceMonth" label="label.residenceMonth" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+</schema>
+
+<schema  name="edit.import.residence.bean" type="net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportResidenceEventBean" bundle="RESIDENCE_MANAGEMENT_RESOURCES" extends="residence.bean.selectYear">
+	<slot name="residenceMonth" key="label.residenceMonth" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.residenceManagement.ResidenceMonthProvider" />
-		<property name="format" value="${month}"/>
-		<property name="saveOptions" value="true"/>
+		<property name="eachLayout" value="values"/>
+		<property name="eachSchema" value="show.residenceMonth.month"/>
+		<property name="sortBy" value="month"/>
 	</slot>
-	<slot name="paymentLimitDay" label="label.paymentLimitDay"/>
+	<slot name="paymentLimitDay" key="label.paymentLimitDay" read-only="true"/>
+</schema>
+
+<schema  name="show.residenceMonth.month" type="net.sourceforge.fenixedu.domain.residence.ResidenceMonth" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
+	<slot name="month" key="label.residenceMonth"/>
+</schema>
+
+<schema  name="edit.payment.limit" type="net.sourceforge.fenixedu.domain.residence.ResidenceMonth" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
+	<slot name="month" key="label.residenceMonth" read-only="true"/>
+	<slot name="paymentLimitDay" label="label.paymentLimitDay">
+		<property name="maxLength" value="2"/>
+		<property name="size" value="3"/>
+	</slot>
 </schema>
 
 	

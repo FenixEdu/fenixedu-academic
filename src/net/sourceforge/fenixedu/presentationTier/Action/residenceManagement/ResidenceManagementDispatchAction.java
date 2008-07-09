@@ -1,11 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.Action.residenceManagement;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportResidenceEventBean;
+import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean;
+import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidentListsHolderBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.SimpleFileBean;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
@@ -21,10 +25,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 @Mapping(path = "/residenceManagement", module = "residenceManagement")
-@Forwards( { @Forward(name = "importData", path = "residenceManagement-importData") })
+@Forwards( { @Forward(name = "importData", path = "residenceManagement-importData"),
+	 @Forward(name="paymentLimits", path="residenceManagement-paymentLimits") })
 public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward importData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -34,7 +40,20 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	if (bean == null) {
 	    bean = new ImportResidenceEventBean();
 	} else {
-	    process(bean);
+
+	    List<ResidenceEventBean> sucessful = new ArrayList<ResidenceEventBean>();
+	    List<ResidenceEventBean> unsucessful = new ArrayList<ResidenceEventBean>();
+
+	    for (ResidenceEventBean eventBean : process(bean)) {
+		if (eventBean.getStatus()) {
+		    sucessful.add(eventBean);
+		} else {
+		    unsucessful.add(eventBean);
+		}
+	    }
+
+	    ResidentListsHolderBean listHolder = new ResidentListsHolderBean(sucessful, unsucessful);
+	    request.setAttribute("importList", listHolder);
 	}
 
 	RenderUtils.invalidateViewState();
@@ -56,7 +75,19 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	return importData(mapping, actionForm, request, response);
     }
 
-    private void process(SimpleFileBean bean) throws IOException {
+    public ActionForward configurePaymentLimits(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	IViewState viewState = RenderUtils.getViewState("paymentLimits");
+	ImportResidenceEventBean bean = viewState != null ?  (ImportResidenceEventBean) viewState.getMetaObject().getObject() : new ImportResidenceEventBean();
+	RenderUtils.invalidateViewState();
+	request.setAttribute("paymentLimits", bean);
+	return mapping.findForward("paymentLimits");
+    }
+    
+    private List<ResidenceEventBean> process(SimpleFileBean bean) throws IOException {
+	List<ResidenceEventBean> beans = new ArrayList<ResidenceEventBean>();
+
 	POIFSFileSystem fs = new POIFSFileSystem(bean.getFile());
 	HSSFWorkbook wb = new HSSFWorkbook(fs);
 
@@ -68,12 +99,16 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	    String room = row.getCell((short) 0).getStringCellValue();
 	    if (StringUtils.isEmpty(room))
 		break;
-	    System.out.println(new Double(row.getCell((short) 1).getNumericCellValue()).intValue());
-	    System.out.println(row.getCell((short) 2).getStringCellValue());
-	    System.out.println(getValueFromColumn(row, 6));
-	    System.out.println(row.getCell((short) 8).getNumericCellValue());
+
+	    String userName = String.valueOf(new Double(row.getCell((short) 1).getNumericCellValue()).intValue());
+	    String name = row.getCell((short) 2).getStringCellValue();
+	    String fiscalNumber = getValueFromColumn(row, 6);
+	    Double roomValue = new Double(row.getCell((short) 8).getNumericCellValue());
+	    beans.add(new ResidenceEventBean(userName, fiscalNumber, name, roomValue));
+
 	    i++;
 	}
+	return beans;
     }
 
     private String getValueFromColumn(HSSFRow row, int i) {

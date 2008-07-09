@@ -11,20 +11,28 @@ public class ImportResidenceEventBean extends SimpleFileBean {
     private DomainReference<ResidenceMonth> residenceMonth;
     private Integer paymentLimitDay;
 
+    public ImportResidenceEventBean() {
+	setResidenceYear(null);
+	setResidenceMonth(null);
+    }
+
     public ResidenceYear getResidenceYear() {
-	return this.residenceYear != null ? this.residenceYear.getObject() : null;
+	return this.residenceYear.getObject();
     }
 
     public void setResidenceYear(ResidenceYear residenceYear) {
-	this.residenceYear = (residenceYear != null) ? new DomainReference<ResidenceYear>(residenceYear) : null;
+	this.residenceYear = new DomainReference<ResidenceYear>(residenceYear);
     }
 
     public ResidenceMonth getResidenceMonth() {
-	return this.residenceMonth != null ? this.residenceMonth.getObject() : null;
+	return this.residenceMonth.getObject();
     }
 
-    public void setResindenceMonth(ResidenceMonth residenceMonth) {
-	this.residenceMonth = (residenceMonth != null) ? new DomainReference<ResidenceMonth>(residenceMonth) : null;
+    public void setResidenceMonth(ResidenceMonth residenceMonth) {
+	this.residenceMonth = new DomainReference<ResidenceMonth>(residenceMonth);
+	if (residenceMonth != null) {
+	    setPaymentLimitDay(residenceMonth.getPaymentLimitDay());
+	}
     }
 
     public Integer getPaymentLimitDay() {

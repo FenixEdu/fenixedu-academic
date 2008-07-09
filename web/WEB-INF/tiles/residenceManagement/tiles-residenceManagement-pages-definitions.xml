@@ -14,5 +14,8 @@
 		<put name="body" value="/residenceManagement/importData.jsp"/>
 	</definition>	
 	
+	<definition name="residenceManagement-paymentLimits" extends="definition.residenceManagement.master">
+		<put name="body" value="/residenceManagement/paymentLimits.jsp"/>
+	</definition>	
 
 </tiles-definitions>
