@@ -509,10 +509,10 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	    int diference = secondLevel - assiduousnessMonthlyResume.getPayedWorkWeekBalance();
 
 	    int notPayedSecondLevel = Math.max(diference, 0);
-
-	    int notPayedFirstLevel = Math.max(assiduousnessMonthlyResume.getFirstLevelBalance().toPeriod(PeriodType.dayTime())
-		    .getHours()
-		    - diference, 0);
+	    int notPayedFirstLevel = assiduousnessMonthlyResume.getFirstLevelBalance().toPeriod(PeriodType.dayTime()).getHours();
+	    if (diference < 0) {
+		notPayedFirstLevel = Math.max(notPayedFirstLevel + diference, 0);
+	    }
 
 	    if ((notPayedFirstLevel + notPayedSecondLevel) < getRequestedWorkdayHours()) {
 		setWorkdayHours((notPayedFirstLevel + notPayedSecondLevel));

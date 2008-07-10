@@ -208,7 +208,7 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 	for (ExtraWorkRequest extraWorkRequest : getAssiduousness().getExtraWorkRequests()) {
 	    if (extraWorkRequest.getPaymentYear().equals(yearMonth.getYear())
 		    && extraWorkRequest.getPaymentYearMonth().getNumberOfMonth() <= yearMonth.getNumberOfMonth()
-		    && getWorkdayHours() != null) {
+		    && extraWorkRequest.getWorkdayHours() != null) {
 		result = result + extraWorkRequest.getWorkdayHours();
 	    }
 	}
