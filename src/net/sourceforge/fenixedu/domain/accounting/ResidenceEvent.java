@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
+import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
 
 public class ResidenceEvent extends ResidenceEvent_Base {
@@ -12,16 +13,17 @@ public class ResidenceEvent extends ResidenceEvent_Base {
         super();
     }
 
-    public ResidenceEvent(ResidenceMonth month, Person person) {
-	init(EventType.RESIDENCE_PAYMENT, person, month);
+    public ResidenceEvent(ResidenceMonth month, Person person, Money roomValue) {
+	init(EventType.RESIDENCE_PAYMENT, person, month, roomValue);
     }
     
-    protected void init(EventType eventType, Person person, ResidenceMonth month) {	
+    protected void init(EventType eventType, Person person, ResidenceMonth month, Money roomValue) {	
 	super.init(eventType, person);
 	if (month == null) {
 	    throw new DomainException("error.accounting.events.ResidenceEvent.ResidenceMonth.cannot.be.null");
 	}
 	setResidenceMonth(month);
+	setRoomValue(roomValue);
     }
     
     @Override

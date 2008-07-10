@@ -2,24 +2,26 @@ package net.sourceforge.fenixedu.dataTransferObject.residenceManagement;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.Money;
+
+import org.apache.commons.lang.StringUtils;
 
 public class ResidenceEventBean implements Serializable {
 
     String userName;
     String fiscalNumber;
     String name;
-    Double roomValue;
+    DomainReference<Student> student;
+    Money roomValue;
 
     public ResidenceEventBean(String userName, String fiscalNumber, String name, Double roomValue) {
 	this.userName = userName;
 	this.fiscalNumber = fiscalNumber;
 	this.name = name;
-	this.roomValue = roomValue;
+	this.roomValue = new Money(roomValue);
+	setStudent(null);
     }
 
     public String getUserName() {
@@ -46,14 +48,22 @@ public class ResidenceEventBean implements Serializable {
 	this.name = name;
     }
 
-    public Double getRoomValue() {
+    public Money getRoomValue() {
 	return roomValue;
     }
 
-    public void setRoomValue(Double roomValue) {
+    public void setRoomValue(Money roomValue) {
 	this.roomValue = roomValue;
     }
 
+    public void setStudent(Student student) {
+	this.student = new DomainReference<Student>(student);
+    }
+    
+    public Student getStudent() {
+	return this.student.getObject();
+    }
+    
     public boolean getStatus() {
 	if (!StringUtils.isNumeric(userName)) {
 	    return false;
@@ -63,6 +73,8 @@ public class ResidenceEventBean implements Serializable {
 	if (student == null || !student.hasPerson()) {
 	    return false;
 	}
+	
+	setStudent(student);
 	String socialSecurityNumber = student.getPerson().getSocialSecurityNumber();
 	return socialSecurityNumber == null || socialSecurityNumber.equalsIgnoreCase(fiscalNumber.trim());
 

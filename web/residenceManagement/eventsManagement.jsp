@@ -21,8 +21,9 @@
 
 <logic:present name="searchBean">
 	<logic:present name="searchBean" property="residenceMonth">
-		<fr:view name="searchBean" property="residenceMonth.events" schema="show.residenceMonth.month">	
+		<fr:view name="searchBean" property="residenceMonth.events" schema="show.residenceEvent">	
 			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle1"/>
 			</fr:layout>
 			<fr:destination name="personLink" path="/residenceEventManagement.do?method=viewPersonResidenceEvents&person=${person.OID}&month=${residenceMonth.OID}"/>
 		</fr:view>

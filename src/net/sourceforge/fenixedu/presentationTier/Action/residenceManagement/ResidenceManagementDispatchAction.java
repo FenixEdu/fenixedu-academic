@@ -30,7 +30,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 @Mapping(path = "/residenceManagement", module = "residenceManagement")
 @Forwards( { @Forward(name = "importData", path = "residenceManagement-importData"),
-	 @Forward(name="paymentLimits", path="residenceManagement-paymentLimits") })
+	@Forward(name = "paymentLimits", path = "residenceManagement-paymentLimits") })
 public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward importData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -79,12 +79,23 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	IViewState viewState = RenderUtils.getViewState("paymentLimits");
-	ImportResidenceEventBean bean = viewState != null ?  (ImportResidenceEventBean) viewState.getMetaObject().getObject() : new ImportResidenceEventBean();
+	ImportResidenceEventBean bean = viewState != null ? (ImportResidenceEventBean) viewState.getMetaObject().getObject()
+		: new ImportResidenceEventBean();
 	RenderUtils.invalidateViewState();
 	request.setAttribute("paymentLimits", bean);
 	return mapping.findForward("paymentLimits");
     }
-    
+
+    public ActionForward generateDebts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	
+	ResidentListsHolderBean listHolder= (ResidentListsHolderBean) getRenderedObject("importList");
+	ImportResidenceEventBean eventBean = (ImportResidenceEventBean) getRenderedObject("dateBean");
+	executeService("CreateResidenceEvents", new Object[] { listHolder.getSuccessfulEvents(), eventBean.getResidenceMonth() });
+	
+	return importData(mapping, actionForm, request, response);
+    }
+
     private List<ResidenceEventBean> process(SimpleFileBean bean) throws IOException {
 	List<ResidenceEventBean> beans = new ArrayList<ResidenceEventBean>();
 

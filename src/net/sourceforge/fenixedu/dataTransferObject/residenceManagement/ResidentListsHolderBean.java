@@ -20,4 +20,8 @@ public class ResidentListsHolderBean implements Serializable {
 	this.successfulEvents = sucessful;
 	this.unsuccessfulEvents = unsucessful;
     }
+    
+    public Integer getNumberOfImports() {
+	return successfulEvents.size() + unsuccessfulEvents.size();
+    }
 }

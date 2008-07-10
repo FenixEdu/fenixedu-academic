@@ -38,15 +38,23 @@
 	</slot>
 </schema>
 
-<schema  name="show.residenceMonth.month" type="net.sourceforge.fenixedu.domain.accounting.ResidenceEvent" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
-	<slot name="person.student.number" />
-	<slot name="person.socialSecurityNumber" />
-	<slot name="person.name" layout="link">
+<schema  name="show.residenceEvent" type="net.sourceforge.fenixedu.domain.accounting.ResidenceEvent" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
+	<slot name="person.student.number" key="label.studentNumber"/>
+	<slot name="person.socialSecurityNumber" key="label.fiscalNumber"/>
+	<slot name="person.name" layout="link" key="label.name">
+		<property name="useParent" value="true"/>
 		<property name="destination" value="personLink"/>
 	</slot>
-	<slot name="roomValue" />
-	<slot name="lastPaymentDate" label="label.paymentDate"/>
+	<slot name="roomValue" key="label.roomValue"/>
+	<slot name="lastPaymentDate" key="label.paymentDate" layout="null-as-label">
+		<property name="subLayout" value="values"/>
+		<property name="label" value="-"/>
+	</slot>	
 </schema>
 
-
-	
+<schema name="show.residenceEventBean" type="net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
+	<slot name="userName" key="label.studentNumber"/>
+	<slot name="name" key="label.name"/>
+	<slot name="fiscalNumber" key="label.fiscalNumber"/>
+	<slot name="roomValue" key="label.roomValue"/>
+</schema>
