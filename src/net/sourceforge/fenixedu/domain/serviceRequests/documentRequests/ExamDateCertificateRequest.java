@@ -27,12 +27,12 @@ public class ExamDateCertificateRequest extends ExamDateCertificateRequest_Base 
     }
 
     public ExamDateCertificateRequest(Registration registration, DateTime requestDate, DocumentPurposeType documentPurposeType,
-	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, ExecutionYear executionYear,
-	    Collection<Enrolment> enrolments, Collection<Exam> exams, ExecutionSemester executionSemester) {
+	    String otherDocumentPurposeTypeDescription, Boolean urgentRequest, Collection<Enrolment> enrolments,
+	    Collection<Exam> exams, ExecutionSemester executionSemester) {
 
 	this();
-	init(registration, requestDate, executionYear, documentPurposeType, otherDocumentPurposeTypeDescription, urgentRequest,
-		enrolments, exams, executionSemester);
+	init(registration, requestDate, executionSemester.getExecutionYear(), documentPurposeType,
+		otherDocumentPurposeTypeDescription, urgentRequest, enrolments, exams, executionSemester);
     }
 
     protected void init(Registration registration, DateTime requestDate, ExecutionYear executionYear,

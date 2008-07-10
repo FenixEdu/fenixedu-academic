@@ -1,0 +1,1 @@
+UPDATE POSTING_RULE SET POSTING_RULE.AMOUNT_FIRST_PAGE = "0.0" WHERE POSTING_RULE.OJB_CONCRETE_CLASS = "net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR" OR POSTING_RULE.OJB_CONCRETE_CLASS = "net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR";

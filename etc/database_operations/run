@@ -40,5 +40,7 @@ function executeWithTempFile() {
 	echo
 }
 
-
 execute "Adding event management functionality" addEventManagementMenuItem.sql
+execute "Add new column to PostingRule table" alterTablePostingRule.sql
+execute "Update PostingRules data" updatePostingRulesInformation.sql IST
+execute "Add new columns to AcademicServiceRequest table" alterTableAcademicServiceRequest.sql

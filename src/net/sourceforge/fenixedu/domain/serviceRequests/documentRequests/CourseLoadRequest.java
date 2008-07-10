@@ -33,7 +33,7 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
 	super.getEnrolments().addAll(enrolments);
     }
 
-    private void checkParameters(final Collection<Enrolment> enrolments) {
+    protected void checkParameters(final Collection<Enrolment> enrolments) {
 	if (enrolments.isEmpty()) {
 	    throw new DomainException("error.CourseLoadRequest.invalid.number.of.enrolments");
 	}
@@ -70,7 +70,7 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
 
     @Override
     public void delete() {
-	getEnrolments().clear();
+	super.getEnrolments().clear();
 	super.delete();
     }
 

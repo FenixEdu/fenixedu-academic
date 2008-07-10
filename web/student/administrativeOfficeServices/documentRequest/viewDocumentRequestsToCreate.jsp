@@ -40,7 +40,7 @@
 
 <logic:present name="additionalInformationSchemaName">
 	<bean:define id="additionalInformationSchemaName" name="additionalInformationSchemaName" type="java.lang.String"/>
-	<fr:edit name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName %>" visible="false"
+	<fr:edit name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName + "view" %>" visible="false"
 		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" />
 </logic:present>
 
@@ -57,7 +57,7 @@
 
 <logic:present name="additionalInformationSchemaName">
 	<bean:define id="additionalInformationSchemaName" name="additionalInformationSchemaName" type="java.lang.String"/>	
-	<fr:view name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName %>" 
+	<fr:view name="documentRequestCreateBean" schema="<%= additionalInformationSchemaName + "view" %>" 
 		type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" >
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thright thlight mvert0"/>

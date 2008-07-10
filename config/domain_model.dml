@@ -1491,9 +1491,14 @@ class DomainObject {
 				}
 
 				class accounting.postingRules.serviceRequests.CourseLoadRequestPR extends accounting.postingRules.BaseAmountPlusAmountPerPagePR {
+					Money amountFirstPage;
 				}
 				
+					class accounting.postingRules.serviceRequests.ExternalCourseLoadRequestPR extends accounting.postingRules.serviceRequests.CourseLoadRequestPR {
+					}
+				
 				class accounting.postingRules.serviceRequests.ProgramCertificateRequestPR extends accounting.postingRules.BaseAmountPlusAmountPerPagePR {
+					Money amountFirstPage;
 				}
 				
 				class accounting.postingRules.serviceRequests.ExamDateCertificateRequestPR extends accounting.postingRules.BaseAmountPlusAmountPerPagePR {
@@ -3534,6 +3539,10 @@ class DomainObject {
 					class serviceRequests.documentRequests.CourseLoadRequest extends serviceRequests.documentRequests.CertificateRequest {
 					}
 					
+						class serviceRequests.documentRequests.ExternalCourseLoadRequest extends serviceRequests.documentRequests.CourseLoadRequest {
+							Integer numberOfCourseLoads;
+						}
+					
 					class serviceRequests.documentRequests.ExamDateCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
 					}
 					
@@ -5116,6 +5125,13 @@ relation AllowedToUploadInUnit {
 		multiplicity *;
 	}
 	Person playsRole allowedPeopleToUploadFiles {
+		multiplicity *;
+	}
+}
+
+relation ExternalCourseLoadRequestUnit {
+	organizationalStructure.Unit playsRole institution;
+	serviceRequests.documentRequests.ExternalCourseLoadRequest playsRole externalCourseLoadRequests {
 		multiplicity *;
 	}
 }

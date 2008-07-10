@@ -12,14 +12,19 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBean {
+
+    private DateTime requestDate;
 
     private DocumentRequestType chosenDocumentRequestType;
 
@@ -63,10 +68,23 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 
     private List<DomainReference<Exam>> exams;
 
+    private Integer numberOfCourseLoads;
+
+    private DomainReference<Unit> institution;
+
     public DocumentRequestCreateBean(Registration registration) {
 	super(registration);
+	this.requestDate = new DateTime();
 	this.enrolments = new ArrayList<DomainReference<Enrolment>>();
 	this.exams = new ArrayList<DomainReference<Exam>>();
+    }
+
+    public DateTime getRequestDate() {
+	return requestDate;
+    }
+
+    public void setRequestDate(DateTime requestDate) {
+	this.requestDate = requestDate;
     }
 
     public DocumentRequestType getChosenDocumentRequestType() {
@@ -308,4 +326,23 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
 	this.executionSemester = (executionSemester != null) ? new DomainReference<ExecutionSemester>(executionSemester) : null;
     }
 
+    public Integer getNumberOfCourseLoads() {
+	return numberOfCourseLoads;
+    }
+
+    public void setNumberOfCourseLoads(Integer numberOfCourseLoads) {
+	this.numberOfCourseLoads = numberOfCourseLoads;
+    }
+
+    public UnitName getInstitutionName() {
+	return (this.institution != null) ? this.institution.getObject().getUnitName() : null;
+    }
+
+    public void setInstitutionName(final UnitName institutionName) {
+	this.institution = (institutionName != null) ? new DomainReference<Unit>(institutionName.getUnit()) : null;
+    }
+
+    public Unit getInstitution() {
+	return (this.institution != null) ? this.institution.getObject() : null;
+    }
 }

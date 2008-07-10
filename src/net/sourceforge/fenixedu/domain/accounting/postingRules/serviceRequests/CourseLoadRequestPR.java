@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -19,23 +20,34 @@ public class CourseLoadRequestPR extends CourseLoadRequestPR_Base {
     }
 
     public CourseLoadRequestPR(final ServiceAgreementTemplate serviceAgreementTemplate, final DateTime startDate,
-	    final DateTime endDate, final Money baseAmount, final Money amountPerPage) {
+	    final DateTime endDate, final Money certificateAmount, final Money amountFirstPage, final Money amountPerPage) {
 	this();
 	super.init(EntryType.COURSE_LOAD_REQUEST_FEE, EventType.COURSE_LOAD_REQUEST, startDate, endDate,
-		serviceAgreementTemplate, baseAmount, amountPerPage);
+		serviceAgreementTemplate, certificateAmount, amountPerPage);
+	checkParameters(amountFirstPage);
+	super.setAmountFirstPage(amountFirstPage);
+    }
+
+    protected void checkParameters(final Money amountFirstPage) {
+	if (amountFirstPage == null) {
+	    throw new DomainException("error.accounting.postingRules.CourseLoadRequestPR.amountFirstPage.cannot.be.null");
+	}
     }
 
     @Checked("PostingRulePredicates.editPredicate")
-    public CourseLoadRequestPR edit(final Money baseAmount, final Money amountPerUnit) {
+    public CourseLoadRequestPR edit(final Money baseAmount, final Money amountFirstPage, final Money amountPerUnit) {
 	deactivate();
-	return new CourseLoadRequestPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null, baseAmount, amountPerUnit);
+	return new CourseLoadRequestPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null, baseAmount,
+		amountFirstPage, amountPerUnit);
     }
 
     @Override
     protected Money getAmountForPages(final Event event) {
 	final CertificateRequestEvent requestEvent = (CertificateRequestEvent) event;
-	final int extraPages = requestEvent.getNumberOfPages().intValue() - 1;
-	return getAmountPerPage().multiply(BigDecimal.valueOf(extraPages < 0 ? 0 : extraPages));
+	// remove certificate page number
+	int extraPages = requestEvent.getNumberOfPages().intValue() - 1;
+	return (extraPages <= 0) ? Money.ZERO : getAmountFirstPage().add(
+		getAmountPerPage().multiply(BigDecimal.valueOf(--extraPages)));
     }
 
     @Override

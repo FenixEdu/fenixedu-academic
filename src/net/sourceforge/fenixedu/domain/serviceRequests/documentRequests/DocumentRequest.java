@@ -8,8 +8,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
-import org.joda.time.DateTime;
-
 public abstract class DocumentRequest extends DocumentRequest_Base {
 
     protected DocumentRequest() {
@@ -61,11 +59,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	public Object execute() {
 
 	    if (getChosenDocumentRequestType().isCertificate()) {
-		return CertificateRequest.create(getRegistration(), new DateTime(), getChosenDocumentRequestType(),
-			getChosenDocumentPurposeType(), getOtherPurpose(), getUrgentRequest(), getAverage(), getDetailed(),
-			getExecutionYear(), getMobilityProgram(), getRequestedCycle(), getFreeProcessed(), getEnrolments(),
-			getExams(), getExecutionPeriod(), getInternshipAbolished(), getInternshipApproved(), getStudyPlan(),
-			getExceptionalConclusionDate());
+		return CertificateRequest.create(this);
 
 	    } else if (getChosenDocumentRequestType().isDeclaration()) {
 		return DeclarationRequest.create(getRegistration(), getChosenDocumentRequestType(),
@@ -74,7 +68,6 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 
 	    } else if (getChosenDocumentRequestType().isDiploma()) {
 		return new DiplomaRequest(getRegistration(), getRequestedCycle());
-
 	    }
 
 	    return null;

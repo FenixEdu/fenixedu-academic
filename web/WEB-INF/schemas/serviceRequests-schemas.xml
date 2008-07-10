@@ -139,6 +139,13 @@
 	</slot>	
 </schema>
 
+<schema name="ExternalCourseLoadRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalCourseLoadRequest" extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="numberOfCourseLoads" key="label.ExternalCourseLoad.numberOfCourseLoads" />
+	<slot name="institution" layout="format" key="label.institutionUnitName">
+		<property name="format" value="${name}"/>
+	</slot>
+</schema>
+
 <schema name="ProgramCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest" extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="enrolments" key="label.student.enrolments" layout="values" schema="Enrolment.view-curricular-course-name-only">
 		<property name="htmlSeparator" value=", "/>
@@ -201,6 +208,14 @@
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
 </schema>
 
+<schema name="DocumentRequestCreateBean.SCHOOL_REGISTRATION_CERTIFICATE.AdditionalInformation.view" 
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="executionYear" layout="format">
+		<property name="format" value="${year}" />
+	</slot>
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
+</schema>
+
 <schema name="DocumentRequestCreateBean.ENROLMENT_CERTIFICATE.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="executionYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -211,9 +226,23 @@
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
 </schema>
 
+<schema name="DocumentRequestCreateBean.ENROLMENT_CERTIFICATE.AdditionalInformation.view"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="executionYear" layout="format" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="format" value="${year}" />
+	</slot>
+	<slot name="detailed"  key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
+</schema>
+
 <schema name="DocumentRequestCreateBean.APPROVEMENT_CERTIFICATE.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.APPROVEMENT_CERTIFICATE.AdditionalInformation.view"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
 </schema>
 
 <schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE.AdditionalInformation"
@@ -225,6 +254,17 @@
 	<slot name="internshipApproved" key="label.documentRequestsManagement.searchDocumentRequests.internshipApproved"></slot>
 	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan"></slot>
 	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate"></slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE.AdditionalInformation.view"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
+	<slot name="average" key="label.documentRequestsManagement.searchDocumentRequests.average" />
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
+	<slot name="internshipAbolished" key="label.documentRequestsManagement.searchDocumentRequests.internshipAbolished" />
+	<slot name="internshipApproved" key="label.documentRequestsManagement.searchDocumentRequests.internshipApproved" />
+	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan" />
+	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate" />
 </schema>
 
 <schema name="DocumentRequestCreateBean.COURSE_LOAD.AdditionalInformation"
@@ -241,6 +281,43 @@
     </slot>
 </schema>
 
+<schema name="DocumentRequestCreateBean.COURSE_LOAD.AdditionalInformation.view"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
+	<slot name="toUseAll" key="label.documentRequestsManagement.searchDocumentRequests.all" />
+    <slot name="enrolments" key="label.student.enrolments" layout="values" schema="Enrolment.view-curricular-course-name-only">
+		<property name="htmlSeparator" value=", "/>
+		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
+	</slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.EXTERNAL_COURSE_LOAD.AdditionalInformation"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
+	<slot name="numberOfCourseLoads" key="label.ExternalCourseLoad.numberOfCourseLoads" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="3"/>
+		<property name="maxLength" value="4"/>
+	</slot>
+	<slot name="institutionName" layout="autoComplete" key="label.institutionUnitName" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+		<property name="size" value="40"/>
+		<property name="labelField" value="unit.name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+		<property name="minChars" value="2"/>
+	</slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.EXTERNAL_COURSE_LOAD.AdditionalInformation.view"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
+	<slot name="numberOfCourseLoads" key="label.ExternalCourseLoad.numberOfCourseLoads" />
+	<slot name="institutionName" layout="format" key="label.institutionUnitName">
+		<property name="format" value="${unit.name}"/>
+	</slot>
+</schema>
+
 <schema name="DocumentRequestCreateBean.PROGRAM_CERTIFICATE.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
@@ -253,6 +330,16 @@
         <property name="eachSchema" value="Enrolment.view-curricular-course-name-only" />
 		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
     </slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.PROGRAM_CERTIFICATE.AdditionalInformation.view"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
+	<slot name="toUseAll" key="label.documentRequestsManagement.searchDocumentRequests.all" />
+    <slot name="enrolments" key="label.student.enrolments" layout="values" schema="Enrolment.view-curricular-course-name-only">
+		<property name="htmlSeparator" value=", "/>
+		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
+	</slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.EXAM_DATE_CERTIFICATE.AdditionalInformation" 
@@ -276,12 +363,32 @@
     </slot>
 </schema>
 
+<schema name="DocumentRequestCreateBean.EXAM_DATE_CERTIFICATE.AdditionalInformation.view" 
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="executionYear" layout="format" >
+		<property name="format" value="${year}" />
+	</slot>
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
+	<slot name="executionPeriod" layout="format">
+		<property name="format" value="${name}" />
+	</slot>
+    <slot name="enrolments" key="label.student.enrolments" layout="values" schema="Enrolment.view-curricular-course-name-only">
+		<property name="htmlSeparator" value=", "/>
+		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
+	</slot>
+</schema>
+
 <schema name="Enrolment.view-curricular-course-name-only" 
 	type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="degreeModule.name" key="label.executionCourse" />
 </schema>
 
 <schema name="DocumentRequestCreateBean.IRS_DECLARATION.AdditionalInformation"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="year" key="label.year"/>
+</schema>
+
+<schema name="DocumentRequestCreateBean.IRS_DECLARATION.AdditionalInformation.view"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="year" key="label.year"/>
 </schema>

@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSit
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalCourseLoadRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -33,7 +34,7 @@ import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -70,6 +71,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 		return new ExamDateCertificate(documentRequest);
 	    case COURSE_LOAD:
 		return new CourseLoadRequestDocument((CourseLoadRequest) documentRequest);
+	    case EXTERNAL_COURSE_LOAD:
+		return new ExternalCourseLoadRequestDocument((ExternalCourseLoadRequest) documentRequest);
 	    case PROGRAM_CERTIFICATE:
 		return new ProgramCertificateRequestDocument((ProgramCertificateRequest) documentRequest);
 	    default:
@@ -131,7 +134,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	addParameter("degreeDescription", getDegreeDescription());
 
 	addParameter("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
-	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
+	addParameter("day", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
     }
 
     protected boolean showPriceFields() {
