@@ -218,14 +218,16 @@ public class ExportClosedExtraWorkMonth extends Service {
 			    extraWorkHolidayMovementCode, extraWorkRequest.getHolidayHours()));
 		}
 
-		if (extraWorkRequest.getWorkdayFirstLevelHours() != null && extraWorkRequest.getWorkdayFirstLevelHours() != 0.0) {
+		if (extraWorkRequest.getWorkdayFirstLevelHours() != null && extraWorkRequest.getWorkdayFirstLevelHours() != 0.0
+			&& (!extraWorkRequest.getAddToVacations())) {
 		    result.append(getExtraWorkMovement(assiduousnessClosedMonth.getAssiduousnessStatusHistory()
 			    .getAssiduousness(), assiduousnessClosedMonth.getBeginDate().plusMonths(1).getYear(),
 			    assiduousnessClosedMonth.getBeginDate().plusMonths(1).getMonthOfYear(), begin, end,
 			    extraWorkWeekDayFirstLevelMovementCode, extraWorkRequest.getWorkdayFirstLevelHours()));
 		}
 
-		if (extraWorkRequest.getWorkdaySecondLevelHours() != null && extraWorkRequest.getWorkdaySecondLevelHours() != 0.0) {
+		if (extraWorkRequest.getWorkdaySecondLevelHours() != null && extraWorkRequest.getWorkdaySecondLevelHours() != 0.0
+			&& (!extraWorkRequest.getAddToVacations())) {
 		    result.append(getExtraWorkMovement(assiduousnessClosedMonth.getAssiduousnessStatusHistory()
 			    .getAssiduousness(), assiduousnessClosedMonth.getBeginDate().plusMonths(1).getYear(),
 			    assiduousnessClosedMonth.getBeginDate().plusMonths(1).getMonthOfYear(), begin, end,
