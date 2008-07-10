@@ -243,7 +243,7 @@
 						height="39"
 						key="subreport-1"/>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$F{contexts}))]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/program/programContextsSubReport.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "WEB-INF/classes/reports/documentRequests/programCertificateRequest/programContextsSubReport.jasper"]]></subreportExpression>
 				</subreport>
 				</elementGroup><!-- End 6 !-->
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
