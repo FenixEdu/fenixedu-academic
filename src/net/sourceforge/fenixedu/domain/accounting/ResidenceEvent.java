@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import org.joda.time.DateTime;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
@@ -31,7 +33,10 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 	final LabelFormatter labelFormatter = new LabelFormatter();
 
 	labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES);
-	labelFormatter.appendLabel(" - " + getResidenceMonth().getMonth() + "-" + getResidenceMonth().getYear().getYear());
+	labelFormatter.appendLabel(" - ");
+	labelFormatter.appendLabel(getResidenceMonth().getMonth().getName(), "enum");
+	labelFormatter.appendLabel("-");
+	labelFormatter.appendLabel(getResidenceMonth().getYear().getYear().toString());
 	return labelFormatter;
     }
 
@@ -55,4 +60,7 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 	return getResidenceMonth().getManagementUnit();
     }
     
+    public DateTime getLimitPaymentDate() {
+	return getResidenceMonth().getPaymentLimitDateTime();
+    }
 }

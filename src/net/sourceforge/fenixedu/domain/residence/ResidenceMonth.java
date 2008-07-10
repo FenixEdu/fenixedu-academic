@@ -6,6 +6,9 @@ import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.util.Month;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+
 public class ResidenceMonth extends ResidenceMonth_Base {
 
     protected ResidenceMonth() {
@@ -30,7 +33,11 @@ public class ResidenceMonth extends ResidenceMonth_Base {
 	    }
 	}
 	return false;
-
+    }
+    
+    public DateTime getPaymentLimitDateTime() {
+	LocalDate date = new LocalDate(getYear().getYear(), getMonth().getNumberOfMonth(), getPaymentLimitDay());
+	return date.toDateTimeAtStartOfDay(); 
     }
 
 }
