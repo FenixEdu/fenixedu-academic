@@ -53,7 +53,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     private static final String ORDER_PARAMETER = "sortBy";
     private static final String ORDER_MARKER = "=";
     public static final String[] ASC_ORDER_DIR = { "ascending", "asc" };
-    public static final String DEFAULT_ORDER_DIR = ASC_ORDER_DIR[0];
+    public static final String DEFAULT_ORDER_DIR = "desc";
 
     private RegistrationAcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {
 	Integer academicServiceRequestId = getRequestParameterAsInteger(request, "academicServiceRequestId");
