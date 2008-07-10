@@ -233,13 +233,13 @@ public class CloseAssiduousnessMonth extends Service {
 		    }
 		    totalWorkedTime = totalWorkedTime.plus(thisDayWorkedTime);
 		} else {
-		    totalComplementaryWeeklyRestBalance = totalComplementaryWeeklyRestBalance.plus(roundToHalfHour(new Duration(
-			    Math.min(workDaySheet.getComplementaryWeeklyRest().getMillis(), Assiduousness.normalWorkDayDuration
-				    .getMillis()))));
-		    totalWeeklyRestBalance = totalWeeklyRestBalance.plus(roundToHalfHour(new Duration(Math.min(workDaySheet
-			    .getWeeklyRest().getMillis(), Assiduousness.normalWorkDayDuration.getMillis()))));
-		    holidayRest = holidayRest.plus(roundToHalfHour(new Duration(Math.min(workDaySheet.getHolidayRest()
-			    .getMillis(), Assiduousness.normalWorkDayDuration.getMillis()))));
+		    totalComplementaryWeeklyRestBalance = totalComplementaryWeeklyRestBalance.plus(new Duration(Math.min(
+			    roundToHalfHour(workDaySheet.getComplementaryWeeklyRest()).getMillis(),
+			    Assiduousness.normalWorkDayDuration.getMillis())));
+		    totalWeeklyRestBalance = totalWeeklyRestBalance.plus(new Duration(Math.min(roundToHalfHour(
+			    workDaySheet.getWeeklyRest()).getMillis(), Assiduousness.normalWorkDayDuration.getMillis())));
+		    holidayRest = holidayRest.plus(new Duration(Math.min(roundToHalfHour(workDaySheet.getHolidayRest())
+			    .getMillis(), Assiduousness.normalWorkDayDuration.getMillis())));
 		}
 	    }
 	    workedDaysWithBonusDaysDiscount += thisBonusDiscount;
@@ -310,7 +310,9 @@ public class CloseAssiduousnessMonth extends Service {
 	    return new Duration(Hours.hours(duration.toPeriod(PeriodType.dayTime()).getHours() + 1).toStandardDuration());
 	}
 	Duration result = Hours.hours(duration.toPeriod(PeriodType.dayTime()).getHours()).toStandardDuration();
-	result = result.plus(midHourDuration);
+	if (duration.toPeriod(PeriodType.dayTime()).getMinutes() != 0) {
+	    result = result.plus(midHourDuration);
+	}
 	return result;
     }
 
