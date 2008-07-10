@@ -310,7 +310,7 @@ public class CloseAssiduousnessMonth extends Service {
 	    return new Duration(Hours.hours(duration.toPeriod(PeriodType.dayTime()).getHours() + 1).toStandardDuration());
 	}
 	Duration result = Hours.hours(duration.toPeriod(PeriodType.dayTime()).getHours()).toStandardDuration();
-	result.plus(midHourDuration);
+	result = result.plus(midHourDuration);
 	return result;
     }
 
