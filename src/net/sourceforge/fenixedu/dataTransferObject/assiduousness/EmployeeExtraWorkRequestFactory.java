@@ -499,20 +499,21 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		return new ActionMessage("error.extraWorkRequest.notAuthorized", bundle.getString("label.normalExtraWork"));
 	    }
 
-	    int diference = assiduousnessMonthlyResume.getFirstLevelBalance().toPeriod(PeriodType.dayTime()).getHours()
-		    - assiduousnessMonthlyResume.getPayedWorkWeekBalance();
-	    int notPayedFirstLevel = Math.max(diference, 0);
-	    int notPayedSecondLevel = 0;
+	    int secondLevel = assiduousnessMonthlyResume.getSecondLevelBalance().toPeriod(PeriodType.dayTime()).getHours();
 	    if (employeeExtraWorkAuthorization.getNormalExtraWorkPlusTwoHours()
 		    || employeeExtraWorkAuthorization.getAuxiliarPersonel()) {
-		notPayedSecondLevel = Math.max(assiduousnessMonthlyResume.getSecondLevelBalanceWithoutLimits().toPeriod(
-			PeriodType.dayTime()).getHours()
-			+ diference, 0);
-	    } else {
-		notPayedSecondLevel = Math.max(assiduousnessMonthlyResume.getSecondLevelBalance().toPeriod(PeriodType.dayTime())
-			.getHours()
-			+ diference, 0);
+		secondLevel = assiduousnessMonthlyResume.getSecondLevelBalanceWithoutLimits().toPeriod(PeriodType.dayTime())
+			.getHours();
 	    }
+
+	    int diference = secondLevel - assiduousnessMonthlyResume.getPayedWorkWeekBalance();
+
+	    int notPayedSecondLevel = Math.max(diference, 0);
+
+	    int notPayedFirstLevel = Math.max(assiduousnessMonthlyResume.getFirstLevelBalance().toPeriod(PeriodType.dayTime())
+		    .getHours()
+		    - diference, 0);
+
 	    if ((notPayedFirstLevel + notPayedSecondLevel) < getRequestedWorkdayHours()) {
 		setWorkdayHours((notPayedFirstLevel + notPayedSecondLevel));
 		setWorkdayHoursFirstLevel(notPayedFirstLevel);
@@ -520,7 +521,8 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	    } else {
 		setWorkdayHours(getRequestedWorkdayHours());
 		setWorkdayHoursFirstLevel(Math.min(notPayedFirstLevel, getRequestedWorkdayHours()));
-		setWorkdayHoursSecondLevel(notPayedSecondLevel);
+		setWorkdayHoursSecondLevel(Math
+			.min(getRequestedWorkdayHours() - getWorkdayHoursFirstLevel(), notPayedSecondLevel));
 	    }
 
 	    if (!employeeExtraWorkAuthorization.getNormalExtraWorkPlusOneHundredHours()
@@ -534,7 +536,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 			setWorkdayHoursFirstLevel(Math.max(getWorkdayHoursFirstLevel() - diference, 0));
 		    }
 		    setWorkdayHoursSecondLevel(newSecondLevel);
-		    setWorkdayHours(getWorkdayHoursFirstLevel() + getWorkdayHoursFirstLevel());
+		    setWorkdayHours(getWorkdayHoursFirstLevel() + getWorkdayHoursSecondLevel());
 		}
 
 	    }
@@ -559,7 +561,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 				* firstHourPercentage) / secondHourPercentage);
 			setWorkdayHoursSecondLevel(hourLimit);
 		    }
-		    setWorkdayHours(getWorkdayHoursFirstLevel() + getWorkdayHoursFirstLevel());
+		    setWorkdayHours(getWorkdayHoursFirstLevel() + getWorkdayHoursSecondLevel());
 		}
 	    }
 	}
