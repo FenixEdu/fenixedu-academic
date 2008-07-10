@@ -38,4 +38,15 @@
 	</slot>
 </schema>
 
+<schema  name="show.residenceMonth.month" type="net.sourceforge.fenixedu.domain.accounting.ResidenceEvent" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
+	<slot name="person.student.number" />
+	<slot name="person.socialSecurityNumber" />
+	<slot name="person.name" layout="link">
+		<property name="destination" value="personLink"/>
+	</slot>
+	<slot name="roomValue" />
+	<slot name="lastPaymentDate" label="label.paymentDate"/>
+</schema>
+
+
 	
