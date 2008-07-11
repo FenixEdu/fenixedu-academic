@@ -30,12 +30,18 @@
 
 <logic:present name="searchBean">
 	<logic:present name="searchBean" property="residenceMonth">
-		<fr:view name="searchBean" property="residenceMonth.events" schema="show.residenceEvent">	
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1"/>
-			</fr:layout>
-			<fr:destination name="personLink" path="/residenceEventManagement.do?method=viewPersonResidenceEvents&person=${person.OID}&month=${residenceMonth.OID}"/>
-		</fr:view>
+		<logic:notEmpty name="searchBean" property="residenceMonth.events">
+			<fr:view name="searchBean" property="residenceMonth.events" schema="show.residenceEvent">	
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle1"/>
+					<fr:property name="sortBy" value="person.student.number"/>
+				</fr:layout>
+				<fr:destination name="personLink" path="/residenceEventManagement.do?method=viewPersonResidenceEvents&person=${person.OID}&month=${residenceMonth.OID}"/>
+			</fr:view>
+		</logic:notEmpty>
+		<logic:empty name="searchBean" property="residenceMonth.events">
+			<bean:message key="message.month.empty.events" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
+		</logic:empty>
 	</logic:present>
 </logic:present>
 

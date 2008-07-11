@@ -18,9 +18,12 @@
 		<put name="body" value="/residenceManagement/paymentLimits.jsp"/>
 	</definition>
 	
-		<definition name="residenceManagement-events-management" extends="definition.residenceManagement.master">
+	<definition name="residenceManagement-events-management" extends="definition.residenceManagement.master">
 		<put name="body" value="/residenceManagement/eventsManagement.jsp"/>
 	</definition>	
 		
+	<definition name="view-person-residence-events" extends="definition.residenceManagement.master">
+		<put name="body" value="/residenceManagement/viewPersonResidenceEvents.jsp"/>
+	</definition>	
 
 </tiles-definitions>

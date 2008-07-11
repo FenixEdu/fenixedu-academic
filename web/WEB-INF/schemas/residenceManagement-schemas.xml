@@ -58,3 +58,36 @@
 	<slot name="fiscalNumber" key="label.fiscalNumber"/>
 	<slot name="roomValue" key="label.roomValue"/>
 </schema>
+
+<schema name="show.residence.person" type="net.sourceforge.fenixedu.domain.Person" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
+	<slot name="name" key="label.name"/>
+	<slot name="student.number" key="label.studentNumber"/>
+	<slot name="socialSecurityNumber" key="label.fiscalNumber"/>
+	<slot name="defaultPhone" layout="null-as-label" key="label.phone">
+		<property name="subLayout" value="values"/>
+		<property name="label" value="-"/>
+        <property name="subSchema" value="show.contact.presentationValue"/>		
+	</slot>
+	<slot name="defaultEmailAddress" layout="null-as-label" key="label.email">
+		<property name="subLayout" value="values"/>
+		<property name="label" value="-"/>
+        <property name="subSchema" value="show.contact.presentationValue"/>		
+	</slot>
+</schema>
+
+<schema name="show.contact.presentationValue" type="net.sourceforge.fenixedu.domain.contacts.PartyContact" >
+	<slot name="presentationValue" layout="null-as-label">
+		<property name="subLayout" value="values"/>
+		<property name="label" value="-"/>		
+	</slot>
+</schema>
+
+<schema  name="show.person.residenceEvents" type="net.sourceforge.fenixedu.domain.accounting.ResidenceEvent" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
+	<slot name="residenceMonth.year.year" key="label.residenceYear"/>
+	<slot name="residenceMonth.month" key="label.residenceMonth"/>
+	<slot name="roomValue" key="label.roomValue"/>
+	<slot name="lastPaymentDate" key="label.paymentDate" layout="null-as-label">
+		<property name="subLayout" value="values"/>
+		<property name="label" value="-"/>
+	</slot>	
+</schema>

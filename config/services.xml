@@ -11824,6 +11824,13 @@
 			<chain name="ManagerAuthorization" />
 		</filterChains>
 	</service>
+    <service>
+		<name>CancelResidenceEvent</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CancelResidenceEvent</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>	
 	<service>
 	<name>TransferPaymentsToOtherEventAndCancel</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.TransferPaymentsToOtherEventAndCancel</implementationClass>
