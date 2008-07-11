@@ -28,7 +28,7 @@ public class ProgramCertificateRequestPR extends ProgramCertificateRequestPR_Bas
 	super.setAmountFirstPage(amountFirstPage);
     }
 
-    private void checkParameters(final Money amountFirstPage) {
+    protected void checkParameters(final Money amountFirstPage) {
 	if (amountFirstPage == null) {
 	    throw new DomainException("error.accounting.postingRules.ProgramCertificateRequestPR.amountFirstPage.cannot.be.null");
 	}
