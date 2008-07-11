@@ -35,6 +35,11 @@ public class ResidenceMonth extends ResidenceMonth_Base {
 	return false;
     }
     
+    public DateTime getPaymentStartDate() {
+	LocalDate date = new LocalDate(getYear().getYear(), getMonth().getNumberOfMonth(), 1);
+	return date.toDateTimeAtStartOfDay();
+    }
+    
     public DateTime getPaymentLimitDateTime() {
 	LocalDate date = new LocalDate(getYear().getYear(), getMonth().getNumberOfMonth(), getPaymentLimitDay());
 	return date.toDateTimeAtStartOfDay(); 

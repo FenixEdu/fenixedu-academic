@@ -18,10 +18,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
+import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
@@ -928,13 +930,13 @@ public class Person extends Person_Base {
      * PersonFunctions that selection indicated in the parameters.
      * 
      * @param unit
-     *            filter all PersonFunctions to this unit, or <code>null</code>
-     *            for all PersonFunctions
+     *                filter all PersonFunctions to this unit, or
+     *                <code>null</code> for all PersonFunctions
      * @param includeSubUnits
-     *            if even subunits of the given unit are considered
+     *                if even subunits of the given unit are considered
      * @param active
-     *            the state of the function, <code>null</code> for all
-     *            PersonFunctions
+     *                the state of the function, <code>null</code> for all
+     *                PersonFunctions
      */
     public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active, Boolean virtual,
 	    AccountabilityTypeEnum accountabilityTypeEnum) {
@@ -1632,10 +1634,30 @@ public class Person extends Person_Base {
 	return people;
     }
 
+    private Set<Event> getEventsFromType(Class<? extends Event> clazz) {
+	Set<Event> events = new HashSet<Event>();
+
+	for (Event event : getEventsSet()) {
+	    if (clazz.isAssignableFrom(event.getClass())) {
+		events.add(event);
+	    }
+	}
+
+	return events;
+    }
+
+    public Set<Event> getAcademicEvents() {
+	return getEventsFromType(AcademicEvent.class);
+    }
+
+    public Set<Event> getResidencePaymentEvents() {
+	return getEventsFromType(ResidenceEvent.class);
+    }
+
     public Set<Event> getNotPayedEventsPayableOn(AdministrativeOffice administrativeOffice, boolean withInstallments) {
 	final Set<Event> result = new HashSet<Event>();
 
-	for (final Event event : getEventsSet()) {
+	for (final Event event : getAcademicEvents()) {
 	    if (event.isOpen() && event.hasInstallments() == withInstallments
 		    && isPayableOnAdministrativeOffice(administrativeOffice, event)) {
 		result.add(event);
@@ -1647,7 +1669,7 @@ public class Person extends Person_Base {
 
     public Set<Event> getNotPayedEventsPayableOn(AdministrativeOffice administrativeOffice) {
 	final Set<Event> result = new HashSet<Event>();
-	for (final Event event : getEventsSet()) {
+	for (final Event event : getAcademicEvents()) {
 	    if (event.isOpen() && isPayableOnAdministrativeOffice(administrativeOffice, event)) {
 		result.add(event);
 	    }
@@ -1662,7 +1684,7 @@ public class Person extends Person_Base {
 
     public List<Event> getPayedEvents() {
 	final List<Event> result = new ArrayList<Event>();
-	for (final Event event : getEventsSet()) {
+	for (final Event event : getAcademicEvents()) {
 	    if (event.isClosed()) {
 		result.add(event);
 	    }
@@ -1673,7 +1695,7 @@ public class Person extends Person_Base {
 
     public List<Event> getEventsWithPayments() {
 	final List<Event> result = new ArrayList<Event>();
-	for (final Event event : getEventsSet()) {
+	for (final Event event : getAcademicEvents()) {
 	    if (!event.isCancelled() && event.hasAnyPayments()) {
 		result.add(event);
 	    }
@@ -1689,7 +1711,7 @@ public class Person extends Person_Base {
     public Set<Entry> getPaymentsWithoutReceiptByAdministrativeOffice(AdministrativeOffice administrativeOffice) {
 	final Set<Entry> result = new HashSet<Entry>();
 
-	for (final Event event : getEventsSet()) {
+	for (final Event event : getAcademicEvents()) {
 	    if (!event.isCancelled() && isPayableOnAdministrativeOffice(administrativeOffice, event)) {
 		result.addAll(event.getEntriesWithoutReceipt());
 	    }
@@ -1700,7 +1722,7 @@ public class Person extends Person_Base {
 
     public Set<Entry> getPayments() {
 	final Set<Entry> result = new HashSet<Entry>();
-	for (final Event event : getEventsSet()) {
+	for (final Event event : getAcademicEvents()) {
 	    if (!event.isCancelled()) {
 		result.addAll(event.getPositiveEntries());
 	    }
@@ -1715,7 +1737,7 @@ public class Person extends Person_Base {
     public Set<? extends Event> getEventsByEventTypeAndClass(final EventType eventType, final Class clazz) {
 	final Set<Event> result = new HashSet<Event>();
 
-	for (final Event event : getEventsSet()) {
+	for (final Event event : getAcademicEvents()) {
 	    if (!event.isCancelled() && event.getEventType() == eventType && (clazz == null || event.getClass().equals(clazz))) {
 		result.add(event);
 	    }

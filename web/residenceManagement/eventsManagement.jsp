@@ -9,6 +9,15 @@
 <em><bean:message key="label.residenceManagement" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/></em>
 <h2><bean:message key="label.debtManagement" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/></h2>
 
+<logic:present name="searchBean" property="residenceMonth">
+<bean:define id="monthOID" name="searchBean" property="residenceMonth.OID"/>
+
+<ul>
+	<li>
+		<html:link page="<%= "/residenceEventManagement.do?method=generatePaymentCodes&selectedMonth=" +  monthOID %>">Gerar códigos</html:link>
+	</li>
+</ul>
+</logic:present>
 
 <fr:form action="/residenceEventManagement.do">
 	<fr:edit id="searchEventMonth" name="searchBean" schema="edit.import.residence.bean">
