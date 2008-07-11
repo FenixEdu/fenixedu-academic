@@ -15,12 +15,29 @@
 </fr:edit>
 
 <logic:present name="paymentLimits" property="residenceYear">
-	<fr:edit name="paymentLimits" property="residenceYear.sortedMonths" schema="edit.payment.limit">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thleft thlight"/>
-		</fr:layout>
-	</fr:edit>
+	<table class="tstyle5 thleft thlight">
+			<logic:iterate id="month" name="paymentLimits" property="residenceYear.sortedMonths">
+				<tr>
+					<td><fr:view name="month" property="month"/></td>
+					<td>
+					
+					<logic:equal name="month" property="ableToEditPaymentLimitDate" value="true">
+							<fr:edit name="month" slot="paymentLimitDay"> 
+							 		<fr:layout>
+							 			<fr:property name="size" value="3"/>
+							 			<fr:property name="maxLength" value="2"/>
+							 		</fr:layout>
+							 </fr:edit>
+					</logic:equal>
+					<logic:equal name="month" property="ableToEditPaymentLimitDate" value="false">
+							<fr:view name="month" property="paymentLimitDay"/> 
+					</logic:equal>
+					</td>
+				</tr>
+			</logic:iterate>
+		</table>
 </logic:present>
 
 <html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
 </fr:form>
+

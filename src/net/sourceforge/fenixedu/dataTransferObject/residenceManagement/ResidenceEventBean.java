@@ -76,7 +76,7 @@ public class ResidenceEventBean implements Serializable {
 	
 	setStudent(student);
 	String socialSecurityNumber = student.getPerson().getSocialSecurityNumber();
-	return socialSecurityNumber == null || socialSecurityNumber.equalsIgnoreCase(fiscalNumber.trim());
+	return !roomValue.isZero() && (socialSecurityNumber == null || socialSecurityNumber.equalsIgnoreCase(fiscalNumber.trim()));
 
     }
 }

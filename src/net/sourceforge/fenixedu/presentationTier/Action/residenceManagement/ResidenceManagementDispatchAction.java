@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportRes
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidentListsHolderBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.SimpleFileBean;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
 import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
@@ -44,7 +43,18 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	    List<ResidenceEventBean> sucessful = new ArrayList<ResidenceEventBean>();
 	    List<ResidenceEventBean> unsucessful = new ArrayList<ResidenceEventBean>();
 
-	    for (ResidenceEventBean eventBean : process(bean)) {
+	    List<ResidenceEventBean> process = null;
+	    try {
+		process = process(bean);
+	    } catch (InvalidSpreadSheetName exception) {
+		addActionMessage(request, "label.error.invalid.spreadsheetname", exception.getRequestedSheet());
+		request.setAttribute("availableSpreadsheets", exception.getAvailableSpreadSheets());
+		RenderUtils.invalidateViewState();
+		request.setAttribute("importFileBean", bean);
+		return mapping.findForward("importData");
+	    }
+
+	    for (ResidenceEventBean eventBean : process) {
 		if (eventBean.getStatus()) {
 		    sucessful.add(eventBean);
 		} else {
@@ -88,21 +98,25 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward generateDebts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	
-	ResidentListsHolderBean listHolder= (ResidentListsHolderBean) getRenderedObject("importList");
+
+	ResidentListsHolderBean listHolder = (ResidentListsHolderBean) getRenderedObject("importList");
 	ImportResidenceEventBean eventBean = (ImportResidenceEventBean) getRenderedObject("dateBean");
 	executeService("CreateResidenceEvents", new Object[] { listHolder.getSuccessfulEvents(), eventBean.getResidenceMonth() });
-	
+
 	return importData(mapping, actionForm, request, response);
     }
 
-    private List<ResidenceEventBean> process(SimpleFileBean bean) throws IOException {
+    private List<ResidenceEventBean> process(ImportResidenceEventBean bean) throws IOException, InvalidSpreadSheetName {
 	List<ResidenceEventBean> beans = new ArrayList<ResidenceEventBean>();
 
 	POIFSFileSystem fs = new POIFSFileSystem(bean.getFile());
 	HSSFWorkbook wb = new HSSFWorkbook(fs);
 
-	HSSFSheet sheet = wb.getSheet("NOVEMBRO_07");
+	HSSFSheet sheet = wb.getSheet(bean.getSpreadsheetName());
+
+	if (sheet == null) {
+	    throw new InvalidSpreadSheetName(bean.getSpreadsheetName(), getAllSpreadsheets(wb));
+	}
 
 	int i = 3;
 	HSSFRow row;
@@ -122,11 +136,38 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	return beans;
     }
 
+    private String[] getAllSpreadsheets(HSSFWorkbook wb) {
+	String[] spreadsheets = new String[wb.getNumberOfSheets()];
+	for (int i = 0; i < wb.getNumberOfSheets(); i++) {
+	    spreadsheets[i] = wb.getSheetName(i);
+	}
+	return spreadsheets;
+    }
+
     private String getValueFromColumn(HSSFRow row, int i) {
 	try {
 	    return new Integer(new Double(row.getCell((short) 6).getNumericCellValue()).intValue()).toString();
 	} catch (NumberFormatException e) {
 	    return row.getCell((short) 6).getStringCellValue();
 	}
+    }
+
+    private class InvalidSpreadSheetName extends Exception {
+	private final String requestedSheet;
+	private final String[] availableSpreadSheets;
+
+	public InvalidSpreadSheetName(String requestedSheet, String[] availableSpreadSheets) {
+	    this.requestedSheet = requestedSheet;
+	    this.availableSpreadSheets = availableSpreadSheets;
+	}
+
+	public String[] getAvailableSpreadSheets() {
+	    return availableSpreadSheets;
+	}
+
+	public String getRequestedSheet() {
+	    return requestedSheet;
+	}
+
     }
 }

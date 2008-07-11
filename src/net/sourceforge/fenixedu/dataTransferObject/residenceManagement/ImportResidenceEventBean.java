@@ -11,6 +11,8 @@ public class ImportResidenceEventBean extends SimpleFileBean {
     private DomainReference<ResidenceMonth> residenceMonth;
     private Integer paymentLimitDay;
 
+    private String spreadsheetName;
+    
     public ImportResidenceEventBean() {
 	setResidenceYear(null);
 	setResidenceMonth(null);
@@ -41,5 +43,13 @@ public class ImportResidenceEventBean extends SimpleFileBean {
 
     public void setPaymentLimitDay(Integer paymentLimitDay) {
 	this.paymentLimitDay = paymentLimitDay;
+    }
+
+    public String getSpreadsheetName() {
+        return spreadsheetName;
+    }
+
+    public void setSpreadsheetName(String spreadsheetName) {
+        this.spreadsheetName = spreadsheetName;
     }
 }
