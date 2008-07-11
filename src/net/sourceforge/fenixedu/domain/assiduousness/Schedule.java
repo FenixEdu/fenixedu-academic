@@ -33,36 +33,20 @@ public class Schedule extends Schedule_Base {
     public Schedule(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate, DateTime lastModifiedDate,
 	    Employee modifiedBy) {
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setAssiduousness(assiduousness);
-	setBeginDate(beginDate);
-	setEndDate(endDate);
-	setException(false);
-	setLastModifiedDate(lastModifiedDate);
-	setModifiedBy(modifiedBy);
+	init(assiduousness, beginDate, endDate, false, lastModifiedDate, modifiedBy);
     }
 
     public Schedule(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate, Boolean exception,
 	    DateTime lastModifiedDate, Employee modifiedBy) {
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setAssiduousness(assiduousness);
-	setBeginDate(beginDate);
-	setEndDate(endDate);
-	setException(exception);
-	setLastModifiedDate(lastModifiedDate);
-	setModifiedBy(modifiedBy);
+	init(assiduousness, beginDate, endDate, exception, lastModifiedDate, modifiedBy);
     }
 
     public Schedule(EmployeeScheduleFactory employeeScheduleFactory, boolean deletedDays) {
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setAssiduousness(employeeScheduleFactory.getEmployee().getAssiduousness());
-	setBeginDate(employeeScheduleFactory.getBeginDate());
-	setEndDate(employeeScheduleFactory.getEndDate());
-	setModifiedBy(employeeScheduleFactory.getModifiedBy());
-	setLastModifiedDate(new DateTime());
-	setException(false);
+	init(employeeScheduleFactory.getEmployee().getAssiduousness(), employeeScheduleFactory.getBeginDate(),
+		employeeScheduleFactory.getEndDate(), false, new DateTime(), employeeScheduleFactory.getModifiedBy());
+
 	for (EmployeeWorkWeekScheduleBean workWeekScheduleBean : employeeScheduleFactory.getEmployeeWorkWeekScheduleList()) {
 	    Periodicity periodicity = getPeriodicity(workWeekScheduleBean.getWorkWeekNumber());
 	    if (!deletedDays) {
@@ -75,28 +59,22 @@ public class Schedule extends Schedule_Base {
 
     public Schedule(EmployeeScheduleFactory employeeScheduleFactory) {
 	super();
-	setAssiduousness(employeeScheduleFactory.getEmployee().getAssiduousness());
-	setBeginDate(employeeScheduleFactory.getBeginDate());
-	setEndDate(employeeScheduleFactory.getEndDate());
+	if (!validDates(employeeScheduleFactory.getBeginDate(), employeeScheduleFactory.getEndDate())) {
+	    throw new DomainException("error.invalidDateInterval");
+	}
+
 	ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
-	if (isCloseMonthInsideScheduleInterval(closedMonth)) {
+	if (isCloseMonthInsideScheduleInterval(closedMonth, employeeScheduleFactory.getBeginDate())) {
 	    Month month = Month.values()[closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) - 1];
 	    throw new DomainException("error.schedule.monthClose", ResourceBundle.getBundle("resources.EnumerationResources",
 		    Language.getLocale()).getString(month.name()), ((Integer) closedMonth.getClosedYearMonth().get(
 		    DateTimeFieldType.year())).toString());
 	}
-	DateTime endDateTime = null;
-	if (getEndDate() != null) {
-	    endDateTime = getEndDate().plusDays(1).toDateTimeAtStartOfDay();
-	}
-	Interval newInterval = new Interval(getBeginDate().toDateTimeAtStartOfDay(), endDateTime);
-	if (overLapsAnotherSchedule(newInterval, false)) {
+	init(employeeScheduleFactory.getEmployee().getAssiduousness(), employeeScheduleFactory.getBeginDate(),
+		employeeScheduleFactory.getEndDate(), false, new DateTime(), employeeScheduleFactory.getModifiedBy());
+	if (overLapsAnotherSchedule(employeeScheduleFactory.getBeginDate(), employeeScheduleFactory.getEndDate(), false)) {
 	    throw new DomainException("error.schedule.overlapsAnotherSchedule");
 	}
-	setRootDomainObject(RootDomainObject.getInstance());
-	setModifiedBy(employeeScheduleFactory.getModifiedBy());
-	setLastModifiedDate(new DateTime());
-	setException(false);
 	for (EmployeeWorkWeekScheduleBean workWeekScheduleBean : employeeScheduleFactory.getEmployeeWorkWeekScheduleList()) {
 	    WorkWeek workWeek = workWeekScheduleBean.getWorkWeekByCheckedBox();
 	    if (workWeek != null) {
@@ -108,33 +86,45 @@ public class Schedule extends Schedule_Base {
 	}
     }
 
+    public void init(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate, Boolean exception,
+	    DateTime lastModifiedDate, Employee modifiedBy) {
+	if (!validDates(beginDate, endDate)) {
+	    throw new DomainException("error.invalidDateInterval");
+	}
+	setRootDomainObject(RootDomainObject.getInstance());
+	setAssiduousness(assiduousness);
+	setBeginDate(beginDate);
+	setEndDate(endDate);
+	setException(exception);
+	setLastModifiedDate(lastModifiedDate);
+	setModifiedBy(modifiedBy);
+    }
+
     // creates a new Exception Schedule
     public Schedule(EmployeeExceptionScheduleBean employeeExceptionScheduleBean) {
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	setAssiduousness(employeeExceptionScheduleBean.getEmployee().getAssiduousness());
-	setBeginDate(employeeExceptionScheduleBean.getBeginDate());
-	setEndDate(employeeExceptionScheduleBean.getEndDate());
 	ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
-	if (startsBeforeClosedMonth(closedMonth)) {
+	if (startsBeforeClosedMonth(closedMonth, employeeExceptionScheduleBean.getBeginDate())) {
 	    Month month = Month.values()[closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) - 1];
 	    throw new DomainException("error.schedule.monthClose", ResourceBundle.getBundle("resources.EnumerationResources",
 		    Language.getLocale()).getString(month.name()), ((Integer) closedMonth.getClosedYearMonth().get(
 		    DateTimeFieldType.year())).toString());
 	}
-	if (overLapsAnotherSchedule(getValidInterval(), true)) {
+	if (overLapsAnotherSchedule(employeeExceptionScheduleBean.getBeginDate(), employeeExceptionScheduleBean.getEndDate(),
+		true)) {
 	    throw new DomainException("error.schedule.overlapsAnotherException");
 	}
-	setException(Boolean.TRUE);
-	setModifiedBy(employeeExceptionScheduleBean.getModifiedBy());
-	setLastModifiedDate(new DateTime());
+	init(employeeExceptionScheduleBean.getEmployee().getAssiduousness(), employeeExceptionScheduleBean.getBeginDate(),
+		employeeExceptionScheduleBean.getEndDate(), true, new DateTime(), employeeExceptionScheduleBean.getModifiedBy());
 	addWorkScheduleForExceptionSchedule(employeeExceptionScheduleBean);
     }
 
     public void editScheduleDates(LocalDate beginDate, LocalDate endDate) {
-	DateTime endDateTime = null;
 	if (endDate != null) {
-	    endDateTime = endDate.plusDays(1).toDateTimeAtStartOfDay();
+	    if (!validDates(beginDate, endDate)) {
+		throw new DomainException("error.invalidDateInterval");
+	    }
+	    DateTime endDateTime = endDate.plusDays(1).toDateTimeAtStartOfDay();
 	    LocalDate closedMonthEndDate = ClosedMonth.getLastClosedLocalDate();
 	    if (!endDateTime.isAfter(closedMonthEndDate.toDateTimeAtStartOfDay())) {
 		throw new DomainException("error.schedule.monthClose", ResourceBundle.getBundle("resources.EnumerationResources",
@@ -142,8 +132,7 @@ public class Schedule extends Schedule_Base {
 			new Integer(closedMonthEndDate.get(DateTimeFieldType.year())).toString());
 	    }
 	}
-	Interval newInterval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDateTime);
-	if (overLapsAnotherSchedule(newInterval, getException())) {
+	if (overLapsAnotherSchedule(beginDate, endDate, getException())) {
 	    throw new DomainException("error.schedule.overlapsAnotherSchedule");
 	} else {
 	    setBeginDate(beginDate);
@@ -151,17 +140,24 @@ public class Schedule extends Schedule_Base {
 	}
     }
 
+    private boolean validDates(LocalDate beginDate, LocalDate endDate) {
+	if (endDate != null) {
+	    return endDate.isAfter(beginDate);
+	}
+	return true;
+    }
+
     public void editException(EmployeeExceptionScheduleBean employeeExceptionScheduleBean) {
 	setBeginDate(employeeExceptionScheduleBean.getBeginDate());
 	setEndDate(employeeExceptionScheduleBean.getEndDate());
 	ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
-	if (startsBeforeClosedMonth(closedMonth)) {
+	if (startsBeforeClosedMonth(closedMonth, getBeginDate())) {
 	    Month month = Month.values()[closedMonth.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()) - 1];
 	    throw new DomainException("error.schedule.monthClose", ResourceBundle.getBundle("resources.EnumerationResources",
 		    Language.getLocale()).getString(month.name()), ((Integer) closedMonth.getClosedYearMonth().get(
 		    DateTimeFieldType.year())).toString());
 	}
-	if (overLapsAnotherSchedule(getValidInterval(), true)) {
+	if (overLapsAnotherSchedule(getBeginDate(), getEndDate(), true)) {
 	    throw new DomainException("error.schedule.overlapsAnotherException");
 	}
 	setModifiedBy(employeeExceptionScheduleBean.getModifiedBy());
@@ -193,9 +189,20 @@ public class Schedule extends Schedule_Base {
 	return new WorkWeek(weekDays.toArray(array));
     }
 
-    private boolean overLapsAnotherSchedule(Interval scheduleInterval, Boolean exception) {
+    // private boolean overLapsAnotherSchedule(Interval scheduleInterval,
+    // Boolean exception) {
+    // for (Schedule schedule : getAssiduousness().getSchedules()) {
+    // if (schedule != this && schedule.getException().equals(exception) &&
+    // schedule.isDefinedInInterval(scheduleInterval)) {
+    // return true;
+    // }
+    // }
+    // return false;
+    // }
+
+    private boolean overLapsAnotherSchedule(LocalDate beginDate, LocalDate endDate, Boolean exception) {
 	for (Schedule schedule : getAssiduousness().getSchedules()) {
-	    if (schedule != this && schedule.getException().equals(exception) && schedule.isDefinedInInterval(scheduleInterval)) {
+	    if (schedule != this && schedule.getException().equals(exception) && schedule.isDefinedInInterval(beginDate, endDate)) {
 		return true;
 	    }
 	}
@@ -204,7 +211,7 @@ public class Schedule extends Schedule_Base {
 
     public Schedule deleteDays(EmployeeScheduleFactory employeeScheduleFactory) {
 	ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
-	if (isCloseMonthInsideScheduleInterval(closedMonth)) {
+	if (isCloseMonthInsideScheduleInterval(closedMonth, getBeginDate())) {
 	    LocalDate endDate = new LocalDate(closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()), closedMonth
 		    .getClosedYearMonth().get(DateTimeFieldType.monthOfYear()), 1);
 	    endDate = endDate.plusDays(endDate.dayOfMonth().getMaximumValue()).minusDays(1);
@@ -261,7 +268,7 @@ public class Schedule extends Schedule_Base {
 
     public Schedule edit(EmployeeScheduleFactory employeeScheduleFactory) {
 	ClosedMonth closedMonth = ClosedMonth.getLastMonthClosed();
-	if (isCloseMonthInsideScheduleInterval(closedMonth)) {
+	if (isCloseMonthInsideScheduleInterval(closedMonth, getBeginDate())) {
 	    LocalDate endDate = new LocalDate(closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()), closedMonth
 		    .getClosedYearMonth().get(DateTimeFieldType.monthOfYear()), 1);
 	    endDate = endDate.plusDays(endDate.dayOfMonth().getMaximumValue()).minusDays(1);
@@ -369,9 +376,9 @@ public class Schedule extends Schedule_Base {
 	return newWorkWeek;
     }
 
-    private boolean isCloseMonthInsideScheduleInterval(ClosedMonth closedMonth) {
+    private boolean isCloseMonthInsideScheduleInterval(ClosedMonth closedMonth, LocalDate date) {
 	LocalDate closedMonthEndDate = closedMonth.getClosedMonthLastDay();
-	if (!closedMonthEndDate.isBefore(getBeginDate())) {
+	if (!closedMonthEndDate.isBefore(date)) {
 	    return true;
 	}
 	return false;
@@ -410,13 +417,27 @@ public class Schedule extends Schedule_Base {
     }
 
     // Return true if the Schedule is valid in the interval
-    public boolean isDefinedInInterval(Interval interval) {
-	if (getEndDate() != null) {
-	    return interval.getEnd() == null ? (!interval.getStart().isAfter(getBeginDate().toDateTimeAtStartOfDay()))
-		    : getValidInterval().overlaps(interval);
+    // public boolean isDefinedInInterval(Interval interval) {
+    // if (getEndDate() != null) {
+    // return interval.getEnd() == null ?
+    // (!interval.getStart().isAfter(getBeginDate().toDateTimeAtStartOfDay()))
+    // : getValidInterval().overlaps(interval);
+    // }
+    // return interval.getEnd() == null ? true :
+    // interval.contains(getBeginDate().toDateTimeAtStartOfDay())
+    // || getBeginDate().isBefore(interval.getStart().toLocalDate());
+    // }
+
+    public boolean isDefinedInInterval(LocalDate beginDate, LocalDate endDate) {
+	DateTime beginDateTime = beginDate.toDateTimeAtStartOfDay();
+
+	if (endDate == null) {
+	    return getEndDate() != null ? (!beginDateTime.isAfter(getBeginDate().toDateTimeAtStartOfDay())) : true;
+	} else {
+	    Interval interval = new Interval(beginDateTime, endDate.toDateTimeAtStartOfDay());
+	    return getEndDate() != null ? getValidInterval().overlaps(interval) : (interval.contains(getBeginDate()
+		    .toDateTimeAtStartOfDay()) || getBeginDate().isBefore(interval.getStart().toLocalDate()));
 	}
-	return interval.getEnd() == null ? true : interval.contains(getBeginDate().toDateTimeAtStartOfDay())
-		|| getBeginDate().isBefore(interval.getStart().toLocalDate());
     }
 
     // Return true if the Schedule valid interval constains date
@@ -502,12 +523,12 @@ public class Schedule extends Schedule_Base {
 	return new Duration(average);
     }
 
-    private boolean startsBeforeClosedMonth(ClosedMonth closedMonth) {
+    private boolean startsBeforeClosedMonth(ClosedMonth closedMonth, LocalDate date) {
 	LocalDate beginClosedMonth = new LocalDate(closedMonth.getClosedYearMonth().get(DateTimeFieldType.year()), closedMonth
 		.getClosedYearMonth().get(DateTimeFieldType.monthOfYear()), 1);
 	LocalDate endClosedMonth = new LocalDate(beginClosedMonth.getYear(), beginClosedMonth.getMonthOfYear(), beginClosedMonth
 		.dayOfMonth().getMaximumValue());
-	if (getBeginDate().isBefore(endClosedMonth.plusDays(1))) {
+	if (date.isBefore(endClosedMonth.plusDays(1))) {
 	    return true;
 	}
 	return false;

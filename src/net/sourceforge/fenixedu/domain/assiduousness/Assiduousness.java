@@ -132,8 +132,7 @@ public class Assiduousness extends Assiduousness_Base {
     public List<Schedule> getSchedules(LocalDate beginDate, LocalDate endDate) {
 	List<Schedule> scheduleList = new ArrayList<Schedule>();
 	for (Schedule schedule : getSchedules()) {
-	    Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.plusDays(1).toDateTimeAtStartOfDay());
-	    if (schedule.isDefinedInInterval(interval)) {
+	    if (schedule.isDefinedInInterval(beginDate, endDate.plusDays(1))) {
 		scheduleList.add(schedule);
 	    }
 	}
