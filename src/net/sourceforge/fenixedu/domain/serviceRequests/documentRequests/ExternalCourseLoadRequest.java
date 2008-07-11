@@ -74,4 +74,10 @@ public class ExternalCourseLoadRequest extends ExternalCourseLoadRequest_Base {
     public EventType getEventType() {
 	return EventType.EXTERNAL_COURSE_LOAD_REQUEST;
     }
+    
+    @Override
+    public void delete() {
+	super.setInstitution(null);
+        super.delete();
+    }
 }
