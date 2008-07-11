@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.predicates;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -25,9 +26,11 @@ public class PostingRulePredicates {
 	}
 
 	private boolean hasValidRole() {
-	    return (AccessControl.getUserView().hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
-		    || AccessControl.getUserView().hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE) || AccessControl
-		    .getUserView().hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER));
+	    final IUserView userView = AccessControl.getUserView();
+	    return (userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
+		    || userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
+		    || userView.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE) || userView
+		    .hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER));
 	}
 
     };
