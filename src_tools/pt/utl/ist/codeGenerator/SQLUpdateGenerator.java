@@ -36,8 +36,6 @@ import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
 
 public class SQLUpdateGenerator {
 
-    private static Connection connection = null;
-
     private static class TableDoesNotExistException extends Exception {
     }
 
@@ -69,7 +67,7 @@ public class SQLUpdateGenerator {
 	private final Set<TreeSet<String>> uniqyeKeys = new HashSet<TreeSet<String>>();
 	private final Set<TreeSet<String>> indexes = new HashSet<TreeSet<String>>();
 
-	private TableInfo(final String tablename) throws SQLException, TableDoesNotExistException {
+	private TableInfo(final String tablename, final Connection connection) throws SQLException, TableDoesNotExistException {
 	    this.tablename = tablename;
 
 	    final Statement statement = connection.createStatement();
@@ -225,13 +223,14 @@ public class SQLUpdateGenerator {
     }
 
     public static void main(String[] args) {
+	Connection connection = null;
 	try {
 	    Config config = PropertiesManager.getFenixFrameworkConfig("build/WEB-INF/classes/domain_model.dml");
 	    FenixFramework.initialize(config);
 
 	    final PersistenceBroker persistenceBroker = PersistenceBrokerFactory.defaultPersistenceBroker();
 	    connection = persistenceBroker.serviceConnectionManager().getConnection();
-	    generate();
+	    generate(connection);
 	} catch (Exception ex) {
 	    ex.printStackTrace();
 	} finally {
@@ -248,9 +247,13 @@ public class SQLUpdateGenerator {
 	System.exit(0);
     }
 
-    private static void generate() throws Exception {
+    private static void generate(final Connection connection) throws Exception {
 	final String destinationFilename = "etc/database_operations/updates.sql";
+	final String result = generateInMem(connection);
+	writeFile(destinationFilename, result);
+    }
 
+    public static String generateInMem(final Connection connection) throws Exception {
 	final StringBuilder stringBuilderForSingleLineInstructions = new StringBuilder();
 	final StringBuilder stringBuilderForMultiLineInstructions = new StringBuilder();
 
@@ -261,8 +264,8 @@ public class SQLUpdateGenerator {
 
 	    final String tableName = classDescriptor.getFullTableName();
 	    if (tableName != null && !tableName.startsWith("OJB")) {
-		if (exists(tableName)) {
-		    final TableInfo tableInfo = new TableInfo(tableName);
+		if (exists(tableName, connection)) {
+		    final TableInfo tableInfo = new TableInfo(tableName, connection);
 		    tableInfo.appendAlterTables(stringBuilderForSingleLineInstructions, classDescriptor);
 		} else {
 		    createTable(classDescriptor);
@@ -273,7 +276,7 @@ public class SQLUpdateGenerator {
 		final CollectionDescriptor collectionDescriptor = (CollectionDescriptor) iterator.next();
 		final String indirectionTablename = collectionDescriptor.getIndirectionTable();
 		if (indirectionTablename != null && !processedIndirectionTables.contains(indirectionTablename)
-			&& !exists(indirectionTablename)) {
+			&& !exists(indirectionTablename, connection)) {
 		    processedIndirectionTables.add(indirectionTablename);
 		    appendIndirectionTable(stringBuilderForMultiLineInstructions, collectionDescriptor, indirectionTablename);
 		}
@@ -282,8 +285,8 @@ public class SQLUpdateGenerator {
 
 	appendCreateTables(stringBuilderForMultiLineInstructions);
 
-	writeFile(destinationFilename, getOutputStringForSingleLineInstructions(stringBuilderForSingleLineInstructions) + "\n\n"
-		+ stringBuilderForMultiLineInstructions.toString());
+	return getOutputStringForSingleLineInstructions(stringBuilderForSingleLineInstructions)
+		+ "\n\n" + stringBuilderForMultiLineInstructions.toString();
     }
 
     private static void appendIndirectionTable(final StringBuilder stringBuilder,
@@ -307,7 +310,7 @@ public class SQLUpdateGenerator {
 	stringBuilder.append(") type=InnoDB;\n");
     }
 
-    private static boolean exists(final String indirectionTablename) throws SQLException {
+    private static boolean exists(final String indirectionTablename, final Connection connection) throws SQLException {
 	final Statement statement = connection.createStatement();
 	try {
 	    final ResultSet resultSet = statement.executeQuery("show create table " + indirectionTablename);
