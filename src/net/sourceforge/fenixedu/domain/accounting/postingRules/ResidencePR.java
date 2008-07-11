@@ -40,7 +40,7 @@ public class ResidencePR extends ResidencePR_Base {
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	ResidenceEvent residenceEvent = (ResidenceEvent) event;
 	Money baseValue = residenceEvent.getRoomValue();
-	if (residenceEvent.getLimitPaymentDate().isAfter(when)) {
+	if (residenceEvent.getPaymentLimiteDate().isAfter(when)) {
 	    return baseValue;
 	}
 	return baseValue.add(getPenaltyPerDay().multiply(

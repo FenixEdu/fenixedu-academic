@@ -60,7 +60,11 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 	return getResidenceMonth().getManagementUnit();
     }
     
-    public DateTime getLimitPaymentDate() {
+    public DateTime getPaymentStartDate() {
+	return getResidenceMonth().getPaymentStartDate();
+    }
+    
+    public DateTime getPaymentLimiteDate() {
 	return getResidenceMonth().getPaymentLimitDateTime();
     }
 }
