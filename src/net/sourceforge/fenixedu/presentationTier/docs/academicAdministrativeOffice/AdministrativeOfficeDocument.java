@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Certific
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalCourseLoadRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalProgramCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -75,6 +76,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 		return new ExternalCourseLoadRequestDocument((ExternalCourseLoadRequest) documentRequest);
 	    case PROGRAM_CERTIFICATE:
 		return new ProgramCertificateRequestDocument((ProgramCertificateRequest) documentRequest);
+	    case EXTERNAL_PROGRAM_CERTIFICATE:
+		return new ExternalProgramCertificateRequestDocument((ExternalProgramCertificateRequest) documentRequest);
 	    default:
 		return new AdministrativeOfficeDocument(documentRequest);
 	    }

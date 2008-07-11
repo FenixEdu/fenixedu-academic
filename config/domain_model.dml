@@ -1501,6 +1501,9 @@ class DomainObject {
 					Money amountFirstPage;
 				}
 				
+					class accounting.postingRules.serviceRequests.ExternalProgramCertificateRequestPR extends accounting.postingRules.serviceRequests.ProgramCertificateRequestPR {
+					}
+				
 				class accounting.postingRules.serviceRequests.ExamDateCertificateRequestPR extends accounting.postingRules.BaseAmountPlusAmountPerPagePR {
 				}
 
@@ -3548,6 +3551,10 @@ class DomainObject {
 					
 					class serviceRequests.documentRequests.ProgramCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
 					}
+					
+						class serviceRequests.documentRequests.ExternalProgramCertificateRequest extends serviceRequests.documentRequests.ProgramCertificateRequest {
+							Integer numberOfPrograms;
+						}
 	
 				class serviceRequests.documentRequests.DeclarationRequest extends serviceRequests.documentRequests.DocumentRequest {
 					DocumentPurposeType documentPurposeType;
@@ -5132,6 +5139,13 @@ relation AllowedToUploadInUnit {
 relation ExternalCourseLoadRequestUnit {
 	organizationalStructure.Unit playsRole institution;
 	serviceRequests.documentRequests.ExternalCourseLoadRequest playsRole externalCourseLoadRequests {
+		multiplicity *;
+	}
+}
+
+relation ExternalProgramCertificateRequestUnit {
+	organizationalStructure.Unit playsRole institution;
+	serviceRequests.documentRequests.ExternalProgramCertificateRequest playsRole externalProgramCertificateRequests {
 		multiplicity *;
 	}
 }

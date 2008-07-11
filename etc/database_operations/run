@@ -40,3 +40,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add new columns to AcademicServiceRequest table" alterTableAcademicServiceRequest.sql

@@ -153,6 +153,13 @@
 	</slot>	
 </schema>
 
+<schema name="ExternalProgramCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalProgramCertificateRequest" extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="numberOfPrograms" key="label.ExternalProgramCertificate.numberOfPrograms" />
+	<slot name="institution" layout="format" key="label.institutionUnitName">
+		<property name="format" value="${name}"/>
+	</slot>	
+</schema>
+
 <schema name="ExamDateCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="enrolments" key="label.student.enrolments" layout="values" schema="Enrolment.view-curricular-course-name-only">
 		<property name="htmlSeparator" value=", "/>
@@ -339,6 +346,33 @@
     <slot name="enrolments" key="label.student.enrolments" layout="values" schema="Enrolment.view-curricular-course-name-only">
 		<property name="htmlSeparator" value=", "/>
 		<property name="style" value="list-style: none; padding: 0; margin: 0;" />
+	</slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.EXTERNAL_PROGRAM_CERTIFICATE.AdditionalInformation"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
+	<slot name="numberOfPrograms" key="label.ExternalProgramCertificate.numberOfPrograms" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="3"/>
+		<property name="maxLength" value="4"/>
+	</slot>
+	<slot name="institutionName" layout="autoComplete" key="label.institutionUnitName" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
+		<property name="size" value="40"/>
+		<property name="labelField" value="unit.name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+		<property name="minChars" value="2"/>
+	</slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.EXTERNAL_PROGRAM_CERTIFICATE.AdditionalInformation.view"
+	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
+	<slot name="numberOfPrograms" key="label.ExternalProgramCertificate.numberOfPrograms" />
+	<slot name="institutionName" layout="format" key="label.institutionUnitName">
+		<property name="format" value="${unit.name}"/>
 	</slot>
 </schema>
 

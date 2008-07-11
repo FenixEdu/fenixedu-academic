@@ -126,10 +126,18 @@
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
 </schema>
 
+<schema name="ExternalCourseLoadRequestPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExternalCourseLoadRequestPR" 
+	extends="CourseLoadRequestPR.view" bundle="APPLICATION_RESOURCES">
+</schema>
+
 <schema name="ProgramCertificateRequestPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR" bundle="APPLICATION_RESOURCES">
 	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
 	<slot name="amountFirstPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR.amountFirstPage" />
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+</schema>
+
+<schema name="ExternalProgramCertificateRequestPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExternalProgramCertificateRequestPR" 
+	extends="ProgramCertificateRequestPR.view" bundle="APPLICATION_RESOURCES">
 </schema>
 
 <schema name="ExamDateCertificateRequestPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExamDateCertificateRequestPR"
@@ -231,11 +239,19 @@
 	<setter signature="edit(baseAmount,amountFirstPage,amountPerPage)"/>
 </schema>
 
+<schema name="ExternalCourseLoadRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExternalCourseLoadRequestPR" 
+	extends="CourseLoadRequestPR.edit" bundle="APPLICATION_RESOURCES">
+</schema>
+
 <schema name="ProgramCertificateRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR" bundle="APPLICATION_RESOURCES">
 	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
 	<slot name="amountFirstPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR.amountFirstPage" />
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
 	<setter signature="edit(baseAmount,amountFirstPage,amountPerPage)"/>
+</schema>
+
+<schema name="ExternalProgramCertificateRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExternalProgramCertificateRequestPR" 
+	extends="ProgramCertificateRequestPR.edit" bundle="APPLICATION_RESOURCES">
 </schema>
 
 <schema name="ExamDateCertificateRequestPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExamDateCertificateRequestPR"
@@ -312,10 +328,18 @@
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
 </schema>
 
+<schema name="ExternalCourseLoadRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExternalCourseLoadRequestPR" 
+	extends="CourseLoadRequestPR.view-student" bundle="APPLICATION_RESOURCES">
+</schema>
+
 <schema name="ProgramCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ProgramCertificateRequestPR" bundle="APPLICATION_RESOURCES">
 	<slot name="baseAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.baseAmount"  />
 	<slot name="amountFirstPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CourseLoadRequestPR.amountFirstPage" />
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.BaseAmountPlusAmountPerPagePR.amountPerPage" />
+</schema>
+
+<schema name="ExternalProgramCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExternalProgramCertificateRequestPR" 
+	extends="ProgramCertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
 </schema>
 
 <schema name="ExamDateCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.ExamDateCertificateRequestPR"

@@ -71,6 +71,8 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     private Integer numberOfCourseLoads;
 
     private DomainReference<Unit> institution;
+    
+    private Integer numberOfPrograms;
 
     public DocumentRequestCreateBean(Registration registration) {
 	super(registration);
@@ -345,4 +347,13 @@ public class DocumentRequestCreateBean extends RegistrationSelectExecutionYearBe
     public Unit getInstitution() {
 	return (this.institution != null) ? this.institution.getObject() : null;
     }
+
+    public Integer getNumberOfPrograms() {
+        return numberOfPrograms;
+    }
+
+    public void setNumberOfPrograms(Integer numberOfPrograms) {
+        this.numberOfPrograms = numberOfPrograms;
+    }
+    
 }

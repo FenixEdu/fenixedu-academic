@@ -31,9 +31,11 @@ public enum DocumentRequestType {
 
     COURSE_LOAD(true, false, AdministrativeOfficeType.DEGREE),
 
-    EXTERNAL_COURSE_LOAD(true, false /*, AdministrativeOfficeType.DEGREE*/),
+    EXTERNAL_COURSE_LOAD(true, false /* , AdministrativeOfficeType.DEGREE */),
 
-    PROGRAM_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE);
+    PROGRAM_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE),
+
+    EXTERNAL_PROGRAM_CERTIFICATE(true, false /* , AdministrativeOfficeType.DEGREE */);
 
     private boolean hasAdditionalInformation;
 
@@ -43,7 +45,7 @@ public enum DocumentRequestType {
 
     static private List<DocumentRequestType> CERTIFICATES = Arrays.asList(SCHOOL_REGISTRATION_CERTIFICATE, ENROLMENT_CERTIFICATE,
 	    APPROVEMENT_CERTIFICATE, DEGREE_FINALIZATION_CERTIFICATE, EXAM_DATE_CERTIFICATE, COURSE_LOAD, EXTERNAL_COURSE_LOAD,
-	    PROGRAM_CERTIFICATE);
+	    PROGRAM_CERTIFICATE, EXTERNAL_PROGRAM_CERTIFICATE);
 
     static private List<DocumentRequestType> DECLARATIONS = Arrays.asList(SCHOOL_REGISTRATION_DECLARATION, ENROLMENT_DECLARATION,
 	    IRS_DECLARATION);

@@ -18,7 +18,7 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
     static public final List<RegistrationAgreement> FREE_PAYMENT_AGREEMENTS = Arrays.asList(RegistrationAgreement.AFA,
 	    RegistrationAgreement.MA);
 
-    private ProgramCertificateRequest() {
+    protected ProgramCertificateRequest() {
 	super();
 	setNumberOfPages(0);
     }

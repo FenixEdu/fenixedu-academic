@@ -42,12 +42,13 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 		    .getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean.getUrgentRequest(), bean.getExecutionYear());
 
 	case ENROLMENT_CERTIFICATE:
-	    return new EnrolmentCertificateRequest(bean.getRegistration(), bean.getRequestDate(), bean.getChosenDocumentPurposeType(),
-		    bean.getOtherPurpose(), bean.getUrgentRequest(), bean.getDetailed(), bean.getExecutionYear());
+	    return new EnrolmentCertificateRequest(bean.getRegistration(), bean.getRequestDate(), bean
+		    .getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean.getUrgentRequest(), bean.getDetailed(), bean
+		    .getExecutionYear());
 
 	case APPROVEMENT_CERTIFICATE:
-	    return new ApprovementCertificateRequest(bean.getRegistration(), bean.getRequestDate(), bean.getChosenDocumentPurposeType(),
-		    bean.getOtherPurpose(), bean.getUrgentRequest(), bean.getMobilityProgram());
+	    return new ApprovementCertificateRequest(bean.getRegistration(), bean.getRequestDate(), bean
+		    .getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean.getUrgentRequest(), bean.getMobilityProgram());
 
 	case DEGREE_FINALIZATION_CERTIFICATE:
 	    return new DegreeFinalizationCertificateRequest(bean.getRegistration(), bean.getRequestDate(), bean
@@ -57,12 +58,12 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 		    .getExceptionalConclusionDate());
 
 	case EXAM_DATE_CERTIFICATE:
-	    return new ExamDateCertificateRequest(bean.getRegistration(), bean.getRequestDate(), bean.getChosenDocumentPurposeType(),
-		    bean.getOtherPurpose(), bean.getUrgentRequest(), bean.getEnrolments(), bean.getExams(), bean
-			    .getExecutionPeriod());
+	    return new ExamDateCertificateRequest(bean.getRegistration(), bean.getRequestDate(), bean
+		    .getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean.getUrgentRequest(), bean.getEnrolments(), bean
+		    .getExams(), bean.getExecutionPeriod());
 	case COURSE_LOAD:
-	    return new CourseLoadRequest(bean.getRegistration(), bean.getRequestDate(), ExecutionYear.readCurrentExecutionYear(), bean
-		    .getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean.getEnrolments(), bean.getUrgentRequest());
+	    return new CourseLoadRequest(bean.getRegistration(), bean.getRequestDate(), ExecutionYear.readCurrentExecutionYear(),
+		    bean.getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean.getEnrolments(), bean.getUrgentRequest());
 
 	case EXTERNAL_COURSE_LOAD:
 	    return new ExternalCourseLoadRequest(bean.getRegistration(), bean.getRequestDate(), bean.getExecutionYear(), bean
@@ -70,9 +71,14 @@ public abstract class CertificateRequest extends CertificateRequest_Base {
 		    bean.getInstitution(), bean.getUrgentRequest());
 
 	case PROGRAM_CERTIFICATE:
-	    return new ProgramCertificateRequest(bean.getRegistration(), bean.getRequestDate(),
-		    ExecutionYear.readCurrentExecutionYear(), bean.getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean
-			    .getEnrolments(), bean.getUrgentRequest());
+	    return new ProgramCertificateRequest(bean.getRegistration(), bean.getRequestDate(), ExecutionYear
+		    .readCurrentExecutionYear(), bean.getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean
+		    .getEnrolments(), bean.getUrgentRequest());
+
+	case EXTERNAL_PROGRAM_CERTIFICATE:
+	    return new ExternalProgramCertificateRequest(bean.getRegistration(), bean.getRequestDate(), ExecutionYear
+		    .readCurrentExecutionYear(), bean.getChosenDocumentPurposeType(), bean.getOtherPurpose(), bean
+		    .getNumberOfPrograms(), bean.getInstitution(), bean.getUrgentRequest());
 	}
 
 	return null;
