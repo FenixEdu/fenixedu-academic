@@ -119,7 +119,7 @@ public class ExportClosedExtraWorkMonth extends Service {
 		    if (leaveBeanList != null) {
 			for (LeaveBean leaveBean : leaveBeanList) {
 			    result.append(getLeaveLine(assiduousnessClosedMonth, leaveBean, beginUnpaidLicenseDate,
-				    endUnpaidLicenseDate));
+				    endUnpaidLicenseDate, closedMonth.getClosedMonthFirstDay().plusMonths(1)));
 			}
 		    }
 		}
@@ -371,11 +371,11 @@ public class ExportClosedExtraWorkMonth extends Service {
 
     private StringBuilder getLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth, LeaveBean leaveBean) {
 	return getLeaveLine(assiduousnessClosedMonth, leaveBean, assiduousnessClosedMonth.getBeginDate(),
-		assiduousnessClosedMonth.getEndDate());
+		assiduousnessClosedMonth.getEndDate(), null);
     }
 
     private StringBuilder getLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth, LeaveBean leaveBean,
-	    LocalDate beginDate, LocalDate endDate) {
+	    LocalDate beginDate, LocalDate endDate, LocalDate paymentMonth) {
 	StringBuilder line = new StringBuilder();
 	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay().plusDays(1));
 	if (leaveBean.getLeave().getTotalInterval().overlaps(interval)) {
@@ -402,9 +402,11 @@ public class ExportClosedExtraWorkMonth extends Service {
 			maternityJustificationList.add(leaveBean.getLeave().getAssiduousness());
 		    }
 		}
-		LocalDate nextMontDate = start.plusMonths(1);
-		line.append(nextMontDate.getYear()).append(fieldSeparator);
-		line.append(monthFormat.format(nextMontDate.getMonthOfYear())).append(fieldSeparator);
+		if (paymentMonth == null) {
+		    paymentMonth = start.plusMonths(1);
+		}
+		line.append(paymentMonth.getYear()).append(fieldSeparator);
+		line.append(monthFormat.format(paymentMonth.getMonthOfYear())).append(fieldSeparator);
 		line.append(
 			employeeNumberFormat.format(leaveBean.getLeave().getAssiduousness().getEmployee().getEmployeeNumber()))
 			.append(fieldSeparator);
