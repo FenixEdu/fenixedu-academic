@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.studentCurricularPlan;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -28,130 +29,114 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        DynaActionForm editStudentCurricularPlanForm = (DynaActionForm) form;
-        Integer studentCurricularPlanId = new Integer(getFromRequest("studentCurricularPlanId", request));
-        IUserView userView = getUserView(request);
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	DynaActionForm editStudentCurricularPlanForm = (DynaActionForm) form;
+	Integer studentCurricularPlanId = new Integer(getFromRequest("studentCurricularPlanId", request));
+	IUserView userView = getUserView(request);
 
-        Object args[] = { studentCurricularPlanId };
+	Object args[] = { studentCurricularPlanId };
 
-        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-        try {
-            infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
-                    .executeService( "ReadPosGradStudentCurricularPlanById", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+	try {
+	    infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory.executeService(
+		    "ReadPosGradStudentCurricularPlanById", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        Object argsBranches[] = { infoStudentCurricularPlan.getInfoDegreeCurricularPlan()
-                .getIdInternal() };
-        List branchList = null;
+	Object argsBranches[] = { infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal() };
+	List branchList = null;
 
-        try {
-            branchList = (List) ServiceManagerServiceFactory.executeService(
-                    "ReadBranchesByDegreeCurricularPlanId", argsBranches);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
+	try {
+	    branchList = (List) ServiceManagerServiceFactory.executeService("ReadBranchesByDegreeCurricularPlanId", argsBranches);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        // put request
-        request.setAttribute(SessionConstants.BRANCH, (branchList == null) ? new ArrayList() : branchList);
-        request.setAttribute("currentState", infoStudentCurricularPlan.getCurrentState());
+	// put request
+	request.setAttribute(SessionConstants.BRANCH, (branchList == null) ? new ArrayList() : branchList);
+	request.setAttribute("currentState", infoStudentCurricularPlan.getCurrentState());
 
-        request.setAttribute("student", infoStudentCurricularPlan.getInfoStudent());
-        request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
+	request.setAttribute("student", infoStudentCurricularPlan.getInfoStudent());
+	request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
 
-        editStudentCurricularPlanForm.set("specialization", infoStudentCurricularPlan
-                .getSpecialization().toString());
+	editStudentCurricularPlanForm.set("specialization", infoStudentCurricularPlan.getSpecialization().toString());
 
-        if (infoStudentCurricularPlan.getInfoBranch() != null) {
-            editStudentCurricularPlanForm.set("branch", infoStudentCurricularPlan.getInfoBranch()
-                    .getIdInternal());
-        }
+	if (infoStudentCurricularPlan.getInfoBranch() != null) {
+	    editStudentCurricularPlanForm.set("branch", infoStudentCurricularPlan.getInfoBranch().getIdInternal());
+	}
 
-        editStudentCurricularPlanForm.set("currentState", infoStudentCurricularPlan.getCurrentState()
-                .toString());
-        editStudentCurricularPlanForm.set("credits",
-                (infoStudentCurricularPlan.getGivenCredits() == null) ? "0.0" : String
-                        .valueOf(infoStudentCurricularPlan.getGivenCredits()));
-        editStudentCurricularPlanForm
-                .set("startDate", infoStudentCurricularPlan.getStartDateFormatted());
-        String[] formValues = new String[infoStudentCurricularPlan.getInfoEnrolments().size()];
-        int i = 0;
-        for (Iterator iter = infoStudentCurricularPlan.getInfoEnrolments().iterator(); iter.hasNext();) {
-            Object enrollment = iter.next();
-            if (enrollment instanceof InfoEnrolmentInExtraCurricularCourse) {
-                Integer enrollmentId = ((InfoEnrolmentInExtraCurricularCourse) enrollment)
-                        .getIdInternal();
-                formValues[i] = enrollmentId.toString();
-            }
-            i++;
-        }
-        DynaActionForm coursesForm = (DynaActionForm) form;
-        coursesForm.set("extraCurricularCourses", formValues);
-        return mapping.findForward("editStudentCurricularCoursePlan");
+	editStudentCurricularPlanForm.set("currentState", infoStudentCurricularPlan.getCurrentState().toString());
+	editStudentCurricularPlanForm.set("credits", (infoStudentCurricularPlan.getGivenCredits() == null) ? "0.0" : String
+		.valueOf(infoStudentCurricularPlan.getGivenCredits()));
+	editStudentCurricularPlanForm.set("startDate", infoStudentCurricularPlan.getStartDateFormatted());
+	String[] formValues = new String[infoStudentCurricularPlan.getInfoEnrolments().size()];
+	int i = 0;
+	for (Iterator iter = infoStudentCurricularPlan.getInfoEnrolments().iterator(); iter.hasNext();) {
+	    Object enrollment = iter.next();
+	    if (enrollment instanceof InfoEnrolmentInExtraCurricularCourse) {
+		Integer enrollmentId = ((InfoEnrolmentInExtraCurricularCourse) enrollment).getIdInternal();
+		formValues[i] = enrollmentId.toString();
+	    }
+	    i++;
+	}
+	DynaActionForm coursesForm = (DynaActionForm) form;
+	coursesForm.set("extraCurricularCourses", formValues);
+	return mapping.findForward("editStudentCurricularCoursePlan");
     }
 
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	final IUserView userView = getUserView(request);
 
-        DynaActionForm editStudentCurricularPlanForm = (DynaActionForm) form;
+	final Integer scpOID = getIntegerFromRequest(request, "studentCurricularPlanId");
+	request.setAttribute("studentCurricularPlanId", scpOID);
 
-        String studentCurricularPlanIdString = request.getParameter("studentCurricularPlanId");
-        String[] extraCurricularCoursesArray = (String[]) editStudentCurricularPlanForm
-                .get("extraCurricularCourses");
+	final DynaActionForm editForm = (DynaActionForm) form;
+	final String currentState = (String) editForm.get("currentState");
+	final Integer branchOID = (Integer) editForm.get("branch");
+	final String specialization = (String) editForm.get("specialization");
+	final String startDate = (String) editForm.get("startDate");
+	final String observations = (String) editForm.get("observations");
 
-        String currentState = (String) editStudentCurricularPlanForm.get("currentState");
-        String specialization = (String) editStudentCurricularPlanForm.get("specialization");
-        Integer branch = (Integer) editStudentCurricularPlanForm.get("branch");
-        Object creditsObj = editStudentCurricularPlanForm.get("credits");
-        Double credits = (creditsObj != null && ((String)creditsObj).length() > 0) ? (Double
-                .valueOf((String) creditsObj)) : null;
-        String startDate = (String) editStudentCurricularPlanForm.get("startDate");
+	final Object creditsObj = editForm.get("credits");
+	final Double credits = (creditsObj != null && ((String) creditsObj).length() > 0) ? (Double.valueOf((String) creditsObj))
+		: null;
 
-        Integer studentCurricularPlanId = new Integer(studentCurricularPlanIdString);
-        String observations = (String) editStudentCurricularPlanForm.get("observations");
-        IUserView userView = getUserView(request);
+	final List<Integer> extraCurricularOIDs = new ArrayList<Integer>();
+	for (final String extraCurricular : Arrays.asList((String[]) editForm.get("extraCurricularCourses"))) {
+	    extraCurricularOIDs.add(Integer.valueOf(extraCurricular));
+	}
 
-        List extraCurricularCourses = new ArrayList();
+	final Object args[] = { userView, scpOID, currentState, credits, startDate, extraCurricularOIDs, observations, branchOID,
+		specialization };
+	try {
+	    ServiceManagerServiceFactory.executeService("EditPosGradStudentCurricularPlanStateAndCredits", args);
+	} catch (FenixServiceException e) {
+	    throw new FenixActionException(e);
+	}
 
-        for (int i = 0; i < extraCurricularCoursesArray.length; i++) {
-            extraCurricularCourses.add(new Integer(extraCurricularCoursesArray[i]));
-
-        }
-        Object args[] = { userView, studentCurricularPlanId, currentState, credits, startDate,
-                extraCurricularCourses, observations, branch, specialization };
-
-        try {
-            ServiceManagerServiceFactory.executeService(
-                    "EditPosGradStudentCurricularPlanStateAndCredits", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-
-        request.setAttribute("studentCurricularPlanId", studentCurricularPlanId);
-
-        return mapping.findForward("ShowStudentCurricularCoursePlan");
+	return mapping.findForward("ShowStudentCurricularCoursePlan");
     }
-    
-    public ActionForward enrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-	
+
+    public ActionForward enrol(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+
 	Enrolment enrolment = (Enrolment) rootDomainObject
 		.readCurriculumModuleByOID(getIntegerFromRequest(request, "enrolmentID"));
 	executeService("SetEnrolmentState", enrolment, EnrollmentState.ENROLLED);
 
 	request.setAttribute("studentCurricularPlanId", enrolment.getStudentCurricularPlan().getIdInternal());
 
-	return prepare(mapping, form, request, response);	
+	return prepare(mapping, form, request, response);
     }
 
     private String getFromRequest(String parameter, HttpServletRequest request) {
-        String parameterString = request.getParameter(parameter);
-        if (parameterString == null) {
-            parameterString = request.getAttribute(parameter).toString();
-        }
-        return parameterString;
+	String parameterString = request.getParameter(parameter);
+	if (parameterString == null) {
+	    parameterString = request.getAttribute(parameter).toString();
+	}
+	return parameterString;
     }
 }
