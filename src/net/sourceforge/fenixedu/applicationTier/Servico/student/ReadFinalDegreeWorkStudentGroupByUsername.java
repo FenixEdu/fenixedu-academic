@@ -18,16 +18,34 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
 
     public InfoGroup run(final Person personUser, final ExecutionYear executionYear) throws ExcepcaoPersistencia {
-	Registration registration = personUser.getStudentByType(DegreeType.BOLONHA_MASTER_DEGREE);
-	if (registration == null) registration = personUser.getStudentByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
-	if (registration == null) registration = personUser.getStudentByType(DegreeType.BOLONHA_DEGREE);
-	if (registration == null) registration = personUser.getStudentByType(DegreeType.DEGREE);
-	if (registration == null) {
-	    return null;
-	}
+	final FinalDegreeWorkGroup finalDegreeWorkGroup = findFinalDegreeWorkGroup(personUser, executionYear);
+        return InfoGroup.newInfoFromDomain(finalDegreeWorkGroup);
+    }
 
-	final FinalDegreeWorkGroup group = registration.findFinalDegreeWorkGroupForExecutionYear(executionYear);
-        return InfoGroup.newInfoFromDomain(group);
+    private FinalDegreeWorkGroup findFinalDegreeWorkGroup(final Person personUser, final ExecutionYear executionYear) {
+	FinalDegreeWorkGroup finalDegreeWorkGroup = find(personUser, executionYear, DegreeType.BOLONHA_MASTER_DEGREE);
+	if (finalDegreeWorkGroup == null) {
+	    finalDegreeWorkGroup = find(personUser, executionYear, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+	}
+	if (finalDegreeWorkGroup == null) {
+	    finalDegreeWorkGroup = find(personUser, executionYear, DegreeType.BOLONHA_DEGREE);
+	}
+	if (finalDegreeWorkGroup == null) {
+	    finalDegreeWorkGroup = find(personUser, executionYear, DegreeType.DEGREE);
+	}
+	return finalDegreeWorkGroup;
+    }
+
+    private FinalDegreeWorkGroup find(final Person personUser, final ExecutionYear executionYear, final DegreeType degreeType) {
+	for (final Registration registration : personUser.getStudent().getRegistrationsSet()) {
+	    if (registration.getDegreeType() == degreeType) {
+		final FinalDegreeWorkGroup finalDegreeWorkGroup = registration.findFinalDegreeWorkGroupForExecutionYear(executionYear);
+		if (finalDegreeWorkGroup != null) {
+		    return finalDegreeWorkGroup;
+		}
+	    }
+	}
+	return null;
     }
 
 }
