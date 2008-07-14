@@ -59,7 +59,8 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 
 	final AcademicServiceRequestSituation activeSituation = academicServiceRequest.getActiveSituation();
 	if (activeSituation != null
-		&& academicServiceRequestBean.getFinalSituationDate().isBefore(activeSituation.getSituationDate())) {
+		&& academicServiceRequestBean.getFinalSituationDate().toLocalDate().isBefore(
+			activeSituation.getSituationDate().toLocalDate())) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.situation.date.is.before");
 	}
 
