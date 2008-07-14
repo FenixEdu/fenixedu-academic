@@ -38,7 +38,7 @@
     </logic:present>
 
 
-	<logic:notEmpty name="section" property="childrenFiles">
+	<logic:notEmpty name="section" property="visibleFiles">
 			<table class="box" style="float: right;" cellspacing="0">   
 				<tr>
 					<td class="box_header">
@@ -50,7 +50,7 @@
 				<tr>
 					<td class="box_cell">
 						<ul>
-								<logic:iterate id="file" name="section" property="childrenFiles" type="net.sourceforge.fenixedu.domain.contents.Attachment">		
+								<logic:iterate id="file" name="section" property="visibleFiles" type="net.sourceforge.fenixedu.domain.contents.Attachment">		
 									<li>
 									<app:contentLink name="file">
 									<fr:view name="file" property="name"/> 

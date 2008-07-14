@@ -251,11 +251,21 @@ public class Section extends Section_Base {
     public List<Section> getChildrenSections() {
 	return (List<Section>) getChildren(Section.class);
     }
-    
+
+    public List<Attachment> getVisibleFiles() {
+	List<Attachment> visibleFiles = new ArrayList<Attachment>();
+	for (Attachment attachment : getChildrenFiles()) {
+	    if (attachment.getParentNode(this).isNodeVisible()) {
+		visibleFiles.add(attachment);
+	    }
+	}
+	return visibleFiles;
+    }
+
     public List<Attachment> getChildrenFiles() {
 	return (List<Attachment>) getChildren(Attachment.class);
     }
-    
+
     public List<Section> getSubSections() {
 	List<Section> sections = new ArrayList<Section>();
 	for (Section section : getChildren(Section.class)) {
