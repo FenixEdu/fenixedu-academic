@@ -62,5 +62,4 @@ public class SecondCycleIndividualCandidacyEvent extends SecondCycleIndividualCa
     public Account getToAccount() {
 	return getAdministrativeOffice().getUnit().getInternalAccount();
     }
-
 }

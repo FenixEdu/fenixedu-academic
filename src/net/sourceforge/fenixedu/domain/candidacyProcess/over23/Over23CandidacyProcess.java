@@ -106,6 +106,8 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	return result;
     }
 
+    // static information
+    
     static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();

@@ -581,3 +581,8 @@
 		type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.graduatedPerson.DegreeCandidacyForGraduatedPersonProcessDA$DegreeCandidacyForGraduatedPersonDegreeBean"
 		extends="CandidacyProcess.candidacyDegreeBean" bundle="APPLICATION_RESOURCES">
 </schema>
+
+<!-- DegreeChange -->
+<schema name="DegreeChangeCandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean"
+		extends="CandidacyProcessBean.manage" bundle="APPLICATION_RESOURCES">
+</schema>

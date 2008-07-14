@@ -30,6 +30,18 @@ import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
+/**
+ * INFO: when extending this class pay attention to the following aspects
+ * 
+ * <p>
+ * Must configure the following forwards: intro (common value:
+ * /candidacy/mainCandidacyProcess.jsp), prepare-create-new-process (common
+ * value: /candidacy/createCandidacyPeriod.jsp; used schemas:
+ * <process_name>Bean.manage), prepare-edit-candidacy-period (common value:
+ * /candidacy/editCandidacyPeriod.jsp; used schemas: <process_name>Bean.manage)
+ * 
+ */
+
 abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 
     abstract protected Class getChildProcessType();
@@ -64,6 +76,9 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	return getExecutionInterval(request) != null;
     }
 
+    /**
+     * Set information used to present main candidacy process page
+     */
     abstract protected void setStartInformation(ActionForm actionForm, HttpServletRequest request, HttpServletResponse response);
 
     abstract protected ActionForward introForward(final ActionMapping mapping);
@@ -226,7 +241,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
     }
 
     /**
-     * Creates list of CandidacyDegreeBeans with information related to accepted
+     * Create list of CandidacyDegreeBeans with information related to accepted
      * candidacies
      */
     abstract protected List<CandidacyDegreeBean> createCandidacyDegreeBeans(final HttpServletRequest request);

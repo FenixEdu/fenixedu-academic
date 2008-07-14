@@ -1,10 +1,14 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import java.math.BigDecimal;
+
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
+import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 
 import org.joda.time.LocalDate;
 
@@ -76,4 +80,27 @@ public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentD
     public void edit(CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
 	throw new DomainException("error.InstitutionPrecedentDegreeInformation.cannot.edit");
     }
+
+    @Override
+    public Integer getNumberOfApprovedCurricularCourses() {
+	return getStudentCurricularPlan().getRoot().getNumberOfAllApprovedCurriculumLines();
+    }
+
+    @Override
+    public BigDecimal getGradeSum() {
+	final Curriculum curriculum = getStudentCurricularPlan().getRoot().getCurriculum();
+	curriculum.setAverageType(AverageType.SIMPLE);
+	return curriculum.getSumPiCi();
+    }
+
+    @Override
+    public BigDecimal getApprovedEcts() {
+	return BigDecimal.valueOf(getStudentCurricularPlan().getRoot().getAprovedEctsCredits());
+    }
+
+    @Override
+    public BigDecimal getEnroledEcts() {
+	return BigDecimal.valueOf(getStudentCurricularPlan().getRoot().getEctsCredits());
+    }
+
 }

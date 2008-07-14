@@ -4758,6 +4758,9 @@ class period.CandidacyPeriod extends DomainObject {
 	class period.DegreeCandidacyForGraduatedPersonCandidacyPeriod extends period.CandidacyPeriod {
 	}
 	
+	class period.DegreeChangeCandidacyPeriod extends period.CandidacyPeriod {
+	}
+	
 class candidacyProcess.CandidacyProcess extends caseHandling.Process {
 	CandidacyProcessState state;
 }
@@ -4771,6 +4774,9 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
 	class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonProcess extends candidacyProcess.CandidacyProcess {
 	}
 	
+	class candidacyProcess.degreeChange.DegreeChangeCandidacyProcess extends candidacyProcess.CandidacyProcess {
+	}
+	
 class candidacyProcess.IndividualCandidacyProcess extends caseHandling.Process {
 }
 
@@ -4781,6 +4787,9 @@ class candidacyProcess.IndividualCandidacyProcess extends caseHandling.Process {
 	}
 	
 	class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcess extends candidacyProcess.IndividualCandidacyProcess {
+	}
+	
+	class candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
 	}
 		
 class candidacyProcess.IndividualCandidacy extends DomainObject {
@@ -4813,6 +4822,9 @@ class candidacyProcess.IndividualCandidacy extends DomainObject {
 		Integer degreeNature;
 		Double candidacyGrade;
 	}
+	
+	class candidacyProcess.degreeChange.DegreeChangeIndividualCandidacy extends candidacyProcess.IndividualCandidacy {
+	}
 
 class candidacyProcess.CandidacyPrecedentDegreeInformation extends DomainObject {
 }
@@ -4825,6 +4837,10 @@ class candidacyProcess.CandidacyPrecedentDegreeInformation extends DomainObject 
 		String degreeDesignation;
 		LocalDate conclusionDate;
 		String conclusionGrade;
+		Integer numberOfApprovedCurricularCourses;
+		BigDecimal gradeSum;
+    	BigDecimal approvedEcts;
+		BigDecimal enroledEcts;
 	}
 
 class candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry extends DomainObject {
@@ -12752,6 +12768,13 @@ relation SecondCycleIndividualCandidacySelectedDegree {
 relation DegreeCandidacyForGraduatedPersonSelectedDegree {
 	Degree playsRole selectedDegree;
 	candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson playsRole selectedDegreeCandidacyForGraduatedPersonCandidacies {
+		multiplicity *;
+	}
+}
+
+relation DegreeChangeIndividualCandidacySelectedDegree {
+	Degree playsRole selectedDegree;
+	candidacyProcess.degreeChange.DegreeChangeIndividualCandidacy playsRole selectedDegreeChangeIndividualCandidacies {
 		multiplicity *;
 	}
 }

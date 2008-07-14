@@ -31,7 +31,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	super();
     }
 
-    protected Over23IndividualCandidacyProcess(final Over23IndividualCandidacyProcessBean bean) {
+    private Over23IndividualCandidacyProcess(final Over23IndividualCandidacyProcessBean bean) {
 	this();
 	checkParameters(bean.getCandidacyProcess());
 	setCandidacyProcess(bean.getCandidacyProcess());

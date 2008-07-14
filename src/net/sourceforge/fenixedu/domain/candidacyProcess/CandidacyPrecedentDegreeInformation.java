@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import java.math.BigDecimal;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
@@ -33,4 +35,12 @@ abstract public class CandidacyPrecedentDegreeInformation extends CandidacyPrece
     public String getDegreeAndInstitutionName() {
 	return getDegreeDesignation() + " / " + getInstitution().getName();
     }
+
+    abstract public Integer getNumberOfApprovedCurricularCourses();
+
+    abstract public BigDecimal getGradeSum();
+
+    abstract public BigDecimal getApprovedEcts();
+
+    abstract public BigDecimal getEnroledEcts();
 }

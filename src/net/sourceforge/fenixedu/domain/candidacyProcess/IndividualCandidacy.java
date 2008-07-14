@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
@@ -180,5 +181,9 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     protected ExecutionInterval getCandidacyExecutionInterval() {
 	return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyExecutionInterval() : null;
+    }
+    
+    protected boolean personHasDegree(final Person person, final Degree selectedDegree) {
+	return person.hasStudent() ? person.getStudent().hasRegistrationFor(selectedDegree) : false;
     }
 }

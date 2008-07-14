@@ -187,4 +187,9 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
     }
 
     abstract public NoCourseGroupCurriculumGroupType getNoCourseGroupCurriculumGroupType();
+    
+    @Override
+    public int getNumberOfAllApprovedCurriculumLines() {
+        return 0;
+    }
 }

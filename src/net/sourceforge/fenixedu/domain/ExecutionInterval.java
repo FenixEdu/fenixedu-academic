@@ -6,12 +6,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.DegreeCandidacyForGraduatedPersonCandidacyPeriod;
+import net.sourceforge.fenixedu.domain.period.DegreeChangeCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.PeriodState;
-
-import org.joda.time.YearMonthDay;
 
 abstract public class ExecutionInterval extends ExecutionInterval_Base {
 
@@ -39,9 +38,8 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
 
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkDateInterval() {
-	final YearMonthDay start = getBeginDateYearMonthDay();
-	final YearMonthDay end = getEndDateYearMonthDay();
-	return start != null && end != null && start.isBefore(end);
+	return getBeginDateYearMonthDay() != null && getEndDateYearMonthDay() != null
+		&& getBeginDateYearMonthDay().isBefore(getEndDateYearMonthDay());
     }
 
     public List<? extends CandidacyPeriod> getCandidacyPeriods(final Class<? extends CandidacyPeriod> clazz) {
@@ -90,6 +88,17 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
 	return getDegreeCandidacyForGraduatedPersonCandidacyPeriod() != null;
     }
 
+    public DegreeChangeCandidacyPeriod getDegreeChangeCandidacyPeriod() {
+	final List<DegreeChangeCandidacyPeriod> candidacyPeriods = (List<DegreeChangeCandidacyPeriod>) getCandidacyPeriods(DegreeChangeCandidacyPeriod.class);
+	return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+    }
+
+    public boolean hasDegreeChangeCandidacyPeriod() {
+	return getDegreeChangeCandidacyPeriod() != null;
+    }
+
+    // static information
+
     static public List<ExecutionInterval> readExecutionIntervalsWithCandidacyPeriod(final Class<? extends CandidacyPeriod> clazz) {
 	final List<ExecutionInterval> result = new ArrayList<ExecutionInterval>();
 	for (final ExecutionInterval executionInterval : RootDomainObject.getInstance().getExecutionIntervals()) {
@@ -99,4 +108,5 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
 	}
 	return result;
     }
+
 }

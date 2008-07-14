@@ -36,7 +36,7 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
 	if (institution == null) {
 	    throw new DomainException("error.ExternalPrecedentDegreeInformation.invalid.institution");
 	}
-	
+
 	if (conclusionGrade != null && conclusionGrade.length() != 0 && !conclusionGrade.matches("[0-9]+(\\.[0-9]+)?")) {
 	    throw new DomainException("error.ExternalPrecedentDegreeInformation.invalid.conclusionGrade");
 	}
@@ -56,5 +56,4 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
 	setInstitution(bean.getInstitution());
 	setConclusionGrade(bean.getConclusionGrade());
     }
-
 }

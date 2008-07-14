@@ -607,16 +607,40 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return result;
     }
 
+    /**
+     * This method returns the number of approved child CurriculumLines
+     */
     final public int getNumberOfApprovedCurriculumLines() {
 	int result = 0;
 	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    if (curriculumModule.isLeaf()) {
+	    if (curriculumModule.isCurriculumLine()) {
 		final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
 		if (curriculumLine.isDismissal() && curriculumLine.hasCurricularCourse()) {
 		    result++;
 		} else if (curriculumLine.isEnrolment() && ((Enrolment) curriculumLine).isApproved()) {
 		    result++;
 		}
+	    }
+	}
+	return result;
+    }
+
+    /**
+     * This method makes a deep search to count number of all approved
+     * CurriculumLines (except NoCourseGroupCurriculumGroups)
+     */
+    public int getNumberOfAllApprovedCurriculumLines() {
+	int result = 0;
+	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+	    if (curriculumModule.isCurriculumLine()) {
+		final CurriculumLine curriculumLine = (CurriculumLine) curriculumModule;
+		if (curriculumLine.isDismissal() && curriculumLine.hasCurricularCourse()) {
+		    result++;
+		} else if (curriculumLine.isEnrolment() && ((Enrolment) curriculumLine).isApproved()) {
+		    result++;
+		}
+	    } else {
+		result += ((CurriculumGroup) curriculumModule).getNumberOfAllApprovedCurriculumLines();
 	    }
 	}
 	return result;

@@ -32,7 +32,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	super();
     }
 
-    protected DegreeCandidacyForGraduatedPersonIndividualProcess(final DegreeCandidacyForGraduatedPersonIndividualProcessBean bean) {
+    private DegreeCandidacyForGraduatedPersonIndividualProcess(final DegreeCandidacyForGraduatedPersonIndividualProcessBean bean) {
 	this();
 	checkParameters(bean.getCandidacyProcess());
 	setCandidacyProcess(bean.getCandidacyProcess());

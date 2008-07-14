@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
@@ -47,17 +46,17 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 		    .getCandidacyExecutionInterval().getName());
 	}
 
-	if (selectedDegree == null || personHasDegree(person, selectedDegree)) {
-	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.degrees");
+	if (selectedDegree == null) {
+	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.degree");
+	}
+
+	if (personHasDegree(person, selectedDegree)) {
+	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.existing.degree", selectedDegree.getName());
 	}
 
 	if (precedentDegreeInformation == null) {
 	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.invalid.precedentDegreeInformation");
 	}
-    }
-
-    private boolean personHasDegree(final Person person, final Degree selectedDegree) {
-	return person.hasStudent() ? person.getStudent().hasRegistrationFor(selectedDegree) : false;
     }
 
     private void createDebt() {
@@ -110,10 +109,10 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	    throw new DomainException("error.DegreeCandidacyForGraduatedPerson.cannot.change.state.from.accepted.candidacies");
 	}
     }
-    
+
     @Override
     protected ExecutionYear getCandidacyExecutionInterval() {
-        return (ExecutionYear) super.getCandidacyExecutionInterval();
+	return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
 
     @Override

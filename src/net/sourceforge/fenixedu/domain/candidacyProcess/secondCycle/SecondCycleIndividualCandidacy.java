@@ -50,17 +50,17 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 		    .getCandidacyExecutionInterval().getName());
 	}
 
-	if (degree == null || personHasDegree(person, degree)) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degrees");
+	if (degree == null) {
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degree");
+	}
+	
+	if (personHasDegree(person, degree)) {
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.existing.degree", degree.getName());
 	}
 
 	if (precedentDegreeInformation == null) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.precedentDegreeInformation");
 	}
-    }
-
-    private boolean personHasDegree(final Person person, final Degree degree) {
-	return person.hasStudent() && person.getStudent().hasRegistrationFor(degree);
     }
 
     @Override
