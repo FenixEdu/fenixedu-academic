@@ -155,7 +155,7 @@
 						<subreportParameterExpression><![CDATA[$P{coorientatorName}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA["/reports/thesisReport_studentOrientation.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["/reports/thesis/thesisReport_studentOrientation.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport  isUsingCache="true">
 					<reportElement
@@ -203,7 +203,7 @@
 						<subreportParameterExpression><![CDATA[$P{keywordEn5}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA["/reports/thesisReport_keywords.jasper"]]></subreportExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["/reports/thesis/thesisReport_keywords.jasper"]]></subreportExpression>
 				</subreport>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
