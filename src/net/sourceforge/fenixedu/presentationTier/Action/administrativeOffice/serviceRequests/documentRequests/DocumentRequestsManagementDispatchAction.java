@@ -62,9 +62,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 		.create(documentRequest);
 	administrativeOfficeDocument.addParameter("path", getServlet().getServletContext().getRealPath("/"));
 
-	byte[] data = ReportsUtils.exportToPdf(administrativeOfficeDocument.getReportTemplateKey(), administrativeOfficeDocument
-		.getParameters(), administrativeOfficeDocument.getResourceBundle(), administrativeOfficeDocument.getDataSource());
-
+	byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(administrativeOfficeDocument);
 	response.setContentLength(data.length);
 	response.setContentType("application/pdf");
 	response.addHeader("Content-Disposition", "attachment; filename=" + administrativeOfficeDocument.getReportFileName()
@@ -303,17 +301,18 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
 	final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) getRenderedObject();
 	if (documentRequestCreateBean.isToUseAll()) {
-	    documentRequestCreateBean.setEnrolments(documentRequestCreateBean.getStudent().getApprovedEnrolments(getAdministrativeOffice()));
+	    documentRequestCreateBean.setEnrolments(documentRequestCreateBean.getStudent().getApprovedEnrolments(
+		    getAdministrativeOffice()));
 	} else {
 	    documentRequestCreateBean.setEnrolments(new ArrayList<Enrolment>());
 	}
 	RenderUtils.invalidateViewState();
 	request.setAttribute("documentRequestCreateBean", documentRequestCreateBean);
 	setAdditionalInformationSchemaName(request, documentRequestCreateBean);
-	
+
 	return mapping.findForward("createDocumentRequests");
     }
-    
+
     private AdministrativeOffice getAdministrativeOffice() {
 	return AccessControl.getPerson().getEmployeeAdministrativeOffice();
     }

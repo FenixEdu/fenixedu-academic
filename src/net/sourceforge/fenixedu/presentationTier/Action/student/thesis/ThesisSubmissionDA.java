@@ -24,237 +24,243 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 public class ThesisSubmissionDA extends FenixDispatchAction {
 
     public Student getStudent(HttpServletRequest request) {
-        return getUserView(request).getPerson().getStudent();
+	return getUserView(request).getPerson().getStudent();
     }
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("thesis", getThesis(request));
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("thesis", getThesis(request));
 
-        return super.execute(mapping, actionForm, request, response);
+	return super.execute(mapping, actionForm, request, response);
     }
 
     public Thesis getThesis(HttpServletRequest request) {
-        Thesis thesis = null;
-        
-        String idString = request.getParameter("thesisID");
-        if (idString == null) {
-            thesis = (Thesis) request.getAttribute("thesis");
+	Thesis thesis = null;
 
-            if (thesis == null) {
-                Student student = getStudent(request);
-                
-                Enrolment enrolment = student.getDissertationEnrolment();
-                if (enrolment != null) {
-                    thesis = enrolment.getThesis();
-                }
-            }
-        }
-        else {
-            thesis = RootDomainObject.getInstance().readThesisByOID(new Integer(idString));
-        }
-        
-        return thesis;
+	String idString = request.getParameter("thesisID");
+	if (idString == null) {
+	    thesis = (Thesis) request.getAttribute("thesis");
+
+	    if (thesis == null) {
+		Student student = getStudent(request);
+
+		Enrolment enrolment = student.getDissertationEnrolment();
+		if (enrolment != null) {
+		    thesis = enrolment.getThesis();
+		}
+	    }
+	} else {
+	    thesis = RootDomainObject.getInstance().readThesisByOID(new Integer(idString));
+	}
+
+	return thesis;
     }
-    
-    public ActionForward prepareThesisSubmission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Student student = getStudent(request);
-        
-        Enrolment enrolment = student.getDissertationEnrolment();
-        if (enrolment == null) {
-        	request.setAttribute("noEnrolment", true);
-            return mapping.findForward("thesis-notFound");
-        }
-        
-        Thesis thesis = enrolment.getThesis();
-        if (thesis == null || thesis.isDraft() || thesis.isSubmitted()) {
-        	request.setAttribute("noThesis", true);
-        	request.setAttribute("proposal", enrolment.getDissertationProposal());
-        	
-            return mapping.findForward("thesis-notFound");
-        }
-        
-        request.setAttribute("thesis", thesis);
-        if (thesis.isWaitingConfirmation()) {
-            setupStudentTodo(request, thesis);
-            return mapping.findForward("thesis-submit");
-        }
-        else {
-            if (thesis.isConfirmed() || thesis.isEvaluated()) {
-                return mapping.findForward("thesis-showState");
-            }
-            else {
-                return mapping.findForward("thesis-showUnavailable");
-            }
-        }
+
+    public ActionForward prepareThesisSubmission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Student student = getStudent(request);
+
+	Enrolment enrolment = student.getDissertationEnrolment();
+	if (enrolment == null) {
+	    request.setAttribute("noEnrolment", true);
+	    return mapping.findForward("thesis-notFound");
+	}
+
+	Thesis thesis = enrolment.getThesis();
+	if (thesis == null || thesis.isDraft() || thesis.isSubmitted()) {
+	    request.setAttribute("noThesis", true);
+	    request.setAttribute("proposal", enrolment.getDissertationProposal());
+
+	    return mapping.findForward("thesis-notFound");
+	}
+
+	request.setAttribute("thesis", thesis);
+	if (thesis.isWaitingConfirmation()) {
+	    setupStudentTodo(request, thesis);
+	    return mapping.findForward("thesis-submit");
+	} else {
+	    if (thesis.isConfirmed() || thesis.isEvaluated()) {
+		return mapping.findForward("thesis-showState");
+	    } else {
+		return mapping.findForward("thesis-showUnavailable");
+	    }
+	}
     }
 
     private void setupStudentTodo(HttpServletRequest request, Thesis thesis) {
-        request.setAttribute("todo", thesis.getStudentConditions());
+	request.setAttribute("todo", thesis.getStudentConditions());
     }
 
-    public ActionForward changeThesisDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("changeDetails", true);
-        
-        return prepareThesisSubmission(mapping, actionForm, request, response);
+    public ActionForward changeThesisDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("changeDetails", true);
+
+	return prepareThesisSubmission(mapping, actionForm, request, response);
     }
-    
-    public ActionForward editAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return editASCII(mapping, request, "thesis-edit-abstract");
+
+    public ActionForward editAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	return editASCII(mapping, request, "thesis-edit-abstract");
     }
-    
-    public ActionForward editKeywords(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return editASCII(mapping, request, "thesis-edit-keywords");
+
+    public ActionForward editKeywords(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	return editASCII(mapping, request, "thesis-edit-keywords");
     }
-    
+
     public ActionForward editASCII(ActionMapping mapping, HttpServletRequest request, String forward) throws Exception {
-        Student student = getStudent(request);
-        
-        Enrolment enrolment = student.getDissertationEnrolment();
-        if (enrolment == null) {
-            return mapping.findForward("thesis-notFound");
-        }
-        
-        Thesis thesis = enrolment.getThesis();
-        if (thesis == null) {
-            return mapping.findForward("thesis-notFound");
-        }
-        
-        request.setAttribute("thesis", thesis);
-        return mapping.findForward(forward);
+	Student student = getStudent(request);
+
+	Enrolment enrolment = student.getDissertationEnrolment();
+	if (enrolment == null) {
+	    return mapping.findForward("thesis-notFound");
+	}
+
+	Thesis thesis = enrolment.getThesis();
+	if (thesis == null) {
+	    return mapping.findForward("thesis-notFound");
+	}
+
+	request.setAttribute("thesis", thesis);
+	return mapping.findForward(forward);
     }
 
-    public ActionForward viewDeclaration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Thesis thesis = getThesis(request);
-        request.setAttribute("bean", new DeclarationBean(thesis));
+    public ActionForward viewDeclaration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Thesis thesis = getThesis(request);
+	request.setAttribute("bean", new DeclarationBean(thesis));
 
-        if (thesis.isWaitingConfirmation()) {
-            return mapping.findForward("thesis-declaration");
-        }
-        else {
-            return mapping.findForward("thesis-declaration-view");
-        }
-    }
-    
-    public ActionForward changeDeclaration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Thesis thesis = getThesis(request);
-
-        boolean confirmation = request.getParameter("confirmReject") != null;
-        if (confirmation) {
-            executeService("RejectThesisDeclaration", thesis);
-        }
-        else {
-            DeclarationBean bean = (DeclarationBean) getRenderedObject("declarationBean");
-
-            boolean accepted = request.getParameter("accept") != null;
-            if (accepted) {
-                if (bean.getVisibility() != null) {
-                    executeService("AcceptThesisDeclaration", thesis, bean.getVisibility(), bean.getAvailableAfter());
-                }
-                else {
-                    if (bean.getVisibility() == null) {
-                        addActionMessage("error", request, "error.student.thesis.declaration.visibility.required");
-                    }
-                    
-                    return mapping.findForward("thesis-declaration");
-                }
-            }
-            else {
-                if (thesis.hasDissertation() || thesis.hasExtendedAbstract()) {
-                    request.setAttribute("confirmRejectWithFiles", true);
-                    return mapping.findForward("thesis-declaration");
-                }
-                else {
-                    executeService("RejectThesisDeclaration", thesis);
-                }
-            }
-        }
-        
-        return prepareThesisSubmission(mapping, actionForm, request, response);
-    }
-    
-    public ActionForward prepareUploadDissertation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("fileBean", new ThesisFileBean());
-        return mapping.findForward("thesis-upload-dissertation");
-    }
-    
-    public ActionForward uploadDissertation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ThesisFileBean bean = (ThesisFileBean) getRenderedObject();
-        RenderUtils.invalidateViewState();
-        
-        if (bean != null && bean.getFile() != null) {
-        	File temporaryFile = null;
-        	
-        	try {
-	            temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-				executeService("CreateThesisDissertationFile", getThesis(request), temporaryFile, bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
-        	}
-        	finally {
-        		if (temporaryFile != null) {
-        			temporaryFile.delete();
-        		}
-        	}
-        }
-        
-        return prepareThesisSubmission(mapping, actionForm, request, response);
+	if (thesis.isWaitingConfirmation()) {
+	    return mapping.findForward("thesis-declaration");
+	} else {
+	    return mapping.findForward("thesis-declaration-view");
+	}
     }
 
-    public ActionForward removeDissertation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        executeService("CreateThesisDissertationFile", getThesis(request), null, null, null, null, null);
-        
-        return prepareThesisSubmission(mapping, actionForm, request, response);
-    }
-    
-    public ActionForward prepareUploadAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("fileBean", new ThesisFileBean());
-        return mapping.findForward("thesis-upload-abstract");
-    }
+    public ActionForward changeDeclaration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Thesis thesis = getThesis(request);
 
-    public ActionForward uploadAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ThesisFileBean bean = (ThesisFileBean) getRenderedObject();
-        RenderUtils.invalidateViewState();
-        
-        if (bean != null && bean.getFile() != null) {
-        	File temporaryFile = null;
-        	
-        	try {
-	            temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-	            executeService("CreateThesisAbstractFile", getThesis(request), temporaryFile, bean.getSimpleFileName(), null, null, null);
-        	}
-        	finally {
-        		if (temporaryFile != null) {
-        			temporaryFile.delete();
-        		}
-        	}
-        }
-        
-        return prepareThesisSubmission(mapping, actionForm, request, response);
-    }
+	boolean confirmation = request.getParameter("confirmReject") != null;
+	if (confirmation) {
+	    executeService("RejectThesisDeclaration", thesis);
+	} else {
+	    DeclarationBean bean = (DeclarationBean) getRenderedObject("declarationBean");
 
-    public ActionForward removeAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        executeService("CreateThesisAbstractFile", getThesis(request), null, null, null, null, null);
-        
-        return prepareThesisSubmission(mapping, actionForm, request, response);
+	    boolean accepted = request.getParameter("accept") != null;
+	    if (accepted) {
+		if (bean.getVisibility() != null) {
+		    executeService("AcceptThesisDeclaration", thesis, bean.getVisibility(), bean.getAvailableAfter());
+		} else {
+		    if (bean.getVisibility() == null) {
+			addActionMessage("error", request, "error.student.thesis.declaration.visibility.required");
+		    }
+
+		    return mapping.findForward("thesis-declaration");
+		}
+	    } else {
+		if (thesis.hasDissertation() || thesis.hasExtendedAbstract()) {
+		    request.setAttribute("confirmRejectWithFiles", true);
+		    return mapping.findForward("thesis-declaration");
+		} else {
+		    executeService("RejectThesisDeclaration", thesis);
+		}
+	    }
+	}
+
+	return prepareThesisSubmission(mapping, actionForm, request, response);
     }
 
-    public ActionForward downloadIdentificationSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Thesis thesis = getThesis(request);
-        
-        try {
-            StudentThesisIdentificationDocument document = new StudentThesisIdentificationDocument(thesis);
-            byte[] data = ReportsUtils.exportToPdf(document);
-            
-            response.setContentLength(data.length);
-            response.setContentType("application/pdf");
-            response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
+    public ActionForward prepareUploadDissertation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("fileBean", new ThesisFileBean());
+	return mapping.findForward("thesis-upload-dissertation");
+    }
 
-            response.getOutputStream().write(data);
-            
-            return null;
-        } catch (JRException e) {
-            addActionMessage("error", request, "student.thesis.generate.identification.failed");
-            return prepareThesisSubmission(mapping, actionForm, request, response);
-        }
+    public ActionForward uploadDissertation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	ThesisFileBean bean = (ThesisFileBean) getRenderedObject();
+	RenderUtils.invalidateViewState();
+
+	if (bean != null && bean.getFile() != null) {
+	    File temporaryFile = null;
+
+	    try {
+		temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
+		executeService("CreateThesisDissertationFile", getThesis(request), temporaryFile, bean.getSimpleFileName(), bean
+			.getTitle(), bean.getSubTitle(), bean.getLanguage());
+	    } finally {
+		if (temporaryFile != null) {
+		    temporaryFile.delete();
+		}
+	    }
+	}
+
+	return prepareThesisSubmission(mapping, actionForm, request, response);
+    }
+
+    public ActionForward removeDissertation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	executeService("CreateThesisDissertationFile", getThesis(request), null, null, null, null, null);
+
+	return prepareThesisSubmission(mapping, actionForm, request, response);
+    }
+
+    public ActionForward prepareUploadAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("fileBean", new ThesisFileBean());
+	return mapping.findForward("thesis-upload-abstract");
+    }
+
+    public ActionForward uploadAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	ThesisFileBean bean = (ThesisFileBean) getRenderedObject();
+	RenderUtils.invalidateViewState();
+
+	if (bean != null && bean.getFile() != null) {
+	    File temporaryFile = null;
+
+	    try {
+		temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
+		executeService("CreateThesisAbstractFile", getThesis(request), temporaryFile, bean.getSimpleFileName(), null,
+			null, null);
+	    } finally {
+		if (temporaryFile != null) {
+		    temporaryFile.delete();
+		}
+	    }
+	}
+
+	return prepareThesisSubmission(mapping, actionForm, request, response);
+    }
+
+    public ActionForward removeAbstract(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	executeService("CreateThesisAbstractFile", getThesis(request), null, null, null, null, null);
+
+	return prepareThesisSubmission(mapping, actionForm, request, response);
+    }
+
+    public ActionForward downloadIdentificationSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Thesis thesis = getThesis(request);
+
+	try {
+	    StudentThesisIdentificationDocument document = new StudentThesisIdentificationDocument(thesis);
+	    byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(document);
+
+	    response.setContentLength(data.length);
+	    response.setContentType("application/pdf");
+	    response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
+
+	    response.getOutputStream().write(data);
+
+	    return null;
+	} catch (JRException e) {
+	    addActionMessage("error", request, "student.thesis.generate.identification.failed");
+	    return prepareThesisSubmission(mapping, actionForm, request, response);
+	}
     }
 
 }

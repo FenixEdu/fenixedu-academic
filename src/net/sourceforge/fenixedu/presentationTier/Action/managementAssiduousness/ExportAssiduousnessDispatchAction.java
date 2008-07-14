@@ -99,7 +99,8 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	    Collections.sort(employeeWorkSheetList, comparatorChain);
 	    response.setContentType("application/pdf");
 	    response.addHeader("Content-Disposition", "attachment; filename=verbetes.pdf");
-	    byte[] data = ReportsUtils.exportToPdf("assiduousness.workDaySheet", parameters, bundle, employeeWorkSheetList);
+	    byte[] data = ReportsUtils.exportToPdfFileAsByteArray("assiduousness.workDaySheet", parameters, bundle,
+		    employeeWorkSheetList);
 	    response.setContentLength(data.length);
 	    ServletOutputStream writer = response.getOutputStream();
 	    writer.write(data);
@@ -202,7 +203,8 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 		"ExportEmployeesAnualInfo", new Object[] { yearMonth, assiduousnessStatus });
 
 	Collections.sort(assignedEmployeeInfoList, new BeanComparator("employee.employeeNumber"));
-	byte[] data = ReportsUtils.exportToPdf("personnelSection.employeesAnualInfo", null, null, assignedEmployeeInfoList);
+	byte[] data = ReportsUtils.exportToPdfFileAsByteArray("personnelSection.employeesAnualInfo", null, null,
+		assignedEmployeeInfoList);
 	response.setContentLength(data.length);
 	response.setContentType("application/pdf");
 	response.setHeader("Content-disposition", "attachment; filename=" + fileName);
@@ -247,7 +249,8 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	Collections.sort(assiduousnessVacationsList, comparatorChain);
 	response.setContentType("application/pdf");
 	response.addHeader("Content-Disposition", "attachment; filename=ferias.pdf");
-	byte[] data = ReportsUtils.exportToPdf("assiduousness.vacations", parameters, bundle, assiduousnessVacationsList);
+	byte[] data = ReportsUtils.exportToPdfFileAsByteArray("assiduousness.vacations", parameters, bundle,
+		assiduousnessVacationsList);
 	response.setContentLength(data.length);
 	ServletOutputStream writer = response.getOutputStream();
 	writer.write(data);

@@ -52,10 +52,12 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	request.setAttribute("libraryCardSearch", libraryCardSearch);
 	final List<LibraryCardDTO> result = libraryCardSearch.getSearchResult();
 
-	CollectionPager<LibraryCardDTO> collectionPager = new CollectionPager<LibraryCardDTO>(result != null ? result : new ArrayList<LibraryCardDTO>(), 50);
+	CollectionPager<LibraryCardDTO> collectionPager = new CollectionPager<LibraryCardDTO>(result != null ? result
+		: new ArrayList<LibraryCardDTO>(), 50);
 	request.setAttribute("collectionPager", collectionPager);
 	final String pageNumberString = request.getParameter("pageNumber");
-	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer.valueOf(1);
+	final Integer pageNumber = !StringUtils.isEmpty(pageNumberString) ? Integer.valueOf(pageNumberString) : Integer
+		.valueOf(1);
 	request.setAttribute("pageNumber", pageNumber);
 	request.setAttribute("numberOfPages", Integer.valueOf(collectionPager.getNumberOfPages()));
 	request.setAttribute("resultPage", collectionPager.getPage(pageNumber));
@@ -108,8 +110,6 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
 	return showUsersBase(mapping, request, libraryCardSearch);
     }
-
-    
 
     private void setSearchCriteria(HttpServletRequest request, LibraryCardSearch libraryCardSearch) {
 	String partyClassificationString = request.getParameter("partyClassification");
@@ -213,7 +213,8 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	if (request.getParameter("modify") != null) {
 	    libraryCardDTO = getRenderedObject("libraryCardEdit") != null ? (LibraryCardDTO) getRenderedObject("libraryCardEdit")
 		    : libraryCardDTO;
-	    //TODO remove this condition, when user names that already exist are no longer bigger than the max length
+	    // TODO remove this condition, when user names that already exist
+	    // are no longer bigger than the max length
 	    if (libraryCardDTO.getPerson().getName().length() > maxUserNameLength) {
 		addMessage(request, "message.card.userName.tooLong", libraryCardDTO.getPerson().getName().length(),
 			maxUserNameLength);
@@ -229,10 +230,10 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	List<LibraryCardDTO> cardList = new ArrayList<LibraryCardDTO>();
 	cardList.add(libraryCardDTO);
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources", Language.getLocale());
-	byte[] data = ReportsUtils.exportToPdf("net.sourceforge.fenixedu.domain.library.LibrabryCard", null, bundle, cardList);
+	byte[] data = ReportsUtils.exportToPdfFileAsByteArray("net.sourceforge.fenixedu.domain.library.LibrabryCard", null,
+		bundle, cardList);
 
-	executeService("MarkLibraryCardAsEmited", new Object[] { libraryCardDTO
-		.getLibraryCard() });
+	executeService("MarkLibraryCardAsEmited", new Object[] { libraryCardDTO.getLibraryCard() });
 
 	response.setContentType("application/pdf");
 	response.addHeader("Content-Disposition", "attachment; filename=cartao.pdf");
@@ -263,8 +264,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("edit-card");
 	}
 
-	LibraryCard libraryCard = (LibraryCard) executeService("EditLibraryCard",
-		new Object[] { libraryCardDTO });
+	LibraryCard libraryCard = (LibraryCard) executeService("EditLibraryCard", new Object[] { libraryCardDTO });
 
 	request.setAttribute("libraryCardDTO", new LibraryCardDTO(libraryCard));
 	request.setAttribute("libraryCardSearch", new LibraryCardSearch(libraryCardDTO.getPerson().getPartyClassification()));
@@ -291,11 +291,10 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
 	if (!cardList.isEmpty()) {
 	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.LibraryResources", Language.getLocale());
-	    byte[] data = ReportsUtils
-		    .exportToPdf("net.sourceforge.fenixedu.domain.library.LibrabryCard", null, bundle, cardList);
+	    byte[] data = ReportsUtils.exportToPdfFileAsByteArray("net.sourceforge.fenixedu.domain.library.LibrabryCard", null,
+		    bundle, cardList);
 
-	    executeService("MarkLibraryCardListAsEmited",
-		    new Object[] { cardList });
+	    executeService("MarkLibraryCardListAsEmited", new Object[] { cardList });
 
 	    response.setContentType("application/pdf");
 	    response.addHeader("Content-Disposition", "attachment; filename=cartoes.pdf");
@@ -328,10 +327,9 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 		&& !libraryCard.getPartyClassification().equals(PartyClassification.TEACHER)) {
 	    reportID += "ForStudents";
 	}
-	byte[] data = ReportsUtils.exportToPdf(reportID, null, bundle, cardList);
+	byte[] data = ReportsUtils.exportToPdfFileAsByteArray(reportID, null, bundle, cardList);
 
-	executeService("MarkLibraryCardLetterAsEmited",
-		new Object[] { libraryCard });
+	executeService("MarkLibraryCardLetterAsEmited", new Object[] { libraryCard });
 
 	response.setContentType("application/pdf");
 	response.addHeader("Content-Disposition", "attachment; filename=carta.pdf");
@@ -383,10 +381,9 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	    if (result.equalsIgnoreCase("yes")) {
 		reportID += "ForStudents";
 	    }
-	    byte[] data = ReportsUtils.exportToPdf(reportID, null, bundle, cardList);
+	    byte[] data = ReportsUtils.exportToPdfFileAsByteArray(reportID, null, bundle, cardList);
 
-	    executeService("MarkLibraryCardListLettersAsEmited",
-		    new Object[] { cardList });
+	    executeService("MarkLibraryCardListLettersAsEmited", new Object[] { cardList });
 
 	    response.setContentType("application/pdf");
 	    response.addHeader("Content-Disposition", "attachment; filename=cartas.pdf");
@@ -502,7 +499,8 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
 	Integer libraryCardID = new Integer(request.getParameter("libraryCardID"));
 	LibraryCard libraryCard = rootDomainObject.readLibraryCardByOID(libraryCardID);
-	//TODO remove this condition, when user names that already exist are no longer bigger than the max length
+	// TODO remove this condition, when user names that already exist are no
+	// longer bigger than the max length
 	if (libraryCard.getUserName().length() > maxUserNameLength) {
 	    addMessage(request, "message.card.userName.tooLong", libraryCard.getUserName().length(), maxUserNameLength);
 	}

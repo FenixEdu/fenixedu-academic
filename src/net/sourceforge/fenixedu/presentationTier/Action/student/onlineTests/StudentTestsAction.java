@@ -63,8 +63,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 	try {
 	    final Collection<Registration> students = userView.getPerson().getStudentsSet();
 	    final Object[] args = { students.isEmpty() ? null : students.iterator().next() };
-	    studentExecutionCoursesList = (List) ServiceUtils
-		    .executeService( "ReadExecutionCoursesByStudentTests", args);
+	    studentExecutionCoursesList = (List) ServiceUtils.executeService("ReadExecutionCoursesByStudentTests", args);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -280,8 +279,8 @@ public class StudentTestsAction extends FenixDispatchAction {
 
 	List studentTestQuestionList;
 	try {
-	    studentTestQuestionList = (List) ServiceUtils.executeService("ReadStudentTestToDo", new Object[] {
-		    registration, testCode, new Boolean(false), path });
+	    studentTestQuestionList = (List) ServiceUtils.executeService("ReadStudentTestToDo", new Object[] { registration,
+		    testCode, new Boolean(false), path });
 	} catch (NotAuthorizedException e) {
 	    request.setAttribute("cantDoTest", new Boolean(true));
 	    return mapping.findForward("testError");
@@ -329,10 +328,10 @@ public class StudentTestsAction extends FenixDispatchAction {
 	InfoSiteStudentTestFeedback infoSiteStudentTestFeedback;
 	List<StudentTestQuestion> infoStudentTestQuestionList;
 	try {
-	    infoSiteStudentTestFeedback = (InfoSiteStudentTestFeedback) ServiceUtils.executeService(
-		    "InsertStudentTestResponses", new Object[] { registration, studentCode, testCode, userResponse, path });
-	    infoStudentTestQuestionList = (List) ServiceUtils.executeService("ReadStudentTestToDo", new Object[] {
-		    registration, testCode, new Boolean(false), path });
+	    infoSiteStudentTestFeedback = (InfoSiteStudentTestFeedback) ServiceUtils.executeService("InsertStudentTestResponses",
+		    new Object[] { registration, studentCode, testCode, userResponse, path });
+	    infoStudentTestQuestionList = (List) ServiceUtils.executeService("ReadStudentTestToDo", new Object[] { registration,
+		    testCode, new Boolean(false), path });
 	} catch (NotAuthorizedException e) {
 	    request.setAttribute("cantDoTest", new Boolean(true));
 	    return mapping.findForward("testError");
@@ -397,7 +396,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 		if (someRegistration.getPerson().equals(userView.getPerson())) {
 		    List<StudentTestLog> studentTestLogs = new ArrayList<StudentTestLog>();
 		    studentTestLogs.add(studentTestLog);
-		    byte[] data = ReportsUtils.exportToPdf(
+		    byte[] data = ReportsUtils.exportToPdfFileAsByteArray(
 			    "net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog.checksumReport", null, null,
 			    studentTestLogs);
 		    response.setContentType("application/pdf");
@@ -450,8 +449,8 @@ public class StudentTestsAction extends FenixDispatchAction {
 
 	Registration registration = Registration.readByUsername(userView.getUtilizador());
 	try {
-	    ServiceUtils.executeService("GiveUpTestQuestion", new Object[] { registration, distributedTest,
-		    exerciseCode, itemCode, getServlet().getServletContext().getRealPath("/") });
+	    ServiceUtils.executeService("GiveUpTestQuestion", new Object[] { registration, distributedTest, exerciseCode,
+		    itemCode, getServlet().getServletContext().getRealPath("/") });
 	} catch (NotAuthorizedFilterException e) {
 	    request.setAttribute("cantDoTest", new Boolean(true));
 	    return mapping.findForward("testError");
@@ -492,9 +491,8 @@ public class StudentTestsAction extends FenixDispatchAction {
 
 	List<StudentTestQuestion> studentTestQuestionList = null;
 	try {
-	    studentTestQuestionList = (List<StudentTestQuestion>) ServiceUtils.executeService("CleanSubQuestions",
-		    new Object[] { registration, distributedTest, exerciseCode, itemCode,
-			    getServlet().getServletContext().getRealPath("/") });
+	    studentTestQuestionList = (List<StudentTestQuestion>) ServiceUtils.executeService("CleanSubQuestions", new Object[] {
+		    registration, distributedTest, exerciseCode, itemCode, getServlet().getServletContext().getRealPath("/") });
 	} catch (NotAuthorizedFilterException e) {
 	    request.setAttribute("cantDoTest", new Boolean(true));
 	    return mapping.findForward("testError");
@@ -529,8 +527,8 @@ public class StudentTestsAction extends FenixDispatchAction {
 
 	List<StudentTestQuestion> studentTestQuestionList = null;
 	try {
-	    studentTestQuestionList = (List<StudentTestQuestion>) ServiceUtils.executeService(
-		    "ReadStudentTestForCorrection", new Object[] { registration, distributedTest, new Boolean(false), path });
+	    studentTestQuestionList = (List<StudentTestQuestion>) ServiceUtils.executeService("ReadStudentTestForCorrection",
+		    new Object[] { registration, distributedTest, new Boolean(false), path });
 	} catch (InvalidArgumentsServiceException e) {
 	    request.setAttribute("invalidTest", new Boolean(true));
 	    return mapping.findForward("testError");

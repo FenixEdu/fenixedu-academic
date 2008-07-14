@@ -88,7 +88,8 @@ public class ExportExtraWorkDispatchAction extends FenixDispatchAction {
 	response.setContentType("application/pdf");
 	response.addHeader("Content-Disposition", "attachment; filename=trabalhoExtraFunc.pdf");
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
-	byte[] data = ReportsUtils.exportToPdf("assiduousness.employeeExtraWork", parameters, bundle, extraWorkRequests);
+	byte[] data = ReportsUtils.exportToPdfFileAsByteArray("assiduousness.employeeExtraWork", parameters, bundle,
+		extraWorkRequests);
 	response.setContentLength(data.length);
 	ServletOutputStream writer = response.getOutputStream();
 	writer.write(data);

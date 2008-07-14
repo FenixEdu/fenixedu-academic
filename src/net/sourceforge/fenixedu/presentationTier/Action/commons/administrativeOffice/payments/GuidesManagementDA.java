@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO;
 import net.sourceforge.fenixedu.presentationTier.docs.accounting.GuideDocument;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public abstract class GuidesManagementDA extends PaymentsManagementDispatchAction {
 
@@ -41,7 +42,7 @@ public abstract class GuidesManagementDA extends PaymentsManagementDispatchActio
 
 	final GuideDocument document = new GuideDocument(managementDTO, getCurrentUnit(request),
 		getMessageResourceProvider(request), getServlet().getServletContext().getRealPath("/"));
-	final byte[] data = ReportsUtils.exportToPdf(document);
+	final byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(document);
 
 	response.setContentLength(data.length);
 	response.setContentType("application/pdf");

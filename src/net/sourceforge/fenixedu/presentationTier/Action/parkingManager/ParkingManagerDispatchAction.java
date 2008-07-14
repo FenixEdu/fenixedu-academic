@@ -56,8 +56,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public class ParkingManagerDispatchAction extends FenixDispatchAction {
     private static final int MAX_NOTE_LENGTH = 250;
 
-    public ActionForward showParkingRequests(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showParkingRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	// verificar autorização
 	ParkingRequestSearch parkingRequestSearch = (ParkingRequestSearch) getRenderedObject("parkingRequestSearch");
 
@@ -77,13 +77,11 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     private void setSearchCriteria(HttpServletRequest request, ParkingRequestSearch parkingRequestSearch) {
 	String parkingRequestState = request.getParameter("parkingRequestState");
 	if (!StringUtils.isEmpty(parkingRequestState)) {
-	    parkingRequestSearch
-		    .setParkingRequestState(ParkingRequestState.valueOf(parkingRequestState));
+	    parkingRequestSearch.setParkingRequestState(ParkingRequestState.valueOf(parkingRequestState));
 	}
 	String partyClassification = request.getParameter("partyClassification");
 	if (!StringUtils.isEmpty(partyClassification)) {
-	    parkingRequestSearch
-		    .setPartyClassification(PartyClassification.valueOf(partyClassification));
+	    parkingRequestSearch.setPartyClassification(PartyClassification.valueOf(partyClassification));
 	}
 	String personName = request.getParameter("personName");
 	if (!StringUtils.isEmpty(personName)) {
@@ -96,8 +94,8 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	}
     }
 
-    public ActionForward showRequest(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	// verificar autorização
 	final String codeString = request.getParameter("idInternal");
 	Integer code = null;
@@ -114,7 +112,11 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	request.setAttribute("parkingRequest", parkingRequest);
 	request.setAttribute("parkingPartyBean", new ParkingPartyBean(parkingRequest.getParkingParty()));
 	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-	if (!StringUtils.isEmpty(dynaActionForm.getString("cardAlwaysValid"))) { // in case of error validation
+	if (!StringUtils.isEmpty(dynaActionForm.getString("cardAlwaysValid"))) { // in
+	    // case
+	    // of
+	    // error
+	    // validation
 	    dynaActionForm.set("cardAlwaysValid", dynaActionForm.getString("cardAlwaysValid"));
 	} else {
 	    dynaActionForm.set("cardAlwaysValid", "no");
@@ -122,8 +124,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
 	if (parkingRequest.getParkingParty().getParty().isPerson()) {
 	    Person person = (Person) parkingRequest.getParkingParty().getParty();
-	    if (person.getTeacher() != null
-		    && person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
+	    if (person.getTeacher() != null && person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
 		request.setAttribute("monitor", "true");
 	    }
 	}
@@ -153,8 +154,8 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("showParkingRequest");
     }
 
-    public ActionForward showPhoto(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showPhoto(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	Integer personID = new Integer(request.getParameter("personID"));
 	Party party = rootDomainObject.readPartyByOID(personID);
@@ -175,8 +176,8 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	return null;
     }
 
-    public ActionForward editFirstTimeParkingParty(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editFirstTimeParkingParty(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	Integer parkingRequestID = new Integer(request.getParameter("code"));
 	final ParkingRequest parkingRequest = rootDomainObject.readParkingRequestByOID(parkingRequestID);
 
@@ -205,8 +206,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	request.setAttribute("carPlateNumber", carPlateNumber);
 
 	DynaActionForm dynaForm = (DynaActionForm) actionForm;
-	if (!StringUtils.isEmpty((String) dynaForm.get("accepted"))
-		|| request.getParameter("acceptPrint") != null) {
+	if (!StringUtils.isEmpty((String) dynaForm.get("accepted")) || request.getParameter("acceptPrint") != null) {
 	    Long cardNumber = null;
 	    Integer group = null;
 	    try {
@@ -262,8 +262,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
 	    if (!StringUtils.isEmpty(note) && note.length() > MAX_NOTE_LENGTH) {
 		ActionMessages actionMessages = getMessages(request);
-		actionMessages
-			.add("note", new ActionMessage("error.maxLengthExceeded", MAX_NOTE_LENGTH));
+		actionMessages.add("note", new ActionMessage("error.maxLengthExceeded", MAX_NOTE_LENGTH));
 		saveMessages(request, actionMessages);
 		request.setAttribute("idInternal", parkingRequestID);
 		return showRequest(mapping, actionForm, request, response);
@@ -291,15 +290,14 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	return showParkingRequests(mapping, actionForm, request, response);
     }
 
-    public ActionForward exportToPDFParkingCard(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward exportToPDFParkingCard(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	String parkingPartyID = (String) request.getParameter("parkingPartyID");
 
-	final ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(new Integer(
-		parkingPartyID));
-	Integer parkingGroupID = request.getParameter("groupID") != null ? Integer.valueOf(request
-		.getParameter("groupID")) : null;
+	final ParkingParty parkingParty = rootDomainObject.readParkingPartyByOID(new Integer(parkingPartyID));
+	Integer parkingGroupID = request.getParameter("groupID") != null ? Integer.valueOf(request.getParameter("groupID"))
+		: null;
 	ParkingGroup parkingGroup = null;
 	if (parkingGroupID != null) {
 	    parkingGroup = rootDomainObject.readParkingGroupByOID(parkingGroupID);
@@ -308,8 +306,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	}
 
 	Map<String, Object> parameters = new HashMap<String, Object>();
-	parameters.put("imageUrl", getServlet().getServletContext().getRealPath("/").concat(
-		"/images/Logo_IST_color.tiff"));
+	parameters.put("imageUrl", getServlet().getServletContext().getRealPath("/").concat("/images/Logo_IST_color.tiff"));
 
 	Person person = (Person) parkingParty.getParty();
 	parameters.put("number", getMostSignificantNumber(person, parkingGroup));
@@ -317,7 +314,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	List<Person> persons = new ArrayList<Person>();
 	persons.add(person);
 
-	byte[] data = ReportsUtils.exportToPdf("parkingManager.parkingCard", parameters, null, persons);
+	byte[] data = ReportsUtils.exportToPdfFileAsByteArray("parkingManager.parkingCard", parameters, null, persons);
 	response.setContentType("application/pdf");
 	response.addHeader("Content-Disposition", "attachment; filename=cartao.pdf");
 	response.setContentLength(data.length);
@@ -344,8 +341,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	}
 	if (p.getStudent() != null && !parkingGroup.getGroupName().equalsIgnoreCase("Bolseiros")) {
 	    DegreeType degreeType = p.getStudent().getMostSignificantDegreeType();
-	    Collection<Registration> registrations = p.getStudent().getRegistrationsByDegreeType(
-		    degreeType);
+	    Collection<Registration> registrations = p.getStudent().getRegistrationsByDegreeType(degreeType);
 	    for (Registration registration : registrations) {
 		StudentCurricularPlan scp = registration.getActiveStudentCurricularPlan();
 		if (scp != null) {
@@ -374,8 +370,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
     private boolean isValidCardNumber(Long cardNumber, ParkingPartyBean parkingPartyBean) {
 	for (ParkingParty parkingParty : rootDomainObject.getParkingParties()) {
-	    if (parkingParty.getCardNumber() != null
-		    && parkingPartyBean.getParkingParty() != parkingParty
+	    if (parkingParty.getCardNumber() != null && parkingPartyBean.getParkingParty() != parkingParty
 		    && parkingParty.getCardNumber().equals(cardNumber)) {
 		return false;
 	    }
@@ -389,14 +384,14 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	saveMessages(request, actionMessages);
     }
 
-    public ActionForward prepareSearchParty(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareSearchParty(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	request.setAttribute("searchPartyBean", new SearchPartyBean());
 	return mapping.findForward("searchParty");
     }
 
-    public ActionForward showParkingPartyRequests(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward showParkingPartyRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	IViewState viewState = RenderUtils.getViewState("searchPartyBean");
 	SearchPartyBean searchPartyBean = null;
@@ -437,13 +432,12 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	request.setAttribute("searchPartyBean", new SearchPartyBean(party, carPlateNumber));
     }
 
-    public ActionForward prepareEditParkingParty(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareEditParkingParty(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	ParkingParty parkingParty = null;
 	ParkingPartyBean parkingPartyBean = (ParkingPartyBean) getFactoryObject();
-	if ((!StringUtils.isEmpty(request.getParameter("addVehicle")) && request.getParameter(
-		"addVehicle").equals("yes"))
+	if ((!StringUtils.isEmpty(request.getParameter("addVehicle")) && request.getParameter("addVehicle").equals("yes"))
 		&& parkingPartyBean != null) {
 	    parkingPartyBean.addVehicle();
 	    parkingParty = parkingPartyBean.getParkingParty();
@@ -461,7 +455,11 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
 	if (parkingParty.hasAnyVehicles()) {
 	    if (!StringUtils.isEmpty(dynaActionForm.getString("cardAlwaysValid"))) {
-		dynaActionForm.set("cardAlwaysValid", dynaActionForm.getString("cardAlwaysValid")); // in case of error validation
+		dynaActionForm.set("cardAlwaysValid", dynaActionForm.getString("cardAlwaysValid")); // in
+		// case
+		// of
+		// error
+		// validation
 	    } else {
 		if (parkingParty.getCardStartDate() == null) {
 		    dynaActionForm.set("cardAlwaysValid", "yes");
@@ -470,7 +468,11 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 		}
 	    }
 	} else {
-	    if (!StringUtils.isEmpty(dynaActionForm.getString("cardAlwaysValid"))) { // in case of error validation
+	    if (!StringUtils.isEmpty(dynaActionForm.getString("cardAlwaysValid"))) { // in
+		// case
+		// of
+		// error
+		// validation
 		dynaActionForm.set("cardAlwaysValid", dynaActionForm.getString("cardAlwaysValid"));
 	    } else {
 		dynaActionForm.set("cardAlwaysValid", "no");
@@ -479,8 +481,8 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("editParkingParty");
     }
 
-    public ActionForward editParkingParty(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward editParkingParty(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 
 	ParkingPartyBean parkingPartyBean = (ParkingPartyBean) getFactoryObject();
 	request.setAttribute("parkingPartyID", parkingPartyBean.getParkingParty().getIdInternal());
@@ -503,13 +505,11 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	boolean vehicleDataCorrect = true;
 	boolean deleteAllVehicles = true;
 	Set<String> vehiclePlates = new HashSet<String>();
-	for (final Iterator<VehicleBean> iter = parkingPartyBean.getVehicles().iterator(); iter
-		.hasNext();) {
+	for (final Iterator<VehicleBean> iter = parkingPartyBean.getVehicles().iterator(); iter.hasNext();) {
 	    VehicleBean vehicle = iter.next();
 	    if (!vehicle.getDeleteVehicle()) {
 		deleteAllVehicles = false;
-		if (StringUtils.isEmpty(vehicle.getVehicleMake())
-			|| StringUtils.isEmpty(vehicle.getVehiclePlateNumber())) {
+		if (StringUtils.isEmpty(vehicle.getVehicleMake()) || StringUtils.isEmpty(vehicle.getVehiclePlateNumber())) {
 		    vehicleDataCorrect = false;
 		    break;
 		}
@@ -536,8 +536,8 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	return showParkingPartyRequests(mapping, actionForm, request, response);
     }
 
-    public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
 	ParkingRequestSearch parkingRequestSearch = new ParkingRequestSearch();
 	setSearchCriteria(request, parkingRequestSearch);
 	List<ParkingRequest> parkingRequestList = parkingRequestSearch.getSearchResult();
@@ -550,23 +550,19 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	spreadsheet.addHeader("Data Pedido");
 	spreadsheet.addHeader("Outras Informações", 6000);
 
-	final ResourceBundle enumerationBundle = ResourceBundle.getBundle(
-		"resources.EnumerationResources", Language.getLocale());
+	final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	for (ParkingRequest parkingRequest : parkingRequestList) {
 	    if (parkingRequest.getParkingParty().getParty().isPerson()) {
 		Person person = (Person) parkingRequest.getParkingParty().getParty();
 		spreadsheet.newRow();
 		int firstRow = spreadsheet.getRow().getRowNum();
-		spreadsheet.addCell(enumerationBundle.getString(parkingRequestSearch
-			.getPartyClassification().name()));
+		spreadsheet.addCell(enumerationBundle.getString(parkingRequestSearch.getPartyClassification().name()));
 		spreadsheet.addCell(parkingRequest.getParkingParty().getMostSignificantNumber());
 		spreadsheet.addCell(person.getName());
-		spreadsheet.addCell(enumerationBundle.getString(parkingRequest.getParkingRequestState()
-			.name()));
+		spreadsheet.addCell(enumerationBundle.getString(parkingRequest.getParkingRequestState().name()));
 		spreadsheet.addDateTimeCell(parkingRequest.getCreationDate());
 		if (!parkingRequest.getParkingParty().getDegreesInformation().isEmpty()) {
-		    Iterator<String> iterator = parkingRequest.getParkingParty().getDegreesInformation()
-			    .iterator();
+		    Iterator<String> iterator = parkingRequest.getParkingParty().getDegreesInformation().iterator();
 		    String degreeInfo = (String) iterator.next();
 		    spreadsheet.addCell(degreeInfo);
 		    while (iterator.hasNext()) {
@@ -574,12 +570,10 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 			degreeInfo = (String) iterator.next();
 			spreadsheet.addCell(degreeInfo, 5);
 		    }
-		    int lastRow = firstRow
-			    + parkingRequest.getParkingParty().getDegreesInformation().size() - 1;
+		    int lastRow = firstRow + parkingRequest.getParkingParty().getDegreesInformation().size() - 1;
 		    if (firstRow != lastRow) {
 			for (int iter = 0; iter < 5; iter++) {
-			    spreadsheet.getSheet().addMergedRegion(
-				    new Region(firstRow, (short) iter, lastRow, (short) iter));
+			    spreadsheet.getSheet().addMergedRegion(new Region(firstRow, (short) iter, lastRow, (short) iter));
 			}
 		    }
 		}
@@ -596,8 +590,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
     private boolean isRepeatedCardNumber(Long cardNumber, ParkingParty parkingParty) {
 	for (ParkingParty tempParkingParty : rootDomainObject.getParkingParties()) {
-	    if (tempParkingParty.getCardNumber() != null
-		    && tempParkingParty.getCardNumber().equals(cardNumber)
+	    if (tempParkingParty.getCardNumber() != null && tempParkingParty.getCardNumber().equals(cardNumber)
 		    && tempParkingParty != parkingParty) {
 		return false;
 	    }
