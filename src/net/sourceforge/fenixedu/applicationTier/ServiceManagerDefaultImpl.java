@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,13 +15,13 @@ import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.applicationTier.logging.UserExecutionLog;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.fenixframework.pstm.IllegalWriteException;
-import pt.ist.fenixframework.pstm.ServiceInfo;
-import pt.ist.fenixframework.pstm.Transaction;
 
 import org.apache.commons.collections.FastHashMap;
 import org.apache.log4j.Logger;
 
+import pt.ist.fenixframework.pstm.IllegalWriteException;
+import pt.ist.fenixframework.pstm.ServiceInfo;
+import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.berserk.logic.filterManager.FilterInvocationTimingType;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.ClassNotIFilterException;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterRetrieveException;
@@ -180,12 +181,18 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
             Map failedPreFilters = filterChainFailedException.getFailedFilters(FilterInvocationTimingType.PRE);
             Map failedPostFilters = filterChainFailedException.getFailedFilters(FilterInvocationTimingType.POST);
             if (failedPreFilters != null && !failedPreFilters.isEmpty()) {
-                List failledExceptions = (List) failedPreFilters.values().iterator().next();
-                throw (FenixFilterException) failledExceptions.get(0);
+        	for (List failledExceptions : (Collection<List>) failedPreFilters.values()) {
+        	    if (!failledExceptions.isEmpty()) {
+        		throw (FenixFilterException) failledExceptions.get(0);
+        	    }
+        	}
             }
             if (failedPostFilters != null && !failedPostFilters.isEmpty()) {
-                List failledExceptions = (List) failedPostFilters.values().iterator().next();
-                throw (FenixFilterException) failledExceptions.get(0);
+        	for (List failledExceptions : (Collection<List>) failedPostFilters.values()) {
+        	    if (!failledExceptions.isEmpty()) {
+        		throw (FenixFilterException) failledExceptions.get(0);
+        	    }
+        	}
             }
             throw new FenixServiceException(e);
         } catch (ServiceManagerException e) {
