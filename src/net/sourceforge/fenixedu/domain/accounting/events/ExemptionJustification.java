@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.resources.LabelFormatter;
@@ -8,6 +9,7 @@ public abstract class ExemptionJustification extends ExemptionJustification_Base
 
     protected ExemptionJustification() {
 	super();
+	super.setRootDomainObject(RootDomainObject.getInstance());
     }
 
     protected void init(final Exemption exemption, final String reason) {
@@ -16,13 +18,11 @@ public abstract class ExemptionJustification extends ExemptionJustification_Base
 
 	super.setExemption(exemption);
 	super.setReason(reason);
-
     }
 
     private void checkParameters(Exemption exemption) {
 	if (exemption == null) {
-	    throw new DomainException(
-		    "error.accounting.events.ExemptionJustification.exemption.cannot.be.null");
+	    throw new DomainException("error.accounting.events.ExemptionJustification.exemption.cannot.be.null");
 	}
     }
 
@@ -43,7 +43,6 @@ public abstract class ExemptionJustification extends ExemptionJustification_Base
 	removeExemption();
 
 	super.deleteDomainObject();
-
     }
 
     @Override
