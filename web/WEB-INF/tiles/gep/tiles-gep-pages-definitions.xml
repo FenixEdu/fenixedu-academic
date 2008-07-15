@@ -83,8 +83,11 @@
 	<definition name="show-execution-courses-for-inquiries" extends="definition.gep.two-column" >
 		<put name="body" value="/gep/inquiries/showExecutionCoursesForInquiries.jsp" />
 	</definition>
-    <!-- PROTOCOLS -->          
+    <!-- PROTOCOLS -->
 	<definition name="search-protocols" extends="definition.gep.two-column">
         <put name="body" value="/protocols/searchProtocols.jsp"/>
+    </definition>	
+	<definition name="reports-by-degree-type" extends="definition.gep.two-column">
+        <put name="body" value="/gep/reportsByDegreeType.jsp"/>
     </definition>	
 </tiles-definitions>

@@ -35,6 +35,11 @@
 	  		<bean:message key="link.gep.ETIsReport" bundle="GEP_RESOURCES" />
 	  	</html:link>
 	</li>
+	<li>
+	  	<html:link page="/reportsByDegreeType.do?method=selectDegreeType">
+	  		<bean:message key="link.reports.by.degree.type" bundle="GEP_RESOURCES" />
+	  	</html:link>
+	</li>
 
 	<li class="navheader">
 		<bean:message key="label.inquiries" bundle="INQUIRIES_RESOURCES"/>

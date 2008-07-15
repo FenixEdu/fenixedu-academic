@@ -294,6 +294,11 @@
    	       <forward name="search-protocols" path="search-protocols"/>
 	    </action>
 			
+		<action path="/reportsByDegreeType"
+	      		parameter="method"  
+	      		type="net.sourceforge.fenixedu.presentationTier.Action.gep.ReportsByDegreeTypeDA"> 	                   
+   	       <forward name="selectDegreeType" path="reports-by-degree-type"/>
+	    </action>
 
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->

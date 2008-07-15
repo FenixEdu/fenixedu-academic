@@ -7,12 +7,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -91,28 +89,8 @@ public class TeacherService extends TeacherService_Base {
 
     public Double getTeachingDegreeCredits() throws ParseException {
 	double credits = 0;
-	ExecutionYear executionYear = ExecutionYear.readStartExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments();
 	for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
-	    ExecutionCourse executionCourse = degreeTeachingService.getProfessorship().getExecutionCourse();
-	    ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-	    if (!executionCourse.isMasterDegreeDFAOrDEAOnly()
-		    && (executionSemester.getExecutionYear().isBefore(executionYear) || !executionCourse
-			    .areAllOptionalCurricularCoursesWithLessTenEnrolments())) {
-		Teacher teacher = degreeTeachingService.getProfessorship().getTeacher();
-		Category teacherCategory = teacher.getCategoryForCreditsByPeriod(executionSemester);
-		if (teacherCategory != null
-			&& ((teacherCategory.getCode().equals("AST") && teacherCategory.getLongName().equals("ASSISTENTE")) || (teacherCategory
-				.getCode().equals("ASC") && teacherCategory.getLongName().equals("ASSISTENTE CONVIDADO")))
-			&& degreeTeachingService.getShift().containsType(ShiftType.TEORICA)) {
-		    double hours = degreeTeachingService.getShift().getUnitHours().doubleValue();
-		    credits += (hours * (degreeTeachingService.getPercentage().doubleValue() / 100)) * 1.5;
-		} else {
-		    double hoursAfter20PM = degreeTeachingService.getShift().hoursAfter(20);
-		    double hoursBefore20PM = degreeTeachingService.getShift().getUnitHours().doubleValue() - hoursAfter20PM;
-		    credits += hoursBefore20PM * (degreeTeachingService.getPercentage().doubleValue() / 100);
-		    credits += (hoursAfter20PM * (degreeTeachingService.getPercentage().doubleValue() / 100)) * 1.5;
-		}
-	    }
+	    credits += degreeTeachingService.calculateCredits();
 	}
 	return round(credits);
     }
