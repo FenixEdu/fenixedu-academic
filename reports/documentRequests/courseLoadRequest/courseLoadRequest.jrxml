@@ -71,11 +71,11 @@
 			</band>
 			</groupHeader>
 			<groupFooter>
-			<band height="195"  isSplitAllowed="true" >
+			<band height="170"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="200"
-						y="131"
+						y="105"
 						width="160"
 						height="21"
 						key="staticText-24"/>
@@ -92,7 +92,7 @@
 				<line direction="TopDown">
 					<reportElement
 						x="131"
-						y="176"
+						y="149"
 						width="314"
 						height="0"
 						key="line-1"/>
@@ -101,7 +101,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="4"
+						y="3"
 						width="469"
 						height="27"
 						key="staticText-25"/>
@@ -118,7 +118,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="63"
+						y="54"
 						width="469"
 						height="18"
 						key="textField-27"/>
@@ -135,7 +135,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="181"
+						y="154"
 						width="469"
 						height="14"
 						key="textField-28"/>
@@ -152,7 +152,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="46"
+						y="37"
 						width="469"
 						height="17"
 						key="textField-29"/>
@@ -221,7 +221,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="55"  isSplitAllowed="true" >
+			<band height="54"  isSplitAllowed="true" >
 				<subreport  isUsingCache="true">
 					<reportElement
 						x="0"
@@ -236,7 +236,7 @@
 				<subreport  isUsingCache="true">
 					<reportElement
 						x="0"
-						y="30"
+						y="29"
 						width="595"
 						height="25"
 						key="subreport-2"
