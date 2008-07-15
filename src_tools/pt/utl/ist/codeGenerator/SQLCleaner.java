@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.CollectionDescriptor;
 
+import pt.ist.fenixWebFramework.repository.database.DatabaseDescriptorFactory;
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.pstm.MetadataManager;
-import pt.utl.ist.codeGenerator.database.DatabaseDescriptorFactory;
 
 public class SQLCleaner {
 
