@@ -20,10 +20,10 @@
 </schema>
 
 <schema name="DegreeCandidacyForGraduatedPersonPR.view"
-	type="net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
-	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
-	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
 </schema>
 
 <schema name="FixedAmountPR.view"
@@ -39,6 +39,11 @@
 
 <schema name="DiplomaRequestPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DiplomaRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.SecondCycleIndividualCandidacyPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
 </schema>
 
@@ -153,10 +158,10 @@
 </schema>
 
 <schema name="DegreeCandidacyForGraduatedPersonPR.edit"
-	type="net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
-	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
-	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
 	<setter signature="edit(amountForInstitutionStudent,amountForExternalStudent)"/>
 </schema>
 
@@ -174,6 +179,11 @@
 
 <schema name="DiplomaRequestPR.edit"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DeclarationRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit">
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.SecondCycleIndividualCandidacyPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit">
 </schema>
 
@@ -280,6 +290,11 @@
 
 <schema name="DiplomaRequestPR.view-student"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.DiplomaRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view-student">
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.SecondCycleIndividualCandidacyPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view-student">
 </schema>
 
@@ -396,8 +411,8 @@
 </schema>
 
 <schema name="DegreeCandidacyForGraduatedPersonPR.view-student"
-	type="net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
-	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
-	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR.amountForExternalStudent"/>
 </schema>

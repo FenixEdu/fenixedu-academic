@@ -277,7 +277,7 @@
 
 <schema name="CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean.edit" 
 		type="net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean" 
-		bundle="APPLICATION_RESOURCES" >
+		bundle="APPLICATION_RESOURCES">
    	<slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" 
    	key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePenaltyExemptionBean.justificationType">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.PenaltyExemptionTypeProviderForCreatePenaltyExemptionBean" />
@@ -287,6 +287,14 @@
     <slot name="reason" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePenaltyExemptionBean.reason" layout="longText" />
 </schema>
 
+<schema name="SecondCycleIndividualCandidacyExemptionBean.edit" 
+		type="net.sourceforge.fenixedu.dataTransferObject.accounting.SecondCycleIndividualCandidacyExemptionBean"
+		bundle="APPLICATION_RESOURCES">
+	<slot name="justificationType" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.net.sourceforge.fenixedu.dataTransferObject.accounting.SecondCycleIndividualCandidacyExemptionBean.justificationType">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.SecondCycleIndividualCandidacyExemptionJustificationProvider" />
+        <property name="saveOptions" value="true"/>
+	</slot>
+</schema>
 
 <schema name="InstallmentPenaltyExemption.view" 
 		type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption" 
@@ -308,6 +316,12 @@
 		bundle="APPLICATION_RESOURCES">
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.description" />
     <slot name="reason" key="label.net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption.reason" />
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyExemption.view"
+		type="net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption" 
+		bundle="APPLICATION_RESOURCES">
+	<slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption.description" />
 </schema>
 
 <schema name="GratuityExemption.view" type="net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption" bundle="APPLICATION_RESOURCES">

@@ -10822,6 +10822,15 @@
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>
+    <service>
+    	<name>CreateSecondCycleIndividualCandidacyExemption</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateSecondCycleIndividualCandidacyExemption</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>
 	<service>
 		<name>CreateAcademicCalendarEntry</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement.CreateAcademicCalendarEntry</implementationClass>
@@ -12278,7 +12287,7 @@
 		<filterChains/>
 	</service>
 	
-		<service>
+	<service>
 		<name>CreateResidencePaymentCodes</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement.CreateResidencePaymentCodes</implementationClass>
 		<isTransactional>true</isTransactional>

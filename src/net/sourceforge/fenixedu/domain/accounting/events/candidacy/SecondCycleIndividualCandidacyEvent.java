@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -26,9 +27,9 @@ public class SecondCycleIndividualCandidacyEvent extends SecondCycleIndividualCa
 	final AdministrativeOffice administrativeOffice = readAdministrativeOffice();
 	checkParameters(candidacy, administrativeOffice);
 	super.init(administrativeOffice, EventType.SECOND_CYCLE_INDIVIDUAL_CANDIDACY, person);
-	setIndividualCandidacy(candidacy);	
+	setIndividualCandidacy(candidacy);
     }
-    
+
     private void checkParameters(final SecondCycleIndividualCandidacy candidacy, final AdministrativeOffice administrativeOffice) {
 	if (candidacy == null) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacyt.invalid.candidacy");
@@ -61,5 +62,24 @@ public class SecondCycleIndividualCandidacyEvent extends SecondCycleIndividualCa
     @Override
     public Account getToAccount() {
 	return getAdministrativeOffice().getUnit().getInternalAccount();
+    }
+
+    @Override
+    public boolean isExemptionAppliable() {
+	return true;
+    }
+
+    public boolean hasSecondCycleIndividualCandidacyExemption() {
+	return getSecondCycleIndividualCandidacyExemption() != null;
+    }
+
+    public SecondCycleIndividualCandidacyExemption getSecondCycleIndividualCandidacyExemption() {
+	for (final Exemption exemption : getExemptionsSet()) {
+	    if (exemption instanceof SecondCycleIndividualCandidacyExemption) {
+		return (SecondCycleIndividualCandidacyExemption) exemption;
+	    }
+	}
+
+	return null;
     }
 }

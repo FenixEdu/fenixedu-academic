@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.accounting.postingRules;
+package net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy;
 
 import java.util.Collections;
 import java.util.List;

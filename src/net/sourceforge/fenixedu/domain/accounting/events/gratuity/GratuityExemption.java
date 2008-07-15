@@ -36,7 +36,6 @@ public abstract class GratuityExemption extends GratuityExemption_Base {
 		    }
 		}
 	    }
-
 	});
     }
 
