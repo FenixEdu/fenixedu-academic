@@ -20,9 +20,9 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.SimpleMailSenderAction;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/sendEmail", module = "publicRelations")
 @Forwards( {

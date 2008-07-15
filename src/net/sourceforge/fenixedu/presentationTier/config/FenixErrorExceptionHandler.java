@@ -25,33 +25,10 @@ import org.apache.struts.config.ExceptionConfig;
  */
 public class FenixErrorExceptionHandler extends ExceptionHandler {
 
-    /**
-     *  
-     */
     public FenixErrorExceptionHandler() {
         super();
     }
 
-    /**
-     * Handle the exception. Return the <code>ActionForward</code> instance
-     * (if any) returned by the called <code>ExceptionHandler</code>.
-     * 
-     * @param ex
-     *            The exception to handle
-     * @param ae
-     *            The ExceptionConfig corresponding to the exception
-     * @param mapping
-     *            The ActionMapping we are processing
-     * @param formInstance
-     *            The ActionForm we are processing
-     * @param request
-     *            The servlet request we are processing
-     * @param response
-     *            The servlet response we are creating
-     * @throws ServletException 
-     * 
-     * @since Struts 1.1
-     */
     public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping,
             ActionForm formInstance, HttpServletRequest request, HttpServletResponse response) throws ServletException {
 

@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportRes
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidentListsHolderBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFRow;

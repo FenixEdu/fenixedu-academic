@@ -63,7 +63,7 @@
         <set-property property="defaultTileDefinition" value="definition.residenceManagement.master" />
     </plug-in>
     
-    <plug-in className="net.sourceforge.fenixedu.presentationTier.struts.plugin.StrutsAnnotationsPlugIn" />
+    <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn" />
     
     
 </struts-config>

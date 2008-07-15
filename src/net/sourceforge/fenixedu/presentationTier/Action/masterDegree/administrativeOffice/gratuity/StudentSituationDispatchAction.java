@@ -21,11 +21,11 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Exceptions;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Input;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Input;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;

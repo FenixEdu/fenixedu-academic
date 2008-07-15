@@ -75,6 +75,8 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
 
             casEnabled = Boolean.valueOf(getProperty("cas.enabled"));
             casLoginUrl = getProperty("cas.loginUrl");
+
+            exceptionHandlerClassname = "net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler";
         }};
     }
 }

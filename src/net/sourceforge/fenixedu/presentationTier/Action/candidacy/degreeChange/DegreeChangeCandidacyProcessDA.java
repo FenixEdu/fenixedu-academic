@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChang
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.period.DegreeChangeCandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

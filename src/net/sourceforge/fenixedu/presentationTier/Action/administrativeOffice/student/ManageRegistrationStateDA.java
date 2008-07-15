@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateDeleter;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

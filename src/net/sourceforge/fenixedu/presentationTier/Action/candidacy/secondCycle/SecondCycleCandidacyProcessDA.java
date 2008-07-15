@@ -23,9 +23,9 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleI
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forward;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Forwards;
-import net.sourceforge.fenixedu.presentationTier.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.SpreadsheetXLSExporter;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
