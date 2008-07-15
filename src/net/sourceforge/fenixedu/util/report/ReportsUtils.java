@@ -23,6 +23,7 @@ import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JRParameter;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -74,6 +75,21 @@ public class ReportsUtils extends PropertiesManager {
 
     static public String getReportsPropertiesFile() {
 	return reportsPropertiesFile;
+    }
+
+    static public boolean exportToPdfFile(String key, Map parameters, ResourceBundle bundle, Collection dataSource,
+	    String destination) {
+	try {
+	    final JasperPrint jasperPrint = createJasperPrint(key, parameters, bundle, dataSource);
+	    if (jasperPrint != null) {
+		JasperExportManager.exportReportToPdfFile(jasperPrint, destination);
+		return true;
+	    } else {
+		return false;
+	    }
+	} catch (JRException e) {
+	    return false;
+	}
     }
 
     static public byte[] exportToPdfFileAsByteArray(final String key, final Map parameters, final ResourceBundle bundle,
