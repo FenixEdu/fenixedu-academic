@@ -41,3 +41,4 @@ function executeWithTempFile() {
 }
 
 execute "Alter Residence Year and Month" alterResidenceYearAndMonth.sql
+execute "Update Country information" updateCountryName.sql IST
