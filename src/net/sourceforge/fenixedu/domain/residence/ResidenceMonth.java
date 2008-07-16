@@ -1,7 +1,11 @@
 package net.sourceforge.fenixedu.domain.residence;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
@@ -36,25 +40,40 @@ public class ResidenceMonth extends ResidenceMonth_Base {
 	return false;
     }
 
-    @Override
-    public void setPaymentLimitDay(Integer paymentLimitDay) {
-	if (!isAbleToEditPaymentLimitDate()) {
-	    throw new DomainException("label.error.unable.to.change.paymentLimitDay.when.there.are.events");
-	}
-	super.setPaymentLimitDay(paymentLimitDay);
-    }
-
     public DateTime getPaymentStartDate() {
 	LocalDate date = new LocalDate(getYear().getYear(), getMonth().getNumberOfMonth(), 1);
 	return date.toDateTimeAtStartOfDay();
     }
 
     public DateTime getPaymentLimitDateTime() {
-	LocalDate date = new LocalDate(getYear().getYear(), getMonth().getNumberOfMonth(), getPaymentLimitDay());
+	ResidenceYear residenceYear = getYear();
+	LocalDate date = new LocalDate(residenceYear.getYear(), getMonth().getNumberOfMonth(), residenceYear.getPaymentLimitDay());
 	return date.toDateTimeAtStartOfDay();
     }
 
     public boolean isAbleToEditPaymentLimitDate() {
 	return getEventsCount() == 0;
+    }
+    
+    public Set<ResidenceEvent> getEventsWithPaymentCodes() {
+	Set<ResidenceEvent> eventsWithCodes = new HashSet<ResidenceEvent>();
+	
+	for (ResidenceEvent event : getEvents()) {
+	    if (event.getPaymentCodesCount() > 0) {
+		eventsWithCodes.add(event);
+	    }
+	}
+	return eventsWithCodes;
+    }
+    
+    public Set<ResidenceEvent> getEventsWithoutPaymentCodes() {
+	Set<ResidenceEvent> eventsWithoutCodes = new HashSet<ResidenceEvent>();
+	
+	for (ResidenceEvent event : getEvents()) {
+	    if (event.getPaymentCodesCount() == 0) {
+		eventsWithoutCodes.add(event);
+	    }
+	}
+	return eventsWithoutCodes;
     }
 }

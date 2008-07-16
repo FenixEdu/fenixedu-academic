@@ -40,3 +40,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Residence Year and Month" alterResidenceYearAndMonth.sql

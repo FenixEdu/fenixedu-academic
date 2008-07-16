@@ -13,6 +13,11 @@ public class ImportResidenceEventBean extends SimpleFileBean {
 
     private String spreadsheetName;
     
+    public ImportResidenceEventBean(ResidenceMonth month) {
+	setResidenceMonth(month);
+	setResidenceYear(month.getYear());
+    }
+    
     public ImportResidenceEventBean() {
 	setResidenceYear(null);
 	setResidenceMonth(null);
@@ -24,6 +29,9 @@ public class ImportResidenceEventBean extends SimpleFileBean {
 
     public void setResidenceYear(ResidenceYear residenceYear) {
 	this.residenceYear = new DomainReference<ResidenceYear>(residenceYear);
+	if (residenceYear != null) {
+	    setPaymentLimitDay(residenceYear.getPaymentLimitDay());
+	}
     }
 
     public ResidenceMonth getResidenceMonth() {
@@ -32,9 +40,6 @@ public class ImportResidenceEventBean extends SimpleFileBean {
 
     public void setResidenceMonth(ResidenceMonth residenceMonth) {
 	this.residenceMonth = new DomainReference<ResidenceMonth>(residenceMonth);
-	if (residenceMonth != null) {
-	    setPaymentLimitDay(residenceMonth.getPaymentLimitDay());
-	}
     }
 
     public Integer getPaymentLimitDay() {

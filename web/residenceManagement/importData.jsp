@@ -8,29 +8,17 @@
 <html:xhtml />
 
 <em><bean:message key="label.residenceManagement" bundle="RESIDENCE_MANAGEMENT_RESOURCES" /></em>
-<h2><bean:message key="label.debtManagement" bundle="RESIDENCE_MANAGEMENT_RESOURCES" /></h2>
+<h2><bean:message key="label.import.residences" bundle="RESIDENCE_MANAGEMENT_RESOURCES" /></h2>
+
+<bean:define id="monthOID" name="importFileBean" property="residenceMonth.OID"/>
 
 <ul>
 	<li>
-		<html:link page="/residenceManagement.do?method=createYear">
-			<bean:message key="label.createNewYear"	bundle="RESIDENCE_MANAGEMENT_RESOURCES" />
-		</html:link>
-	</li>
-	<li>
-		<html:link page="/residenceManagement.do?method=configurePaymentLimits">
-			<bean:message key="label.configurePaymentLimits" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />
+		<html:link page="<%= "/residenceEventManagement.do?method=manageResidenceEvents&monthOID="  + monthOID%>"> 
+			<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>
 		</html:link>
 	</li>
 </ul>
-
-<fr:form action="/residenceManagement.do?method=postBack">
-	<fr:edit id="editBean" name="importFileBean" schema="edit.import.residence.bean">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thleft thlight" />
-		</fr:layout>
-		<fr:destination name="postback" path="/residenceManagement.do?method=postBack" />
-	</fr:edit>
-</fr:form>
 
 <logic:present name="importFileBean" property="residenceMonth">
 
@@ -53,7 +41,20 @@
 		</ul>
 	</logic:notEmpty>
 	
-	<fr:form action="/residenceManagement.do?method=importData" encoding="multipart/form-data">
+	
+	<logic:present name="createdDebts">
+		<p class="mtop15 mbottom1">
+			<span class="success0">
+				<bean:message key="label.debts.created" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
+			</span>
+		</p>
+	</logic:present>
+	
+	<div class="infoop2">
+		<bean:message key="label.information.xls.format" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
+	</div>
+	
+	<fr:form action="<%= "/residenceManagement.do?method=importData&monthOID=" + monthOID %>" encoding="multipart/form-data">
 		<fr:edit id="importFile" name="importFileBean" visible="false" />
 
 		<table class="tstyle5 thleft thlight">
@@ -75,10 +76,10 @@
 				</td>
 				<td>
 					<fr:edit id="file" name="importFileBean" slot="file" >
-								<fr:layout>
-									<fr:property name="size" value="30"/>
-								</fr:layout>
-						</fr:edit>
+						<fr:layout>
+							<fr:property name="size" value="30"/>
+						</fr:layout>
+					</fr:edit>
 				</td>
 				<td>
 					<html:submit>
@@ -92,46 +93,59 @@
 	<logic:present name="importList">
 		<div id="warn">
 			<bean:define id="totalImports" name="importList" property="numberOfImports" /> 
-			<bean:message key="label.total.imports" arg0="<%= totalImports.toString() %>" bundle="RESIDENCE_MANAGEMENT_RESOURCES" /> 
+			<p><em><bean:message key="label.total.imports" arg0="<%= totalImports.toString() %>" bundle="RESIDENCE_MANAGEMENT_RESOURCES" /></em></p> 
 			
 			<logic:notEmpty name="importList" property="unsuccessfulEvents">
 				<bean:size id="numberOfErrors" name="importList"	property="unsuccessfulEvents" />
-				<p class="error">
-					<bean:message key="label.errors.in.import" arg0="<%= numberOfErrors.toString() %>" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />. 
-					<%=ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX%><a href="#statusNotOk"> 
-						<bean:message key="label.details" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />
-					</a>
+				<p>
+					<span class="error">
+						<bean:message key="label.errors.in.import" arg0="<%= numberOfErrors.toString() %>" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />. 
+						<%=ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX%><a href="#statusNotOk"> 
+							<bean:message key="label.details" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />
+						</a>
+					</span>
 				</p>
 			</logic:notEmpty>
 		</div>
 
 
 		<logic:notEmpty name="importList" property="successfulEvents">
-			<bean:message key="label.debts.to.create" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />
+			<p class="mtop2 mbottom05"><bean:message key="label.valid.residents" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />:</p>
 			<fr:view name="importList" property="successfulEvents" schema="show.residenceEventBean">
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle1" />
+						<fr:property name="classes" value="tstyle1 tdcenter thlight mtop05" />
+						<fr:property name="columnClasses" value=",aleft,,,," />
 					<fr:property name="sortBy" value="userName"/>
 				</fr:layout>
 			</fr:view>
-			<fr:form action="/residenceManagement.do?method=generateDebts">
+		</logic:notEmpty>
+
+		<logic:notEmpty name="importList" property="unsuccessfulEvents">
+			<div id="statusNotOk">
+				<p class="mtop2 mbottom05"><bean:message key="label.invalid.residents" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />:</p>
+				<fr:view name="importList" property="unsuccessfulEvents" schema="show.residenceEventBean.with.status">
+					<fr:layout name="tabular">	
+						<fr:property name="classes" value="tstyle1 tdcenter thlight mtop05" />
+						<fr:property name="columnClasses" value=",aleft,,,highlight6 aleft" />
+						<fr:property name="sortBy" value="userName"/>
+					</fr:layout>
+				</fr:view>
+			</div>
+			<p>
+			<bean:size id="invalidNumber" name="importList" property="unsuccessfulEvents"/>
+			<strong><bean:message key="label.request.confirmation.due.to.invalids" arg0="<%=  invalidNumber.toString()%>" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/></strong>
+			</p>
+			
+		</logic:notEmpty>
+		
+		<logic:notEmpty name="importList" property="successfulEvents">
+		   <fr:form action="<%= "/residenceManagement.do?method=generateDebts&monthOID=" + monthOID %>">
 				<fr:edit id="dateBean" name="importFileBean" visible="false"/>
 				<fr:edit id="importList" name="importList" visible="false" />
 				<html:submit>
 					<bean:message key="label.generate.debts" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
 				</html:submit>
 			</fr:form>
-		</logic:notEmpty>
-
-		<logic:notEmpty name="importList" property="unsuccessfulEvents">
-			<div id="statusNotOk">
-				<bean:message	key="label.unable.to.create" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />
-				<fr:view name="importList" property="unsuccessfulEvents" schema="show.residenceEventBean">
-					<fr:layout name="tabular">	
-						<fr:property name="classes" value="tstyle1" />
-					</fr:layout>
-				</fr:view>
-			</div>
 		</logic:notEmpty>
 	</logic:present>
 

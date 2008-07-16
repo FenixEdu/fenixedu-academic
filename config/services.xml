@@ -12292,5 +12292,12 @@
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement.CreateResidencePaymentCodes</implementationClass>
 		<isTransactional>true</isTransactional>
 		<filterChains/>
-	</service>		
+	</service>
+	
+	<service>
+		<name>PayResidenceEvent</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement.PayResidenceEvent</implementationClass>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>				
 </serviceDefinitions>

@@ -683,7 +683,7 @@ a.color007b4d { color: #007b4d !important; }
 .highlight3 { background-color: #def; } /* azul */
 .highlight4 { background-color: #dfb ; } /* verde */
 .highlight5 { background-color: #fdfbdd; } /* amarelo */
-.highlight6 { background-color: #ffc; }
+.highlight6 { background-color: #ffc !important; }
 .highlight7 { background-color: #fffaee !important; } /* amarelo */
 .bgcolor1 { background-color: #fcfcf0; }
 .bgcolor2 { background-color: #fcfae4; }
@@ -719,7 +719,7 @@ margin-bottom: 1em;
 div.pass_warning strong {
 background-color: #ffa;
 }
-
+Nº de estudante inválido 
 
 /* search person */
 div.pp {
@@ -2398,3 +2398,4 @@ ul.pub-material li.pub-cellphone { background: url(http://www.ist.utl.pt/img/ico
 .pub-tab_lay td { padding: 5px; height: 2em; }
 .pub-tab_lay td.pub-subheader { font-weight: bold; color: #333; background: #e2e2e2; padding: 5px 5px 5px 5px; }
 .pub-tab_lay td.pub-bluecell, .pub-tab_lay tr.pub-bluecell { background: #EDF3FE; }
+

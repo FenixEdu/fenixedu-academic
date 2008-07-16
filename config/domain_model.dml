@@ -4859,11 +4859,13 @@ class candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry extends Domai
 
 class residence.ResidenceYear extends DomainObject {
 	Integer year;
+	Integer paymentLimitDay;
+	Money singleRoomValue;
+	Money doubleRoomValue;
 }
 
 class residence.ResidenceMonth extends DomainObject {
 	Month month;
-	Integer paymentLimitDay;
 }
 
 /*

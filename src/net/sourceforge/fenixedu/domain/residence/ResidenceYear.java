@@ -3,12 +3,15 @@ package net.sourceforge.fenixedu.domain.residence;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.YearMonthDay;
 
 public class ResidenceYear extends ResidenceYear_Base {
 
@@ -41,6 +44,16 @@ public class ResidenceYear extends ResidenceYear_Base {
 	}
 
 	return next != null ? next + 1 : new DateTime().getYear();
+    }
+
+    public static ResidenceYear getCurrentYear() {
+	Integer currentYear = new LocalDate().getYear();
+	for (ResidenceYear year : RootDomainObject.getInstance().getResidenceYears()) {
+	    if ( year.getYear().equals(currentYear)) {
+		return year;
+	    }
+	}
+	return null;
     }
     
 }

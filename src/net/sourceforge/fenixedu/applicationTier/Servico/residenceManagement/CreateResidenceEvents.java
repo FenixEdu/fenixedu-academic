@@ -11,7 +11,9 @@ public class CreateResidenceEvents extends Service {
 
     public void run(List<ResidenceEventBean> beans, ResidenceMonth month) {
 	for (ResidenceEventBean bean : beans) {
-	    new ResidenceEvent(month,bean.getStudent().getPerson(), bean.getRoomValue());
+	    if (!month.isEventPresent(bean.getStudent().getPerson())) {
+		new ResidenceEvent(month, bean.getStudent().getPerson(), bean.getRoomValue());
+	    }
 	}
     }
 }

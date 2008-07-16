@@ -318,6 +318,16 @@
 	<!-- End: Prices -->
 
 
+	<!--  Begin: Residence Payments -->
+	<definition name="show-student-residence-payments" extends="definition.student.masterPage">
+		<put name="body" value="/student/residenceServices/showResidenceEvents.jsp" />
+	</definition>
+	<definition name="view-event-details" extends="definition.student.masterPage">
+		<put name="body" value="/student/residenceServices/showDetails.jsp" />
+	</definition>
+	<!--  End: Residence Payments -->
+	
+	
 	<definition name="enrolment.welcome" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/welcome.jsp"/>
 	</definition>	

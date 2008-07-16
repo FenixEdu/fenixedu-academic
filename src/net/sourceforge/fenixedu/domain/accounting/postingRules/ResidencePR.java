@@ -20,13 +20,14 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormat
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
-import org.joda.time.Interval;
+import org.joda.time.Days;
 
 public class ResidencePR extends ResidencePR_Base {
 
     public ResidencePR(final EntryType entryType, final EventType eventType, final DateTime startDate, final DateTime endDate,
-	    final ServiceAgreementTemplate serviceAgreementTemplate) {
+	    final ServiceAgreementTemplate serviceAgreementTemplate, Money penaltyPerDay) {
 	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate);
+	setPenaltyPerDay(penaltyPerDay);
     }
 
     @Override
@@ -40,11 +41,11 @@ public class ResidencePR extends ResidencePR_Base {
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	ResidenceEvent residenceEvent = (ResidenceEvent) event;
 	Money baseValue = residenceEvent.getRoomValue();
-	if (residenceEvent.getPaymentLimiteDate().isAfter(when)) {
+	if (residenceEvent.getPaymentLimitDate().isAfter(when)) {
 	    return baseValue;
 	}
 	return baseValue.add(getPenaltyPerDay().multiply(
-		BigDecimal.valueOf(new Interval(getEndDate(), when).toPeriod().getDays())));
+		BigDecimal.valueOf(Days.daysBetween(residenceEvent.getPaymentLimitDate(),when).getDays())));
     }
 
     @Override

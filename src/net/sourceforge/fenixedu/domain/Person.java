@@ -1655,10 +1655,11 @@ public class Person extends Person_Base {
 	return getEventsFromType(ResidenceEvent.class);
     }
 
-    public Set<Event> getNotPayedEventsPayableOn(AdministrativeOffice administrativeOffice, boolean withInstallments) {
+
+    public Set<Event> getNotPayedEventsPayableOn(AdministrativeOffice administrativeOffice, Class eventClass, boolean withInstallments) {
 	final Set<Event> result = new HashSet<Event>();
 
-	for (final Event event : getAcademicEvents()) {
+	for (final Event event : getEventsFromType(eventClass)) {
 	    if (event.isOpen() && event.hasInstallments() == withInstallments
 		    && isPayableOnAdministrativeOffice(administrativeOffice, event)) {
 		result.add(event);
@@ -1666,6 +1667,11 @@ public class Person extends Person_Base {
 	}
 
 	return result;
+    }
+
+    
+    public Set<Event> getNotPayedEventsPayableOn(AdministrativeOffice administrativeOffice, boolean withInstallments) {
+	return getNotPayedEventsPayableOn(administrativeOffice, AcademicEvent.class, withInstallments);
     }
 
     public Set<Event> getNotPayedEventsPayableOn(AdministrativeOffice administrativeOffice) {
@@ -1683,15 +1689,20 @@ public class Person extends Person_Base {
 	return ((administrativeOffice == null) || (event.isPayableOnAdministrativeOffice(administrativeOffice)));
     }
 
-    public List<Event> getPayedEvents() {
+    
+    public List<Event> getPayedEvents(Class eventClass) {
 	final List<Event> result = new ArrayList<Event>();
-	for (final Event event : getAcademicEvents()) {
+	for (final Event event : getEventsFromType(eventClass)) {
 	    if (event.isClosed()) {
 		result.add(event);
 	    }
 	}
-
+	
 	return result;
+    }
+
+    public List<Event> getPayedEvents() {
+	return getPayedEvents(AcademicEvent.class);
     }
 
     public List<Event> getEventsWithPayments() {
@@ -1721,14 +1732,18 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public Set<Entry> getPayments() {
+    public Set<Entry> getPayments(Class eventClass) {
 	final Set<Entry> result = new HashSet<Entry>();
-	for (final Event event : getAcademicEvents()) {
+	for (final Event event : getEventsFromType(eventClass)) {
 	    if (!event.isCancelled()) {
 		result.addAll(event.getPositiveEntries());
 	    }
 	}
 	return result;
+    }
+    
+    public Set<Entry> getPayments() {
+	return getPayments(AcademicEvent.class);
     }
 
     public Set<? extends Event> getEventsByEventType(final EventType eventType) {

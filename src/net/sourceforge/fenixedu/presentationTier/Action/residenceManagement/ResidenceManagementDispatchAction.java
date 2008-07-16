@@ -10,10 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportResidenceEventBean;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidentListsHolderBean;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -24,12 +23,16 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/residenceManagement", module = "residenceManagement")
 @Forwards( { @Forward(name = "importData", path = "residenceManagement-importData"),
-	@Forward(name = "paymentLimits", path = "residenceManagement-paymentLimits") })
+	@Forward(name = "yearConfiguration", path = "residenceManagement-yearConfiguration"),
+	@Forward(name = "editPaymentLimitDay", path = "/residenceManagement/editPaymentLimitDay.jsp"),
+	@Forward(name = "editRoomValues", path = "/residenceManagement/editRoomValues.jsp") })
 public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward importData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -37,7 +40,8 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 
 	ImportResidenceEventBean bean = (ImportResidenceEventBean) getRenderedObject("importFile");
 	if (bean == null) {
-	    bean = new ImportResidenceEventBean();
+	    ResidenceMonth month = getResidenceMonth(request);
+	    bean = month != null ? new ImportResidenceEventBean(month) : new ImportResidenceEventBean();
 	} else {
 
 	    List<ResidenceEventBean> sucessful = new ArrayList<ResidenceEventBean>();
@@ -71,29 +75,35 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("importData");
     }
 
-    public ActionForward postBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ImportResidenceEventBean bean = (ImportResidenceEventBean) getRenderedObject("editBean");
-	RenderUtils.invalidateViewState();
-	request.setAttribute("importFileBean", bean);
-	return mapping.findForward("importData");
-    }
-
     public ActionForward createYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	executeService("CreateNewResidenceYear", new Object[] {});
 	return importData(mapping, actionForm, request, response);
     }
 
-    public ActionForward configurePaymentLimits(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward editPaymentLimitDay(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	return editResidenceYearProperty(mapping, actionForm, request, response, "editPaymentLimitDay");
+    }
+
+    public ActionForward editRoomValues(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	IViewState viewState = RenderUtils.getViewState("paymentLimits");
-	ImportResidenceEventBean bean = viewState != null ? (ImportResidenceEventBean) viewState.getMetaObject().getObject()
-		: new ImportResidenceEventBean();
-	RenderUtils.invalidateViewState();
-	request.setAttribute("paymentLimits", bean);
-	return mapping.findForward("paymentLimits");
+	return editResidenceYearProperty(mapping, actionForm, request, response, "editRoomValues");
+    }
+
+    private ActionForward editResidenceYearProperty(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response, String forwardName) throws Exception {
+
+	ResidenceMonth month = getResidenceMonth(request);
+	request.setAttribute("residenceMonth", month);
+
+	return mapping.findForward(forwardName);
+    }
+
+    private ResidenceMonth getResidenceMonth(HttpServletRequest request) {
+	String oid = request.getParameter("monthOID");
+	return oid == null ? null : (ResidenceMonth) DomainObject.fromOID(Long.valueOf(oid));
     }
 
     public ActionForward generateDebts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -101,8 +111,14 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 
 	ResidentListsHolderBean listHolder = (ResidentListsHolderBean) getRenderedObject("importList");
 	ImportResidenceEventBean eventBean = (ImportResidenceEventBean) getRenderedObject("dateBean");
-	executeService("CreateResidenceEvents", new Object[] { listHolder.getSuccessfulEvents(), eventBean.getResidenceMonth() });
-
+	try {
+	    executeService("CreateResidenceEvents", new Object[] { listHolder.getSuccessfulEvents(),
+		    eventBean.getResidenceMonth() });
+	} catch (Exception e) {
+	    addActionMessage(request, e.getMessage());
+	    return importData(mapping, actionForm, request, response);
+	}
+	request.setAttribute("createdDebts", true);
 	return importData(mapping, actionForm, request, response);
     }
 

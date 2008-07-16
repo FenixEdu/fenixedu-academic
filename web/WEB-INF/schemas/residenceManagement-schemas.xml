@@ -13,6 +13,7 @@
 		<property name="choiceType" value="net.sourceforge.fenixedu.domain.residence.ResidenceYear" />
 		<property name="format" value="${year}"/>
 		<property name="sortBy" value="year"/>
+		<property name="defaultText" value=" "/>
 	</slot>
 </schema>
 
@@ -22,8 +23,8 @@
 		<property name="eachLayout" value="values"/>
 		<property name="eachSchema" value="show.residenceMonth.month"/>
 		<property name="sortBy" value="month"/>
+		<property name="defaultText" value=" "/>
 	</slot>
-	<slot name="paymentLimitDay" key="label.paymentLimitDay" read-only="true"/>
 </schema>
 
 <schema  name="show.residenceMonth.month" type="net.sourceforge.fenixedu.domain.residence.ResidenceMonth" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
@@ -46,10 +47,17 @@
 		<property name="destination" value="personLink"/>
 	</slot>
 	<slot name="roomValue" key="label.roomValue"/>
-	<slot name="lastPaymentDate" key="label.paymentDate" layout="null-as-label">
-		<property name="subLayout" value="values"/>
+</schema>
+
+<schema  name="show.residenceEvent.with.dates" type="net.sourceforge.fenixedu.domain.accounting.ResidenceEvent" bundle="RESIDENCE_MANAGEMENT_RESOURCES" extends="show.residenceEvent">
+	<slot name="paymentMode" layout="null-as-label">
+		<property name="subLayout" value="default"/>
 		<property name="label" value="-"/>
-	</slot>	
+	</slot>
+	<slot name="paymentDate" layout="null-as-label">
+		<property name="subLayout" value="no-time"/>
+		<property name="label" value="-"/>
+	</slot>
 </schema>
 
 <schema name="show.residenceEventBean" type="net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
@@ -59,10 +67,19 @@
 	<slot name="roomValue" key="label.roomValue"/>
 </schema>
 
+<schema name="show.residenceEventBean.with.status" type="net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean" bundle="RESIDENCE_MANAGEMENT_RESOURCES" extends="show.residenceEventBean" >
+	<slot name="statusMessage" layout="slot-as-label">
+		<property name="bundle" value="RESIDENCE_MANAGEMENT_RESOURCES"/>
+	</slot>
+</schema>
+
 <schema name="show.residence.person" type="net.sourceforge.fenixedu.domain.Person" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
 	<slot name="name" key="label.name"/>
 	<slot name="student.number" key="label.studentNumber"/>
-	<slot name="socialSecurityNumber" key="label.fiscalNumber"/>
+	<slot name="socialSecurityNumber" layout="null-as-label" key="label.fiscalNumber">
+		<property name="subLayout" value="default"/>
+		<property name="label" value="-"/>
+	</slot>
 	<slot name="defaultPhone" layout="null-as-label" key="label.phone">
 		<property name="subLayout" value="values"/>
 		<property name="label" value="-"/>
@@ -77,7 +94,7 @@
 
 <schema name="show.contact.presentationValue" type="net.sourceforge.fenixedu.domain.contacts.PartyContact" >
 	<slot name="presentationValue" layout="null-as-label">
-		<property name="subLayout" value="values"/>
+		<property name="subLayout" value="default"/>
 		<property name="label" value="-"/>		
 	</slot>
 </schema>
@@ -86,8 +103,22 @@
 	<slot name="residenceMonth.year.year" key="label.residenceYear"/>
 	<slot name="residenceMonth.month" key="label.residenceMonth"/>
 	<slot name="roomValue" key="label.roomValue"/>
-	<slot name="lastPaymentDate" key="label.paymentDate" layout="null-as-label">
-		<property name="subLayout" value="values"/>
+	<slot name="amountToPay" key="label.roomValue"/>
+	<slot name="paymentLimitDate" key="label.paymentLimitDate" layout="null-as-label">
+		<property name="subLayout" value="no-time"/>
 		<property name="label" value="-"/>
 	</slot>	
+	<slot name="lastPaymentDate" key="label.paymentDate" layout="null-as-label">
+		<property name="subLayout" value="no-time"/>
+		<property name="label" value="-"/>
+	</slot>	
+</schema>
+
+<schema  name="residenceYear.configuration.roomValues" type="net.sourceforge.fenixedu.domain.residence.ResidenceYear" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
+	<slot name="singleRoomValue" key="label.singleRoom.value"/>
+	<slot name="doubleRoomValue" key="label.doubleRoom.value"/>
+</schema>
+
+<schema  name="residenceYear.configuration.paymentLimitDay" type="net.sourceforge.fenixedu.domain.residence.ResidenceYear" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
+	<slot name="paymentLimitDay" key="label.paymentLimitDay"/>
 </schema>

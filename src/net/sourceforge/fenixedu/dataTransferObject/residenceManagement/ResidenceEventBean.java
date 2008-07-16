@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.residenceManagement;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.residence.ResidenceYear;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -10,12 +11,13 @@ import org.apache.commons.lang.StringUtils;
 
 public class ResidenceEventBean implements Serializable {
 
-    String userName;
-    String fiscalNumber;
-    String name;
-    DomainReference<Student> student;
-    Money roomValue;
-
+    private String userName;
+    private String fiscalNumber;
+    private String name;
+    private DomainReference<Student> student;
+    private Money roomValue;
+    private String statusMessage;    
+    
     public ResidenceEventBean(String userName, String fiscalNumber, String name, Double roomValue) {
 	this.userName = userName;
 	this.fiscalNumber = fiscalNumber;
@@ -64,19 +66,36 @@ public class ResidenceEventBean implements Serializable {
 	return this.student.getObject();
     }
     
+    public String getStatusMessage() {
+	return statusMessage;
+    }
+    
     public boolean getStatus() {
 	if (!StringUtils.isNumeric(userName)) {
+	    statusMessage = "label.error.invalid.student.number";
 	    return false;
 	}
 
 	Student student = Student.readStudentByNumber(Integer.valueOf(userName));
 	if (student == null || !student.hasPerson()) {
+	    statusMessage = "label.error.invalid.student.number";
+	    return false;
+	}
+	setStudent(student);
+	
+	
+	ResidenceYear year = ResidenceYear.getCurrentYear();	
+	if (!roomValue.equals(year.getSingleRoomValue()) && !roomValue.equals(year.getDoubleRoomValue())) {
+	    statusMessage = "label.error.invalid.payment.amount";
 	    return false;
 	}
 	
-	setStudent(student);
 	String socialSecurityNumber = student.getPerson().getSocialSecurityNumber();
-	return !roomValue.isZero() && (socialSecurityNumber == null || socialSecurityNumber.equalsIgnoreCase(fiscalNumber.trim()));
+	if (socialSecurityNumber != null && !socialSecurityNumber.equalsIgnoreCase(fiscalNumber.trim())) {
+	    statusMessage = "label.error.invalid.fiscalNumber";
+	    return false;
+	}
 
+	 return true;
     }
 }

@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 
+import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -65,7 +68,7 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 	return getResidenceMonth().getPaymentStartDate();
     }
     
-    public DateTime getPaymentLimiteDate() {
+    public DateTime getPaymentLimitDate() {
 	return getResidenceMonth().getPaymentLimitDateTime();
     }
 
@@ -75,4 +78,17 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 	super.cancel(responsibleEmployee);
     }
 
+    
+    public DateTime getPaymentDate() {
+	return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().get(0).getTransactionDetail().getWhenRegistered();
+    }
+    
+    public PaymentMode getPaymentMode() {
+	return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().get(0).getTransactionDetail().getPaymentMode();
+    }
+    
+    public Money getAmountToPay() {
+	return calculateAmountToPay(new DateTime());
+    }
+    
 }
