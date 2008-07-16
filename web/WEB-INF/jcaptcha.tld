@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+  ~ JCaptcha, the open source java framework for captcha definition and integration
+  ~ Copyright (c)  2007 jcaptcha.net. All Rights Reserved.
+  ~ See the LICENSE.txt file distributed with this package.
+  -->
+
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems,
+ Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+<taglib>
+    <tlibversion>1.0</tlibversion>
+    <jspversion>1.1</jspversion>
+    <shortname>jcaptcha-struts-taglib</shortname>
+    <uri>http://jcaptcha.sourceforge.net</uri>
+    <info>JCAPTCHA Taglib for the base module</info>
+
+    <tag>
+        <name>question</name>
+        <tagclass>com.octo.captcha.module.struts.taglib.QuestionTag</tagclass>
+        <bodycontent>empty</bodycontent>
+        <info>Display the jcaptcha question for this session</info>
+    </tag>
+    <tag>
+        <name>message</name>
+        <tagclass>com.octo.captcha.module.taglib.MessageTag</tagclass>
+        <bodycontent>empty</bodycontent>
+        <info>Display the jcaptcha failure message for this session</info>
+    </tag>
+</taglib>

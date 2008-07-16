@@ -21,6 +21,10 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
         return RoleType.GRANT_OWNER_MANAGER;
     }
 
+    protected RoleType getRoleTypeAlumni() {
+        return RoleType.ALUMNI;
+    }
+
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
@@ -35,9 +39,10 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
             Integer objectId = (Integer) arguments[0];
 
             // Verify if:
-            // 1: The user ir a Grant Owner Manager and the qualification
+            // 1: The user is a Grant Owner Manager and the qualification
             // belongs to a Grant Owner
-            // 2: The user ir a Teacher and the qualification is his own
+            // 2: The user is a Teacher and the qualification is his own
+            // 3: The user is an Alumni and the qualification is his own
             if (!isNew) {
                 boolean valid = false;
 
@@ -45,8 +50,11 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
                     valid = true;
                 }
 
-                if (id.hasRoleType(getRoleTypeTeacher()) && isOwnQualification(id, objectId)) {
-                    valid = true;
+                if (isOwnQualification(id, objectId)) {
+                    
+                    if (id.hasRoleType(getRoleTypeTeacher()) || id.hasRoleType(getRoleTypeAlumni())) {
+                	valid = true;
+                    }
                 }
 
                 if (!valid)
