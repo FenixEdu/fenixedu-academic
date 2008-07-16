@@ -1,0 +1,85 @@
+/* --------------------------------------------------------
+	alumni.css
+	made by: Bruno Monteiro (GAEL)
+	date: 27.08.2007
+---------------------------------------------------------*/
+
+ul.material li.alerts { background: url(http://www.ist.utl.pt/img/alumni/icon_alerts.png) no-repeat 10px 50%; padding-left: 35px; }
+ul.material li.briefcase { background: url(http://www.ist.utl.pt/img/alumni/icon_briefcase.png) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.homepage { background: url(http://www.ist.utl.pt/img/alumni/icon_homepage.png) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.mailfwd { background: url(http://www.ist.utl.pt/img/alumni/icon_mailfwd.png) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.newsletter { background: url(http://www.ist.utl.pt/img/alumni/icon_newsletter.png) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.p_search { background: url(http://www.ist.utl.pt/img/alumni/icon_peoplesearch.png) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.storage { background: url(http://www.ist.utl.pt/img/alumni/icon_storage.png) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.m-list { background: url(http://www.ist.utl.pt/img/alumni/icon_mlist.gif) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.library { background: url(http://www.ist.utl.pt/img/alumni/icon_library.gif) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.feedback { background: url(http://www.ist.utl.pt/img/alumni/icon_feedback.png) no-repeat 13px 50%; padding-left: 35px; }
+
+.btt_inscrever a, .btt_inscrever a:visited, .btt_inscrever a:hover { text-indent: -9999px; background: url(http://www.ist.utl.pt/img/alumni/btt_inscrever.gif) no-repeat; width: 162px; height: 34px; display: block; text-decoration: none; border: none; overflow: hidden; margin: 0.5em 0 1.33em; }
+.btt_inscrever a:hover { background: url(http://www.ist.utl.pt/img/alumni/btt_inscrever_h.gif) no-repeat; margin: 0.5em 0 1.33em; }
+.col_right_alumni { float: right; margin: 30px; }
+.h_box p { margin-top: 0; padding: 0.5em 0 0 35px; }
+
+/* --- form    --- */
+fieldset label {
+margin-top: 0.5em !important;
+}
+
+#reg_form fieldset {
+background: #f6f6f6;
+width: 80%;
+border: 1px solid #e2e2e2;
+padding: 0em 2em 1.5em 2em;
+	position: relative;
+	margin-bottom: 1em;
+	padding-top: 1.0em;
+}
+#reg_form fieldset p { color: #666; margin-top: 0; margin-bottom: 1em; }
+#reg_form legend {
+font-size: 1.2em;
+font-weight: bold;
+	padding: 0 0.5em;
+	position:absolute; top: -0.5em; left: 0.5em;
+color: #000;
+}
+#reg_form label { font-weight: normal; display: block; padding: 6px 0 3px;}
+/*#reg_form input { display: block; }*/
+#reg_form p.comment { font-size: 1em; color: #999; padding-top: 1em; }
+#reg_form input#button { margin-top: 1em; }
+#reg_form span.red { color: #bb1309 !important; }
+#reg_form span.comment { font-size: 1em; color: #999; font-weight: normal; }
+span.red { color: #c30 !important; }
+
+ * html #reg_form fieldset { padding-top: 1.75em; } /* ie6 only*/
+ *:first-child+html #reg_form fieldset { padding-top: 1.75em; } /* ie7 only */
+ 
+/* novo */
+span.comment { font-size: 0.85em !important; color: #999; }
+
+
+ * html div.ie67margin20px { height: 20px; }
+ *:first-child+html div.ie67margin20px { height: 20px; }
+
+ * html p.ie67pbottom5px { padding-bottom: 5px !important; }
+ *:first-child+html p.ie67pbottom5px { padding-bottom: 5px !important; }
+ 
+.alumnilogo {
+background: url(../images/alumni03.gif) top right no-repeat; padding-right: 210px;	
+}
+
+
+.fwnormal {
+font-weight: normal !important;
+}
+
+.ptoplegendfix { padding-top: 0em; /* IE6 */ }
+.ptoplegendfix[class] { padding-top: 0em; /* Firefox */ }
+*:first-child+html .ptoplegendfix[class] { padding-top: 0em; /* IE7 */ }
+@media screen and (min-width: 0px) { .ptoplegendfix{ padding-top: 0.75em !important; }  /* Opera */ }
+@media screen and (-webkit-min-device-pixel-ratio:0) { body:first-of-type .ptoplegendfix { padding-top: 0.75em !important; } /* Safari */ }
+
+.toplegendfix { top: -0.5em; /* IE6 */ }
+.toplegendfix[class] { top: -0.5em; /* Firefox */ }
+*:first-child+html .toplegendfix[class] { top: -0.5em; /* IE7 */ }
+@media screen and (min-width: 0px) { .toplegendfix{ top: -0.75em !important; }  /* Opera */ }
+@media screen and (-webkit-min-device-pixel-ratio:0) { body:first-of-type .toplegendfix { top: -0.75em !important; } /* Safari */ }

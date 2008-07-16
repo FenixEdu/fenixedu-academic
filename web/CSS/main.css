@@ -19,7 +19,15 @@ padding-left: 20px !important;
 h3.arrow_bullet { padding-left: 1.4em; background: url(../images/icon_arrow.gif) no-repeat 0 0; }/***********************************************************	page footer***********************************************************/#footer { height: 20px; font: 10px "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; color: #45556A; border-top: 10px solid #45556A; background: #a8a88e; padding: 5px 10px 5px 10px; }#foot_links, #foot_copy { float: left; width: 30%; margin: 0; padding: 0; }#foot_copy { float: right; width: 45%; text-align: right; }#footer a:link, #footer a:visited { text-decoration: none; font-weight: bold; color: #45556A; }#footer a:hover { text-decoration: underline; font-weight: bold; color: #45556A; }/***********************************************************	columns***********************************************************/	.col_left, .col_left_photo { float: left; width: 150px; margin: 0 30px 0 0;}.col_left_photo img { border: 2px solid #999; } .col_right, .col_right_photo { float: right; width: 150px; margin: 30px; }.col_right { width: 250px; }.col_right_photo img { border: 2px solid #999; margin-bottom: 20px;} .box { width: 250px; border: 1px solid #999; margin: 0 0 1em 1em; }.box p { margin: 0; } .box img { border: 0; }.box_header { background: #ccc; padding: 3px 10px 3px 10px; }.box_cell { background: #eae7e4; padding: 10px; }.box ul { list-style-type: none; margin: 0; padding: 0; }.spaced_table { border: 1px solid #ccc; background: #eae7e4; }.spaced_table td { padding: 10px; }/***********************************************************	text and other util widgets***********************************************************/.greytxt { color: #666; }
 .redtxt { color: #c00; }	
 .bluetxt { color: #369; }
-.px10 { font-size: 10px; } .photoframer { display: block; border: 2px solid #999; }.inline { display: inline; }.clear { clear: both; }.center { text-align: center; }.post_date { font: 11px "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; color: #666; margin: 0; padding: 0; }	.bottom_border { border-bottom: 1px solid #ccc; }.redbox { color: #fff; background: #c30; padding: 3px 6px 3px 6px; }/***********************************************************	complementary navigation hints***********************************************************/	#main .breadcumbs { color: #999; padding-bottom: 1em; }
+.px10 { font-size: 10px; } .photoframer { display: block; border: 2px solid #999; }.inline { display: inline; }.clear { clear: both; }.center { text-align: center; }.post_date { font: 11px "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; color: #666; margin: 0; padding: 0; }	.bottom_border { border-bottom: 1px solid #ccc; }.redbox { color: #fff; background: #c30; padding: 3px 6px 3px 6px; }.marker { background: #fff794; padding: 2px; }
+ul.material { list-style-type: none; margin-left: 0; padding-left: 0; }
+ul.material li.pdf { background: url(/img/icon_pdf.gif) no-repeat 10px 50%; padding-left: 35px; }
+ul.material li.doc { background: url(/img/icon_doc.gif) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.xls { background: url(/img/icon_excel.gif) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.document { background: url(/img/icon_generic_doc.gif) no-repeat 13px 50%; padding-left: 35px; }
+ul.material li.link { background: url(/img/icon_link.gif) no-repeat 10px 50%; padding-left: 35px; }
+ul.material li.lightbulb { background: url(/img/icon_lightbulb.gif) no-repeat 10px 50%; padding-left: 35px; }
+/***********************************************************	complementary navigation hints***********************************************************/	#main .breadcumbs { color: #999; padding-bottom: 1em; }
 #main .breadcumbs a:link, #main .breadcumbs a:visited { text-decoration: none; color: #999; border-bottom: 1px solid #999; }
 #main .breadcumbs a:hover { text-decoration: none; color: #999; border-bottom: 0; }
 /* .version { float: right; width: 20%; text-align: right; padding-bottom: 2em; }       old class*/
@@ -33,6 +41,21 @@ h3.arrow_bullet { padding-left: 1.4em; background: url(../images/icon_arrow.gif)
 /***********************************************************	licenciatura section***********************************************************/.degree_imageplacer { float: right; width: 250px; margin: 0 30px 0 30px; }	/***********************************************************	general stripes layout table for www.ist.utl.pt***********************************************************/.tab_lay { border: 1px solid #999; font-size: 11px; }.tab_lay th { color: #333; background: #ccc; text-align: left; padding: 5px; }.tab_lay td { padding: 5px; height: 2em; }.tab_lay th.subheader { font: bold 12px "Trebuchet MS", "bitstream vera sans", Georgia, Arial, Helvetica, sans-serif; color: #333; background: #e2e2e2; padding: 5px 5px 5px 5px; }
 .tab_lay td.subheader { font: bold 12px "Trebuchet MS", "bitstream vera sans", Georgia, Arial, Helvetica, sans-serif; color: #333; background: #e2e2e2; padding: 5px 5px 5px 5px; }.tab_lay td.bluecell { background: #EDF3FE; }.tab_themes { border: 1px solid #999; font-size: 11px; }.tab_themes td { line-height: 1.5em; padding: 5px; height: 2em; }.tab_themes td.title { background: #e2e2e2; }.tab_themes h3 { color: #333; margin: 0; }/***********************************************************	context navigation***********************************************************/#contextual_nav { float: right; width: 200px; margin: 0 0 20px 20px; padding: 20px 0 20px 20px; /* border-left: 1px solid #ccc; */}#contextual_nav h2 { color:#666; }#contextual_nav ul, #contextual_nav li  { list-style-type: none; margin: 0; padding-left: 0; }#contextual_nav ul { margin-bottom: 20px; padding-left: 15px; border-left: 1px solid #ccc; }#contextual_nav li { background: url(../images/icon_redcircle.gif) no-repeat 0 50%; padding-left: 15px; }#contextual_nav li { background: url(../images/icon_redcircle.gif) no-repeat 0 50%; padding-left: 15px; }/*********************************************************** Errors***********************************************************/.serv_error_403 { background: url(http://www.ist.utl.pt/img/403.gif) no-repeat 30px 10px; }.serv_error_404 { background: url(http://www.ist.utl.pt/img/404.gif) no-repeat 30px 10px; }/***********************************************************	sitemap***********************************************************/#sitemap ul { list-style-type: square; line-height: 0.9em; font-size: 10px; margin-top: 0.4em; }#sitemap li { padding: 0.3em 0 0.3em 0; }h2.sitemap a:link, h2.sitemap a:visited {  font: bold 12px "Trebuchet MS", "bitstream vera sans", Georgia, Arial, Helvetica, sans-serif; text-decoration: underline; color: #c30; }h2.sitemap a:hover { text-decoration: none; background:#c30; color: #fff; padding: 2px 4px 2px 4px; }
 
+/***********************************************************
+	ensino - bolonha
+***********************************************************/
+
+#main .h_aux { font-weight: normal; color: #999; }
+#main .h_aux a:link, #main .h_aux a:visited { text-decoration: none; color: #999; border-bottom: 1px solid #999; }
+#main .h_aux a:hover { text-decoration: none; color: #999; border-bottom: 0; }
+h3.question a:link, h3.question a:visited { text-decoration: none; color: #333; }
+.question { margin-bottom: 20px; }	
+.answer { background: #fff !important; border-left: 3px solid #e2e2e2; margin: 0 0 2em 2em; padding: 0 0 0 1em; }
+.q_number { font: bold 2.2em "bitstream vera sans", "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif; color: #d4cfb4; float: left; margin: -0.15em 0.5em 0 0; }
+.h_box, .h_box_alt { background:#f6f6f6; width: 80%; padding: 0.75em; margin: 1em 0 ; border: 1px solid #e2e2e2; }
+.h_box_alt { background: #FCFCEC; }
+#main .tab_simpler td { padding: 5px; }
+#main .tab_simpler td.align_r { text-align: right;}
 
 /***********************************************************
 	Execution Course - Annoucements
@@ -111,12 +134,15 @@ padding: 0.5em;
 .aright { text-align: right; }
 .acenter { text-align: center; }
 
+.color777 { color: #777 !important;}
+.color888 { color: #888 !important;}
+
 .altJavaScriptSubmitButton { display:block; }
 .showHideDetailsButton { display:none; }
 
 table.smalltxt tr td { font-size: 0.85em;}
-.smalltxt { font-size: 0.85em; }
-.color888 { color: #888; }
+.smalltxt { font-size: 0.85em !important; }
+.largetxt { font-size: 1.25em; }
 
 /* accessibility javascript */
 .switchInline { display: none; }
@@ -748,7 +774,7 @@ margin: 0.5em 0;
 .width50em { width: 50em; }
 .width60em { width: 60em; }
 
-
+/*
 fieldset {
 margin: 1em 0;
 padding: 1em;
@@ -765,6 +791,7 @@ font-size: 1.2em;
 .tstyle0 tr td {
 padding: 4px;
 }
+*/
 
 /*****************************************************************
 	SOP - exams table format

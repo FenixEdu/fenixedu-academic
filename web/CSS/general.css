@@ -192,17 +192,6 @@ margin: 0;
 padding: 0 0.25em;
 }
 
-
-.liststyle5 {
-width: 300px;
-}
-.liststyle5 li {
-background: #f5f5f5;
-padding: 0.25em;
-margin: 1px 0;
-}
-
-
 /* ----------------------
 ------- Tables ---------
 ----------------------- */
@@ -488,7 +477,7 @@ p.warning0 {padding: 0.5em;}
 form { margin: 0; padding: 0; }
 form p { margin: 0.5em; margin-left: 0; }
 span.required { color: #b55; }
-.forminline form { display: inline; }
+.forminline form { display: inline !important; }
 /*
 .forminline form table { display: inline; }
 */
@@ -766,6 +755,10 @@ padding: 0.25em;
 }
 table.ppdetails td.ppleft {
 text-align: right;
+width: 10em;
+}
+table.ppdetails td.ppleft2 {
+text-align: left;
 width: 10em;
 }
 table.ppdetails td.ppleft2 {
@@ -2336,6 +2329,7 @@ color: #fbb699;
 padding: 0.75em;
 text-align: center;	
 }
+
 
 
 /***********************************************************
