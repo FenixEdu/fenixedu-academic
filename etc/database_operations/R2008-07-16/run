@@ -40,3 +40,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add new columns to ExemptionJustification table" alterTableExemptionJustification.sql
+execute "Refactored posting rule name" updatePostingRuleConcreteClass.sql
