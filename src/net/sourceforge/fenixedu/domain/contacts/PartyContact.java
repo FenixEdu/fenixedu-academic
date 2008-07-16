@@ -92,6 +92,14 @@ public abstract class PartyContact extends PartyContact_Base {
 	return getType() == PartyContactType.INSTITUTIONAL;
     }
     
+    public boolean isWorkType() {
+	return getType() == PartyContactType.WORK;
+    }
+    
+    public boolean isPersonalType() {
+	return getType() == PartyContactType.PERSONAL;
+    }
+    
     public boolean isWebAddress() {
 	return false;
     }
