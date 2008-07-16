@@ -534,6 +534,13 @@ Documentation:
     <renderer mode="input" type="java.lang.Object" layout="tabular" class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer">
     		<property name="labelTerminator" value=":"/>
     </renderer>
+    <!--@ Allows an object to be editing in a tabular with break way, that is, labels are presented in an upper row of the table
+          and slot editors are presented in the row below. Additionally validation errors messages are presented to the
+          right of the editor. -->  
+	<renderer mode="input" type="java.lang.Object" layout="tabular-break" class="pt.ist.fenixWebFramework.renderers.StandardInputBreakRenderer">
+		<property name="labelTerminator" value=":"/>
+	</renderer>
+    
 
     <!--@ This layout is the same as the default tabular layout but it includes the default presentation for an objecti input.  -->  
     <renderer mode="input" type="java.lang.Object" layout="tabular-style5" class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer">
@@ -764,6 +771,8 @@ Documentation:
           type represented by the class. This allows to reuse all the other layouts defined for the input mode, that is, we don't need
           to define a create mode and redefine all the layouts to that mode.  -->
     <renderer mode="input" type="java.lang.Class" class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer"/>
+
+	<renderer mode="input" type="java.lang.Class" class="pt.ist.fenixWebFramework.renderers.StandardInputBreakRenderer"/>
 
     <!--@ This layouts is the same as the <tt>values</tt> layout preconfigured with an html separator of values. This
           way it can be used as a property of other layout. -->
