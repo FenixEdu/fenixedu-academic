@@ -732,7 +732,7 @@ Calendar.prototype.create = function (_par) {
 
 	var table = Calendar.createElement("table");
 	this.table = table;
-	table.cellSpacing = 0;
+	table.cellSpacing = 1;
 	table.cellPadding = 0;
 	table.calendar = this;
 	Calendar.addEvent(table, "mousedown", Calendar.tableMouseDown);
