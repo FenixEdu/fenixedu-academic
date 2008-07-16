@@ -59,7 +59,7 @@
         <set-property property="definitions-config" value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/residenceManagement/tiles-residenceManagement-definitions.xml,/WEB-INF/tiles/residenceManagement/tiles-residenceManagement-pages-definitions.xml" />
         <set-property property="moduleAware" value="true" />
         <set-property property="definitions-parser-validate" value="true" />
-        <set-property property="factoryClassname" value="net.sourceforge.fenixedu.presentationTier.tiles.definition.FenixDefinitionsFactory" />
+        <set-property property="factoryClassname" value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" />
         <set-property property="defaultTileDefinition" value="definition.residenceManagement.master" />
     </plug-in>
     

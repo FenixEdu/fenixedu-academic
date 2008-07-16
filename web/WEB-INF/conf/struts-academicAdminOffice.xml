@@ -790,7 +790,7 @@
             value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/academicAdminOffice/tiles-academicAdminOffice-definitions.xml,/WEB-INF/tiles/academicAdminOffice/tiles-academicAdminOffice-pages-definitions.xml" />
         <set-property property="moduleAware" value="true" />
         <set-property property="definitions-parser-validate" value="true" />
-        <set-property property="factoryClassname" value="net.sourceforge.fenixedu.presentationTier.tiles.definition.FenixDefinitionsFactory" />
+        <set-property property="factoryClassname" value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" />
         <set-property property="defaultTileDefinition" value="academicAdminOffice.masterPage" />
     </plug-in>
     
