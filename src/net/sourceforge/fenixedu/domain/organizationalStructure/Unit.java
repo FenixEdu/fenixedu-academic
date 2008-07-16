@@ -65,6 +65,7 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -1512,7 +1513,7 @@ public class Unit extends Unit_Base {
 	return publications;
 
     }
-
+    
     protected List<ResearchResultPublication> getResearchResultPublicationsByType(
 	    final Class<? extends ResearchResultPublication> clazz, Boolean checkSubunits) {
 	return filterResultPublicationsByType(clazz, getResearchResultPublications(checkSubunits));
@@ -1607,5 +1608,49 @@ public class Unit extends Unit_Base {
 	}
 	return false;
     }
+    
+    
+    public Boolean hasParentUnit(Unit parentUnit) {
+	for(Unit parent : getParentUnits()) {
+	    if (parent.equals(parentUnit)) {
+		return Boolean.TRUE;
+	    }
+	}
+	return Boolean.FALSE;
+    }
 
+    public static Unit getParentUnit(String unitNormalizedName, Class<? extends Unit> clazz) {
+	if (StringUtils.isEmpty(unitNormalizedName)) {
+	    return null;
+	}
+	
+	for (final Party party : RootDomainObject.getInstance().getPartys()) {
+	    if (party.isUnit() && party.getClass().equals(clazz) && unitNormalizedName.equalsIgnoreCase(StringNormalizer.normalize(party.getName()))) {
+		return (Unit) party;
+	    }
+	}
+	return null;
+    }
+    
+    public static Unit getParentUnitByNormalizedName(Unit childUnit, String parentNormalizedName) {
+	for (Unit possibleParent : childUnit.getParentUnits()) {
+	    if (parentNormalizedName.equalsIgnoreCase(StringNormalizer.normalize(possibleParent.getName()))) {
+		return (Unit) possibleParent;
+	    }
+	}
+	return null;
+    }	    
+    
+    public void deleteParentUnitRelation(Unit parentUnit) {
+	for (Accountability relation : this.getParents()) {
+	    if (relation.getParentParty().equals(parentUnit)) {
+		relation.delete();
+		return;
+	    }
+	}
+    }
+
+    public Boolean isOfficial() {
+	return Boolean.FALSE;
+    }
 }

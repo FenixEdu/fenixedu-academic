@@ -436,6 +436,10 @@ public abstract class Party extends Party_Base {
 	return false;
     }
 
+    public boolean isAcademicalUnit() {
+	return false;
+    }
+
     public boolean isSchoolUnit() {
 	return false;
     }

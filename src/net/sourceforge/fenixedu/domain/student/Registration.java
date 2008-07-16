@@ -3116,4 +3116,10 @@ public class Registration extends Registration_Base {
 
 	return false;
     }
+
+    public boolean hasStartedBetween(final ExecutionYear firstExecutionYear, final ExecutionYear finalExecutionYear) {
+	return getStartExecutionYear().isAfterOrEquals(firstExecutionYear)
+	    && getStartExecutionYear().isBeforeOrEquals((finalExecutionYear));
+    }
+
 }
