@@ -17,6 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/general.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/color.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/calendar.css" media="screen" />
 <!-- specific: to tiles -->	<link href="<%= contextPath %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 <!-- specific: to tiles -->	<link href="<%= contextPath %>/CSS/dotist_calendars.css" rel="stylesheet" media="screen, print" type="text/css" />
 <!-- specific: to tiles -->	<link href="<%= contextPath %>/CSS/inquiries_style.css" rel="stylesheet" media="screen" type="text/css" />
