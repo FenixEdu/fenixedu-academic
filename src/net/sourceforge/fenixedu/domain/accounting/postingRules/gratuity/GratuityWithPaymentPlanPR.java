@@ -124,7 +124,10 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 	    GratuityEventWithPaymentPlan event, AccountingTransactionDetailDTO transactionDetail) {
 
 	event.changeGratuityTotalPaymentCodeState(event.getPaymentCodeStateFor(transactionDetail.getPaymentMode()));
-	checkIfCanAddAmount(entryDTO, transactionDetail.getWhenRegistered(), event);
+
+	if (!transactionDetail.isSibsTransactionDetail()) {
+	    checkIfCanAddAmount(entryDTO, transactionDetail.getWhenRegistered(), event);
+	}
 
 	return super.makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(), entryDTO.getAmountToPay(),
 		transactionDetail);
@@ -136,7 +139,10 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base {
 
 	final EntryWithInstallmentDTO entryWithInstallmentDTO = (EntryWithInstallmentDTO) entryDTO;
 
-	checkIfCanAddAmountForInstallment(entryWithInstallmentDTO, transactionDetail.getWhenRegistered(), event);
+	if (!transactionDetail.isSibsTransactionDetail()) {
+	    checkIfCanAddAmountForInstallment(entryWithInstallmentDTO, transactionDetail.getWhenRegistered(), event);
+	}
+
 	event.changeInstallmentPaymentCodeState(entryWithInstallmentDTO.getInstallment(), event
 		.getPaymentCodeStateFor(transactionDetail.getPaymentMode()));
 

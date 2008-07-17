@@ -37,5 +37,10 @@ public class SibsTransactionDetailDTO extends AccountingTransactionDetailDTO {
     public void setSibsCode(String sibsCode) {
 	this.sibsCode = sibsCode;
     }
+    
+    @Override
+    public boolean isSibsTransactionDetail() {
+	return true;
+    }
 
 }

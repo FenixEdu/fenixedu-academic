@@ -19,8 +19,7 @@ public class AccountingTransactionDetailDTO implements Serializable {
 
     }
 
-    public AccountingTransactionDetailDTO(DateTime whenRegistered, PaymentMode paymentMode,
-	    String comments) {
+    public AccountingTransactionDetailDTO(DateTime whenRegistered, PaymentMode paymentMode, String comments) {
 	this.comments = comments;
 	this.paymentMode = paymentMode;
 	this.whenRegistered = whenRegistered;
@@ -48,6 +47,10 @@ public class AccountingTransactionDetailDTO implements Serializable {
 
     public void setWhenRegistered(DateTime whenRegistered) {
 	this.whenRegistered = whenRegistered;
+    }
+
+    public boolean isSibsTransactionDetail() {
+	return false;
     }
 
 }
