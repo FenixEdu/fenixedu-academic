@@ -1121,7 +1121,17 @@ Documentation:
 	<renderer mode="input" type="java.lang.String" layout="inquiries-answer-radiogroup" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiriesRadioGroupQuestionRenderer" />
 	
 	<renderer mode="input" type="java.lang.String" layout="inquiries-answer-checkbox" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiriesCheckBoxQuestionRenderer" />
-	
+
+    <renderer type="java.util.Collection" layout="contact-list" class="net.sourceforge.fenixedu.presentationTier.renderers.ContactListRenderer">
+        <property name="bundle" value="APPLICATION_RESOURCES"/>
+        <property name="defaultLabel" value="label.partyContacts.defaultContact"/>
+    </renderer>
+
+    <renderer type="java.util.Collection" layout="contact-table" class="net.sourceforge.fenixedu.presentationTier.renderers.ContactTableRenderer">
+        <property name="bundle" value="APPLICATION_RESOURCES"/>
+        <property name="defaultLabel" value="label.partyContacts.defaultContact"/>
+    </renderer>
+
 	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean" layout="search-execution-course-attends" class="net.sourceforge.fenixedu.presentationTier.renderers.SearchExecutionCourseAttendsRenderer" />
 	
 </renderers-config>

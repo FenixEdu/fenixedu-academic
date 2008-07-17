@@ -23,25 +23,25 @@ public class EmailAddress extends EmailAddress_Base {
 		result = -1;
 	    }
 	    return (result == 0) ? COMPARATOR_BY_TYPE.compare(contact, otherContact) : result;
-	}};
+	}
+    };
 
     protected EmailAddress() {
 	super();
     }
 
-    protected EmailAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
+    public EmailAddress(final Party party, final PartyContactType type, final boolean defaultContact, final String value) {
 	this();
-	super.init(party, type, visible, defaultContact);
+	super.init(party, type, defaultContact);
+	checkParameters(value);
+	super.setValue(value);
     }
 
-    public EmailAddress(final Party party, final PartyContactType type, final Boolean visible, final Boolean defaultContact,
-	    final String value) {
+    public EmailAddress(final Party party, final PartyContactType type, final boolean visibleToPublic,
+	    final boolean visibleToStudents, final boolean visibleToTeachers, final boolean visibleToEmployees,
+	    final boolean defaultContact, final String value) {
 	this();
-	init(party, type, visible.booleanValue(), defaultContact.booleanValue(), value);
-    }
-
-    protected void init(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String value) {
-	super.init(party, type, visible, defaultContact);
+	super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, defaultContact);
 	checkParameters(value);
 	super.setValue(value);
     }
@@ -85,16 +85,6 @@ public class EmailAddress extends EmailAddress_Base {
 	if (!isInstitutionalType()) {
 	    super.setValue(value);
 	}
-    }
-
-    public void edit(final PartyContactType type, final Boolean defaultContact, final String value) {
-	super.edit(type, true, defaultContact);
-	edit(value);
-    }
-
-    public void edit(final PartyContactType type, final Boolean visible, final Boolean defaultContact, final String value) {
-	super.edit(type, visible, defaultContact);
-	edit(value);
     }
 
     @Override

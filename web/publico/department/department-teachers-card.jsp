@@ -61,31 +61,27 @@
 					</fr:view>
 				</p>
 			</logic:notEmpty>
-			
-			<logic:notEmpty name="teacher" property="person.email">
-				<logic:equal name="teacher" property="person.emailPubliclyAvailable" value="true">
-					<p class="mtop025 mbottom05">
-						<table class="personInfo2 mvert0">
-							<tr>
-								<td style="vertical-align: middle; padding-left: 0 !important;"><bean:message key="label.teacher.email" bundle="PUBLIC_DEPARTMENT_RESOURCES"/>: </td>
-								<td style="vertical-align: middle;">
-			            			<bean:define id="homepageID" name="teacher" property="person.homepage.idInternal"/>
-									<img align="middle" src="<%= request.getContextPath() %>/publico/viewHomepage.do?method=emailPng&amp;homepageID=<%= homepageID.toString() %>"/>
-								</td>
-							</tr>
-						</table>
-					</p>
-				</logic:equal>
-			</logic:notEmpty>
-			
-			<logic:notEmpty name="teacher" property="person.personWorkPhone">
-				<logic:notEmpty name="teacher" property="person.personWorkPhone.number">
-					<p class="mtop025 mbottom05">
-						<bean:message key="label.teacher.workPhone" bundle="PUBLIC_DEPARTMENT_RESOURCES"/>: 
-						<fr:view name="teacher" property="person.personWorkPhone.number"/>
-					</p>
-				</logic:notEmpty>
-			</logic:notEmpty>
+
+            <table class="personInfo2 mvert0 thlight thtop">
+                <fr:view name="teacher" property="person.emailAddresses">
+                    <fr:layout name="contact-table">
+                        <fr:property name="publicSpace" value="true"/>
+                        <fr:property name="bundle" value="PUBLIC_DEPARTMENT_RESOURCES" />
+                        <fr:property name="label" value="label.teacher.email" />
+                    </fr:layout>
+                </fr:view>
+            </table>
+
+            <table class="personInfo2 mvert0 thlight thtop">
+                <fr:view name="teacher" property="person.phones">
+                    <fr:layout name="contact-table">
+                        <fr:property name="publicSpace" value="true"/>
+                        <fr:property name="bundle" value="PUBLIC_DEPARTMENT_RESOURCES" />
+                        <fr:property name="label" value="label.teacher.workPhone" />
+                        <fr:property name="types" value="WORK" />
+                    </fr:layout>
+                </fr:view>
+            </table>
 		</td>
 	</tr>
 </table>

@@ -22,28 +22,25 @@ public class WebAddress extends WebAddress_Base {
 		result = -1;
 	    }
 	    return (result == 0) ? COMPARATOR_BY_TYPE.compare(contact, otherContact) : result;
-	}};
+	}
+    };
 
     protected WebAddress() {
 	super();
     }
 
-    protected WebAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
+    public WebAddress(final Party party, final PartyContactType type, final boolean defaultContact, final String url) {
 	this();
-	super.init(party, type, visible, defaultContact);
+	super.init(party, type, defaultContact);
+	checkParameters(url);
+	super.setUrl(url);
     }
 
-    public WebAddress(final Party party, final PartyContactType type, final Boolean defaultContact, final String url) {
-	this(party, type, true, defaultContact.booleanValue(), url);
-    }
-
-    public WebAddress(final Party party, final PartyContactType type, final Boolean visible, final Boolean defaultContact, final String url) {
+    public WebAddress(final Party party, final PartyContactType type, final boolean visibleToPublic,
+	    final boolean visibleToStudents, final boolean visibleToTeachers, final boolean visibleToEmployees,
+	    final boolean defaultContact, final String url) {
 	this();
-	init(party, type, visible, defaultContact, url);
-    }
-
-    protected void init(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String url) {
-	super.init(party, type, visible, defaultContact);
+	super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, defaultContact);
 	checkParameters(url);
 	super.setUrl(url);
     }
@@ -61,16 +58,6 @@ public class WebAddress extends WebAddress_Base {
 
     public void edit(final String url) {
 	super.setUrl(url);
-    }
-
-    public void edit(final PartyContactType type, final Boolean defaultContact, final String url) {
-	super.edit(type, true, defaultContact);
-	edit(url);
-    }
-
-    public void edit(final PartyContactType type, final Boolean visible, final Boolean defaultContact, final String url) {
-	super.edit(type, visible, defaultContact);
-	edit(url);
     }
 
     public boolean hasUrl() {

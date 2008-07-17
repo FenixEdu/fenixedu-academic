@@ -1365,6 +1365,7 @@
     <message-resources parameter="resources.HomepageResources" key="HOMEPAGE_RESOURCES" null="false"/>
     <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
     <message-resources parameter="resources.SiteResources" key="SITE_RESOURCES" null="false"/>
+    <message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
     <message-resources parameter="resources.AdminOffice" key="ADMIN_OFFICE_RESOURCES" null="false"/>
     <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>  
    	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>

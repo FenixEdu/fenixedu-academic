@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import org.apache.commons.lang.StringUtils;
 
 public class PhysicalAddress extends PhysicalAddress_Base {
-    
+
     public static Comparator<PhysicalAddress> COMPARATOR_BY_ADDRESS = new Comparator<PhysicalAddress>() {
 	public int compare(PhysicalAddress contact, PhysicalAddress otherContact) {
 	    final String address = contact.getAddress();
@@ -23,43 +23,35 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 		result = -1;
 	    }
 	    return (result == 0) ? COMPARATOR_BY_TYPE.compare(contact, otherContact) : result;
-	}};
-    
+	}
+    };
+
     protected PhysicalAddress() {
-        super();
-    }
-    
-    protected PhysicalAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
-	this();
-	super.init(party, type, visible, defaultContact);
-    }
-    
-    public PhysicalAddress(final Party party, final PartyContactType type, final Boolean defaultContact, final String address, final String areaCode,
-	    final String areaOfAreaCode, final String area, final String parishOfResidence, final String districtSubdivisionOfResidence,
-	    final String districtOfResidence, final Country countryOfResidence) {
-	
-	this(party, type, defaultContact.booleanValue(), false, 
-		new PhysicalAddressData(address, areaCode, areaOfAreaCode, area, parishOfResidence,
-			districtSubdivisionOfResidence, districtOfResidence, countryOfResidence));
-    }
-    
-    public PhysicalAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final PhysicalAddressData physicalAddressData) {
-	this();
-	init(party, type, visible, defaultContact, physicalAddressData);
+	super();
     }
 
-    private void init(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final PhysicalAddressData data) {
-	super.init(party, type, visible, defaultContact);
-        super.setAddress(data.getAddress());
-        super.setAreaCode(data.getAreaCode());
-        super.setAreaOfAreaCode(data.getAreaOfAreaCode());
-        super.setArea(data.getArea());
-        super.setParishOfResidence(data.getParishOfResidence());
-        super.setDistrictSubdivisionOfResidence(data.getDistrictSubdivisionOfResidence());
-        super.setDistrictOfResidence(data.getDistrictOfResidence());
-        super.setCountryOfResidence(data.getCountryOfResidence());
+    /**
+     * @deprecated use a constructor with PhysicalAddressData.
+     */
+    @Deprecated
+    protected PhysicalAddress(final Party party, final PartyContactType type, final boolean defaultContact) {
+	this();
+	super.init(party, type, defaultContact);
     }
-    
+
+    public PhysicalAddress(final Party party, final PartyContactType type, final boolean defaultContact, PhysicalAddressData data) {
+	this();
+	super.init(party, type, defaultContact);
+	edit(data);
+    }
+
+    public PhysicalAddress(final Party party, final PartyContactType type, final Boolean defaultContact, final String address,
+	    final String areaCode, final String areaOfAreaCode, final String area, final String parishOfResidence,
+	    final String districtSubdivisionOfResidence, final String districtOfResidence, final Country countryOfResidence) {
+	this(party, type, defaultContact.booleanValue(), new PhysicalAddressData(address, areaCode, areaOfAreaCode, area,
+		parishOfResidence, districtSubdivisionOfResidence, districtOfResidence, countryOfResidence));
+    }
+
     public void edit(final PhysicalAddressData data) {
 	super.setAddress(data.getAddress());
 	super.setAreaCode(data.getAreaCode());
@@ -70,37 +62,37 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 	super.setDistrictOfResidence(data.getDistrictOfResidence());
 	super.setCountryOfResidence(data.getCountryOfResidence());
     }
-    
+
     public void edit(final PartyContactType type, final Boolean defaultContact, final String address, final String areaCode,
-	    final String areaOfAreaCode, final String area, final String parishOfResidence, final String districtSubdivisionOfResidence,
-	    final String districtOfResidence, final Country countryOfResidence) {
-	
-	super.edit(type, getVisible(), defaultContact);
-	edit(new PhysicalAddressData(address, areaCode, areaOfAreaCode, area, parishOfResidence,
-		districtSubdivisionOfResidence, districtOfResidence, countryOfResidence));
+	    final String areaOfAreaCode, final String area, final String parishOfResidence,
+	    final String districtSubdivisionOfResidence, final String districtOfResidence, final Country countryOfResidence) {
+	super.edit(type, defaultContact);
+	edit(new PhysicalAddressData(address, areaCode, areaOfAreaCode, area, parishOfResidence, districtSubdivisionOfResidence,
+		districtOfResidence, countryOfResidence));
     }
-    
+
     @Override
     public boolean isPhysicalAddress() {
-        return true;
+	return true;
     }
-    
+
     public String getCountryOfResidenceName() {
 	return hasCountryOfResidence() ? getCountryOfResidence().getName() : StringUtils.EMPTY;
     }
-    
+
     @Override
     public void deleteWithoutCheckRules() {
 	removeCountryOfResidence();
-        super.deleteWithoutCheckRules();
-    }
-    
-    @Override
-    public void delete() {
-        removeCountryOfResidence();
-        super.delete();
+	super.deleteWithoutCheckRules();
     }
 
+    @Override
+    public void delete() {
+	removeCountryOfResidence();
+	super.delete();
+    }
+
+    @Override
     protected void checkRulesToDelete() {
 	if (getParty().getPartyContacts(getClass()).size() == 1) {
 	    throw new DomainException("error.domain.contacts.PhysicalAddress.cannot.remove.last.physicalAddress");

@@ -1,28 +1,28 @@
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
-<html:xhtml/>
-<bean:define id="partyContactName" name="partyContactName" />
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<html:xhtml />
+<bean:define id="partyContactClass" scope="request" name="partyContactClass" />
 
 <em><bean:message key="label.person.main.title" /></em>
-<h2><bean:message key="<%= "label.partyContacts.add" +  partyContactName %>" /></h2>
+<h2><bean:message key="<%= "label.partyContacts.add" +  partyContactClass %>" /></h2>
 
-<fr:form action="/partyContacts.do">	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createPartyContact"/>
+<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+    <p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
+    </p>
+</html:messages>
 
-	<bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" />
-	
-	<fr:create schema="<%= "contacts." + partyContactName + ".manage-student" %>" type="<%= "net.sourceforge.fenixedu.domain.contacts." + partyContactName  %>" >
-		<fr:layout name="tabular-editable" >
-			<fr:property name="classes" value="tstyle5 thlight thright thmiddle"/>
-	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
-		</fr:layout>
-		<fr:hidden slot="party" name="person" />
-	</fr:create>
-	
-	<p>
-		<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:submit>
-		<html:cancel onclick="this.form.method.value='backToShowInformation';"><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:cancel>
-	</p>
-</fr:form>
+<fr:edit id="edit-contact" name="partyContact" action="/partyContacts.do?method=createPartyContact"
+    schema="<%= "contacts." + partyContactClass + ".manage-student" %>">
+    <fr:layout name="tabular-editable">
+        <fr:property name="classes" value="tstyle5 thlight thright thmiddle" />
+        <fr:property name="columnClasses" value=",,tdclear tderror1" />
+    </fr:layout>
+    <fr:destination name="postback-set-public"
+        path="/partyContacts.do?method=postbackSetPublic&form=create" />
+    <fr:destination name="postback-set-elements"
+        path="/partyContacts.do?method=postbackSetElements&form=create" />
+    <fr:destination name="invalid" path="/partyContacts.do?method=invalid&form=create" />
+    <fr:destination name="cancel" path="/partyContacts.do?method=backToShowInformation" />
+</fr:edit>

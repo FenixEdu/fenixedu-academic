@@ -1,14 +1,13 @@
 package net.sourceforge.fenixedu.domain.contacts;
 
-
 public enum PartyContactType {
 
     PERSONAL,
-    
+
     WORK,
-    
+
     INSTITUTIONAL;
-    
+
     public String getName() {
 	return name();
     }
@@ -20,5 +19,5 @@ public enum PartyContactType {
     public String getFullyQualifiedName() {
 	return PartyContactType.class.getName() + "." + name();
     }
-    
+
 }

@@ -9,30 +9,92 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public abstract class PartyContact extends PartyContact_Base {
-    
+
     public static Comparator<PartyContact> COMPARATOR_BY_TYPE = new Comparator<PartyContact>() {
 	public int compare(PartyContact contact, PartyContact otherContact) {
 	    int result = contact.getType().compareTo(otherContact.getType());
 	    return (result == 0) ? DomainObject.COMPARATOR_BY_ID.compare(contact, otherContact) : result;
-	}};
-    
+	}
+    };
+
     protected PartyContact() {
-        super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
-        setVisible(Boolean.FALSE);
+	super();
+	super.setRootDomainObject(RootDomainObject.getInstance());
+	setVisibleToPublic(Boolean.FALSE);
+	setVisibleToStudents(Boolean.FALSE);
+	setVisibleToTeachers(Boolean.FALSE);
+	setVisibleToEmployees(Boolean.FALSE);
     }
-    
-    protected void init(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
-	
+
+    protected void init(final Party party, final PartyContactType type, final boolean defaultContact) {
+
 	checkParameters(party, type);
-	
+
 	super.setParty(party);
 	super.setType(type);
-	
-	super.setVisible(Boolean.valueOf(visible));
+
+	if (type.equals(PartyContactType.INSTITUTIONAL))
+	    setVisibleToPublic();
+	else if (defaultContact)
+	    setVisibleToPublic();
+	else if (type.equals(PartyContactType.WORK)) {
+	    setVisibleToEmployees(Boolean.TRUE);
+	    setVisibleToTeachers(Boolean.TRUE);
+	}
 	setDefaultContactInformation(defaultContact);
     }
-    
+
+    protected void init(final Party party, final PartyContactType type, final boolean visibleToPublic,
+	    final boolean visibleToStudents, final boolean visibleToTeachers, final boolean visibleToEmployees,
+	    final boolean defaultContact) {
+	checkParameters(party, type);
+	super.setParty(party);
+	super.setType(type);
+	setVisibleToPublic(new Boolean(visibleToPublic));
+	setVisibleToStudents(new Boolean(visibleToStudents));
+	setVisibleToTeachers(new Boolean(visibleToTeachers));
+	setVisibleToEmployees(new Boolean(visibleToEmployees));
+	setDefaultContactInformation(defaultContact);
+    }
+
+    private void setVisibleToPublic() {
+	super.setVisibleToPublic(Boolean.TRUE);
+	super.setVisibleToStudents(Boolean.TRUE);
+	super.setVisibleToTeachers(Boolean.TRUE);
+	super.setVisibleToEmployees(Boolean.TRUE);
+    }
+
+    @Override
+    public void setVisibleToPublic(Boolean visibleToPublic) {
+	super.setVisibleToPublic(visibleToPublic);
+	if (visibleToPublic.booleanValue()) {
+	    super.setVisibleToStudents(Boolean.TRUE);
+	    super.setVisibleToTeachers(Boolean.TRUE);
+	    super.setVisibleToEmployees(Boolean.TRUE);
+	}
+    }
+
+    @Override
+    public void setVisibleToStudents(Boolean visibleToStudents) {
+	super.setVisibleToStudents(visibleToStudents);
+	if (!visibleToStudents.booleanValue())
+	    super.setVisibleToPublic(Boolean.FALSE);
+    }
+
+    @Override
+    public void setVisibleToTeachers(Boolean visibleToTeachers) {
+	super.setVisibleToTeachers(visibleToTeachers);
+	if (!visibleToTeachers.booleanValue())
+	    super.setVisibleToPublic(Boolean.FALSE);
+    }
+
+    @Override
+    public void setVisibleToEmployees(Boolean visibleToEmployees) {
+	super.setVisibleToEmployees(visibleToEmployees);
+	if (!visibleToEmployees.booleanValue())
+	    super.setVisibleToPublic(Boolean.FALSE);
+    }
+
     private void setDefaultContactInformation(final boolean defaultContact) {
 	if (defaultContact) {
 	    changeToDefault();
@@ -44,7 +106,7 @@ public abstract class PartyContact extends PartyContact_Base {
 		setAnotherContactAsDefault();
 		super.setDefaultContact(Boolean.FALSE);
 	    }
-	}	    
+	}
     }
 
     public void changeToDefault() {
@@ -64,34 +126,26 @@ public abstract class PartyContact extends PartyContact_Base {
 	}
     }
 
-    public void edit(final PartyContactType type, final boolean visible, final boolean defaultContact) {
-	
+    public void edit(final PartyContactType type, final boolean defaultContact) {
 	checkParameters(getParty(), type);
-	
 	super.setType(type);
-	super.setVisible(Boolean.valueOf(visible));
-	
 	setDefaultContactInformation(defaultContact);
     }
-    
+
     public abstract String getPresentationValue();
-    
+
     public boolean isDefault() {
 	return hasDefaultContactValue() && getDefaultContact().booleanValue();
     }
-    
+
     private boolean hasDefaultContactValue() {
 	return getDefaultContact() != null;
     }
-    
-    public boolean isContactVisible() {
-	return getVisible().booleanValue();
-    }
-    
+
     public boolean isInstitutionalType() {
 	return getType() == PartyContactType.INSTITUTIONAL;
     }
-    
+
     public boolean isWorkType() {
 	return getType() == PartyContactType.WORK;
     }
@@ -103,27 +157,27 @@ public abstract class PartyContact extends PartyContact_Base {
     public boolean isWebAddress() {
 	return false;
     }
-    
+
     public boolean isPhysicalAddress() {
 	return false;
     }
-    
+
     public boolean isEmailAddress() {
 	return false;
     }
-    
+
     public boolean isPhone() {
 	return false;
     }
-    
+
     public boolean isMobile() {
 	return false;
     }
-    
+
     public void deleteWithoutCheckRules() {
 	processDelete();
     }
-    
+
     public void delete() {
 	checkRulesToDelete();
 	processDelete();
@@ -135,7 +189,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
-    
+
     protected void checkRulesToDelete() {
 	// nothing to check
     }
@@ -150,63 +204,37 @@ public abstract class PartyContact extends PartyContact_Base {
 	}
     }
 
-    static public WebAddress createDefaultPersonalWebAddress(final Party party) {
-	return new WebAddress(party, PartyContactType.PERSONAL, true, true);
-    }
-    
     static public WebAddress createDefaultPersonalWebAddress(final Party party, final String url) {
-	return new WebAddress(party, PartyContactType.PERSONAL, true, true, url);
-    }
-    
-    static public WebAddress createWebAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String url) {
-	return new WebAddress(party, type, visible, defaultContact, url);
-    }
-    
-    static public PhysicalAddress createDefaultPersonalPhysicalAddress(final Party party) {
-	return new PhysicalAddress(party, PartyContactType.PERSONAL, true, true);
-    }
-    
-    static public PhysicalAddress createDefaultPersonalPhysicalAddress(final Party party, final PhysicalAddressData data) {
-	return new PhysicalAddress(party, PartyContactType.PERSONAL, true, true, data);
-    }
-    
-    static public PhysicalAddress createPhysicalAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final PhysicalAddressData data) {
-	return new PhysicalAddress(party, type, visible, defaultContact, data);
-    }
-    
-    static public Phone createDefaultPersonalPhone(final Party party) {
-	return new Phone(party, PartyContactType.PERSONAL, true, true);
-    }
-    
-    static public Phone createDefaultPersonalPhone(final Party party, final String number) {
-	return new Phone(party, PartyContactType.PERSONAL, true, true, number);
-    }
-    
-    static public Phone createPhone(final Party party, final PartyContactType type, boolean visible, boolean defaultContact, final String number) {
-	return new Phone(party, type, visible, defaultContact, number);
+	return new WebAddress(party, PartyContactType.PERSONAL, true, url);
     }
 
-    static public MobilePhone createDefaultPersonalMobilePhone(final Party party) {
-	return new MobilePhone(party, PartyContactType.PERSONAL, true, true);
+    static public PhysicalAddress createDefaultPersonalPhysicalAddress(final Party party) {
+	return new PhysicalAddress(party, PartyContactType.PERSONAL, true, null);
     }
-    
+
+    static public PhysicalAddress createDefaultPersonalPhysicalAddress(final Party party, final PhysicalAddressData data) {
+	return new PhysicalAddress(party, PartyContactType.PERSONAL, true, data);
+    }
+
+    static public Phone createDefaultPersonalPhone(final Party party, final String number) {
+	return new Phone(party, PartyContactType.PERSONAL, true, number);
+    }
+
+    @Deprecated
+    static public Phone createPhone(final Party party, final PartyContactType type, boolean visible, boolean defaultContact,
+	    final String number) {
+	return new Phone(party, type, defaultContact, number);
+    }
+
     static public MobilePhone createDefaultPersonalMobilePhone(final Party party, final String number) {
-	return new MobilePhone(party, PartyContactType.PERSONAL, true, true, number);
+	return new MobilePhone(party, PartyContactType.PERSONAL, true, number);
     }
-    
-    static public MobilePhone createMobilePhone(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String number) {
-	return new MobilePhone(party, type, visible, defaultContact, number);
-    }
-    
-    static public EmailAddress createDefaultPersonalEmailAddress(final Party party) {
-	return new EmailAddress(party, PartyContactType.PERSONAL, true, true);
-    }
-    
+
     static public EmailAddress createDefaultPersonalEmailAddress(final Party party, final String value) {
-	return createEmailAddress(party, PartyContactType.PERSONAL, true, true, value);
+	return new EmailAddress(party, PartyContactType.PERSONAL, true, value);
     }
-    
-    static public EmailAddress createEmailAddress(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact, final String value) {
-	return new EmailAddress(party, type, visible, defaultContact, value);
+
+    static public EmailAddress createInstitutionalEmailAddress(final Party party, final String value) {
+	return new EmailAddress(party, PartyContactType.INSTITUTIONAL, false, value);
     }
 }

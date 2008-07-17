@@ -742,7 +742,7 @@ public class Person extends Person_Base {
 	if (!hasAnyPartyContact(MobilePhone.class) && !StringUtils.isEmpty(infoPerson.getTelemovel()))
 	    new MobilePhone(this, PartyContactType.PERSONAL, Boolean.FALSE, infoPerson.getTelemovel());
 	if (!hasAnyPartyContact(EmailAddress.class) && EmailSender.emailAddressFormatIsValid(infoPerson.getEmail()))
-	    new EmailAddress(this, PartyContactType.PERSONAL, false, Boolean.FALSE, infoPerson.getEmail());
+	    new EmailAddress(this, PartyContactType.PERSONAL, Boolean.FALSE, infoPerson.getEmail());
 	if (!hasAnyPartyContact(WebAddress.class) && !StringUtils.isEmpty(infoPerson.getEnderecoWeb()))
 	    new WebAddress(this, PartyContactType.PERSONAL, Boolean.FALSE, infoPerson.getEnderecoWeb());
     }
@@ -931,13 +931,13 @@ public class Person extends Person_Base {
      * PersonFunctions that selection indicated in the parameters.
      * 
      * @param unit
-     *            filter all PersonFunctions to this unit, or <code>null</code>
-     *            for all PersonFunctions
+     *                filter all PersonFunctions to this unit, or
+     *                <code>null</code> for all PersonFunctions
      * @param includeSubUnits
-     *            if even subunits of the given unit are considered
+     *                if even subunits of the given unit are considered
      * @param active
-     *            the state of the function, <code>null</code> for all
-     *            PersonFunctions
+     *                the state of the function, <code>null</code> for all
+     *                PersonFunctions
      */
     public List<PersonFunction> getPersonFunctions(Unit unit, boolean includeSubUnits, Boolean active, Boolean virtual,
 	    AccountabilityTypeEnum accountabilityTypeEnum) {
@@ -2468,6 +2468,10 @@ public class Person extends Person_Base {
 	}
     }
 
+    /**
+     * @use getInstitutionalOrDefaultEmailAddress()
+     */
+    @Deprecated
     public String getEmail() {
 	return hasInstitutionalEmail() ? getInstitutionalEmail() : super.getEmail();
     }
@@ -2480,20 +2484,10 @@ public class Person extends Person_Base {
     public void updateInstitutionalEmail(final String institutionalEmailString) {
 	final EmailAddress institutionalEmailAddress = getInstitutionalEmailAddress();
 	if (institutionalEmailAddress == null) {
-	    PartyContact.createEmailAddress(this, PartyContactType.INSTITUTIONAL, true, false, institutionalEmailString);
+	    PartyContact.createInstitutionalEmailAddress(this, institutionalEmailString);
 	} else {
 	    institutionalEmailAddress.setValue(institutionalEmailString);
 	}
-    }
-
-    // Currently, a Person can only have one InstitutionalEmailAddress (so
-    // use
-    // get(0) method)
-    private EmailAddress getInstitutionalEmailAddress() {
-	final List<EmailAddress> partyContacts = (List<EmailAddress>) getPartyContacts(EmailAddress.class,
-		PartyContactType.INSTITUTIONAL);
-	// actually exists only one (protected in domain)
-	return partyContacts.isEmpty() ? null : (EmailAddress) partyContacts.get(0);
     }
 
     public Boolean getHasInstitutionalEmail() {
@@ -2686,25 +2680,12 @@ public class Person extends Person_Base {
 	return showPhotoInHomepage != null && showPhotoInHomepage;
     }
 
-    public boolean isEmailPubliclyAvailable() {
-	if (!isDefaultEmailVisible()) {
-	    return false;
-	}
-
-	if (!isHomePageAvailable()) {
-	    return false;
-	}
-
-	Boolean showEmailInHomepage = getHomepage().getShowEmail();
-	return showEmailInHomepage != null && showEmailInHomepage;
-    }
-
     public boolean isDefaultEmailVisible() {
-	return getDefaultEmailAddress() == null ? false : getDefaultEmailAddress().isContactVisible();
+	return getDefaultEmailAddress() == null ? false : getDefaultEmailAddress().getVisibleToPublic();
     }
 
     public boolean isDefaultWebAddressVisible() {
-	return getDefaultWebAddress() == null ? false : getDefaultWebAddress().isContactVisible();
+	return getDefaultWebAddress() == null ? false : getDefaultWebAddress().getVisibleToPublic();
     }
 
     @Deprecated
@@ -2715,7 +2696,7 @@ public class Person extends Person_Base {
     @Deprecated
     public void setAvailableEmail(Boolean available) {
 	if (getDefaultEmailAddress() != null)
-	    getDefaultEmailAddress().setVisible(available);
+	    getDefaultEmailAddress().setVisibleToPublic(available);
     }
 
     @Deprecated
@@ -2726,7 +2707,7 @@ public class Person extends Person_Base {
     @Deprecated
     public void setAvailableWebSite(Boolean available) {
 	if (getDefaultWebAddress() != null)
-	    getDefaultWebAddress().setVisible(available);
+	    getDefaultWebAddress().setVisibleToPublic(available);
     }
 
     public List<UnitFile> getUploadedFiles(Unit unit) {

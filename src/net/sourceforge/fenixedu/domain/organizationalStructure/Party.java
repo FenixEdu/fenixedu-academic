@@ -748,6 +748,16 @@ public abstract class Party extends Party_Base {
 	return getDefaultPartyContact(clazz) != null;
     }
 
+    public PartyContact getInstitutionalPartyContact(final Class<? extends PartyContact> clazz) {
+	List<EmailAddress> institutionals = (List<EmailAddress>) getPartyContacts(EmailAddress.class,
+		PartyContactType.INSTITUTIONAL);
+	return institutionals.isEmpty() ? null : institutionals.get(0);
+    }
+
+    public boolean hasInstitutionalPartyContact(final Class<? extends PartyContact> clazz) {
+	return getInstitutionalPartyContact(clazz) != null;
+    }
+
     /*
      * WebAddress
      */
@@ -763,9 +773,10 @@ public abstract class Party extends Party_Base {
 	return (List<WebAddress>) getPartyContacts(WebAddress.class);
     }
 
+    @Deprecated
     private WebAddress getOrCreateDefaultWebAddress() {
 	final WebAddress webAddress = getDefaultWebAddress();
-	return webAddress != null ? webAddress : PartyContact.createDefaultPersonalWebAddress(this);
+	return webAddress != null ? webAddress : PartyContact.createDefaultPersonalWebAddress(this, null);
     }
 
     protected WebAddress createDefaultWebAddress(final String url) {
@@ -773,7 +784,21 @@ public abstract class Party extends Party_Base {
     }
 
     public void updateDefaultWebAddress(final String url) {
-	getOrCreateDefaultWebAddress().edit(url);
+	if (hasDefaultWebAddress())
+	    getDefaultWebAddress().edit(url);
+	else
+	    createDefaultWebAddress(url);
+    }
+
+    @Deprecated
+    public String getWebAddress() {
+	final WebAddress webAddress = getDefaultWebAddress();
+	return webAddress != null ? webAddress.getUrl() : StringUtils.EMPTY;
+    }
+
+    @Deprecated
+    public void setWebAddress(String webAddress) {
+	updateDefaultWebAddress(webAddress);
     }
 
     /*
@@ -791,9 +816,10 @@ public abstract class Party extends Party_Base {
 	return (List<Phone>) getPartyContacts(Phone.class);
     }
 
+    @Deprecated
     private Phone getOrCreateDefaultPhone() {
 	final Phone phone = getDefaultPhone();
-	return phone != null ? phone : (Phone) PartyContact.createDefaultPersonalPhone(this);
+	return phone != null ? phone : (Phone) PartyContact.createDefaultPersonalPhone(this, null);
     }
 
     protected Phone createDefaultPhone(final String number) {
@@ -801,7 +827,21 @@ public abstract class Party extends Party_Base {
     }
 
     protected void updateDefaultPhone(final String number) {
-	getOrCreateDefaultPhone().edit(number);
+	if (hasDefaultPhone())
+	    getDefaultPhone().edit(number);
+	else
+	    createDefaultPhone(number);
+    }
+
+    @Deprecated
+    public String getPhone() {
+	final Phone phone = getDefaultPhone();
+	return phone != null ? phone.getNumber() : StringUtils.EMPTY;
+    }
+
+    @Deprecated
+    public void setPhone(String phone) {
+	updateDefaultPhone(phone);
     }
 
     /*
@@ -819,9 +859,10 @@ public abstract class Party extends Party_Base {
 	return (List<MobilePhone>) getPartyContacts(MobilePhone.class);
     }
 
+    @Deprecated
     private MobilePhone getOrCreateDefaultMobilePhone() {
 	final MobilePhone mobilePhone = getDefaultMobilePhone();
-	return mobilePhone != null ? mobilePhone : (MobilePhone) PartyContact.createDefaultPersonalMobilePhone(this);
+	return mobilePhone != null ? mobilePhone : (MobilePhone) PartyContact.createDefaultPersonalMobilePhone(this, null);
     }
 
     protected MobilePhone createDefaultMobilePhone(final String number) {
@@ -829,7 +870,21 @@ public abstract class Party extends Party_Base {
     }
 
     public void updateDefaultMobilePhone(final String number) {
-	getOrCreateDefaultMobilePhone().edit(number);
+	if (hasDefaultMobilePhone())
+	    getDefaultMobilePhone().edit(number);
+	else
+	    createDefaultMobilePhone(number);
+    }
+
+    @Deprecated
+    public String getMobile() {
+	final MobilePhone phone = getDefaultMobilePhone();
+	return phone != null ? phone.getNumber() : StringUtils.EMPTY;
+    }
+
+    @Deprecated
+    public void setMobile(String mobile) {
+	updateDefaultMobilePhone(mobile);
     }
 
     /*
@@ -844,30 +899,51 @@ public abstract class Party extends Party_Base {
 	return (!StringUtils.isEmpty(value)) ? PartyContact.createDefaultPersonalEmailAddress(this, value) : null;
     }
 
+    @Deprecated
     private EmailAddress getOrCreateDefaultEmailAddress() {
 	final EmailAddress emailAddress = getDefaultEmailAddress();
-	return emailAddress != null ? emailAddress : PartyContact.createDefaultPersonalEmailAddress(this);
+	return emailAddress != null ? emailAddress : PartyContact.createDefaultPersonalEmailAddress(this, null);
     }
 
     public void updateDefaultEmailAddress(final String email) {
-	getOrCreateDefaultEmailAddress().edit(email);
+	if (hasDefaultEmailAddress())
+	    getDefaultEmailAddress().edit(email);
+	else
+	    createDefaultEmailAddress(email);
     }
 
     public EmailAddress getDefaultEmailAddress() {
 	return (EmailAddress) getDefaultPartyContact(EmailAddress.class);
     }
 
+    public EmailAddress getInstitutionalEmailAddress() {
+	return (EmailAddress) getInstitutionalPartyContact(EmailAddress.class);
+    }
+
+    public EmailAddress getInstitutionalOrDefaultEmailAddress() {
+	return hasInstitutionalEmailAddress() ? getInstitutionalEmailAddress() : getDefaultEmailAddress();
+    }
+
+    public boolean hasInstitutionalEmailAddress() {
+	return hasInstitutionalPartyContact(EmailAddress.class);
+    }
+
     public List<EmailAddress> getEmailAddresses() {
 	return (List<EmailAddress>) getPartyContacts(EmailAddress.class);
     }
 
+    /**
+     * @deprecated Use {@link getDefaultEmailAddress}
+     */
+    @Deprecated
     public String getEmail() {
 	final EmailAddress emailAddress = getDefaultEmailAddress();
 	return emailAddress != null ? emailAddress.getValue() : StringUtils.EMPTY;
     }
 
+    @Deprecated
     public void setEmail(String email) {
-	getOrCreateDefaultEmailAddress().edit(email);
+	updateDefaultEmailAddress(email);
     }
 
     /*
@@ -878,12 +954,16 @@ public abstract class Party extends Party_Base {
     }
 
     protected void updateDefaultPhysicalAddress(final PhysicalAddressData data) {
-	getOrCreateDefaultPhysicalAddress().edit(data);
+	if (hasDefaultPhysicalAddress())
+	    getDefaultPhysicalAddress().edit(data);
+	else
+	    createDefaultPhysicalAddress(data);
     }
 
+    @Deprecated
     private PhysicalAddress getOrCreateDefaultPhysicalAddress() {
 	final PhysicalAddress physicalAdress = getDefaultPhysicalAddress();
-	return physicalAdress != null ? physicalAdress : PartyContact.createDefaultPersonalPhysicalAddress(this);
+	return physicalAdress != null ? physicalAdress : PartyContact.createDefaultPersonalPhysicalAddress(this, null);
     }
 
     public PhysicalAddress getDefaultPhysicalAddress() {
@@ -898,11 +978,13 @@ public abstract class Party extends Party_Base {
 	return (List<PhysicalAddress>) getPartyContacts(PhysicalAddress.class);
     }
 
+    @Deprecated
     public String getAddress() {
 	final PhysicalAddress physicalAddress = getDefaultPhysicalAddress();
 	return physicalAddress != null ? physicalAddress.getAddress() : StringUtils.EMPTY;
     }
 
+    @Deprecated
     public void setAddress(String address) {
 	getOrCreateDefaultPhysicalAddress().setAddress(address);
     }
@@ -968,33 +1050,6 @@ public abstract class Party extends Party_Base {
 
     public void setCountryOfResidence(Country countryOfResidence) {
 	getOrCreateDefaultPhysicalAddress().setCountryOfResidence(countryOfResidence);
-    }
-
-    public String getWebAddress() {
-	final WebAddress webAddress = getDefaultWebAddress();
-	return webAddress != null ? webAddress.getUrl() : StringUtils.EMPTY;
-    }
-
-    public void setWebAddress(String webAddress) {
-	updateDefaultWebAddress(webAddress);
-    }
-
-    public String getPhone() {
-	final Phone phone = getDefaultPhone();
-	return phone != null ? phone.getNumber() : StringUtils.EMPTY;
-    }
-
-    public void setPhone(String phone) {
-	updateDefaultPhone(phone);
-    }
-
-    public String getMobile() {
-	final MobilePhone phone = getDefaultMobilePhone();
-	return phone != null ? phone.getNumber() : StringUtils.EMPTY;
-    }
-
-    public void setMobile(String mobile) {
-	updateDefaultMobilePhone(mobile);
     }
 
     protected List<ResearchResultPublication> filterArticlesWithType(List<ResearchResultPublication> publications,

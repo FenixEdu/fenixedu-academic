@@ -11347,6 +11347,24 @@
 			<chain name="ResponsibleDegreeCoordinatorAuthorization" />
 		</filterChains>
     </service>
+    <service>
+        <name>CreatePartyContact</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.contacts.CreatePartyContact</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+            <chain name="PersonOrAcademicAdministrativeOfficeAuthorization" />
+        </filterChains>
+    </service>
+    <service>
+        <name>EditPartyContact</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.contacts.EditPartyContact</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+            <chain name="PersonOrAcademicAdministrativeOfficeAuthorization" />
+        </filterChains>
+    </service>
 	<service>
         <name>DeletePartyContact</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.contacts.DeletePartyContact</implementationClass>

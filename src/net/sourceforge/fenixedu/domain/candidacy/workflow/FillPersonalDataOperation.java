@@ -123,8 +123,7 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	return residenceApplianceInquiryForm;
     }
 
-    public void setResidenceApplianceInquiryForm(
-	    ResidenceApplianceInquiryForm fillResidenceApplianceInquiryForm) {
+    public void setResidenceApplianceInquiryForm(ResidenceApplianceInquiryForm fillResidenceApplianceInquiryForm) {
 	this.residenceApplianceInquiryForm = fillResidenceApplianceInquiryForm;
     }
 
@@ -157,32 +156,26 @@ public class FillPersonalDataOperation extends CandidacyOperation {
     }
 
     private void fillResidenceAppliance() {
-	getStudentCandidacy().setApplyForResidence(
-		getResidenceApplianceInquiryForm().isToApplyForResidence());
+	getStudentCandidacy().setApplyForResidence(getResidenceApplianceInquiryForm().isToApplyForResidence());
 	getStudentCandidacy().setNotesAboutResidenceAppliance(
 		getResidenceApplianceInquiryForm().getNotesAboutApplianceForResidence());
     }
 
     protected void fillOriginInformation() {
-	final PrecedentDegreeInformation precedentDegreeInformation = getStudentCandidacy()
-		.getPrecedentDegreeInformation();
+	final PrecedentDegreeInformation precedentDegreeInformation = getStudentCandidacy().getPrecedentDegreeInformation();
 	precedentDegreeInformation.setConclusionGrade(getOriginInformationForm().getConclusionGrade());
-	precedentDegreeInformation.setDegreeDesignation(getOriginInformationForm()
-		.getDegreeDesignation());
+	precedentDegreeInformation.setDegreeDesignation(getOriginInformationForm().getDegreeDesignation());
 
 	Unit institution = getOriginInformationForm().getInstitution();
 	if (institution == null) {
-	    institution = UnitUtils.readExternalInstitutionUnitByName(getOriginInformationForm()
-		    .getInstitutionName());
+	    institution = UnitUtils.readExternalInstitutionUnitByName(getOriginInformationForm().getInstitutionName());
 	    if (institution == null) {
-		institution = Unit.createNewNoOfficialExternalInstitution(getOriginInformationForm()
-			.getInstitutionName());
+		institution = Unit.createNewNoOfficialExternalInstitution(getOriginInformationForm().getInstitutionName());
 	    }
 	}
 	precedentDegreeInformation.setInstitution(institution);
 	precedentDegreeInformation.setConclusionYear(getOriginInformationForm().getConclusionYear());
-	precedentDegreeInformation.setCountry(getOriginInformationForm()
-		.getCountryWhereFinishedPrecedentDegree());
+	precedentDegreeInformation.setCountry(getOriginInformationForm().getCountryWhereFinishedPrecedentDegree());
     }
 
     protected void fillPersonalDataAuthorizationChoice() {
@@ -192,9 +185,9 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 
     protected void fillContacts(final Person person) {
 	person.setEmail(getContactsForm().getEmail());
-	person.getDefaultEmailAddress().setVisible(getContactsForm().isEmailAvailable());
+	person.getDefaultEmailAddress().setVisibleToPublic(getContactsForm().isEmailAvailable());
 	person.setWebAddress(getContactsForm().getWebAddress());
-	person.getDefaultWebAddress().setVisible(getContactsForm().isHomepageAvailable());
+	person.getDefaultWebAddress().setVisibleToPublic(getContactsForm().isHomepageAvailable());
 	person.setMobile(getContactsForm().getMobileNumber());
 	person.setPhone(getContactsForm().getPhoneNumber());
     }
@@ -205,8 +198,7 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	person.setAreaCode(getResidenceInformationForm().getAreaCode());
 	person.setAreaOfAreaCode(getResidenceInformationForm().getAreaOfAreaCode());
 	person.setDistrictOfResidence(getResidenceInformationForm().getDistrictOfResidence());
-	person.setDistrictSubdivisionOfResidence(getResidenceInformationForm()
-		.getDistrictSubdivisionOfResidence());
+	person.setDistrictSubdivisionOfResidence(getResidenceInformationForm().getDistrictSubdivisionOfResidence());
 	person.setParishOfResidence(getResidenceInformationForm().getParishOfResidence());
 	person.setCountryOfResidence(getResidenceInformationForm().getCountryOfResidence());
     }
@@ -224,12 +216,9 @@ public class FillPersonalDataOperation extends CandidacyOperation {
     }
 
     protected void fillPersonalInformation(final Person person) {
-	person.setEmissionDateOfDocumentIdYearMonthDay(getPersonalInformationForm()
-		.getDocumentIdEmissionDate());
-	person.setExpirationDateOfDocumentIdYearMonthDay(getPersonalInformationForm()
-		.getDocumentIdExpirationDate());
-	person.setEmissionLocationOfDocumentId(getPersonalInformationForm()
-		.getDocumentIdEmissionLocation());
+	person.setEmissionDateOfDocumentIdYearMonthDay(getPersonalInformationForm().getDocumentIdEmissionDate());
+	person.setExpirationDateOfDocumentIdYearMonthDay(getPersonalInformationForm().getDocumentIdExpirationDate());
+	person.setEmissionLocationOfDocumentId(getPersonalInformationForm().getDocumentIdEmissionLocation());
 	person.setProfession(getPersonalInformationForm().getProfession());
 	person.setSocialSecurityNumber(getPersonalInformationForm().getSocialSecurityNumber());
 	person.setIdDocumentType(getPersonalInformationForm().getIdDocumentType());

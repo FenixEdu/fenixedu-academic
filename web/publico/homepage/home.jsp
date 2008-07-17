@@ -258,68 +258,58 @@
 		</tr>
         </logic:notEmpty>
 		</logic:equal>
-		
-		
-		<!--  E-mail -->
-		<logic:equal name="homepage" property="showEmail" value="true">
-        <logic:notEmpty name="homepage" property="person.email">
-		<tr>
-			<th>E-mail:</th>
-			<td>
-				<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
-				<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
-				<bean:define id="emailURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/publico/viewHomepage.do?method=emailPng&amp;homepageID=<bean:write name="homepage" property="idInternal"/></bean:define>
-				<html:img align="middle" src="<%= emailURL %>" altKey="email" bundle="IMAGE_RESOURCES"/>
-			</td>
-		</tr>
-        </logic:notEmpty>
-		</logic:equal>
-		
-		
-		<!--  Telephone-->
-		<logic:equal name="homepage" property="showTelephone" value="true">
-        <logic:notEmpty name="homepage" property="person.phone">
-		<tr>
-			<th><bean:message key="label.homepage.showTelephone" bundle="HOMEPAGE_RESOURCES"/>:</th>
-			<td><bean:write name="homepage" property="person.phone"/></td>
-		</tr>
-        </logic:notEmpty>
-		</logic:equal>
-		
-	
-		<!--  -->
-		<logic:equal name="homepage" property="showWorkTelephone" value="true">
-        <logic:notEmpty name="homepage" property="person.workPhone">
-		<tr>
-			<th><bean:message key="label.homepage.showWorkTelephone" bundle="HOMEPAGE_RESOURCES"/>:</th>
-			<td><bean:write name="homepage" property="person.workPhone"/></td>
-		</tr>
-        </logic:notEmpty>
-		</logic:equal>
-		
-		<!--  -->
-		<logic:equal name="homepage" property="showMobileTelephone" value="true">
-        <logic:notEmpty name="homepage" property="person.mobile">
-		<tr>
-			<th><bean:message key="label.homepage.showMobileTelephone" bundle="HOMEPAGE_RESOURCES"/>:</th>
-			<td><bean:write name="homepage" property="person.mobile"/></td>
-		</tr>
-        </logic:notEmpty>
-		</logic:equal>
-		
-		<!--  -->
-		<logic:equal name="homepage" property="showAlternativeHomepage" value="true">
-        <logic:notEmpty name="homepage" property="person.webAddress">
-		<tr>
-			<th><bean:message key="label.homepage.showAlternativeHomepage" bundle="HOMEPAGE_RESOURCES"/>:</th>
-			<td>
-				<bean:define id="url" type="java.lang.String" name="homepage" property="person.webAddress"/>
-				<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="homepage" property="person.webAddress"/></html:link>
-			</td>
-		</tr>
-        </logic:notEmpty>
-		</logic:equal>
-		
+
+        <!-- email -->
+        <fr:view name="homepage" property="person.emailAddresses">
+            <fr:layout name="contact-table">
+                <fr:property name="publicSpace" value="true"/>
+                <fr:property name="bundle" value="HOMEPAGE_RESOURCES" />
+                <fr:property name="label" value="label.homepage.showEmail" />
+                <fr:property name="defaultLabel" value="label.homepage.contact.default" />
+            </fr:layout>
+        </fr:view>
+
+        <!-- phone -->
+        <fr:view name="homepage" property="person.phones">
+            <fr:layout name="contact-table">
+                <fr:property name="publicSpace" value="true"/>
+                <fr:property name="types" value="PERSONAL" />
+                <fr:property name="bundle" value="HOMEPAGE_RESOURCES" />
+                <fr:property name="label" value="label.homepage.showTelephone" />
+                <fr:property name="defaultLabel" value="label.homepage.contact.default" />
+            </fr:layout>
+        </fr:view>
+
+        <!-- work phone -->
+        <fr:view name="homepage" property="person.phones">
+            <fr:layout name="contact-table">
+                <fr:property name="publicSpace" value="true"/>
+                <fr:property name="types" value="WORK" />
+                <fr:property name="bundle" value="HOMEPAGE_RESOURCES" />
+                <fr:property name="label" value="label.homepage.showWorkTelephone" />
+                <fr:property name="defaultLabel" value="label.homepage.contact.default" />
+            </fr:layout>
+        </fr:view>
+
+        <!-- mobile phone -->
+        <fr:view name="homepage" property="person.mobilePhones">
+            <fr:layout name="contact-table">
+                <fr:property name="publicSpace" value="true"/>
+                <fr:property name="bundle" value="HOMEPAGE_RESOURCES" />
+                <fr:property name="label" value="label.homepage.showMobileTelephone" />
+                <fr:property name="defaultLabel" value="label.homepage.contact.default" />
+            </fr:layout>
+        </fr:view>
+
+        <!-- alternative page -->
+        <fr:view name="homepage" property="person.webAddresses">
+            <fr:layout name="contact-table">
+                <fr:property name="publicSpace" value="true"/>
+                <fr:property name="bundle" value="HOMEPAGE_RESOURCES" />
+                <fr:property name="label" value="label.homepage.showAlternativeHomepage" />
+                <fr:property name="defaultLabel" value="label.homepage.contact.default" />
+            </fr:layout>
+        </fr:view>
 
 		<!--  -->
 		<logic:equal name="homepage" property="showCurrentExecutionCourses" value="true">

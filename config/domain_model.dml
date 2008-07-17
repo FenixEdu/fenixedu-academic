@@ -2056,7 +2056,10 @@ class DomainObject {
 	class contacts.PartyContact extends DomainObject {
 		Boolean defaultContact;
 		PartyContactType type;
-		Boolean visible (REQUIRED);
+		Boolean visibleToPublic (REQUIRED);
+		Boolean visibleToStudents (REQUIRED);
+        Boolean visibleToTeachers (REQUIRED);
+        Boolean visibleToEmployees (REQUIRED);
 	}
 
 		class contacts.EmailAddress extends contacts.PartyContact {

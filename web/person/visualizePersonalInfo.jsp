@@ -18,6 +18,7 @@
 	<span class="error0"><!-- Error messages go here --><html:errors /></span>
 </p>
 
+<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/checkall.js"></script>
 
 <!-- Contactos -->
 <table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
@@ -36,26 +37,38 @@
 	</ul>
 </logic:messagesPresent>
 
-	<fr:form  action="/partyContacts.do?method=updateVisibility">
-<table class="tstyle2 thlight thleft thwhite">
+	<fr:form  action="/partyContacts.do">
+<table class="tstyle2 thlight thleft">
     <tr>
         <th></th>
         <th></th>
-        <th><bean:message key="label.person.visible.to.students" /></th>
+        <th><bean:message key="label.contact.visible.to.public" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
+        <th><bean:message key="label.contact.visible.to.students" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
+        <th><bean:message key="label.contact.visible.to.teachers" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
+        <th><bean:message key="label.contact.visible.to.employees" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
+        <th><bean:message key="label.contact.visible.to.management" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
         <th></th>
     </tr>
-    <tr>
+    <!-- <tr>
         <td><bean:message key="label.partyContacts.Picture" /></td>
         <td>-</td>
-        <td class="acenter"><fr:edit name="person" slot="availablePhoto" /></td>
+        <td class="acenter">
+            <logic:equal name="person" property="availablePhoto" value="true">
+                <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+            </logic:equal>
+        </td>
         <td></td>
-    </tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr> -->
 <bean:define id="phones" name="person" property="phones" />
 <bean:size id="size" name="phones" />
 <logic:notEmpty name="phones">
 	<logic:iterate id="contact" name="phones">
 		<tr>
-			<th><bean:message key="label.partyContacts.Phone" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</th>
+			<td><bean:message key="label.partyContacts.Phone" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>
 				<bean:write name="contact" property="number" />
 				<logic:equal name="contact" property="defaultContact" value="true">
@@ -66,7 +79,31 @@
 				</logic:equal>
 			</td>
             <td class="acenter">
-                <fr:edit name="contact" slot="visible" />
+                <logic:equal name="contact" property="visibleToPublic" value="true">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToPublic" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToStudents" value="true">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToStudents" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToTeachers" value="true">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToTeachers" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToEmployees" value="true">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToEmployees" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
             </td>
 			<td class="tdclear">
 				<html:link action="/partyContacts.do?method=prepareCreatePhone">
@@ -84,9 +121,13 @@
 </logic:notEmpty>
 <logic:empty name="phones">
 	<tr>
-		<th><bean:message key="label.partyContacts.Phone" />:</th>
-		<td>-</td>
-		<td></td>
+		<td><bean:message key="label.partyContacts.Phone" />:</td>
+        <td>-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
 		<td class="tdclear">
 			<html:link action="/partyContacts.do?method=prepareCreatePhone">
 				<bean:message key="label.add" />
@@ -100,7 +141,7 @@
 <logic:notEmpty name="mobilePhones">
 	<logic:iterate id="contact" name="mobilePhones">
 		<tr>
-			<th><bean:message key="label.partyContacts.MobilePhone" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</th>
+			<td><bean:message key="label.partyContacts.MobilePhone" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>
 				<bean:write name="contact" property="number" />
 				<logic:equal name="contact" property="defaultContact" value="true">
@@ -111,7 +152,31 @@
 				</logic:equal>
 			</td>
             <td class="acenter">
-                <fr:edit name="contact" slot="visible" />
+                <logic:equal name="contact" property="visibleToPublic" value="true">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToPublic" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToStudents" value="true">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToStudents" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToTeachers" value="true">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToTeachers" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToEmployees" value="true">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToEmployees" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
             </td>
 			<td class="tdclear">
 				<html:link action="/partyContacts.do?method=prepareCreateMobilePhone">
@@ -129,9 +194,13 @@
 </logic:notEmpty>
 <logic:empty name="mobilePhones">
 	<tr>
-		<th><bean:message key="label.partyContacts.MobilePhone" />:</th>
-		<td>-</td>
-		<td></td>
+		<td><bean:message key="label.partyContacts.MobilePhone" />:</td>
+        <td>-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
 		<td class="tdclear">
 			<html:link action="/partyContacts.do?method=prepareCreateMobilePhone">
 				<bean:message key="label.add" />
@@ -145,7 +214,7 @@
 <logic:notEmpty name="emailAddresses">
 	<logic:iterate id="contact" name="emailAddresses">
 		<tr>
-			<th><bean:message key="label.partyContacts.EmailAddress" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</th>
+			<td><bean:message key="label.partyContacts.EmailAddress" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>
 				<bean:write name="contact" property="value" />
 				<logic:equal name="contact" property="defaultContact" value="true">
@@ -156,16 +225,39 @@
 				</logic:equal>
 			</td>
             <td class="acenter">
-                <fr:edit name="contact" slot="visible" />
+                <logic:equal name="contact" property="visibleToPublic" value="true">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToPublic" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToStudents" value="true">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToStudents" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToTeachers" value="true">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToTeachers" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToEmployees" value="true">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToEmployees" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
             </td>
 			<td class="tdclear">
     			<html:link action="/partyContacts.do?method=prepareCreateEmailAddress">
 					<bean:message key="label.add" />
-				<!-- Do not indent the next line or the comma will be messed up -->
+				</html:link>,
+				<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
+					<bean:message key="label.edit" />
 				</html:link><logic:notEqual name="contact" property="type.name" value="INSTITUTIONAL">,
-					<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
-						<bean:message key="label.edit" />
-					</html:link>,
 					<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="idInternal">
 						<bean:message key="label.clear" />
 					</html:link>
@@ -176,9 +268,13 @@
 </logic:notEmpty>
 <logic:empty name="emailAddresses">
 	<tr>
-		<th><bean:message key="label.partyContacts.EmailAddress" />:</th>
-		<td>-</td>
-		<td></td>
+		<td><bean:message key="label.partyContacts.EmailAddress" />:</td>
+        <td>-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
 		<td class="tdclear">
 			<html:link action="/partyContacts.do?method=prepareCreateEmailAddress">
 				<bean:message key="label.add" />
@@ -192,7 +288,7 @@
 <logic:notEmpty name="webAddresses">
 	<logic:iterate id="contact" name="webAddresses">
 		<tr>
-			<th><bean:message key="label.partyContacts.WebAddress" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</th>
+			<td><bean:message key="label.partyContacts.WebAddress" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>
 				<bean:write name="contact" property="url" />
 				<logic:equal name="contact" property="defaultContact" value="true">
@@ -203,7 +299,31 @@
 				</logic:equal>
 			</td>
             <td class="acenter">
-                <fr:edit name="contact" slot="visible" />
+                <logic:equal name="contact" property="visibleToPublic" value="true">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToPublic" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToStudents" value="true">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToStudents" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToTeachers" value="true">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToTeachers" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToEmployees" value="true">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToEmployees" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                    <img src="<%= request.getContextPath() %>/images/accept.gif"/>
             </td>
 			<td class="tdclear">
 				<html:link action="/partyContacts.do?method=prepareCreateWebAddress">
@@ -221,9 +341,13 @@
 </logic:notEmpty>
 <logic:empty name="webAddresses">
 	<tr>
-		<th><bean:message key="label.partyContacts.WebAddress" />:</th>
-		<td>-</td>
-		<td></td>
+		<td><bean:message key="label.partyContacts.WebAddress" />:</td>
+        <td>-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
 		<td class="tdclear">
 			<html:link action="/partyContacts.do?method=prepareCreateWebAddress">
 				<bean:message key="label.add" />
@@ -231,15 +355,22 @@
 		</td>
 	</tr>
 </logic:empty>
+</table>
+</fr:form>
+
+<fr:form action="/visualizePersonalInfo.do">
+<table class="tstyle2 thlight thleft">
     <tr>
-        <th></th>
-        <td></td>
+        <td><bean:message key="label.person.availablePhoto" /></td>
         <td>
-            <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
-                <bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>
-            </html:submit>
+        <fr:edit layout="option-select-postback" name="person" slot="availablePhoto">
+        </fr:edit>
         </td>
-        <td></td>
+        <td class="switchNone">
+            <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="mvert05">
+        <bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES"/>
+    </html:submit>
+    </td>
     </tr>
 </table>
 </fr:form>
@@ -317,3 +448,7 @@
 </logic:iterate>
 
 </logic:present>
+
+<script type="text/javascript" language="javascript">
+switchGlobal();
+</script>

@@ -22,24 +22,25 @@ public class MobilePhone extends MobilePhone_Base {
 		result = -1;
 	    }
 	    return (result == 0) ? COMPARATOR_BY_TYPE.compare(contact, otherContact) : result;
-	}};
+	}
+    };
 
     protected MobilePhone() {
 	super();
     }
 
-    protected MobilePhone(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
+    public MobilePhone(final Party party, final PartyContactType type, final boolean defaultContact, final String number) {
 	this();
-	super.init(party, type, visible, defaultContact);
+	super.init(party, type, defaultContact);
+	checkParameters(number);
+	super.setNumber(number);
     }
 
-    public MobilePhone(final Party party, final PartyContactType type, final Boolean defaultContact, final String number) {
-	this(party, type, true, defaultContact.booleanValue(), number);
-    }
-
-    public MobilePhone(final Party party, final PartyContactType type, final Boolean visible, final Boolean defaultContact, final String number) {
+    public MobilePhone(final Party party, final PartyContactType type, final boolean visibleToPublic,
+	    final boolean visibleToStudents, final boolean visibleToTeachers, final boolean visibleToEmployees,
+	    final boolean defaultContact, final String number) {
 	this();
-	super.init(party, type, visible, defaultContact);
+	super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, defaultContact);
 	checkParameters(number);
 	super.setNumber(number);
     }
@@ -57,16 +58,6 @@ public class MobilePhone extends MobilePhone_Base {
 
     public void edit(final String number) {
 	super.setNumber(number);
-    }
-
-    public void edit(final PartyContactType type, final Boolean defaultContact, final String number) {
-	super.edit(type, true, defaultContact);
-	edit(number);
-    }
-
-    public void edit(final PartyContactType type, final Boolean visible, final Boolean defaultContact, final String number) {
-	super.edit(type, visible, defaultContact);
-	edit(number);
     }
 
     @Override

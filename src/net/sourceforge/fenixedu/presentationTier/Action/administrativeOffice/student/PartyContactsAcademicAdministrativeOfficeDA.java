@@ -12,7 +12,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 public class PartyContactsAcademicAdministrativeOfficeDA extends PartyContactsManagementDispatchAction {
-    
     private Student getStudent(final HttpServletRequest request) {
 	final Student student = rootDomainObject.readStudentByOID(Integer.valueOf(request.getParameter("studentID")));
 	request.setAttribute("student", student);
@@ -20,14 +19,34 @@ public class PartyContactsAcademicAdministrativeOfficeDA extends PartyContactsMa
     }
 
     @Override
-    protected Person getPerson(final HttpServletRequest request) {
-        return getStudent(request).getPerson();
-    }
-    
-    @Override
-    public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-        return mapping.findForward("editPersonalData");
+    protected Person getParty(final HttpServletRequest request) {
+	return getStudent(request).getPerson();
     }
 
+    @Override
+    public ActionForward postbackSetPublic(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("student", getStudent(request));
+	return super.postbackSetPublic(mapping, actionForm, request, response);
+    }
+
+    @Override
+    public ActionForward postbackSetElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("student", getStudent(request));
+	return super.postbackSetElements(mapping, actionForm, request, response);
+    }
+
+    @Override
+    public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("student", getStudent(request));
+	return super.invalid(mapping, actionForm, request, response);
+    }
+
+    @Override
+    public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return mapping.findForward("editPersonalData");
+    }
 }

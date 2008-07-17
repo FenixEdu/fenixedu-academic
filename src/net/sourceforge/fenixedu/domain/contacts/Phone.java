@@ -29,19 +29,17 @@ public class Phone extends Phone_Base {
 	super();
     }
 
-    protected Phone(final Party party, final PartyContactType type, final boolean visible, final boolean defaultContact) {
+    public Phone(final Party party, final PartyContactType type, final boolean defaultContact, final String number) {
 	this();
-	super.init(party, type, visible, defaultContact);
+	super.init(party, type, defaultContact);
+	checkParameters(number);
+	super.setNumber(number);
     }
 
-    public Phone(final Party party, final PartyContactType type, final Boolean defaultContact, final String number) {
-	this(party, type, true, defaultContact, number);
-    }
-
-    public Phone(final Party party, final PartyContactType type, final Boolean visible, final Boolean defaultContact,
-	    final String number) {
+    public Phone(final Party party, final PartyContactType type, final boolean visibleToPublic, final boolean visibleToStudents,
+	    final boolean visibleToTeachers, final boolean visibleToEmployees, final boolean defaultContact, final String number) {
 	this();
-	super.init(party, type, visible, defaultContact);
+	super.init(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees, defaultContact);
 	checkParameters(number);
 	super.setNumber(number);
     }
@@ -59,16 +57,6 @@ public class Phone extends Phone_Base {
 
     public void edit(final String number) {
 	super.setNumber(number);
-    }
-
-    public void edit(final PartyContactType type, final Boolean defaultContact, final String number) {
-	super.edit(type, true, defaultContact);
-	edit(number);
-    }
-
-    public void edit(final PartyContactType type, final Boolean visible, final Boolean defaultContact, final String number) {
-	super.edit(type, visible, defaultContact);
-	edit(number);
     }
 
     @Override
