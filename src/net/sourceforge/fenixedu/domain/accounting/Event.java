@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
-import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.InstallmentAccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -491,21 +490,6 @@ public abstract class Event extends Event_Base {
     protected Set<Entry> internalProcess(User responsibleUser, List<EntryDTO> entryDTOs,
 	    AccountingTransactionDetailDTO transactionDetail) {
 	return getPostingRule().process(responsibleUser, entryDTOs, this, getFromAccount(), getToAccount(), transactionDetail);
-    }
-
-    public InstallmentAccountingTransaction getAccountingTransactionFor(final Installment installment) {
-	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
-	    if (accountingTransaction instanceof InstallmentAccountingTransaction
-		    && ((InstallmentAccountingTransaction) accountingTransaction).getInstallment() == installment) {
-		return (InstallmentAccountingTransaction) accountingTransaction;
-	    }
-	}
-
-	return null;
-    }
-
-    public boolean hasAccountingTransactionFor(final Installment installment) {
-	return installment != null && getAccountingTransactionFor(installment) != null;
     }
 
     public boolean hasInstallments() {
