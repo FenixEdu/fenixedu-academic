@@ -203,7 +203,7 @@ public abstract class Event extends Event_Base {
     public void setEventState(EventState eventState) {
 	throw new DomainException("error.accounting.Event.cannot.modify.eventState");
     }
-    
+
     @Override
     public void setEmployeeResponsibleForCancel(Employee employee) {
 	throw new DomainException("error.accounting.Event.cannot.modify.employeeResponsibleForCancel");
@@ -250,7 +250,7 @@ public abstract class Event extends Event_Base {
 	final List<AccountingTransaction> result = new ArrayList<AccountingTransaction>();
 
 	for (final AccountingTransaction transaction : super.getAccountingTransactionsSet()) {
-	    if (!transaction.isAdjustingTransaction()) {
+	    if (!transaction.isAdjustingTransaction() && transaction.getAmountWithAdjustment().isPositive()) {
 		result.add(transaction);
 	    }
 	}
