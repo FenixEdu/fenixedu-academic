@@ -40,3 +40,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Residence Year and Month" alterResidenceYearAndMonth.sql
+execute "Update Country information" updateCountryName.sql IST
+executeWithTempFile "Change Contact Visibility Settings" changeContactVisibilitySettings.sql
