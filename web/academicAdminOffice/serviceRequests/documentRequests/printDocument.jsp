@@ -87,7 +87,7 @@
 	<br/>
 	<br/>
 	--%>
-	<html:submit><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
+	<html:submit><bean:message key="label.documentRequestsManagement.conclude" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 	<html:cancel onclick="this.form.method.value='backToViewRegistration'"><bean:message key="back" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:cancel>	
 </fr:form>
 
