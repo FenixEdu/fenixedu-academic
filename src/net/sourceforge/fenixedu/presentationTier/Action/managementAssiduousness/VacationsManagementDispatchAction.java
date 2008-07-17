@@ -9,7 +9,9 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.AssiduousnessExportChoices;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
+import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessVacations;
@@ -36,22 +38,20 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward chooseYearMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("action", getFromRequest(request, "action"));
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
-	if (yearMonth == null) {
-	    yearMonth = getYearMonth(request);
-	}
-	request.setAttribute("chooseYear", Boolean.TRUE);
-	request.setAttribute("yearMonth", yearMonth);
+	String action = request.getParameter("action");
+	AssiduousnessExportChoices assiduousnessExportChoices = new AssiduousnessExportChoices(action);
+	assiduousnessExportChoices.setChooseYear(true);
+	request.setAttribute("assiduousnessExportChoices", assiduousnessExportChoices);
+	request.setAttribute("action", action);
+	request.setAttribute("vacations", true);
 	return mapping.findForward("choose-year-month");
     }
 
     public ActionForward calculateA17AndA18(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	YearMonth yearMonth = (YearMonth) getRenderedObject("yearMonth");
-	if (yearMonth == null) {
-	    yearMonth = getYearMonth(request);
-	}
+
+	AssiduousnessExportChoices assiduousnessExportChoices = (AssiduousnessExportChoices) getRenderedObject("assiduousnessExportChoices");
+
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=a17a18.xls");
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
@@ -72,13 +72,17 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 
 	spreadsheet.addHeader("Média de horas");
 
-	ServiceUtils.executeService("CalculateArticles17And18", new Object[] { yearMonth.getYear() });
+	ServiceUtils.executeService("CalculateArticles17And18", new Object[] { assiduousnessExportChoices.getYearMonth()
+		.getYear() });
 
-	LocalDate beginDate = new LocalDate(yearMonth.getYear() - 1, 1, 1);
-	LocalDate endDate = new LocalDate(yearMonth.getYear() - 1, 12, 31);
+	LocalDate beginDate = new LocalDate(assiduousnessExportChoices.getYearMonth().getYear() - 1, 1, 1);
+	LocalDate endDate = new LocalDate(assiduousnessExportChoices.getYearMonth().getYear() - 1, 12, 31);
 
-	for (AssiduousnessVacations assiduousnessVacations : rootDomainObject.getAssiduousnessVacations()) {
-	    if (assiduousnessVacations.getYear().equals(yearMonth.getYear())) {
+	for (Assiduousness assiduousness : assiduousnessExportChoices.getAssiduousnesses()) {
+	    AssiduousnessVacations assiduousnessVacations = assiduousness
+		    .getAssiduousnessVacationsByYear(assiduousnessExportChoices.getYearMonth().getYear());
+	    if (assiduousnessVacations != null
+		    && assiduousnessVacations.getYear().equals(assiduousnessExportChoices.getYearMonth().getYear())) {
 		AssiduousnessStatusHistory assiduousnessStatusHistory = assiduousnessVacations.getAssiduousness()
 			.getLastAssiduousnessStatusHistoryBetween(beginDate, endDate);
 		if (assiduousnessStatusHistory != null) {
@@ -97,7 +101,8 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 		    Collections.sort(assiduousnessClosedMonths, new BeanComparator("beginDate"));
 
 		    for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonths) {
-			if (assiduousnessClosedMonth.getBeginDate().get(DateTimeFieldType.year()) == (yearMonth.getYear() - 1)) {
+			if (assiduousnessClosedMonth.getBeginDate().get(DateTimeFieldType.year()) == (assiduousnessExportChoices
+				.getYearMonth().getYear() - 1)) {
 			    spreadsheet.addDuration(assiduousnessClosedMonth.getTotalWorkedTime(), assiduousnessClosedMonth
 				    .getBeginDate().get(DateTimeFieldType.monthOfYear()) + 6);
 			}
@@ -107,6 +112,7 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 		    spreadsheet.addDuration(averageWorkPeriodDuration, 19);
 		}
 	    }
+
 	}
 	final ServletOutputStream writer = response.getOutputStream();
 	spreadsheet.getWorkbook().write(writer);

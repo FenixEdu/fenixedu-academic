@@ -16,7 +16,11 @@
 </span>
 
 <logic:present name="assiduousnessExportChoices">
-	<fr:form action="<%="/exportAssiduousness.do?method="+nextAction%>">
+	<bean:define id="exportAction" value="exportAssiduousness"/>
+	<logic:present name="vacations">
+		<bean:define id="exportAction" value="vacationsManagement"/>
+	</logic:present>
+	<fr:form action="<%="/"+exportAction+".do?method="+nextAction%>">
 		
 		<logic:equal name="assiduousnessExportChoices" property="canChooseDateType" value="true">
 			<fr:edit id="assiduousnessExportChoicesDatesTypes" name="assiduousnessExportChoices" schema="choose.assiduosunessExportChoice.datesType">
@@ -73,60 +77,43 @@
 	</fr:form>
 </logic:present>
 <logic:present name="yearMonth">
-	<logic:present name="chooseYear">
-		<fr:form action="<%="/vacationsManagement.do?method="+nextAction%>">
-			<html:hidden property="action" value="<%=nextAction %>" />
-			<fr:edit id="yearMonth" name="yearMonth" schema="choose.year">
+	<logic:present name="employeesAnualInfo">
+		<fr:form action="<%="/exportAssiduousness.do?method="+nextAction%>">
+		<html:hidden property="action" value="<%=nextAction %>" />
+			<fr:edit id="yearMonth" name="yearMonth" schema="choose.date">
 				<fr:layout>
 					<fr:property name="classes" value="thlight thright" />
 				</fr:layout>
 			</fr:edit>		
 			<p>
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
-					<bean:message key="button.submit" />
+					<bean:message key="button.export" />
 				</html:submit>
 			</p>
 		</fr:form>
 	</logic:present>
-	<logic:notPresent name="chooseYear">
-		<logic:present name="employeesAnualInfo">
-			<fr:form action="<%="/exportAssiduousness.do?method="+nextAction%>">
+	<logic:notPresent name="employeesAnualInfo">
+		<fr:form action="<%="/exportExtraWork.do?method="+nextAction%>">
 			<html:hidden property="action" value="<%=nextAction %>" />
+			<logic:present name="chooseMonth">
+				<bean:define id="chooseMonth" name="chooseMonth" type="java.lang.String"/>
+				<html:hidden property="chooseMonth" value="<%=chooseMonth %>" />
+				<fr:edit id="yearMonth" name="yearMonth" schema="choose.year">
+					<fr:layout>
+						<fr:property name="classes" value="thlight thright" />
+					</fr:layout>
+				</fr:edit>
+			</logic:present>
+			<logic:notPresent name="chooseMonth">
 				<fr:edit id="yearMonth" name="yearMonth" schema="choose.date">
 					<fr:layout>
 						<fr:property name="classes" value="thlight thright" />
 					</fr:layout>
-				</fr:edit>		
-				<p>
-					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
-						<bean:message key="button.export" />
-					</html:submit>
-				</p>
-			</fr:form>
-		</logic:present>
-		<logic:notPresent name="employeesAnualInfo">
-			<fr:form action="<%="/exportExtraWork.do?method="+nextAction%>">
-				<html:hidden property="action" value="<%=nextAction %>" />
-				<logic:present name="chooseMonth">
-					<bean:define id="chooseMonth" name="chooseMonth" type="java.lang.String"/>
-					<html:hidden property="chooseMonth" value="<%=chooseMonth %>" />
-					<fr:edit id="yearMonth" name="yearMonth" schema="choose.year">
-						<fr:layout>
-							<fr:property name="classes" value="thlight thright" />
-						</fr:layout>
-					</fr:edit>
-				</logic:present>
-				<logic:notPresent name="chooseMonth">
-					<fr:edit id="yearMonth" name="yearMonth" schema="choose.date">
-						<fr:layout>
-							<fr:property name="classes" value="thlight thright" />
-						</fr:layout>
-					</fr:edit>
-				</logic:notPresent>
-				<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
-					<bean:message key="button.export" />
-				</html:submit></p>
-			</fr:form>
-		</logic:notPresent>
+				</fr:edit>
+			</logic:notPresent>
+			<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
+				<bean:message key="button.export" />
+			</html:submit></p>
+		</fr:form>
 	</logic:notPresent>
 </logic:present>
