@@ -17,7 +17,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
 	activities.add(new CandidacyPayment());
-	// activities.add(new EditCandidacyPersonalInformation());
+	activities.add(new EditCandidacyPersonalInformation());
 	// activities.add(new EditCandidacyInformation());
 	// activities.add(new IntroduceCandidacyResult());
 	// activities.add(new CancelCandidacy());
@@ -40,17 +40,17 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	    throw new DomainException("error.DegreeChangeIndividualCandidacyProcess.invalid.candidacy.process");
 	}
     }
-    
+
     @Override
     public DegreeChangeCandidacyProcess getCandidacyProcess() {
-        return (DegreeChangeCandidacyProcess) super.getCandidacyProcess();
+	return (DegreeChangeCandidacyProcess) super.getCandidacyProcess();
     }
-    
+
     @Override
     public DegreeChangeIndividualCandidacy getCandidacy() {
-        return (DegreeChangeIndividualCandidacy) super.getCandidacy();
+	return (DegreeChangeIndividualCandidacy) super.getCandidacy();
     }
-    
+
     @Override
     public boolean canExecuteActivity(final IUserView userView) {
 	return isDegreeAdministrativeOfficeEmployee(userView);
@@ -60,11 +60,11 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
     public List<Activity> getActivities() {
 	return activities;
     }
-    
+
     public Degree getCandidacySelectedDegree() {
 	return getCandidacy().getSelectedDegree();
     }
-    
+
     public CandidacyPrecedentDegreeInformation getCandidacyPrecedentDegreeInformation() {
 	return getCandidacy().getPrecedentDegreeInformation();
     }
@@ -113,7 +113,26 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	    return process; // nothing to be done, for now payment is being
 	    // done by existing interfaces
 	}
+    }
 
+    static private class EditCandidacyPersonalInformation extends Activity<DegreeChangeIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeChangeIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeChangeIndividualCandidacyProcess executeActivity(DegreeChangeIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.editPersonalCandidacyInformation(((DegreeChangeIndividualCandidacyProcessBean) object).getPersonBean());
+	    return process;
+	}
     }
 
 }
