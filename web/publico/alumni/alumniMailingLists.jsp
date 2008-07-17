@@ -11,11 +11,7 @@
 
 <h2>Mailing Lists</h2>
 
-<%--
 <p><a href="<%= request.getContextPath() + "/conteudos-publicos/registo-alumni"%>">« Voltar</a></p>
---%>
-<p><a href="https://fenix.ist.utl.pt/conteudos-publicos/registo-alumni">« Voltar</a></p>
-
 
 <div class="alumnilogo">
 	

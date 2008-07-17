@@ -41,6 +41,11 @@ public class AlumniManager {
 	return null;
     }
 
+    public Alumni registerAlumni(final Student student) {
+	final Alumni alumni = new Alumni(student);
+	return alumni;
+    }
+
     public Alumni registerAlumni(final Integer studentNumber, final String documentIdNumber, final String email) {
 
 	checkRulesToRegisterAlumni(studentNumber, documentIdNumber);

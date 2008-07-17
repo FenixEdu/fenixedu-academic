@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.Email;
 
 public class RegisterAlumniData extends Service {
@@ -45,6 +46,10 @@ public class RegisterAlumniData extends Service {
 
 	alumni.setRegistered(registered);
 	return alumni;
+    }
+
+    public Alumni run(final Student student) {
+	return new AlumniManager().registerAlumni(student);
     }
 
     public Alumni run(final Integer studentNumber, final String documentIdNumber, final String email) {

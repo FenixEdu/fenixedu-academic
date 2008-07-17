@@ -16,10 +16,7 @@
 
 <h2><bean:message key="label.alumni.student.number.recovery" bundle="ALUMNI_RESOURCES" /></h2>
 
-<%--
 <p><a href="<%= request.getContextPath() + "/conteudos-publicos/registo-alumni"%>">« Voltar</a></p>
---%>
-<p><a href="https://fenix.ist.utl.pt/conteudos-publicos/registo-alumni">« Voltar</a></p>
 
 
 <p class="greytxt" style="margin-bottom: 1em;"><bean:message key="label.alumni.student.number.recovery.text" bundle="ALUMNI_RESOURCES" /></p>

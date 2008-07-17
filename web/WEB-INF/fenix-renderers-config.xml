@@ -772,8 +772,6 @@ Documentation:
           to define a create mode and redefine all the layouts to that mode.  -->
     <renderer mode="input" type="java.lang.Class" class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer"/>
 
-	<renderer mode="input" type="java.lang.Class" class="pt.ist.fenixWebFramework.renderers.StandardInputBreakRenderer"/>
-
     <!--@ This layouts is the same as the <tt>values</tt> layout preconfigured with an html separator of values. This
           way it can be used as a property of other layout. -->
     <renderer type="java.lang.Object" layout="values-dash" class="pt.ist.fenixWebFramework.renderers.ValuesRenderer">
