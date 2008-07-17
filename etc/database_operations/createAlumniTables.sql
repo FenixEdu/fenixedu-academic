@@ -1,4 +1,3 @@
-drop table if exists EDUCATION_AREA;
 create table EDUCATION_AREA (
   ID_INTERNAL INT(11) not null auto_increment,
   KEY_ROOT_DOMAIN_OBJECT int(11) not null,
@@ -10,7 +9,6 @@ create table EDUCATION_AREA (
 ) type=InnoDB;
 
 
-drop table if exists BUSINESS_AREA;
 create table BUSINESS_AREA (
   ID_INTERNAL INT(11) not null auto_increment,
   KEY_ROOT_DOMAIN_OBJECT int(11) not null,
@@ -22,7 +20,7 @@ create table BUSINESS_AREA (
   KEY KEY_ROOT_DOMAIN_OBJECT (KEY_ROOT_DOMAIN_OBJECT)
 ) type=InnoDB;
 
-drop table if exists ALUMNI;
+
 create table ALUMNI (
   ID_INTERNAL int(11) not null auto_increment,
   KEY_ROOT_DOMAIN_OBJECT int(11) not null,
@@ -33,7 +31,7 @@ create table ALUMNI (
   KEY KEY_ROOT_DOMAIN_OBJECT (KEY_ROOT_DOMAIN_OBJECT)
 ) type=InnoDB;
 
-drop table if exists ALUMNI_IDENTITY_CHECK_REQUEST;
+
 create table ALUMNI_IDENTITY_CHECK_REQUEST (
   ID_INTERNAL int(11) not null auto_increment,
   KEY_ROOT_DOMAIN_OBJECT int(11) not null,

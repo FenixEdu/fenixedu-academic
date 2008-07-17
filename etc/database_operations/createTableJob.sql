@@ -1,4 +1,3 @@
-drop table if exists JOB;
 create table JOB (
   ID_INTERNAL int(11) not null auto_increment,
   KEY_ROOT_DOMAIN_OBJECT int(11) not null,

@@ -1,4 +1,3 @@
-drop table if exists SUPPORT_REQUEST;
 create table SUPPORT_REQUEST (
   ID_INTERNAL int(11) not null auto_increment,
   KEY_ROOT_DOMAIN_OBJECT int(11) not null,
