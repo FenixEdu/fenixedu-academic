@@ -227,8 +227,7 @@ public class Alumni extends Alumni_Base {
 
     public void addIfNotExistsEmail(String email) {
 	if (!hasEmailAddress(email)) {
-	    PartyContact.createEmailAddress(getStudent().getPerson(), PartyContactType.PERSONAL, Boolean.FALSE, Boolean.FALSE,
-		    email);
+	    PartyContact.createEmailAddress(getStudent().getPerson(), PartyContactType.PERSONAL, Boolean.FALSE, email);
 	}
 
     }
@@ -240,7 +239,7 @@ public class Alumni extends Alumni_Base {
     public boolean hasPastLogin() {
 	return getStudent().getPerson().getUser().getLastLoginDateTimeDateTime() != null;
     }
-    
+
     public boolean hasAnyPendingIdentityRequests() {
 	for (AlumniIdentityCheckRequest request : getIdentityRequests()) {
 	    if (request.getApproved() == null) {

@@ -225,6 +225,11 @@ public abstract class PartyContact extends PartyContact_Base {
 	    final String number) {
 	return new Phone(party, type, defaultContact, number);
     }
+    
+    @Deprecated
+    static public EmailAddress createEmailAddress(final Party party, final PartyContactType type, final boolean defaultContact, final String value) {
+	return new EmailAddress(party, type, defaultContact, value);
+    }
 
     static public MobilePhone createDefaultPersonalMobilePhone(final Party party, final String number) {
 	return new MobilePhone(party, PartyContactType.PERSONAL, true, number);

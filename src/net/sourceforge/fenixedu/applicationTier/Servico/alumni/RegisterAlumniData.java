@@ -58,7 +58,7 @@ public class RegisterAlumniData extends Service {
 	try {
 	    if (!alumni.hasEmailAddress(emailAddress)) {
 		PartyContact.createEmailAddress(alumni.getStudent().getPerson(), PartyContactType.PERSONAL, Boolean.FALSE,
-			Boolean.FALSE, emailAddress);
+			emailAddress);
 	    }
 	} catch (DomainException e) {
 	    throw new FenixServiceException(e.getMessage());
