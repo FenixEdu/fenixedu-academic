@@ -67,7 +67,8 @@
 
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
-		<action path="/showErrorPage" forward="/exception/error.jsp"/>
+		<action path="/showErrorPage" forward="/exception/error.jsp" />
+		<!-- /supportHelpInquiry.jsp -->
 		<action path="/showErrorPageRegistered" forward="/exception/errorRegistered.jsp"/>
         <action path="/naoAutorizado" forward="/error.jsp"/>
         <action path="/naoExecutado" forward="/error.jsp"/>
@@ -141,6 +142,7 @@
 				name="errorMailForm"
 				scope="request" 
             	type="net.sourceforge.fenixedu.presentationTier.Action.ExceptionHandlingAction" >
+            <forward name="supportHelpInquiry" path="/supportHelpInquiry.jsp"/>
         </action>
         <action path="/isAlive"
 				type="net.sourceforge.fenixedu.presentationTier.Action.CheckIsAliveAction">

@@ -20,6 +20,20 @@
 	<definition name="prepare.search.person.to.generate.userUID" extends="definition.operator.two-column">
 		<put name="body" value="/operator/userUID/searchPersonToGenerateUserUID.jsp"></put>
 	</definition>
-	
+
+	<!-- ========== Alumni Identity Check Requests =============== -->
+	<definition name="alumni.view.identity.requests.list" extends="definition.operator.two-column">
+		<put name="body" value="/operator/alumni/viewIdentityRequestsList.jsp"></put>
+	</definition>
+	<definition name="alumni.validate.request" extends="definition.operator.two-column">
+		<put name="body" value="/operator/alumni/validateIdentityRequest.jsp"></put>
+	</definition>
+	<definition name="alumni.validate.request.result" extends="definition.operator.two-column">
+		<put name="body" value="/operator/alumni/validateIdentityRequestResult.jsp"></put>
+	</definition>
+	<definition name="alumni.closed.identity.requests" extends="definition.operator.two-column">
+		<put name="body" value="/operator/alumni/viewClosedIdentityRequests.jsp"></put>
+	</definition>
+
 	
 </tiles-definitions>	

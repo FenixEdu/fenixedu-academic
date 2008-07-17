@@ -1,22 +1,127 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <tiles-definitions>
-    <definition name="index" extends="alumni.masterPage">
-        <put name="body" value="/alumni/index.jsp"></put>
-    </definition>
-	<definition name="df.page.curriculum.chooseRegistration" extends="alumni.masterPage" >
+	<definition name="index" extends="alumni.masterPage">
+		<put name="body" value="/alumni/index.jsp"></put>
+	</definition>
+
+	<definition name="df.page.curriculum.chooseRegistration" extends="alumni.masterPage">
 		<put name="body" value="/student/curriculum/chooseRegistration.jsp" />
-	</definition>	
-    <definition name="chooseCycleForViewRegistrationCurriculum" extends="alumni.masterPage">
-        <put name="body" value="/student/curriculum/chooseCycleForViewRegistrationCurriculum.jsp"></put>
-    </definition>
-    <definition name="view-registration-curriculum" extends="alumni.masterPage">
-        <put name="body" value="/student/curriculum/viewRegistrationCurriculum.jsp"></put>
-    </definition>
-	<definition name="df.page.showStudentCurriculum" extends="alumni.masterPage" >
+	</definition>
+
+	<definition name="view-registration-curriculum"	extends="alumni.masterPage">
+		<put name="body" value="/student/curriculum/viewRegistrationCurriculum.jsp" />
+	</definition>
+
+	<definition name="df.page.showStudentCurriculum" extends="alumni.masterPage">
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
-	</definition>	
-	<definition name="df.page.notAuthorized" extends="alumni.masterPage" >
+	</definition>
+
+	<definition name="df.page.notAuthorized" extends="alumni.masterPage">
 		<put name="body" value="/student/notAuthorized_bd.jsp" />
-	</definition>		    
+	</definition>
+
+	<definition name="alumni.view.curriculum.validate.identity" extends="alumni.masterPage">
+		<put name="body" value="/alumni/notAuthorizedValidateIdentity.jsp" />
+	</definition>
+
+	<definition name="alumni.showAlumniList" extends="alumni.masterPage">
+		<put name="body" value="/alumni/showAlumniList.jsp" />
+	</definition>
+
+	<definition name="alumni.viewAlumniDetails" extends="alumni.masterPage">
+		<put name="body" value="/alumni/viewAlumniDetails.jsp" />
+	</definition>
+
+
+	<!-- JOB -->
+	<definition name="alumni.innerProfessionalInformation" extends="alumni.masterPage">
+		<put name="body" value="/alumni/viewAlumniProfessionalInformation.jsp" />
+	</definition>
+
+	<definition name="alumni.createProfessionalInformation" extends="alumni.masterPage">
+		<put name="body" value="/alumni/alumniManageProfessionalInformation.jsp" />
+	</definition>
+
+	<definition name="alumni.editProfessionalInformation" extends="alumni.masterPage">
+		<put name="body" value="/alumni/alumniManageProfessionalInformation.jsp" />
+	</definition>
+	<!-- JOB -->
+
+
+	<!-- FORMATION -->
+	<definition name="alumni.viewAlumniQualifications" extends="alumni.masterPage">
+		<put name="body" value="/alumni/viewAlumniQualifications.jsp" />
+	</definition>
+
+	<definition name="alumni.alumniCreateFormation" extends="alumni.masterPage">
+		<put name="body" value="/alumni/alumniManageFormation.jsp" />
+	</definition>
+
+	<definition name="alumni.alumniEditFormation" extends="alumni.masterPage">
+		<put name="body" value="/alumni/alumniManageFormation.jsp" />
+	</definition>
+	<!-- FORMATION -->
+
+	<!-- FROM STUDENT ROLE -->
+
+	<definition name="alumni.administrativeOfficeServices.documentRequests.administrativeOfficeServicesIndex" extends="alumni.masterPage">
+		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/administrativeOfficeServicesIntro.jsp" />
+	</definition>
+		
+	<definition name="alumni.administrativeOfficeServices.documentRequests.createDocumentRequests" extends="alumni.masterPage">
+		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/createDocumentRequests.jsp" />
+	</definition>
+
+	<definition name="alumni.administrativeOfficeServices.documentRequests.chooseRegistration" extends="alumni.masterPage">
+		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/chooseRegistration.jsp" />
+	</definition>
+		
+	<definition name="alumni.administrativeOfficeServices.documentRequests.viewDocumentRequestsToCreate" extends="alumni.masterPage">
+		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/viewDocumentRequestsToCreate.jsp" />
+	</definition>	<definition name="alumni.administrativeOfficeServices.documentRequests.chooseRegistration" extends="alumni.masterPage">
+		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/chooseRegistration.jsp" />
+	</definition>
+	
+		
+	<definition name="alumni.administrativeOfficeServices.documentRequests.createSuccess" extends="alumni.masterPage">
+		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/createSuccess.jsp" />
+	</definition>
+		
+	<definition name="alumni.administrativeOfficeServices.documentRequests.viewDocumentRequests" extends="alumni.masterPage">
+		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/viewDocumentRequests.jsp" />
+	</definition>
+		
+	<definition name="alumni.administrativeOfficeServices.documentRequests.viewDocumentRequest" extends="alumni.masterPage">
+		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/viewDocumentRequest.jsp" />
+	</definition>
+	
+	<definition name="alumni.administrativeOfficeServices.documentRequests.prepareCancelAcademicServiceRequest" extends="alumni.masterPage">
+		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/prepareCancelAcademicServiceRequest.jsp"/>
+	</definition>
+	
+	<definition name="alumni.administrativeOfficeServices.documentRequests.cancelSuccess" extends="alumni.masterPage">
+		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/cancelSuccess.jsp" />
+	</definition>
+
+
+	<definition name="alumni.administrativeOfficeServices.payments.showEvents"
+		extends="alumni.masterPage">
+		<put name="body"
+			value="/alumni/administrativeOfficeServices/payments/showEvents.jsp" />
+	</definition>
+
+	<definition name="alumni.administrativeOfficeServices.payments.showEventDetails"
+		extends="alumni.masterPage">
+		<put name="body"
+			value="/alumni/administrativeOfficeServices/payments/showEventDetails.jsp" />
+	</definition>
+
+	<definition name="alumni.administrativeOfficeServices.prices.viewPrices"
+		extends="alumni.masterPage">
+		<put name="body"
+			value="/alumni/administrativeOfficeServices/prices/viewPrices.jsp" />
+	</definition>
+	<!-- FROM STUDENT ROLE -->
+
 </tiles-definitions>

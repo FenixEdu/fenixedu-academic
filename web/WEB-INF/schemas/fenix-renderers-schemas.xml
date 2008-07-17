@@ -51,7 +51,8 @@
 	<!ENTITY caseHandlingSchemas SYSTEM "caseHandling-schemas.xml">
 	<!ENTITY email SYSTEM "email-schemas.xml">
 	<!ENTITY residenceManagement SYSTEM "residenceManagement-schemas.xml">
-	
+    <!ENTITY support SYSTEM "support-schemas.xml">
+    <!ENTITY alumni SYSTEM "alumni-schemas.xml">
 ]>
 
 <schemas>
@@ -718,4 +719,6 @@
     &caseHandlingSchemas;
     &email;
     &residenceManagement;
+    &support;
+    &alumni;
 </schemas>

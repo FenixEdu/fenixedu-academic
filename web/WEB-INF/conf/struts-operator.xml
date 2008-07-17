@@ -127,6 +127,17 @@
 				<forward name="prepareSearchPerson" path="prepare.search.person.to.generate.userUID"/>	
 		   </action>
 		   
+		   <!-- ========== Alumni Identity Check Requests =============== -->
+		   <action 	path="/alumni"
+					parameter="method"					
+					type="net.sourceforge.fenixedu.presentationTier.Action.operator.AlumniOperations"
+					scope="request">
+				<forward name="alumni.view.identity.requests.list" path="alumni.view.identity.requests.list"/>
+				<forward name="alumni.validate.request" path="alumni.validate.request"/>
+				<forward name="alumni.validate.request.result" path="alumni.validate.request.result"/>
+				<forward name="alumni.closed.identity.requests" path="alumni.closed.identity.requests"/>
+		   </action>
+		   
      </action-mappings>     
 
     

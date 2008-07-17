@@ -1522,6 +1522,16 @@ public class Person extends Person_Base {
 	return allPersons;
     }
 
+    public static List<Person> readPersonsByRoleType(RoleType roleType) {
+	return new ArrayList<Person>(Role.getRoleByRoleType(roleType).getAssociatedPersonsSet());
+    }
+
+    public static List<Person> readPersonsByNameAndRoleType(final String name, RoleType roleType) {
+	Set<Person> filteredPersons = new HashSet<Person>(readPersonsByRoleType(roleType));
+	filteredPersons.retainAll(Person.findInternalPerson(name));
+	return new ArrayList<Person>(filteredPersons);
+    }
+    
     public SortedSet<StudentCurricularPlan> getActiveStudentCurricularPlansSortedByDegreeTypeAndDegreeName() {
 	final SortedSet<StudentCurricularPlan> studentCurricularPlans = new TreeSet<StudentCurricularPlan>(
 		StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_DEGREE_NAME);
@@ -1697,7 +1707,7 @@ public class Person extends Person_Base {
 		result.add(event);
 	    }
 	}
-	
+
 	return result;
     }
 
@@ -1741,7 +1751,7 @@ public class Person extends Person_Base {
 	}
 	return result;
     }
-    
+
     public Set<Entry> getPayments() {
 	return getPayments(AcademicEvent.class);
     }
@@ -2423,10 +2433,12 @@ public class Person extends Person_Base {
 		} else if (personRole.getRoleType() == RoleType.RESEARCHER) {
 		    mainRoles.add("Investigador");
 		    researcher = true;
+		} else if (personRole.getRoleType() == RoleType.ALUMNI) {
+		    mainRoles.add("Alumni");
 		}
 	    }
 	    if ((employee && !teacher && !researcher)) {
-		mainRoles.add("Funcionário");
+		mainRoles.add(0, "Funcionário");
 	    }
 	}
 	return mainRoles;
@@ -2869,9 +2881,18 @@ public class Person extends Person_Base {
     public boolean hasValidDegreeCandidacyForGraduatedPerson(final ExecutionInterval executionInterval) {
 	return hasValidIndividualCandidacy(DegreeCandidacyForGraduatedPerson.class, executionInterval);
     }
-
+    
     public boolean hasValidDegreeChangeIndividualCandidacy(final ExecutionInterval executionInterval) {
 	return hasValidIndividualCandidacy(DegreeChangeIndividualCandidacy.class, executionInterval);
     }
 
+    public List<Formation> getFormations() {
+	List<Formation> formations = new ArrayList<Formation>();
+	for (Qualification qualification : getAssociatedQualifications()) {
+	    if (qualification instanceof Formation) {
+		formations.add((Formation) qualification);
+	    }
+	}
+	return formations;
+    }
 }

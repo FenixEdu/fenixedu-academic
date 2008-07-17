@@ -194,6 +194,17 @@
 		<put name="body" value="/commons/blank.jsp" />
   		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>
+       
+    <definition name="definition.public.alumni" page="/layout/istLayout.jsp" >
+		<put name="title" value=".Instituto Superior Técnico" />	
+        <put name="serviceName" value="Instituto Superior Técnico" />                 	
+        <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
+        <put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />
+        <put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />	
+		<put name="body" value="/commons/blank.jsp" />
+  		<put name="footer" value="/publico/degreeSite/footer.jsp" />
+  		<put name="css-headers" value="/publico/alumni/alumniCSSHeader.jsp" />
+	</definition>
 	
 	<definition name="show-result" page="/layout/secondaryIstLayout.jsp">
 		<put name="body" value="/publico/researcher/showResearchResult.jsp" />

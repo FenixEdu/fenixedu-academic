@@ -1,0 +1,484 @@
+
+	<schema name="alumni.registration.search.list" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="ALUMNI_RESOURCES">
+		<slot name="student.person.name" layout="link" key="list.column.name" >
+			<property name="useParent" value="true" />
+			<property name="contextRelative" value="true" />
+			<property name="moduleRelative" value="true" />
+			<property name="linkFormat" value="/searchAlumni.do?method=visualizeAlumni&amp;studentId=${student.idInternal}"/>
+		</slot> 
+		<slot name="degree.name" key="list.column.degree" />
+		<slot name="startExecutionYear.year" key="list.column.year" />
+	</schema>
+
+	<schema name="alumni.professional.information.job" type="net.sourceforge.fenixedu.domain.Job" bundle="ALUMNI_RESOURCES">
+		<slot name="employerName" key="label.employer.name" />
+		<slot name="city" key="label.city" />
+		<slot name="country" key="label.country" layout="menu-select">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider" />
+			<property name="format" value="${name}"/>
+			<property name="sortBy" value="name"/>
+		</slot>
+		<slot name="businessArea" key="label.parent.businessArea" layout="menu-select-postback">
+			<property name="destination" value="updateBusinessAreaPostback" />
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BusinessAreaProvider" />
+			<property name="format" value="${description}"/>
+			<property name="sortBy" value="code"/>
+		</slot>
+		<slot name="position" key="label.job.position" />
+		<slot name="beginDate" key="label.beginDate" layout="picker" >
+			<property name="size" value="12"/>
+			<property name="maxLength" value="10"/>
+		</slot>
+		<slot name="endDate" key="label.endDate" layout="null-as-label">
+        	<property name="label" value="-"/>
+		</slot>		
+		<slot name="contractType" key="label.contract.type" layout="null-as-label">
+        	<property name="label" value="-"/>
+		</slot>		
+	</schema>
+
+	<schema name="alumni.public.access.jobContact" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean" bundle="ALUMNI_RESOURCES">
+		<slot name="employerName" key="label.employerName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="size" value="30"/>
+		</slot>
+		<slot name="city" key="label.city" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<slot name="country" key="label.employerCountry" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider" />
+			<property name="format" value="${name}"/>
+			<property name="sortBy" value="name"/>
+		</slot>
+		<slot name="parentBusinessArea" key="label.parent.businessArea" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="destination" value="updateBusinessAreaPostback" />
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BusinessAreaParentProvider" />
+			<property name="format" value="${description}"/>
+			<property name="sortBy" value="code"/>
+		</slot>
+		<slot name="position" key="label.job.position" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<slot name="beginDate" key="label.beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="picker" >
+			<property name="size" value="12"/>
+			<property name="maxLength" value="10"/>
+		</slot>
+		<slot name="endDate" key="label.endDate" layout="picker" >
+			<property name="size" value="12"/>
+			<property name="maxLength" value="10"/>
+		</slot>
+		<slot name="contractType" key="label.contract.type" layout="menu-select">
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.ContractType" />
+			<property name="eachLayout" value="this-does-not-exist" />
+		</slot>
+	</schema>
+
+	<schema name="alumni.public.access.job.businessArea" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean" bundle="ALUMNI_RESOURCES">
+		<slot name="parentBusinessArea" key="label.parent.businessArea" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="destination" value="updateBusinessAreaPostback" />
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BusinessAreaParentProvider" />
+			<property name="format" value="${description}"/>
+			<property name="sortBy" value="code"/>
+		</slot>
+	</schema>
+
+	<schema name="alumni.public.access.jobContact.full" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean" bundle="ALUMNI_RESOURCES">
+		<slot name="employerName" key="label.employerName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="size" value="30"/>
+		</slot>
+		<slot name="city" key="label.city" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<slot name="country" key="label.employerCountry" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider" />
+			<property name="format" value="${name}"/>
+			<property name="sortBy" value="name"/>
+		</slot>
+		<slot name="parentBusinessArea" key="label.parent.businessArea" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="destination" value="updateBusinessAreaPostback" />
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BusinessAreaParentProvider" />
+			<property name="format" value="${description}"/>
+			<property name="sortBy" value="code"/>
+		</slot>
+		<slot name="childBusinessArea" key="label.child.businessArea" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.BusinessAreaChildProvider" />
+			<property name="format" value="${description}"/>
+			<property name="sortBy" value="code"/>
+		</slot>
+		<slot name="position" key="label.job.position" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<slot name="beginDate" key="label.beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="picker">
+			<property name="size" value="12"/>
+			<property name="maxLength" value="10"/>
+		</slot>
+		<slot name="endDate" key="label.endDate" layout="picker" >
+			<property name="size" value="12"/>
+			<property name="maxLength" value="10"/>
+		</slot>
+		<slot name="contractType" key="label.contract.type" layout="menu-select">
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.ContractType" />
+			<property name="eachLayout" value="this-does-not-exist" />
+		</slot>
+	</schema>
+	
+	<schema name="job.begin" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean" bundle="ALUMNI_RESOURCES">
+		<slot name="beginDate" key="label.beginDate" layout="picker" >
+			<property name="size" value="12"/>
+			<property name="maxLength" value="10"/>
+			<property name="required" value="true"/>
+		</slot>
+	</schema>
+
+	<schema name="alumni.public.access.personalContact" type="net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPublicAccessBean" bundle="ALUMNI_RESOURCES">
+		<slot name="phone" key="label.phone" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" >
+			<property size="20" />
+		</slot>
+	</schema>
+
+	<schema name="alumni.public.access.contact.address" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniAddressBean" bundle="ALUMNI_RESOURCES" >
+		<slot name="address" key="label.address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property size="50" />
+		</slot>
+		<slot name="areaCode" key="label.areaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<slot name="areaOfAreaCode" key="label.areaOfAreaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<slot name="country" key="label.country" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider" />
+			<property name="format" value="${name}"/>
+			<property name="sortBy" value="name"/>
+		</slot>
+	</schema>
+
+	<schema name="alumni.public.access.passwordCreation.personal.info" type="net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPasswordBean" bundle="ALUMNI_RESOURCES">
+		<slot name="fullName" key="label.fullName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="size" value="40" />
+		</slot>
+		<slot name="dateOfBirthYearMonthDay" key="label.dateOfBirthYearMonthDay" >
+			<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+			<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+			<property name="size" value="12" />
+			<property name="maxLength" value="10"/>
+		</slot>
+		<slot name="districtOfBirth" key="label.districtOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="size" value="30" />
+		</slot>
+		<slot name="districtSubdivisionOfBirth" key="label.districtSubdivisionOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="size" value="30" />
+		</slot>
+		<slot name="parishOfBirth" key="label.parishOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="size" value="30" />
+		</slot>
+		<slot name="socialSecurityNumber" key="label.socialSecurityNumber" >
+			<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />
+			<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+			<property name="size" value="10" />
+			<property name="maxLength" value="15"/>
+		</slot>
+		<slot name="nameOfFather" key="label.nameOfFather" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="size" value="40" />
+		</slot>
+		<slot name="nameOfMother" key="label.nameOfMother" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="size" value="40" />
+		</slot>
+	</schema>
+
+	<schema name="alumni.public.access.passwordCreation.password.info" type="net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPasswordBean" bundle="ALUMNI_RESOURCES">
+		<slot name="password" key="label.password" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<slot name="passwordConfirmation" key="label.passwordConfirmation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	</schema>
+
+	<!-- PUBLIC ACCESS END -->
+
+	<schema name="alumni.formation.degree" type="net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation" bundle="ALUMNI_RESOURCES">
+		<slot name="formationType" key="label.formation.type" layout="menu-postback" >
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.FormationType" />
+			<property name="destination" value="updateFormationTypePostback" />
+		</slot>
+	</schema>
+
+	<schema name="alumni.formation.degree.both" type="net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation" bundle="ALUMNI_RESOURCES">
+		<slot name="formationType" key="label.formation.type" layout="menu-postback">
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.FormationType" />
+			<property name="destination" value="updateFormationTypePostback" />
+		</slot>
+		<slot name="formationDegree" key="label.formation.degree" layout="menu-select">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.alumni.AlumniFormationDegreeProvider"/>
+			<property name="eachLayout" value="this-does-not-exist" />
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.QualificationType" />
+		</slot>
+	</schema>
+	
+
+	<schema name="alumni.formation.no.institution.type" type="net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation" bundle="ALUMNI_RESOURCES">
+		<slot name="institutionType" key="label.formation.institution.type" layout="menu-postback" >
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
+			<property name="destination" value="updateInstitutionTypePostback" />
+		</slot>
+	</schema>
+
+	<schema name="alumni.formation.national.institution.parent" type="net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation" bundle="ALUMNI_RESOURCES">
+		<slot name="institutionType" key="label.formation.institution.type" layout="menu-postback" >
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
+			<property name="destination" value="updateInstitutionTypePostback" />
+		</slot>
+		<slot name="parentInstitution" key="label.formation.institution.parent" layout="menu-select-postback" >
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.alumni.AlumniFormationParentInstitutionProvider"/>
+			<property name="choiceType" value="AcademicalInstitutionUnit" />
+			<property name="format" value="${partyName}"/>
+			<property name="sortBy" value="partyName"/>
+			<property name="destination" value="updateInstitutionTypePostback" />
+		</slot>
+	</schema>
+
+	<schema name="alumni.formation.national.institution.both" type="net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation" bundle="ALUMNI_RESOURCES">
+		<slot name="institutionType" key="label.formation.institution.type" layout="menu-postback" >
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
+			<property name="destination" value="updateInstitutionTypePostback" />
+		</slot>
+		<slot name="parentInstitution" key="label.formation.institution.parent" layout="menu-select-postback" bundle="ALUMNI_RESOURCES">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.alumni.AlumniFormationParentInstitutionProvider"/>
+			<property name="choiceType" value="AcademicalInstitutionUnit" />
+			<property name="format" value="${partyName}"/>
+			<property name="sortBy" value="partyName"/>
+			<property name="destination" value="updateInstitutionTypePostback" />
+		</slot>
+		<slot name="childInstitution" key="label.formation.institution.child" layout="menu-select" bundle="ALUMNI_RESOURCES">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.alumni.AlumniFormationChildInstitutionProvider"/>
+			<property name="choiceType" value="AcademicalInstitutionUnit" />
+			<property name="format" value="${partyName}"/>
+			<property name="sortBy" value="partyName"/>
+		</slot>
+	</schema>
+
+	<schema name="alumni.formation.foreign.institution" type="net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation" bundle="ALUMNI_RESOURCES">
+		<slot name="institutionType" key="label.formation.institution.type" layout="menu-postback" >
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
+			<property name="destination" value="updateInstitutionTypePostback" />
+		</slot>
+		<slot name="countryUnit" key="label.formation.country" layout="menu-select">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryUnitProvider" />
+			<property name="format" value="${name}"/>
+			<property name="sortBy" value="name"/>
+		</slot>
+		<slot name="childInstitution" key="label.formation.institution.child" layout="autoComplete" bundle="ALUMNI_RESOURCES">
+			<property name="size" value="50"/>
+			<property name="labelField" value="partyName"/>
+			<property name="format" value="${partyName}"/>
+			<property name="indicatorShown" value="true"/>
+			<property name="serviceName" value="SearchOtherFormationInstitutions"/>
+			<property name="serviceArgs" value="slot=partyName"/>
+			<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
+			<property name="minChars" value="3"/>
+			<property name="maxCount" value="10"/>
+			<property name="rawSlotName" value="foreignUnit"/>
+			<property name="errorStyleClass" value="error0"/>
+		</slot>
+	</schema>
+
+	<schema name="alumni.formation.other.institution" type="net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation" bundle="ALUMNI_RESOURCES">
+		<slot name="institutionType" key="label.formation.institution.type" layout="menu-postback" >
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
+			<property name="destination" value="updateInstitutionTypePostback" />
+		</slot>
+		<slot name="childInstitution" key="label.formation.institution.child" layout="autoComplete" bundle="ALUMNI_RESOURCES">
+			<property name="size" value="50"/>
+			<property name="labelField" value="partyName"/>
+			<property name="format" value="${partyName}"/>
+			<property name="indicatorShown" value="true"/>
+			<property name="serviceName" value="SearchOtherFormationInstitutions"/>
+			<property name="serviceArgs" value="slot=partyName"/>
+			<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
+			<property name="minChars" value="3"/>
+			<property name="maxCount" value="10"/>
+			<property name="rawSlotName" value="foreignUnit"/>
+			<property name="errorStyleClass" value="error0"/>
+		</slot>
+	</schema>
+
+	<schema name="alumni.formation.info" type="net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation" bundle="ALUMNI_RESOURCES">
+		<slot name="formationBeginYear" key="label.formation.beginDate" layout="menu-select" >
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CivilYearsProvider"/>
+			<property name="choiceType" value="java.lang.String" />
+		</slot>
+		<slot name="formationEndYear" key="label.formation.endDate" layout="menu-select" >
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CivilYearsProvider"/>
+			<property name="choiceType" value="java.lang.String" />
+		</slot>
+		<slot name="formationCredits" key="label.formation.credits" />
+		<slot name="formationHours" key="label.formation.hours" />
+	</schema>
+
+	
+	<!-- TODO class=required * à esquerda -->
+	<schema name="alumni.formation.degree.public" type="net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation" bundle="ALUMNI_RESOURCES">
+		<slot name="formationType" key="label.formation.type.public" layout="menu-postback" >
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.FormationType" />
+			<property name="destination" value="updateFormationTypePostback" />
+		</slot>
+	</schema>
+
+	<schema name="alumni.formation.degree.both.public" type="net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation" bundle="ALUMNI_RESOURCES">
+		<slot name="formationType" key="label.formation.type.public" layout="menu-postback">
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.FormationType" />
+			<property name="destination" value="updateFormationTypePostback" />
+		</slot>
+		<slot name="formationDegree" key="label.formation.degree.public" layout="menu-select">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.alumni.AlumniFormationDegreeProvider"/>
+			<property name="eachLayout" value="this-does-not-exist" />
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.QualificationType" />
+		</slot>
+	</schema>
+
+	<schema name="alumni.formation.no.institution.type.public" type="net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation" bundle="ALUMNI_RESOURCES">
+		<slot name="institutionType" key="label.formation.institution.type.public" layout="menu-postback" >
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
+			<property name="destination" value="updateInstitutionTypePostback" />
+		</slot>
+	</schema>
+
+	<schema name="alumni.formation.national.institution.parent.public" type="net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation" bundle="ALUMNI_RESOURCES">
+		<slot name="institutionType" key="label.formation.institution.type.public" layout="menu-postback" >
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
+			<property name="destination" value="updateInstitutionTypePostback" />
+		</slot>
+		<slot name="parentInstitution" key="label.formation.institution.parent.public" layout="menu-select-postback" >
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.alumni.AlumniFormationParentInstitutionProvider"/>
+			<property name="choiceType" value="AcademicalInstitutionUnit" />
+			<property name="format" value="${partyName}"/>
+			<property name="sortBy" value="partyName"/>
+			<property name="destination" value="updateInstitutionTypePostback" />
+		</slot>
+	</schema>
+
+	<schema name="alumni.formation.national.institution.both.public" type="net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation" bundle="ALUMNI_RESOURCES">
+		<slot name="institutionType" key="label.formation.institution.type.public" layout="menu-postback" >
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
+			<property name="destination" value="updateInstitutionTypePostback" />
+		</slot>
+		<slot name="parentInstitution" key="label.formation.institution.parent.public" layout="menu-select-postback" bundle="ALUMNI_RESOURCES">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.alumni.AlumniFormationParentInstitutionProvider"/>
+			<property name="choiceType" value="AcademicalInstitutionUnit" />
+			<property name="format" value="${partyName}"/>
+			<property name="sortBy" value="partyName"/>
+			<property name="destination" value="updateInstitutionTypePostback" />
+		</slot>
+		<slot name="childInstitution" key="label.formation.institution.child.public" layout="menu-select" bundle="ALUMNI_RESOURCES">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.alumni.AlumniFormationChildInstitutionProvider"/>
+			<property name="choiceType" value="AcademicalInstitutionUnit" />
+			<property name="format" value="${partyName}"/>
+			<property name="sortBy" value="partyName"/>
+		</slot>
+	</schema>
+
+	<schema name="alumni.formation.foreign.institution.public" type="net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation" bundle="ALUMNI_RESOURCES">
+		<slot name="institutionType" key="label.formation.institution.type.public" layout="menu-postback" >
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
+			<property name="destination" value="updateInstitutionTypePostback" />
+		</slot>
+		<slot name="countryUnit" key="label.formation.country.public" layout="menu-select">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryUnitProvider" />
+			<property name="format" value="${name}"/>
+			<property name="sortBy" value="name"/>
+		</slot>
+		<slot name="childInstitution" key="label.formation.institution.child.public" layout="autoComplete" bundle="ALUMNI_RESOURCES">
+			<property name="size" value="50"/>
+			<property name="labelField" value="partyName"/>
+			<property name="format" value="${partyName}"/>
+			<property name="indicatorShown" value="true"/>
+			<property name="serviceName" value="SearchOtherFormationInstitutions"/>
+			<property name="serviceArgs" value="slot=partyName"/>
+			<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
+			<property name="minChars" value="3"/>
+			<property name="maxCount" value="10"/>
+			<property name="rawSlotName" value="foreignUnit"/>
+			<property name="errorStyleClass" value="error0"/>
+		</slot>
+	</schema>
+
+	<schema name="alumni.formation.other.institution.public" type="net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation" bundle="ALUMNI_RESOURCES">
+		<slot name="institutionType" key="label.formation.institution.type.public" layout="menu-postback" >
+			<property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType" />
+			<property name="destination" value="updateInstitutionTypePostback" />
+		</slot>
+		<slot name="childInstitution" key="label.formation.institution.child.public" layout="autoComplete" bundle="ALUMNI_RESOURCES">
+			<property name="size" value="50"/>
+			<property name="labelField" value="partyName"/>
+			<property name="format" value="${partyName}"/>
+			<property name="indicatorShown" value="true"/>
+			<property name="serviceName" value="SearchOtherFormationInstitutions"/>
+			<property name="serviceArgs" value="slot=partyName"/>
+			<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>
+			<property name="minChars" value="3"/>
+			<property name="maxCount" value="10"/>
+			<property name="rawSlotName" value="foreignUnit"/>
+			<property name="errorStyleClass" value="error0"/>
+		</slot>
+	</schema>
+
+	<schema name="alumni.formation.info.public" type="net.sourceforge.fenixedu.dataTransferObject.alumni.formation.AlumniFormation" bundle="ALUMNI_RESOURCES">
+		<slot name="formationBeginYear" key="label.formation.beginDate.public" layout="menu-select" >
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CivilYearsProvider"/>
+			<property name="choiceType" value="java.lang.String" />
+		</slot>
+		<slot name="formationEndYear" key="label.formation.endDate.public" layout="menu-select" >
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CivilYearsProvider"/>
+			<property name="choiceType" value="java.lang.String" />
+		</slot>
+		<slot name="formationCredits" key="label.formation.credits.public" >
+			<validator class="pt.ist.fenixWebFramework.renderers.validators.DoubleValidator" />
+		</slot>
+		<slot name="formationHours" key="label.formation.hours.public" >
+			<validator class="pt.ist.fenixWebFramework.renderers.validators.DoubleValidator" />
+			<property name="class" value="required" />
+		</slot>
+	</schema>
+
+	<schema name="alumni.formation.list" type="net.sourceforge.fenixedu.domain.Formation" bundle="ALUMNI_RESOURCES">
+		<slot name="type" key="label.formation.name" />
+		<slot name="educationArea" key="label.formation.area" >
+			<property name="format" value="${description}"/>
+		</slot>
+		<slot name="institution" key="label.formation.institution" >
+			<property name="format" value="${partyName}"/>
+		</slot>
+		<slot name="beginYear" key="label.formation.begin" />
+		<slot name="year" key="label.formation.end" layout="null-as-label">
+        	<property name="label" value="-"/>
+		</slot>		
+		<slot name="ectsCredits" key="label.formation.credits" layout="null-as-label">
+        	<property name="label" value="-"/>
+		</slot>		
+		<slot name="formationHours" key="label.formation.hours" layout="null-as-label">
+        	<property name="label" value="-"/>
+		</slot>		
+	</schema>
+
+	<schema name="alumni.identity.check.request" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniIdentityCheckRequestBean" bundle="ALUMNI_RESOURCES">
+		<slot name="contactEmail" key="label.contactEmail" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredEmailValidator" >
+			<property name="size" value="40" />
+		</slot>
+		<slot name="documentIdNumber" key="label.documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="size" value="20" />
+		</slot>
+		<slot name="fullName" key="label.fullName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="size" value="40" />
+		</slot>
+		<slot name="dateOfBirthYearMonthDay" key="label.dateOfBirthYearMonthDay" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator" >
+			<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+			<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+			<property name="size" value="12" />
+			<property name="maxLength" value="10"/>
+		</slot>
+		<slot name="districtOfBirth" key="label.districtOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="size" value="30" />
+		</slot>
+		<slot name="districtSubdivisionOfBirth" key="label.districtSubdivisionOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="size" value="30" />
+		</slot>
+		<slot name="parishOfBirth" key="label.parishOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="size" value="30" />
+		</slot>
+		<slot name="socialSecurityNumber" key="label.socialSecurityNumber" >
+			<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator" />
+			<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+			<property name="size" value="20" />
+			<property name="maxLength" value="15"/>
+		</slot>
+		<slot name="nameOfFather" key="label.nameOfFather" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="size" value="40" />
+		</slot>
+		<slot name="nameOfMother" key="label.nameOfMother" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+			<property name="size" value="40" />
+		</slot>
+	</schema>

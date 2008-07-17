@@ -2245,6 +2245,14 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>DeleteAlumniQualification</name>
+		<implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.DeleteQualification</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>
+	<service>
 		<name>ReadQualification</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.ReadQualification</implementationClass>
@@ -10822,7 +10830,7 @@
         	<chain name="AcademicAdministrativeOfficeAuthorization"></chain>
         </filterChains>     
     </service>
-    <service>
+	<service>
     	<name>CreateSecondCycleIndividualCandidacyExemption</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateSecondCycleIndividualCandidacyExemption</implementationClass>
         <description></description>
@@ -11347,7 +11355,7 @@
 			<chain name="ResponsibleDegreeCoordinatorAuthorization" />
 		</filterChains>
     </service>
-    <service>
+	<service>
         <name>CreatePartyContact</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.contacts.CreatePartyContact</implementationClass>
         <description></description>
@@ -11851,7 +11859,7 @@
 			<chain name="ManagerAuthorization" />
 		</filterChains>
 	</service>
-    <service>
+	<service>
 		<name>CancelResidenceEvent</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CancelResidenceEvent</implementationClass>
 		<description />
@@ -12163,7 +12171,7 @@
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.CopyModuleFunctionalityToContainer</implementationClass>
 		<isTransactional>true</isTransactional>
 		<filterChains/>
-	</service>	
+	</service>
 	<service>
 		<name>AddSectionToContainer</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.AddSectionToContainer</implementationClass>
@@ -12230,7 +12238,7 @@
 			<chain name="ManagerOrAcademicAdministrativeOfficeAuthorization" />
 		</filterChains>
 	</service>
-	
+
 	<service>
 		<name>TeacherEditWrittenTestRooms</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherEditWrittenTestRooms</implementationClass>
@@ -12239,21 +12247,19 @@
 			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
 		</filterChains>
 	</service>
-	
 	<service>
 		<name>ExecuteProcessActivity</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity</implementationClass>
 		<isTransactional>true</isTransactional>
 		<filterChains/>
 	</service>
-	
 	<service>
 		<name>CreateNewProcess</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess</implementationClass>
 		<isTransactional>true</isTransactional>
 		<filterChains/>
 	</service>
-	
+
 	<service>
 		<name>EditReceipt</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.EditReceipt</implementationClass>
@@ -12289,7 +12295,7 @@
 		<filterChains>
 			<chain name="StudentAuthorization" />
 		</filterChains>		
-	</service>
+	</service>	
 	
 	<service>
 		<name>CreateNewResidenceYear</name>
@@ -12305,12 +12311,12 @@
 		<filterChains/>
 	</service>
 	
-	<service>
+		<service>
 		<name>CreateResidencePaymentCodes</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.residenceManagement.CreateResidencePaymentCodes</implementationClass>
 		<isTransactional>true</isTransactional>
 		<filterChains/>
-	</service>
+	</service>		
 	
 	<service>
 		<name>PayResidenceEvent</name>
@@ -12318,4 +12324,75 @@
 		<isTransactional>true</isTransactional>
 		<filterChains/>
 	</service>				
+
+	<service>
+		<name>RegisterAlumniData</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.alumni.RegisterAlumniData</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+    </service>
+	<service>
+		<name>ValidateAlumniIdentity</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.operator.ValidateAlumniIdentity</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+    </service>
+	<service>
+		<name>EditFormation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.alumni.EditFormation</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+    </service>
+	<service>
+		<name>CreateFormation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.alumni.CreateFormation</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+    </service>
+        <service>
+    	<name>CreateProfessionalInformation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.alumni.CreateProfessionalInformation</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+    </service>	
+    <service>
+        <name>EditProfessionalInformation</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.alumni.EditProfessionalInformation</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
+    <service>
+        <name>DeleteProfessionalInformation</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.alumni.DeleteProfessionalInformation</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
+    <service>
+        <name>CreateBusinessArea</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.alumni.CreateBusinessArea</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
+	<service>
+        <name>SearchOtherFormationInstitutions</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.alumni.SearchOtherFormationInstitutions</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
+	<service>
+        <name>CreateSupportRequest</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.CreateSupportRequest</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
 </serviceDefinitions>

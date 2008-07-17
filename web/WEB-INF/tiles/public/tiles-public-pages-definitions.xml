@@ -778,4 +778,36 @@
         <put name="body" value="/publico/researcher/showResearchResult.jsp"/>
     </definition>    
         
+	<!--=== Alumni Registration === -->
+	<definition name="alumni.alumniPublicAccess" extends="definition.public.alumni">
+		<put name="body" value="/publico/alumni/alumniPublicAccess.jsp" />
+	</definition>
+	<definition name="alumni.alumniPublicAccessIdentityCheck" extends="definition.public.alumni">
+		<put name="body" value="/publico/alumni/alumniPublicAccessIdentityCheck.jsp" />
+	</definition>
+	<definition name="alumni.alumniPublicAccessRegistrationEmail" extends="definition.public.alumni">
+		<put name="body" value="/publico/alumni/alumniPublicAccessRegistrationEmail.jsp" />
+	</definition>
+	<definition name="alumni.alumniPublicAccessMessage" extends="definition.public.alumni">
+		<put name="body" value="/publico/alumni/alumniPublicAccessMessage.jsp" />
+	</definition>
+	<definition name="alumni.alumniPublicAccessInner" extends="definition.public.alumni">
+		<put name="body" value="/publico/alumni/alumniPublicAccessInner.jsp" />
+	</definition>
+	<definition name="alumni.alumniPublicAccessInformationInquiry" extends="definition.public.alumni">
+		<put name="body" value="/publico/alumni/alumniPublicAccessInformationInquiry.jsp" />
+	</definition>
+	<definition name="alumni.alumniPublicAccessCreateFormation" extends="definition.public.alumni">
+		<put name="body" value="/publico/alumni/alumniPublicAccessCreateFormation.jsp" />
+	</definition>
+	<definition name="alumni.alumniCreatePassword" extends="definition.public.alumni">
+		<put name="body" value="/publico/alumni/alumniCreatePassword.jsp" />
+	</definition>
+	<definition name="alumni.alumniRegistrationResult" extends="definition.public.alumni">
+		<put name="body" value="/publico/alumni/alumniRegistrationResult.jsp" />
+	</definition>
+	<definition name="alumni.alumniMailingLists" extends="definition.public.alumni">
+		<put name="body" value="/publico/alumni/alumniMailingLists.jsp" />
+	</definition>
+	
 </tiles-definitions>

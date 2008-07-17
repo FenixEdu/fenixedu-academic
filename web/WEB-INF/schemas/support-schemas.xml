@@ -1,0 +1,37 @@
+
+	<schema name="support.request.form" type="net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean" bundle="APPLICATION_RESOURCES">
+		<slot name="responseEmail" key="label.support.responseEmail">
+			<property name="size" value="30" />
+		</slot>
+		<slot name="requestType" key="label.support.requestType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+			<property name="excludedValues" value="EXCEPTION" />
+		</slot>
+		<slot name="requestContext" key="label.support.requestContext" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PortalProvider" />
+			<property name="format" value="${name}"/>
+			<property name="sortBy" value="name"/>
+		</slot>
+		<slot name="subject" key="label.support.subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="size" value="30" />
+		</slot>
+		<slot name="message" key="label.support.message" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="columns" value="36" />
+			<property name="rows" value="5" />
+		</slot>
+		<slot name="requestPriority" key="label.support.priority" layout="radio" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</schema>
+
+
+	<schema name="support.error.form" type="net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean" bundle="APPLICATION_RESOURCES">
+		<slot name="responseEmail" key="label.support.responseEmail" >
+			<property name="size" value="30" />
+		</slot>
+		<slot name="subject" key="label.support.subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="size" value="30" />
+		</slot>
+		<slot name="message" key="label.support.message" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="columns" value="36" />
+			<property name="rows" value="5" />
+		</slot>
+	</schema>
+	

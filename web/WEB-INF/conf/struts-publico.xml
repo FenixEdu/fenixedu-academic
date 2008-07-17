@@ -1343,8 +1343,37 @@
          <forward name="viewSelectedSpace" path="view-selected-space"/>
                   
      </action>
-	 	
-     </action-mappings>
+
+	 <!-- =================== Alumni Registration  =================== -->
+	 <action path="/alumni" 
+	 	parameter="method"
+	 	type="net.sourceforge.fenixedu.presentationTier.Action.publico.alumni.AlumniPublicAccessDA"
+	 	scope="request">
+	 	<forward name="alumniPublicAccess" path="alumni.alumniPublicAccess" />
+	 	<forward name="alumniPublicAccessIdentityCheck" path="alumni.alumniPublicAccessIdentityCheck" />
+	 	<forward name="alumniPublicAccessRegistrationEmail" path="alumni.alumniPublicAccessRegistrationEmail" />
+	 	<forward name="alumniPublicAccessInner" path="alumni.alumniPublicAccessInner" />
+	 	<forward name="alumniPublicAccessInformationInquiry" path="alumni.alumniPublicAccessInformationInquiry" />
+	 	<forward name="alumniPublicAccessMessage" path="alumni.alumniPublicAccessMessage" />
+	 	<forward name="alumniCreateFormation" path="alumni.alumniPublicAccessCreateFormation" />
+	 	<forward name="alumniRegistrationResult" path="alumni.alumniRegistrationResult" />
+	 	<forward name="alumniCreatePassword" path="alumni.alumniCreatePassword" />
+	 	<forward name="alumniMailingLists" path="alumni.alumniMailingLists" />
+	 </action>
+
+	 <action path="/jcaptcha"
+	 	type="com.octo.captcha.module.struts.image.RenderImageCaptchaAction">
+	 </action>
+
+	 <action path="/LoginCaptcha" parameter="method"
+	 	type="com.octo.captcha.module.struts.VerifyCaptchaChallengeAction"
+	 	scope="request" validate="true">
+	 	<forward name="success" path="/alumni.do?method=validateFenixAcessData" redirect="true" />
+	 	<forward name="failure" path="/teste.jsp" redirect="true" />
+	 </action>
+	 <!-- =================== Alumni Registration  =================== -->
+
+    </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
 	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles" />
@@ -1372,6 +1401,8 @@
    	<message-resources parameter="resources.WebSiteManagerResources" key="WEBSITEMANAGER_RESOURCES" null="false"/>
    	<message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"/>
    	<message-resources parameter="resources.SpaceResources" key="SPACE_RESOURCES" null="false"/>
+   	<message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false"/>
+   	<message-resources parameter="resources.AlumniResources" key="ALUMNI_RESOURCES" null="false"/>
    	  	
     
     <!-- ========== Plug Ins Configuration ================================= -->

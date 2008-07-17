@@ -194,8 +194,14 @@ enum      net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricul
 enum	  net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState 									 as CandidacyProcessState;
 enum	  net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState 								 as IndividualCandidacyState;
 enum	  net.sourceforge.fenixedu.domain.candidacy.Ingression														 as Ingression;
-enum	  net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState								 			 as InquiriesRegistryState; 
+enum	  net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState								 			 as InquiriesRegistryState;
 enum	  net.sourceforge.fenixedu.domain.accounting.events.candidacy.CandidacyExemptionJustificationType			 as CandidacyExemptionJustificationType;
+enum	  net.sourceforge.fenixedu.domain.support.SupportRequestType												 as SupportRequestType;
+enum	  net.sourceforge.fenixedu.domain.support.SupportRequestPriority											 as SupportRequestPriority;
+enum 	  net.sourceforge.fenixedu.domain.FormationType																 as FormationType;
+enum 	  net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType							 as AcademicalInstitutionType;
+enum 	  net.sourceforge.fenixedu.domain.AlumniRequestType															 as AlumniRequestType;
+enum 	  net.sourceforge.fenixedu.domain.ContractType															 	 as ContractType;
 
 /*
 *
@@ -205,6 +211,28 @@ enum	  net.sourceforge.fenixedu.domain.accounting.events.candidacy.CandidacyExem
 
 class DomainObject {
 }
+
+	class Alumni extends DomainObject {
+		Boolean registered;
+		UUID urlRequestToken;
+	}
+
+	class AlumniIdentityCheckRequest extends DomainObject {
+		String contactEmail;
+		String documentIdNumber;
+		String fullName;
+		YearMonthDay dateOfBirthYearMonthDay;
+		String parishOfBirth;
+		String districtOfBirth;
+		String districtSubdivisionOfBirth;
+		String socialSecurityNumber;
+		String nameOfFather;
+		String nameOfMother;
+		DateTime creationDateTime;
+		Boolean approved;
+		DateTime decisionDateTime;
+		AlumniRequestType requestType;
+	}
 
 	class Attends extends DomainObject {
 	}
@@ -973,6 +1001,13 @@ class DomainObject {
 		QualificationType type;
 		String year;
 	}
+	
+	class Formation extends Qualification {
+		FormationType formationType;
+		String beginYear;
+		BigDecimal ectsCredits;
+		Integer formationHours;
+	}
 
 	class Role extends DomainObject {
 		String page;
@@ -1360,10 +1395,10 @@ class DomainObject {
 			
 			class accounting.events.candidacy.SecondCycleIndividualCandidacyEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
 			}
-			
+
 			class accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
 			}
-			
+
 			class accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
 			}
 
@@ -1382,7 +1417,7 @@ class DomainObject {
 
 			class accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption extends accounting.events.PenaltyExemption {
 			}
-			
+
 		class accounting.events.gratuity.GratuityExemption extends accounting.Exemption {
 		}
 
@@ -1393,7 +1428,7 @@ class DomainObject {
 			class accounting.events.gratuity.ValueGratuityExemption extends accounting.events.gratuity.GratuityExemption {
 				Money value;
 			}
-			
+
 		class accounting.events.candidacy.SecondCycleIndividualCandidacyExemption extends accounting.Exemption {
 		}
 
@@ -1502,14 +1537,14 @@ class DomainObject {
 				}
 				
 					class accounting.postingRules.serviceRequests.ExternalCourseLoadRequestPR extends accounting.postingRules.serviceRequests.CourseLoadRequestPR {
-					}
+				}
 				
 				class accounting.postingRules.serviceRequests.ProgramCertificateRequestPR extends accounting.postingRules.BaseAmountPlusAmountPerPagePR {
 					Money amountFirstPage;
 				}
 				
 					class accounting.postingRules.serviceRequests.ExternalProgramCertificateRequestPR extends accounting.postingRules.serviceRequests.ProgramCertificateRequestPR {
-					}
+				}
 				
 				class accounting.postingRules.serviceRequests.ExamDateCertificateRequestPR extends accounting.postingRules.BaseAmountPlusAmountPerPagePR {
 				}
@@ -1549,7 +1584,7 @@ class DomainObject {
 
 				class accounting.postingRules.serviceRequests.DiplomaRequestPR extends accounting.postingRules.FixedAmountPR {
 				}
-				
+
 				class accounting.postingRules.candidacy.SecondCycleIndividualCandidacyPR extends accounting.postingRules.FixedAmountPR {
 				}
 
@@ -1604,7 +1639,7 @@ class DomainObject {
 				Money amountForInstitutionStudent;
 				Money amountForExternalStudent;
 			}
-			
+
 			class accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR extends accounting.postingRules.GenericSingleEntryTypePR {
 				Money amountForInstitutionStudent;
 				Money amountForExternalStudent;
@@ -1690,7 +1725,7 @@ class DomainObject {
 			class accounting.events.gratuity.GratuityExemptionJustificationByDispatch extends accounting.events.gratuity.GratuityExemptionJustification {
 				YearMonthDay gratuityExemptionDispatchDate;
 			}
-		
+
 		class accounting.events.candidacy.SecondCycleIndividualCandidacyExemptionJustification extends accounting.events.ExemptionJustification {
 			CandidacyExemptionJustificationType candidacyExemptionJustificationType;
 		}
@@ -2753,6 +2788,26 @@ class DomainObject {
 		Integer totalNumberAnswers;
 	}
 
+	class EducationArea extends DomainObject {
+		String code;
+		String description;
+	}
+
+	class BusinessArea extends DomainObject {
+		Integer level;
+		String code;
+		String description;
+	}
+
+	class Job extends DomainObject {
+		String employerName;
+		String city;
+		LocalDate beginDate;
+		LocalDate endDate;
+		String position;
+		ContractType contractType;
+	}
+
 	class log.EnrolmentLog extends DomainObject {
 		EnrolmentAction action;
 		DateTime dateDateTime;
@@ -2963,9 +3018,6 @@ class DomainObject {
 			class organizationalStructure.ResearchUnit extends organizationalStructure.Unit {
 			}
 
-			class organizationalStructure.SchoolUnit extends organizationalStructure.Unit {
-			}
-
 			class organizationalStructure.ScientificAreaUnit extends organizationalStructure.Unit {
 			}
 
@@ -2975,8 +3027,17 @@ class DomainObject {
 			class organizationalStructure.SectionUnit extends organizationalStructure.Unit {
 			}
 
-			class organizationalStructure.UniversityUnit extends organizationalStructure.Unit {
+			class organizationalStructure.AcademicalInstitutionUnit extends organizationalStructure.Unit {
+				Boolean official;
+				String code;
+				AcademicalInstitutionType institutionType;
 			}
+
+				class organizationalStructure.SchoolUnit extends organizationalStructure.AcademicalInstitutionUnit {
+				}
+	
+				class organizationalStructure.UniversityUnit extends organizationalStructure.AcademicalInstitutionUnit {
+				}
 
 	class organizationalStructure.UnitName extends DomainObject {
 		Boolean isExternalUnit;
@@ -3572,7 +3633,7 @@ class DomainObject {
 					
 					class serviceRequests.documentRequests.ProgramCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
 					}
-					
+	
 						class serviceRequests.documentRequests.ExternalProgramCertificateRequest extends serviceRequests.documentRequests.ProgramCertificateRequest {
 							Integer numberOfPrograms;
 						}
@@ -3887,6 +3948,26 @@ class DomainObject {
 		String definition;
 		String term;
 	}
+	
+	class support.SupportRequest extends DomainObject {
+		SupportRequestPriority requestPriority;
+		String responseEmail;
+		String subject;
+		String message;
+		DateTime requestTime;
+	}
+		
+		class support.SupportSugestion extends support.SupportRequest {
+		}
+		
+		class support.SupportDoubt extends support.SupportRequest {
+		}
+		
+		class support.SupportError extends support.SupportRequest {
+		}
+		
+		class support.SupportException extends support.SupportRequest {
+		}
 
 	class system.CronRegistry extends DomainObject {
 		DateTime buildVersion;
@@ -4775,7 +4856,7 @@ class period.CandidacyPeriod extends DomainObject {
 	
 	class period.SecondCycleCandidacyPeriod extends period.CandidacyPeriod {
 	}
-	
+
 	class period.DegreeCandidacyForGraduatedPersonCandidacyPeriod extends period.CandidacyPeriod {
 	}
 	
@@ -4809,7 +4890,7 @@ class candidacyProcess.IndividualCandidacyProcess extends caseHandling.Process {
 	
 	class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcess extends candidacyProcess.IndividualCandidacyProcess {
 	}
-	
+		
 	class candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
 	}
 		
@@ -4837,13 +4918,13 @@ class candidacyProcess.IndividualCandidacy extends DomainObject {
 		String interviewGrade;
 		Double seriesCandidacyGrade;
 	}
-	
+
 	class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson extends candidacyProcess.IndividualCandidacy {
 		Double affinity;
 		Integer degreeNature;
 		Double candidacyGrade;
 	}
-	
+
 	class candidacyProcess.degreeChange.DegreeChangeIndividualCandidacy extends candidacyProcess.IndividualCandidacy {
 	}
 
@@ -12875,4 +12956,133 @@ relation ResidenceManagementUnitResidenceEvent {
 	residence.ResidenceYear playsRole residenceYears {
 		multiplicity *;
 	}
+}
+
+relation RootDomainObjectSupportRequest {
+	RootDomainObject playsRole rootDomainObject;
+	support.SupportRequest playsRole supportRequests {
+		multiplicity *;
+	}
+}
+
+relation SupportRequestPerson {
+	Person playsRole requester;
+	support.SupportRequest playsRole supportRequests {
+		multiplicity *;
+	}
+}
+
+relation SupportRequestContent {
+	contents.Content playsRole requestContext;
+	support.SupportRequest playsRole supportRequests {
+		multiplicity *;
+	}
+}
+
+relation SupportExceptionErrorLog {
+	support.SupportException playsRole supportException;
+	log.requests.ErrorLog playsRole errorLog;
+}
+
+relation AlumniStudent {
+	Alumni playsRole alumni;
+	student.Student playsRole student;
+}
+
+relation AlumniIdentityCheckRequestAlumni {
+	Alumni playsRole alumni;
+	AlumniIdentityCheckRequest playsRole identityRequests {
+		multiplicity *;
+	}
+}
+
+relation AlumniIdentityCheckRequestPerson {
+	Person playsRole operator;
+	AlumniIdentityCheckRequest playsRole identityRequests {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAlumni {
+	RootDomainObject playsRole rootDomainObject;
+	Alumni playsRole alumnis {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAlumniIdentityCheckRequest {
+	RootDomainObject playsRole rootDomainObject;
+	AlumniIdentityCheckRequest playsRole alumniIdentityRequest {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectJob {
+	RootDomainObject playsRole rootDomainObject;
+	Job playsRole jobs {
+		multiplicity *;
+	}
+}
+
+relation JobPerson {
+	Person playsRole person;
+	Job playsRole jobs {
+		multiplicity *;
+	}
+}
+
+relation JobCountry {
+	Country playsRole country;
+	Job playsRole jobs {
+		multiplicity *;
+	}
+}
+
+relation JobBusinessArea {
+	BusinessArea playsRole businessArea;
+	Job playsRole jobs {
+		multiplicity *;
+	}
+}
+
+relation BusinessAreaBusinessArea {
+	BusinessArea playsRole parentArea;
+	BusinessArea playsRole childAreas {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectBusinessArea {
+	RootDomainObject playsRole rootDomainObject;
+	BusinessArea playsRole businessAreas {
+		multiplicity *;
+	}
+}
+
+relation EducationAreaEducationArea {
+	EducationArea playsRole parentArea;
+	EducationArea playsRole childAreas {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectEducationArea {
+	RootDomainObject playsRole rootDomainObject;
+	EducationArea playsRole educationAreas {
+		multiplicity *;
+	}
+}
+
+relation FormationEducationArea {
+	Formation playsRole associatedFormations {
+		multiplicity *;
+	}
+	EducationArea playsRole educationArea;
+}
+
+relation FormationUnit {
+	Formation playsRole associatedFormations {
+		multiplicity *;
+	}
+	organizationalStructure.Unit playsRole institution;
 }

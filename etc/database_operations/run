@@ -19,9 +19,9 @@ echo Institution: $INSTITUTION
 function execute() {
 	if [ -z $3 ] 
 		then  
-			echo ---------------------------------------- $1 
-			mysql -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < $2 
-			echo 
+	echo ---------------------------------------- $1
+	mysql -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < $2
+	echo
 		else 
 			if [ "$INSTITUTION" == "$3" ]
 			then 
@@ -40,3 +40,11 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Data fix for some IST country units" dataFix.sql
+execute "Create Alumni tables" createAlumniTables.sql
+execute "Adding key to Alumni in Student" alterTableStudent.sql
+execute "Adding Formation (extends Qualification)" alterTableQualification.sql
+execute "Adding fields to Unit" alterTableParty.sql
+execute "Create Job table" createTableJob.sql
+execute "Create SupportRequest table" createTableSupportRequest.sql
+execute "Creating public section for Alumni Registration" intercepted.sql

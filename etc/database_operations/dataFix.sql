@@ -1,0 +1,2 @@
+--fixing some units declared as countries
+update PARTY set OJB_CONCRETE_CLASS='net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit' where ID_INTERNAL in (180558, 313171, 386397, 387382, 387384, 387386, 387400, 387405, 387410, 388974);

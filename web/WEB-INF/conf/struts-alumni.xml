@@ -18,8 +18,29 @@
 		<form-property name="detailed" type="java.lang.Boolean" initial="false"/>
 		<form-property name="viewType" type="java.lang.String"/>
       </form-bean>
+      
+      <form-bean name="documentRequestCreateForm" type="org.apache.struts.validator.DynaValidatorForm"
+			dynamic="true">
+			<form-property name="scpId" type="java.lang.Integer" />
+			<form-property name="chosenDocumentRequestTypes" type="java.lang.String[]" />
+			<form-property name="schoolRegistrationExecutionYearId" type="java.lang.Integer" />
+			<form-property name="enrolmentDetailed" type="java.lang.String" initial="false"/>
+			<form-property name="enrolmentExecutionYearId" type="java.lang.Integer" />	
+			<form-property name="degreeFinalizationAverage" type="java.lang.String" initial="false"/>
+			<form-property name="degreeFinalizationDetailed" type="java.lang.String" initial="false"/>			
+			<form-property name="chosenDocumentPurposeType" type="java.lang.String" />
+			<form-property name="otherPurpose" type="java.lang.String" />
+			<form-property name="notes" type="java.lang.String" />
+			<form-property name="urgentRequest" type="java.lang.String" initial="false"/>
+			<form-property name="justification" type="java.lang.String" />
+			<form-property name="numberOfPages" type="java.lang.Integer" />
+			<form-property name="registrationId" type="java.lang.Integer" />
+			<form-property name="method" type="java.lang.String"/>
+		</form-bean>
 
     </form-beans>
+    
+    
 
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
@@ -37,6 +58,10 @@
 
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
+      <forward name="home" path="/mainPortalPage.jsp" redirect="true" contextRelative="true"/>
+      <forward name="logoff" path="/logoff.do" contextRelative="true"/>
+      <forward name="redirect" path="/redirect.do" contextRelative="true"/>
+      <forward name="globalOutOfPeriod" path="definition.out.of.period"/>              
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -45,27 +70,94 @@
             <forward name="Success" path="index"/>
         </action>
 
+		<action path="/formation"
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniFormationManagementDA"
+				scope="request">
+			<forward name="viewAlumniQualifications" path="alumni.viewAlumniQualifications"/>
+			<forward name="alumniCreateFormation" path="alumni.alumniCreateFormation"/>
+			<forward name="alumniEditFormation" path="alumni.alumniEditFormation"/>
+		</action>
+
 		<action path="/registration"
 				parameter="method"
 				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.StudentDA"
 				scope="request">
 			<forward name="chooseCycleForViewRegistrationCurriculum" path="chooseCycleForViewRegistrationCurriculum"/>	
 			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>
-		</action>	
+		</action>
 
 		<action path="/viewCurriculum"
 				name="studentCurricularPlanAndEnrollmentsSelectionForm"
 				scope="request"		
 		        parameter="method"
-			    type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction">
+		        type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniViewCurriculum">
 	        <forward name="chooseRegistration" path="df.page.curriculum.chooseRegistration" />
 			<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
-			<forward name="NotAuthorized" path="df.page.notAuthorized"/>
+			<forward name="alumni.view.curriculum.not.authorized" path="df.page.notAuthorized"/>
+			<forward name="alumni.view.curriculum.validate.identity" path="alumni.view.curriculum.validate.identity"/>
+		</action>
+
+		<action path="/searchAlumni" 
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniSearchDA"
+				scope="request" >
+	        <forward name="showAlumniList" path="alumni.showAlumniList" />
+	        <forward name="viewAlumniDetails" path="alumni.viewAlumniDetails" />
+		</action>
+
+		<action path="/professionalInformation"
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniProfessionalInformationDA"
+				scope="request">
+			<forward name="innerProfessionalInformation" path="alumni.innerProfessionalInformation"/>
+			<forward name="createProfessionalInformation" path="alumni.createProfessionalInformation"/>
+			<forward name="editProfessionalInformation" path="alumni.editProfessionalInformation"/>
+		</action>
+
+		<!-- FROM STUDENT ROLE -->
+		
+		<!-- ADMINISTRATIVE OFFICE SERVICES -->
+		<action path="/administrativeOfficeServicesSection"
+			parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
+			<forward name="Success" path="df.page.administrativeOfficeServicesIndex"/>
+		</action>
+  		
+		<action path="/documentRequest"
+			type="net.sourceforge.fenixedu.presentationTier.Action.student.administrativeOfficeServices.DocumentRequestDispatchAction"
+			parameter="method"
+			name="documentRequestCreateForm"
+			input="/administrativeOfficeServicesSection.do">
+			<forward name="chooseRegistration" path="alumni.administrativeOfficeServices.documentRequests.chooseRegistration" />
+			<forward name="createDocumentRequests" path="alumni.administrativeOfficeServices.documentRequests.createDocumentRequests"/>
+			<forward name="viewDocumentRequestsToCreate" path="alumni.administrativeOfficeServices.documentRequests.viewDocumentRequestsToCreate"/>
+			<forward name="createSuccess" path="alumni.administrativeOfficeServices.documentRequests.createSuccess"/>
+			<forward name="viewDocumentRequests" path="alumni.administrativeOfficeServices.documentRequests.viewDocumentRequests" redirect ="true"/>
+			<forward name="viewDocumentRequest" path="alumni.administrativeOfficeServices.documentRequests.viewDocumentRequest"/>
+			<forward name="prepareCancelAcademicServiceRequest" path="alumni.administrativeOfficeServices.documentRequests.prepareCancelAcademicServiceRequest"/>
+			<forward name="cancelSuccess" path="alumni.administrativeOfficeServices.documentRequests.cancelSuccess"/>
 		</action>
 		
+		<action path="/payments" 
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.student.payments.StudentPaymentsDispatchAction"
+				scope="request" >
+			<forward name="showEvents" path="alumni.administrativeOfficeServices.payments.showEvents" />
+			<forward name="showEventDetails" path="alumni.administrativeOfficeServices.payments.showEventsDetails" />
+		</action>
+
+		<action path="/prices"
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.student.prices.StudentPricesDispatchAction"
+				scope="request" >
+	        <forward name="viewPrices" path="alumni.administrativeOfficeServices.prices.viewPrices" />
+		</action>
+
 		<action path="/viewCurriculumGraph" scope="request" parameter="method"
 			type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.ViewCurriculumGraphDispatchAction">
 		</action>
+		<!-- FROM STUDENT ROLE -->
 	
     </action-mappings>
 
@@ -75,7 +167,7 @@
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
     <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>	
-	<message-resources parameter="resources.AlumniResources" key="ALUMNI" null="false"/>
+	<message-resources parameter="resources.AlumniResources" key="ALUMNI_RESOURCES" null="false"/>
     <message-resources parameter="resources.StudentResources" key="STUDENT_RESOURCES"  null="false"/>
 	<message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/>
 	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
@@ -85,10 +177,15 @@
       <set-property property="pathnames" 
                     value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-alumni.xml"/>
     </plug-in>    
-    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+    <plug-in className="net.sourceforge.fenixedu.presentationTier.tiles.plugin.FenixTilesPlugin" >
         <set-property property="definitions-config" 
             value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/alumni/tiles-alumni-definitions.xml,/WEB-INF/tiles/alumni/tiles-alumni-pages-definitions.xml" />
         <set-property property="moduleAware" value="true" />
         <set-property property="definitions-parser-validate" value="true" />
+        <set-property property="factoryClassname" value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" />
+        <set-property property="defaultTileDefinition" value="alumni.masterPage" />
     </plug-in>
+    <plug-in className="com.octo.captcha.module.struts.CaptchaServicePlugin" />
+    <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn" />
 </struts-config>
+

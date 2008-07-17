@@ -9,7 +9,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - Error Page</title>
+    <title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - Support Page</title>
     <link href="<%= request.getContextPath() %>/CSS/logdotist.css" rel="stylesheet" type="text/css" />
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   </head>

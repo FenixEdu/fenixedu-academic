@@ -11,6 +11,87 @@
 	<slot name="username"/>	
 	<slot name="name">
 		<property name="size" value="50"/>
-	</slot>	
+	</slot>
 	<slot name="documentIdNumber" />
-</schema>		
+</schema>
+
+<schema name="alumni.identity.request.list" type="net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest" bundle="MANAGER_RESOURCES">
+	<slot name="creationDateTime" key="label.creationDateTime" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator" >
+		<property name="size" value="12"/>
+	</slot>
+	<slot name="fullName" key="label.fullName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="link">
+		<property size="40" />
+		<property name="useParent" value="true" />
+		<property name="contextRelative" value="true" />
+		<property name="moduleRelative" value="true" />
+		<property name="linkFormat" value="/alumni.do?method=prepareIdentityValidation&amp;requestId=${idInternal}&amp;personId=${alumni.student.person.idInternal}"/>
+	</slot>
+	<slot name="documentIdNumber" key="label.documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property size="20" />
+	</slot>
+	<slot name="alumni.student.number" key="label.student.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property size="10" />
+	</slot>
+	<slot name="contactEmail" key="label.contactEmail" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredEmailValidator" >
+		<property size="40" />
+	</slot>
+</schema>
+
+<schema name="alumni.identity.closed.request.list" type="net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest" bundle="MANAGER_RESOURCES">
+	<slot name="decisionDateTime" key="label.decisionDateTime" >
+		<property name="size" value="12"/>
+	</slot>
+	<slot name="fullName" key="label.fullName" layout="link">
+		<property size="40" />
+		<property name="useParent" value="true" />
+		<property name="contextRelative" value="true" />
+		<property name="moduleRelative" value="true" />
+		<property name="linkFormat" value="/alumni.do?method=showIdentityValidation&amp;requestId=${idInternal}&amp;personId=${alumni.student.person.idInternal}"/>
+	</slot>
+	<slot name="documentIdNumber" key="label.documentIdNumber" >
+		<property size="20" />
+	</slot>
+	<slot name="alumni.student.number" key="label.student.number" >
+		<property size="10" />
+	</slot>
+	<slot name="contactEmail" key="label.contactEmail" >
+		<property size="40" />
+	</slot>
+	<slot name="approved" key="label.approved" >
+		<property size="40" />
+	</slot>
+</schema>
+
+<schema name="alumni.identity.request.header" type="net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest" bundle="MANAGER_RESOURCES">
+	<slot name="requestType" key="label.requestType" >
+		<property size="40" />
+	</slot>
+	<slot name="contactEmail" key="label.contactEmail" >
+		<property size="40" />
+	</slot>
+	<slot name="documentIdNumber" key="label.documentIdNumber" >
+		<property size="20" />
+	</slot>
+</schema>
+
+<schema name="alumni.identity.request.body" type="net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniIdentityCheckRequestBean" bundle="MANAGER_RESOURCES">
+	<slot name="fullName" key="label.fullName" />
+	<slot name="dateOfBirthYearMonthDay" key="label.dateOfBirthYearMonthDay" />
+	<slot name="districtOfBirth" key="label.districtOfBirth" />
+	<slot name="districtSubdivisionOfBirth" key="label.districtSubdivisionOfBirth" />
+	<slot name="parishOfBirth" key="label.parishOfBirth" />
+	<slot name="socialSecurityNumber" key="label.socialSecurityNumber" />
+	<slot name="nameOfFather" key="label.nameOfFather" />
+	<slot name="nameOfMother" key="label.nameOfMother" />
+</schema>
+
+<schema name="alumni.person.body" type="net.sourceforge.fenixedu.domain.Person" >
+	<slot name="fullName" />
+	<slot name="dateOfBirthYearMonthDay" />
+	<slot name="districtOfBirth" />
+	<slot name="districtSubdivisionOfBirth" />
+	<slot name="parishOfBirth" />
+	<slot name="socialSecurityNumber" />
+	<slot name="nameOfFather" />
+	<slot name="nameOfMother" />
+</schema>
