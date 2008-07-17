@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -25,12 +26,12 @@ public class DegreeChangeIndividualCandidacyProcessBean extends IndividualCandid
 
     public DegreeChangeIndividualCandidacyProcessBean(final DegreeChangeIndividualCandidacyProcess process) {
 	setCandidacyDate(process.getCandidacyDate());
-	// TODO: not implemented
-	// setPrecedentDegreeInformation(new
-	// CandidacyPrecedentDegreeInformationBean(process
-	// .getCandidacyPrecedentDegreeInformation()));
-	// setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.
-	// getCandidacyPrecedentDegreeInformation()));
+	setSelectedDegree(process.getCandidacySelectedDegree());
+	setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getCandidacyPrecedentDegreeInformation()));
+	final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation = new CandidacyPrecedentDegreeInformationBean(
+		process.getCandidacyPrecedentDegreeInformation());
+	precedentDegreeInformation.initCurricularCoursesInformation(process.getCandidacyPrecedentDegreeInformation());
+	setPrecedentDegreeInformation(precedentDegreeInformation);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class DegreeChangeIndividualCandidacyProcessBean extends IndividualCandid
     protected boolean isPreBolonhaPrecedentDegreeAllowed() {
 	return false;
     }
-    
+
     @Override
     public List<StudentCurricularPlan> getPrecedentStudentCurricularPlans() {
 	final Student student = getStudent();
@@ -54,11 +55,11 @@ public class DegreeChangeIndividualCandidacyProcessBean extends IndividualCandid
 	for (final Registration registration : student.getActiveRegistrations()) {
 	    if (registration.isBolonha()) {
 		final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-		
+
 		for (final CycleType cycleType : getValidPrecedentCycleTypes()) {
 		    if (studentCurricularPlan.hasCycleCurriculumGroup(cycleType)) {
 			final CycleCurriculumGroup cycle = studentCurricularPlan.getCycle(cycleType);
-			
+
 			if (!cycle.isConclusionProcessed() && !cycle.isConcluded()) {
 			    studentCurricularPlans.add(registration.getLastStudentCurricularPlan());
 			    break;

@@ -178,7 +178,6 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	    if (!process.isInStandBy() || process.isCandidacyCancelled() || process.isCandidacyAccepted()) {
 		throw new PreConditionNotValidException();
 	    }
-
 	}
 
 	@Override

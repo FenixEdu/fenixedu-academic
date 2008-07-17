@@ -15,6 +15,14 @@
 
 <bean:define id="processName" name="processName" />
 
+<fr:hasMessages for="candidacyProcessBean" type="conversion">
+	<ul class="nobullet list6">
+		<fr:messages>
+			<li><span class="error0"><fr:message/></span></li>
+		</fr:messages>
+	</ul>
+</fr:hasMessages>
+
 <fr:edit id="candidacyProcessBean" name="candidacyProcessBean" schema='<%= processName.toString() + "Bean.manage" %>'
 		 action='<%= "/caseHandling" + processName.toString() +".do?method=createNewProcess" %>'>
 		 

@@ -11,7 +11,6 @@ This page must be included using <%@ include file="/candidacy/fillPrecedentCurri
 -> To use this jsp your action must implement the following methods:
 
 - fillCandidacyInformationInvalid: when validation errors occur
-- fillPrecedentInformationPostback: when selecting between 'Internal' and 'External' degree information
 
 -> Schemas to create: 
 [schema must extends IndividualCandidacyProcessBean.precedentDegreeInformation.(INSTITUTION/EXTERNAL)_DEGREE.curricularCourses]
@@ -40,7 +39,6 @@ This page must be included using <%@ include file="/candidacy/fillPrecedentCurri
    		    	<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
 			<fr:destination name="invalid" path='<%= "/caseHandling" + processName + ".do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
-			<fr:destination name="precedentDegreeTypePostback" path='<%= "/caseHandling" + processName + ".do?method=fillPrecedentInformationPostback&amp;parentProcessId=" + parentProcessId.toString() %>' />
 		</fr:edit>
 	</logic:equal>
 </logic:notEmpty>

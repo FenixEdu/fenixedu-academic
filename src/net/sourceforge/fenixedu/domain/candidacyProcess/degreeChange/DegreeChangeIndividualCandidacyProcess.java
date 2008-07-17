@@ -18,7 +18,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
     static {
 	activities.add(new CandidacyPayment());
 	activities.add(new EditCandidacyPersonalInformation());
-	// activities.add(new EditCandidacyInformation());
+	activities.add(new EditCandidacyInformation());
 	// activities.add(new IntroduceCandidacyResult());
 	// activities.add(new CancelCandidacy());
 	// activities.add(new CreateRegistration());
@@ -67,6 +67,10 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 
     public CandidacyPrecedentDegreeInformation getCandidacyPrecedentDegreeInformation() {
 	return getCandidacy().getPrecedentDegreeInformation();
+    }
+    
+    public void editCandidacyInformation(final DegreeChangeIndividualCandidacyProcessBean bean) {
+	getCandidacy().editCandidacyInformation(bean);
     }
 
     // static information
@@ -135,4 +139,24 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	}
     }
 
+    static private class EditCandidacyInformation extends Activity<DegreeChangeIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeChangeIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	    if (!process.isInStandBy() || process.isCandidacyCancelled() || process.isCandidacyAccepted()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeChangeIndividualCandidacyProcess executeActivity(DegreeChangeIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.editCandidacyInformation((DegreeChangeIndividualCandidacyProcessBean) object);
+	    return process;
+	}
+	
+    }
 }

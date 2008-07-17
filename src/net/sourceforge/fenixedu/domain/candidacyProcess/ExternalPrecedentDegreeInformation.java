@@ -83,4 +83,10 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
 	    throw new DomainException("error.ExternalPrecedentDegreeInformation.invalid." + property);
 	}
     }
+
+    @Override
+    public void editCurricularCoursesInformation(final CandidacyPrecedentDegreeInformationBean information) {
+	init(information.getNumberOfApprovedCurricularCourses(), information.getGradeSum(), information.getApprovedEcts(),
+		information.getEnroledEcts());
+    }
 }

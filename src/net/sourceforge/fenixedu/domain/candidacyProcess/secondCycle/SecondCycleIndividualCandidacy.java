@@ -100,8 +100,12 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
 	checkParameters(getPerson(), getCandidacyProcess(), candidacyDate);
 
-	if (selectedDegree == null || personHasDegree(getPerson(), selectedDegree)) {
+	if (selectedDegree == null) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degree");
+	}
+	
+	if (personHasDegree(getPerson(), selectedDegree)) {
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.existing.degree", selectedDegree.getName());
 	}
 
 	if (precedentDegreeInformation == null) {

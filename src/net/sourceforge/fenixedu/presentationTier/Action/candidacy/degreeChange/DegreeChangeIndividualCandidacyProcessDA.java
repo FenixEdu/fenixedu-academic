@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeChange;
 
-import java.math.BigDecimal;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,14 +8,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
-import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
@@ -81,18 +76,8 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
     @Override
     protected void createCandidacyPrecedentDegreeInformation(IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean,
 	    StudentCurricularPlan studentCurricularPlan) {
-
 	super.createCandidacyPrecedentDegreeInformation(bean, studentCurricularPlan);
-
-	final CandidacyPrecedentDegreeInformationBean degreeInformation = bean.getPrecedentDegreeInformation();
-	degreeInformation.setNumberOfApprovedCurricularCourses(studentCurricularPlan.getRoot()
-		.getNumberOfAllApprovedCurriculumLines());
-	degreeInformation.setApprovedEcts(BigDecimal.valueOf(studentCurricularPlan.getRoot().getAprovedEctsCredits()));
-	degreeInformation.setEnroledEcts(BigDecimal.valueOf(studentCurricularPlan.getRoot().getEctsCredits()));
-
-	final Curriculum curriculum = studentCurricularPlan.getRoot().getCurriculum();
-	curriculum.setAverageType(AverageType.SIMPLE);
-	degreeInformation.setGradeSum(curriculum.getSumPiCi());
+	bean.getPrecedentDegreeInformation().initCurricularCoursesInformation(studentCurricularPlan);
     }
 
     public ActionForward prepareExecuteEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,
@@ -120,4 +105,30 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
+
+    public ActionForward prepareExecuteEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), new DegreeChangeIndividualCandidacyProcessBean(
+		getProcess(request)));
+	return mapping.findForward("edit-candidacy-information");
+    }
+
+    public ActionForward executeEditCandidacyInformationInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	return mapping.findForward("edit-candidacy-information");
+    }
+
+    public ActionForward executeEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    executeActivity(getProcess(request), "EditCandidacyInformation", getIndividualCandidacyProcessBean());
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    return mapping.findForward("edit-candidacy-information");
+	}
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+
 }

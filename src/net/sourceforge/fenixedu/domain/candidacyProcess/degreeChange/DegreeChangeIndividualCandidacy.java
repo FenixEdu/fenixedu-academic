@@ -77,4 +77,34 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
 
+    void editCandidacyInformation(final DegreeChangeIndividualCandidacyProcessBean bean) {
+	checkParameters(bean.getCandidacyDate(), bean.getSelectedDegree(), bean.getPrecedentDegreeInformation());
+
+	setCandidacyDate(bean.getCandidacyDate());
+	setSelectedDegree(bean.getSelectedDegree());
+
+	if (getPrecedentDegreeInformation().isExternal()) {
+	    getPrecedentDegreeInformation().edit(bean.getPrecedentDegreeInformation());
+	    getPrecedentDegreeInformation().editCurricularCoursesInformation(bean.getPrecedentDegreeInformation());
+	}
+    }
+
+    private void checkParameters(final LocalDate candidacyDate, final Degree selectedDegree,
+	    CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
+
+	checkParameters(getPerson(), getCandidacyProcess(), candidacyDate);
+
+	if (selectedDegree == null) {
+	    throw new DomainException("error.DegreeChangeIndividualCandidacy.invalid.degree");
+	}
+
+	if (personHasDegree(getPerson(), selectedDegree)) {
+	    throw new DomainException("error.DegreeChangeIndividualCandidacy.existing.degree", selectedDegree.getName());
+	}
+
+	if (precedentDegreeInformation == null) {
+	    throw new DomainException("error.DegreeChangeIndividualCandidacy.invalid.precedentDegreeInformation");
+	}
+    }
+
 }

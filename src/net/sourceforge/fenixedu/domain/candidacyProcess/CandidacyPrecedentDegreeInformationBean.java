@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
+import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
+import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 
 import org.joda.time.LocalDate;
 
@@ -33,10 +35,6 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
 	setConclusionDate(precedentDegreeInformation.getConclusionDate());
 	setConclusionGrade(precedentDegreeInformation.getConclusionGrade());
 	setInstitutionValue(precedentDegreeInformation);
-	setNumberOfApprovedCurricularCourses(precedentDegreeInformation.getNumberOfApprovedCurricularCourses());
-	setGradeSum(precedentDegreeInformation.getGradeSum());
-	setApprovedEcts(precedentDegreeInformation.getApprovedEcts());
-	setEnroledEcts(precedentDegreeInformation.getEnroledEcts());
     }
 
     public CandidacyPrecedentDegreeInformationBean(final StudentCurricularPlan studentCurricularPlan) {
@@ -65,6 +63,23 @@ public class CandidacyPrecedentDegreeInformationBean implements Serializable {
 	if (studentCurricularPlan.getFinalAverage(cycleType) != null) {
 	    setConclusionGrade(studentCurricularPlan.getFinalAverage(cycleType));
 	}
+    }
+
+    public void initCurricularCoursesInformation(final CandidacyPrecedentDegreeInformation precedentDegreeInformation) {
+	setNumberOfApprovedCurricularCourses(precedentDegreeInformation.getNumberOfApprovedCurricularCourses());
+	setGradeSum(precedentDegreeInformation.getGradeSum());
+	setApprovedEcts(precedentDegreeInformation.getApprovedEcts());
+	setEnroledEcts(precedentDegreeInformation.getEnroledEcts());
+    }
+
+    public void initCurricularCoursesInformation(final StudentCurricularPlan studentCurricularPlan) {
+	setNumberOfApprovedCurricularCourses(studentCurricularPlan.getRoot().getNumberOfAllApprovedCurriculumLines());
+	setApprovedEcts(BigDecimal.valueOf(studentCurricularPlan.getRoot().getAprovedEctsCredits()));
+	setEnroledEcts(BigDecimal.valueOf(studentCurricularPlan.getRoot().getEctsCredits()));
+
+	final Curriculum curriculum = studentCurricularPlan.getRoot().getCurriculum();
+	curriculum.setAverageType(AverageType.SIMPLE);
+	setGradeSum(curriculum.getSumPiCi());
     }
 
     private void setInstitutionValue(final CandidacyPrecedentDegreeInformation precedentDegreeInformation) {
