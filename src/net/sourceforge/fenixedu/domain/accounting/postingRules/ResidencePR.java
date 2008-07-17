@@ -24,9 +24,9 @@ import org.joda.time.Days;
 
 public class ResidencePR extends ResidencePR_Base {
 
-    public ResidencePR(final EntryType entryType, final EventType eventType, final DateTime startDate, final DateTime endDate,
+    public ResidencePR(final DateTime startDate, final DateTime endDate,
 	    final ServiceAgreementTemplate serviceAgreementTemplate, Money penaltyPerDay) {
-	super.init(entryType, eventType, startDate, endDate, serviceAgreementTemplate);
+	super.init(EntryType.RESIDENCE_FEE, EventType.RESIDENCE_PAYMENT, startDate, endDate, serviceAgreementTemplate);
 	setPenaltyPerDay(penaltyPerDay);
     }
 

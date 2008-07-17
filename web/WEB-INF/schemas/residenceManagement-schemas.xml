@@ -103,7 +103,6 @@
 	<slot name="residenceMonth.year.year" key="label.residenceYear"/>
 	<slot name="residenceMonth.month" key="label.residenceMonth"/>
 	<slot name="roomValue" key="label.roomValue"/>
-	<slot name="amountToPay" key="label.roomValue"/>
 	<slot name="paymentLimitDate" key="label.paymentLimitDate" layout="null-as-label">
 		<property name="subLayout" value="no-time"/>
 		<property name="label" value="-"/>

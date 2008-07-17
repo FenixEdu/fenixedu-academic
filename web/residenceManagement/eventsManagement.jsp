@@ -19,7 +19,13 @@
 			<bean:message key="label.roomValues" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
 		</th>
 		<td>
-			<fr:view name="currentResidenceYear" property="singleRoomValue"/> <bean:message key="label.currency.symbol" bundle="GLOBAL_RESOURCES"/> | <fr:view name="currentResidenceYear" property="doubleRoomValue"/> <bean:message key="label.currency.symbol" bundle="GLOBAL_RESOURCES"/> 
+			<logic:present name="currentResidenceYear" property="singleRoomValue">
+				<fr:view name="currentResidenceYear" property="singleRoomValue"/> 
+				<bean:message key="label.currency.symbol" bundle="GLOBAL_RESOURCES"/> | 
+			</logic:present>
+			<logic:present name="currentResidenceYear" property="doubleRoomValue">
+				<fr:view name="currentResidenceYear" property="doubleRoomValue"/> <bean:message key="label.currency.symbol" bundle="GLOBAL_RESOURCES"/>
+			</logic:present> 
 		</td>
 	</tr>
 	<tr>
@@ -27,7 +33,7 @@
 			<bean:message key="label.paymentDate" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
 		</th>
 		<td>
-			<fr:view name="currentResidenceYear" property="paymentLimitDay">
+			<fr:view name="currentResidenceYear" property="paymentLimitDay" type="java.lang.Integer">
 				<fr:layout name="null-as-label">
 					<property name="subLayout" value="values"/>
 					<property name="label" value="-"/>			

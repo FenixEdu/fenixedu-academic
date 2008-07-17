@@ -1,12 +1,15 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
@@ -33,6 +36,11 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 	setRoomValue(roomValue);
     }
 
+    @Override
+    public LabelFormatter getDescription() {
+	return getDescriptionForEntryType(EntryType.RESIDENCE_FEE);
+    }
+    
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	final LabelFormatter labelFormatter = new LabelFormatter();
@@ -91,4 +99,21 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 	return calculateAmountToPay(new DateTime());
     }
     
+    @Override
+    protected List<AccountingEventPaymentCode> createPaymentCodes() {
+	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+
+	return Collections.singletonList(AccountingEventPaymentCode.create(PaymentCodeType.RESIDENCE_FEE,
+		new YearMonthDay(), getPaymentLimitDate().toYearMonthDay(), this, entryDTO.getAmountToPay(),
+		entryDTO.getAmountToPay(), getPerson().getStudent()));
+    }
+    
+    @Override
+    protected List<AccountingEventPaymentCode> updatePaymentCodes() {
+	final EntryDTO entryDTO = calculateEntries(new DateTime()).get(0);
+	getNonProcessedPaymentCodes().get(0).update(new YearMonthDay(),  getPaymentLimitDate().toYearMonthDay(),
+		entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+
+	return getNonProcessedPaymentCodes();
+    }
 }

@@ -342,6 +342,8 @@
 	<slot name="entityCode" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.entityCode" />
 	<slot name="formattedCode" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.formattedCode" />
 	<slot name="minAmount" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.minAmount" />
+	<slot name="startDate" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.startDate" />
+	<slot name="endDate" key="label.net.sourceforge.fenixedu.domain.accounting.PaymentCode.endDate" />
 </schema>
 
 <schema name="AccountingEventPaymentCode.view" type="net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode" bundle="APPLICATION_RESOURCES" extends="PaymentCode.view">

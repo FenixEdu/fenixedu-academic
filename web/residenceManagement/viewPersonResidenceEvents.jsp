@@ -29,7 +29,7 @@
 <logic:notEmpty name="residenceEvents">
 	<fr:view name="residenceEvents" schema="show.person.residenceEvents">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4" />
+			<fr:property name="classes" value="tstyle1 tdcenter thlight mtop05" />
 			<fr:property name="link(cancel)" value="<%= "/residenceEventManagement.do?method=cancelResidenceEvent&monthOID=" + monthOID%>"/>
 			<fr:property name="key(cancel)" value="label.cancel.residence.event" />
 			<fr:property name="param(cancel)" value="OID/event,person.OID/person,residenceMonth.OID/month" />
