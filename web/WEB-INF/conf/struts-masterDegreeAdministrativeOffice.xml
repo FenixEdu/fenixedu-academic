@@ -2548,7 +2548,7 @@
              value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-masterDegreeAdministrativeOffice.xml"/>
     </plug-in>
     
-    <plug-in className="net.sourceforge.fenixedu.presentationTier.tiles.plugin.FenixTilesPlugin" >
+    <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin" >
 		<set-property property="definitions-config" 
 		     value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/masterDegreeAdministrativeOffice/tiles-masterDegreeAdministrativeOffice-definitions.xml,/WEB-INF/tiles/masterDegreeAdministrativeOffice/tiles-masterDegreeAdministrativeOffice-pages-definitions.xml"/>
         <set-property property="moduleAware" value="true" />

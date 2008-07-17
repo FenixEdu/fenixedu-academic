@@ -177,7 +177,7 @@
       <set-property property="pathnames" 
                     value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-alumni.xml"/>
     </plug-in>    
-    <plug-in className="net.sourceforge.fenixedu.presentationTier.tiles.plugin.FenixTilesPlugin" >
+    <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin" >
         <set-property property="definitions-config" 
             value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/alumni/tiles-alumni-definitions.xml,/WEB-INF/tiles/alumni/tiles-alumni-pages-definitions.xml" />
         <set-property property="moduleAware" value="true" />
