@@ -4,17 +4,17 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
-import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson;
+import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacy;
 
-public class DegreeCandidacyForGraduatedPersonEvent extends DegreeCandidacyForGraduatedPersonEvent_Base {
+public class DegreeChangeIndividualCandidacyEvent extends DegreeChangeIndividualCandidacyEvent_Base {
 
-    private DegreeCandidacyForGraduatedPersonEvent() {
+    private DegreeChangeIndividualCandidacyEvent() {
 	super();
     }
 
-    public DegreeCandidacyForGraduatedPersonEvent(final DegreeCandidacyForGraduatedPerson candidacy, final Person person) {
+    public DegreeChangeIndividualCandidacyEvent(final DegreeChangeIndividualCandidacy candidacy, final Person person) {
 	this();
-	super.init(candidacy, EventType.DEGREE_CANDIDACY_FOR_GRADUATED_PERSON, person);
+	super.init(candidacy, EventType.DEGREE_CHANGE_INDIVIDUAL_CANDICAY, person);
     }
 
     @Override

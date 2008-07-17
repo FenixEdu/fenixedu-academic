@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
@@ -23,18 +23,18 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-public class DegreeCandidacyForGraduatedPersonPR extends DegreeCandidacyForGraduatedPersonPR_Base {
+public class DegreeChangeIndividualCandidacyPR extends DegreeChangeIndividualCandidacyPR_Base {
 
-    private DegreeCandidacyForGraduatedPersonPR() {
+    private DegreeChangeIndividualCandidacyPR() {
 	super();
     }
 
-    public DegreeCandidacyForGraduatedPersonPR(final DateTime start, final DateTime end,
+    public DegreeChangeIndividualCandidacyPR(final DateTime start, final DateTime end,
 	    final ServiceAgreementTemplate serviceAgreementTemplate, final Money amountForInstitutionStudent,
 	    final Money amountForExternalStudent) {
 	this();
-	super.init(EntryType.DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_FEE, EventType.DEGREE_CANDIDACY_FOR_GRADUATED_PERSON, start,
-		end, serviceAgreementTemplate);
+	super.init(EntryType.DEGREE_CHANGE_INDIVIDUAL_CANDICAY_FEE, EventType.DEGREE_CHANGE_INDIVIDUAL_CANDICAY, start, end,
+		serviceAgreementTemplate);
 	checkParameters(amountForInstitutionStudent, amountForExternalStudent);
 	super.setAmountForInstitutionStudent(amountForInstitutionStudent);
 	super.setAmountForExternalStudent(amountForExternalStudent);
@@ -42,33 +42,33 @@ public class DegreeCandidacyForGraduatedPersonPR extends DegreeCandidacyForGradu
 
     private void checkParameters(final Money amountForInstitutionStudent, final Money amountForExternalStudent) {
 	if (amountForInstitutionStudent == null) {
-	    throw new DomainException("error.DegreeCandidacyForGraduatedPersonPR.invalid.amountForInstitutionStudent");
+	    throw new DomainException("error.DegreeChangeIndividualCandidacyPR.invalid.amountForInstitutionStudent");
 	}
 	if (amountForExternalStudent == null) {
-	    throw new DomainException("error.DegreeCandidacyForGraduatedPersonPR.invalid.amountForExternalStudent");
+	    throw new DomainException("error.DegreeChangeIndividualCandidacyPR.invalid.amountForExternalStudent");
 	}
     }
 
     @Override
     public void setAmountForInstitutionStudent(final Money amountForInstitutionStudent) {
-	throw new DomainException("error.DegreeCandidacyForGraduatedPersonPR.cannot.modify.amountForInstitutionStudent");
+	throw new DomainException("error.DegreeChangeIndividualCandidacyPR.cannot.modify.amountForInstitutionStudent");
     }
 
     @Override
     public void setAmountForExternalStudent(final Money amountForExternalStudent) {
-	throw new DomainException("error.DegreeCandidacyForGraduatedPersonPR.cannot.modify.amountForExternalStudent");
+	throw new DomainException("error.DegreeChangeIndividualCandidacyPR.cannot.modify.amountForExternalStudent");
     }
 
     @Override
-    public List<EntryDTO> calculateEntries(final Event event, final DateTime when) {
+    public List<EntryDTO> calculateEntries(Event event, DateTime when) {
 	final Money amountToPay = calculateTotalAmountToPay(event, when);
 	return Collections.singletonList(new EntryDTO(getEntryType(), event, amountToPay, Money.ZERO, amountToPay, event
 		.getDescriptionForEntryType(getEntryType()), amountToPay));
     }
 
     @Override
-    public Money calculateTotalAmountToPay(final Event event, final DateTime when, final boolean applyDiscount) {
-	final CandidacyPrecedentDegreeInformation information = ((DegreeCandidacyForGraduatedPersonEvent) event)
+    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+	final CandidacyPrecedentDegreeInformation information = ((DegreeChangeIndividualCandidacyEvent) event)
 		.getIndividualCandidacy().getPrecedentDegreeInformation();
 	return information.isExternal() && !belongsToInstitutionGroup(information.getInstitution()) ? getAmountForExternalStudent()
 		: getAmountForInstitutionStudent();
@@ -84,11 +84,10 @@ public class DegreeCandidacyForGraduatedPersonPR extends DegreeCandidacyForGradu
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(final User user, final List<EntryDTO> entryDTOs, final Event event,
-	    final Account fromAccount, final Account toAccount, final AccountingTransactionDetailDTO transactionDetail) {
-
+    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
+	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 	if (entryDTOs.size() != 1) {
-	    throw new DomainException("error.DegreeCandidacyForGraduatedPersonPR.invalid.number.of.entryDTOs");
+	    throw new DomainException("error.DegreeChangeIndividualCandidacyPR.invalid.number.of.entryDTOs");
 	}
 
 	final EntryDTO entryDTO = entryDTOs.get(0);
@@ -101,15 +100,15 @@ public class DegreeCandidacyForGraduatedPersonPR extends DegreeCandidacyForGradu
     private void checkIfCanAddAmount(final Money amountToPay, final Event event, final DateTime when) {
 	if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) < 0) {
 	    throw new DomainExceptionWithLabelFormatter(
-		    "error.DegreeCandidacyForGraduatedPersonPR.amount.being.payed.must.match.amount.to.pay", event
+		    "error.DegreeChangeIndividualCandidacyPR.amount.being.payed.must.match.amount.to.pay", event
 			    .getDescriptionForEntryType(getEntryType()));
 	}
     }
 
     @Checked("PostingRulePredicates.editPredicate")
-    public DegreeCandidacyForGraduatedPersonPR edit(final Money amountForInstitutionStudent, final Money amountForExternalStudent) {
+    public DegreeChangeIndividualCandidacyPR edit(final Money amountForInstitutionStudent, final Money amountForExternalStudent) {
 	deactivate();
-	return new DegreeCandidacyForGraduatedPersonPR(new DateTime(), null, getServiceAgreementTemplate(),
+	return new DegreeChangeIndividualCandidacyPR(new DateTime(), null, getServiceAgreementTemplate(),
 		amountForInstitutionStudent, amountForExternalStudent);
     }
 }

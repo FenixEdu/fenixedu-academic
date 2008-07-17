@@ -25,7 +25,6 @@ public class SecondCycleIndividualCandidacyPR extends SecondCycleIndividualCandi
 
     @Checked("PostingRulePredicates.editPredicate")
     public SecondCycleIndividualCandidacyPR edit(final Money fixedAmount) {
-
 	deactivate();
 	return new SecondCycleIndividualCandidacyPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount);
     }

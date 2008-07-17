@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import java.math.BigDecimal;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
@@ -55,5 +57,30 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
 	setConclusionDate(bean.getConclusionDate());
 	setInstitution(bean.getInstitution());
 	setConclusionGrade(bean.getConclusionGrade());
+    }
+
+    public void init(final Integer numberOfApprovedCurricularCourses, final BigDecimal gradeSum, final BigDecimal approvedEcts,
+	    final BigDecimal enroledEcts) {
+	checkParameters(numberOfApprovedCurricularCourses, gradeSum, approvedEcts, enroledEcts);
+	setNumberOfApprovedCurricularCourses(numberOfApprovedCurricularCourses);
+	setGradeSum(gradeSum);
+	setApprovedEcts(approvedEcts);
+	setEnroledEcts(enroledEcts);
+    }
+
+    private void checkParameters(final Integer numberOfApprovedCurricularCourses, final BigDecimal gradeSum,
+	    final BigDecimal approvedEcts, final BigDecimal enroledEcts) {
+	if (numberOfApprovedCurricularCourses != null && numberOfApprovedCurricularCourses.intValue() == 0) {
+	    throw new DomainException("error.ExternalPrecedentDegreeInformation.invalid.numberOfApprovedCurricularCourses");
+	}
+	checkBigDecimal(gradeSum, "gradeSum");
+	checkBigDecimal(approvedEcts, "approvedEcts");
+	checkBigDecimal(enroledEcts, "enroledEcts");
+    }
+
+    private void checkBigDecimal(final BigDecimal value, final String property) {
+	if (value != null && value.signum() == 0) {
+	    throw new DomainException("error.ExternalPrecedentDegreeInformation.invalid." + property);
+	}
     }
 }

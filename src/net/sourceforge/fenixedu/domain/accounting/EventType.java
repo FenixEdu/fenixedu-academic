@@ -92,7 +92,9 @@ public enum EventType {
     
     DEGREE_CANDIDACY_FOR_GRADUATED_PERSON,
     
-    RESIDENCE_PAYMENT;
+    RESIDENCE_PAYMENT,
+    
+    DEGREE_CHANGE_INDIVIDUAL_CANDICAY;
 
     public String getName() {
 	return name();

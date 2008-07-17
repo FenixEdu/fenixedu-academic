@@ -1363,6 +1363,9 @@ class DomainObject {
 			
 			class accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
 			}
+			
+			class accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
+			}
 
 	class accounting.Exemption extends DomainObject {
 		DateTime whenCreated;
@@ -1598,6 +1601,11 @@ class DomainObject {
 			}
 
 			class accounting.postingRules.candidacy.DegreeCandidacyForGraduatedPersonPR extends accounting.postingRules.GenericSingleEntryTypePR {
+				Money amountForInstitutionStudent;
+				Money amountForExternalStudent;
+			}
+			
+			class accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR extends accounting.postingRules.GenericSingleEntryTypePR {
 				Money amountForInstitutionStudent;
 				Money amountForExternalStudent;
 			}

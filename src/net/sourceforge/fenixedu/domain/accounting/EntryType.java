@@ -66,7 +66,9 @@ public enum EntryType {
     
     DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_FEE,
     
-    RESIDENCE_FEE;
+    RESIDENCE_FEE,
+    
+    DEGREE_CHANGE_INDIVIDUAL_CANDICAY_FEE;
 
     public String getName() {
 	return name();

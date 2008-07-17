@@ -50,7 +50,7 @@
 		
 	<h3 class="mtop15 mbottom025"><bean:message key="label.candidacy.precedentDegreeInformation" bundle="APPLICATION_RESOURCES"/>:</h3>
 	<bean:define id="precedentDegreeTypeName" name="individualCandidacyProcessBean" property="precedentDegreeType.name" />
-	<bean:define id="schema">IndividualCandidacyProcessBean.precedentDegreeInformation.<bean:write name="precedentDegreeTypeName"/></bean:define>
+	<bean:define id="schema"><bean:write name="processName"/>.precedentDegreeInformation.<bean:write name="precedentDegreeTypeName"/></bean:define>
 	<fr:edit id="individualCandidacyProcessBean.precedentDegreeInformation"
 		name="individualCandidacyProcessBean" schema="<%= schema.toString() + ".edit" %>">
 		<fr:layout name="tabular-editable">

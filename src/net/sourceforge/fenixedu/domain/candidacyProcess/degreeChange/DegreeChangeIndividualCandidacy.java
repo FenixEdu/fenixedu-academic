@@ -2,9 +2,10 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.NotImplementedException;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.ExternalPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.LocalDate;
@@ -27,7 +28,6 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 
 	createPrecedentDegreeInformation(bean);
 	createDebt(person);
-
     }
 
     private void checkParameters(final Person person, final DegreeChangeIndividualCandidacyProcess process,
@@ -55,14 +55,16 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     }
 
     @Override
-    protected void createExternalPrecedentDegreeInformation(CandidacyPrecedentDegreeInformationBean bean) {
-	super.createExternalPrecedentDegreeInformation(bean);
-	throw new NotImplementedException();
+    protected ExternalPrecedentDegreeInformation createExternalPrecedentDegreeInformation(
+	    final CandidacyPrecedentDegreeInformationBean bean) {
+	final ExternalPrecedentDegreeInformation information = super.createExternalPrecedentDegreeInformation(bean);
+	information.init(bean.getNumberOfApprovedCurricularCourses(), bean.getGradeSum(), bean.getApprovedEcts(), bean
+		.getEnroledEcts());
+	return information;
     }
 
     private void createDebt(final Person person) {
-	// new DegreeChangeIndividualCandidacyEvent(this, person);
-	throw new NotImplementedException();
+	new DegreeChangeIndividualCandidacyEvent(this, person);
     }
 
     @Override

@@ -1,3 +1,4 @@
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
@@ -7,11 +8,19 @@
 
 This page must be included using <%@ include file="/candidacy/fillPrecedentDegreeInformation.jsp" %>
 
-To use this jsp your action must implement the following methods:
+-> To use this jsp your action must implement the following methods:
 
 - fillCandidacyInformationInvalid: when validation errors occur
 - fillPrecedentInformationPostback: when selecting between 'Internal' and 'External' degree information
 - fillPrecedentInformationStudentCurricularPlanPostback: having more than one precedent SCP and when choosing one
+
+-> Schemas to create: 
+[schema must extends IndividualCandidacyProcessBean.precedentDegreeInformation.(INSTITUTION/EXTERNAL)_DEGREE.(create/edit)]
+
+- <process_name>.precedentDegreeInformation.INSTITUTION_DEGREE.create
+- <process_name>.precedentDegreeInformation.INSTITUTION_DEGREE.edit
+- <process_name>.precedentDegreeInformation.EXTERNAL_DEGREE.create
+- <process_name>.precedentDegreeInformation.EXTERNAL_DEGREE.edit
 
 --%>
 
@@ -23,7 +32,7 @@ To use this jsp your action must implement the following methods:
 	
 	<logic:equal name="individualCandidacyProcessBean" property="validPrecedentDegreeInformation" value="true">
 		<bean:define id="precedentDegreeTypeName" name="individualCandidacyProcessBean" property="precedentDegreeType.name" />
-		<bean:define id="schema">IndividualCandidacyProcessBean.precedentDegreeInformation.<bean:write name="precedentDegreeTypeName"/></bean:define>
+		<bean:define id="schema"><bean:write name="processName" />.precedentDegreeInformation.<bean:write name="precedentDegreeTypeName"/></bean:define>
 		<fr:edit id="individualCandidacyProcessBean.precedentDegreeInformation"
 			name="individualCandidacyProcessBean" schema="<%= schema.toString() + ".create" %>" 
 			nested="true">

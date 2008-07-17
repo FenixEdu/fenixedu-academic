@@ -180,7 +180,9 @@
 	</slot>
 </schema>
 
-<schema name="IndividualCandidacyProcessBean.precedentDegreeInformation.EXTERNAL_DEGREE.create" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean" bundle="APPLICATION_RESOURCES">
+<schema name="IndividualCandidacyProcessBean.precedentDegreeInformation.EXTERNAL_DEGREE.create" 
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean" 
+		bundle="APPLICATION_RESOURCES">
 	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="bundle" value="APPLICATION_RESOURCES"/>
 		<property name="destination" value="precedentDegreeTypePostback"/>
@@ -212,7 +214,9 @@
 	</slot>
 </schema>
 
-<schema name="IndividualCandidacyProcessBean.precedentDegreeInformation.INSTITUTION_DEGREE.create" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean" bundle="APPLICATION_RESOURCES">
+<schema name="IndividualCandidacyProcessBean.precedentDegreeInformation.INSTITUTION_DEGREE.create" 
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean" 
+		bundle="APPLICATION_RESOURCES">
 	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="bundle" value="APPLICATION_RESOURCES"/>
 		<property name="destination" value="precedentDegreeTypePostback"/>
@@ -224,7 +228,9 @@
 	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" layout="null-as-label" read-only="true" />
 </schema>
 
-<schema name="IndividualCandidacyProcessBean.precedentDegreeInformation.EXTERNAL_DEGREE.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean" bundle="APPLICATION_RESOURCES">
+<schema name="IndividualCandidacyProcessBean.precedentDegreeInformation.EXTERNAL_DEGREE.edit" 
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean" 
+		bundle="APPLICATION_RESOURCES">
 	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" read-only="true" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="bundle" value="APPLICATION_RESOURCES"/>
 		<property name="classes" value="nobullet liinline"/>
@@ -255,7 +261,9 @@
 	</slot>
 </schema>
 
-<schema name="IndividualCandidacyProcessBean.precedentDegreeInformation.INSTITUTION_DEGREE.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean" bundle="APPLICATION_RESOURCES">
+<schema name="IndividualCandidacyProcessBean.precedentDegreeInformation.INSTITUTION_DEGREE.edit" 
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean" 
+		bundle="APPLICATION_RESOURCES">
 	<slot name="precedentDegreeType" layout="radio-postback" key="label.candidacy.precedentDegreeType" read-only="true" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="bundle" value="APPLICATION_RESOURCES"/>
 		<property name="classes" value="nobullet liinline"/>
@@ -264,6 +272,56 @@
 	<slot name="precedentDegreeInformation.institutionUnitName.name" key="label.candidacy.institution" read-only="true" />
 	<slot name="precedentDegreeInformation.conclusionDate" key="label.conclusionDate" layout="null-as-label" read-only="true" />
 	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" layout="null-as-label" read-only="true" />
+</schema>
+
+<schema name="IndividualCandidacyProcessBean.precedentDegreeInformation.EXTERNAL_DEGREE.curricularCourses" 
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean" 
+		bundle="APPLICATION_RESOURCES">
+	<slot name="precedentDegreeInformation.numberOfApprovedCurricularCourses" key="label.candidacy.numberOfApprovedCurricularCourses">
+		<property name="size" value="2"/>
+		<property name="maxLength" value="2"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{1}|)"/>
+            <property name="message" value="error.conclusionGrade.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+	</slot>
+	<slot name="precedentDegreeInformation.gradeSum" key="label.candidacy.gradeSum">
+		<property name="size" value="3"/>
+		<property name="maxLength" value="3"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(\d{1}|)"/>
+            <property name="message" value="error.conclusionGrade.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+	</slot>
+	<slot name="precedentDegreeInformation.approvedEcts" key="label.candidacy.approvedEcts">
+		<property name="size" value="5"/>
+		<property name="maxLength" value="5"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(([0-9]+(\.[0-9]+)?)|)"/>
+            <property name="message" value="error.conclusionGrade.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+	</slot>
+	<slot name="precedentDegreeInformation.enroledEcts" key="label.candidacy.enroledEcts">
+		<property name="size" value="5"/>
+		<property name="maxLength" value="5"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="(([0-9]+(\.[0-9]+)?)|)"/>
+            <property name="message" value="error.conclusionGrade.invalidFormat"/>
+            <property name="key" value="true"/>
+        </validator>
+	</slot>
+</schema>
+
+<schema name="IndividualCandidacyProcessBean.precedentDegreeInformation.INSTITUTION_DEGREE.curricularCourses" 
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean" 
+		bundle="APPLICATION_RESOURCES">
+	<slot name="precedentDegreeInformation.numberOfApprovedCurricularCourses" key="label.candidacy.numberOfApprovedCurricularCourses" read-only="true" />
+	<slot name="precedentDegreeInformation.gradeSum" key="label.candidacy.gradeSum" read-only="true" />
+	<slot name="precedentDegreeInformation.approvedEcts" key="label.candidacy.approvedEcts" layout="null-as-label" read-only="true" />
+	<slot name="precedentDegreeInformation.enroledEcts" key="label.candidacy.enroledEcts" layout="null-as-label" read-only="true" />
 </schema>
 
 <schema name="CandidacyProcess.candidacyDegreeBean" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA$CandidacyDegreeBean" bundle="APPLICATION_RESOURCES">
@@ -492,6 +550,26 @@
 	<slot name="notes" key="label.candidacy.notes" />
 </schema>
 
+<schema name="SecondCycleIndividualCandidacyProcess.precedentDegreeInformation.EXTERNAL_DEGREE.create" bundle="APPLICATION_RESOURCES" 
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean"
+		extends="IndividualCandidacyProcessBean.precedentDegreeInformation.EXTERNAL_DEGREE.create" >
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyProcess.precedentDegreeInformation.EXTERNAL_DEGREE.edit" bundle="APPLICATION_RESOURCES" 
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean"
+		extends="IndividualCandidacyProcessBean.precedentDegreeInformation.EXTERNAL_DEGREE.edit" >
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyProcess.precedentDegreeInformation.INSTITUTION_DEGREE.create" bundle="APPLICATION_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean"
+		extends="IndividualCandidacyProcessBean.precedentDegreeInformation.INSTITUTION_DEGREE.create">
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyProcess.precedentDegreeInformation.INSTITUTION_DEGREE.edit" bundle="APPLICATION_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean"
+		extends="IndividualCandidacyProcessBean.precedentDegreeInformation.INSTITUTION_DEGREE.edit">
+</schema>
+
 <!-- DegreeCandidacyForGraduatedPerson -->
 
 <schema name="DegreeCandidacyForGraduatedPersonProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean"
@@ -582,7 +660,91 @@
 		extends="CandidacyProcess.candidacyDegreeBean" bundle="APPLICATION_RESOURCES">
 </schema>
 
+<schema name="DegreeCandidacyForGraduatedPersonIndividualProcess.precedentDegreeInformation.EXTERNAL_DEGREE.create" bundle="APPLICATION_RESOURCES" 
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean"
+		extends="IndividualCandidacyProcessBean.precedentDegreeInformation.EXTERNAL_DEGREE.create" >
+</schema>
+
+<schema name="DegreeCandidacyForGraduatedPersonIndividualProcess.precedentDegreeInformation.EXTERNAL_DEGREE.edit" bundle="APPLICATION_RESOURCES" 
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean"
+		extends="IndividualCandidacyProcessBean.precedentDegreeInformation.EXTERNAL_DEGREE.edit" >
+</schema>
+
+<schema name="DegreeCandidacyForGraduatedPersonIndividualProcess.precedentDegreeInformation.INSTITUTION_DEGREE.create" bundle="APPLICATION_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean"
+		extends="IndividualCandidacyProcessBean.precedentDegreeInformation.INSTITUTION_DEGREE.create">
+</schema>
+
+<schema name="DegreeCandidacyForGraduatedPersonIndividualProcess.precedentDegreeInformation.INSTITUTION_DEGREE.edit" bundle="APPLICATION_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean"
+		extends="IndividualCandidacyProcessBean.precedentDegreeInformation.INSTITUTION_DEGREE.edit">
+</schema>
+
 <!-- DegreeChange -->
+
 <schema name="DegreeChangeCandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean"
 		extends="CandidacyProcessBean.manage" bundle="APPLICATION_RESOURCES">
+</schema>
+
+<schema name="DegreeChangeCandidacyProcessBean.candidacyDate" type="net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+	<slot name="candidacyDate" key="label.candidacy.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema name="DegreeChangeCandidacyProcessBean.selectDegree.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+   	<slot name="selectedDegree" layout="menu-select" key="label.degree.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DegreeChangeIndividualCandidacyDegreesProvider" />
+        <property name="format" value="${presentationName}" />
+        <property name="sortBy" value="degreeType, name"/>
+    </slot>
+</schema>
+
+<schema name="DegreeChangeIndividualCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess" bundle="APPLICATION_RESOURCES"
+		extends="IndividualCandidacyProcess.view">
+	<slot name="candidacySelectedDegree" key="label.candidacy.choosed.degree">
+		<property name="format" value="${name} - ${sigla}" />
+	</slot>
+	<slot name="candidacyPrecedentDegreeInformation.degreeDesignation" key="label.candidacy.previous.degree" read-only="true" />
+	<slot name="candidacyPrecedentDegreeInformation.institution.name" key="label.candidacy.institution" read-only="true" />
+	<slot name="candidacyPrecedentDegreeInformation.numberOfApprovedCurricularCourses" key="label.candidacy.numberOfApprovedCurricularCourses" read-only="true" />
+	<slot name="candidacyPrecedentDegreeInformation.gradeSum" key="label.candidacy.gradeSum" read-only="true" />
+	<slot name="candidacyPrecedentDegreeInformation.approvedEcts" key="label.candidacy.approvedEcts" layout="null-as-label" read-only="true" />
+	<slot name="candidacyPrecedentDegreeInformation.enroledEcts" key="label.candidacy.enroledEcts" layout="null-as-label" read-only="true" />
+</schema>
+
+<schema name="DegreeChangeIndividualCandidacyProcess.precedentDegreeInformation.EXTERNAL_DEGREE.create" bundle="APPLICATION_RESOURCES" 
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean"
+		extends="IndividualCandidacyProcessBean.precedentDegreeInformation.EXTERNAL_DEGREE.create" >
+	<remove name="precedentDegreeInformation.conclusionDate" />
+	<remove name="precedentDegreeInformation.conclusionGrade" />
+</schema>
+	
+<schema name="DegreeChangeIndividualCandidacyProcess.precedentDegreeInformation.EXTERNAL_DEGREE.edit" bundle="APPLICATION_RESOURCES" 
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean"
+		extends="IndividualCandidacyProcessBean.precedentDegreeInformation.EXTERNAL_DEGREE.edit" >
+	<remove name="precedentDegreeInformation.conclusionDate" />
+	<remove name="precedentDegreeInformation.conclusionGrade" />		
+</schema>
+
+<schema name="DegreeChangeIndividualCandidacyProcess.precedentDegreeInformation.INSTITUTION_DEGREE.create" bundle="APPLICATION_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean"
+		extends="IndividualCandidacyProcessBean.precedentDegreeInformation.INSTITUTION_DEGREE.create">
+	<remove name="precedentDegreeInformation.conclusionDate" />
+	<remove name="precedentDegreeInformation.conclusionGrade" />
+</schema>
+
+<schema name="DegreeChangeIndividualCandidacyProcess.precedentDegreeInformation.INSTITUTION_DEGREE.edit" bundle="APPLICATION_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean"
+		extends="IndividualCandidacyProcessBean.precedentDegreeInformation.INSTITUTION_DEGREE.edit">
+	<remove name="precedentDegreeInformation.conclusionDate" />
+	<remove name="precedentDegreeInformation.conclusionGrade" />
+</schema>
+
+<schema name="DegreeChangeIndividualCandidacyProcess.precedentDegreeInformation.EXTERNAL_DEGREE.curricularCourses" bundle="APPLICATION_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean"
+		extends="IndividualCandidacyProcessBean.precedentDegreeInformation.EXTERNAL_DEGREE.curricularCourses">
+</schema>
+
+<schema name="DegreeChangeIndividualCandidacyProcess.precedentDegreeInformation.INSTITUTION_DEGREE.curricularCourses" bundle="APPLICATION_RESOURCES"
+		type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean"
+		extends="IndividualCandidacyProcessBean.precedentDegreeInformation.INSTITUTION_DEGREE.curricularCourses">
 </schema>

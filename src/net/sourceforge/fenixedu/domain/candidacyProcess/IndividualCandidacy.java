@@ -120,9 +120,10 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	}
     }
 
-    protected void createExternalPrecedentDegreeInformation(final CandidacyPrecedentDegreeInformationBean bean) {
-	new ExternalPrecedentDegreeInformation(this, bean.getDegreeDesignation(), bean.getConclusionDate(),
-		bean.getInstitution(), bean.getConclusionGrade());
+    protected ExternalPrecedentDegreeInformation createExternalPrecedentDegreeInformation(
+	    final CandidacyPrecedentDegreeInformationBean bean) {
+	return new ExternalPrecedentDegreeInformation(this, bean.getDegreeDesignation(), bean.getConclusionDate(), bean
+		.getInstitution(), bean.getConclusionGrade());
     }
 
     protected void createInstitutionPrecedentDegreeInformation(final StudentCurricularPlan studentCurricularPlan) {
@@ -182,7 +183,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     protected ExecutionInterval getCandidacyExecutionInterval() {
 	return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyExecutionInterval() : null;
     }
-    
+
     protected boolean personHasDegree(final Person person, final Degree selectedDegree) {
 	return person.hasStudent() ? person.getStudent().hasRegistrationFor(selectedDegree) : false;
     }
