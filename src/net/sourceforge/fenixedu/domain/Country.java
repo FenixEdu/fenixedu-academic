@@ -9,6 +9,10 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Country extends Country_Base {
 
+    static final public String PORTUGAL = "PORTUGAL";
+    static final public String NATIONALITY_PORTUGUESE = "PORTUGUESA";
+    static final public String DEFAULT_COUNTRY_NATIONALITY = NATIONALITY_PORTUGUESE;
+
     public static Comparator<Country> COMPARATOR_BY_NAME = new Comparator<Country>() {
 	public int compare(Country leftCountry, Country rightCountry) {
 	    int comparationResult = leftCountry.getName().compareTo(rightCountry.getName());
@@ -32,6 +36,16 @@ public class Country extends Country_Base {
     // -------------------------------------------------------------
     // read static methods
     // -------------------------------------------------------------
+
+    /**
+     * If the person country is undefined it is set to default. In a not
+     * distance future this will not be needed since the coutry can never be
+     * null.
+     */
+    public static Country readDefault() {
+	return readCountryByNationality(DEFAULT_COUNTRY_NATIONALITY);
+    }
+
     public static Country readCountryByNationality(final String nationality) {
 	for (final Country country : RootDomainObject.getInstance().getCountrysSet()) {
 	    if (country.getNationality().equals(nationality)) {
@@ -48,10 +62,10 @@ public class Country extends Country_Base {
     public static Set<Country> readDistinctCountries() {
 	final Set<Country> result = new HashSet<Country>();
 	for (final Country country : RootDomainObject.getInstance().getCountrysSet()) {
-	    if (!country.getName().equalsIgnoreCase("PORTUGAL")) {
+	    if (!country.getName().equalsIgnoreCase(PORTUGAL)) {
 		result.add(country);
 	    } else {
-		if (country.getNationality().equals("PORTUGUESA")) {
+		if (country.getNationality().equals(NATIONALITY_PORTUGUESE)) {
 		    result.add(country);
 		}
 	    }
