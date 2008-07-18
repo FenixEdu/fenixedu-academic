@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.EntryPhase;
@@ -168,6 +169,9 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	registration.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
 	registration.setIngression(ingression);
 	setRegistration(registration);
+
+	person.addPersonRoleByRoleType(RoleType.PERSON);
+	person.addPersonRoleByRoleType(RoleType.STUDENT);
 
 	return registration;
     }
