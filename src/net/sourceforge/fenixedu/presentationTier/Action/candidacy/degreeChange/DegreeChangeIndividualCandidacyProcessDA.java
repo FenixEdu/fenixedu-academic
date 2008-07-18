@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProce
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
@@ -25,7 +26,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/caseHandlingDegreeChangeIndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
-@Forwards( { @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
+@Forwards( {
+	@Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
 	@Forward(name = "list-allowed-activities", path = "/candidacy/listIndividualCandidacyActivities.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp"),
 	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),
@@ -33,6 +35,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp"),
 	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/editPersonalInformation.jsp"),
 	@Forward(name = "edit-candidacy-information", path = "/candidacy/degreeChange/editCandidacyInformation.jsp"),
+	@Forward(name = "edit-candidacy-curricularCourses-information", path = "/candidacy/degreeChange/editCandidacyCurricularCoursesInformation.jsp"),
 	@Forward(name = "introduce-candidacy-result", path = "/candidacy/degreeChange/introduceCandidacyResult.jsp"),
 	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
 	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp")
@@ -131,4 +134,75 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
 
+    public ActionForward prepareExecuteEditCandidacyCurricularCoursesInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), new DegreeChangeIndividualCandidacyProcessBean(
+		getProcess(request)));
+	return mapping.findForward("edit-candidacy-curricularCourses-information");
+    }
+
+    public ActionForward executeEditCandidacyCurricularCoursesInformationInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	return mapping.findForward("edit-candidacy-curricularCourses-information");
+    }
+
+    public ActionForward executeEditCandidacyCurricularCoursesInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    executeActivity(getProcess(request), "EditCandidacyCurricularCoursesInformation", getIndividualCandidacyProcessBean());
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    return mapping.findForward("edit-candidacy-curricularCourses-information");
+	}
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+
+    public ActionForward prepareExecuteIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("individualCandidacyResultBean", new DegreeChangeIndividualCandidacyResultBean(getProcess(request)));
+	return mapping.findForward("introduce-candidacy-result");
+    }
+
+    public ActionForward executeIntroduceCandidacyResultInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("individualCandidacyResultBean", getCandidacyResultBean());
+	return mapping.findForward("introduce-candidacy-result");
+    }
+
+    public ActionForward executeIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	try {
+	    executeActivity(getProcess(request), "IntroduceCandidacyResult", getCandidacyResultBean());
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute("individualCandidacyResultBean", getCandidacyResultBean());
+	    return mapping.findForward("introduce-candidacy-result");
+	}
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+
+    private DegreeChangeIndividualCandidacyResultBean getCandidacyResultBean() {
+	return (DegreeChangeIndividualCandidacyResultBean) getRenderedObject("individualCandidacyResultBean");
+    }
+
+    public ActionForward prepareExecuteCreateRegistration(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	request.setAttribute("degree", getProcess(request).getCandidacySelectedDegree());
+	return mapping.findForward("create-registration");
+    }
+
+    public ActionForward executeCreateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    executeActivity(getProcess(request), "CreateRegistration");
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute("degree", getProcess(request).getCandidacySelectedDegree());
+	    return mapping.findForward("create-registration");
+	}
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
 }

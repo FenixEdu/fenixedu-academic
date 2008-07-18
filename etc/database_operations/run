@@ -19,9 +19,9 @@ echo Institution: $INSTITUTION
 function execute() {
 	if [ -z $3 ] 
 		then  
-	echo ---------------------------------------- $1
-	mysql -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < $2
-	echo
+			echo ---------------------------------------- $1 
+			mysql -u$USER -f -h$DB_HOST --default-character-set=latin1 $DB < $2 
+			echo 
 		else 
 			if [ "$INSTITUTION" == "$3" ]
 			then 
@@ -48,5 +48,5 @@ execute "Adding fields to Unit" alterTableParty.sql
 execute "Create Job table" createTableJob.sql
 execute "Create SupportRequest table" createTableSupportRequest.sql
 execute "Creating public section for Alumni Registration" intercepted.sql
-
 execute "Remove import Data Functionality from residence management" removeImportDataFunctionality.sql
+execute "Add new columns to IndividualCandidacy table" alterTableIndividualCandidacy.sql

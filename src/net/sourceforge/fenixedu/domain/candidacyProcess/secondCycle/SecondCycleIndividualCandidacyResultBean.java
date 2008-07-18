@@ -9,21 +9,13 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState
 public class SecondCycleIndividualCandidacyResultBean implements Serializable {
 
     private DomainReference<SecondCycleIndividualCandidacyProcess> candidacyProcess;
-
     private Integer professionalExperience;
-
     private Double affinity;
-
     private Integer degreeNature;
-
     private Double grade;
-
     private String interviewGrade; // NA or value
-
     private Double seriesGrade;
-
     private IndividualCandidacyState state;
-
     private String notes;
 
     public SecondCycleIndividualCandidacyResultBean(final SecondCycleIndividualCandidacyProcess process) {

@@ -582,7 +582,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return result;
     }
 
-    public DegreeCurricularPlan getLastDegreeCurricularPlan() {
+    public DegreeCurricularPlan getLastActiveDegreeCurricularPlan() {
 	DegreeCurricularPlan result = null;
 	ExecutionDegree mostRecentExecutionDegree = null;
 

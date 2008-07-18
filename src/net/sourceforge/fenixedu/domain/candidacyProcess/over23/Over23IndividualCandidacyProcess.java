@@ -258,7 +258,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	}
 
 	private DegreeCurricularPlan getDegreeCurricularPlan(final Over23IndividualCandidacyProcess candidacyProcess) {
-	    return candidacyProcess.getAcceptedDegree().getLastDegreeCurricularPlan();
+	    return candidacyProcess.getAcceptedDegree().getLastActiveDegreeCurricularPlan();
 	}
     }
 }

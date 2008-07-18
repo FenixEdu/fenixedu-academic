@@ -1,12 +1,17 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent;
+import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.ExternalPrecedentDegreeInformation;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.LocalDate;
 
@@ -88,6 +93,10 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	    getPrecedentDegreeInformation().editCurricularCoursesInformation(bean.getPrecedentDegreeInformation());
 	}
     }
+    
+    void editCandidacyCurricularCoursesInformation(final DegreeChangeIndividualCandidacyProcessBean bean) {
+	getPrecedentDegreeInformation().editCurricularCoursesInformation(bean.getPrecedentDegreeInformation());
+    }
 
     private void checkParameters(final LocalDate candidacyDate, final Degree selectedDegree,
 	    CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
@@ -107,4 +116,33 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	}
     }
 
+    void editCandidacyResult(DegreeChangeIndividualCandidacyResultBean bean) {
+
+	checkParameters(bean);
+
+	setAffinity(bean.getAffinity());
+	setDegreeNature(bean.getDegreeNature());
+	setApprovedEctsRate(bean.getApprovedEctsRate());
+	setGradeRate(bean.getGradeRate());
+	setSeriesCandidacyGrade(bean.getSeriesCandidacyGrade());
+	
+	if (isCandidacyResultStateValid(bean.getState())) {
+	    setState(bean.getState());
+	}
+    }
+
+    private void checkParameters(final DegreeChangeIndividualCandidacyResultBean bean) {
+	if (isAccepted() && bean.getState() != IndividualCandidacyState.ACCEPTED && hasRegistration()) {
+	    throw new DomainException("error.DegreeChangeIndividualCandidacy.cannot.change.state.from.accepted.candidacies");
+	}
+    }
+
+    @Override
+    protected Registration createRegistration(Person person, DegreeCurricularPlan degreeCurricularPlan, CycleType cycleType,
+	    Ingression ingression) {
+	final Registration registration = super.createRegistration(person, degreeCurricularPlan, cycleType, ingression);
+	registration.setRegistrationYear(getCandidacyExecutionInterval().hasNextExecutionYear() ? getCandidacyExecutionInterval()
+		.getNextExecutionYear() : getCandidacyExecutionInterval());
+	return registration;
+    }
 }

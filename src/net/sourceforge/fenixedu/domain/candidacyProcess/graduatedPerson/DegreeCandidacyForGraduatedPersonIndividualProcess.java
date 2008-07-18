@@ -196,7 +196,11 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (process.isCandidacyCancelled() || !process.hasAnyPaymentForCandidacy() || !process.isSentToCoordinator()) {
+	    if (process.isCandidacyCancelled() || !process.hasAnyPaymentForCandidacy()) {
+		throw new PreConditionNotValidException();
+	    }
+	    
+	    if (!process.isSentToCoordinator() && !process.isSentToScientificCouncil()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -256,7 +260,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
 	private DegreeCurricularPlan getDegreeCurricularPlan(
 		final DegreeCandidacyForGraduatedPersonIndividualProcess candidacyProcess) {
-	    return candidacyProcess.getCandidacySelectedDegree().getLastDegreeCurricularPlan();
+	    return candidacyProcess.getCandidacySelectedDegree().getLastActiveDegreeCurricularPlan();
 	}
     }
 

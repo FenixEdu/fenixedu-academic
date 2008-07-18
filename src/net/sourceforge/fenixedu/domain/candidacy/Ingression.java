@@ -76,6 +76,8 @@ public enum Ingression {
 
     MCI("Mudança de Curso Interna"),
 
+    MCE("Mudança de Curso Externa"),
+
     RI("Reingresso (de Pré-Bolonha)"),
 
     TPB("Transição para Bolonha"),
@@ -83,8 +85,10 @@ public enum Ingression {
     DA1C("Acesso directo do 1º Ciclo"),
 
     AG1C("Atribuição de Grau de 1º Ciclo"),
-    
-    CM23("Maiores de 23");
+
+    CM23("Maiores de 23"),
+
+    TF("Transferência");
 
     String description;
 

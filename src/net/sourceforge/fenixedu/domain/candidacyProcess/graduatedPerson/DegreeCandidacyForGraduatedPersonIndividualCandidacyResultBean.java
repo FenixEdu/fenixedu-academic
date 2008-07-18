@@ -16,6 +16,9 @@ public class DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean impl
     public DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean(
 	    final DegreeCandidacyForGraduatedPersonIndividualProcess process) {
 	setCandidacyProcess(process);
+	setAffinity(process.getCandidacyAffinity());
+	setDegreeNature(process.getCandidacyDegreeNature());
+	setGrade(process.getCandidacyGrade());
 	if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
 	    setState(process.getCandidacyState());
 	}

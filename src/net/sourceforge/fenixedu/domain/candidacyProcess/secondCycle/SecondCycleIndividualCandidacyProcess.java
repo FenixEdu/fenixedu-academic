@@ -218,7 +218,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isSentToCoordinator()) {
+	    if (!process.isSentToCoordinator() && !process.isSentToScientificCouncil()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -284,7 +284,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	}
 
 	private DegreeCurricularPlan getDegreeCurricularPlan(final SecondCycleIndividualCandidacyProcess candidacyProcess) {
-	    return candidacyProcess.getCandidacySelectedDegree().getLastDegreeCurricularPlan();
+	    return candidacyProcess.getCandidacySelectedDegree().getLastActiveDegreeCurricularPlan();
 	}
     }
 }
