@@ -1,4 +1,4 @@
-/* general.css - 01.2006 by João Alfaiate @ Fenix */
+/* general.css - 01.2006 by Joï¿½o Alfaiate @ Fenix */
 
 /* File sections: Headings, Anchors, Show Info, Info Blocks, Lists, Tables, Tree, Feedback, Forms, Misc Classes, Specific, To Replace, To Organize, Old (general properties waiting to be merged) */
 
@@ -719,9 +719,9 @@ margin-bottom: 1em;
 div.pass_warning strong {
 background-color: #ffa;
 }
-Nº de estudante inválido 
 
-/* search person */
+
+
 div.pp {
 border: 1px solid #ccc;
 padding-bottom: 0;
@@ -1021,7 +1021,7 @@ border-width: 1px;
 border-color: #CCCCCC;
 }
 
-/* Vigilância */
+/* Vigilï¿½ncia */
 .mvert15 { margin-top: 1.5em; margin-bottom: 1.5em; }
 .greytxt1 { color: #777; }
 .greytxt2 { color: #777; }
@@ -2232,7 +2232,7 @@ padding: 0 !important;
 width: 1%;
 }
 
-/* 01 Código e Disciplina */
+/* 01 Cï¿½digo e Disciplina */
 td.scplancolcurricularcourse {
 text-align: left !important;
 font-size: 1em !important;
@@ -2260,7 +2260,7 @@ td.scplancolweight { color: #888; }
 /* 08 ECTS */
 td.scplancolects { color: #888; }
 
-/* 09 Época */
+/* 09 ï¿½poca */
 td.scplancolenrolmentevaluationtype { }
 td.scplancolenrolmentevaluationtype span { border-bottom: 1px dotted #777; }
 
@@ -2274,7 +2274,7 @@ td.scplancolsemester { white-space: nowrap; }
 td.scplancolexamdate { }
 td.scplancolexamdate span { border-bottom: 1px dotted #777; }
 
-/* 13 Pessoa Responsável Nota */
+/* 13 Pessoa Responsï¿½vel Nota */
 td.scplancolgraderesponsible { }
 td.scplancolgraderesponsible span { border-bottom: 1px dotted #777; }
 
