@@ -122,10 +122,10 @@ public class AlumniPublicAccessDA extends SimpleMailSenderAction {
 		    .getDocumentIdNumber(), alumniBean.getEmail());
 
 	    // TODO remove
-//	    String url = MessageFormat.format(RESOURCES
-//		    .getString("alumni.public.registration.url"), alumni.getStudent().getPerson().getFirstAndLastName(), alumni
-//		    .getIdInternal().toString(), alumni.getUrlRequestToken());
-//	    request.setAttribute("alumniEmailSuccessMessage", "http" + url.split("http")[1]);
+	    String url = MessageFormat.format(RESOURCES
+		    .getString("alumni.public.registration.url"), alumni.getStudent().getPerson().getFirstAndLastName(), alumni
+		    .getIdInternal().toString(), alumni.getUrlRequestToken());
+	    request.setAttribute("alumniEmailSuccessMessage", "http" + url.split("http")[1]);
 	    // TODO remove
 
 	} catch (DomainException e) {
