@@ -12,7 +12,7 @@ package net.sourceforge.fenixedu.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.apache.struts.util.LabelValueBean;
 

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.util.Money;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class EntryWithInstallmentDTO extends EntryDTO implements Serializable {
 

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.joda.time.YearMonthDay;
 

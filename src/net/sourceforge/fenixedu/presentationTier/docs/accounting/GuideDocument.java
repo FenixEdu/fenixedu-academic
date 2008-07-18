@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
-import net.sourceforge.fenixedu.util.resources.IMessageResourceProvider;
+import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;

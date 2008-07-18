@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.PasswordVerifierUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PasswordForm extends Form {
 

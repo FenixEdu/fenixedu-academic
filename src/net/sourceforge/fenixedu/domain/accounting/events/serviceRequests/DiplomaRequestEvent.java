@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 abstract public class DiplomaRequestEvent extends DiplomaRequestEvent_Base {
 

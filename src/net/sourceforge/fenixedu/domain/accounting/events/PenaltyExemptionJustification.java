@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.events;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PenaltyExemptionJustification extends PenaltyExemptionJustification_Base {
 

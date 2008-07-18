@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.joda.time.YearMonthDay;
 

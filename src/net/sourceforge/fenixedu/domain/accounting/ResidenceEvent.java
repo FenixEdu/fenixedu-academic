@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManageme
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class ResidenceEvent extends ResidenceEvent_Base {
 

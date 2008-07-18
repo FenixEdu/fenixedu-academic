@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;

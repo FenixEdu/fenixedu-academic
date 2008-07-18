@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 

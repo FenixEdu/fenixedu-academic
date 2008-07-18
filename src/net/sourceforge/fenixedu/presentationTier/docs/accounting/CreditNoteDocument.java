@@ -8,7 +8,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.accounting.CreditNote;
 import net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
-import net.sourceforge.fenixedu.util.resources.IMessageResourceProvider;
+import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
 
 import org.joda.time.DateTime;
 

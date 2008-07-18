@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class ImprovementOfApprovedEnrolmentEvent extends ImprovementOfApprovedEnrolmentEvent_Base {
 

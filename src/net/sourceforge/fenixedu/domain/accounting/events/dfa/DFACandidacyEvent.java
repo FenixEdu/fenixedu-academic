@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;
 import net.sourceforge.fenixedu.injectionCode.Checked;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 

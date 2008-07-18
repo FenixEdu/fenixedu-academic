@@ -23,7 +23,7 @@ public class DomainMetaObject extends SimpleMetaObject {
 
     private Class type;
     private int oid;
-    
+
     private transient DomainObject object;
 
     private String service;

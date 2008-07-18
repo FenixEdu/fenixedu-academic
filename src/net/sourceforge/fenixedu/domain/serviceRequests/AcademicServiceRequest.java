@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormat
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;

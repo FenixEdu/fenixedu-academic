@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;

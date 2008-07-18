@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class OriginInformationForm extends Form {
 

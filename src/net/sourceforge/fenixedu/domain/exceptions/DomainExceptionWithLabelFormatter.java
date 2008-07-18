@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.exceptions;
 
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DomainExceptionWithLabelFormatter extends DomainException {
 

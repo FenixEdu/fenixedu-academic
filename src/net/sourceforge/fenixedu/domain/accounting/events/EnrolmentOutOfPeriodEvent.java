@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import dml.runtime.RelationAdapter;
 
 public class EnrolmentOutOfPeriodEvent extends EnrolmentOutOfPeriodEvent_Base {

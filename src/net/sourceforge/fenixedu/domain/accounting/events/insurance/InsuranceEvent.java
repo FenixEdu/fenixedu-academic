@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.Unit
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.Money;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;

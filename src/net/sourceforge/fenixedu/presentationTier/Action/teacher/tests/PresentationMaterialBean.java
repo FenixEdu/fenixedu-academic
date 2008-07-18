@@ -6,7 +6,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.tests.NewPresentationMaterialType;
 import net.sourceforge.fenixedu.domain.tests.NewTestElement;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PresentationMaterialBean implements Serializable {
 

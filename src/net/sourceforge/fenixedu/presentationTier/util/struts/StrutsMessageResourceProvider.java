@@ -6,7 +6,7 @@ import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.util.resources.AbstractMessageResourceProvider;
+import pt.utl.ist.fenix.tools.resources.AbstractMessageResourceProvider;
 
 import org.apache.struts.Globals;
 import org.apache.struts.config.ModuleConfig;

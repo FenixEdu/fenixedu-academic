@@ -10,7 +10,7 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.apache.struts.taglib.TagUtils;
 

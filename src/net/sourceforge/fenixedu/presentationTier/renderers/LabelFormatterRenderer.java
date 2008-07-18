@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 import java.util.Properties;
 
 import net.sourceforge.fenixedu.presentationTier.renderers.util.RendererMessageResourceProvider;
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;

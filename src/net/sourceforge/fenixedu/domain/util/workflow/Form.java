@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.util.workflow;
 import java.io.Serializable;
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class Form implements Serializable {
 
