@@ -8,13 +8,12 @@ import java.util.Set;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Country extends Country_Base {
-    
+
     public static Comparator<Country> COMPARATOR_BY_NAME = new Comparator<Country>() {
 	public int compare(Country leftCountry, Country rightCountry) {
-	    int comparationResult = leftCountry.getName().compareTo(
-		    rightCountry.getName());
-	    return (comparationResult == 0) ? leftCountry.getIdInternal().compareTo(
-		    rightCountry.getIdInternal()) : comparationResult;
+	    int comparationResult = leftCountry.getName().compareTo(rightCountry.getName());
+	    return (comparationResult == 0) ? leftCountry.getIdInternal().compareTo(rightCountry.getIdInternal())
+		    : comparationResult;
 	}
     };
 
@@ -52,20 +51,21 @@ public class Country extends Country_Base {
 	    if (!country.getName().equalsIgnoreCase("PORTUGAL")) {
 		result.add(country);
 	    } else {
-		if (country.getNationality().equals("PORTUGUESA NATURAL DO CONTINENTE")) {
+		if (country.getNationality().equals("PORTUGUESA")) {
 		    result.add(country);
 		}
 	    }
 	}
-	
+
 	return result;
 
     }
-    
+
     public String getFilteredNationality() {
-        final String nationality = getNationality();
-        final String nationalitySpecialCase = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString("label.person.portugueseNationality").toUpperCase();
+	final String nationality = getNationality();
+	final String nationalitySpecialCase = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale())
+		.getString("label.person.portugueseNationality").toUpperCase();
 	return nationality.trim().contains(nationalitySpecialCase) ? nationalitySpecialCase : nationality;
     }
-    
+
 }

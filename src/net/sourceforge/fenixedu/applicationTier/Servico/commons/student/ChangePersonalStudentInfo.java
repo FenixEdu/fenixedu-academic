@@ -22,34 +22,33 @@ import net.sourceforge.fenixedu.domain.Person;
 
 public class ChangePersonalStudentInfo extends Service {
 
-    public InfoPerson run(InfoPersonEditor newInfoPerson) throws FenixServiceException  {
-        
-        final Person person = (Person) rootDomainObject.readPartyByOID(newInfoPerson.getIdInternal());
-        if (person == null) {
-            throw new ExcepcaoInexistente("error.changePersonalStudentInfo.noPerson");
-        }
+    public InfoPerson run(InfoPersonEditor newInfoPerson) throws FenixServiceException {
 
-        // Get new Country
-        Country country = null;
-        if ((newInfoPerson.getInfoPais() != null)
-            && (newInfoPerson.getInfoPais().getNationality().length() != 0)) {
-            if ((person.getCountry() == null)
-                    || (!newInfoPerson.getInfoPais().getNationality().equals(
-                            person.getCountry().getNationality()))) {
-                country = Country.readCountryByNationality(newInfoPerson.getInfoPais().getNationality());
-            }else{
-                country = person.getCountry();
-            }
-        }
-        else {
-            //If the person country is undefined it is set to default "PORTUGUESA NATURAL DO CONTINENTE" 
-            //In a not distance future this will not be needed since the coutry can never be null
-            country = Country.readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
-        }
+	final Person person = (Person) rootDomainObject.readPartyByOID(newInfoPerson.getIdInternal());
+	if (person == null) {
+	    throw new ExcepcaoInexistente("error.changePersonalStudentInfo.noPerson");
+	}
 
-        // Change personal Information
-        person.edit(newInfoPerson, country);
+	// Get new Country
+	Country country = null;
+	if ((newInfoPerson.getInfoPais() != null) && (newInfoPerson.getInfoPais().getNationality().length() != 0)) {
+	    if ((person.getCountry() == null)
+		    || (!newInfoPerson.getInfoPais().getNationality().equals(person.getCountry().getNationality()))) {
+		country = Country.readCountryByNationality(newInfoPerson.getInfoPais().getNationality());
+	    } else {
+		country = person.getCountry();
+	    }
+	} else {
+	    // If the person country is undefined it is set to default
+	    // "PORTUGUESA NATURAL DO CONTINENTE"
+	    // In a not distance future this will not be needed since the coutry
+	    // can never be null
+	    country = Country.readCountryByNationality("PORTUGUESA");
+	}
 
-        return InfoPerson.newInfoFromDomain(person);
+	// Change personal Information
+	person.edit(newInfoPerson, country);
+
+	return InfoPerson.newInfoFromDomain(person);
     }
 }
