@@ -128,7 +128,7 @@ public class ProtocolSearch implements Serializable {
 	    if (partner.getCountry() == null) {
 		return false;
 	    }
-	    if (!partner.getCountry().getName().equalsIgnoreCase("PORTUGAL")) {
+	    if (!partner.getCountry().getName().equalsIgnoreCase(Country.PORTUGAL)) {
 		return true;
 	    }
 	}
