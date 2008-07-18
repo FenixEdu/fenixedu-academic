@@ -50,3 +50,4 @@ execute "Create SupportRequest table" createTableSupportRequest.sql
 execute "Creating public section for Alumni Registration" intercepted.sql
 execute "Remove import Data Functionality from residence management" removeImportDataFunctionality.sql
 execute "Add new columns to IndividualCandidacy table" alterTableIndividualCandidacy.sql
+execute "Adding residence amount to Sibs reports" addResidenceAmountToReport.sql

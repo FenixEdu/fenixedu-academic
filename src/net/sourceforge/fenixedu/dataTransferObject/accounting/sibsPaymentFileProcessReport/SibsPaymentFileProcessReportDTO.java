@@ -38,6 +38,8 @@ public class SibsPaymentFileProcessReportDTO {
 
     private Money transactionsTotalAmount;
 
+    private Money residenceAmount;
+
     private Money totalCost;
 
     public SibsPaymentFileProcessReportDTO() {
@@ -56,6 +58,7 @@ public class SibsPaymentFileProcessReportDTO {
 	this.phdGratuityTotalAmout = Money.ZERO;
 	this.transactionsTotalAmount = Money.ZERO;
 	this.totalCost = Money.ZERO;
+	this.residenceAmount  = Money.ZERO;
     }
 
     public void addAdministrativeOfficeTaxAmount(final Money amount) {
@@ -126,8 +129,7 @@ public class SibsPaymentFileProcessReportDTO {
     }
 
     public void addIntegratedBolonhaMasterDegreeGratuityAmount(final Money amount) {
-	this.integratedBolonhaMasterDegreeGratuityTotalAmount = this.integratedBolonhaMasterDegreeGratuityTotalAmount
-		.add(amount);
+	this.integratedBolonhaMasterDegreeGratuityTotalAmount = this.integratedBolonhaMasterDegreeGratuityTotalAmount.add(amount);
     }
 
     public Money getIntegratedBolonhaMasterDegreeGratuityTotalAmount() {
@@ -135,8 +137,7 @@ public class SibsPaymentFileProcessReportDTO {
     }
 
     public void addIntegratedMasterDegreeGratuityAmount(final Money amount) {
-	this.integratedMasterDegreeGratuityTotalAmount = this.integratedMasterDegreeGratuityTotalAmount
-		.add(amount);
+	this.integratedMasterDegreeGratuityTotalAmount = this.integratedMasterDegreeGratuityTotalAmount.add(amount);
     }
 
     public Money getIntegratedMasterDegreeGratuityTotalAmount() {
@@ -152,8 +153,7 @@ public class SibsPaymentFileProcessReportDTO {
     }
 
     public void addBolonhaMasterDegreGratuityTotalAmount(final Money amount) {
-	this.bolonhaMasterDegreeGratuityTotalAmount = this.bolonhaMasterDegreeGratuityTotalAmount
-		.add(amount);
+	this.bolonhaMasterDegreeGratuityTotalAmount = this.bolonhaMasterDegreeGratuityTotalAmount.add(amount);
     }
 
     public Money getBolonhaMasterDegreeGratuityTotalAmount() {
@@ -200,4 +200,11 @@ public class SibsPaymentFileProcessReportDTO {
 	this.whenProcessedBySibs = whenProcessedBySibs;
     }
 
+    public Money getResidenceAmount() {
+        return residenceAmount;
+    }
+
+    public void addResidenceAmount(Money money) {
+	this.residenceAmount.add(money);
+    }
 }

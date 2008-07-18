@@ -2,13 +2,16 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
@@ -115,5 +118,12 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 		entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
 
 	return getNonProcessedPaymentCodes();
+    }
+    
+    @Override
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode,
+	    Money amountToPay, SibsTransactionDetailDTO transactionDetail) {
+	return internalProcess(responsibleUser, Collections.singletonList(new EntryDTO(
+		EntryType.RESIDENCE_FEE, this, amountToPay)), transactionDetail);
     }
 }

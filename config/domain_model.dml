@@ -1702,6 +1702,7 @@ class DomainObject {
 		Money specializationGratuityTotalAmount;
 		Money totalCost;
 		Money transactionsTotalAmount;
+		Money residencePayment;
 		DateTime whenProcessed;
 		YearMonthDay whenProcessedBySibs;
 	}
