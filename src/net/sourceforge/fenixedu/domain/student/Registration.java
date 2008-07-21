@@ -2118,6 +2118,11 @@ public class Registration extends Registration_Base {
 	return isActive() || isConcluded();
     }
 
+    public ExecutionYear getConclusionYear() {
+	final YearMonthDay conclusionDate = isBolonha() ? getConclusionDate(getLastConcludedCycleType()) : getConclusionDate();
+	return ExecutionYear.readByDateTime(conclusionDate.toDateTimeAtMidnight());
+    }
+
     @Override
     public YearMonthDay getConclusionDate() {
 	if (isBolonha()) {
@@ -3119,7 +3124,7 @@ public class Registration extends Registration_Base {
 
     public boolean hasStartedBetween(final ExecutionYear firstExecutionYear, final ExecutionYear finalExecutionYear) {
 	return getStartExecutionYear().isAfterOrEquals(firstExecutionYear)
-	    && getStartExecutionYear().isBeforeOrEquals((finalExecutionYear));
+		&& getStartExecutionYear().isBeforeOrEquals((finalExecutionYear));
     }
 
 }
