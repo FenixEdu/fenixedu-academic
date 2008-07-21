@@ -26,14 +26,20 @@ table.tdwith90px td { width: 90px; }
 	</tr>
 </table>
 
+<html:messages id="message" message="true" bundle="INQUIRIES_RESOURCES">
+	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
+</html:messages>
+
 <h3 class="separator2 mtop2"><span style="font-weight: normal ;"><bean:message key="title.inquiries.separator.courses_1" bundle="INQUIRIES_RESOURCES"/></span></h3>
 
 <div class="forminline dinline">
 	<fr:form action="/studentInquiry.do?method=showInquiries2ndPage">
+		<p><bean:message key="title.studentInquiries.firstPageFirstBlock" bundle="INQUIRIES_RESOURCES"/></p>
 		<fr:edit name="studentInquiry" property="firstPageFirstBlock" />
 		<fr:edit name="studentInquiry" property="firstPageSecondBlock" />
 		<fr:edit name="studentInquiry" property="firstPageThirdBlock" />
 		<fr:edit name="studentInquiry" property="firstPageFourthBlock" />
+		<p><bean:message key="title.studentInquiries.firstPageFifthBlock" bundle="INQUIRIES_RESOURCES"/></p>
 		<fr:edit name="studentInquiry" property="firstPageFifthBlock" />
 		
 		<fr:edit name="studentInquiry" id="studentInquiry" visible="false"/>
