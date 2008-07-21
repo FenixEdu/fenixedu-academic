@@ -25,6 +25,10 @@ public class SubmitStudentSpentTimeInPeriod extends Service {
 	    throw new DomainException("error.weeklyHoursSpentPercentage.is.not.100.percent");
 	}
 
+	if (!checkTotalStudyDaysSpentInExamsSeason(courses)) {
+	    throw new DomainException("error.studyDaysSpentInExamsSeason.exceedsMaxDaysLimit");
+	}
+
 	InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod = student.getInquiriesStudentExecutionPeriod(executionSemester);
 	if (inquiriesStudentExecutionPeriod == null) {
 	    inquiriesStudentExecutionPeriod = new InquiriesStudentExecutionPeriod(student, executionSemester);
@@ -47,5 +51,14 @@ public class SubmitStudentSpentTimeInPeriod extends Service {
 	}
 
 	return totalPercentage == 100;
+    }
+    
+    private boolean checkTotalStudyDaysSpentInExamsSeason(List<CurricularCourseInquiriesRegistryDTO> courses) {
+	double totalDays = 0;
+	for (CurricularCourseInquiriesRegistryDTO curricularCourseInquiriesRegistryDTO : courses) {
+	    totalDays += curricularCourseInquiriesRegistryDTO.getStudyDaysSpentInExamsSeason();
+	}
+
+	return totalDays <= 42;
     }
 }

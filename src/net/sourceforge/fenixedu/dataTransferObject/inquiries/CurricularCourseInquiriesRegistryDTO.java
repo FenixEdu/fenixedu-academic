@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainReference;
@@ -21,7 +22,7 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 
     private Integer weeklyHoursSpentPercentage;
 
-    private Integer studyDaysSpentInExamsSeason;
+    private Double studyDaysSpentInExamsSeason;
 
     public CurricularCourseInquiriesRegistryDTO(final CurricularCourse curricularCourse, final InquiriesRegistry inquiriesRegistry) {
 	super();
@@ -55,12 +56,32 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 	this.weeklyHoursSpentPercentage = weeklyHoursSpentPercentage;
     }
 
-    public Integer getStudyDaysSpentInExamsSeason() {
+    public Double getStudyDaysSpentInExamsSeason() {
 	return studyDaysSpentInExamsSeason;
     }
 
-    public void setStudyDaysSpentInExamsSeason(Integer studyDaysSpentInExamsSeason) {
+    public double getWeeklyContactLoad() {
+	return getCurricularCourse().getCompetenceCourse().getContactLoad() / 14;
+    }
+    
+    public void setStudyDaysSpentInExamsSeason(Double studyDaysSpentInExamsSeason) {
 	this.studyDaysSpentInExamsSeason = studyDaysSpentInExamsSeason;
     }
+
+    public Double getCalculatedECTSCredits() {
+	Integer weeklyHoursSpentInClassesSeason = getInquiriesRegistry().getInquiriesStudentExecutionPeriod()
+		.getWeeklyHoursSpentInClassesSeason();
+
+	DecimalFormat format = new DecimalFormat("#0.00");
+
+	// ((%*NHTA + NHC)*14+ NDE*8) / 28
+	final double result = ((getWeeklyHoursSpentPercentage() * weeklyHoursSpentInClassesSeason + getCurricularCourse()
+		.getCompetenceCourse().getContactLoad()) * 14 + getStudyDaysSpentInExamsSeason() * 8)
+		/ (28 * 100);
+
+	return Double.valueOf(format.format(result));
+    }
+    
+    
 
 }

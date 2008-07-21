@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiriesQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherInquiryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -117,10 +118,12 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 
 	inquiriesRegistry.setState(InquiriesRegistryState.ANSWERED);
 
-	Collection<TeacherInquiryDTO> teachersInquiries = inquiryDTO.getTeachersInquiries();
-	for (TeacherInquiryDTO teacherInquiryDTO : teachersInquiries) {
-	    if(teacherInquiryDTO.isFilled()){
-		inquiriesCourse.addAssociatedInquiriesTeachers(InquiriesTeacher.makeNew(teacherInquiryDTO));
+	Map<TeacherDTO, Collection<? extends TeacherInquiryDTO>> inquiriesByTeacher = inquiryDTO.getTeachersInquiries();
+	for (Collection<? extends TeacherInquiryDTO> teachersInquiries : inquiriesByTeacher.values()) {
+	    for (TeacherInquiryDTO teacherInquiryDTO : teachersInquiries) {
+		if (teacherInquiryDTO.isFilled()) {
+		    inquiriesCourse.addAssociatedInquiriesTeachers(InquiriesTeacher.makeNew(teacherInquiryDTO));
+		}
 	    }
 	}
 

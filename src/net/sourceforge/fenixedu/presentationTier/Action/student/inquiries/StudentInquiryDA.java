@@ -31,6 +31,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
@@ -62,11 +64,12 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	for (final Entry<CurricularCourse, InquiriesRegistry> entry : coursesToAnswer.entrySet()) {
 	    courses.add(new CurricularCourseInquiriesRegistryDTO(entry.getKey(), entry.getValue()));
 	}
-	
-	if(courses.isEmpty()){
+
+	if (courses.isEmpty()) {
 	    return actionMapping.findForward("inquiriesClosed");
 	}
 
+	request.setAttribute("executionSemester", executionSemester);
 	request.setAttribute("courses", courses);
 	request.setAttribute("student", student);
 	return actionMapping.findForward("chooseCourse");
@@ -111,32 +114,65 @@ public class StudentInquiryDA extends FenixDispatchAction {
 
     public ActionForward showInquiries2ndPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	request.setAttribute("studentInquiry", getRenderedObject("studentInquiry"));
-	return actionMapping.findForward("showInquiry2ndPage");
+	final StudentInquiryDTO studentInquiry = (StudentInquiryDTO) getRenderedObject("studentInquiry");
+	request.setAttribute("studentInquiry", studentInquiry);
+	RenderUtils.invalidateViewState();
+
+	if (studentInquiry.getFirstPageThirdBlock().validate() && studentInquiry.getFirstPageFourthBlock().validate()
+		&& studentInquiry.getFirstPageFifthBlock().validate()) {
+	    return actionMapping.findForward("showInquiry2ndPage");
+	}
+
+	addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+	return actionMapping.findForward("showInquiry1stPage");
     }
 
     public ActionForward showTeachersToAnswer(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	request.setAttribute("studentInquiry", getRenderedObject("studentInquiry"));
-	return actionMapping.findForward("chooseTeacher");
+	final StudentInquiryDTO studentInquiry = (StudentInquiryDTO) getRenderedObject("studentInquiry");
+	request.setAttribute("studentInquiry", studentInquiry);
+	RenderUtils.invalidateViewState();
+
+	if (studentInquiry.getSecondPageFirstBlock().validate() && studentInquiry.getSecondPageSecondBlock().validate()
+		&& studentInquiry.getSecondPageThirdBlock().validate()) {
+	    return actionMapping.findForward("chooseTeacher");
+	}
+
+	addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+	return actionMapping.findForward("showInquiry2ndPage");
     }
 
     public ActionForward showTeachersInquiries1stPage(ActionMapping actionMapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-	final TeacherInquiryDTO teacherInquiry = (TeacherInquiryDTO) getRenderedObject("teacherInquiry");
-	teacherInquiry.setFilled(true);
-	request.setAttribute("teacherInquiry", teacherInquiry);
+	request.setAttribute("teacherInquiry", getRenderedObject("teacherInquiry"));
 	request.setAttribute("studentInquiry", getRenderedObject("studentInquiry"));
+	return actionMapping.findForward("showTeacherInquiry1stPage");
+    }
+
+    public ActionForward fillTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final TeacherInquiryDTO teacherInquiry = (TeacherInquiryDTO) getRenderedObject("teacherInquiry");
+	request.setAttribute("studentInquiry", getRenderedObject("studentInquiry"));
+	RenderUtils.invalidateViewState();
+
+	if (teacherInquiry.getThirdPageFirstBlock().validate()) {
+	    teacherInquiry.setFilled(true);
+	    return actionMapping.findForward("chooseTeacher");
+	}
+
+	request.setAttribute("teacherInquiry", teacherInquiry);
+	addActionMessage(request, "error.inquiries.fillAllRequiredFields");
 	return actionMapping.findForward("showTeacherInquiry1stPage");
     }
 
     public ActionForward showPreview(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	
+
 	return confirm(actionMapping, actionForm, request, response);
-	
-//	request.setAttribute("studentInquiry", getRenderedObject("studentInquiry"));
-//	return actionMapping.findForward("previewAndConfirm");
+
+	// request.setAttribute("studentInquiry",
+	// getRenderedObject("studentInquiry"));
+	// return actionMapping.findForward("previewAndConfirm");
     }
 
     public ActionForward confirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

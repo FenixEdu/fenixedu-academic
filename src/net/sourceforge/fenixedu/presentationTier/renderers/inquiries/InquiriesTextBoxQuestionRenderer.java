@@ -7,6 +7,8 @@ import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlSimpleValueComponent;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTextArea;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTextInput;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
@@ -23,7 +25,11 @@ public class InquiriesTextBoxQuestionRenderer extends InputRenderer {
 
 	    @Override
 	    public HtmlComponent createComponent(Object object, Class type) {
-		final HtmlTextInput htmlTextInput = new HtmlTextInput();
+
+		Boolean textArea = (Boolean) getContext().getProperties().get("textArea");
+
+		final HtmlSimpleValueComponent htmlTextInput = textArea != null && textArea ? new HtmlTextArea()
+			: new HtmlTextInput();
 		htmlTextInput.setValue(object != null ? object.toString() : StringUtils.EMPTY);
 		return htmlTextInput;
 	    }

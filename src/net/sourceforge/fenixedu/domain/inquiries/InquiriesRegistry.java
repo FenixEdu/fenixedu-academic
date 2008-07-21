@@ -70,4 +70,8 @@ public class InquiriesRegistry extends InquiriesRegistry_Base {
 	return null;
     }
 
+    public InquiriesStudentExecutionPeriod getInquiriesStudentExecutionPeriod() {
+	return getStudent().getStudent().getInquiriesStudentExecutionPeriod(getExecutionPeriod());
+    }
+
 }

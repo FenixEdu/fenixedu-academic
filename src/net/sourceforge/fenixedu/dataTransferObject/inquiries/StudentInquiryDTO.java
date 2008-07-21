@@ -9,14 +9,19 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
+import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -27,7 +32,8 @@ public class StudentInquiryDTO implements Serializable {
 
     private DomainReference<InquiriesRegistry> inquiriesRegistry;
 
-    private Collection<TeacherInquiryDTO> teachersInquiries = new ArrayList<TeacherInquiryDTO>();
+    Map<TeacherDTO, Collection<? extends TeacherInquiryDTO>> teachersInquiries = new TreeMap<TeacherDTO, Collection<? extends TeacherInquiryDTO>>(
+	    new BeanComparator("name"));
 
     private InquiriesBlock firstPageFirstBlock;
 
@@ -39,7 +45,11 @@ public class StudentInquiryDTO implements Serializable {
 
     private InquiriesBlock firstPageFifthBlock;
 
-    private InquiriesBlock secondBlock;
+    private InquiriesBlock secondPageFirstBlock;
+
+    private InquiriesBlock secondPageSecondBlock;
+
+    private InquiriesBlock secondPageThirdBlock;
 
     private StudentInquiryDTO(InquiriesRegistry inquiriesRegistry) {
 
@@ -48,22 +58,58 @@ public class StudentInquiryDTO implements Serializable {
 	buildQuestionBlocks();
 
 	final ExecutionCourse executionCourse = inquiriesRegistry.getExecutionCourse();
-
 	final Set<ShiftType> shiftTypes = executionCourse.getShiftTypes();
 
-	for (final Professorship professorship : executionCourse.getProfessorships()) {
+	fillTeachersInquiriesWithAffiliatedTeachers(executionCourse, shiftTypes);
+	fillTeachersInquiriesWithNonAffiliatedTeachers(executionCourse, shiftTypes);
+
+    }
+
+    private void fillTeachersInquiriesWithNonAffiliatedTeachers(final ExecutionCourse executionCourse,
+	    final Set<ShiftType> shiftTypes) {
+	for (final NonAffiliatedTeacher nonAffiliatedTeacher : executionCourse.getNonAffiliatedTeachers()) {
+	    final NonAffiliatedTeacherDTO nonAffiliatedTeacherDTO = new NonAffiliatedTeacherDTO(nonAffiliatedTeacher);
+	    Collection<TeacherInquiryDTO> nonAffiliatedTeachers = new ArrayList<TeacherInquiryDTO>();
 	    for (final ShiftType shiftType : shiftTypes) {
-		this.teachersInquiries
-			.add(new AffiliatedTeacherInquiryDTO(professorship.getTeacher(), executionCourse, shiftType));
+		nonAffiliatedTeachers.add(new TeacherInquiryDTO(nonAffiliatedTeacherDTO, executionCourse, shiftType));
 	    }
+	    teachersInquiries.put(nonAffiliatedTeacherDTO, nonAffiliatedTeachers);
+	}
+    }
+
+    private void fillTeachersInquiriesWithAffiliatedTeachers(final ExecutionCourse executionCourse,
+	    final Set<ShiftType> shiftTypes) {
+	Map<Teacher, Map<ShiftType, TeacherInquiryDTO>> teachersShifts = new HashMap<Teacher, Map<ShiftType, TeacherInquiryDTO>>();
+	for (final Professorship professorship : executionCourse.getProfessorships()) {
+
+	    final Teacher teacher = professorship.getTeacher();
+	    if (!teachersShifts.containsKey(teacher)) {
+		teachersShifts.put(teacher, new HashMap<ShiftType, TeacherInquiryDTO>());
+	    }
+
+	    final Map<ShiftType, TeacherInquiryDTO> teacherShift = teachersShifts.get(teacher);
+	    final TeacherDTO teacherDTO = new AffiliatedTeacherDTO(teacher);
+
+	    for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
+		for (ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
+		    if (!teacherShift.containsKey(shiftType)) {
+			teacherShift.put(shiftType, new TeacherInquiryDTO(teacherDTO, executionCourse, shiftType));
+		    }
+		}
+	    }
+
+	    if (teacherShift.isEmpty()) {
+		for (final ShiftType shiftType : shiftTypes) {
+		    teacherShift.put(shiftType, new TeacherInquiryDTO(teacherDTO, executionCourse, shiftType));
+		}
+	    }
+
 	}
 
-	for (final ShiftType shiftType : shiftTypes) {
-	    for (final NonAffiliatedTeacher nonAffiliatedTeacher : executionCourse.getNonAffiliatedTeachers()) {
-		this.teachersInquiries.add(new NonAffiliatedTeacherInquiryDTO(nonAffiliatedTeacher, executionCourse, shiftType));
-	    }
+	for (Entry<Teacher, Map<ShiftType, TeacherInquiryDTO>> entry : teachersShifts.entrySet()) {
+	    teachersInquiries.put(new AffiliatedTeacherDTO(entry.getKey()), new ArrayList<TeacherInquiryDTO>(entry.getValue()
+		    .values()));
 	}
-
     }
 
     public static StudentInquiryDTO makeNew(InquiriesRegistry inquiriesRegistry) {
@@ -74,11 +120,7 @@ public class StudentInquiryDTO implements Serializable {
 	return firstPageFirstBlock;
     }
 
-    public InquiriesBlock getSecondBlock() {
-	return secondBlock;
-    }
-
-    public Collection<TeacherInquiryDTO> getTeachersInquiries() {
+    public Map<TeacherDTO, Collection<? extends TeacherInquiryDTO>> getTeachersInquiries() {
 	return teachersInquiries;
     }
 
@@ -102,6 +144,18 @@ public class StudentInquiryDTO implements Serializable {
 	return firstPageFifthBlock;
     }
 
+    public InquiriesBlock getSecondPageFirstBlock() {
+	return secondPageFirstBlock;
+    }
+
+    public InquiriesBlock getSecondPageSecondBlock() {
+	return secondPageSecondBlock;
+    }
+
+    public InquiriesBlock getSecondPageThirdBlock() {
+	return secondPageThirdBlock;
+    }
+
     public InquiriesRegistry getInquiriesRegistry() {
 	return inquiriesRegistry.getObject();
     }
@@ -114,7 +168,9 @@ public class StudentInquiryDTO implements Serializable {
 	retrieveAnswersFromBlock(answers, firstPageThirdBlock, fullLabels);
 	retrieveAnswersFromBlock(answers, firstPageFourthBlock, fullLabels);
 	retrieveAnswersFromBlock(answers, firstPageFifthBlock, fullLabels);
-	retrieveAnswersFromBlock(answers, secondBlock, fullLabels);
+	retrieveAnswersFromBlock(answers, secondPageFirstBlock, fullLabels);
+	retrieveAnswersFromBlock(answers, secondPageSecondBlock, fullLabels);
+	retrieveAnswersFromBlock(answers, secondPageThirdBlock, fullLabels);
 
 	return answers;
     }
@@ -132,7 +188,7 @@ public class StudentInquiryDTO implements Serializable {
     }
 
     private void buildQuestionBlocks() {
-	this.firstPageFirstBlock = new InquiriesBlock("title.studentInquiries.firstPageFirstBlock",
+	this.firstPageFirstBlock = new InquiriesBlock(StringUtils.EMPTY, false,
 		"header.studentInquiries.firstPageFirstBlock.nonEvaluated",
 		"header.studentInquiries.firstPageFirstBlock.flunked", "header.studentInquiries.firstPageFirstBlock.10_12",
 		"header.studentInquiries.firstPageFirstBlock.13_14", "header.studentInquiries.firstPageFirstBlock.15_16",
@@ -141,7 +197,7 @@ public class StudentInquiryDTO implements Serializable {
 		"label.studentInquiries.firstPageFirstBlock.classificationInThisCU", false, "nonEvaluated", "flunked", "10_12",
 		"13_14", "15_16", "17_18", "19_20"));
 
-	this.firstPageSecondBlock = new InquiriesBlock("title.studentInquiries.firstPageSecondBlock");
+	this.firstPageSecondBlock = new InquiriesBlock("title.studentInquiries.firstPageSecondBlock", false);
 	this.firstPageSecondBlock.addQuestion(new CheckBoxQuestion(
 		"label.studentInquiries.firstPageSecondBlock.highWorkLoadReasonComplexProjects"));
 	this.firstPageSecondBlock.addQuestion(new CheckBoxQuestion(
@@ -155,9 +211,9 @@ public class StudentInquiryDTO implements Serializable {
 	this.firstPageSecondBlock.addQuestion(new CheckBoxQuestion(
 		"label.studentInquiries.firstPageSecondBlock.highWorkLoadReasonLackOfAttendanceOfLessons"));
 	this.firstPageSecondBlock.addQuestion(new TextBoxQuestion(
-		"label.studentInquiries.firstPageSecondBlock.highWorkLoadReasonOtherReasons"));
+		"label.studentInquiries.firstPageSecondBlock.highWorkLoadReasonOtherReasons", true));
 
-	this.firstPageThirdBlock = new InquiriesBlock(StringUtils.EMPTY,
+	this.firstPageThirdBlock = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.studentInquiries.firstPageThirdBlock.totallyDisagree", StringUtils.EMPTY,
 		"header.studentInquiries.firstPageThirdBlock.disagree", StringUtils.EMPTY,
 		"header.studentInquiries.firstPageThirdBlock.neitherAgreeOrDisagree", StringUtils.EMPTY,
@@ -166,13 +222,14 @@ public class StudentInquiryDTO implements Serializable {
 	this.firstPageThirdBlock.addQuestion(new RadioGroupQuestion(
 		"label.studentInquiries.firstPageThirdBlock.previousKnowledgeEnoughToCUAttendance", 1, 9, true));
 
-	this.firstPageFourthBlock = new InquiriesBlock(StringUtils.EMPTY, "header.studentInquiries.firstPageFourthBlock.passive",
+	this.firstPageFourthBlock = new InquiriesBlock(StringUtils.EMPTY, true,
+		"header.studentInquiries.firstPageFourthBlock.passive",
 		"header.studentInquiries.firstPageFourthBlock.activeWhenRequired",
 		"header.studentInquiries.firstPageFourthBlock.activeByOwnWill");
 	this.firstPageFourthBlock.addQuestion(new RadioGroupQuestion(
 		"label.studentInquiries.firstPageFourthBlock.activityParticipation", 1, 3, true));
 
-	this.firstPageFifthBlock = new InquiriesBlock("title.studentInquiries.firstPageFifthBlock",
+	this.firstPageFifthBlock = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.studentInquiries.firstPageFifthBlock.unknown",
 		"header.studentInquiries.firstPageFifthBlock.didNotContribute",
 		"header.studentInquiries.firstPageFifthBlock.didContribute",
@@ -186,38 +243,40 @@ public class StudentInquiryDTO implements Serializable {
 	this.firstPageFifthBlock.addQuestion(new RadioGroupQuestion(
 		"label.studentInquiries.firstPageFifthBlock.cooperationAndComunicationCapacity", 0, 3, true));
 
-	this.secondBlock = new InquiriesBlock("title.studentInquiries.secondPageFirstBlock",
+	this.secondPageFirstBlock = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.studentInquiries.secondPageFirstBlock.totallyDisagree", StringUtils.EMPTY,
 		"header.studentInquiries.secondPageFirstBlock.disagree", StringUtils.EMPTY,
 		"header.studentInquiries.secondPageFirstBlock.neitherAgreeOrDisagree", StringUtils.EMPTY,
 		"header.studentInquiries.secondPageFirstBlock.agree", StringUtils.EMPTY,
 		"header.studentInquiries.secondPageFirstBlock.totallyAgree");
-	this.secondBlock.addQuestion(new RadioGroupQuestion(
+	this.secondPageFirstBlock.addQuestion(new RadioGroupQuestion(
 		"label.studentInquiries.secondPageFirstBlock.predictedProgramTeached", 1, 9, true));
-	this.secondBlock.addQuestion(new RadioGroupQuestion("label.studentInquiries.secondPageFirstBlock.wellStructuredOfCU", 1,
-		9, true));
-	this.secondBlock.addQuestion(new RadioGroupQuestion("label.studentInquiries.secondPageFirstBlock.goodGuidanceMaterial",
-		1, 9, true));
-	this.secondBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.secondPageFirstBlock.recomendendBibliographyImportance", 1, 9, true));
+	this.secondPageFirstBlock.addQuestion(new RadioGroupQuestion(
+		"label.studentInquiries.secondPageFirstBlock.wellStructuredOfCU", 1, 9, true)
+		.setToolTip("tooltip.studentInquiries.secondPageFirstBlock.wellStructuredOfCU"));
+	this.secondPageFirstBlock.addQuestion(new RadioGroupQuestion(
+		"label.studentInquiries.secondPageFirstBlock.goodGuidanceMaterial", 1, 9, true));
+	this.secondPageFirstBlock.addQuestion(new RadioGroupQuestion(
+		"label.studentInquiries.secondPageFirstBlock.recomendendBibliographyImportance", 1, 9, true)
+		.setToolTip("tooltip.studentInquiries.secondPageFirstBlock.recomendendBibliographyImportance"));
 
-	QuestionHeader secondPageSecondBlockHeader = new QuestionHeader("title.studentInquiries.secondPageSecondBlock",
+	this.secondPageSecondBlock = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.studentInquiries.secondPageFirstBlock.totallyDisagree", StringUtils.EMPTY,
 		"header.studentInquiries.secondPageFirstBlock.disagree", StringUtils.EMPTY,
 		"header.studentInquiries.secondPageFirstBlock.neitherAgreeOrDisagree", StringUtils.EMPTY,
 		"header.studentInquiries.secondPageFirstBlock.agree", StringUtils.EMPTY,
 		"header.studentInquiries.secondPageFirstBlock.totallyAgree");
-	this.secondBlock.addQuestion(new RadioGroupQuestion("label.studentInquiries.secondPageSecondBlock.fairEvaluationMethods",
-		1, 9, true, secondPageSecondBlockHeader));
+	this.secondPageSecondBlock.addQuestion(new RadioGroupQuestion(
+		"label.studentInquiries.secondPageSecondBlock.fairEvaluationMethods", 1, 9, true));
 
-	QuestionHeader secondPageThirdBlockHeader = new QuestionHeader(StringUtils.EMPTY,
+	this.secondPageThirdBlock = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.studentInquiries.secondPageThirdBlock.veryBad", StringUtils.EMPTY,
 		"header.studentInquiries.secondPageThirdBlock.bad", StringUtils.EMPTY,
 		"header.studentInquiries.secondPageThirdBlock.neitherGoodOrBad", StringUtils.EMPTY,
 		"header.studentInquiries.secondPageThirdBlock.good", StringUtils.EMPTY,
 		"header.studentInquiries.secondPageThirdBlock.veryGood");
-	this.secondBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.secondPageThirdBlock.globalClassificationOfCU", 1, 9, true, secondPageThirdBlockHeader));
+	this.secondPageThirdBlock.addQuestion(new RadioGroupQuestion(
+		"label.studentInquiries.secondPageThirdBlock.globalClassificationOfCU", 1, 9, true));
     }
 
 }

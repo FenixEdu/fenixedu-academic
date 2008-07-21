@@ -1140,7 +1140,8 @@ public class Student extends Student_Base {
 		final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
 
 		for (final InquiriesRegistry inquiriesRegistry : registration.getAssociatedInquiriesRegistries()) {
-		    if (inquiriesRegistry.getState() != InquiriesRegistryState.NOT_ANSWERED) {
+		    if (inquiriesRegistry.getState() != InquiriesRegistryState.NOT_ANSWERED
+			    && inquiriesRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
 			coursesToAnswer.put(inquiriesRegistry.getExecutionCourse().getCurricularCourseFor(degreeCurricularPlan),
 				inquiriesRegistry);
 		    }

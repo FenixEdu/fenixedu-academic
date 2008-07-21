@@ -6,10 +6,10 @@ package net.sourceforge.fenixedu.domain.inquiries;
 
 import java.util.Map;
 
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.AffiliatedTeacherInquiryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.AffiliatedTeacherDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiriesQuestion;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.NonAffiliatedTeacherInquiryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.NonAffiliatedTeacherDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherInquiryDTO;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -70,10 +70,10 @@ public class InquiriesTeacher extends InquiriesTeacher_Base {
 
 	setAnswers(inquiryDTO, inquiriesTeacher);
 
-	if (inquiryDTO instanceof AffiliatedTeacherInquiryDTO) {
-	    inquiriesTeacher.setTeacher(((AffiliatedTeacherInquiryDTO) inquiryDTO).getTeacher());
-	} else if (inquiryDTO instanceof NonAffiliatedTeacherInquiryDTO) {
-	    inquiriesTeacher.setNonAffiliatedTeacher(((NonAffiliatedTeacherInquiryDTO) inquiryDTO).getTeacher());
+	if (inquiryDTO.getTeacherDTO() instanceof AffiliatedTeacherDTO) {
+	    inquiriesTeacher.setTeacher((Teacher) inquiryDTO.getTeacherDTO().getTeacher());
+	} else if (inquiryDTO.getTeacherDTO() instanceof NonAffiliatedTeacherDTO) {
+	    inquiriesTeacher.setNonAffiliatedTeacher((NonAffiliatedTeacher) inquiryDTO.getTeacherDTO().getTeacher());
 	}
 
 	return inquiriesTeacher;

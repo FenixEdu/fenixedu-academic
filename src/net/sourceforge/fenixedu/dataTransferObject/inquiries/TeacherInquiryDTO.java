@@ -17,23 +17,30 @@ import org.apache.commons.lang.StringUtils;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public abstract class TeacherInquiryDTO implements Serializable {
+public class TeacherInquiryDTO implements Serializable {
 
     private InquiriesBlock thirdPageFirstBlock;
 
     private InquiriesBlock thirdPageThirdBlock;
 
+    private InquiriesBlock thirdPageFourthBlock;
+
+    private InquiriesBlock thirdPageFifthBlock;
+
     private InquiriesBlock thirdPageSixthBlock;
 
     private DomainReference<ExecutionCourse> executionCourse;
+
+    private TeacherDTO teacherDTO;
 
     private ShiftType shiftType;
 
     private boolean filled = false;
 
-    protected TeacherInquiryDTO(final ExecutionCourse executionCourse, ShiftType shiftType) {
+    protected TeacherInquiryDTO(final TeacherDTO teacherDTO, final ExecutionCourse executionCourse, final ShiftType shiftType) {
 	this.executionCourse = new DomainReference<ExecutionCourse>(executionCourse);
 	this.shiftType = shiftType;
+	this.teacherDTO = teacherDTO;
 	buildQuestionBlocks();
     }
 
@@ -43,6 +50,14 @@ public abstract class TeacherInquiryDTO implements Serializable {
 
     public InquiriesBlock getThirdPageThirdBlock() {
 	return thirdPageThirdBlock;
+    }
+
+    public InquiriesBlock getThirdPageFourthBlock() {
+	return thirdPageFourthBlock;
+    }
+
+    public InquiriesBlock getThirdPageFifthBlock() {
+	return thirdPageFifthBlock;
     }
 
     public InquiriesBlock getThirdPageSixthBlock() {
@@ -65,29 +80,66 @@ public abstract class TeacherInquiryDTO implements Serializable {
 	this.filled = filled;
     }
 
-    public abstract String getTeacherName();
+    public TeacherDTO getTeacherDTO() {
+	return teacherDTO;
+    }
 
     public Map<String, InquiriesQuestion> buildAnswersMap(boolean fullLabels) {
 	final Map<String, InquiriesQuestion> answers = new HashMap<String, InquiriesQuestion>();
 
 	StudentInquiryDTO.retrieveAnswersFromBlock(answers, thirdPageFirstBlock, fullLabels);
 	StudentInquiryDTO.retrieveAnswersFromBlock(answers, thirdPageThirdBlock, fullLabels);
+	StudentInquiryDTO.retrieveAnswersFromBlock(answers, thirdPageFourthBlock, fullLabels);
+	StudentInquiryDTO.retrieveAnswersFromBlock(answers, thirdPageFifthBlock, fullLabels);
 	StudentInquiryDTO.retrieveAnswersFromBlock(answers, thirdPageSixthBlock, fullLabels);
 
 	return answers;
     }
 
     private void buildQuestionBlocks() {
-	this.thirdPageFirstBlock = new InquiriesBlock("title.studentInquiries.thirdPageFirstBlock",
+
+	this.thirdPageFirstBlock = new InquiriesBlock(StringUtils.EMPTY, false,
 		"header.studentInquiries.thirdPageFirstBlock.never", StringUtils.EMPTY,
 		"header.studentInquiries.thirdPageFirstBlock.sometimes", StringUtils.EMPTY,
 		"header.studentInquiries.thirdPageFirstBlock.often", StringUtils.EMPTY,
-		"header.studentInquiries.thirdPageFirstBlock.always");
-	this.thirdPageFirstBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.thirdPageFirstBlock.classesFrequency", 1, 7, true));
+		"header.studentInquiries.thirdPageFirstBlock.always") {
 
-	QuestionHeader thirdPageSecondBlockHeader = new QuestionHeader("title.studentInquiries.thirdPageSecondBlock",
-		StringUtils.EMPTY);
+	    @Override
+	    public boolean validate() {
+		if (!super.validate()) {
+		    return false;
+		}
+
+		if (getQuestion("label.studentInquiries.thirdPageFirstBlock.classesFrequency").getValueAsInteger() < 3) {
+
+		    if (!getQuestion("label.studentInquiries.thirdPageSecondBlock.lowClassesFrequencyReasonSchedule").isEmpty()) {
+			return true;
+		    }
+		    if (!getQuestion("label.studentInquiries.thirdPageSecondBlock.lowClassesFrequencyReasonTeacher").isEmpty()) {
+			return true;
+		    }
+		    if (!getQuestion("label.studentInquiries.thirdPageSecondBlock.lowClassesFrequencyReasonContents").isEmpty()) {
+			return true;
+		    }
+		    if (!getQuestion("label.studentInquiries.thirdPageSecondBlock.lowClassesFrequencyReasonFlunkeeStudent")
+			    .isEmpty()) {
+			return true;
+		    }
+		    if (!getQuestion("label.studentInquiries.thirdPageSecondBlock.lowClassesFrequencyReasonOther").isEmpty()) {
+			return true;
+		    }
+
+		    return false;
+		} else {
+		    return true;
+		}
+	    }
+	};
+
+	this.thirdPageFirstBlock.addQuestion(new RadioGroupQuestion(
+		"label.studentInquiries.thirdPageFirstBlock.classesFrequency", 1, 7, true).setRequired(true));
+
+	QuestionHeader thirdPageSecondBlockHeader = new QuestionHeader("title.studentInquiries.thirdPageSecondBlock");
 	this.thirdPageFirstBlock.addQuestion(new CheckBoxQuestion(
 		"label.studentInquiries.thirdPageSecondBlock.lowClassesFrequencyReasonSchedule", thirdPageSecondBlockHeader));
 	this.thirdPageFirstBlock.addQuestion(new CheckBoxQuestion(
@@ -99,45 +151,46 @@ public abstract class TeacherInquiryDTO implements Serializable {
 	this.thirdPageFirstBlock.addQuestion(new CheckBoxQuestion(
 		"label.studentInquiries.thirdPageSecondBlock.lowClassesFrequencyReasonOther"));
 
-	this.thirdPageThirdBlock = new InquiriesBlock(StringUtils.EMPTY, "header.studentInquiries.thirdPage.totallyDisagree",
-		StringUtils.EMPTY, "header.studentInquiries.thirdPage.disagree", StringUtils.EMPTY,
+	this.thirdPageThirdBlock = new InquiriesBlock(StringUtils.EMPTY, false,
+		"header.studentInquiries.thirdPage.totallyDisagree", StringUtils.EMPTY,
+		"header.studentInquiries.thirdPage.disagree", StringUtils.EMPTY,
 		"header.studentInquiries.thirdPage.neitherAgreeOrDisagree", StringUtils.EMPTY,
 		"header.studentInquiries.thirdPage.agree", StringUtils.EMPTY, "header.studentInquiries.thirdPage.totallyAgree");
 	this.thirdPageThirdBlock.addQuestion(new RadioGroupQuestion(
 		"label.studentInquiries.thirdPageThirdBlock.teacherAcomplishedScheduleAndActivities", 1, 9, true));
 	this.thirdPageThirdBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.thirdPageThirdBlock.suitedClassesRythm", 1, 9, true));
+		"label.studentInquiries.thirdPageThirdBlock.suitedClassesRythm", 1, 9, true)
+		.setToolTip("toolTip.studentInquiries.thirdPageThirdBlock.suitedClassesRythm"));
 
-	QuestionHeader thirdPageFourthBlockHeader = new QuestionHeader("title.studentInquiries.thirdPageFourthBlock",
-		"header.studentInquiries.secondPageFirstBlock.totallyDisagree", StringUtils.EMPTY,
+	this.thirdPageFourthBlock = new InquiriesBlock(StringUtils.EMPTY, false,
+		"header.studentInquiries.thirdPage.totallyDisagree", StringUtils.EMPTY,
 		"header.studentInquiries.thirdPage.disagree", StringUtils.EMPTY,
 		"header.studentInquiries.thirdPage.neitherAgreeOrDisagree", StringUtils.EMPTY,
 		"header.studentInquiries.thirdPage.agree", StringUtils.EMPTY, "header.studentInquiries.thirdPage.totallyAgree");
-	this.thirdPageThirdBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.thirdPageFourthBlock.teacherCommited", 1, 9, true, thirdPageFourthBlockHeader));
-	this.thirdPageThirdBlock.addQuestion(new RadioGroupQuestion(
+	this.thirdPageFourthBlock.addQuestion(new RadioGroupQuestion(
+		"label.studentInquiries.thirdPageFourthBlock.teacherCommited", 1, 9, true)
+		.setToolTip("toolTip.studentInquiries.thirdPageFourthBlock.teacherCommited"));
+	this.thirdPageFourthBlock.addQuestion(new RadioGroupQuestion(
 		"label.studentInquiries.thirdPageFourthBlock.teacherExposedContentsAtractively", 1, 9, true));
-	this.thirdPageThirdBlock.addQuestion(new RadioGroupQuestion(
+	this.thirdPageFourthBlock.addQuestion(new RadioGroupQuestion(
 		"label.studentInquiries.thirdPageFourthBlock.teacherShowedSecurity", 1, 9, true));
-	this.thirdPageThirdBlock.addQuestion(new RadioGroupQuestion(
+	this.thirdPageFourthBlock.addQuestion(new RadioGroupQuestion(
 		"label.studentInquiries.thirdPageFourthBlock.teacherExposedContentsClearly", 1, 9, true));
 
-	QuestionHeader thirdPageFifthBlockHeader = new QuestionHeader("title.studentInquiries.thirdPageFifthBlock",
-		"header.studentInquiries.secondPageFirstBlock.totallyDisagree", StringUtils.EMPTY,
+	this.thirdPageFifthBlock = new InquiriesBlock(StringUtils.EMPTY, false,
+		"header.studentInquiries.thirdPage.totallyDisagree", StringUtils.EMPTY,
 		"header.studentInquiries.thirdPage.disagree", StringUtils.EMPTY,
 		"header.studentInquiries.thirdPage.neitherAgreeOrDisagree", StringUtils.EMPTY,
 		"header.studentInquiries.thirdPage.agree", StringUtils.EMPTY, "header.studentInquiries.thirdPage.totallyAgree");
-	this.thirdPageThirdBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.thirdPageFifthBlock.teacherStimulatedParticipation", 1, 9, true,
-		thirdPageFifthBlockHeader));
-	this.thirdPageThirdBlock.addQuestion(new RadioGroupQuestion(
+	this.thirdPageFifthBlock.addQuestion(new RadioGroupQuestion(
+		"label.studentInquiries.thirdPageFifthBlock.teacherStimulatedParticipation", 1, 9, true));
+	this.thirdPageFifthBlock.addQuestion(new RadioGroupQuestion(
 		"label.studentInquiries.thirdPageFifthBlock.teacherOpenToClearDoubts", 1, 9, true));
 
-	this.thirdPageSixthBlock = new InquiriesBlock("title.studentInquiries.thirdPageFirstBlock",
+	this.thirdPageSixthBlock = new InquiriesBlock(StringUtils.EMPTY, false,
 		"header.studentInquiries.thirdPageSixthBlock.improving", "header.studentInquiries.thirdPageSixthBlock.good",
 		"header.studentInquiries.thirdPageSixthBlock.veryGood");
 	this.thirdPageSixthBlock.addQuestion(new RadioGroupQuestion(
 		"label.studentInquiries.thirdPageSixthBlock.teacherGlobalClassification", 1, 3, true));
     }
-
 }

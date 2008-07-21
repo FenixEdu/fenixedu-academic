@@ -13,6 +13,9 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiriesQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.QuestionHeader;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.RadioGroupQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TextBoxQuestion;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlFormComponent;
@@ -75,7 +78,9 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 		}
 
 		final HtmlTableRow questionRow = mainTable.createRow();
-		questionRow.createCell(CellType.HEADER).setText(getResource(inquiriesQuestion.getLabel()));
+		final HtmlTableCell labelCell = questionRow.createCell(CellType.HEADER);
+		labelCell.setBody(new HtmlText(getResource(inquiriesQuestion.getLabel()) + getQuestionToolTip(inquiriesQuestion)
+			+ getQuestionRequiredIndication(inquiriesQuestion), false));
 
 		PresentationContext newContext = getContext().createSubContext(metaSlot);
 		newContext.setSchema(metaSlot.getSchema() != null ? metaSlot.getSchema().getName() : null);
@@ -83,8 +88,13 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 		HtmlFormComponent formComponent = null;
 
 		if (inquiriesQuestion instanceof TextBoxQuestion) {
+		    final TextBoxQuestion textBoxQuestion = (TextBoxQuestion) inquiriesQuestion;
+
 		    newContext.setLayout("inquiries-answer-textbox");
-		    newContext.setProperties(metaSlot.getProperties());
+
+		    Properties properties = new Properties(metaSlot.getProperties());
+		    properties.put("textArea", textBoxQuestion.isTextArea());
+		    newContext.setProperties(properties);
 
 		    formComponent = (HtmlFormComponent) kit.render(newContext, metaSlot.getObject(), metaSlot.getType());
 
@@ -112,6 +122,8 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 		} else if (inquiriesQuestion instanceof CheckBoxQuestion) {
 
 		    newContext.setLayout("inquiries-answer-checkbox");
+		    // metaSlot.setLayout("inquiries-answer-checkbox");
+
 		    newContext.setProperties(metaSlot.getProperties());
 
 		    formComponent = (HtmlFormComponent) kit.render(newContext, metaSlot.getObject(), metaSlot.getType());
@@ -132,6 +144,15 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 
 	}
 
+	private String getQuestionToolTip(final InquiriesQuestion inquiriesQuestion) {
+	    return (inquiriesQuestion.hasToolTip() ? "<a href=\"#\" class=\"help\"> [?] <span>"
+		    + getResource(inquiriesQuestion.getToolTip()) + "</span></a>" : StringUtils.EMPTY);
+	}
+
+	private String getQuestionRequiredIndication(final InquiriesQuestion inquiriesQuestion) {
+	    return inquiriesQuestion.getRequired() ? "<span class=\"required\"> *</span>" : StringUtils.EMPTY;
+	}
+
 	private String getResource(String label) {
 	    try {
 		return inquiriesResources.getString(label);
@@ -145,7 +166,7 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 
 	    final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
 	    firstHeaderCell.setBody(new HtmlText(getResource(header.getTitle())));
-	    firstHeaderCell.addClass("bold");	    
+	    firstHeaderCell.addClass("bold width300px");
 
 	    if (header.hasScaleHeaders()) {
 		for (String scale : header.getScaleHeaders()) {
@@ -157,7 +178,7 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 		headerRow.createCell(CellType.HEADER).setColspan(block.getHeader().getScaleHeadersCount());
 	    }
 	}
-	
+
 	@Override
 	public String getClasses() {
 	    return "tstyle1 thlight thleft tdcenter tdwith50px";

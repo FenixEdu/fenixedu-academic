@@ -5,6 +5,8 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
@@ -18,6 +20,10 @@ public abstract class InquiriesQuestion implements Serializable {
     private String value;
 
     private QuestionHeader header;
+
+    private String toolTip;
+
+    private Boolean required;
 
     public InquiriesQuestion(final String label) {
 	super();
@@ -63,6 +69,32 @@ public abstract class InquiriesQuestion implements Serializable {
 
     public boolean hasHeader() {
 	return this.header != null;
+    }
+
+    public boolean isEmpty() {
+	return StringUtils.isEmpty(getValue());
+    }
+
+    public String getToolTip() {
+	return toolTip;
+    }
+
+    public InquiriesQuestion setToolTip(String toolTip) {
+	this.toolTip = toolTip;
+	return this;
+    }
+
+    public boolean hasToolTip() {
+	return !StringUtils.isEmpty(getToolTip());
+    }
+
+    public Boolean getRequired() {
+	return required;
+    }
+
+    public InquiriesQuestion setRequired(Boolean required) {
+	this.required = required;
+	return this;
     }
 
 }
