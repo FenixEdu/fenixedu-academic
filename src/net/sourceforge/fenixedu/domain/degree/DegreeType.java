@@ -21,11 +21,11 @@ import net.sourceforge.fenixedu.domain.cardGeneration.Category;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.fenix.tools.util.StringAppender;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * 
@@ -282,12 +282,20 @@ public enum DegreeType {
 	return Float.valueOf(this.academicPeriod.getWeight()).intValue();
     }
 
+    public int getSemesters() {
+	return Float.valueOf(this.academicPeriod.getWeight() / AcademicPeriod.SEMESTER.getWeight()).intValue();
+    }
+
     public Integer getYears(final CycleType cycleType) {
 	if (cycleType == null) {
 	    return getYears();
 	}
 
 	return hasCycleTypes(cycleType) ? Float.valueOf(getAcademicPeriod().getWeight()).intValue() : null;
+    }
+
+    public Integer getSemesters(final CycleType cycleType) {
+	return Float.valueOf(getYears(cycleType) / AcademicPeriod.SEMESTER.getWeight()).intValue();
     }
 
     final public boolean hasExactlyOneCurricularYear() {
@@ -350,8 +358,7 @@ public enum DegreeType {
     }
 
     public String getLocalizedName() {
-	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale())
-		.getString(getQualifiedName());
+	return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
     }
 
     public String getQualifiedName() {
