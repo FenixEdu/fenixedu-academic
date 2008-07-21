@@ -35,25 +35,59 @@
 
 <schema name="inquiriesStudentExecutionPeriod.submitWeeklySpentHours"
 		type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" bundle="INQUIRIES_RESOURCES">
-	<slot name="integer" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="integer" >
 		<property name="size" value="5" />
 		<property name="maxLength" value="3" />	
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+            <property name="lowerBound" value="0"/>
+            <property name="upperBound" value="168"/>
+        </validator>		
 	</slot>
 </schema>
 
 <schema name="curricularCourseInquiriesRegistryDTO.submitHoursAndDays"
 		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO" bundle="INQUIRIES_RESOURCES">
 	<slot name="curricularCourse.name" key="label.curricularCourse.name" read-only="true"/>
-	<slot name="curricularCourse.competenceCourse.contactLoad" key="label.contactLoad" read-only="true"/>
-	<slot name="weeklyHoursSpentPercentage" key="label.weeklyHoursSpentPercentage" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="5" />
-		<property name="maxLength" value="3" />	
-	</slot>
-	<slot name="studyDaysSpentInExamsSeason" key="label.studyDaysSpentInExamsSeason" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="5" />
-		<property name="maxLength" value="3" />	
-	</slot>
 	<slot name="curricularCourse.competenceCourse.ectsCredits" key="label.competenceCourse.ectsCredits" read-only="true"/>
+	<slot name="weeklyContactLoad" key="label.contactLoad" read-only="true">
+		<property name="headerToolTip" value="toolTip.studentInquiries.weeklyScheduleLoad" />
+	</slot>	
+	<slot name="weeklyHoursSpentPercentage" key="label.weeklyHoursSpentPercentage" read-only="true" />
+	<slot name="studyDaysSpentInExamsSeason" key="label.studyDaysSpentInExamsSeason" >
+		<property name="headerToolTip" value="toolTip.studentInquiries.studyDaysSpentInExamsSeason" />
+	</slot>
+	<slot name="calculatedECTSCredits" key="label.calculatedEctsCredits" read-only="true"/>
+</schema>
+
+<schema name="curricularCourseInquiriesRegistryDTO.submitHoursAndDays.edit"
+		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO" bundle="INQUIRIES_RESOURCES">
+	<slot name="curricularCourse.name" key="label.curricularCourse.name" read-only="true"/>
+	<slot name="weeklyContactLoad" key="label.contactLoad" read-only="true">
+		<property name="headerToolTip" value="toolTip.studentInquiries.weeklyScheduleLoad" />
+	</slot>
+	<slot name="weeklyHoursSpentPercentage" key="label.weeklyHoursSpentPercentage">
+		<property name="size" value="5" />
+		<property name="maxLength" value="3" />	
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+            <property name="lowerBound" value="0"/>
+            <property name="upperBound" value="100"/>
+        </validator>
+	</slot>
+	<slot name="studyDaysSpentInExamsSeason" key="label.studyDaysSpentInExamsSeason">
+		<property name="size" value="5" />
+		<property name="maxLength" value="4" />
+		<property name="headerToolTip" value="toolTip.studentInquiries.studyDaysSpentInExamsSeason" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DoubleValidator"/>
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DoubleRangeValidator">
+            <property name="lowerBound" value="0"/>
+            <property name="upperBound" value="42"/>
+        </validator>			
+	</slot>
 </schema>
 
 <schema name="teacherInquiry.selectShiftTypes"
