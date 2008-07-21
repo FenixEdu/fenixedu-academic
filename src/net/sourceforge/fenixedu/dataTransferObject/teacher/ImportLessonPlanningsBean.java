@@ -16,15 +16,17 @@ public class ImportLessonPlanningsBean extends ImportContentBean implements Seri
     private DomainReference<ExecutionCourse> executionCourseToReference;
 
     public ImportLessonPlanningsBean(ExecutionCourse executionCourse) {
-        setExecutionCourseTo(executionCourse);
+        super();
+	setExecutionCourseTo(executionCourse);
+	setShift(null);
     }
     
     public ExecutionCourse getExecutionCourseTo() {
-        return (this.executionCourseToReference != null) ? this.executionCourseToReference.getObject() : null;
+        return this.executionCourseToReference.getObject();
     }
     
     public void setExecutionCourseTo(ExecutionCourse executionCourse) {
-        this.executionCourseToReference = (executionCourse != null) ? new DomainReference<ExecutionCourse>(executionCourse) : null;
+        this.executionCourseToReference = new DomainReference<ExecutionCourse>(executionCourse);
     }
     
     public ImportType getImportType() {
@@ -36,11 +38,11 @@ public class ImportLessonPlanningsBean extends ImportContentBean implements Seri
     }    
     
     public Shift getShift() {
-        return (this.shiftReference != null) ? this.shiftReference.getObject() : null;
+        return this.shiftReference.getObject();
     }
 
     public void setShift(Shift shift) {
-        this.shiftReference = (shift != null) ? new DomainReference<Shift>(shift) : null;
+        this.shiftReference = new DomainReference<Shift>(shift);
     }
     
     public static enum ImportType{
