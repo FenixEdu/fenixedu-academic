@@ -4,26 +4,32 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
@@ -59,6 +65,24 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	public void setExecutionYear(final ExecutionYear executionYear) {
 	    executionYearReference = executionYear == null ? null : new DomainReference<ExecutionYear>(executionYear);
 	}
+
+	public ExecutionYear getExecutionYearFourYearsBack() {
+	    final ExecutionYear executionYear = getExecutionYear();
+	    return executionYear == null ? null : ReportsByDegreeTypeDA.getExecutionYearFourYearsBack(executionYear);
+	}
+    }
+
+    public static ExecutionYear getExecutionYearFourYearsBack(final ExecutionYear executionYear) {
+	ExecutionYear executionYearFourYearsBack = executionYear;
+	if (executionYear != null) {
+	    for (int i = 5; i > 1; i--) {
+		final ExecutionYear previousExecutionYear = executionYearFourYearsBack.getPreviousExecutionYear();
+		if (previousExecutionYear != null) {
+		    executionYearFourYearsBack = previousExecutionYear;
+		}
+	    }
+	}
+	return executionYearFourYearsBack;
     }
 
     public ActionForward selectDegreeType(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -134,11 +158,25 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return null;
     }
 
+    public ActionForward downloadStatusAndAproval(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	final DegreeType degreeType = getDegreeType(request);
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final String format = getFormat(request);
+	final String reportName = getReportName("statusAndAproval", degreeType.getLocalizedName(), executionYear);
+
+	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
+	reportStatusAndAproval(spreadsheet, degreeType, executionYear);
+
+	outputReport(response, reportName, spreadsheet, format);
+	return null;
+    }
+
     private void reportEurAce(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
 	spreadsheet.setHeader("nome curso");
 	spreadsheet.setHeader("nome disciplina");
 	spreadsheet.setHeader("número dos docentes");
-	spreadsheet.setHeader("// Dados créditos docentes...");
+	spreadsheet.setHeader("créditos");
 
 	for (final Degree degree : rootDomainObject.getDegreesSet()) {
 	    if (degree.getDegreeType() == degreeType) {
@@ -292,4 +330,128 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	}
     }
 
+    public static class EnrolmentAndAprovalCounter {
+	private int enrolments = 0;
+	private int aprovals = 0;
+
+	public void count(final Enrolment enrolment) {
+	    enrolments++;
+	    if (enrolment.isApproved()) {
+		aprovals++;
+	    }
+	}
+
+	public int getEnrolments() {
+	    return enrolments;
+	}
+
+	public int getAprovals() {
+	    return aprovals;
+	}
+    }
+
+    public static class EnrolmentAndAprovalCounterMap extends HashMap<ExecutionSemester, EnrolmentAndAprovalCounter> {
+
+	private final ExecutionSemester firstExecutionSemester;
+	private final ExecutionSemester lastExecutionSemester;
+
+	public EnrolmentAndAprovalCounterMap(final ExecutionSemester firstExecutionSemester,
+		final ExecutionSemester lastExecutionSemester) {
+	    this.firstExecutionSemester = firstExecutionSemester;
+	    this.lastExecutionSemester = lastExecutionSemester;
+	}
+
+	public EnrolmentAndAprovalCounterMap(final ExecutionSemester firstExecutionSemester,
+		final ExecutionSemester lastExecutionSemester, final Registration registration) {
+	    this(firstExecutionSemester, lastExecutionSemester);
+	    for (final Registration otherRegistration : registration.getStudent().getRegistrationsSet()) {
+		if (otherRegistration.getDegree() == registration.getDegree()) {
+		    for (final StudentCurricularPlan studentCurricularPlan : otherRegistration.getStudentCurricularPlansSet()) {
+			for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
+			    count(enrolment);
+			}
+		    }
+		}
+	    }
+	}
+
+	public void count(final Enrolment enrolment) {
+	    final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
+	    if (firstExecutionSemester.isBeforeOrEquals(executionSemester)
+		    && executionSemester.isBeforeOrEquals(lastExecutionSemester)) {
+		final EnrolmentAndAprovalCounter enrolmentAndAprovalCounter = get(executionSemester);
+		enrolmentAndAprovalCounter.count(enrolment);
+	    }
+	}
+
+	@Override
+	public EnrolmentAndAprovalCounter get(final Object key) {
+	    EnrolmentAndAprovalCounter enrolmentAndAprovalCounter = super.get(key);
+	    if (enrolmentAndAprovalCounter == null) {
+		enrolmentAndAprovalCounter = new EnrolmentAndAprovalCounter();
+		put((ExecutionSemester) key, enrolmentAndAprovalCounter);
+	    }
+	    return enrolmentAndAprovalCounter;
+	}
+
+    }
+
+    private void reportStatusAndAproval(final Spreadsheet spreadsheet, final DegreeType degreeType, final ExecutionYear executionYear) {
+	spreadsheet.setHeader("Numero aluno");
+	spreadsheet.setHeader("Ano lectivo");
+	spreadsheet.setHeader("Semestre");
+	spreadsheet.setHeader("Tipo curso");
+	spreadsheet.setHeader("Nome curso");
+	spreadsheet.setHeader("Sigla curso");
+	spreadsheet.setHeader("Estatuto");
+	spreadsheet.setHeader("Numero inscricoes");
+	spreadsheet.setHeader("Numero aprovacoes");
+
+	final ExecutionSemester firstExecutionSemester = ReportsByDegreeTypeDA.getExecutionYearFourYearsBack(executionYear).getFirstExecutionPeriod();
+	final ExecutionSemester lastExecutionSemester = executionYear.getLastExecutionPeriod();
+	for (final Degree degree : rootDomainObject.getDegreesSet()) {
+	    if (degree.getDegreeType() == degreeType) {
+		if (isActive(degree, executionYear)) {
+		    for (final Registration registration : degree.getRegistrationsSet()) {
+			if (registration.isInRegisteredState(executionYear)) {
+			    final EnrolmentAndAprovalCounterMap map = new EnrolmentAndAprovalCounterMap(firstExecutionSemester, lastExecutionSemester, registration);
+			    for (final Entry<ExecutionSemester, EnrolmentAndAprovalCounter> entry : map.entrySet()) {
+				final ExecutionSemester executionSemester = entry.getKey();
+				final EnrolmentAndAprovalCounter enrolmentAndAprovalCounter = entry.getValue();
+
+				final Row row = spreadsheet.addRow();
+				row.setCell(registration.getNumber().toString());
+				row.setCell(executionSemester.getExecutionYear().getYear());
+				row.setCell(executionSemester.getSemester().toString());
+				row.setCell(degree.getDegreeType().getLocalizedName());
+				row.setCell(degree.getPresentationName());
+				row.setCell(degree.getSigla());
+				final StringBuilder stringBuilder = new StringBuilder();
+				for (final StudentStatuteBean studentStatuteBean : registration.getStudent().getStatutes(executionSemester)) {
+				    if (stringBuilder.length() > 0) {
+					stringBuilder.append(", ");
+				    }
+				    stringBuilder.append(studentStatuteBean.getStudentStatute().getStatuteType());
+				}
+				row.setCell(stringBuilder.toString());
+				row.setCell(Integer.toString(enrolmentAndAprovalCounter.getEnrolments()));
+				row.setCell(Integer.toString(enrolmentAndAprovalCounter.getAprovals()));
+			    }
+			}
+		    }
+		}
+	    }
+	}
+    }
+
+    private boolean isActive(final Degree degree, final ExecutionYear executionYear) {
+	for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+	    if (degreeCurricularPlan.hasExecutionDegreeFor(executionYear)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }
+
