@@ -24,6 +24,9 @@
 		<bean:define id="urlEctsLabel" type="java.lang.String">/reportsByDegreeType.do?method=downloadEctsLabel&amp;<bean:write name="args" filter="false"/></bean:define>
 		<bean:define id="urlStatusAndAproval" type="java.lang.String">/reportsByDegreeType.do?method=downloadStatusAndAproval&amp;<bean:write name="args" filter="false"/></bean:define>
 		<bean:define id="urlEti" type="java.lang.String">/reportsByDegreeType.do?method=downloadEti&amp;<bean:write name="args" filter="false"/></bean:define>
+		<bean:define id="urlRegistrations" type="java.lang.String">/reportsByDegreeType.do?method=downloadRegistrations&amp;<bean:write name="args" filter="false"/></bean:define>
+		<bean:define id="urlFlunked" type="java.lang.String">/reportsByDegreeType.do?method=downloadFlunked&amp;<bean:write name="args" filter="false"/></bean:define>
+		<bean:define id="urlGraduations" type="java.lang.String">/reportsByDegreeType.do?method=downloadGraduations&amp;<bean:write name="args" filter="false"/></bean:define>
 		<table class="tstyle1 thleft thlight mtop025">
 			<tr>
 				<th>
@@ -91,6 +94,57 @@
 				<td>
 					<bean:define id="urlEtiXls" type="java.lang.String"><bean:write name="urlEti" filter="false"/>&amp;format=xls</bean:define>
 					<html:link page="<%= urlEtiXls %>">
+						<bean:message key="label.download.xls" bundle="GEP_RESOURCES" />
+					</html:link>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<bean:message key="label.report.registrations" bundle="GEP_RESOURCES"/>
+				</th>
+				<td>
+					<bean:define id="urlRegistrationsCsv" type="java.lang.String"><bean:write name="urlRegistrations" filter="false"/>&amp;format=csv</bean:define>
+					<html:link page="<%= urlRegistrationsCsv %>">
+						<bean:message key="label.download.csv" bundle="GEP_RESOURCES" />
+					</html:link>
+				</td>
+				<td>
+					<bean:define id="urlRegistrationsXls" type="java.lang.String"><bean:write name="urlRegistrations" filter="false"/>&amp;format=xls</bean:define>
+					<html:link page="<%= urlRegistrationsXls %>">
+						<bean:message key="label.download.xls" bundle="GEP_RESOURCES" />
+					</html:link>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<bean:message key="label.report.flunked" bundle="GEP_RESOURCES"/>
+				</th>
+				<td>
+					<bean:define id="urlFlunkedCsv" type="java.lang.String"><bean:write name="urlFlunked" filter="false"/>&amp;format=csv</bean:define>
+					<html:link page="<%= urlFlunkedCsv %>">
+						<bean:message key="label.download.csv" bundle="GEP_RESOURCES" />
+					</html:link>
+				</td>
+				<td>
+					<bean:define id="urlFlunkedXls" type="java.lang.String"><bean:write name="urlFlunked" filter="false"/>&amp;format=xls</bean:define>
+					<html:link page="<%= urlFlunkedXls %>">
+						<bean:message key="label.download.xls" bundle="GEP_RESOURCES" />
+					</html:link>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<bean:message key="label.report.graduations" bundle="GEP_RESOURCES"/>
+				</th>
+				<td>
+					<bean:define id="urlGraduationsCsv" type="java.lang.String"><bean:write name="urlGraduations" filter="false"/>&amp;format=csv</bean:define>
+					<html:link page="<%= urlGraduationsCsv %>">
+						<bean:message key="label.download.csv" bundle="GEP_RESOURCES" />
+					</html:link>
+				</td>
+				<td>
+					<bean:define id="urlGraduationsXls" type="java.lang.String"><bean:write name="urlGraduations" filter="false"/>&amp;format=xls</bean:define>
+					<html:link page="<%= urlGraduationsXls %>">
 						<bean:message key="label.download.xls" bundle="GEP_RESOURCES" />
 					</html:link>
 				</td>

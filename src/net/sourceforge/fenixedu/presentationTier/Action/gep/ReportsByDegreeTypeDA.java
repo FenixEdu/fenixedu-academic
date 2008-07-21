@@ -24,13 +24,17 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
@@ -43,6 +47,7 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
@@ -174,6 +179,24 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return null;
     }
 
+    private void setDegreeHeaders(final Spreadsheet spreadsheet) {
+	spreadsheet.setHeader("tipo curso");
+	spreadsheet.setHeader("nome curso");
+	spreadsheet.setHeader("sigla curso");
+    }
+
+    private void setDegreeHeaders(final Spreadsheet spreadsheet, final String suffix) {
+	spreadsheet.setHeader("tipo curso " + suffix);
+	spreadsheet.setHeader("nome curso " + suffix);
+	spreadsheet.setHeader("sigla curso " + suffix);
+    }
+
+    private void setDegreeColumns(final Row row, final Degree degree) {
+	row.setCell(degree.getDegreeType().getLocalizedName());
+	row.setCell(degree.getName());
+	row.setCell(degree.getSigla());
+    }
+
     public ActionForward downloadEti(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	final DegreeType degreeType = getDegreeType(request);
@@ -188,10 +211,52 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	return null;
     }
 
+    public ActionForward downloadRegistrations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	final DegreeType degreeType = getDegreeType(request);
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final String format = getFormat(request);
+	final String reportName = getReportName("etiGrades", degreeType.getLocalizedName(), executionYear);
+
+	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
+	reportRegistrations(spreadsheet, degreeType, executionYear);
+
+	outputReport(response, reportName, spreadsheet, format);
+	return null;
+    }
+
+    public ActionForward downloadFlunked(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	final DegreeType degreeType = getDegreeType(request);
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final String format = getFormat(request);
+	final String reportName = getReportName("etiGrades", degreeType.getLocalizedName(), executionYear);
+
+	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
+	reportFlunked(spreadsheet, degreeType, executionYear);
+
+	outputReport(response, reportName, spreadsheet, format);
+	return null;
+    }
+
+    public ActionForward downloadGraduations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	final DegreeType degreeType = getDegreeType(request);
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final String format = getFormat(request);
+	final String reportName = getReportName("etiGrades", degreeType.getLocalizedName(), executionYear);
+
+	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
+	reportGraduations(spreadsheet, degreeType, executionYear);
+
+	outputReport(response, reportName, spreadsheet, format);
+	return null;
+    }
+
     private void reportEurAce(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
-	spreadsheet.setHeader("nome curso");
+	setDegreeHeaders(spreadsheet);
 	spreadsheet.setHeader("nome disciplina");
-	spreadsheet.setHeader("número dos docentes");
+	spreadsheet.setHeader("número do docente");
 	spreadsheet.setHeader("créditos");
 
 	for (final Degree degree : rootDomainObject.getDegreesSet()) {
@@ -204,7 +269,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 				    for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
 					final Teacher teacher = professorship.getTeacher();
 					final Row row = spreadsheet.addRow();
-					row.setCell(degree.getPresentationName());
+					setDegreeColumns(row, degree);
 					row.setCell(curricularCourse.getName());
 					row.setCell(teacher.getTeacherNumber().toString());
 					double credits = 0;
@@ -247,7 +312,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     }
 
     private void reportEctsLabel(final Spreadsheet spreadsheet, final DegreeType degreeType, final ExecutionYear executionYear) {
-	spreadsheet.setHeader("nome curso");
+	setDegreeHeaders(spreadsheet);
 	spreadsheet.setHeader("nome disciplina");
 	spreadsheet.setHeader("ano curricular");
 	spreadsheet.setHeader("semestre");
@@ -279,7 +344,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 				    final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
 
 				    final Row row = spreadsheet.addRow();
-				    row.setCell(degree.getPresentationName());
+				    setDegreeColumns(row, degree);
 				    row.setCell(curricularCourse.getName());
 				    row.setCell(context.getCurricularYear());
 				    final ExecutionSemester executionSemester;
@@ -413,15 +478,13 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     }
 
     private void reportStatusAndAproval(final Spreadsheet spreadsheet, final DegreeType degreeType, final ExecutionYear executionYear) {
-	spreadsheet.setHeader("Numero aluno");
-	spreadsheet.setHeader("Ano lectivo");
-	spreadsheet.setHeader("Semestre");
-	spreadsheet.setHeader("Tipo curso");
-	spreadsheet.setHeader("Nome curso");
-	spreadsheet.setHeader("Sigla curso");
-	spreadsheet.setHeader("Estatuto");
-	spreadsheet.setHeader("Numero inscricoes");
-	spreadsheet.setHeader("Numero aprovacoes");
+	spreadsheet.setHeader("número aluno");
+	spreadsheet.setHeader("ano lectivo");
+	spreadsheet.setHeader("semestre");
+	setDegreeHeaders(spreadsheet);
+	spreadsheet.setHeader("estatuto");
+	spreadsheet.setHeader("número inscricoes");
+	spreadsheet.setHeader("núumero aprovacoes");
 
 	final ExecutionSemester firstExecutionSemester = ReportsByDegreeTypeDA.getExecutionYearFourYearsBack(executionYear).getFirstExecutionPeriod();
 	final ExecutionSemester lastExecutionSemester = executionYear.getLastExecutionPeriod();
@@ -439,9 +502,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 				row.setCell(registration.getNumber().toString());
 				row.setCell(executionSemester.getExecutionYear().getYear());
 				row.setCell(executionSemester.getSemester().toString());
-				row.setCell(degree.getDegreeType().getLocalizedName());
-				row.setCell(degree.getPresentationName());
-				row.setCell(degree.getSigla());
+				setDegreeColumns(row, degree);
 				final StringBuilder stringBuilder = new StringBuilder();
 				for (final StudentStatuteBean studentStatuteBean : registration.getStudent().getStatutes(executionSemester)) {
 				    if (stringBuilder.length() > 0) {
@@ -470,16 +531,16 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     }
 
     private void reportEti(final Spreadsheet spreadsheet, final DegreeType degreeType, final ExecutionYear executionYear) {
-	spreadsheet.setHeader("Numero Aluno");
-	spreadsheet.setHeader("Semestre");
-	spreadsheet.setHeader("Nome Disciplina");
-	spreadsheet.setHeader("Nota");
-	spreadsheet.setHeader("Estado");
-	spreadsheet.setHeader("Epoca");
-	spreadsheet.setHeader("Tipo Curso");
-	spreadsheet.setHeader("Nome Curso");
-	spreadsheet.setHeader("Tipo Aluno");
-	spreadsheet.setHeader("Numero Inscricoes Anteriores");
+	spreadsheet.setHeader("número Aluno");
+	setDegreeHeaders(spreadsheet, "aluno");
+	spreadsheet.setHeader("semestre");
+	spreadsheet.setHeader("nome Disciplina");
+	setDegreeHeaders(spreadsheet, "disciplina");
+	spreadsheet.setHeader("nota");
+	spreadsheet.setHeader("estado");
+	spreadsheet.setHeader("época");
+	spreadsheet.setHeader("tipo Aluno");
+	spreadsheet.setHeader("número inscricoes anteriores");
 
 	for (final Degree degree : rootDomainObject.getDegreesSet()) {
 	    if (degree.getDegreeType() == degreeType) {
@@ -501,17 +562,17 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 					    
 					    final Row row = spreadsheet.addRow();
 					    row.setCell(student.getNumber().toString());
+					    setDegreeColumns(row, degree);
 					    if (curricularCourse.isAnual()) {
 						row.setCell("");
 					    } else {
 						row.setCell(executionSemester.getSemester().toString());
 					    }
 					    row.setCell(curricularCourse.getName());
+					    setDegreeColumns(row, curricularCourse.getDegree());
 					    row.setCell(enrolment.getGradeValue());
 					    row.setCell(enrolment.getEnrollmentState().getDescription());
 					    row.setCell(enrolment.getEnrolmentEvaluationType().getDescription());
-					    row.setCell(studentsDegree.getDegreeType().getLocalizedName());
-					    row.setCell(studentsDegree.getName());
 					    row.setCell(registration.getRegistrationAgreement().getName());
 					    row.setCell(countPreviousEnrolments(curricularCourse, executionSemester, student));
 					}
@@ -539,6 +600,124 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    }
 	}
 	return Integer.toString(count);
+    }
+
+    private void reportRegistrations(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
+	spreadsheet.setHeader("número aluno");
+	setDegreeHeaders(spreadsheet);
+	spreadsheet.setHeader("código regime de ingresso");
+	spreadsheet.setHeader("regime de ingresso");
+	spreadsheet.setHeader("ano léctivo de ingresso");
+	spreadsheet.setHeader("tipo de aluno");
+	spreadsheet.setHeader("ano curricular");
+
+	for (final Degree degree : rootDomainObject.getDegreesSet()) {
+	    if (degree.getDegreeType() == degreeType) {
+		if (isActive(degree, executionYear)) {
+		    for (final Registration registration : degree.getRegistrationsSet()) {
+			if (registration.isInRegisteredState(executionYear)) {
+			    final Row row = spreadsheet.addRow();
+			    row.setCell(registration.getNumber());
+			    setDegreeColumns(row, degree);
+			    final Ingression ingression = registration.getIngression();
+			    if (ingression != null) {
+				row.setCell(ingression.getName());
+				row.setCell(ingression.getDescription());
+			    } else {
+				row.setCell("");
+				row.setCell("");
+			    }
+			    row.setCell(registration.getStartExecutionYear().getYear());
+			    if (registration.getRegistrationAgreement() != null) {
+				row.setCell(registration.getRegistrationAgreement().getName()); //TODO: "tipo de aluno": check this
+			    } else {
+				row.setCell("");
+			    }
+			    row.setCell(Integer.toString(registration.getCurricularYear(executionYear)));
+			}
+		    }
+		}
+	    }
+	}
+    }
+
+    private void reportFlunked(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
+	spreadsheet.setHeader("número aluno");
+	setDegreeHeaders(spreadsheet);
+
+	for (final Degree degree : rootDomainObject.getDegreesSet()) {
+	    if (degree.getDegreeType() == degreeType) {
+		if (isActive(degree, executionYear)) {
+		    for (final Registration registration : degree.getRegistrationsSet()) {
+			for (final RegistrationState registrationState : registration.getRegistrationStates()) {
+			    final RegistrationStateType registrationStateType = registrationState.getStateType();
+			    if (registrationStateType == RegistrationStateType.FLUNKED
+				    && registrationState.getExecutionYear() == executionYear) {
+				final Row row = spreadsheet.addRow();
+				row.setCell(registration.getNumber());
+				setDegreeColumns(row, degree);
+			    }
+			}
+		    }
+		}
+	    }
+	}
+    }
+
+    private void reportGraduations(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
+	spreadsheet.setHeader("número aluno");
+	setDegreeHeaders(spreadsheet);
+	spreadsheet.setHeader("ano de ingresso");
+	spreadsheet.setHeader("ano léctivo conclusão");
+	spreadsheet.setHeader("data conclusão");
+	spreadsheet.setHeader("número de anos para conclusão");
+	spreadsheet.setHeader("média final");
+
+	final CycleType cycleType = degreeType.getLastCycleType();
+
+	for (final Degree degree : rootDomainObject.getDegreesSet()) {
+	    if (degree.getDegreeType() == degreeType) {
+		if (isActive(degree, executionYear)) {
+		    for (final Registration registration : degree.getRegistrationsSet()) {
+			final RegistrationState registrationState = registration.getLastRegistrationState(executionYear);
+			if (registrationState != null
+				&& registrationState.getStateType() == RegistrationStateType.CONCLUDED
+				&& registration.isRegistrationConclusionProcessed()
+				&& !registration.getStudentCurricularPlansSet().isEmpty()
+				&& (!degreeType.isBolonhaType() || registration.hasConcludedCycle(cycleType))) {
+			    final ExecutionYear conclusionExecutionYear;
+			    final YearMonthDay conclusionDate;
+			    if (degreeType.isBolonhaType()) { 
+				conclusionExecutionYear = registration.getConclusionYear();
+				conclusionDate = registration.getConclusionDate(cycleType);
+			    } else {
+				conclusionDate = registration.getConclusionDate();
+				conclusionExecutionYear = conclusionDate == null ?
+					null : ExecutionYear.getExecutionYearByDate(conclusionDate);
+			    }
+			    if (conclusionExecutionYear == null || conclusionExecutionYear == executionYear) {
+				final Row row = spreadsheet.addRow();
+				row.setCell(registration.getNumber());
+				setDegreeColumns(row, degree);
+				row.setCell(registration.getStartExecutionYear().getYear());
+				if (conclusionExecutionYear != null) {
+				    row.setCell(conclusionExecutionYear.getYear());
+				} else {
+				    row.setCell("");
+				}
+				if (conclusionDate != null) {
+				    row.setCell(conclusionDate.toString("yyyy-MM-dd"));
+				} else {
+				    row.setCell("");
+				}
+				row.setCell(Integer.valueOf(registration.getSortedEnrolmentsExecutionYears().size()));
+				row.setCell(registration.getFinalAverage());
+			    }
+			}
+		    }
+		}
+	    }
+	}
     }
 
 }
