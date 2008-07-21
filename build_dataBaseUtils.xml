@@ -6,13 +6,35 @@
 
     <property name="lib" location="lib" />
 
-	<property name="build.home" location="build"/>
-	<property name="build.home.temp" value="${build.home}/temp"/>
-	<property name="build.home.temp.classes" value="${build.home.temp}/classes"/>
-	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
-	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
+	   <target name="set-properties-copy" if="institution.project"
+	            description="Determine properties to use for build properties">
+	        <property name="build.home" location="build"/>
+	    </target>
 
-    <target name="compile"
+	    <target name="set-properties-inplace" unless="institution.project"
+	            description="Determine properties to use for build properties">
+	        <property name="build.home" location="web"/>
+	    </target>
+
+	    <target name="set-properties" description="Determine properties to use for build properties"
+	            depends="set-properties-copy, set-properties-inplace">
+	        <property name="build.home.webinf" value="${build.home}/WEB-INF"/>
+	        <property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
+	        <property name="build.home.webinf.classes.meta.inf" value="${build.home.webinf.classes}/META-INF"/>
+	        <property name="build.home.webinf.conf" value="${build.home.webinf}/conf"/>
+	        <property name="build.home.webinf.libs" value="${build.home.webinf}/lib"/>
+	    	<property name="build.home.webinf.lib" value="${build.home.webinf}/lib"/>
+	        <property name="build.home.jsp_gen_code" value="${build.home}/Jsp-Code"/>
+	        <property name="build.home.jsp_gen_code.classes" value="${build.home.jsp_gen_code}/classes"/>
+	        <property name="build.home.reports" value="${build.home.webinf.classes}/reports"/>
+	        <property name="dml.definition.file.completed" value="${build.home.webinf.classes}/domain_model.dml"/>
+	        <property name="build.home.xfire" value="${build.home.webinf.classes.meta.inf}/xfire" />
+	        <property name="build.home.temp" value="${build.home}/temp"/>
+	        <property name="build.home.temp.classes" value="${build.home.temp}/classes"/>
+
+	    </target>
+
+    <target name="compile" depends="set-properties"
     		description="Compile tools">
     	<ant antfile="build_compile.xml" target="compile-without-injectionCode"/>
     	<ant antfile="build_codeGenerator.xml" target="compile"/>
@@ -27,6 +49,9 @@
 				<pathelement path="${build.home.temp.classes}"/>
 				<pathelement path="${build.home.webinf.classes}"/>
                 <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="${build.home.webinf.lib}">
                     <include name="**/*.jar"/>
                 </fileset>
 			</classpath>
@@ -44,13 +69,15 @@
                 <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
+                <fileset dir="${build.home.webinf.lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
 			</classpath>
 		</java>
     </target>
 
-    <target name="SQLUpdateGenerator"
-    		description="Generates possible sql instructions to be run on next deploy."
-    		depends="compile">
+    <target name="SQLUpdateGenerator" depends="compile"
+    		description="Generates possible sql instructions to be run on next deploy.">
 		<java classname="pt.utl.ist.codeGenerator.SQLUpdateGenerator" fork="true">
 <!--				jvmargs="-Xdebug -Xnoagent -Djava.compiler=NONE  -Xrunjdwp:transport=dt_socket,server=y,address=8000,suspend=y" -->
 			<classpath>
@@ -58,6 +85,9 @@
 				<pathelement path="${build.home.webinf.classes}"/>
                 <fileset dir="${lib}">
                     <include name="**/*.jar"/>
+                </fileset>
+			    <fileset dir="${build.home.webinf.lib}">
+			        <include name="**/*.jar"/>
                 </fileset>
 			</classpath>
 		</java>
@@ -74,11 +104,14 @@
                 <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
+                <fileset dir="${build.home.webinf.lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
 			</classpath>
 		</java>
     </target>
 
-    <target name="prepare-full-run-file"
+    <target name="prepare-full-run-file" depends="set-properties"
     		description="Generates a single run file for upgrading database.">
 		<java classname="pt.utl.ist.fenix.tools.scripts.JoinSQLScripts" fork="true">
 			<arg value="${basedir}/etc/database_operations"/>
@@ -88,6 +121,9 @@
                 <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
+			    <fileset dir="${build.home.webinf.lib}">
+			        <include name="**/*.jar"/>
+			    </fileset>
 			</classpath>
 		</java>
     </target>
@@ -103,11 +139,14 @@
                 <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
+                <fileset dir="${build.home.webinf.lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
 			</classpath>
 		</java>
     </target>
 
-    <target name="DmlCleaner"
+    <target name="DmlCleaner" depends="set-properties"
     		description="Generates a single run file for upgrading database.">
 		<java classname="pt.utl.ist.codeGenerator.DmlCleaner" fork="true">
 			<arg value="${basedir}/build/WEB-INF/classes/domain_model.dml"/>
@@ -117,11 +156,14 @@
             	<fileset dir="${lib}">
             	    <include name="**/*.jar"/>
         	    </fileset>
+                <fileset dir="${build.home.webinf.lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
 			</classpath>
 		</java>
     </target>
 
-    <target name="DmlChecker"
+    <target name="DmlChecker" depends="set-properties"
     		description="Generates a single run file for upgrading database.">
 		<java classname="pt.utl.ist.codeGenerator.DmlChecker" fork="true">
 			<arg value="${basedir}/build/WEB-INF/classes/domain_model.dml"/>
@@ -131,11 +173,14 @@
             	<fileset dir="${lib}">
             	    <include name="**/*.jar"/>
         	    </fileset>
+                <fileset dir="${build.home.webinf.lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
 			</classpath>
 		</java>
     </target>
 
-    <target name="OidSqlGenerator"
+    <target name="OidSqlGenerator" depends="set-properties"
     		description="Generates a single run file for upgrading database.">
 		<java classname="pt.utl.ist.codeGenerator.OidSqlGenerator" fork="true">
 			<arg value="${basedir}/build/WEB-INF/classes/domain_model.dml"/>
@@ -145,6 +190,9 @@
             	<fileset dir="${lib}">
             	    <include name="**/*.jar"/>
         	    </fileset>
+                <fileset dir="${build.home.webinf.lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
 			</classpath>
 		</java>
     </target>
