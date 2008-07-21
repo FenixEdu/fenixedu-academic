@@ -30,6 +30,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
@@ -167,6 +169,20 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
 	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
 	reportStatusAndAproval(spreadsheet, degreeType, executionYear);
+
+	outputReport(response, reportName, spreadsheet, format);
+	return null;
+    }
+
+    public ActionForward downloadEti(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	final DegreeType degreeType = getDegreeType(request);
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final String format = getFormat(request);
+	final String reportName = getReportName("etiGrades", degreeType.getLocalizedName(), executionYear);
+
+	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
+	reportEti(spreadsheet, degreeType, executionYear);
 
 	outputReport(response, reportName, spreadsheet, format);
 	return null;
@@ -451,6 +467,78 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    }
 	}
 	return false;
+    }
+
+    private void reportEti(final Spreadsheet spreadsheet, final DegreeType degreeType, final ExecutionYear executionYear) {
+	spreadsheet.setHeader("Numero Aluno");
+	spreadsheet.setHeader("Semestre");
+	spreadsheet.setHeader("Nome Disciplina");
+	spreadsheet.setHeader("Nota");
+	spreadsheet.setHeader("Estado");
+	spreadsheet.setHeader("Epoca");
+	spreadsheet.setHeader("Tipo Curso");
+	spreadsheet.setHeader("Nome Curso");
+	spreadsheet.setHeader("Tipo Aluno");
+	spreadsheet.setHeader("Numero Inscricoes Anteriores");
+
+	for (final Degree degree : rootDomainObject.getDegreesSet()) {
+	    if (degree.getDegreeType() == degreeType) {
+		for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+		    if (degreeCurricularPlan.hasExecutionDegreeFor(executionYear)) {
+			for (final CurricularCourse curricularCourse : degreeCurricularPlan.getAllCurricularCourses()) {
+			    if (curricularCourse.isActive(executionYear)) {
+
+				for (final CurriculumModule curriculumModule : curricularCourse.getCurriculumModulesSet()) {
+				    if (curriculumModule.isEnrolment()) {
+					final Enrolment enrolment = (Enrolment) curriculumModule;
+					if (enrolment.getExecutionYear() == executionYear) {
+
+					    final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
+					    final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
+					    final Registration registration = studentCurricularPlan.getRegistration();
+					    final Degree studentsDegree = registration.getDegree();
+					    final Student student = registration.getStudent();
+					    
+					    final Row row = spreadsheet.addRow();
+					    row.setCell(student.getNumber().toString());
+					    if (curricularCourse.isAnual()) {
+						row.setCell("");
+					    } else {
+						row.setCell(executionSemester.getSemester().toString());
+					    }
+					    row.setCell(curricularCourse.getName());
+					    row.setCell(enrolment.getGradeValue());
+					    row.setCell(enrolment.getEnrollmentState().getDescription());
+					    row.setCell(enrolment.getEnrolmentEvaluationType().getDescription());
+					    row.setCell(studentsDegree.getDegreeType().getLocalizedName());
+					    row.setCell(studentsDegree.getName());
+					    row.setCell(registration.getRegistrationAgreement().getName());
+					    row.setCell(countPreviousEnrolments(curricularCourse, executionSemester, student));
+					}
+				    }
+				}
+			    }
+			}
+		    }
+		}
+	    }
+	}
+    }
+
+    private String countPreviousEnrolments(final CurricularCourse curricularCourse, final ExecutionSemester executionPeriod,
+	    final Student student) {
+	int count = 0;
+	for (final CurriculumModule curriculumModule : curricularCourse.getCurriculumModulesSet()) {
+	    if (curriculumModule.isEnrolment()) {
+		final Enrolment enrolment = (Enrolment) curriculumModule;
+		if (executionPeriod.compareTo(enrolment.getExecutionPeriod()) > 0) {
+		    if (enrolment.getStudentCurricularPlan().getRegistration().getStudent() == student) {
+			count++;
+		    }
+		}
+	    }
+	}
+	return Integer.toString(count);
     }
 
 }
