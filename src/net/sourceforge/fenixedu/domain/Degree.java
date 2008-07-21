@@ -707,6 +707,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return result;
     }
 
+    public MultiLanguageString getQualificationLevel(final ExecutionYear executionYear) {
+	return getMostRecentDegreeInfo(executionYear).getQualificationLevel();
+    }
+
     public DegreeInfo getMostRecentDegreeInfo() {
 	return getMostRecentDegreeInfo(ExecutionYear.readCurrentExecutionYear());
     }
