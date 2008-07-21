@@ -194,7 +194,7 @@ enum      net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricul
 enum	  net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState 									 as CandidacyProcessState;
 enum	  net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState 								 as IndividualCandidacyState;
 enum	  net.sourceforge.fenixedu.domain.candidacy.Ingression														 as Ingression;
-enum	  net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState								 			 as InquiriesRegistryState;
+enum	  net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState								 			 as InquiriesRegistryState; 
 enum	  net.sourceforge.fenixedu.domain.accounting.events.candidacy.CandidacyExemptionJustificationType			 as CandidacyExemptionJustificationType;
 enum	  net.sourceforge.fenixedu.domain.support.SupportRequestType												 as SupportRequestType;
 enum	  net.sourceforge.fenixedu.domain.support.SupportRequestPriority											 as SupportRequestPriority;
@@ -1001,7 +1001,7 @@ class DomainObject {
 		QualificationType type;
 		String year;
 	}
-	
+
 	class Formation extends Qualification {
 		FormationType formationType;
 		String beginYear;
@@ -1395,7 +1395,7 @@ class DomainObject {
 			
 			class accounting.events.candidacy.SecondCycleIndividualCandidacyEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
 			}
-
+			
 			class accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent extends accounting.events.candidacy.IndividualCandidacyEvent {
 			}
 
@@ -1431,7 +1431,6 @@ class DomainObject {
 
 		class accounting.events.candidacy.SecondCycleIndividualCandidacyExemption extends accounting.Exemption {
 		}
-
 
 	class accounting.Installment extends DomainObject {
 		Money amount;
@@ -1537,14 +1536,14 @@ class DomainObject {
 				}
 				
 					class accounting.postingRules.serviceRequests.ExternalCourseLoadRequestPR extends accounting.postingRules.serviceRequests.CourseLoadRequestPR {
-				}
+					}
 				
 				class accounting.postingRules.serviceRequests.ProgramCertificateRequestPR extends accounting.postingRules.BaseAmountPlusAmountPerPagePR {
 					Money amountFirstPage;
 				}
 				
 					class accounting.postingRules.serviceRequests.ExternalProgramCertificateRequestPR extends accounting.postingRules.serviceRequests.ProgramCertificateRequestPR {
-				}
+					}
 				
 				class accounting.postingRules.serviceRequests.ExamDateCertificateRequestPR extends accounting.postingRules.BaseAmountPlusAmountPerPagePR {
 				}
@@ -2556,7 +2555,7 @@ class DomainObject {
 
 	class inquiries.InquiriesCourse extends DomainObject {
     	Integer weeklyHoursSpentPercentage;
-    	Integer studyDaysSpentInExamsSeason;	
+    	Double studyDaysSpentInExamsSeason;	
 	
 		Character approvationRatioClassification;
 		Character arithmeticMeanClassification;
@@ -2598,7 +2597,7 @@ class DomainObject {
 	class inquiries.InquiriesRegistry extends DomainObject {
 		InquiriesRegistryState state;
     	Integer weeklyHoursSpentPercentage;
-    	Integer studyDaysSpentInExamsSeason;
+    	Double studyDaysSpentInExamsSeason;
 	}
 
 	class inquiries.InquiriesRoom extends DomainObject {
@@ -3035,10 +3034,10 @@ class DomainObject {
 			}
 
 				class organizationalStructure.SchoolUnit extends organizationalStructure.AcademicalInstitutionUnit {
-				}
-	
+			}
+
 				class organizationalStructure.UniversityUnit extends organizationalStructure.AcademicalInstitutionUnit {
-				}
+			}
 
 	class organizationalStructure.UnitName extends DomainObject {
 		Boolean isExternalUnit;
@@ -3634,7 +3633,7 @@ class DomainObject {
 					
 					class serviceRequests.documentRequests.ProgramCertificateRequest extends serviceRequests.documentRequests.CertificateRequest {
 					}
-	
+					
 						class serviceRequests.documentRequests.ExternalProgramCertificateRequest extends serviceRequests.documentRequests.ProgramCertificateRequest {
 							Integer numberOfPrograms;
 						}
@@ -3949,7 +3948,7 @@ class DomainObject {
 		String definition;
 		String term;
 	}
-	
+
 	class support.SupportRequest extends DomainObject {
 		SupportRequestPriority requestPriority;
 		String responseEmail;
@@ -3957,10 +3956,10 @@ class DomainObject {
 		String message;
 		DateTime requestTime;
 	}
-		
+
 		class support.SupportSugestion extends support.SupportRequest {
-		}
-		
+	}
+
 		class support.SupportDoubt extends support.SupportRequest {
 		}
 		
@@ -4857,7 +4856,7 @@ class period.CandidacyPeriod extends DomainObject {
 	
 	class period.SecondCycleCandidacyPeriod extends period.CandidacyPeriod {
 	}
-
+	
 	class period.DegreeCandidacyForGraduatedPersonCandidacyPeriod extends period.CandidacyPeriod {
 	}
 	
@@ -4891,7 +4890,7 @@ class candidacyProcess.IndividualCandidacyProcess extends caseHandling.Process {
 	
 	class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcess extends candidacyProcess.IndividualCandidacyProcess {
 	}
-		
+	
 	class candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
 	}
 		
@@ -4919,13 +4918,13 @@ class candidacyProcess.IndividualCandidacy extends DomainObject {
 		String interviewGrade;
 		Double seriesCandidacyGrade;
 	}
-
+	
 	class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson extends candidacyProcess.IndividualCandidacy {
 		Double affinity;
 		Integer degreeNature;
 		Double candidacyGrade;
 	}
-
+	
 	class candidacyProcess.degreeChange.DegreeChangeIndividualCandidacy extends candidacyProcess.IndividualCandidacy {
 		Double affinity;
 		Integer degreeNature;
@@ -13007,7 +13006,7 @@ relation AlumniIdentityCheckRequestPerson {
 	AlumniIdentityCheckRequest playsRole identityRequests {
 		multiplicity *;
 	}
-}
+	}
 
 relation RootDomainObjectAlumni {
 	RootDomainObject playsRole rootDomainObject;
