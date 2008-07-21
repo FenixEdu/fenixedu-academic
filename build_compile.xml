@@ -334,7 +334,7 @@
 		</copy>
 	</target>
 
-	<target name="generateStubs">		
+	<target name="generateStubs" depends="set-properties">		
 		<mkdir dir="${xfire.stubsTempDir}"/>		
 		<mkdir dir="${xfire.stubsTempDir.classes}"/>
 		<taskdef name="wsgen" classname="org.codehaus.xfire.gen.WsGenTask" classpathref="class.path.lib.ref"/>
