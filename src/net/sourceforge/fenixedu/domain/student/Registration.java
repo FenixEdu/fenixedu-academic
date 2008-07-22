@@ -551,6 +551,10 @@ public class Registration extends Registration_Base {
 	return getCurriculum(executionYear, (CycleType) null);
     }
 
+    final public ICurriculum getCurriculum(final CycleType cycleType) {
+	return getCurriculum((ExecutionYear) null, (CycleType) cycleType);
+    }
+
     final public ICurriculum getCurriculum(final ExecutionYear executionYear, final CycleType cycleType) {
 	if (!hasAnyStudentCurricularPlans()) {
 	    return Curriculum.createEmpty(executionYear);
