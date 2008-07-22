@@ -39,6 +39,12 @@ public class StyledExcelSpreadsheet {
     private static final DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
 
     private static final DateTimeFormatter timeFormat = DateTimeFormat.forPattern("HH:mm");
+    
+    public StyledExcelSpreadsheet() {
+	workbook = new HSSFWorkbook();
+	excelStyle = new ExcelStyle(workbook);
+	wrapText = true;
+    }
 
     public StyledExcelSpreadsheet(final String sheetName) {
 	workbook = new HSSFWorkbook();
