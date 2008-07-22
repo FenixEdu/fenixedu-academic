@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,6 +44,10 @@ public class Spreadsheet {
 	
 	public void setCell(final Double cellValue) {
 	    cells.add((cellValue != null) ? cellValue.toString() : "");
+	}
+	
+	public void setCell(final BigDecimal cellValue) {
+	    cells.add((cellValue != null) ? cellValue.toPlainString() : "");
 	}
 
 	public void setValues(final String[] values) {
