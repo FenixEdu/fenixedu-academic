@@ -75,6 +75,7 @@ public class ExcelStyle extends FenixUtil {
 	style.setBorderRight(HSSFCellStyle.BORDER_THIN);
 	style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
 	style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+	style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
 	style.setWrapText(true);
 	headerStyle = style;
     }
