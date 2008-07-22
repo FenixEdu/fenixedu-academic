@@ -82,7 +82,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	getCandidacy().editCandidacyCurricularCoursesInformation(bean);
     }
 
-    public Double getCandidacyAffinity() {
+    public BigDecimal getCandidacyAffinity() {
 	return getCandidacy().getAffinity();
     }
 
@@ -98,7 +98,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	return getCandidacy().getGradeRate();
     }
 
-    public Double getCandidacySeriesCandidacyGrade() {
+    public BigDecimal getCandidacySeriesCandidacyGrade() {
 	return getCandidacy().getSeriesCandidacyGrade();
     }
     

@@ -4912,25 +4912,25 @@ class candidacyProcess.IndividualCandidacy extends DomainObject {
 		String professionalStatus;
 		String otherEducation;
 		Integer professionalExperience;
-		Double affinity;
+		BigDecimal affinity;
 		Integer degreeNature;
-		Double candidacyGrade;
+		BigDecimal candidacyGrade;
 		String interviewGrade;
-		Double seriesCandidacyGrade;
+		BigDecimal seriesCandidacyGrade;
 	}
 	
 	class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson extends candidacyProcess.IndividualCandidacy {
-		Double affinity;
+		BigDecimal affinity;
 		Integer degreeNature;
-		Double candidacyGrade;
+		BigDecimal candidacyGrade;
 	}
 	
 	class candidacyProcess.degreeChange.DegreeChangeIndividualCandidacy extends candidacyProcess.IndividualCandidacy {
-		Double affinity;
+		BigDecimal affinity;
 		Integer degreeNature;
 		BigDecimal approvedEctsRate;
 		BigDecimal gradeRate;
-		Double seriesCandidacyGrade;
+		BigDecimal seriesCandidacyGrade;
 	}
 
 class candidacyProcess.CandidacyPrecedentDegreeInformation extends DomainObject {

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	return getCandidacy().getSelectedDegree();
     }
 
-    public Double getCandidacyAffinity() {
+    public BigDecimal getCandidacyAffinity() {
 	return getCandidacy().getAffinity();
     }
 
@@ -77,7 +78,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	return getCandidacy().getDegreeNature();
     }
 
-    public Double getCandidacyGrade() {
+    public BigDecimal getCandidacyGrade() {
 	return getCandidacy().getCandidacyGrade();
     }
 

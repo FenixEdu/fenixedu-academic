@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +92,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	return getCandidacy().getProfessionalExperience();
     }
 
-    public Double getCandidacyAffinity() {
+    public BigDecimal getCandidacyAffinity() {
 	return getCandidacy().getAffinity();
     }
 
@@ -99,7 +100,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	return getCandidacy().getDegreeNature();
     }
 
-    public Double getCandidacyGrade() {
+    public BigDecimal getCandidacyGrade() {
 	return getCandidacy().getCandidacyGrade();
     }
 
@@ -107,7 +108,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	return getCandidacy().getInterviewGrade();
     }
 
-    public Double getCandidacySeriesGrade() {
+    public BigDecimal getCandidacySeriesGrade() {
 	return getCandidacy().getSeriesCandidacyGrade();
     }
 

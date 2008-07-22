@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState
 public class DegreeChangeIndividualCandidacyResultBean implements Serializable {
 
     private DomainReference<DegreeChangeIndividualCandidacyProcess> candidacyProcess;
-    private Double affinity;
+    private BigDecimal affinity;
     private Integer degreeNature;
     private BigDecimal approvedEctsRate;
     private BigDecimal gradeRate;
-    private Double seriesCandidacyGrade;
+    private BigDecimal seriesCandidacyGrade;
     private IndividualCandidacyState state;
 
     public DegreeChangeIndividualCandidacyResultBean(final DegreeChangeIndividualCandidacyProcess process) {
@@ -50,11 +50,11 @@ public class DegreeChangeIndividualCandidacyResultBean implements Serializable {
 	return getCandidacyPerson().getName();
     }
 
-    public Double getAffinity() {
+    public BigDecimal getAffinity() {
 	return affinity;
     }
 
-    public void setAffinity(Double affinity) {
+    public void setAffinity(BigDecimal affinity) {
 	this.affinity = affinity;
     }
 
@@ -82,11 +82,11 @@ public class DegreeChangeIndividualCandidacyResultBean implements Serializable {
 	this.gradeRate = gradeRate;
     }
 
-    public Double getSeriesCandidacyGrade() {
+    public BigDecimal getSeriesCandidacyGrade() {
 	return seriesCandidacyGrade;
     }
 
-    public void setSeriesCandidacyGrade(Double seriesCandidacyGrade) {
+    public void setSeriesCandidacyGrade(BigDecimal seriesCandidacyGrade) {
 	this.seriesCandidacyGrade = seriesCandidacyGrade;
     }
 

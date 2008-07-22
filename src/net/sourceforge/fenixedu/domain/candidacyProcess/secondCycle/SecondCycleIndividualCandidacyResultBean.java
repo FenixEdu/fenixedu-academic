@@ -1,20 +1,20 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 
 public class SecondCycleIndividualCandidacyResultBean implements Serializable {
 
     private DomainReference<SecondCycleIndividualCandidacyProcess> candidacyProcess;
     private Integer professionalExperience;
-    private Double affinity;
+    private BigDecimal affinity;
     private Integer degreeNature;
-    private Double grade;
+    private BigDecimal grade;
     private String interviewGrade; // NA or value
-    private Double seriesGrade;
+    private BigDecimal seriesGrade;
     private IndividualCandidacyState state;
     private String notes;
 
@@ -41,11 +41,11 @@ public class SecondCycleIndividualCandidacyResultBean implements Serializable {
 		candidacyProcess) : null;
     }
 
-    public Double getAffinity() {
+    public BigDecimal getAffinity() {
 	return affinity;
     }
 
-    public void setAffinity(Double affinity) {
+    public void setAffinity(BigDecimal affinity) {
 	this.affinity = affinity;
     }
 
@@ -57,11 +57,11 @@ public class SecondCycleIndividualCandidacyResultBean implements Serializable {
 	this.degreeNature = degreeNature;
     }
 
-    public Double getGrade() {
+    public BigDecimal getGrade() {
 	return grade;
     }
 
-    public void setGrade(Double grade) {
+    public void setGrade(BigDecimal grade) {
 	this.grade = grade;
     }
 
@@ -89,11 +89,11 @@ public class SecondCycleIndividualCandidacyResultBean implements Serializable {
 	this.professionalExperience = professionalExperience;
     }
 
-    public Double getSeriesGrade() {
+    public BigDecimal getSeriesGrade() {
 	return seriesGrade;
     }
 
-    public void setSeriesGrade(Double seriesGrade) {
+    public void setSeriesGrade(BigDecimal seriesGrade) {
 	this.seriesGrade = seriesGrade;
     }
 
@@ -103,25 +103,5 @@ public class SecondCycleIndividualCandidacyResultBean implements Serializable {
 
     public void setState(IndividualCandidacyState state) {
 	this.state = state;
-    }
-
-    // this method can be used instead of grade field, when necessary
-    // information is present
-    public Double calculateGrade() {
-	final CandidacyPrecedentDegreeInformation information = getCandidacyProcess().getCandidacyPrecedentDegreeInformation();
-	final Double mfc = Double.valueOf(information.getConclusionGrade());
-	return (0.4 * getAffinity() + 0.3 * getDegreeNature() / 5 + 0.3 * (mfc * 10 + getProfessionalExperience()) / 200) * 200;
-    }
-
-    // this method can be used instead of seriesGrade field, when necessary
-    // information is present
-    public Double calculateSeriesGrade() {
-	final Double grade = calculateGrade();
-	return hasInterviewGrade() ? (0.7 * grade + 0.3 * Double.valueOf(getInterviewGrade())) : grade;
-    }
-
-    private boolean hasInterviewGrade() {
-	return getInterviewGrade() != null && getInterviewGrade().matches("[0-9]+(\\.[0-9]+)?")
-		&& Double.valueOf(getInterviewGrade()) != 0d;
     }
 }

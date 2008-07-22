@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
@@ -8,9 +9,9 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState
 public class DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean implements Serializable {
 
     private DomainReference<DegreeCandidacyForGraduatedPersonIndividualProcess> candidacyProcess;
-    private Double affinity;
+    private BigDecimal affinity;
     private Integer degreeNature;
-    private Double grade;
+    private BigDecimal grade;
     private IndividualCandidacyState state;
 
     public DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean(
@@ -34,11 +35,11 @@ public class DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean impl
 		: null;
     }
 
-    public Double getAffinity() {
+    public BigDecimal getAffinity() {
 	return affinity;
     }
 
-    public void setAffinity(Double affinity) {
+    public void setAffinity(BigDecimal affinity) {
 	this.affinity = affinity;
     }
 
@@ -50,11 +51,11 @@ public class DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean impl
 	this.degreeNature = degreeNature;
     }
 
-    public Double getGrade() {
+    public BigDecimal getGrade() {
 	return grade;
     }
 
-    public void setGrade(Double grade) {
+    public void setGrade(BigDecimal grade) {
 	this.grade = grade;
     }
 

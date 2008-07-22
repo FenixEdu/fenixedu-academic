@@ -248,11 +248,10 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 
     private BigDecimal calculateC(final DegreeChangeIndividualCandidacyProcess process) {
 	if (process.getCandidacySeriesCandidacyGrade() != null) {
-	    final Double grade = process.getCandidacySeriesCandidacyGrade();
-	    return new BigDecimal(grade).setScale(2, RoundingMode.HALF_EVEN);
+	    return process.getCandidacySeriesCandidacyGrade().setScale(2, RoundingMode.HALF_EVEN);
 	}
 	
-	final Double affinity = process.getCandidacyAffinity();
+	final BigDecimal affinity = process.getCandidacyAffinity();
 	final Integer nature = process.getCandidacyDegreeNature();
 	final BigDecimal valueA = calculateA(process, false);
 	final BigDecimal valueB = calculateB(process, false);
