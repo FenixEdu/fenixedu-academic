@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -216,7 +217,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final DegreeType degreeType = getDegreeType(request);
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
-	final String reportName = getReportName("etiGrades", degreeType.getLocalizedName(), executionYear);
+	final String reportName = getReportName("matriculas", degreeType.getLocalizedName(), executionYear);
 
 	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
 	reportRegistrations(spreadsheet, degreeType, executionYear);
@@ -230,7 +231,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final DegreeType degreeType = getDegreeType(request);
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
-	final String reportName = getReportName("etiGrades", degreeType.getLocalizedName(), executionYear);
+	final String reportName = getReportName("prescricoes", degreeType.getLocalizedName(), executionYear);
 
 	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
 	reportFlunked(spreadsheet, degreeType, executionYear);
@@ -244,7 +245,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final DegreeType degreeType = getDegreeType(request);
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
-	final String reportName = getReportName("etiGrades", degreeType.getLocalizedName(), executionYear);
+	final String reportName = getReportName("diplomados", degreeType.getLocalizedName(), executionYear);
 
 	final Spreadsheet spreadsheet = new Spreadsheet(reportName);
 	reportGraduations(spreadsheet, degreeType, executionYear);
@@ -666,12 +667,19 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     private void reportGraduations(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
 	spreadsheet.setHeader("número aluno");
+	spreadsheet.setHeader("nome");
 	setDegreeHeaders(spreadsheet);
 	spreadsheet.setHeader("ano de ingresso");
 	spreadsheet.setHeader("ano léctivo conclusão");
 	spreadsheet.setHeader("data conclusão");
 	spreadsheet.setHeader("número de anos para conclusão");
 	spreadsheet.setHeader("média final");
+	spreadsheet.setHeader("morada");
+	spreadsheet.setHeader("código postal");
+	spreadsheet.setHeader("telefone");
+	spreadsheet.setHeader("telemovel");
+	spreadsheet.setHeader("email");
+	spreadsheet.setHeader("sexo");
 
 	final CycleType cycleType = degreeType.getLastCycleType();
 
@@ -696,8 +704,11 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 					null : ExecutionYear.getExecutionYearByDate(conclusionDate);
 			    }
 			    if (conclusionExecutionYear == null || conclusionExecutionYear == executionYear) {
+				final Person person = registration.getPerson();
+
 				final Row row = spreadsheet.addRow();
 				row.setCell(registration.getNumber());
+				row.setCell(person.getName());
 				setDegreeColumns(row, degree);
 				row.setCell(registration.getStartExecutionYear().getYear());
 				if (conclusionExecutionYear != null) {
@@ -712,6 +723,12 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 				}
 				row.setCell(Integer.valueOf(registration.getSortedEnrolmentsExecutionYears().size()));
 				row.setCell(registration.getFinalAverage());
+				row.setCell(person.getAddress());
+				row.setCell(person.getPostalCode());
+				row.setCell(person.getPhone());
+				row.setCell(person.getMobile());
+				row.setCell(person.getEmail());
+				row.setCell(person.getGender().toLocalizedString());
 			    }
 			}
 		    }
