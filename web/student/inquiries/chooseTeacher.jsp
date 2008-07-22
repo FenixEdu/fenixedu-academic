@@ -5,14 +5,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
-<style>
-table.tdwith50px td { width: 50px; }
-table.tdwith90px td { width: 90px; }
-.aleft { text-align: left !important; }
-.acenter { text-align: center !important; }
-.bold { font-weight: bold !important; }
-</style>
-
 <em><bean:message key="title.studentPortal" bundle="INQUIRIES_RESOURCES"/></em>
 <h2><bean:message key="title.inquiries" bundle="INQUIRIES_RESOURCES"/></h2>
 
@@ -37,13 +29,13 @@ table.tdwith90px td { width: 90px; }
 	</tr>
 	<logic:iterate id="teacherInquiry" name="studentInquiry" property="teachersInquiries">
 			<tr>
-				<td>
+				<td class="acenter">
 					<c:if test="${teacherInquiry.key.photoAvailable}">
 						<bean:define id="personID" name="teacherInquiry" property="key.personID"/>
-						<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>					
+						<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>					
 					</c:if>
 					<c:if test="${!teacherInquiry.key.photoAvailable}">
-						<html:img align="middle" height="100" width="100" src="<%= request.getContextPath() +"/images/photo_placer01_pt.gif"%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+						<html:img align="middle" src="<%= request.getContextPath() +"/images/photo_placer01_pt.gif"%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 					</c:if>										
 				</td>
 				<td>				
@@ -74,9 +66,7 @@ table.tdwith90px td { width: 90px; }
 	</logic:iterate>
 </table>
 
-<br/>
-
-<p class="mtop15"><bean:message key="message.inquiries.submitInquiryWhenFinnish" bundle="INQUIRIES_RESOURCES"/></p>
+<p class="mtop2"><bean:message key="message.inquiries.submitInquiryWhenFinnish" bundle="INQUIRIES_RESOURCES"/></p>
 
 <p class="mbottom0">
 	<div class="forminline dinline">

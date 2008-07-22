@@ -4,44 +4,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
-<style>
-table.tdwith50px td { width: 50px; }
-table.tdwith90px td { width: 90px; }
-.aleft { text-align: left !important; }
-.acenter { text-align: center !important; }
-.bold { font-weight: bold !important; }
-</style>
-<style>
-a.help {
-position: relative;
-text-decoration: none;
-/*color: black !important;*/
-border: none !important;
-width: 20px;
-}
-a.help span {
-display: none;
-}
-a.help:hover {
-/*background: none;*/ /* IE hack */
-z-index: 100;
-}
-a.help:hover span {
-display: block !important;
-display: inline-block;
-width: 250px;
-position: absolute;
-top: 10px;
-left: 30px;
-text-align: left;
-padding: 7px 10px;
-background: #48869e;
-color: #fff;
-border: 3px solid #97bac6;
-/*cursor: help;*/
-}
-</style>
-
 <em><bean:message key="title.studentPortal" bundle="INQUIRIES_RESOURCES"/></em>
 <h2><bean:message key="title.inquiries" bundle="INQUIRIES_RESOURCES"/></h2>
 
@@ -69,16 +31,17 @@ border: 3px solid #97bac6;
 		<fr:edit name="studentInquiry" id="studentInquiry" visible="false"/>
 		<fr:edit name="teacherInquiry" id="teacherInquiry" visible="false" />
 		
-		<p><bean:message key="title.studentInquiries.thirdPageFirstBlock" bundle="INQUIRIES_RESOURCES"/></p>
+		<h4 class="mtop15 mbottom05"><bean:message key="title.studentInquiries.thirdPageFirstBlock" bundle="INQUIRIES_RESOURCES"/></h4>
 		<fr:edit name="teacherInquiry" property="thirdPageFirstBlock" />
 		<fr:edit name="teacherInquiry" property="thirdPageThirdBlock" />
-		<p><bean:message key="title.studentInquiries.thirdPageFourthBlock" bundle="INQUIRIES_RESOURCES"/></p>
+		<h4 class="mtop15 mbottom05"><bean:message key="title.studentInquiries.thirdPageFourthBlock" bundle="INQUIRIES_RESOURCES"/></h4>
 		<fr:edit name="teacherInquiry" property="thirdPageFourthBlock" />
-		<p><bean:message key="title.studentInquiries.thirdPageFifthBlock" bundle="INQUIRIES_RESOURCES"/></p>
+		<h4 class="mtop15 mbottom05"><bean:message key="title.studentInquiries.thirdPageFifthBlock" bundle="INQUIRIES_RESOURCES"/></h4>
 		<fr:edit name="teacherInquiry" property="thirdPageFifthBlock" />
-		<p><bean:message key="title.studentInquiries.thirdPageSixthBlock" bundle="INQUIRIES_RESOURCES"/></p>
+		<h4 class="mtop15 mbottom05"><bean:message key="title.studentInquiries.thirdPageSixthBlock" bundle="INQUIRIES_RESOURCES"/></h4>
 		<fr:edit name="teacherInquiry" property="thirdPageSixthBlock" />
 	
+		<p class="mtop025 mbottom15"><em><bean:message key="message.inquiries.requiredFieldsMarkedWithAsterisk" bundle="INQUIRIES_RESOURCES"/></em></p>
 		<html:submit><bean:message key="button.continue" bundle="INQUIRIES_RESOURCES"/></html:submit>
 	</fr:form>
 	

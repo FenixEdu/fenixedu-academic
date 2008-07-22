@@ -5,14 +5,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
-<style>
-table.tdwith50px td { width: 50px; }
-table.tdwith90px td { width: 90px; }
-.aleft { text-align: left !important; }
-.acenter { text-align: center !important; }
-.bold { font-weight: bold !important; }
-</style>
-
 <em><bean:message key="title.studentPortal" bundle="INQUIRIES_RESOURCES"/></em>
 <h2><bean:message key="title.inquiries" bundle="INQUIRIES_RESOURCES"/></h2>
 

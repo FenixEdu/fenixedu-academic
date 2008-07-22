@@ -4,14 +4,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
-<style>
-table.tdwith50px td { width: 50px; }
-table.tdwith90px td { width: 90px; }
-.aleft { text-align: left !important; }
-.acenter { text-align: center !important; }
-.bold { font-weight: bold !important; }
-</style>
-
 <em><bean:message key="title.studentPortal" bundle="INQUIRIES_RESOURCES"/></em>
 <h2><bean:message key="title.inquiries" bundle="INQUIRIES_RESOURCES"/></h2>
 
@@ -34,20 +26,24 @@ table.tdwith90px td { width: 90px; }
 
 <div class="forminline dinline">
 	<fr:form action="/studentInquiry.do?method=showInquiries2ndPage">
-		<p><bean:message key="title.studentInquiries.firstPageFirstBlock" bundle="INQUIRIES_RESOURCES"/></p>
+		<h4 class="mtop15 mbottom05"><bean:message key="title.studentInquiries.firstPageFirstBlock" bundle="INQUIRIES_RESOURCES"/></h4>
 		<fr:edit name="studentInquiry" property="firstPageFirstBlock" />
 		<fr:edit name="studentInquiry" property="firstPageSecondBlock" />
 		<fr:edit name="studentInquiry" property="firstPageThirdBlock" />
 		<fr:edit name="studentInquiry" property="firstPageFourthBlock" />
-		<p><bean:message key="title.studentInquiries.firstPageFifthBlock" bundle="INQUIRIES_RESOURCES"/></p>
+		<h4 class="mtop15 mbottom05"><bean:message key="title.studentInquiries.firstPageFifthBlock" bundle="INQUIRIES_RESOURCES"/></h4>
 		<fr:edit name="studentInquiry" property="firstPageFifthBlock" />
 		
 		<fr:edit name="studentInquiry" id="studentInquiry" visible="false"/>
 	
+		<p class="mtop025 mbottom15"><em><bean:message key="message.inquiries.requiredFieldsMarkedWithAsterisk" bundle="INQUIRIES_RESOURCES"/></em></p>
 		<html:submit><bean:message key="button.continue" bundle="INQUIRIES_RESOURCES"/></html:submit>
 	</fr:form>
 	
 	<fr:form action="/studentInquiry.do?method=showCoursesToAnswer">
 		<html:submit><bean:message key="button.back" bundle="INQUIRIES_RESOURCES"/></html:submit>
 	</fr:form>
+	
+	
+	
 </div>	
