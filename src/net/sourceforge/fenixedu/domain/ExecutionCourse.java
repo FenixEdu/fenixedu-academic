@@ -342,10 +342,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public void delete() {
 	if (canBeDeleted()) {
+
 	    if (hasSite()) {
 		getSite().delete();
 	    }
-
+	    
+	    if (hasBoard()) {
+		getBoard().delete();
+	    }
+	    
 	    for (; !getCourseLoads().isEmpty(); getCourseLoads().get(0).delete())
 		;
 	    for (; !getProfessorships().isEmpty(); getProfessorships().get(0).delete())
@@ -359,10 +364,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    for (; !getForuns().isEmpty(); getForuns().get(0).delete())
 		;
 
-	    if (hasBoard()) {
-		getBoard().delete();
-	    }
-
+	    removeFinalEvaluations();
 	    getAssociatedCurricularCourses().clear();
 	    getNonAffiliatedTeachers().clear();
 	    removeExecutionPeriod();
@@ -374,10 +376,23 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
     }
 
+    private void removeFinalEvaluations() {
+	final Iterator<Evaluation> iterator = getAssociatedEvaluationsIterator();
+	while (iterator.hasNext()) {
+	    final Evaluation evaluation = iterator.next();
+	    if (evaluation.isFinal()) {
+		iterator.remove();
+		evaluation.delete();
+	    } else {
+		throw new DomainException("error.ExecutionCourse.cannot.remove.non.final.evaluation");
+	    }
+	}
+    }
+
     public boolean canBeDeleted() {
 
 	if (hasAnyAssociatedInquiriesCourses() || hasAnyAssociatedInquiriesRegistries() || hasAnyAssociatedSummaries()
-		|| !getGroupings().isEmpty() || hasAnyAssociatedBibliographicReferences() || hasAnyAssociatedEvaluations()
+		|| !getGroupings().isEmpty() || hasAnyAssociatedBibliographicReferences() || !hasOnlyFinalEvaluations()
 		|| hasEvaluationMethod() || !getAssociatedShifts().isEmpty() || hasCourseReport() || hasAnyAttends()
 		|| (hasSite() && !getSite().isDeletable()) || (hasBoard() && !getBoard().isDeletable())) {
 	    throw new DomainException("error.execution.course.cant.delete");
@@ -395,6 +410,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    }
 	}
 
+	return true;
+    }
+    
+    private boolean hasOnlyFinalEvaluations() {
+	for (final Evaluation evaluation : getAssociatedEvaluationsSet()) {
+	    if (!evaluation.isFinal()) {
+		return false;
+	    }
+	}
 	return true;
     }
 
