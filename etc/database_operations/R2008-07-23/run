@@ -40,3 +40,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Change from Double to BigDecimal in IndividualCandidacy" alterDoublesFromIndividualCandidacy.sql
+execute "Altering Inquiries Tables" alterInquiriesTables.sql
