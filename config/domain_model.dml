@@ -2556,6 +2556,7 @@ class DomainObject {
 	class inquiries.InquiriesCourse extends DomainObject {
     	Integer weeklyHoursSpentPercentage;
     	Double studyDaysSpentInExamsSeason;	
+    	Long answerDuration;
 	
 		Character approvationRatioClassification;
 		Character arithmeticMeanClassification;
