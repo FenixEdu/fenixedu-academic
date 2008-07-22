@@ -22,10 +22,11 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class Event extends Event_Base {
 
@@ -416,7 +417,8 @@ public abstract class Event extends Event_Base {
 
     public Money calculateAmountToPay(DateTime whenRegistered) {
 	final Money totalAmountToPay = calculateTotalAmountToPay(whenRegistered);
-	return totalAmountToPay.isPositive() ? totalAmountToPay.subtract(getPayedAmount()) : Money.ZERO;
+	return totalAmountToPay != null && totalAmountToPay.isPositive() ? totalAmountToPay.subtract(getPayedAmount())
+		: Money.ZERO;
 
     }
 
