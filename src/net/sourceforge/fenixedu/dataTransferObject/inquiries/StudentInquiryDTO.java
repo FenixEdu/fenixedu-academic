@@ -223,20 +223,20 @@ public class StudentInquiryDTO implements Serializable {
 		"label.studentInquiries.firstPageSecondBlock.highWorkLoadReasonOtherReasons", true));
 
 	this.firstPageThirdBlock = new InquiriesBlock(StringUtils.EMPTY, true,
-		"header.studentInquiries.firstPageThirdBlock.totallyDisagree", StringUtils.EMPTY,
-		"header.studentInquiries.firstPageThirdBlock.disagree", StringUtils.EMPTY,
-		"header.studentInquiries.firstPageThirdBlock.neitherAgreeOrDisagree", StringUtils.EMPTY,
-		"header.studentInquiries.firstPageThirdBlock.agree", StringUtils.EMPTY,
+		"header.studentInquiries.firstPageThirdBlock.totallyDisagree", "header.studentInquiries.two",
+		"header.studentInquiries.firstPageThirdBlock.disagree", "header.studentInquiries.four",
+		"header.studentInquiries.firstPageThirdBlock.neitherAgreeOrDisagree", "header.studentInquiries.six",
+		"header.studentInquiries.firstPageThirdBlock.agree", "header.studentInquiries.eight",
 		"header.studentInquiries.firstPageThirdBlock.totallyAgree");
 	this.firstPageThirdBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.firstPageThirdBlock.previousKnowledgeEnoughToCUAttendance", 1, 9, true));
+		"label.studentInquiries.firstPageThirdBlock.previousKnowledgeEnoughToCUAttendance", 1, 9, false));
 
 	this.firstPageFourthBlock = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.studentInquiries.firstPageFourthBlock.passive",
 		"header.studentInquiries.firstPageFourthBlock.activeWhenRequired",
 		"header.studentInquiries.firstPageFourthBlock.activeByOwnWill");
 	this.firstPageFourthBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.firstPageFourthBlock.activityParticipation", 1, 3, true));
+		"label.studentInquiries.firstPageFourthBlock.activityParticipation", 1, 3, false));
 
 	this.firstPageFifthBlock = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.studentInquiries.firstPageFifthBlock.unknown",
@@ -244,48 +244,48 @@ public class StudentInquiryDTO implements Serializable {
 		"header.studentInquiries.firstPageFifthBlock.didContribute",
 		"header.studentInquiries.firstPageFifthBlock.contributedAlot");
 	this.firstPageFifthBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.firstPageFifthBlock.knowledgeAndComprehensionOfCU", 0, 3, true));
+		"label.studentInquiries.firstPageFifthBlock.knowledgeAndComprehensionOfCU", 0, 3, false));
 	this.firstPageFifthBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.firstPageFifthBlock.knowledgeApplicationOfCU", 0, 3, true));
+		"label.studentInquiries.firstPageFifthBlock.knowledgeApplicationOfCU", 0, 3, false));
 	this.firstPageFifthBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.firstPageFifthBlock.criticSenseAndReflexiveSpirit", 0, 3, true));
+		"label.studentInquiries.firstPageFifthBlock.criticSenseAndReflexiveSpirit", 0, 3, false));
 	this.firstPageFifthBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.firstPageFifthBlock.cooperationAndComunicationCapacity", 0, 3, true));
+		"label.studentInquiries.firstPageFifthBlock.cooperationAndComunicationCapacity", 0, 3, false));
 
 	this.secondPageFirstBlock = new InquiriesBlock(StringUtils.EMPTY, true,
-		"header.studentInquiries.secondPageFirstBlock.totallyDisagree", StringUtils.EMPTY,
-		"header.studentInquiries.secondPageFirstBlock.disagree", StringUtils.EMPTY,
-		"header.studentInquiries.secondPageFirstBlock.neitherAgreeOrDisagree", StringUtils.EMPTY,
-		"header.studentInquiries.secondPageFirstBlock.agree", StringUtils.EMPTY,
+		"header.studentInquiries.secondPageFirstBlock.totallyDisagree", "header.studentInquiries.two",
+		"header.studentInquiries.secondPageFirstBlock.disagree", "header.studentInquiries.four",
+		"header.studentInquiries.secondPageFirstBlock.neitherAgreeOrDisagree", "header.studentInquiries.six",
+		"header.studentInquiries.secondPageFirstBlock.agree", "header.studentInquiries.eight",
 		"header.studentInquiries.secondPageFirstBlock.totallyAgree");
 	this.secondPageFirstBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.secondPageFirstBlock.predictedProgramTeached", 1, 9, true));
+		"label.studentInquiries.secondPageFirstBlock.predictedProgramTeached", 1, 9, false));
 	this.secondPageFirstBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.secondPageFirstBlock.wellStructuredOfCU", 1, 9, true)
+		"label.studentInquiries.secondPageFirstBlock.wellStructuredOfCU", 1, 9, false)
 		.setToolTip("tooltip.studentInquiries.secondPageFirstBlock.wellStructuredOfCU"));
 	this.secondPageFirstBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.secondPageFirstBlock.goodGuidanceMaterial", 1, 9, true));
+		"label.studentInquiries.secondPageFirstBlock.goodGuidanceMaterial", 1, 9, false));
 	this.secondPageFirstBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.secondPageFirstBlock.recomendendBibliographyImportance", 1, 9, true)
+		"label.studentInquiries.secondPageFirstBlock.recomendendBibliographyImportance", 1, 9, false)
 		.setToolTip("tooltip.studentInquiries.secondPageFirstBlock.recomendendBibliographyImportance"));
 
 	this.secondPageSecondBlock = new InquiriesBlock(StringUtils.EMPTY, true,
-		"header.studentInquiries.secondPageFirstBlock.totallyDisagree", StringUtils.EMPTY,
-		"header.studentInquiries.secondPageFirstBlock.disagree", StringUtils.EMPTY,
-		"header.studentInquiries.secondPageFirstBlock.neitherAgreeOrDisagree", StringUtils.EMPTY,
-		"header.studentInquiries.secondPageFirstBlock.agree", StringUtils.EMPTY,
+		"header.studentInquiries.secondPageFirstBlock.totallyDisagree", "header.studentInquiries.two",
+		"header.studentInquiries.secondPageFirstBlock.disagree", "header.studentInquiries.four",
+		"header.studentInquiries.secondPageFirstBlock.neitherAgreeOrDisagree", "header.studentInquiries.six",
+		"header.studentInquiries.secondPageFirstBlock.agree", "header.studentInquiries.eight",
 		"header.studentInquiries.secondPageFirstBlock.totallyAgree");
 	this.secondPageSecondBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.secondPageSecondBlock.fairEvaluationMethods", 1, 9, true));
+		"label.studentInquiries.secondPageSecondBlock.fairEvaluationMethods", 1, 9, false));
 
 	this.secondPageThirdBlock = new InquiriesBlock(StringUtils.EMPTY, true,
-		"header.studentInquiries.secondPageThirdBlock.veryBad", StringUtils.EMPTY,
-		"header.studentInquiries.secondPageThirdBlock.bad", StringUtils.EMPTY,
-		"header.studentInquiries.secondPageThirdBlock.neitherGoodOrBad", StringUtils.EMPTY,
-		"header.studentInquiries.secondPageThirdBlock.good", StringUtils.EMPTY,
+		"header.studentInquiries.secondPageThirdBlock.veryBad", "header.studentInquiries.two",
+		"header.studentInquiries.secondPageThirdBlock.bad", "header.studentInquiries.four",
+		"header.studentInquiries.secondPageThirdBlock.neitherGoodOrBad", "header.studentInquiries.six",
+		"header.studentInquiries.secondPageThirdBlock.good", "header.studentInquiries.eight",
 		"header.studentInquiries.secondPageThirdBlock.veryGood");
 	this.secondPageThirdBlock.addQuestion(new RadioGroupQuestion(
-		"label.studentInquiries.secondPageThirdBlock.globalClassificationOfCU", 1, 9, true));
+		"label.studentInquiries.secondPageThirdBlock.globalClassificationOfCU", 1, 9, false));
     }
 
 }
