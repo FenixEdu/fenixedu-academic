@@ -278,7 +278,15 @@ abstract public class DegreeModule extends DegreeModule_Base {
 		return true;
 	    }
 	}
-
+	return false;
+    }
+    
+    public boolean hasAnyOpenParentContexts(final ExecutionSemester executionSemester) {
+	for (final Context context : getParentContextsSet()) {
+	    if (executionSemester == null || context.isOpen(executionSemester)) {
+		return true;
+	    }
+	}
 	return false;
     }
 
