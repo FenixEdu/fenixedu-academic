@@ -5,7 +5,7 @@
 <html:xhtml/>
 
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
-<h2><bean:message key="label.candidacy.graduatedPerson.send.to.coordinator" bundle="APPLICATION_RESOURCES"/></h2>
+<h2><bean:message key="label.candidacy.send.to.coordinator" bundle="APPLICATION_RESOURCES"/></h2>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
 	<span class="error0"> <bean:write name="message" /> </span>
@@ -18,7 +18,7 @@
 <fr:form action='<%= "/caseHandling" + processName.toString() + ".do?processId=" + processId.toString() %>'>
  	<html:hidden property="method" value="executeSendToCoordinator" />
 
-	<strong><bean:message key="label.candidacy.graduatedPerson.send.to.coordinator.confirm.message" bundle="APPLICATION_RESOURCES" />?</strong>
+	<strong><bean:message key="label.candidacy.send.to.coordinator.confirm.message" bundle="APPLICATION_RESOURCES" />?</strong>
 	<br/>
 	<br/>
 	<html:submit><bean:message key="label.update" bundle="APPLICATION_RESOURCES" /></html:submit>

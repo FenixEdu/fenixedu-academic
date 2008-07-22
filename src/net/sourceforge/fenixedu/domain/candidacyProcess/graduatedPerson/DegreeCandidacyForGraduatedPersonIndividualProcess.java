@@ -40,7 +40,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     }
 
     private void checkParameters(final DegreeCandidacyForGraduatedPersonProcess candidacyProcess) {
-	if (candidacyProcess == null || !candidacyProcess.hasOpenCandidacyPeriod()) {
+	if (candidacyProcess == null || !candidacyProcess.hasCandidacyPeriod()) {
 	    throw new DomainException("error.DegreeCandidacyForGraduatedPersonIndividualProcess.invalid.candidacy.process");
 	}
     }

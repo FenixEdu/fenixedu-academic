@@ -194,7 +194,7 @@
 	</slot>
 	<slot name="precedentDegreeInformation.institutionUnitName" layout="autoComplete" key="label.candidacy.choose.institution" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
 		<property name="size" value="40"/>
-		<property name="labelField" value="unit.name"/>
+		<property name="labelField" value="unit.presentationNameWithParents"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchExternalUnits"/>
 		<property name="serviceArgs" value="slot=name,size=20"/>
@@ -241,7 +241,7 @@
 	</slot>
 	<slot name="precedentDegreeInformation.institutionUnitName" layout="autoComplete" key="label.candidacy.choose.institution" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
 		<property name="size" value="40"/>
-		<property name="labelField" value="unit.name"/>
+		<property name="labelField" value="unit.presentationNameWithParents"/>
 		<property name="indicatorShown" value="true"/>		
 		<property name="serviceName" value="SearchExternalUnits"/>
 		<property name="serviceArgs" value="slot=name,size=20"/>
@@ -290,7 +290,7 @@
 		<property name="size" value="3"/>
 		<property name="maxLength" value="3"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{1}|)"/>
+            <property name="regexp" value="(\d{3}|)"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
@@ -517,7 +517,7 @@
             <property name="key" value="true"/>
         </validator>
 	</slot>
-	<slot name="state" key="label.candidacy.individual.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="state" key="label.candidacy.individual.state">
 		<property name="excludedValues" value="STAND_BY, CANCELLED" />
 	</slot>
 	<slot name="notes" key="label.candidacy.notes">
@@ -624,7 +624,7 @@
             <property name="key" value="true"/>
         </validator>
 	</slot>
-	<slot name="state" key="label.candidacy.individual.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="state" key="label.candidacy.individual.state">
 		<property name="excludedValues" value="STAND_BY, CANCELLED" />
 	</slot>
 </schema>
@@ -803,7 +803,32 @@
             <property name="key" value="true"/>
         </validator>
 	</slot>
-	<slot name="state" key="label.candidacy.individual.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="state" key="label.candidacy.individual.state">
 		<property name="excludedValues" value="STAND_BY, CANCELLED" />
 	</slot>
+</schema>
+
+<schema name="DegreeChangeIndividualCandidacyResultBean.introduce.result.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
+	<slot name="candidacyPerson.name" key="label.name" read-only="true">
+		<property name="classes" value="nowrap" />
+	</slot>
+	<slot name="candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
+		<property name="classes" value="nowrap" />
+		<property name="format" value="${degreeDesignation} / ${institution.name}" />
+	</slot>
+	<slot name="candidacyAffinity" key="label.candidacy.affinity" read-only="true" />
+	<slot name="candidacyDegreeNature" key="label.candidacy.degreeNature" read-only="true" />
+	<slot name="candidacyPrecedentDegreeInformation.numberOfApprovedCurricularCourses" key="label.candidacy.numberOfApprovedCurricularCourses" read-only="true" />
+	<slot name="candidacyPrecedentDegreeInformation.gradeSum" key="label.candidacy.gradeSum.abbr" read-only="true" />
+	<slot name="candidacyPrecedentDegreeInformation.approvedEcts" key="label.candidacy.approvedEcts" read-only="true" />
+	<slot name="candidacyPrecedentDegreeInformation.enroledEcts" key="label.candidacy.enroledEcts" read-only="true" />
+	<slot name="candidacyApprovedEctsRate" key="label.candidacy.approvedEctsRate" read-only="true" />
+	<slot name="candidacyGradeRate" key="label.candidacy.gradeRate" read-only="true" />
+	<slot name="candidacySeriesCandidacyGrade" key="label.candidacy.degreeChange.seriesCandidacyGrade" read-only="true" />
+	<slot name="candidacyState" key="label.candidacy.individual.state" read-only="true" />
+</schema>
+
+<schema name="DegreeChangeCandidacyProcess.candidacyDegreeBean" 
+		type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeChange.DegreeChangeCandidacyProcessDA$DegreeChangeCandidacyDegreeBean"
+		extends="CandidacyProcess.candidacyDegreeBean" bundle="APPLICATION_RESOURCES">
 </schema>

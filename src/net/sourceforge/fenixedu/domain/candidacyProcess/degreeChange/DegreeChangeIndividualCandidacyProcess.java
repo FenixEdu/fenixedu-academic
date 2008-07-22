@@ -41,7 +41,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
     }
 
     private void checkParameters(final DegreeChangeCandidacyProcess candidacyProcess) {
-	if (candidacyProcess == null || !candidacyProcess.hasOpenCandidacyPeriod()) {
+	if (candidacyProcess == null || !candidacyProcess.hasCandidacyPeriod()) {
 	    throw new DomainException("error.DegreeChangeIndividualCandidacyProcess.invalid.candidacy.process");
 	}
     }
@@ -100,6 +100,10 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 
     public Double getCandidacySeriesCandidacyGrade() {
 	return getCandidacy().getSeriesCandidacyGrade();
+    }
+    
+    public boolean hasCandidacyForSelectedDegree(final Degree degree) {
+	return getCandidacySelectedDegree() == degree;
     }
 
     // static information
