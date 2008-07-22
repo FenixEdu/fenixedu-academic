@@ -11,7 +11,7 @@
 		<property name="destination" value="degreePostBack"/>
 	</slot>
 	<slot name="executionYear" layout="menu-select-postback" key="label.executionYear" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.ExecutionYearsForDegree"/>
 		<property name="format" value="${year}"/>
 		<property name="destination" value="degreeCurricularPlanPostBack"/>				
 	</slot>	
