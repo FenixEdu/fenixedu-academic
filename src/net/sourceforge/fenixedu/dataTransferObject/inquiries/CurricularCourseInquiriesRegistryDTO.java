@@ -63,7 +63,7 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
     public double getWeeklyContactLoad() {
 	return getCurricularCourse().getCompetenceCourse().getContactLoad() / 14;
     }
-    
+
     public void setStudyDaysSpentInExamsSeason(Double studyDaysSpentInExamsSeason) {
 	this.studyDaysSpentInExamsSeason = studyDaysSpentInExamsSeason;
     }
@@ -75,13 +75,10 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 	DecimalFormat format = new DecimalFormat("#0.00");
 
 	// ((%*NHTA + NHC)*14+ NDE*8) / 28
-	final double result = ((getWeeklyHoursSpentPercentage() * weeklyHoursSpentInClassesSeason + getCurricularCourse()
-		.getCompetenceCourse().getContactLoad()) * 14 + getStudyDaysSpentInExamsSeason() * 8)
-		/ (28 * 100);
+	final double result = (((getWeeklyHoursSpentPercentage() / 100d) * weeklyHoursSpentInClassesSeason * 14)
+		+ getCurricularCourse().getCompetenceCourse().getContactLoad() + getStudyDaysSpentInExamsSeason() * 8) / 28;
 
 	return Double.valueOf(format.format(result));
     }
-    
-    
 
 }

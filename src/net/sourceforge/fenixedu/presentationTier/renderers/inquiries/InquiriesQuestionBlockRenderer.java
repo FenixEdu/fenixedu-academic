@@ -79,8 +79,9 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 
 		final HtmlTableRow questionRow = mainTable.createRow();
 		final HtmlTableCell labelCell = questionRow.createCell(CellType.HEADER);
-		labelCell.setBody(new HtmlText(getResource(inquiriesQuestion.getLabel()) + getQuestionToolTip(inquiriesQuestion)
-			+ getQuestionRequiredIndication(inquiriesQuestion), false));
+		labelCell.setBody(new HtmlText(getResource(inquiriesQuestion.getLabel())
+			+ getQuestionRequiredIndication(inquiriesQuestion) + getQuestionToolTip(inquiriesQuestion), false));
+		labelCell.addClass("width300px brightccc");
 
 		PresentationContext newContext = getContext().createSubContext(metaSlot);
 		newContext.setSchema(metaSlot.getSchema() != null ? metaSlot.getSchema().getName() : null);
@@ -166,7 +167,7 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 
 	    final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
 	    firstHeaderCell.setBody(new HtmlText(getResource(header.getTitle())));
-	    firstHeaderCell.addClass("bold width300px");
+	    firstHeaderCell.addClass("width300px");
 
 	    if (header.hasScaleHeaders()) {
 		for (String scale : header.getScaleHeaders()) {
@@ -181,7 +182,7 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 
 	@Override
 	public String getClasses() {
-	    return "tstyle1 thlight thleft tdcenter tdwith50px";
+	    return "tstyle2 thlight thleft tdcenter tdwith50px tborderccc";
 	}
     }
 

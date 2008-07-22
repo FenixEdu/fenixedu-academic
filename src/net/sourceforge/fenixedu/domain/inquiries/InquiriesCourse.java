@@ -113,7 +113,8 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 	final InquiriesRegistry inquiriesRegistry = inquiryDTO.getInquiriesRegistry();
 
 	InquiriesCourse inquiriesCourse = new InquiriesCourse(inquiriesRegistry);
-
+	inquiriesCourse.setAnswerDuration(inquiryDTO.getAnswerDuration());
+	
 	setAnswers(inquiryDTO, inquiriesCourse);
 
 	inquiriesRegistry.setState(InquiriesRegistryState.ANSWERED);

@@ -23,6 +23,8 @@ import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -51,9 +53,12 @@ public class StudentInquiryDTO implements Serializable {
 
     private InquiriesBlock secondPageThirdBlock;
 
+    private DateTime startDateTime;
+
     private StudentInquiryDTO(InquiriesRegistry inquiriesRegistry) {
 
 	this.inquiriesRegistry = new DomainReference<InquiriesRegistry>(inquiriesRegistry);
+	this.startDateTime = new DateTime();
 
 	buildQuestionBlocks();
 
@@ -158,6 +163,10 @@ public class StudentInquiryDTO implements Serializable {
 
     public InquiriesRegistry getInquiriesRegistry() {
 	return inquiriesRegistry.getObject();
+    }
+
+    public long getAnswerDuration() {
+	return this.startDateTime == null ? 0 : new DateTime().getMillis() - this.startDateTime.getMillis();
     }
 
     public Map<String, InquiriesQuestion> buildAnswersMap(boolean fullLabels) {

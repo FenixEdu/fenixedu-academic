@@ -54,6 +54,18 @@ public class InquiriesRegistry extends InquiriesRegistry_Base {
 	return getState() == InquiriesRegistryState.ANSWERED;
     }
 
+    public boolean isNotAnswered() {
+	return getState() == InquiriesRegistryState.NOT_ANSWERED;
+    }
+
+    public boolean isToAnswerLater() {
+	return !isNotAvailableToInquiries() && (getState() == null || getState() == InquiriesRegistryState.ANSWER_LATER);
+    }
+
+    public boolean isNotAvailableToInquiries() {
+	return !getExecutionCourse().getAvailableForInquiries();
+    }
+
     public ExecutionDegree getExecutionDegree() {
 
 	final StudentCurricularPlan studentCurricularPlan = getStudent().getActiveStudentCurricularPlan();
