@@ -527,6 +527,7 @@ padding-right: 0.5em;
 .attention2 { background-color: #ffa; color: #d60; }
 .underline1 { border-bottom: 2px solid #ec8; padding-bottom: 0.1em; }
 .valigntop { vertical-align: top; }
+.valignbottom { vertical-align: bottom; }
 .acronym { border-bottom: 1px dotted #888; }
 
 /* floats */
