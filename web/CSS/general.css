@@ -2399,3 +2399,41 @@ ul.pub-material li.pub-cellphone { background: url(http://www.ist.utl.pt/img/ico
 .pub-tab_lay td.pub-subheader { font-weight: bold; color: #333; background: #e2e2e2; padding: 5px 5px 5px 5px; }
 .pub-tab_lay td.pub-bluecell, .pub-tab_lay tr.pub-bluecell { background: #EDF3FE; }
 
+
+
+table.tdwith50px td { width: 50px; }
+table.tdwith90px td { width: 90px; }
+.aleft { text-align: left !important; }
+.acenter { text-align: center !important; }
+.bold { font-weight: bold !important; }
+
+a.help {
+position: relative;
+text-decoration: none;
+/*color: black !important;*/
+border: none !important;
+width: 20px;
+}
+a.help span {
+display: none;
+}
+a.help:hover {
+/*background: none;*/ /* IE hack */
+z-index: 100;
+}
+a.help:hover span {
+display: block !important;
+display: inline-block;
+width: 250px;
+position: absolute;
+top: 10px;
+left: 30px;
+text-align: left;
+padding: 7px 10px;
+background: #48869e;
+color: #fff;
+border: 3px solid #97bac6;
+/*cursor: help;*/
+}
+table.tborderccc { border: 1px solid #ccc; }
+.brightccc { border-right: 1px solid #ccc !important; }
