@@ -31,11 +31,11 @@ public enum DocumentRequestType {
 
     COURSE_LOAD(true, false, AdministrativeOfficeType.DEGREE),
 
-    EXTERNAL_COURSE_LOAD(true, false /* , AdministrativeOfficeType.DEGREE */),
+    EXTERNAL_COURSE_LOAD(true, false, AdministrativeOfficeType.DEGREE),
 
     PROGRAM_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE),
 
-    EXTERNAL_PROGRAM_CERTIFICATE(true, false /* , AdministrativeOfficeType.DEGREE */);
+    EXTERNAL_PROGRAM_CERTIFICATE(true, false, AdministrativeOfficeType.DEGREE);
 
     private boolean hasAdditionalInformation;
 
