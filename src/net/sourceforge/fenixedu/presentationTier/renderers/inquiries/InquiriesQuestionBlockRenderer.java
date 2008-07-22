@@ -172,8 +172,8 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 	    if (header.hasScaleHeaders()) {
 		for (String scale : header.getScaleHeaders()) {
 		    HtmlTableCell headerCell = headerRow.createCell(CellType.HEADER);
-		    headerCell.setBody(new HtmlText(getResource(scale)));
-		    headerCell.addClass("acenter");
+		    headerCell.setBody(new HtmlText(getResource(scale), false));
+		    headerCell.addClass("acenter valignbottom");
 		}
 	    } else {
 		headerRow.createCell(CellType.HEADER).setColspan(block.getHeader().getScaleHeadersCount());
