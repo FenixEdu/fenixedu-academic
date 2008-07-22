@@ -68,7 +68,9 @@ public class DegreeChangeIndividualCandidacyProcessBean extends IndividualCandid
 		}
 
 	    } else if (isPreBolonhaPrecedentDegreeAllowed()) {
-		studentCurricularPlans.add(registration.getLastStudentCurricularPlan());
+		if (!registration.isConcluded() && !registration.isRegistrationConclusionProcessed()) {
+		    studentCurricularPlans.add(registration.getLastStudentCurricularPlan());
+		}
 	    }
 	}
 

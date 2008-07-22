@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
@@ -60,6 +61,15 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     }
 
     @Override
+    protected void createInstitutionPrecedentDegreeInformation(StudentCurricularPlan studentCurricularPlan) {
+	final Registration registration = studentCurricularPlan.getRegistration();
+	if (registration.isConcluded() || registration.isRegistrationConclusionProcessed()) {
+	    throw new DomainException("error.DegreeChangeIndividualCandidacy.studentCurricularPlan.cannot.be.concluded");
+	}
+	super.createInstitutionPrecedentDegreeInformation(studentCurricularPlan);
+    }
+
+    @Override
     protected ExternalPrecedentDegreeInformation createExternalPrecedentDegreeInformation(
 	    final CandidacyPrecedentDegreeInformationBean bean) {
 	final ExternalPrecedentDegreeInformation information = super.createExternalPrecedentDegreeInformation(bean);
@@ -93,7 +103,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	    getPrecedentDegreeInformation().editCurricularCoursesInformation(bean.getPrecedentDegreeInformation());
 	}
     }
-    
+
     void editCandidacyCurricularCoursesInformation(final DegreeChangeIndividualCandidacyProcessBean bean) {
 	getPrecedentDegreeInformation().editCurricularCoursesInformation(bean.getPrecedentDegreeInformation());
     }
@@ -125,7 +135,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	setApprovedEctsRate(bean.getApprovedEctsRate());
 	setGradeRate(bean.getGradeRate());
 	setSeriesCandidacyGrade(bean.getSeriesCandidacyGrade());
-	
+
 	if (isCandidacyResultStateValid(bean.getState())) {
 	    setState(bean.getState());
 	}
