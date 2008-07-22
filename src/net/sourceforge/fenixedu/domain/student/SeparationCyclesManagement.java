@@ -47,11 +47,12 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.OptionalDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
 import net.sourceforge.fenixedu.domain.studentCurriculum.TemporarySubstitution;
 import net.sourceforge.fenixedu.util.InvocationResult;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SeparationCyclesManagement {
 
@@ -214,7 +215,10 @@ public class SeparationCyclesManagement {
     private void moveEnrolment(final Enrolment enrolment, final CurriculumGroup parent) {
 	final CurriculumModule child = parent.getChildCurriculumModule(enrolment.getDegreeModule());
 	if (child != null && child.isEnrolment()) {
-	    throw new DomainException("error.SeparationCyclesManagement.enrolment.should.not.exist");
+	    final Enrolment childEnrolment = (Enrolment) child;
+	    if (childEnrolment.getExecutionPeriod() == enrolment.getExecutionPeriod()) {
+		throw new DomainException("error.SeparationCyclesManagement.enrolment.should.not.exist.for.same.executionPeriod");
+	    }
 	}
 
 	final Registration registration = parent.getStudentCurricularPlan().getRegistration();
@@ -237,6 +241,9 @@ public class SeparationCyclesManagement {
 
 	if (enrolment.isOptional()) {
 	    final OptionalEnrolment optional = (OptionalEnrolment) enrolment;
+	    if (parent.hasChildDegreeModule(optional.getOptionalCurricularCourse())) {
+		return;
+	    }
 	    new OptionalDismissal(substitution, parent, optional.getOptionalCurricularCourse(), optional.getEctsCredits());
 	} else {
 	    new Dismissal(substitution, parent, enrolment.getCurricularCourse());
