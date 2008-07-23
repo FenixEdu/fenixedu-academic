@@ -61,7 +61,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     }
 
     @Override
-    protected void createInstitutionPrecedentDegreeInformation(StudentCurricularPlan studentCurricularPlan) {
+    protected void createInstitutionPrecedentDegreeInformation(final StudentCurricularPlan studentCurricularPlan) {
 	final Registration registration = studentCurricularPlan.getRegistration();
 	if (registration.isConcluded() || registration.isRegistrationConclusionProcessed()) {
 	    throw new DomainException("error.DegreeChangeIndividualCandidacy.studentCurricularPlan.cannot.be.concluded");

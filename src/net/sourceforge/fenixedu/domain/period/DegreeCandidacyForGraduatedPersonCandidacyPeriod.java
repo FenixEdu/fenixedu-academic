@@ -44,9 +44,9 @@ public class DegreeCandidacyForGraduatedPersonCandidacyPeriod extends DegreeCand
     public DegreeCandidacyForGraduatedPersonProcess getDegreeCandidacyForGraduatedPersonProcess() {
 	return (DegreeCandidacyForGraduatedPersonProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().get(0) : null);
     }
-    
+
     @Override
     public ExecutionYear getExecutionInterval() {
-        return (ExecutionYear) super.getExecutionInterval();
+	return (ExecutionYear) super.getExecutionInterval();
     }
 }

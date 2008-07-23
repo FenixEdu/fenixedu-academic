@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.DegreeCandidacyForGraduatedPersonCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.DegreeChangeCandidacyPeriod;
+import net.sourceforge.fenixedu.domain.period.DegreeTransferCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
@@ -67,7 +68,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     }
 
     public boolean hasOver23CandidacyPeriod() {
-	return getOver23CandidacyPeriod() != null;
+	return hasCandidacyPeriods(Over23CandidacyPeriod.class);
     }
 
     public SecondCycleCandidacyPeriod getSecondCycleCandidacyPeriod() {
@@ -76,7 +77,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     }
 
     public boolean hasSecondCycleCandidacyPeriod() {
-	return getSecondCycleCandidacyPeriod() != null;
+	return hasCandidacyPeriods(SecondCycleCandidacyPeriod.class);
     }
 
     public DegreeCandidacyForGraduatedPersonCandidacyPeriod getDegreeCandidacyForGraduatedPersonCandidacyPeriod() {
@@ -85,7 +86,7 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     }
 
     public boolean hasDegreeCandidacyForGraduatedPersonCandidacyPeriod() {
-	return getDegreeCandidacyForGraduatedPersonCandidacyPeriod() != null;
+	return hasCandidacyPeriods(DegreeCandidacyForGraduatedPersonCandidacyPeriod.class);
     }
 
     public DegreeChangeCandidacyPeriod getDegreeChangeCandidacyPeriod() {
@@ -94,7 +95,16 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
     }
 
     public boolean hasDegreeChangeCandidacyPeriod() {
-	return getDegreeChangeCandidacyPeriod() != null;
+	return hasCandidacyPeriods(DegreeChangeCandidacyPeriod.class);
+    }
+
+    public DegreeTransferCandidacyPeriod getDegreeTransferCandidacyPeriod() {
+	final List<DegreeTransferCandidacyPeriod> candidacyPeriods = (List<DegreeTransferCandidacyPeriod>) getCandidacyPeriods(DegreeTransferCandidacyPeriod.class);
+	return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+    }
+
+    public boolean hasDegreeTransferCandidacyPeriod() {
+	return hasCandidacyPeriods(DegreeTransferCandidacyPeriod.class);
     }
 
     // static information

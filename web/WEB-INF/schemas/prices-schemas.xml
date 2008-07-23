@@ -33,6 +33,13 @@
 	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForExternalStudent"/>
 </schema>
 
+<schema name="DegreeTransferIndividualCandidacyPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForExternalStudent"/>
+</schema>
+
 <schema name="FixedAmountPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR"
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
@@ -177,6 +184,14 @@
 	bundle="APPLICATION_RESOURCES">
 	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForInstitutionStudent"/>
 	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForExternalStudent"/>
+	<setter signature="edit(amountForInstitutionStudent,amountForExternalStudent)"/>
+</schema>
+
+<schema name="DegreeTransferIndividualCandidacyPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES">
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForExternalStudent"/>
 	<setter signature="edit(amountForInstitutionStudent,amountForExternalStudent)"/>
 </schema>
 
@@ -437,4 +452,11 @@
 	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
 	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForInstitutionStudent"/>
 	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeChangeIndividualCandidacyPR.amountForExternalStudent"/>
+</schema>
+
+<schema name="DegreeTransferIndividualCandidacyPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+	<slot name="amountForInstitutionStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForInstitutionStudent"/>
+	<slot name="amountForExternalStudent" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.DegreeTransferIndividualCandidacyPR.amountForExternalStudent"/>
 </schema>
