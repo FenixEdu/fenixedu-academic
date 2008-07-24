@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 public class RegistrationConclusionBean implements Serializable, IRegistrationBean {
@@ -25,13 +26,11 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     public RegistrationConclusionBean(Registration registration) {
 	this(registration, null);
-
     }
 
     public RegistrationConclusionBean(Registration registration, CycleCurriculumGroup cycleCurriculumGroup) {
 	setRegistration(registration);
 	setCycleCurriculumGroup(cycleCurriculumGroup);
-
     }
 
     public CycleCurriculumGroup getCycleCurriculumGroup() {
@@ -76,6 +75,18 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().calculateConclusionDate() : getRegistration()
 		.calculateConclusionDate();
+    }
+
+    public boolean hasDissertationThesis() {
+	return getRegistration().hasDissertationThesis();
+    }
+
+    public String getDissertationThesisTitle() {
+	return hasDissertationThesis() ? getRegistration().getDissertationThesisTitle() : null;
+    }
+
+    public LocalDate getDissertationThesisDiscussedDate() {
+	return hasDissertationThesis() ? getRegistration().getDissertationThesisDiscussedDate() : null;
     }
 
     public double getEctsCredits() {
