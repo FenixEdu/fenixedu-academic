@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
-import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
@@ -15,6 +14,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -27,10 +27,8 @@ public class Diploma extends AdministrativeOfficeDocument {
 
     @Override
     protected void fillReport() {
-	final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
-	addParameter("universityName", institutionsUniversityUnit.getName());
-	addParameter("universityPrincipalName", institutionsUniversityUnit.getInstitutionsUniversityPrincipal()
-		.getValidatedName());
+	addInstitutionParameters();
+	addPersonParameters();
 
 	final DiplomaRequest diplomaRequest = (DiplomaRequest) getDocumentRequest();
 	addParameter("documentRequest", diplomaRequest);
@@ -38,17 +36,10 @@ public class Diploma extends AdministrativeOfficeDocument {
 	final Registration registration = diplomaRequest.getRegistration();
 	addParameter("registration", registration);
 
-	final Person person = registration.getPerson();
-	addParameter("name", StringFormatter.prettyPrint(person.getName()));
-	addParameter("nameOfFather", StringFormatter.prettyPrint(person.getNameOfFather()));
-	addParameter("nameOfMother", StringFormatter.prettyPrint(person.getNameOfMother()));
-	addParameter("birthLocale", getBirthLocale(person));
-
 	final RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration, diplomaRequest
 		.getCycleCurriculumGroup());
 
-	addParameter("conclusionDate", registrationConclusionBean.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy",
-		Language.getLocale()));
+	addParameter("conclusionDate", getConclusionDate(diplomaRequest, registrationConclusionBean));
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
 
@@ -68,6 +59,21 @@ public class Diploma extends AdministrativeOfficeDocument {
 	addParameter("graduateTitle", registration.getGraduateTitle(cycleToInspect));
     }
 
+    private void addInstitutionParameters() {
+	final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
+	addParameter("universityName", institutionsUniversityUnit.getName());
+	addParameter("universityPrincipalName", institutionsUniversityUnit.getInstitutionsUniversityPrincipal()
+		.getValidatedName());
+    }
+
+    private void addPersonParameters() {
+	final Person person = getDocumentRequest().getPerson();
+	addParameter("name", StringFormatter.prettyPrint(person.getName()));
+	addParameter("nameOfFather", StringFormatter.prettyPrint(person.getNameOfFather()));
+	addParameter("nameOfMother", StringFormatter.prettyPrint(person.getNameOfMother()));
+	addParameter("birthLocale", getBirthLocale(person));
+    }
+
     private String getBirthLocale(final Person person) {
 	final StringBuilder result = new StringBuilder();
 
@@ -76,6 +82,15 @@ public class Diploma extends AdministrativeOfficeDocument {
 	result.append(StringFormatter.prettyPrint(person.getDistrictSubdivisionOfBirth()));
 
 	return result.toString();
+    }
+
+    private String getConclusionDate(final DiplomaRequest diplomaRequest,
+	    final RegistrationConclusionBean registrationConclusionBean) {
+
+	final LocalDate result = diplomaRequest.hasDissertationTitle() ? registrationConclusionBean.getRegistration()
+		.getDissertationThesisDiscussedDate() : registrationConclusionBean.getConclusionDate().toLocalDate();
+
+	return result.toString("dd 'de' MMMM 'de' yyyy", Language.getLocale());
     }
 
     final private String getConclusionStatusAndDegreeType(final DiplomaRequest diplomaRequest, final Registration registration) {
@@ -112,19 +127,6 @@ public class Diploma extends AdministrativeOfficeDocument {
 	result.append(degreeType.getPrefix()).append(degreeType.getFilteredName());
 	if (degreeType.hasExactlyOneCycleType()) {
 	    result.append(" (").append(enumerationBundle.getString(degreeType.getCycleType().getQualifiedName())).append(")");
-	}
-    }
-
-    private void reportConcludedCycles(final StringBuilder result, final ResourceBundle applicationResources,
-	    final DiplomaRequest diplomaRequest, final Registration registration) {
-	for (final Iterator<CycleType> iter = registration.getConcludedCycles(diplomaRequest.getRequestedCycle()).iterator(); iter
-		.hasNext();) {
-	    final CycleType cycleType = iter.next();
-	    result.append(enumerationBundle.getString(cycleType.getQualifiedName()));
-	    if (iter.hasNext()) {
-		result.append(" ").append(applicationResources.getString("and"));
-		result.append(" ").append(applicationResources.getString("the.masculine")).append(" ");
-	    }
 	}
     }
 
