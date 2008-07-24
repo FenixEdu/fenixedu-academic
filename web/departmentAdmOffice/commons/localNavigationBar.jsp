@@ -1,9 +1,16 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
+<%@page import="pt.ist.fenixWebFramework.security.UserView"%>
 <html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+
+<%
+	final IUserView userView = (IUserView) UserView.getUser();
+	request.setAttribute("userView", userView);
+%>
 
 <logic:present role="DEPARTMENT_ADMINISTRATIVE_OFFICE">
 	<ul>
@@ -55,8 +62,7 @@
 					<bean:message key="link.teachers.search"/>
 				</html:link>
 			</li>
-											
-			<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" scope="session"/>		
+
 			<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
 			<% String deiCode = "28"; %>
 			<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">
