@@ -21,7 +21,7 @@
 	<table width="90%">
 		<tr>
 			<td align="center">
-			<h2>Folha de Apuramento Final</h2>
+			<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document"/></h2>
 			<br />
 			<br />
 			<br />
@@ -29,15 +29,13 @@
 		<tr>
 			<td><b><bean:write name="registration" property="degree.presentationName"/></b></td>
 		<tr>
-			<td>O Aluno <b><bean:write name="registration" property="person.name"/></b>, na Matrícula nº <b><bean:write name="registration" property="number"/></b></td>
+			<td><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.the.student"/> <b><bean:write name="registration" property="person.name"/></b><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.on.registration.number"/><b><bean:write name="registration" property="number"/></b></td>
 		<tr>
 			<td>
-				concluiu 
-				<logic:equal name="registration" property="degreeType.administrativeOfficeType" value="AdministrativeOfficeType.MASTER_DEGREE">
-					a parte escolar d
-				</logic:equal>
-				o curso de <bean:write name="registration" property="degreeType.localizedName"/> 
-				acima indicado, constituído pelas seguintes unidades curriculares e classificações:
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.concluded.lowercase"/>
+				<logic:equal name="registration" property="degreeType.administrativeOfficeType.qualifiedName" value="AdministrativeOfficeType.MASTER_DEGREE"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.scholarship.of"/></logic:equal><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.degree.of"/>
+				<bean:write name="registration" property="degreeType.localizedName"/> 
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.metioned.above.with.following.units"/>:
 				<br/>
 				<br/>
 			</td>
@@ -55,7 +53,7 @@
 	
 	<logic:equal name="registrationConclusionBean" property="curriculumForConclusion.studentCurricularPlan.boxStructure" value="false">
 		<bean:define id="curriculumEntries" name="registrationConclusionBean" property="curriculumForConclusion.curriculumEntries"/>
-		<table class="tstyle4">
+		<table class="tstyle4 printborder">
 			<tr>
 				<th rowspan="2" colspan="2">
 					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.curricular.course.from.curriculum.withBreak"/>
@@ -339,16 +337,16 @@
 		request.setAttribute("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
 	%>
 	
-	<table class="apura-final" width="90%" cellspacing="0" border="0">
+	<table class="apura-final mtop2" width="90%" cellspacing="0" border="0">
 		<tr>
-			<td colspan="6" style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;">Atribuição da Média</td>
+			<td colspan="6" style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.average.atribution"/></td>
 		</tr>
 		<tr>
 			<td style="padding: 5px;"><bean:message bundle="APPLICATION_RESOURCES" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.average"/></td>
 			<td style="padding: 5px;"><bean:write name="registrationConclusionBean" property="average"/></td>		
 			
 			<logic:equal name="registration" property="degreeType" value="MASTER_DEGREE">
-				<td width="50%" style="padding: 5px; padding-left: 15em;">O coordenador do curso,</td>
+				<td width="50%" style="padding: 5px; padding-left: 15em;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.degree.coordinator"/>,</td>
 			</logic:equal>
 		</tr>
 		<tr>
@@ -359,8 +357,8 @@
 			<td style="padding: 5px;"><bean:message bundle="ENUMERATION_RESOURCES" key="<%=averageType%>"/></td>
 		</tr>
 		<tr>
-			<td style="padding: 5px;">Média Final</td>
-			<td style="padding: 5px;"><bean:write name="finalAverage"/> valores</td>
+			<td style="padding: 5px;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="final.degree.average"/></td>
+			<td style="padding: 5px;"><bean:write name="finalAverage"/> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="values"/></td>
 			<td style="padding: 5px; padding-left: 100px;">	</td>
 		</tr>
 		<tr>
@@ -373,19 +371,17 @@
 	
 	<br/>
 	
-	<table class="apura-final" width="90%" cellspacing="0" border="0">
+	<table class="apura-final mtop2" width="90%" cellspacing="0" border="0">
 		<tr>
-			<td colspan="2" style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;">Informação</td>
+			<td colspan="2" style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.information"/></td>
 		</tr>
 		<tr>
 			<td colspan="2" style="padding: 5px;">
 				<p class="apura-pt9">
-					Concluiu 
-					<logic:equal name="registration" property="degreeType.administrativeOfficeType" value="AdministrativeOfficeType.MASTER_DEGREE">
-						a parte escolar d
-					</logic:equal>
-					o <bean:write name="registrationConclusionBean" property="degreeDescription"/>
-					em <bean:write name="degreeFinalizationDate"/><bean:write name="degreeFinalizationGrade"/>, 
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.concluded.uppercase"/>  
+					<logic:equal name="registration" property="degreeType.administrativeOfficeType.qualifiedName" value="AdministrativeOfficeType.MASTER_DEGREE"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.scholarship.of"/></logic:equal>o 
+					<bean:write name="registrationConclusionBean" property="degreeDescription"/>
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.in"/> <bean:write name="degreeFinalizationDate"/><bean:write name="degreeFinalizationGrade"/>, 
 					tendo obtido o total de <bean:write name="degreeFinalizationEcts"/><bean:write name="creditsDescription"/>.
 				</p>
 			</td>
@@ -411,7 +407,7 @@
 		</tr>
 		<tr>
 			<td style="text-align: center;"></td>
-			<td style="text-align: center;">Coordenador<bean:write name="administrativeOfficeCoordinatorGender"/> do <bean:write name="administrativeOfficeName"/></td>
+			<td style="text-align: center;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.coordinator"/><bean:write name="administrativeOfficeCoordinatorGender"/> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.of.male"/> <bean:write name="administrativeOfficeName"/></td>
 		</tr>
 	</table>
 
