@@ -8,6 +8,8 @@ package net.sourceforge.fenixedu.domain;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeThesisState;
 import net.sourceforge.fenixedu.util.State;
 
+import org.joda.time.YearMonthDay;
+
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
@@ -32,6 +34,10 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
 
     public String getDissertationTitle() {
 	return getActiveMasterDegreeThesisDataVersion().getDissertationTitle();
+    }
+
+    public YearMonthDay getProofDateYearMonthDay() {
+	return getActiveMasterDegreeProofVersion().getProofDateYearMonthDay();
     }
 
     public MasterDegreeProofVersion getActiveMasterDegreeProofVersion() {
