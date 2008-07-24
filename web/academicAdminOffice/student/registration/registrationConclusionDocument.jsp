@@ -352,7 +352,7 @@
 		<tr>
 			<td style="padding: 5px;"><bean:message bundle="APPLICATION_RESOURCES" key="label.net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean.registration.averageType"/></td>
 			<bean:define id="averageType">
-				AverageType.<bean:write name="registrationConclusionBean" property="registration.averageType"/>
+				<bean:write name="registrationConclusionBean" property="registration.averageType.qualifiedName"/>
 			</bean:define>	
 			<td style="padding: 5px;"><bean:message bundle="ENUMERATION_RESOURCES" key="<%=averageType%>"/></td>
 		</tr>
