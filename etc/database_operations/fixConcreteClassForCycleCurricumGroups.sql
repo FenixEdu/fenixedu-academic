@@ -15,3 +15,5 @@ UPDATE CURRICULUM_MODULE SET OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.doma
 UPDATE CURRICULUM_MODULE SET OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup' WHERE ID_INTERNAL=6047741;
 UPDATE CURRICULUM_MODULE SET OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup' WHERE ID_INTERNAL=6045660;
 UPDATE CURRICULUM_MODULE SET OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup' WHERE ID_INTERNAL=6019147;
+
+UPDATE DEGREE_MODULE SET OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup', CYCLE_TYPE = 'THIRD_CYCLE' WHERE ID_INTERNAL=48535;
