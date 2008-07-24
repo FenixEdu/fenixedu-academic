@@ -2825,15 +2825,19 @@ public class Registration extends Registration_Base {
     }
 
     final public String getDissertationThesisTitle() {
+	String result = null;
+
 	if (hasDissertationThesis()) {
 	    if (getDegreeType() == DegreeType.MASTER_DEGREE) {
-		return getLastStudentCurricularPlan().getMasterDegreeThesis().getDissertationTitle();
+		result = getLastStudentCurricularPlan().getMasterDegreeThesis().getDissertationTitle();
 	    } else {
-		return getDissertationEnrolment().getThesis().getFinalFullTitle().getContent();
+		result = getDissertationEnrolment().getThesis().getFinalFullTitle().getContent();
 	    }
+
+	    result = result.trim().replace("\"", "");
 	}
 
-	return null;
+	return result;
     }
 
     final public LocalDate getDissertationThesisDiscussedDate() {
