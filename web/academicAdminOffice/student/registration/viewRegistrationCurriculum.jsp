@@ -164,7 +164,7 @@
 				<th><bean:message key="label.numberAprovedCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
 				<th><bean:message key="label.total.ects.credits" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
 				<th><bean:message key="average" bundle="STUDENT_RESOURCES"/> Ponderada</th>
-				<logic:notEqual name="curriculum" property="studentCurricularPlan.averageType" value="WEIGHTED">
+				<logic:notEqual name="curriculum" property="studentCurricularPlan.averageType.name" value="WEIGHTED">
 					<th><bean:message key="average" bundle="STUDENT_RESOURCES"/> Simples</th>
 				</logic:notEqual>
 				<th><bean:message key="label.curricular.year" bundle="STUDENT_RESOURCES"/></th>
@@ -175,7 +175,7 @@
 				<td><bean:write name="sumEctsCredits"/></td>
 				<logic:notEmpty name="executionYear">
 					<td><bean:write name="weightedAverage"/></td>
-					<logic:notEqual name="curriculum" property="studentCurricularPlan.averageType" value="WEIGHTED">
+					<logic:notEqual name="curriculum" property="studentCurricularPlan.averageType.name" value="WEIGHTED">
 						<%
 							curriculum.setAverageType(AverageType.SIMPLE);
 							request.setAttribute("simpleAverage", curriculum.getAverage());
@@ -187,7 +187,7 @@
 				<logic:empty name="executionYear">
 					<logic:equal name="registrationCurriculumBean" property="conclusionProcessed" value="false">
 						<td><bean:write name="weightedAverage"/></td>
-						<logic:notEqual name="curriculum" property="studentCurricularPlan.averageType" value="WEIGHTED">
+						<logic:notEqual name="curriculum" property="studentCurricularPlan.averageType.name" value="WEIGHTED">
 							<%
 								curriculum.setAverageType(AverageType.SIMPLE);
 								request.setAttribute("simpleAverage", curriculum.getAverage());
@@ -197,9 +197,17 @@
 					<td><bean:write name="curricularYear"/></td>
 					</logic:equal>
 					<logic:equal name="registrationCurriculumBean" property="conclusionProcessed" value="true">
-						<td><bean:write name="registrationCurriculumBean" property="finalAverage"/></td>
-						<logic:notEqual name="curriculum" property="studentCurricularPlan.averageType" value="WEIGHTED">
-							<th>-</th>
+						<logic:equal name="curriculum" property="studentCurricularPlan.averageType.name" value="WEIGHTED">
+							<td>
+									<bean:write name="registrationCurriculumBean" property="finalAverage"/>
+							</td>
+							<td>-</td>
+						</logic:equal>
+						<logic:notEqual name="curriculum" property="studentCurricularPlan.averageType.name" value="WEIGHTED">
+							<td>-</td>
+							<td>
+								<bean:write name="registrationCurriculumBean" property="finalAverage"/>
+							</td>
 						</logic:notEqual>
 						<td>-</td>
 					</logic:equal>			
