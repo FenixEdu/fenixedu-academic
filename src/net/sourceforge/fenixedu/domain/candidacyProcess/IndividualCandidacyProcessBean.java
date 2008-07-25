@@ -11,6 +11,11 @@ import org.joda.time.LocalDate;
 
 abstract public class IndividualCandidacyProcessBean implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2860833709120576930L;
+
     private DomainReference<CandidacyProcess> candidacyProcess;
 
     private ChoosePersonBean choosePersonBean;
