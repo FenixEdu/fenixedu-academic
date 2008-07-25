@@ -88,7 +88,7 @@ public enum Ingression {
 
     CM23("Maiores de 23"),
 
-    TF("Transferência");
+    TRF("Transferência");
 
     String description;
 

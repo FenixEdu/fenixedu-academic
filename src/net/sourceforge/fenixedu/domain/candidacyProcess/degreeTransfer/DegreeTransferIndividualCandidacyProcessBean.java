@@ -7,7 +7,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean.PrecedentDegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -23,6 +25,16 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
 	setCandidacyDate(new LocalDate());
     }
 
+    public DegreeTransferIndividualCandidacyProcessBean(final DegreeTransferIndividualCandidacyProcess process) {
+	setCandidacyDate(process.getCandidacyDate());
+	setSelectedDegree(process.getCandidacySelectedDegree());
+	setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getCandidacyPrecedentDegreeInformation()));
+	final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation = new CandidacyPrecedentDegreeInformationBean(
+		process.getCandidacyPrecedentDegreeInformation());
+	precedentDegreeInformation.initCurricularCoursesInformation(process.getCandidacyPrecedentDegreeInformation());
+	setPrecedentDegreeInformation(precedentDegreeInformation);
+    }
+
     @Override
     protected List<CycleType> getValidPrecedentCycleTypes() {
 	return Collections.singletonList(CycleType.FIRST_CYCLE);
@@ -32,7 +44,7 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
     protected boolean isPreBolonhaPrecedentDegreeAllowed() {
 	return false;
     }
-    
+
     @Override
     public List<StudentCurricularPlan> getPrecedentStudentCurricularPlans() {
 	final Student student = getStudent();

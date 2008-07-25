@@ -318,6 +318,7 @@ public class DegreeChangeCandidacyProcess extends DegreeChangeCandidacyProcess_B
     static private class PublishCandidacyResults extends Activity<DegreeChangeCandidacyProcess> {
 	@Override
 	public void checkPreConditions(DegreeChangeCandidacyProcess process, IUserView userView) {
+	    // for now, do not show this option
 	    throw new PreConditionNotValidException();
 	}
 

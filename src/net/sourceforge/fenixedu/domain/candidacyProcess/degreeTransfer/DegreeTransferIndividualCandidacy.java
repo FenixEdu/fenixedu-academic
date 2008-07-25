@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeTransfe
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.ExternalPrecedentDegreeInformation;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -99,4 +100,60 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 		.getNextExecutionYear() : getCandidacyExecutionInterval());
 	return registration;
     }
+
+    void editCandidacyInformation(final DegreeTransferIndividualCandidacyProcessBean bean) {
+	checkParameters(bean.getCandidacyDate(), bean.getSelectedDegree(), bean.getPrecedentDegreeInformation());
+
+	setCandidacyDate(bean.getCandidacyDate());
+	setSelectedDegree(bean.getSelectedDegree());
+
+	if (getPrecedentDegreeInformation().isExternal()) {
+	    getPrecedentDegreeInformation().edit(bean.getPrecedentDegreeInformation());
+	    getPrecedentDegreeInformation().editCurricularCoursesInformation(bean.getPrecedentDegreeInformation());
+	}
+    }
+
+    private void checkParameters(final LocalDate candidacyDate, final Degree selectedDegree,
+	    CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
+
+	checkParameters(getPerson(), getCandidacyProcess(), candidacyDate);
+
+	if (selectedDegree == null) {
+	    throw new DomainException("error.DegreeTransferIndividualCandidacy.invalid.degree");
+	}
+
+	if (personHasDegree(getPerson(), selectedDegree)) {
+	    throw new DomainException("error.DegreeTransferIndividualCandidacy.existing.degree", selectedDegree.getName());
+	}
+
+	if (precedentDegreeInformation == null) {
+	    throw new DomainException("error.DegreeTransferIndividualCandidacy.invalid.precedentDegreeInformation");
+	}
+    }
+
+    public void editCandidacyCurricularCoursesInformation(final DegreeTransferIndividualCandidacyProcessBean bean) {
+	getPrecedentDegreeInformation().editCurricularCoursesInformation(bean.getPrecedentDegreeInformation());
+    }
+
+    void editCandidacyResult(final DegreeTransferIndividualCandidacyResultBean bean) {
+
+	checkParameters(bean);
+
+	setAffinity(bean.getAffinity());
+	setDegreeNature(bean.getDegreeNature());
+	setApprovedEctsRate(bean.getApprovedEctsRate());
+	setGradeRate(bean.getGradeRate());
+	setSeriesCandidacyGrade(bean.getSeriesCandidacyGrade());
+
+	if (isCandidacyResultStateValid(bean.getState())) {
+	    setState(bean.getState());
+	}
+    }
+
+    private void checkParameters(final DegreeTransferIndividualCandidacyResultBean bean) {
+	if (isAccepted() && bean.getState() != IndividualCandidacyState.ACCEPTED && hasRegistration()) {
+	    throw new DomainException("error.DegreeTransferIndividualCandidacy.cannot.change.state.from.accepted.candidacies");
+	}
+    }
+
 }
