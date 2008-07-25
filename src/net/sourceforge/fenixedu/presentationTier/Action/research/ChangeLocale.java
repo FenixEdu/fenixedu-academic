@@ -7,10 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
-import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 
 public class ChangeLocale extends FenixAction {
 
@@ -18,7 +19,7 @@ public class ChangeLocale extends FenixAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         final String newLanguage = request.getParameter("newLanguage");
 
-        request.getSession(false).setAttribute(Globals.LOCALE_KEY, new Locale(newLanguage, "PT"));
+        I18NFilter.setLocale(request, request.getSession(false), new Locale(newLanguage, "PT"));
 
         final String windowLocation = request.getParameter("windowLocation");
 
