@@ -66,7 +66,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
     protected String getDirectLinkContext(HttpServletRequest request) {
 	ExecutionCourse executionCourse = getExecutionCourse(request);
 	try {
-	    String path = ExecutionCourseProcessor.getExecutionCourseAbsolutePath(executionCourse);
+	    String path = executionCourse.getSite().getReversePath(); 
 
 	    if (path == null) {
 		return null;
