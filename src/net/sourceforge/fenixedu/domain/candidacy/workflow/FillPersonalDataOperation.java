@@ -13,10 +13,13 @@ import net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformation
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.PersonalInformationForm;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceApplianceInquiryForm;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
+
+import org.apache.commons.lang.StringUtils;
 
 public class FillPersonalDataOperation extends CandidacyOperation {
 
@@ -184,12 +187,22 @@ public class FillPersonalDataOperation extends CandidacyOperation {
     }
 
     protected void fillContacts(final Person person) {
-	person.setEmail(getContactsForm().getEmail());
+	PartyContact.createDefaultPersonalEmailAddress(person, getContactsForm().getEmail());
 	person.getDefaultEmailAddress().setVisibleToPublic(getContactsForm().isEmailAvailable());
-	person.setWebAddress(getContactsForm().getWebAddress());
-	person.getDefaultWebAddress().setVisibleToPublic(getContactsForm().isHomepageAvailable());
-	person.setMobile(getContactsForm().getMobileNumber());
-	person.setPhone(getContactsForm().getPhoneNumber());
+
+	if (!StringUtils.isEmpty(getContactsForm().getWebAddress())) {
+	    PartyContact.createDefaultPersonalWebAddress(person, getContactsForm().getWebAddress());
+	    person.getDefaultWebAddress().setVisibleToPublic(getContactsForm().isHomepageAvailable());
+	}
+
+	if (!StringUtils.isEmpty(getContactsForm().getMobileNumber())) {
+	    PartyContact.createDefaultPersonalMobilePhone(person, getContactsForm().getMobileNumber());
+	}
+
+	if (!StringUtils.isEmpty(getContactsForm().getPhoneNumber())) {
+	    PartyContact.createDefaultPersonalPhone(person, getContactsForm().getPhoneNumber());
+	}
+
     }
 
     protected void fillResidenceInformation(final Person person) {
