@@ -115,7 +115,7 @@ public class StringFormatter {
 	// IT
 	allLowerSet.add("dei");
 	allLowerSet.add("degli");
-	allLowerSet.add("del");
+//	allLowerSet.add("del");
 	allLowerSet.add("dell");
 	allLowerSet.add("delle");
 	allLowerSet.add("di");
