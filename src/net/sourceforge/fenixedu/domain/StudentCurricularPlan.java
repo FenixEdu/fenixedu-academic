@@ -901,12 +901,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
+    public boolean hasGivenCredits() {
+	return getGivenCredits() != null && getGivenCredits().doubleValue() != Double.valueOf(0).doubleValue();
+    }
+
     protected Integer creditsInSecundaryArea;
 
     public Integer getCreditsInSecundaryArea() {
 	// only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should
 	// return a value
-	return new Integer(0);
+	return Integer.valueOf(0);
     }
 
     public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea) {
@@ -919,7 +923,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Integer getCreditsInSpecializationArea() {
 	// only StudentCurricularPlanLEEC and StudentCurricularPlanLEIC should
 	// return a value
-	return new Integer(0);
+	return Integer.valueOf(0);
     }
 
     public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
@@ -1210,7 +1214,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	Integer curricularCourseAcumulatedEnrolments = getAcumulatedEnrollmentsMap(executionSemester).get(key);
 
 	if (curricularCourseAcumulatedEnrolments == null) {
-	    curricularCourseAcumulatedEnrolments = new Integer(0);
+	    curricularCourseAcumulatedEnrolments = Integer.valueOf(0);
 	}
 
 	if (curricularCourseAcumulatedEnrolments.intValue() >= curricularCourse.getMinimumValueForAcumulatedEnrollments()
