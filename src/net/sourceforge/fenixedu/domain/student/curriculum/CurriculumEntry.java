@@ -7,35 +7,12 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
 abstract public class CurriculumEntry implements Serializable, ICurriculumEntry {
-
-    public boolean isEnrolmentEntry() {
-	return false;
-    }
-
-    final public boolean getIsEnrolmentEntry() {
-	return isEnrolmentEntry();
-    }
-
-    public boolean isNotNeedToEnrolEntry() {
-	return false;
-    }
-
-    final public boolean getIsNotNeedToEnrolEntry() {
-	return isNotNeedToEnrolEntry();
-    }
-
-    public boolean isEquivalentEnrolmentEntry() {
-	return false;
-    }
-
-    final public boolean getIsEquivalentEnrolmentEntry() {
-	return isEquivalentEnrolmentEntry();
-    }
 
     public boolean isNotInDegreeCurriculumEnrolmentEntry() {
 	return false;
@@ -43,14 +20,6 @@ abstract public class CurriculumEntry implements Serializable, ICurriculumEntry 
 
     final public boolean getIsNotInDegreeCurriculumEnrolmentEntry() {
 	return isNotInDegreeCurriculumEnrolmentEntry();
-    }
-
-    public boolean isDismissalEntry() {
-	return false;
-    }
-
-    final public boolean getIsDismissalEntry() {
-	return isDismissalEntry();
     }
 
     protected double ectsCredits(final CurricularCourse curricularCourse) {
@@ -66,7 +35,7 @@ abstract public class CurriculumEntry implements Serializable, ICurriculumEntry 
     abstract public Grade getGrade();
 
     public String getGradeValue() {
-	return getGrade() == null ? null :getGrade().getValue();
+	return getGrade() == null ? null : getGrade().getValue();
     }
 
     public ExecutionSemester getExecutionPeriod() {
