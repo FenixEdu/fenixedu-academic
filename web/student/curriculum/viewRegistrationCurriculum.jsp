@@ -158,10 +158,10 @@
 			<tr class="scplangroup">
 				<td class=" scplancolcurricularcourse" rowspan="2" colspan="2">
 					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.curricular.course.from.curriculum"/>
-				</th>
+				</td>
 				<td class=" scplancolgrade"colspan="3">
 					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="degree.average"/>
-				</th>
+				</td>
 				<td class=" scplancolgrade">
 					<bean:message key="curricular.year" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 				</td>
@@ -178,7 +178,7 @@
 				</td>
 				<td  class=" scplancolgrade" style="width: 100px;">
 					<bean:message bundle="APPLICATION_RESOURCES" key="label.credits"/>
-				</th>
+				</td>
 			</tr>
 			<logic:iterate id="curriculumEntry" name="curriculumEntries">
 				<logic:equal name="curriculumEntry" property="class.name" value="net.sourceforge.fenixedu.domain.student.curriculum.NotInDegreeCurriculumCurriculumEntry">
