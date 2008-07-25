@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -139,7 +140,9 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	}
 
 	if (StringUtils.isEmpty(actionForm.getString("organizedBy"))) {
-	    actionForm.set("organizedBy", OrganizationType.GROUPS.name());
+	    String organizedBy = registration.getDegreeType() == DegreeType.MASTER_DEGREE ? OrganizationType.EXECUTION_YEARS
+		    .name() : OrganizationType.GROUPS.name();
+	    actionForm.set("organizedBy", organizedBy);
 	}
 
 	if (request.getParameter("degreeCurricularPlanID") == null
@@ -161,16 +164,14 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	} else if (scpIdType.isAll()) {
 	    result = getSortedStudentCurricularPlans(registration);
 	} else {
-	    result = Collections.singletonList(getStudentCurricularPlan(registration, Integer
-		    .valueOf(studentCPID)));
+	    result = Collections.singletonList(getStudentCurricularPlan(registration, Integer.valueOf(studentCPID)));
 	}
 
 	return result;
     }
 
     private StudentCurricularPlanIDDomainType getDefaultStudentCPID(final Registration registration) {
-	return registration.isBolonha() ? StudentCurricularPlanIDDomainType.NEWEST
-	    : StudentCurricularPlanIDDomainType.ALL;
+	return registration.isBolonha() ? StudentCurricularPlanIDDomainType.NEWEST : StudentCurricularPlanIDDomainType.ALL;
     }
 
     private String getStudentCPID(HttpServletRequest request, DynaActionForm actionForm) {
@@ -249,7 +250,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	List result = null;
 	try {
 	    Object args[] = { executionDegreeID, Integer.valueOf(studentCurricularPlanID) };
-	    result = (ArrayList) ServiceManagerServiceFactory.executeService( "ReadStudentCurriculum", args);
+	    result = (ArrayList) ServiceManagerServiceFactory.executeService("ReadStudentCurriculum", args);
 	} catch (NotAuthorizedException e) {
 	    return mapping.findForward("NotAuthorized");
 	}
