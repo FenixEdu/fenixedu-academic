@@ -7,17 +7,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
-import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 
 public class ChangeLocale extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         final Locale locale = constructNewLocale(request);
-        request.getSession(true).setAttribute(Globals.LOCALE_KEY, locale);
+        I18NFilter.setLocale(request, request.getSession(true), locale);
         
         // HACK: remove locale parameter if present
         final String windowLocation = filterLocaleFromLocation(request.getParameter("windowLocation"));
