@@ -1408,6 +1408,12 @@
 	<slot name="average"/>
 	<slot name="finalAverage" />
 	<slot name="conclusionDate" />
+	<slot name="dissertationThesisDiscussedDate" layout="null-as-label">
+        <property name="label" value="-"/>	
+	</slot>
+	<slot name="dissertationThesisTitle" layout="null-as-label">
+        <property name="label" value="-"/>	
+	</slot>
 </schema>
 
 <schema name="RegistrationConclusionBean.confirmConclusionForRegistration" type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean" bundle="APPLICATION_RESOURCES">
@@ -1417,6 +1423,12 @@
 	<slot name="registration.averageType"/>
 	<slot name="finalAverage" />
 	<slot name="conclusionDate" />
+	<slot name="dissertationThesisDiscussedDate" layout="null-as-label">
+        <property name="label" value="-"/>	
+	</slot>
+	<slot name="dissertationThesisTitle" layout="null-as-label">
+        <property name="label" value="-"/>	
+	</slot>
 </schema>
 
 <schema name="Registration.editConclusionInformation" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="APPLICATION_RESOURCES">
@@ -1449,6 +1461,12 @@
 	<slot name="average" />
 	<slot name="finalAverage" />
 	<slot name="conclusionDate" />
+	<slot name="dissertationThesisDiscussedDate" layout="null-as-label">
+        <property name="label" value="-"/>	
+	</slot>
+	<slot name="dissertationThesisTitle" layout="null-as-label">
+        <property name="label" value="-"/>	
+	</slot>
 	<slot name="conclusionProcessNotes"/>	
 	<slot name="concluded"/>
 	<slot name="conclusionProcessed" />
@@ -1462,6 +1480,12 @@
 	<slot name="registration.averageType"/>	
 	<slot name="finalAverage" />
 	<slot name="conclusionDate" />
+	<slot name="dissertationThesisDiscussedDate" layout="null-as-label">
+        <property name="label" value="-"/>	
+	</slot>
+	<slot name="dissertationThesisTitle" layout="null-as-label">
+        <property name="label" value="-"/>	
+	</slot>
 	<slot name="conclusionProcessNotes"/>	
 	<slot name="concluded" />
 	<slot name="conclusionProcessed" />
