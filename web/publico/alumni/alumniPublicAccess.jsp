@@ -149,7 +149,7 @@
 	<li class="m-list">subscrição de <html:link href="<%= request.getContextPath() + "/publico/alumni.do?method=checkLists"%>"><bean:message bundle="ALUMNI_RESOURCES" key="link.check.mailing.lists"/></html:link></li>
 	<li class="p_search">procura de colegas</li>	
 	<li class="alerts">um serviço de alertas com mensagens úteis e concisas</li>
-	<li class="mailfwd">endereço de mail personalizado e, se necessário, com <em>forward</em> automático</li>
+	<li class="mailfwd">endereço de <html:link target="_blank" href="https://ciist.ist.utl.pt/servicos/mail.php#webmail">mail personalizado</html:link> e, se necessário, com <em>forward</em> automático</li>
 	<li class="homepage">alojamento de página web institucional</li>
 	<li class="library">acesso à <a href="http://bist.ist.utl.pt">Biblioteca do IST</a> (cartão de utilizador + recursos electrónicos)</li>
 </ul>

@@ -24,7 +24,7 @@
 			<bean:message key="label.registration.login" bundle="ALUMNI_RESOURCES" />
 		</p>
 		<p class="greytxt">
-			<a href="<bean:message key="login.hostname" bundle="APPLICATION_RESOURCES" />" >
+			<a href="<bean:message key="label.fenix.login.hostname" bundle="ALUMNI_RESOURCES" />" >
 				<bean:message key="label.fenix.login.url" bundle="ALUMNI_RESOURCES" />
 			</a>
 		</p>
