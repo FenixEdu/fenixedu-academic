@@ -53,10 +53,12 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
@@ -1722,4 +1724,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public Set<ExecutionYear> getBeginContextExecutionYears() {
 	return isBoxStructure() ? getRoot().getBeginContextExecutionYears() : Collections.EMPTY_SET;
     }
+
+    final public MultiLanguageString getDescriptionI18N() {
+	final MultiLanguageString result = new MultiLanguageString();
+
+	if (!StringUtils.isEmpty(getDescription())) {
+	    result.setContent(Language.pt, getDescription());
+	}
+	if (!StringUtils.isEmpty(getDescriptionEn())) {
+	    result.setContent(Language.en, getDescriptionEn());
+	}
+
+	return result;
+    }
+
 }
