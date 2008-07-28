@@ -82,12 +82,6 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("importData");
     }
 
-    public ActionForward createYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	executeService("CreateNewResidenceYear", new Object[] {});
-	return importData(mapping, actionForm, request, response);
-    }
-
     public ActionForward editPaymentLimitDay(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	return editResidenceYearProperty(mapping, actionForm, request, response, "editPaymentLimitDay");
