@@ -2,11 +2,13 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ExecutionCourseProcessor"%>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+
 <%@page import="org.apache.struts.util.RequestUtils"%>
 
 <logic:present role="RESEARCHER">		
@@ -115,8 +117,11 @@
 		<ul>
   	    <logic:iterate id="lecture" name="lectures" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
 			<li>
-			<a href="<%=RequestUtils.absoluteURL(request, ExecutionCourseProcessor.getExecutionCourseAbsolutePath(lecture))%>" target="_blank">
-			<fr:view name="lecture" property="nome"/></a> (<fr:view name="lecture" property="executionYear.year"/>, <fr:view name="lecture" property="executionPeriod.name"/>, <fr:view name="lecture" property="degreePresentationString"/>)</li>
+			
+			<app:contentLink name="lecture" property="site" target="blank">
+					<fr:view name="lecture" property="nome"/>
+			</app:contentLink>
+			 (<fr:view name="lecture" property="executionYear.year"/>, <fr:view name="lecture" property="executionPeriod.name"/>, <fr:view name="lecture" property="degreePresentationString"/>)</li>
 		</logic:iterate>
 		</ul>
 	</logic:notEmpty>
