@@ -40,3 +40,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Data fix" dataFix.sql IST
