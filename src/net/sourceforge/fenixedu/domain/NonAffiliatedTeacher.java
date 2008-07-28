@@ -9,6 +9,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 /**
  * @author Ricardo Rodrigues
  * 
@@ -17,19 +19,32 @@ import java.util.regex.Pattern;
 public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
 
     public NonAffiliatedTeacher() {
-        super();
-        setRootDomainObject(RootDomainObject.getInstance());
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public static Set<NonAffiliatedTeacher> findNonAffiliatedTeacherByName(final String name) {
-        Pattern pattern = Pattern.compile(name.toLowerCase());
-        final Set<NonAffiliatedTeacher> nonAffiliatedTeachers = new HashSet<NonAffiliatedTeacher>();
-        for (final NonAffiliatedTeacher nonAffiliatedTeacher : RootDomainObject.getInstance().getNonAffiliatedTeachersSet()) {
-            Matcher matcher = pattern.matcher(nonAffiliatedTeacher.getName().toLowerCase());
-            if (matcher.find()) {
-                nonAffiliatedTeachers.add(nonAffiliatedTeacher);
-            }
-        }
-        return nonAffiliatedTeachers;
+	Pattern pattern = Pattern.compile(name.toLowerCase());
+	final Set<NonAffiliatedTeacher> nonAffiliatedTeachers = new HashSet<NonAffiliatedTeacher>();
+	for (final NonAffiliatedTeacher nonAffiliatedTeacher : RootDomainObject.getInstance().getNonAffiliatedTeachersSet()) {
+	    Matcher matcher = pattern.matcher(nonAffiliatedTeacher.getName().toLowerCase());
+	    if (matcher.find()) {
+		nonAffiliatedTeachers.add(nonAffiliatedTeacher);
+	    }
+	}
+	return nonAffiliatedTeachers;
+    }
+
+    public void delete() {
+
+	if (hasAnyAssociatedInquiriesTeachers()) {
+	    throw new DomainException("error.NonAffiliatedTeacher.hasAnyAssociatedInquiriesTeachers");
+	}
+
+	removeRootDomainObject();
+	removeInstitutionUnit();
+	getExecutionCourses().clear();
+
+	super.deleteDomainObject();
     }
 }

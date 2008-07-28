@@ -12388,4 +12388,13 @@
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>
+	<service>
+		<name>DeleteNonAffiliatedTeacher</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gep.DeleteNonAffiliatedTeacher</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerOrGEPAuthorization"/>
+		</filterChains>
+	</service>	    
 </serviceDefinitions>

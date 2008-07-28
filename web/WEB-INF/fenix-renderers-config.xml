@@ -1114,7 +1114,9 @@ Documentation:
 	
 	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiriesBlock" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiriesQuestionBlockRenderer"/>
 	
-	<renderer mode="input" type="java.lang.String" layout="inquiries-answer-textbox" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiriesTextBoxQuestionRenderer" />	
+	<renderer mode="input" type="java.lang.String" layout="inquiries-answer-textbox" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiriesTextBoxQuestionRenderer" >
+		<property name="maxLength" value="100"/>
+	</renderer>	
 	
 	<renderer mode="input" type="java.lang.String" layout="inquiries-answer-radiogroup" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiriesRadioGroupQuestionRenderer" />
 	

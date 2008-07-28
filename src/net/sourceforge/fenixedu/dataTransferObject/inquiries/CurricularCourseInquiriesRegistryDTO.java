@@ -72,7 +72,7 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
 	Integer weeklyHoursSpentInClassesSeason = getInquiriesRegistry().getInquiriesStudentExecutionPeriod()
 		.getWeeklyHoursSpentInClassesSeason();
 
-	DecimalFormat format = new DecimalFormat("#0.00");
+	DecimalFormat format = new DecimalFormat("#0.0");
 
 	// ((%*NHTA + NHC)*14+ NDE*8) / 28
 	final double result = (((getWeeklyHoursSpentPercentage() / 100d) * weeklyHoursSpentInClassesSeason * 14)

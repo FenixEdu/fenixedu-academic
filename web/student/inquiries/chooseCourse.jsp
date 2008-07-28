@@ -30,7 +30,7 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle1 thlight tdcenter tdwith90px"/>
 			<fr:property name="columnClasses" value="nowrap aleft,,,,,,acenter nowrap"/>
-			<fr:property name="suffixes" value=",ECTS,h,%,dias,ECTS,"/>
+			<fr:property name="suffixes" value=",,h,%,dias,,"/>
 			
 			<fr:property name="linkFormat(answerNow)" value="/studentInquiry.do?method=showInquiries1stPage&amp;inquiriesRegistryID=${inquiriesRegistry.idInternal}" />
 			<fr:property name="key(answerNow)" value="link.inquiries.answerNow"/>

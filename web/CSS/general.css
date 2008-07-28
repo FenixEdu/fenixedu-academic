@@ -2436,5 +2436,16 @@ color: #fff;
 border: 3px solid #97bac6;
 /*cursor: help;*/
 }
+
+table.thpadding5px10px th { padding: 5px 10px;  }
+/*
 table.tborderccc { border: 1px solid #ccc; }
 .brightccc { border-right: 1px solid #ccc !important; }
+*/
+
+div.relative {
+position: relative;
+height: 100%;
+}
+input.bright { position: absolute; bottom: 0; left: 5.5em; }
+input.bleft { position: absolute; bottom: 0; left: 0;  }

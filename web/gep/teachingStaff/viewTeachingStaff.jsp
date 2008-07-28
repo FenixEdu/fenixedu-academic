@@ -2,6 +2,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
 <script type='text/javascript' src='<%= request.getContextPath() + "/dwr/engine.js" %>'></script>
 <script type='text/javascript' src='<%= request.getContextPath() + "/dwr/util.js" %>'></script>
@@ -27,12 +28,16 @@
 				<logic:equal name="professorship" property="responsibleFor" value="true">
 					<bean:message key="label.inquiries.responsible" bundle="INQUIRIES_RESOURCES" />
 				</logic:equal>				
-			</td>						
+			</td>
 		</tr>
 	</logic:iterate>
 </table>	
 
 <h3><bean:message key="title.inquiries.nonAffiliatedTeachers" bundle="INQUIRIES_RESOURCES" /></h3>
+<html:messages id="message" message="true" bundle="INQUIRIES_RESOURCES">
+	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
+</html:messages>
+
 <table>	
 	<tr class="listClasses-header">
 		<th><bean:message key="table.rowname.inquiries.teacher.form.teacher.name" bundle="INQUIRIES_RESOURCES" /></th>
@@ -46,6 +51,12 @@
 			</td>
 			<td>
 				<bean:write name="nonAffiliatedTeacher" property="institutionUnit.name"/>
+			</td>							
+			<td>
+				<bean:define id="deleteLink">/teachingStaff.do?method=deleteNonAffiliatedTeacher&executionCourseID=<bean:write name="teachingStaffForm" property="executionCourseID"/></bean:define>
+				<html:link action="<%= deleteLink %>" paramId="nonAffiliatedTeacherID" paramName="nonAffiliatedTeacher" paramProperty="idInternal">
+					<bean:message bundle="APPLICATION_RESOURCES" key="label.delete"/>
+				</html:link>				
 			</td>							
 		</tr>
 	</logic:iterate>	

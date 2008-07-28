@@ -220,7 +220,7 @@ public class StudentInquiryDTO implements Serializable {
 	this.firstPageSecondBlock.addQuestion(new CheckBoxQuestion(
 		"label.studentInquiries.firstPageSecondBlock.highWorkLoadReasonLackOfAttendanceOfLessons"));
 	this.firstPageSecondBlock.addQuestion(new TextBoxQuestion(
-		"label.studentInquiries.firstPageSecondBlock.highWorkLoadReasonOtherReasons", true));
+		"label.studentInquiries.firstPageSecondBlock.highWorkLoadReasonOtherReasons", false));
 
 	this.firstPageThirdBlock = new InquiriesBlock(StringUtils.EMPTY, true,
 		"header.studentInquiries.firstPageThirdBlock.totallyDisagree", "header.studentInquiries.two",

@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
@@ -202,6 +203,17 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
 	    e.printStackTrace();
 	}
 
+	return viewTeachingStaff(mapping, actionForm, request, response);
+    }
+
+    public ActionForward deleteNonAffiliatedTeacher(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    executeService("DeleteNonAffiliatedTeacher", rootDomainObject.readNonAffiliatedTeacherByOID(getIntegerFromRequest(
+	    	request, "nonAffiliatedTeacherID")));
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey());
+	}
 	return viewTeachingStaff(mapping, actionForm, request, response);
     }
 

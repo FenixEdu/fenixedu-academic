@@ -25,22 +25,25 @@
 <h3 class="separator2 mtop2"><span style="font-weight: normal ;"><bean:message key="title.inquiries.separator.courses_2" bundle="INQUIRIES_RESOURCES"/></span></h3>
 
 <div class="forminline dinline">
-	<fr:form action="/studentInquiry.do?method=showTeachersToAnswer">
-		<h4 class="mtop15 mbottom05"><bean:message key="title.studentInquiries.secondPageFirstBlock" bundle="INQUIRIES_RESOURCES"/></h4>
-		<fr:edit name="studentInquiry" property="secondPageFirstBlock" />
-		<h4 class="mtop15 mbottom05"><bean:message key="title.studentInquiries.secondPageSecondBlock" bundle="INQUIRIES_RESOURCES"/></h4>
-		<fr:edit name="studentInquiry" property="secondPageSecondBlock" />
-		<h4 class="mtop15 mbottom05"><bean:message key="title.studentInquiries.secondPageThirdBlock" bundle="INQUIRIES_RESOURCES"/></h4>
-		<fr:edit name="studentInquiry" property="secondPageThirdBlock" />
+	<div class="relative">
+		<fr:form action="/studentInquiry.do?method=showTeachersToAnswer">
+			<h4 class="mtop15 mbottom05"><bean:message key="title.studentInquiries.secondPageFirstBlock" bundle="INQUIRIES_RESOURCES"/></h4>
+			<fr:edit name="studentInquiry" property="secondPageFirstBlock" />
+			<h4 class="mtop15 mbottom05"><bean:message key="title.studentInquiries.secondPageSecondBlock" bundle="INQUIRIES_RESOURCES"/></h4>
+			<fr:edit name="studentInquiry" property="secondPageSecondBlock" />
+			<h4 class="mtop15 mbottom05"><bean:message key="title.studentInquiries.secondPageThirdBlock" bundle="INQUIRIES_RESOURCES"/></h4>
+			<fr:edit name="studentInquiry" property="secondPageThirdBlock" />
+			
+			<fr:edit name="studentInquiry" id="studentInquiry" visible="false"/>
 		
-		<fr:edit name="studentInquiry" id="studentInquiry" visible="false"/>
-	
-		<p class="mtop025 mbottom15"><em><bean:message key="message.inquiries.requiredFieldsMarkedWithAsterisk" bundle="INQUIRIES_RESOURCES"/></em></p>
-		<html:submit><bean:message key="button.continue" bundle="INQUIRIES_RESOURCES"/></html:submit>
-	</fr:form>
-	
-	<fr:form action="/studentInquiry.do?method=showInquiries1stPage">
-		<fr:edit name="studentInquiry" id="studentInquiry" visible="false"/>
-		<html:submit><bean:message key="button.back" bundle="INQUIRIES_RESOURCES"/></html:submit>
-	</fr:form>	
+			<p class="mtop025 mbottom15"><em><bean:message key="message.inquiries.requiredFieldsMarkedWithAsterisk" bundle="INQUIRIES_RESOURCES"/></em></p>
+			<html:submit styleClass="bright"><bean:message key="button.continue" bundle="INQUIRIES_RESOURCES"/></html:submit>
+		</fr:form>
+		
+		<fr:form action="/studentInquiry.do?method=showInquiries1stPage">
+			<fr:edit name="studentInquiry" id="studentInquiry" visible="false"/>
+			<html:submit styleClass="bleft"><bean:message key="button.back" bundle="INQUIRIES_RESOURCES"/></html:submit>
+		</fr:form>
+		<br/>	
+	</div>
 </div>

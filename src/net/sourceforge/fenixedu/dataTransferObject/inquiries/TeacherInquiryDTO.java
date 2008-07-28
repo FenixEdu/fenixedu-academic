@@ -110,7 +110,7 @@ public class TeacherInquiryDTO implements Serializable {
 		    return false;
 		}
 
-		if (getQuestion("label.studentInquiries.thirdPageFirstBlock.classesFrequency").getValueAsInteger() < 3) {
+		if (getQuestion("label.studentInquiries.thirdPageFirstBlock.classesFrequency").getValueAsInteger() <= 3) {
 
 		    if (!getQuestion("label.studentInquiries.thirdPageSecondBlock.lowClassesFrequencyReasonSchedule").isEmpty()) {
 			return true;

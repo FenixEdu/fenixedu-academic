@@ -43,6 +43,16 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
     private final ResourceBundle inquiriesResources = ResourceBundle.getBundle("resources.InquiriesResources", Language
 	    .getLocale());
 
+    private String columnClasses;
+
+    public String getColumnClasses() {
+	return columnClasses;
+    }
+
+    public void setColumnClasses(String columnClasses) {
+	this.columnClasses = columnClasses;
+    }
+
     @Override
     protected Layout getLayout(Object object, Class type) {
 	return new InquiriesQuestionBlockLayout(object);
@@ -88,6 +98,7 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 		RenderKit kit = RenderKit.getInstance();
 		HtmlFormComponent formComponent = null;
 
+		final int scaleHeadersCount = block.getHeader().getScaleHeadersCount();
 		if (inquiriesQuestion instanceof TextBoxQuestion) {
 		    final TextBoxQuestion textBoxQuestion = (TextBoxQuestion) inquiriesQuestion;
 
@@ -100,7 +111,7 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 		    formComponent = (HtmlFormComponent) kit.render(newContext, metaSlot.getObject(), metaSlot.getType());
 
 		    final HtmlTableCell cell = questionRow.createCell();
-		    cell.setColspan(block.getHeader().getScaleHeadersCount());
+		    cell.setColspan(scaleHeadersCount);
 		    cell.setBody(formComponent);
 
 		} else if (inquiriesQuestion instanceof RadioGroupQuestion) {
@@ -130,12 +141,17 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 		    formComponent = (HtmlFormComponent) kit.render(newContext, metaSlot.getObject(), metaSlot.getType());
 
 		    final HtmlTableCell cell = questionRow.createCell();
-		    cell.setColspan(block.getHeader().getScaleHeadersCount());
+		    // cell.setColspan(block.getHeader().getScaleHeadersCount());
 		    cell.setBody(formComponent);
+		    if (scaleHeadersCount > 1) {
+			questionRow.createCell().setColspan(scaleHeadersCount - 1);
+		    }
 
 		}
 
 		formComponent.bind(metaSlot);
+
+		applyStyles(questionRow);
 
 	    }
 
@@ -143,6 +159,24 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 
 	    return mainTable;
 
+	}
+
+	private void applyStyles(final HtmlTableRow questionRow) {
+	    String[] cellClasses = null;
+	    if (getColumnClasses() != null) {
+		cellClasses = getColumnClasses().split(",", -1);
+	    }
+
+	    if (cellClasses != null) {
+		int cellIndex = 0;
+		for (HtmlTableCell cell : questionRow.getCells()) {
+		    String chooseCellClass = cellClasses[cellIndex % cellClasses.length];
+		    if (!chooseCellClass.equals("")) {
+			cell.setClasses(chooseCellClass);
+		    }
+		    cellIndex++;
+		}
+	    }
 	}
 
 	private String getQuestionToolTip(final InquiriesQuestion inquiriesQuestion) {
@@ -166,7 +200,7 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 	    final HtmlTableRow headerRow = mainTable.createRow();
 
 	    final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
-	    firstHeaderCell.setBody(new HtmlText(getResource(header.getTitle())));
+	    firstHeaderCell.setBody(new HtmlText(getResource(header.getTitle()), false));
 	    firstHeaderCell.addClass("width300px");
 
 	    if (header.hasScaleHeaders()) {
@@ -182,7 +216,7 @@ public class InquiriesQuestionBlockRenderer extends InputRenderer {
 
 	@Override
 	public String getClasses() {
-	    return "tstyle2 thlight thleft tdcenter tdwith50px tborderccc";
+	    return "tstyle2 thlight thleft tdcenter tdwith50px thpadding5px10px";
 	}
     }
 

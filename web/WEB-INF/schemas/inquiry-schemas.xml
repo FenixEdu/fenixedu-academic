@@ -67,7 +67,7 @@
 	<slot name="weeklyContactLoad" key="label.contactLoad" read-only="true">
 		<property name="headerToolTip" value="toolTip.studentInquiries.weeklyScheduleLoad" />
 	</slot>
-	<slot name="weeklyHoursSpentPercentage" key="label.weeklyHoursSpentPercentage">
+	<slot name="weeklyHoursSpentPercentage" key="label.weeklyHoursSpentPercentage.withBreaks">
 		<property name="size" value="5" />
 		<property name="maxLength" value="3" />	
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -77,7 +77,7 @@
             <property name="upperBound" value="100"/>
         </validator>
 	</slot>
-	<slot name="studyDaysSpentInExamsSeason" key="label.studyDaysSpentInExamsSeason">
+	<slot name="studyDaysSpentInExamsSeason" key="label.studyDaysSpentInExamsSeason.withBreaks">
 		<property name="size" value="5" />
 		<property name="maxLength" value="4" />
 		<property name="headerToolTip" value="toolTip.studentInquiries.studyDaysSpentInExamsSeason" />
