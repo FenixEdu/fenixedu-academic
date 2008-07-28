@@ -32,13 +32,13 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 	}
 	return (daysBetween == null || daysBetween > 90);
     }
-    
-    public boolean isForCountInCredits() {	
+
+    public boolean isForCountInCredits() {
 	return getSituationType().equals(ProfessionalSituationType.SABBATICAL)
 		|| getSituationType().equals(ProfessionalSituationType.TEACHER_SERVICE_EXEMPTION_E_C_D_U)
 		|| getSituationType().equals(ProfessionalSituationType.TEACHER_SERVICE_EXEMPTION_DL24_84_ART51_N6_EST_DISC)
-		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_SABBATICAL)		
-		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_WITH_DEBITS)		
+		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_SABBATICAL)
+		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_WITH_DEBITS)
 		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY)
 		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITHOUT_SALARY);
     }
@@ -69,15 +69,16 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 
 	return false;
     }
-   
+
     public boolean isMedicalSituation() {
 	return getSituationType().equals(ProfessionalSituationType.MEDICAL_SITUATION)
 		|| getSituationType().equals(ProfessionalSituationType.MATERNAL_LICENSE_WITH_SALARY_80PERCENT)
 		|| getSituationType().equals(ProfessionalSituationType.MATERNAL_LICENSE)
-		|| getSituationType().equals(ProfessionalSituationType.DANGER_MATERNAL_LICENSE) 
-		|| getSituationType().equals(ProfessionalSituationType.CHILDBIRTH_LICENSE);
+		|| getSituationType().equals(ProfessionalSituationType.DANGER_MATERNAL_LICENSE)
+		|| getSituationType().equals(ProfessionalSituationType.CHILDBIRTH_LICENSE)
+		|| getSituationType().equals(ProfessionalSituationType.SPECIAL_LICENCE_FOR_CHILD_ASSISTENCE);
     }
-    
+
     @Override
     public boolean isTeacherServiceExemption() {
 	return true;

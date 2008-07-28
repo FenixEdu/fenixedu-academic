@@ -63,6 +63,7 @@ public enum ProfessionalSituationType {
     LICENSE_WITHOUT_SALARY_UNTIL_NINETY_DAYS(true, false),
     DANGER_MATERNAL_LICENSE(true, false),
     CHILDBIRTH_LICENSE(true, false),
+    SPECIAL_LICENCE_FOR_CHILD_ASSISTENCE(true, false),
     MILITAR_SITUATION(true, false),
     GRANT_OWNER_EQUIVALENCE_WITH_SALARY_SABBATICAL(true, false),
     GRANT_OWNER_EQUIVALENCE_WITH_SALARY_WITH_DEBITS(true, false),
