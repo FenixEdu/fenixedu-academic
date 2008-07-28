@@ -75,6 +75,13 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("importData");
     }
 
+    public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	ImportResidenceEventBean bean = (ImportResidenceEventBean) getRenderedObject("importFile");
+	request.setAttribute("importFileBean", bean);
+	return mapping.findForward("importData");
+    }
+
     public ActionForward createYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	executeService("CreateNewResidenceYear", new Object[] {});

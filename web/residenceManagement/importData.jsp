@@ -62,29 +62,40 @@
 				<td>
 				 	<bean:message key="label.spreadsheetName" bundle="RESIDENCE_MANAGEMENT_RESOURCES" /></td>
 				<td>
-					<fr:edit id="sheetName" name="importFileBean" slot="spreadsheetName">
+					<fr:edit id="sheetName" name="importFileBean" slot="spreadsheetName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 						<fr:layout>
-									<fr:property name="size" value="30"/>
-								</fr:layout>	
-						</fr:edit>
+							<fr:property name="size" value="30"/>
+						</fr:layout>	
+						<fr:destination name="invalid" path="/residenceManagement.do?method=invalid"/>
+					</fr:edit>
 				</td>
 				<td></td>
+				<td class="tdclear">
+				<fr:hasMessages for="sheetName">
+						<p class="mtop15"><span class="error0 mbottom0"><fr:message for="sheetName" show="message"/></span></p>
+				</fr:hasMessages>
 			</tr>
 			<tr>
 				<td>
 					<bean:message key="label.importFile" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />
 				</td>
 				<td>
-					<fr:edit id="file" name="importFileBean" slot="file" >
+					<fr:edit id="file" name="importFileBean" slot="file" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 						<fr:layout>
 							<fr:property name="size" value="30"/>
 						</fr:layout>
+						<fr:destination name="invalid" path="/residenceManagement.do?method=invalid"/>
 					</fr:edit>
 				</td>
 				<td>
 					<html:submit>
 						<bean:message key="label.submit" bundle="APPLICATION_RESOURCES" />
 					</html:submit>
+				</td>
+				<td class="tdclear">		
+					<fr:hasMessages for="file">
+						<p class="mtop15"><span class="error0 mbottom0"><fr:message for="file" show="message"/></span></p>
+					</fr:hasMessages>
 				</td>
 			</tr>
 		</table>
