@@ -9,13 +9,21 @@
 
 <bean:define id="monthOID" name="residenceMonth" property="OID"/>
 
-<fr:form action="<%= "/residenceEventManagement.do?method=manageResidenceEvents&monthOID=" + monthOID%>">
+<div class="dinline forminline">
+	<fr:form action="<%= "/residenceEventManagement.do?method=manageResidenceEvents&monthOID=" + monthOID%>">
+		
+		<fr:edit name="residenceMonth" property="year" schema="residenceYear.configuration.roomValues">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thlight thleft dinline"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
+		</fr:edit>
+		
+		<br/>
+		<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
+	</fr:form>
 	
-	<fr:edit name="residenceMonth" property="year" schema="residenceYear.configuration.roomValues">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle5 thlight thleft"/>
-		</fr:layout>
-	</fr:edit>
-	
-	<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
-</fr:form>
+	<fr:form action="<%= "/residenceEventManagement.do?method=manageResidenceEvents&monthOID=" + monthOID%>">
+		<html:submit><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES"/></html:submit>
+	</fr:form>
+</div>
