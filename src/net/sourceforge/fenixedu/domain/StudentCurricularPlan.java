@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -405,6 +406,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getRegistration().getPerson();
     }
 
+    final public Department getDepartment() {
+	return getDegree().getUnit().getDepartment();
+    }
+    
     final public Degree getDegree() {
 	return getDegreeCurricularPlan().getDegree();
     }

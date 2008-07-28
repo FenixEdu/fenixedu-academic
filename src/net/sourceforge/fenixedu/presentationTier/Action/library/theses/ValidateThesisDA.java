@@ -12,7 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
-public class CheckThesisDA extends FenixDispatchAction {
+public class ValidateThesisDA extends FenixDispatchAction {
     protected Thesis getThesis(HttpServletRequest request) {
 	Integer id = getIdInternal(request, "thesisID");
 	return id != null ? (Thesis) RootDomainObject.getInstance().readThesisByOID(id) : null;

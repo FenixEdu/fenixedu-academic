@@ -85,6 +85,10 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 	return true;
     }
 
+    public boolean match(String[] parts) {
+	return containsAll(getName(), parts);
+    }
+    
     public static void find(final PersonNameLimitedOrderedSet personNameLimitedOrderedSet, final String name,
 	    final int size) {
 	final String[] nameParts = PersonNamePart.getNameParts(name);

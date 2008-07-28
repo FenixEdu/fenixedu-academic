@@ -41,3 +41,4 @@ function executeWithTempFile() {
 }
 
 execute "Data fix" dataFix.sql IST
+execute "Library Thesis Operations" createTableThesisLibraryOperation.sql

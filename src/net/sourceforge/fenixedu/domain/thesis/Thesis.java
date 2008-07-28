@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -38,6 +39,8 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.Email;
@@ -72,7 +75,7 @@ public class Thesis extends Thesis_Base {
 		String number = enrolment.getStudentCurricularPlan().getRegistration().getNumber().toString();
 		switch (theses.size()) {
 		case 0: // can have at least one
-		    return; 
+		    return;
 		case 1: // can have another if existing is not final
 		    Thesis existing = theses.iterator().next();
 		    if (existing.isFinalThesis() || !existing.isEvaluated()) {
@@ -93,7 +96,7 @@ public class Thesis extends Thesis_Base {
 	}
     };
 
-    private final static double CREDITS = 0.5; 
+    private final static double CREDITS = 0.5;
 
     public static class ThesisCondition {
 	private String key;
@@ -167,8 +170,7 @@ public class Thesis extends Thesis_Base {
 
 	if (dissertation == null) {
 	    return null;
-	}
-	else {
+	} else {
 
 	    String subTitle = dissertation.getSubTitle();
 
@@ -192,7 +194,7 @@ public class Thesis extends Thesis_Base {
 		final String content = finalTitle.getContent(language);
 		if (content == null) {
 		    dissertation.setLanguage(finalTitle.getContentLanguage());
-		    dissertation.setTitle(finalTitle.getContent());		    
+		    dissertation.setTitle(finalTitle.getContent());
 		} else {
 		    dissertation.setTitle(content);
 		}
@@ -211,12 +213,12 @@ public class Thesis extends Thesis_Base {
 		final String content = finalSubtitle.getContent(language);
 		if (content == null) {
 		    dissertation.setLanguage(finalSubtitle.getContentLanguage());
-		    dissertation.setSubTitle(finalSubtitle.getContent());		    
+		    dissertation.setSubTitle(finalSubtitle.getContent());
 		} else {
 		    dissertation.setSubTitle(content);
 		}
 	    }
-	}	
+	}
     }
 
     public Language getLanguage() {
@@ -240,9 +242,9 @@ public class Thesis extends Thesis_Base {
     @Override
     @Checked("ThesisPredicates.student")
     public void setDiscussed(DateTime discussed) {
-	if(discussed != null && getEnrolment().getCreationDateDateTime().isAfter(discussed)) {
+	if (discussed != null && getEnrolment().getCreationDateDateTime().isAfter(discussed)) {
 	    throw new DomainException("thesis.invalid.discussed.date.time");
-	}	
+	}
 	super.setDiscussed(discussed);
     }
 
@@ -340,11 +342,12 @@ public class Thesis extends Thesis_Base {
 
 	removeRootDomainObject();
 
-	for (; !getParticipations().isEmpty(); getParticipations().iterator().next().delete()); 
+	for (; !getParticipations().isEmpty(); getParticipations().iterator().next().delete())
+	    ;
 
 	// Unnecessary, the student could not submit files while in draft
-	//removeDissertation();
-	//removeExtendedAbstract();
+	// removeDissertation();
+	// removeExtendedAbstract();
 
 	removeDegree();
 	removeEnrolment();
@@ -444,7 +447,8 @@ public class Thesis extends Thesis_Base {
 	return getThesisInState(degree, executionYear, ThesisState.EVALUATED);
     }
 
-    // the credits calculation always depends on the current credits' value for the thesis (no history)
+    // the credits calculation always depends on the current credits' value for
+    // the thesis (no history)
     public static double getCredits() {
 	return CREDITS;
     }
@@ -452,8 +456,7 @@ public class Thesis extends Thesis_Base {
     public boolean hasCredits() {
 	if (isEvaluated() && hasFinalEnrolmentEvaluation()) {
 	    return true;
-	}
-	else {
+	} else {
 	    return false;
 	}
     }
@@ -480,17 +483,23 @@ public class Thesis extends Thesis_Base {
 
 	if (enrolment != null) {
 	    CurricularCourse curricularCourse = enrolment.getCurricularCourse();
-	    if (! curricularCourse.isDissertation()) {
+	    if (!curricularCourse.isDissertation()) {
 		throw new DomainException("thesis.enrolment.notDissertationEnrolment");
 	    }
 	}
 
 	super.setEnrolment(enrolment);
     }
-    
+
     @Override
     public void removeEnrolment() {
-        super.setEnrolment(null);
+	super.setEnrolment(null);
+    }
+
+    public Department getDepartment() {
+	final CompetenceCourse competenceCourse = getEnrolment().getCurricularCourse().getCompetenceCourse();
+	return getEnrolment().isBolonhaDegree() ? competenceCourse.getDepartmentUnit().getDepartment() : competenceCourse
+		.getDepartments().get(0);
     }
 
     public Student getStudent() {
@@ -505,19 +514,19 @@ public class Thesis extends Thesis_Base {
 	setState(ThesisState.DRAFT);
     }
 
-    /// DRAFT -> SUBMITTED
+    // / DRAFT -> SUBMITTED
     public void submit() {
 	if (getState() != ThesisState.DRAFT) {
 	    throw new DomainException("thesis.submit.notDraft");
 	}
 
-	if (! isValid()) {
+	if (!isValid()) {
 	    throw new DomainException("thesis.submit.hasConditions");
 	}
 
 	Person person = AccessControl.getPerson();
 
-	if (! person.hasTeacher()) {
+	if (!person.hasTeacher()) {
 	    throw new DomainException("thesis.submit.needsTeacher");
 	}
 
@@ -528,7 +537,7 @@ public class Thesis extends Thesis_Base {
 	setState(ThesisState.SUBMITTED);
     }
 
-    /// SUBMITTED -> DRAFT
+    // / SUBMITTED -> DRAFT
     public void cancelSubmit() {
 	switch (getState()) {
 	case SUBMITTED:
@@ -554,14 +563,14 @@ public class Thesis extends Thesis_Base {
     }
 
     // SUBMITTED -> DRAFT
-//    public void reject() {
-//	if (getState() != ThesisState.SUBMITTED) {
-//	    throw new DomainException("thesis.approve.notSubmitted");
-//	}
-//
-//	setSubmitter(null);
-//	setState(ThesisState.DRAFT);
-//    }
+    // public void reject() {
+    // if (getState() != ThesisState.SUBMITTED) {
+    // throw new DomainException("thesis.approve.notSubmitted");
+    // }
+    //
+    // setSubmitter(null);
+    // setState(ThesisState.DRAFT);
+    // }
 
     // SUBMITTED -> APPROVED
     public void approveProposal() {
@@ -608,7 +617,8 @@ public class Thesis extends Thesis_Base {
 	}
 	for (final ThesisEvaluationParticipant thesisEvaluationParticipant : getParticipationsSet()) {
 	    final ThesisParticipationType thesisParticipationType = thesisEvaluationParticipant.getType();
-	    if (thesisParticipationType == ThesisParticipationType.ORIENTATOR || thesisParticipationType == ThesisParticipationType.COORIENTATOR) {
+	    if (thesisParticipationType == ThesisParticipationType.ORIENTATOR
+		    || thesisParticipationType == ThesisParticipationType.COORIENTATOR) {
 		final Person memberPerson = thesisEvaluationParticipant.getPerson();
 		final String toAddr = memberPerson.getEmail();
 		if (toAddr != null && toAddr.length() > 0) {
@@ -625,32 +635,33 @@ public class Thesis extends Thesis_Base {
 	new Email(RoleType.SCIENTIFIC_COUNCIL.getDefaultLabel(), emailAddr, null, tos, null, null, subject, body);
     }
 
-    protected String getMessage(final String key, final Object ... args) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ScientificCouncilResources", Language.getLocale());
-        final String message = bundle.getString(key);
-        return MessageFormat.format(message, args);
+    protected String getMessage(final String key, final Object... args) {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.ScientificCouncilResources", Language.getLocale());
+	final String message = bundle.getString(key);
+	return MessageFormat.format(message, args);
     }
 
-    // Not an actual state change... but it is an aparent state change (whatever that means).
+    // Not an actual state change... but it is an aparent state change (whatever
+    // that means).
     @Override
     public void setConfirmmedDocuments(final DateTime confirmmedDocuments) {
 	if (getState() != ThesisState.APPROVED && getState() != ThesisState.REVISION) {
 	    throw new DomainException("thesis.confirm.notApprovedOrInRevision");
 	}
 
-	if (! isThesisAbstractInBothLanguages()) {
+	if (!isThesisAbstractInBothLanguages()) {
 	    throw new DomainException("thesis.confirm.noAbstract");
 	}
 
-	if (! isKeywordsInBothLanguages()) {
+	if (!isKeywordsInBothLanguages()) {
 	    throw new DomainException("thesis.confirm.noKeywords");
 	}
 
-	if (! hasExtendedAbstract()) {
+	if (!hasExtendedAbstract()) {
 	    throw new DomainException("thesis.confirm.noExtendedAbstract");
 	}
 
-	if (! hasDissertation()) {
+	if (!hasDissertation()) {
 	    throw new DomainException("thesis.confirm.noDissertation");
 	}
 
@@ -669,19 +680,19 @@ public class Thesis extends Thesis_Base {
 	    throw new DomainException("thesis.confirm.notApprovedOrInRevision");
 	}
 
-	if (! isThesisAbstractInBothLanguages()) {
+	if (!isThesisAbstractInBothLanguages()) {
 	    throw new DomainException("thesis.confirm.noAbstract");
 	}
 
-	if (! isKeywordsInBothLanguages()) {
+	if (!isKeywordsInBothLanguages()) {
 	    throw new DomainException("thesis.confirm.noKeywords");
 	}
 
-	if (! hasExtendedAbstract()) {
+	if (!hasExtendedAbstract()) {
 	    throw new DomainException("thesis.confirm.noExtendedAbstract");
 	}
 
-	if (! hasDissertation()) {
+	if (!hasDissertation()) {
 	    throw new DomainException("thesis.confirm.noDissertation");
 	}
 
@@ -721,6 +732,45 @@ public class Thesis extends Thesis_Base {
 	updateMarkSheet();
     }
 
+    public ThesisLibraryState getLibraryState() {
+	if (hasLastLibraryOperation())
+	    return getLastLibraryOperation().getState();
+	return ThesisLibraryState.NOT_DEALT;
+    }
+
+    /**
+     * Do not use this. Create instances of {@link ThesisLibraryOperation} instead.
+     */
+    public void setLibraryState(ThesisLibraryState state) {
+	throw new UnsupportedOperationException();
+    }
+    
+    public String getLibraryReference() {
+	if (hasLastLibraryOperation())
+	    return getLastLibraryOperation().getLibraryReference();
+	return null;
+    }
+    
+    /**
+     * Do not use this. Create instances of {@link ThesisLibraryOperation} instead.
+     */
+    public void setLibraryReference(String reference) {
+	throw new UnsupportedOperationException();
+    }
+
+    public Person getLibraryOperationPerformer() {
+	if (hasLastLibraryOperation())
+	    return getLastLibraryOperation().getPerformer();
+	return null;
+    }
+    
+    /**
+     * Do not use this. Create instances of {@link ThesisLibraryOperation} instead.
+     */
+    public void setLibraryOperationPerformer(Person performer) {
+	throw new UnsupportedOperationException();
+    }
+
     public boolean hasFinalEnrolmentEvaluation() {
 	Enrolment enrolment = getEnrolment();
 	EnrolmentEvaluationState finalState = EnrolmentEvaluationState.FINAL_OBJ;
@@ -743,7 +793,7 @@ public class Thesis extends Thesis_Base {
 	    return;
 	}
 
-	if (! isFinalThesis()) {
+	if (!isFinalThesis()) {
 	    return;
 	}
 
@@ -751,8 +801,7 @@ public class Thesis extends Thesis_Base {
 
 	if (markSheet == null) {
 	    markSheet = createMarkSheet();
-	}
-	else {
+	} else {
 	    mergeInMarkSheet(markSheet);
 	}
     }
@@ -784,22 +833,22 @@ public class Thesis extends Thesis_Base {
      * Verifies if the student has any EnrolmentEvaluation crated by a
      * MarkSheet.
      * 
-     * @return <code>true</code> if the Enrolment related to this Thesis has
-     *         at least one EnrolmentEvaluation connected to a MarkSheet
+     * @return <code>true</code> if the Enrolment related to this Thesis has at
+     *         least one EnrolmentEvaluation connected to a MarkSheet
      */
     public boolean hasAnyEvaluations() {
 	for (EnrolmentEvaluation evaluation : getEnrolment().getEvaluations()) {
-	    if (! evaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)) {
+	    if (!evaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)) {
 		continue;
 	    }
 
-	    if (! evaluation.hasMarkSheet()) {
+	    if (!evaluation.hasMarkSheet()) {
 		continue;
 	    }
 
 	    final String gradeValue = evaluation.getGradeValue();
 	    final Grade evaluationMark = getEvaluationMark();
-	    final String evaluationMarkValue = evaluationMark == null ? null : evaluationMark.getValue(); 
+	    final String evaluationMarkValue = evaluationMark == null ? null : evaluationMark.getValue();
 	    if (gradeValue.equals(evaluationMarkValue)) {
 		return true;
 	    } else {
@@ -812,7 +861,7 @@ public class Thesis extends Thesis_Base {
 
     protected MarkSheet getExistingMarkSheet() {
 	CurricularCourse curricularCourse = getEnrolment().getCurricularCourse();
-	
+
 	Teacher teacher = getResponsibleTeacher();
 
 	for (MarkSheet markSheet : curricularCourse.getMarkSheets()) {
@@ -827,8 +876,8 @@ public class Thesis extends Thesis_Base {
 	    if (markSheet.getMarkSheetType() != MarkSheetType.SPECIAL_AUTHORIZATION) {
 		continue;
 	    }
-	    
-	    if(markSheet.getResponsibleTeacher() != teacher) {
+
+	    if (markSheet.getResponsibleTeacher() != teacher) {
 		continue;
 	    }
 
@@ -840,11 +889,11 @@ public class Thesis extends Thesis_Base {
 
     private Teacher getResponsibleTeacher() {
 	Teacher responsible = getExecutionCourseTeacher();
-	
-	if(responsible == null) {
+
+	if (responsible == null) {
 	    responsible = AccessControl.getPerson().getTeacher();
 	}
-	
+
 	return responsible;
     }
 
@@ -868,13 +917,12 @@ public class Thesis extends Thesis_Base {
 
 	List<MarkSheetEnrolmentEvaluationBean> evaluations = getStudentEvalutionBean();
 
-	return curricularCourse.createNormalMarkSheet(executionSemester, responsible, evaluationDate, type, true, evaluations, employee);
+	return curricularCourse.createNormalMarkSheet(executionSemester, responsible, evaluationDate, type, true, evaluations,
+		employee);
     }
 
     private List<MarkSheetEnrolmentEvaluationBean> getStudentEvalutionBean() {
-	return Arrays.asList(
-		new MarkSheetEnrolmentEvaluationBean(getEnrolment(), getDiscussed().toDate(), getEvaluationMark())
-	);
+	return Arrays.asList(new MarkSheetEnrolmentEvaluationBean(getEnrolment(), getDiscussed().toDate(), getEvaluationMark()));
     }
 
     private Teacher getExecutionCourseTeacher() {
@@ -915,13 +963,14 @@ public class Thesis extends Thesis_Base {
 	Enrolment enrolment = getEnrolment();
 	CurricularCourse curricularCourse = enrolment.getCurricularCourse();
 
-	List<ExecutionCourse> executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(enrolment.getExecutionPeriod());
-	if (! executionCourses.isEmpty()) {
+	List<ExecutionCourse> executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(enrolment
+		.getExecutionPeriod());
+	if (!executionCourses.isEmpty()) {
 	    return executionCourses.iterator().next();
 	}
 
 	executionCourses = curricularCourse.getExecutionCoursesByExecutionYear(enrolment.getExecutionYear());
-	if (! executionCourses.isEmpty()) {
+	if (!executionCourses.isEmpty()) {
 	    return executionCourses.iterator().next();
 	}
 
@@ -944,7 +993,7 @@ public class Thesis extends Thesis_Base {
 	    throw new DomainException("thesis.acceptDeclaration.visibility.required");
 	}
 
-	if (! isWaitingConfirmation()) {
+	if (!isWaitingConfirmation()) {
 	    throw new DomainException("thesis.acceptDeclaration.notAllowed");
 	}
 
@@ -960,7 +1009,7 @@ public class Thesis extends Thesis_Base {
 	setDocumentsAvailableAfter(null);
 	setDeclarationAcceptedTime(null);
 
-	if (! isWaitingConfirmation()) {
+	if (!isWaitingConfirmation()) {
 	    throw new DomainException("thesis.rejectDeclaration.notAllowed");
 	}
 
@@ -999,7 +1048,7 @@ public class Thesis extends Thesis_Base {
     public boolean isEvaluated() {
 	return getState() == ThesisState.EVALUATED;
     }
-    
+
     public boolean isInRevision() {
 	return getState() == ThesisState.REVISION;
     }
@@ -1010,7 +1059,7 @@ public class Thesis extends Thesis_Base {
 
     @Override
     public void setMark(Integer mark) {
-	if (! isMarkValid(mark)) {
+	if (!isMarkValid(mark)) {
 	    throw new DomainException("thesis.mark.invalid");
 	}
 
@@ -1024,14 +1073,18 @@ public class Thesis extends Thesis_Base {
 	    scale = GradeScale.TYPE20;
 	}
 
-	return scale.isValid(mark.toString(), EvaluationType.EXAM_TYPE); // TODO: thesis, check grade type
+	return scale.isValid(mark.toString(), EvaluationType.EXAM_TYPE); //TODO:
+	// thesis
+	// ,
+	// check
+	// grade
+	// type
     }
 
     private Person getParticipationPerson(ThesisEvaluationParticipant participant) {
 	if (participant == null) {
 	    return null;
-	}
-	else {
+	} else {
 	    return participant.getPerson();
 	}
     }
@@ -1049,11 +1102,11 @@ public class Thesis extends Thesis_Base {
 	    conditions.add(new ThesisCondition("thesis.student.discussionDate.missing"));
 	}
 
-	if (! isThesisAbstractInBothLanguages()) {
+	if (!isThesisAbstractInBothLanguages()) {
 	    conditions.add(new ThesisCondition("thesis.student.abstract.missing"));
 	}
 
-	if (! isKeywordsInBothLanguages()) {
+	if (!isKeywordsInBothLanguages()) {
 	    conditions.add(new ThesisCondition("thesis.student.keywords.missing"));
 	}
 
@@ -1065,8 +1118,7 @@ public class Thesis extends Thesis_Base {
 	    if (getExtendedAbstract() == null) {
 		conditions.add(new ThesisCondition("thesis.student.extendedAbstract.missing"));
 	    }
-	}
-	else {
+	} else {
 	    conditions.add(new ThesisCondition("thesis.student.declaration.notAccepted"));
 	}
 
@@ -1128,9 +1180,8 @@ public class Thesis extends Thesis_Base {
 
 	if (orientator == null) {
 	    conditions.add(new ThesisCondition("thesis.condition.orientator.required"));
-	}
-	else {
-	    if (! orientator.hasExternalContract()) {
+	} else {
+	    if (!orientator.hasExternalContract()) {
 		hasInternal = true;
 	    }
 
@@ -1144,7 +1195,7 @@ public class Thesis extends Thesis_Base {
 	    hasInternal = true;
 	}
 
-	if (! hasInternal && (orientator != null || coorientator != null)) {
+	if (!hasInternal && (orientator != null || coorientator != null)) {
 	    conditions.add(new ThesisCondition("thesis.condition.orientation.notInternal"));
 	}
 
@@ -1158,12 +1209,10 @@ public class Thesis extends Thesis_Base {
 
 	if (president == null) {
 	    conditions.add(new ThesisCondition("thesis.condition.president.required"));
-	}
-	else {
+	} else {
 	    if (president.hasExternalContract()) {
 		conditions.add(new ThesisCondition("thesis.condition.president.notInternal"));
-	    }
-	    else {
+	    } else {
 		boolean isMember = false;
 
 		for (ScientificCommission member : getDegree().getCurrentScientificCommissionMembers()) {
@@ -1174,7 +1223,7 @@ public class Thesis extends Thesis_Base {
 		    }
 		}
 
-		if (! isMember) {
+		if (!isMember) {
 		    conditions.add(new ThesisCondition("thesis.condition.president.scientificCommission.notMember"));
 		}
 	    }
@@ -1188,8 +1237,7 @@ public class Thesis extends Thesis_Base {
 
 	if (getVowels().isEmpty()) {
 	    conditions.add(new ThesisCondition("thesis.condition.people.vowels.one.required"));
-	}
-	else {
+	} else {
 	    // check duplicated person
 	    Set<Person> vowelsPersons = new HashSet<Person>();
 	    for (ThesisEvaluationParticipant vowel : getVowels()) {
@@ -1266,15 +1314,13 @@ public class Thesis extends Thesis_Base {
 
 	if (thesisAbstract == null) {
 	    return null;
-	}
-	else {
+	} else {
 	    Language realLanguage = Language.valueOf(language);
 	    String value = thesisAbstract.getContent(realLanguage);
 
 	    if (value == null && value.length() == 0) {
 		return null;
-	    }
-	    else {
+	    } else {
 		return value;
 	    }
 	}
@@ -1286,8 +1332,7 @@ public class Thesis extends Thesis_Base {
 
 	if (thesisAbstract == null) {
 	    setThesisAbstract(new MultiLanguageString(realLanguage, text));
-	}
-	else {
+	} else {
 	    thesisAbstract.setContent(realLanguage, text);
 	    setThesisAbstract(thesisAbstract);
 	}
@@ -1316,8 +1361,7 @@ public class Thesis extends Thesis_Base {
 
 	if (keywords == null) {
 	    return null;
-	}
-	else {
+	} else {
 	    for (String part : keywords.split(",")) {
 		String trimmed = part.trim();
 
@@ -1339,15 +1383,13 @@ public class Thesis extends Thesis_Base {
 
 	if (thesisAbstract == null) {
 	    return null;
-	}
-	else {
+	} else {
 	    Language realLanguage = Language.valueOf(language);
 	    String value = thesisAbstract.getContent(realLanguage);
 
 	    if (value == null && value.length() == 0) {
 		return null;
-	    }
-	    else {
+	    } else {
 		return value;
 	    }
 	}
@@ -1359,8 +1401,7 @@ public class Thesis extends Thesis_Base {
 
 	if (keywords == null) {
 	    setKeywords(new MultiLanguageString(realLanguage, text));
-	}
-	else {
+	} else {
 	    keywords.setContent(realLanguage, text);
 	    setKeywords(keywords);
 	}
@@ -1369,7 +1410,7 @@ public class Thesis extends Thesis_Base {
     public void setOrientator(Person person) {
 	setParticipation(person, ThesisParticipationType.ORIENTATOR);
 
-	if (! isCreditsDistributionNeeded()) {
+	if (!isCreditsDistributionNeeded()) {
 	    setCoorientatorCreditsDistribution(null);
 	}
     }
@@ -1377,7 +1418,7 @@ public class Thesis extends Thesis_Base {
     public void setCoorientator(Person person) {
 	setParticipation(person, ThesisParticipationType.COORIENTATOR);
 
-	if (! isCreditsDistributionNeeded()) {
+	if (!isCreditsDistributionNeeded()) {
 	    setCoorientatorCreditsDistribution(null);
 	}
     }
@@ -1409,8 +1450,7 @@ public class Thesis extends Thesis_Base {
     private void setParticipation(Person person, ThesisParticipationType type) {
 	if (person == null) {
 	    removeParticipation(getParticipant(type));
-	}
-	else {
+	} else {
 	    new ThesisEvaluationParticipant(this, person, type);
 	}
     }
@@ -1461,7 +1501,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public DateTime getCurrentDiscussedDate() {
-	if(isConfirmed() || isEvaluated() || isInRevision()) {
+	if (isConfirmed() || isEvaluated() || isInRevision()) {
 	    return getDiscussed();
 	}
 	return getProposedDiscussed();
@@ -1492,7 +1532,8 @@ public class Thesis extends Thesis_Base {
 	return false;
     }
 
-    public static Set<Thesis> getThesesByParticipationType(final Person person, final ThesisParticipationType thesisParticipationType) {
+    public static Set<Thesis> getThesesByParticipationType(final Person person,
+	    final ThesisParticipationType thesisParticipationType) {
 	final Set<Thesis> theses = new HashSet<Thesis>();
 	for (final ThesisEvaluationParticipant thesisEvaluationParticipant : person.getThesisEvaluationParticipantsSet()) {
 	    if (thesisParticipationType == thesisEvaluationParticipant.getType()) {

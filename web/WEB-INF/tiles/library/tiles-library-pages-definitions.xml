@@ -8,6 +8,14 @@
 		<put name="body" value="/library/index.jsp"/>
 	</definition>	
 
+    <definition name="theses-search" extends="definition.library.master">
+        <put name="body" value="/library/theses/search.jsp"/>
+    </definition>   
+
+	<definition name="thesis-validate" extends="definition.library.master">
+		<put name="body" value="/library/theses/validate.jsp"/>
+	</definition>	
+
 	<definition name="theses-list" extends="definition.library.master">
 		<put name="body" value="/library/theses/list.jsp"/>
 	</definition>	

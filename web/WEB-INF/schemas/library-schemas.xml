@@ -1,3 +1,121 @@
+<schema name="library.thesis.search" type="net.sourceforge.fenixedu.dataTransferObject.thesis.ThesisSearchBean">
+	<slot name="text" key="label.thesis.search.freetext" layout="input-with-comment">
+		<property name="bundle" value="LIBRARY_RESOURCES" />
+		<property name="comment" value="label.thesis.search.freetext.help" />
+	</slot>
+	<slot name="state" key="label.thesis.search.state">
+		<property name="key" value="true" />
+		<property name="bundle" value="ENUMERATION_RESOURCES" />
+		<property name="defaultText" value="ThesisLibraryState.all" />
+	</slot>
+	<slot name="year" key="label.thesis.search.year" layout="menu-select">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ThesisExecutionYearsProvider" />
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionYear" />
+		<property name="format" value="${year}" />
+		<property name="key" value="true" />
+		<property name="bundle" value="LIBRARY_RESOURCES" />
+		<property name="defaultText" value="label.thesis.search.year.all" />
+		<property name="saveOptions" value="true" />
+	</slot>
+</schema>
+
+<schema name="library.thesis.list" type="net.sourceforge.fenixedu.domain.thesis.Thesis"
+	bundle="LIBRARY_RESOURCES">
+	<slot name="enrolment.executionYear.name" key="label.thesis.year" />
+	<slot name="libraryState" key="label.thesis.state" />
+	<slot name="libraryReference" key="label.thesis.library.ref" layout="null-as-label" />
+	<slot name="finalFullTitle" key="label.thesis.title" layout="short">
+		<property name="length" value="60" />
+	</slot>
+	<slot name="student.person" key="label.thesis.author" layout="name-with-alias" />
+	<slot name="libraryOperationPerformer" key="label.thesis.library.operator" layout="null-as-label">
+		<property name="subLayout" value="values" />
+		<property name="subSchema" value="library.thesis.operator" />
+	</slot>
+</schema>
+
+<schema name="library.thesis.operator" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="mostImportantAlias" />
+</schema>
+
+<schema name="library.thesis.author" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+	<slot name="enrolment.studentCurricularPlan.registration.student.person.name" key="label.thesis.author.name"
+		layout="person-name" />
+	<slot name="enrolment.studentCurricularPlan.registration.student.number" key="label.thesis.author.number" />
+	<slot name="enrolment.studentCurricularPlan.degree.name" key="label.thesis.author.degree" />
+	<slot name="department.name" key="label.thesis.author.department" />
+</schema>
+
+<schema name="library.thesis.state.null" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
+	<slot name="libraryState" key="label.thesis.state" />
+</schema>
+
+<schema name="library.thesis.state" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryOperation">
+	<slot name="state" key="label.thesis.state" />
+	<slot name="libraryReference" key="label.thesis.library.ref" />
+    <!--  		layout="tabular-nonNullValues" />-->
+	<slot name="pendingComment" key="label.thesis.library.comment" />
+	<slot name="performer" layout="name-with-alias" key="label.thesis.library.operator" />
+</schema>
+
+<schema name="library.thesis.validate" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryArchiveOperation"
+	constructor="thesisId, performerId, libraryReference">
+	<slot name="thesisId" hidden="true" />
+	<slot name="performerId" hidden="true" />
+	<slot name="libraryReference" key="label.thesis.library.ref"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+</schema>
+
+<schema name="library.thesis.pending" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryPendingOperation"
+	constructor="thesisId, performerId, pendingComment">
+	<slot name="thesisId" hidden="true" />
+	<slot name="performerId" hidden="true" />
+	<slot name="pendingComment" key="label.thesis.library.comment" layout="longText">
+		<property name="columns" value="40" />
+		<property name="rows" value="3" />
+	</slot>
+</schema>
+
+<schema name="library.thesis.cancel" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryCancelOperation"
+	constructor="thesisId, performerId">
+	<slot name="thesisId" hidden="true" />
+	<slot name="performerId" hidden="true" />
+</schema>
+
+<schema name="library.thesis.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis"
+	bundle="LIBRARY_RESOURCES">
+	<slot name="finalTitle" key="label.thesis.title" />
+	<slot name="finalSubtitle" key="label.thesis.subtitle" layout="null-as-label" />
+	<slot name="thesisAbstract" key="label.thesis.note" layout="short">
+		<property name="length" value="300" />
+	</slot>
+	<slot name="keywords" key="label.thesis.keywords" />
+	<slot name="language" key="label.thesis.language" />
+	<slot name="orientation" layout="list" key="label.thesis.orientation">
+		<property name="eachSchema" value="thesis.participant.name-with-alias" />
+		<property name="eachLayout" value="values" />
+		<property name="classes" value="nobullet indent0 mvert0" />
+	</slot>
+	<slot name="enrolment.executionYear.name" key="label.thesis.year" />
+	<slot name="extendedAbstract.filename" layout="link" key="label.thesis.abstract.file">
+		<property name="useParent" value="true" />
+		<property name="linkFormat" value="${extendedAbstract.downloadUrl}" />
+		<property name="contextRelative" value="false" />
+	</slot>
+	<slot name="dissertation.filename" layout="link" key="label.thesis.file">
+		<property name="useParent" value="true" />
+		<property name="linkFormat" value="${dissertation.downloadUrl}" />
+		<property name="contextRelative" value="false" />
+	</slot>
+</schema>
+
+<schema name="thesis.participant.name-with-alias" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
+	<slot name="person" layout="name-with-alias" />
+</schema>
+
+<!-- Old Library Thesis -->
+<!--
 <schema name="library.thesis.list" type="net.sourceforge.fenixedu.domain.research.result.publication.Thesis" bundle="LIBRARY_RESOURCES">
     <slot name="authorsNames" key="label.thesis.authors" layout="person-name"/>
     <slot name="title" key="label.thesis.title" layout="short">
@@ -49,7 +167,7 @@
     <slot name="title" key="label.thesis.title" layout="short"/>
     <slot name="yearMonth" layout="year-month" key="label.thesis.date"/>
 </schema>
-
+-->
 <!-- Library Card -->
 
 <schema name="library.card.list" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">

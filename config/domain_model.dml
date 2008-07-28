@@ -4389,6 +4389,38 @@ class DomainObject {
 		ThesisVisibilityType visibility;
 		DateTime confirmmedDocuments;
 	}
+	
+	class thesis.ThesisLibraryOperation extends DomainObject {
+	   DateTime operation;
+	}
+
+    relation ThesisLibraryLastOperation {
+        thesis.Thesis playsRole thesis;
+        thesis.ThesisLibraryOperation playsRole lastLibraryOperation;
+    }
+
+    relation ThesisLibraryPreviousOperation {
+        thesis.ThesisLibraryOperation playsRole previous;
+        thesis.ThesisLibraryOperation playsRole next;
+    }
+
+    relation ThesisLibraryOperationPerformer {
+        Person playsRole performer;
+        thesis.ThesisLibraryOperation playsRole thesisLibraryOperation {
+            multiplicity *;
+        }
+    }
+
+    class thesis.ThesisLibraryPendingOperation extends thesis.ThesisLibraryOperation {
+       String pendingComment;
+    }
+
+    class thesis.ThesisLibraryArchiveOperation extends thesis.ThesisLibraryOperation {
+        String libraryReference;
+    }
+
+    class thesis.ThesisLibraryCancelOperation extends thesis.ThesisLibraryOperation {
+    }
 
 	class thesis.ThesisEvaluationParticipant extends DomainObject {
 		String affiliation;

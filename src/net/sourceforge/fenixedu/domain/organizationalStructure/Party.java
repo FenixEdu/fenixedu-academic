@@ -62,7 +62,7 @@ import org.apache.commons.lang.StringUtils;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public abstract class Party extends Party_Base {
+public abstract class Party extends Party_Base implements Comparable<Party> {
 
     static final private Comparator<Party> COMPARATOR_BY_NAME = new Comparator<Party>() {
 	public int compare(final Party o1, final Party o2) {
@@ -1325,5 +1325,10 @@ public abstract class Party extends Party_Base {
 	} else {
 	    return createSite();
 	}
+    }
+
+    @Override
+    public int compareTo(Party party) {
+	return COMPARATOR_BY_NAME.compare(this, party);
     }
 }
