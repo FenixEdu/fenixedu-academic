@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.residence;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -33,7 +35,7 @@ public class ResidenceMonth extends ResidenceMonth_Base {
 
     public boolean isEventPresent(Person person) {
 	for (ResidenceEvent event : getEvents()) {
-	    if (event.getPerson() == person) {
+	    if (event.getPerson() == person && (event.isOpen() || event.isPayed())) {
 		return true;
 	    }
 	}
@@ -54,10 +56,10 @@ public class ResidenceMonth extends ResidenceMonth_Base {
     public boolean isAbleToEditPaymentLimitDate() {
 	return getEventsCount() == 0;
     }
-    
+
     public Set<ResidenceEvent> getEventsWithPaymentCodes() {
 	Set<ResidenceEvent> eventsWithCodes = new HashSet<ResidenceEvent>();
-	
+
 	for (ResidenceEvent event : getEvents()) {
 	    if (event.getPaymentCodesCount() > 0) {
 		eventsWithCodes.add(event);
@@ -65,10 +67,10 @@ public class ResidenceMonth extends ResidenceMonth_Base {
 	}
 	return eventsWithCodes;
     }
-    
+
     public Set<ResidenceEvent> getEventsWithoutPaymentCodes() {
 	Set<ResidenceEvent> eventsWithoutCodes = new HashSet<ResidenceEvent>();
-	
+
 	for (ResidenceEvent event : getEvents()) {
 	    if (event.getPaymentCodesCount() == 0) {
 		eventsWithoutCodes.add(event);
