@@ -32,14 +32,14 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements C
 	    Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours,
 	    Double ectsCredits, Integer order, AcademicPeriod academicPeriod) {
 
-	setTheoreticalHours(theoreticalHours);
-	setProblemsHours(problemsHours);
-	setLaboratorialHours(laboratorialHours);
-	setSeminaryHours(seminaryHours);
-	setFieldWorkHours(fieldWorkHours);
-	setTrainingPeriodHours(trainingPeriodHours);
-	setTutorialOrientationHours(tutorialOrientationHours);
-	setAutonomousWorkHours(autonomousWorkHours);
+	setTheoreticalHours(theoreticalHours == null ? Double.valueOf(0) : theoreticalHours);
+	setProblemsHours(problemsHours == null ? Double.valueOf(0) : problemsHours);
+	setLaboratorialHours(laboratorialHours == null ? Double.valueOf(0) : laboratorialHours);
+	setSeminaryHours(seminaryHours == null ? Double.valueOf(0) : seminaryHours);
+	setFieldWorkHours(fieldWorkHours == null ? Double.valueOf(0) : fieldWorkHours);
+	setTrainingPeriodHours(trainingPeriodHours == null ? Double.valueOf(0) : trainingPeriodHours);
+	setTutorialOrientationHours(tutorialOrientationHours == null ? Double.valueOf(0) : tutorialOrientationHours);
+	setAutonomousWorkHours(autonomousWorkHours == null ? Double.valueOf(0) : autonomousWorkHours);
 	setEctsCredits(ectsCredits);
 	setLoadOrder(order);
 	setAcademicPeriod(academicPeriod);
