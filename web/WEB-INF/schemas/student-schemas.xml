@@ -398,12 +398,8 @@
 </schema>
 
 <schema name="student.registrations.with.transition.origin" type="net.sourceforge.fenixedu.domain.student.Registration" bundle="APPLICATION_RESOURCES">
-	<slot name="lastStudentCurricularPlan.degreeCurricularPlan" layout="format">
-		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name}" />
-	</slot>	
-	<slot name="sourceRegistrationForTransition.lastStudentCurricularPlan.degreeCurricularPlan" layout="format">
-		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name}" />
-	</slot>
+	<slot name="lastStudentCurricularPlan.registration.degreeNameWithDescription"/>
+	<slot name="sourceRegistrationForTransition.lastStudentCurricularPlan.registration.degreeNameWithDescription"/>
 </schema>
 
 <schema name="student.yearDelegateElection.candidates" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.student.Student">

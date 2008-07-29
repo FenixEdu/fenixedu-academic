@@ -129,7 +129,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 	try {
 	    String filename;
 
-	    filename = curricularCourse.getDegreeCurricularPlan().getDegree().getName() + "_" + executionYear.getYear();
+	    filename = curricularCourse.getDegreeCurricularPlan().getDegree().getNameFor(executionYear) + "_" + executionYear.getYear();
 
 	    response.setContentType("application/vnd.ms-excel");
 	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
@@ -153,7 +153,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 
 	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("AlunosPorCurso");
 	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader(degree.getName() + " - " + executionYear.getNextYearsYearString() + " - " + year + " Ano "
+	spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getNextYearsYearString() + " - " + year + " Ano "
 		+ semester + " Semestre");
 	spreadsheet.newRow();
 	spreadsheet.newRow();
@@ -171,7 +171,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 	    spreadsheet.addCell(registration.getNumber().toString());
 	    spreadsheet.addCell(registration.getPerson().getName());
 	    spreadsheet.addCell(registration.getRegistrationAgreement().getName());
-	    spreadsheet.addCell(registration.getDegree().getName());
+	    spreadsheet.addCell(registration.getDegree().getNameFor(executionYear));
 	    spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEnrollmentState().getDescription());
 	    spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEnrolmentEvaluationType().getDescription());
 	}
@@ -226,7 +226,7 @@ public class StudentsListByCurricularCourseDA extends FenixDispatchAction {
 			final int enrolmentCount = countEnrolments(curricularCourse, executionYear);
 			final Row row = spreadsheet.addRow();
 			row.setCell(degree.getSigla());
-			row.setCell(degree.getPresentationName());
+			row.setCell(degree.getPresentationName(executionYear));
 			row.setCell(curricularCourse.getName());
 			row.setCell(Integer.toString(enrolmentCount));
 		    }

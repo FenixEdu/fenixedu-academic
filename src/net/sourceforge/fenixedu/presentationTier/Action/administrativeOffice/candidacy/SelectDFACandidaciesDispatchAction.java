@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.DFACandidacyBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.SelectDFACandidacyBean;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -175,10 +176,11 @@ public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 
 	ExecutionDegree executionDegree = retrieveExecutionDegree(admittedCandidacies,
 		substituteCandidacies, notAdmittedCandidacies);
-
+ 
+	ExecutionYear executionYear = executionDegree.getExecutionYear();
 	request.setAttribute("degreeName", executionDegree.getDegreeCurricularPlan().getDegree()
-		.getName());
-	request.setAttribute("currentExecutionYear", executionDegree.getExecutionYear().getYear());
+		.getNameFor(executionYear));
+	request.setAttribute("currentExecutionYear", executionYear.getYear());
 	request.setAttribute("admittedCandidacies", admittedCandidacies);
 	request.setAttribute("substituteCandidacies", substituteCandidacies);
 	request.setAttribute("notAdmittedCandidacies", notAdmittedCandidacies);

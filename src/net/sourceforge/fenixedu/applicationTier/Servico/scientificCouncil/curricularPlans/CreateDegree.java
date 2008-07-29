@@ -2,10 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curri
 
 import java.util.List;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -26,8 +29,11 @@ public class CreateDegree extends Service {
             if (degree.getSigla().equalsIgnoreCase(acronym)) {
                 throw new FenixServiceException("error.existing.degree.acronym");
             }
-            if ((degree.getNome().equalsIgnoreCase(name) || degree.getNameEn().equalsIgnoreCase(nameEn))
-                    && degree.getDegreeType().equals(degreeType)) {
+            ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+
+	    if ((degree.getNameFor(currentExecutionYear).getContent(Language.pt).equalsIgnoreCase(name) || degree.getNameFor(
+		    currentExecutionYear).getContent(Language.en).equalsIgnoreCase(nameEn))
+		    && degree.getDegreeType().equals(degreeType)) {
                 throw new FenixServiceException("error.existing.degree.name.and.type");
             }
         }

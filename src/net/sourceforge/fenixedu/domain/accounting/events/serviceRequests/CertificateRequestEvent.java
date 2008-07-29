@@ -49,7 +49,7 @@ public class CertificateRequestEvent extends CertificateRequestEvent_Base {
 	labelFormatter.appendLabel(" ");
 	labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
 	labelFormatter.appendLabel(" ");
-	labelFormatter.appendLabel(getDegree().getName());
+	labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
 	labelFormatter.appendLabel(")");
     }
 

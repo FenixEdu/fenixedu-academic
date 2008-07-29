@@ -362,7 +362,7 @@ function check(e,v){
 							<logic:iterate id="registration" name="personalInfo" property="student.registrations">
 								<tr>   
 									<td class="ppleft2" style="vertical-align: top;"><bean:message key="label.degree.name" />:</td>  
-									<td class="ppright"><bean:write name="registration" property="degree.presentationName"/></td>
+									<td class="ppright"><bean:write name="registration" property="degreeName"/></td>
 								</tr>							
 							</logic:iterate>											
 						</logic:notEmpty>

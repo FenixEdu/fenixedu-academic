@@ -53,7 +53,7 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 	    final Degree degree = degreeCurricularPlan.getDegree();
 	    executionDegreeLabelValueBeans.add(new LabelValueBean(StringAppender.append(enumMessages.getMessage(
 		    getLocale(request), degree.getTipoCurso().toString()), " ", messages.getMessage(getLocale(request),
-		    "public.degree.information.label.in"), " ", degree.getNome(), addAnotherInfoToLabel(executionDegree,
+		    "public.degree.information.label.in"), " ", degree.getNameFor(executionSemester.getExecutionYear()).getContent(), addAnotherInfoToLabel(executionDegree,
 		    executionSemester) ? " - " + executionDegree.getDegreeCurricularPlan().getName() : ""), executionDegree
 		    .getIdInternal().toString()));
 	}

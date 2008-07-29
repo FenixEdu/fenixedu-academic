@@ -48,8 +48,9 @@ public abstract class TutorshipManagement extends Service {
 			ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 			String degreeType = bundle.getString(executionDegree.getDegree().getDegreeType().getName());
 
+			
 			throw new FenixServiceException("error.tutor.studentNoDegree", new String[] { 
-					studentNumber.toString(), degreeType, executionDegree.getDegree().getName()});
+					studentNumber.toString(), degreeType, executionDegree.getDegree().getNameFor(registration.getStartExecutionYear()).getContent()});
 		}
 	}
 	

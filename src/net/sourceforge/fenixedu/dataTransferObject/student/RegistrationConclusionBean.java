@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashSet;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -52,6 +53,10 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
 
     public void setRegistration(Registration registration) {
 	this.registration = (registration != null) ? new DomainReference<Registration>(registration) : null;
+    }
+
+    public ExecutionYear getStartExecutionYear() {
+	return getRegistration().getStartExecutionYear();
     }
 
     public Integer getFinalAverage() {

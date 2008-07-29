@@ -107,7 +107,7 @@ public class EnrolmentOutOfPeriodEvent extends EnrolmentOutOfPeriodEvent_Base {
 	labelFormatter.appendLabel(" (");
 	labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES);
 	labelFormatter.appendLabel(" - ");
-	labelFormatter.appendLabel(getDegree().getName());
+	labelFormatter.appendLabel(getDegree().getNameFor(getExecutionPeriod().getExecutionYear()).getContent());
 	labelFormatter.appendLabel(" - ");
 	labelFormatter.appendLabel(getExecutionPeriod().getSemester().toString());
 	labelFormatter.appendLabel("label.semester", LabelFormatter.APPLICATION_RESOURCES);

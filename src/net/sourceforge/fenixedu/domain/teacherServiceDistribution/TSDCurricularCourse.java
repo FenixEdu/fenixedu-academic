@@ -88,6 +88,6 @@ public class TSDCurricularCourse extends TSDCurricularCourse_Base {
 	public String getDegreeName() {
 		Degree degree = getCurricularCourse().getDegreeCurricularPlan().getDegree();
 		
-		return degree.getName() + " (" + degree.getSigla() + ")";
+		return degree.getNameFor(getExecutionPeriod().getExecutionYear()) + " (" + degree.getSigla() + ")";
 	}
 }

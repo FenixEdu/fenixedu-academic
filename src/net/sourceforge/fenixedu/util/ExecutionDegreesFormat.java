@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 import org.apache.struts.Globals;
 import org.apache.struts.util.LabelValueBean;
@@ -98,7 +99,8 @@ public class ExecutionDegreesFormat extends FenixUtil {
 		final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 		for (final ExecutionDegree executionDegree : executionDegrees) {
 
-			final String degreeName = executionDegree.getDegree().getName();
+		    	final ExecutionYear executionYear = executionDegree.getExecutionYear();
+			final String degreeName = executionDegree.getDegree().getNameFor(executionYear).getContent();
 			final String degreeType = messageResources.getMessage(locale, executionDegree
 					.getDegreeCurricularPlan().getDegree().getDegreeType().name());
 

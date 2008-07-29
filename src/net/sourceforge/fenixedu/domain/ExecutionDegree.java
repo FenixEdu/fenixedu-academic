@@ -688,6 +688,10 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return getDegreeCurricularPlan().getPresentationName();
     }
 
+    public String getDegreeName() {
+	return getDegree().getNameFor(getExecutionYear()).getContent();
+    }
+    
     public Degree getDegree() {
 	return getDegreeCurricularPlan().getDegree();
     }

@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.util.MarkType;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -96,7 +97,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public Degree(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale) {
 	this();
-	commonFieldsChange(name, nameEn, code, gradeScale);
+	commonFieldsChange(name, nameEn, code, gradeScale, ExecutionYear.readCurrentExecutionYear());
 
 	if (degreeType == null) {
 	    throw new DomainException("degree.degree.type.not.null");
@@ -107,11 +108,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public Degree(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits, GradeScale gradeScale,
 	    String prevailingScientificArea) {
 	this();
-	commonFieldsChange(name, nameEn, acronym, gradeScale);
+	commonFieldsChange(name, nameEn, acronym, gradeScale, ExecutionYear.readCurrentExecutionYear());
 	newStructureFieldsChange(degreeType, ectsCredits, prevailingScientificArea);
     }
 
-    private void commonFieldsChange(String name, String nameEn, String code, GradeScale gradeScale) {
+    private void commonFieldsChange(String name, String nameEn, String code, GradeScale gradeScale, ExecutionYear executionYear) {
 	if (name == null) {
 	    throw new DomainException("degree.name.not.null");
 	} else if (nameEn == null) {
@@ -120,8 +121,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    throw new DomainException("degree.code.not.null");
 	}
 
-	this.setNome(name.trim());
-	this.setNameEn(nameEn.trim());
+	DegreeInfo degreeInfo = getDegreeInfoFor(executionYear);
+	if (degreeInfo == null) {
+	    degreeInfo = createCurrentDegreeInfo(executionYear);
+	}
+	degreeInfo.setName(MultiLanguageString.i18n().add("pt", name.trim()).add("en", nameEn.trim()).finish());
+
 	this.setSigla(code.trim());
 	this.setGradeScale(gradeScale);
     }
@@ -138,8 +143,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	this.setPrevailingScientificArea(prevailingScientificArea == null ? null : prevailingScientificArea.trim());
     }
 
-    public void edit(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale) {
-	commonFieldsChange(name, nameEn, code, gradeScale);
+    public void edit(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale, ExecutionYear executionYear) {
+	commonFieldsChange(name, nameEn, code, gradeScale, executionYear);
 
 	if (degreeType == null) {
 	    throw new DomainException("degree.degree.type.not.null");
@@ -148,9 +153,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public void edit(String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits,
-	    GradeScale gradeScale, String prevailingScientificArea) {
+	    GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear) {
 	checkIfCanEdit(degreeType);
-	commonFieldsChange(name, nameEn, acronym, gradeScale);
+	commonFieldsChange(name, nameEn, acronym, gradeScale, executionYear);
 	newStructureFieldsChange(degreeType, ectsCredits, prevailingScientificArea);
     }
 
@@ -450,31 +455,50 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return result;
     }
 
+    final public MultiLanguageString getNameFor(ExecutionYear executionYear) {
+	DegreeInfo degreeInfo = executionYear == null ? getMostRecentDegreeInfo() : getMostRecentDegreeInfo(executionYear);
+	return degreeInfo == null ? MultiLanguageString.i18n().add("pt", super.getNome()).add("en", super.getNameEn()).finish()
+		: degreeInfo.getName();
+    }
+
+    @Override
+    @Deprecated
+    public String getNome() {
+	return getName();
+    }
+
+    @Deprecated
     final public String getName() {
-	return this.getNome();
+	DegreeInfo degreeInfo = getMostRecentDegreeInfo();
+	return degreeInfo == null ? StringUtils.EMPTY : degreeInfo.getName().getContent(Language.pt);
     }
 
     final public MultiLanguageString getNameI18N() {
-	final MultiLanguageString multiLanguageString = new MultiLanguageString();
-	if (getName() != null && getName().length() > 0) {
-	    multiLanguageString.setContent(Language.pt, getName());
-	}
-	if (getNameEn() != null && getNameEn().length() > 0) {
-	    multiLanguageString.setContent(Language.en, getNameEn());
-	}
-	return multiLanguageString;
+	return getNameFor(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    final public MultiLanguageString getNameI18N(ExecutionYear executionYear) {
+	return getNameFor(executionYear);
     }
 
     final public String getPresentationName() {
+	return getPresentationName(ExecutionYear.readCurrentExecutionYear());
+    }
+    
+    final public String getPresentationName(ExecutionYear executionYear) {
 	final ResourceBundle enumResourceBundle = ResourceBundle
 		.getBundle("resources.EnumerationResources", Language.getLocale());
 	final ResourceBundle appResourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 	return enumResourceBundle.getString(getDegreeType().toString()) + " " + appResourceBundle.getString("label.in") + " "
-		+ getNome();
+		+ getNameFor(executionYear).getContent(Language.pt);
     }
 
     final public String getFilteredName() {
-	final StringBuilder result = new StringBuilder(getName());
+	return getFilteredName(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    final public String getFilteredName(ExecutionYear executionYear) {
+	final StringBuilder result = new StringBuilder(getNameFor(executionYear).getContent());
 
 	for (final net.sourceforge.fenixedu.domain.space.Campus campus : Space.getAllCampus()) {
 	    final String toRemove = " - " + campus.getName();
@@ -486,6 +510,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return result.toString();
     }
 
+    
     public OldInquiriesCoursesRes getOldInquiriesCoursesResByCourseCodeAndExecutionPeriod(String code,
 	    ExecutionSemester executionSemester) {
 	for (OldInquiriesCoursesRes oldInquiriesCoursesRes : this.getAssociatedOldInquiriesCoursesRes()) {
@@ -715,6 +740,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return getMostRecentDegreeInfo(ExecutionYear.readCurrentExecutionYear());
     }
 
+    public DegreeInfo getDegreeInfoFor(ExecutionYear executionYear) {
+	return executionYear.getDegreeInfo(this);
+    }
+
     public DegreeInfo getMostRecentDegreeInfo(ExecutionYear executionYear) {
 	DegreeInfo result = executionYear.getDegreeInfo(this);
 
@@ -733,22 +762,22 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return null;
     }
 
-    public DegreeInfo createCurrentDegreeInfo() {
+    public DegreeInfo createCurrentDegreeInfo(ExecutionYear executionYear) {
 	// first let's check if the current degree info exists already
-	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	DegreeInfo shouldBeThisOne = currentExecutionYear.getDegreeInfo(this);
+	DegreeInfo shouldBeThisOne = executionYear.getDegreeInfo(this);
 	if (shouldBeThisOne != null) {
 	    return shouldBeThisOne;
 	}
 
 	// ok, so let's create a new one based on the most recent one, if
 	// existing
-	DegreeInfo mostRecentDegreeInfo = this.getMostRecentDegreeInfo();
-	if (mostRecentDegreeInfo != null) {
-	    return new DegreeInfo(mostRecentDegreeInfo, currentExecutionYear);
-	} else {
-	    return new DegreeInfo(this, currentExecutionYear);
-	}
+	DegreeInfo mostRecentDegreeInfo = this.getMostRecentDegreeInfo(executionYear);
+	return (mostRecentDegreeInfo != null) ? new DegreeInfo(mostRecentDegreeInfo, executionYear) : new DegreeInfo(this,
+		executionYear);
+    }
+    
+    public DegreeInfo createCurrentDegreeInfo() {
+	return createCurrentDegreeInfo(ExecutionYear.readCurrentExecutionYear());
     }
 
     public List<Integer> buildFullCurricularYearList() {
@@ -1329,4 +1358,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	}
 	return false;
     }
+
+
 }

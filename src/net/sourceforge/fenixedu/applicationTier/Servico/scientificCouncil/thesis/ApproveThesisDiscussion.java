@@ -147,7 +147,7 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 
 	String title = thesis.getTitle().getContent();
 	String year = executionYear.getYear();
-	String degreeName = thesis.getDegree().getName();
+	String degreeName = thesis.getDegree().getNameFor(executionYear).getContent();
 	String studentName = thesis.getStudent().getPerson().getName();
 	String studentNumber = thesis.getStudent().getNumber().toString();
 

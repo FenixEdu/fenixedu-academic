@@ -151,7 +151,7 @@ public class GenerateStudentReport implements Serializable {
 	final Row row = spreadsheet.addRow();
 	row.setCell(student.getNumber().toString());
 	row.setCell(person.getName());
-	row.setCell(degree.getTipoCurso().getLocalizedName() + " " + degree.getName());
+	row.setCell(degree.getTipoCurso().getLocalizedName() + " " + degree.getNameFor(registration.getStartExecutionYear()).getContent());
 	row.setCell(branch == null ? "" : branch.getName());
 	row.setCell("" + registration.getCurricularYear(executionYear));
 	row.setCell("" + registration.getAverage(executionYear));

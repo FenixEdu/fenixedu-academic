@@ -471,7 +471,7 @@ public class ScientificCouncilManageThesisDA extends FenixDispatchAction {
 		row.setCell(thesis.getStudent().getNumber().toString());
 		row.setCell(thesis.getStudent().getPerson().getName());
 		row.setCell(degreeType.getLocalizedName());
-		row.setCell(degree.getPresentationName());
+		row.setCell(degree.getPresentationName(executionYear));
 		row.setCell(degree.getSigla());
 		row.setCell(thesis.getTitle().getContent());
 		row.setCell(thesisPresentationState.getName());

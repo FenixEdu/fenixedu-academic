@@ -227,7 +227,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	stringBuffer.append(enumerations.getMessage(executionDegreeSelected.getDegreeCurricularPlan().getDegree().getDegreeType()
 		.toString()));
 	stringBuffer.append(" em ");
-	stringBuffer.append(executionDegreeSelected.getDegreeCurricularPlan().getDegree().getNome());
+	stringBuffer.append(executionDegreeSelected.getDegreeCurricularPlan().getDegree().getNameFor(executionDegreeSelected.getExecutionYear()).getContent());
 
 	return stringBuffer.toString();
     }

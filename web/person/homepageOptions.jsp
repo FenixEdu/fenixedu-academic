@@ -152,7 +152,7 @@
 								<bean:message name="studentCurricularPlan" property="degreeCurricularPlan.degree.tipoCurso.name" bundle="ENUMERATION_RESOURCES"/>
 							</logic:notPresent>
 							<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
-							<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
+							<bean:write name="studentCurricularPlan" property="registration.degreeName"/>
 						</app:contentLink>
 					</logic:iterate>
 					<logic:iterate id="studentCurricularPlan" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">

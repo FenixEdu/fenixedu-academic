@@ -1291,7 +1291,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public String getDescription() {
-	return getStudentCurricularPlan().getDegree().getPresentationName() + " > " + getName().getContent();
+	return getStudentCurricularPlan().getDegree().getPresentationName(getExecutionYear()) + " > " + getName().getContent();
     }
 
     /**

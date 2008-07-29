@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -10,15 +11,35 @@ public class DegreeInfo extends DegreeInfo_Base {
     protected DegreeInfo(Degree degree, ExecutionYear executionYear) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	setDegree(degree);
+
+	DegreeInfo degreeInfo = degree.getMostRecentDegreeInfo(executionYear);
+
+	if (degreeInfo != null && degreeInfo.getExecutionYear() == executionYear) {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixdu.domain.cannot.create.degreeInfo.already.exists.one.for.that.degree.and.executionYear");
+	}
+
 	setExecutionYear(executionYear);
+	setName(degree.getNameFor(executionYear));
+	setDegree(degree);
+
 	new DegreeInfoCandidacy(this);
 	new DegreeInfoFuture(this);
+    }
+
+    @Override
+    public void setName(MultiLanguageString name) {
+	if (this.getExecutionYear().isBeforeOrEquals(ExecutionYear.readCurrentExecutionYear())) {
+	    throw new DomainException(
+		    "error.net.sourceforge.fenixedu.domain.DegreeInfo.can.only.change.name.for.future.execution.years");
+	}
+	super.setName(name);
     }
 
     protected DegreeInfo(DegreeInfo degreeInfo, ExecutionYear executionYear) {
 	this(degreeInfo.getDegree(), executionYear);
 
+	setName(degreeInfo.getName());
 	setDescription(degreeInfo.getDescription());
 	setHistory(degreeInfo.getHistory());
 	setObjectives(degreeInfo.getObjectives());
@@ -52,99 +73,99 @@ public class DegreeInfo extends DegreeInfo_Base {
     }
 
     public MultiLanguageString getAccessRequisites() {
-        return getDegreeInfoCandidacy().getAccessRequisites();
+	return getDegreeInfoCandidacy().getAccessRequisites();
     }
 
     public MultiLanguageString getCandidacyDocuments() {
-        return getDegreeInfoCandidacy().getCandidacyDocuments();
+	return getDegreeInfoCandidacy().getCandidacyDocuments();
     }
 
     public MultiLanguageString getCandidacyPeriod() {
-        return getDegreeInfoCandidacy().getCandidacyPeriod();
+	return getDegreeInfoCandidacy().getCandidacyPeriod();
     }
 
     public MultiLanguageString getClassifications() {
-        return getDegreeInfoFuture().getClassifications();
+	return getDegreeInfoFuture().getClassifications();
     }
 
     public MultiLanguageString getDesignedFor() {
-        return getDegreeInfoFuture().getDesignedFor();
+	return getDegreeInfoFuture().getDesignedFor();
     }
 
     public MultiLanguageString getEnrolmentPeriod() {
-        return getDegreeInfoCandidacy().getEnrolmentPeriod();
+	return getDegreeInfoCandidacy().getEnrolmentPeriod();
     }
 
     public MultiLanguageString getObjectives() {
-        return getDegreeInfoFuture().getObjectives();
+	return getDegreeInfoFuture().getObjectives();
     }
 
     public MultiLanguageString getProfessionalExits() {
-        return getDegreeInfoFuture().getProfessionalExits();
+	return getDegreeInfoFuture().getProfessionalExits();
     }
 
     public MultiLanguageString getQualificationLevel() {
-        return getDegreeInfoFuture().getQualificationLevel();
+	return getDegreeInfoFuture().getQualificationLevel();
     }
 
     public MultiLanguageString getRecognitions() {
-        return getDegreeInfoFuture().getRecognitions();
+	return getDegreeInfoFuture().getRecognitions();
     }
 
     public MultiLanguageString getSelectionResultDeadline() {
-        return getDegreeInfoCandidacy().getSelectionResultDeadline();
+	return getDegreeInfoCandidacy().getSelectionResultDeadline();
     }
 
     public MultiLanguageString getTestIngression() {
-        return getDegreeInfoCandidacy().getTestIngression();
+	return getDegreeInfoCandidacy().getTestIngression();
     }
 
     public void setAccessRequisites(MultiLanguageString accessRequisites) {
-        getDegreeInfoCandidacy().setAccessRequisites(accessRequisites);
+	getDegreeInfoCandidacy().setAccessRequisites(accessRequisites);
     }
 
     public void setCandidacyDocuments(MultiLanguageString candidacyDocuments) {
-        getDegreeInfoCandidacy().setCandidacyDocuments(candidacyDocuments);
+	getDegreeInfoCandidacy().setCandidacyDocuments(candidacyDocuments);
     }
 
     public void setCandidacyPeriod(MultiLanguageString candidacyPeriod) {
-        getDegreeInfoCandidacy().setCandidacyPeriod(candidacyPeriod);
+	getDegreeInfoCandidacy().setCandidacyPeriod(candidacyPeriod);
     }
 
     public void setClassifications(MultiLanguageString classifications) {
-        getDegreeInfoFuture().setClassifications(classifications);
+	getDegreeInfoFuture().setClassifications(classifications);
     }
 
     public void setDesignedFor(MultiLanguageString designedFor) {
-        getDegreeInfoFuture().setDesignedFor(designedFor);
+	getDegreeInfoFuture().setDesignedFor(designedFor);
     }
 
     public void setEnrolmentPeriod(MultiLanguageString enrolmentPeriod) {
-        getDegreeInfoCandidacy().setEnrolmentPeriod(enrolmentPeriod);
+	getDegreeInfoCandidacy().setEnrolmentPeriod(enrolmentPeriod);
     }
 
     public void setObjectives(MultiLanguageString objectives) {
-        getDegreeInfoFuture().setObjectives(objectives);
+	getDegreeInfoFuture().setObjectives(objectives);
     }
 
     public void setProfessionalExits(MultiLanguageString professionalExits) {
-        getDegreeInfoFuture().setProfessionalExits(professionalExits);
+	getDegreeInfoFuture().setProfessionalExits(professionalExits);
     }
 
     public void setQualificationLevel(MultiLanguageString qualificationLevel) {
-        getDegreeInfoFuture().setQualificationLevel(qualificationLevel);
+	getDegreeInfoFuture().setQualificationLevel(qualificationLevel);
     }
 
     public void setRecognitions(MultiLanguageString recognitions) {
-        getDegreeInfoFuture().setRecognitions(recognitions);
+	getDegreeInfoFuture().setRecognitions(recognitions);
     }
 
     public void setSelectionResultDeadline(MultiLanguageString selectionResultDeadline) {
-        getDegreeInfoCandidacy().setSelectionResultDeadline(selectionResultDeadline);
+	getDegreeInfoCandidacy().setSelectionResultDeadline(selectionResultDeadline);
     }
 
     public void setTestIngression(MultiLanguageString testIngression) {
-        getDegreeInfoCandidacy().setTestIngression(testIngression);
+	getDegreeInfoCandidacy().setTestIngression(testIngression);
     }
 
 }

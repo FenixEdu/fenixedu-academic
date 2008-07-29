@@ -452,7 +452,7 @@
 	<slot name="person.istUsername" key="label.net.sourceforge.fenixedu.domain.Person.istUsername"/>
 	<slot name="number" key="net.sourceforge.fenixedu.domain.candidacy.Candidacy.number"/>
 	<slot name="executionDegree" key="net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy.executionDegree.degreeCurricularPlan.degree.name" layout="format">
-		<property name="format" value="${degreeCurricularPlan.degree.name} - ${degreeCurricularPlan.name}" />
+		<property name="format" value="${degreeName} - ${degreeCurricularPlan.name}" />
 	</slot>
 	<slot name="activeCandidacySituation.candidacySituationType" key="net.sourceforge.fenixedu.domain.candidacy.Candidacy.activeCandidacySituation.candidacySituationType"/>
 </schema>

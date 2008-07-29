@@ -13,7 +13,8 @@
 	</h:outputFormat>
 	<h:form>
 		<h:outputText escape="false" value="<input alt='input.degreeId' id='degreeId' name='degreeId' type='hidden' value='#{DegreeManagement.degreeId}'/>"/>
-
+		<h:outputText escape="false" value="<input alt='input.selectedExecutionYearId' id='selectedExecutionYearId' name='selectedExecutionYearId' type='hidden' value='#{DegreeManagement.selectedExecutionYearId}'/>"/>
+		
 		<h:outputText styleClass="error0" rendered="#{!empty DegreeManagement.errorMessage}"
 			value="#{DegreeManagement.errorMessage}<br/>" escape="false"/>
 		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>			
@@ -23,10 +24,19 @@
 
 		<h:outputText value="<table class='tstyle5 thlight thright'>" escape="false"/>
 
+
+		<h:outputText value="<th><span class='required'>*</span> #{scouncilBundle['label.execution.year']}</th><td>" escape="false"/>
+		<h:panelGroup>
+			<h:selectOneMenu id="selectedExecutionYearId" value="#{DegreeManagement.selectedExecutionYearId}"  valueChangeListener="#{DegreeManagement.onChangeExecutionYear}" onchange="this.form.submit()">
+				<f:selectItems value="#{DegreeManagement.openExecutionYears}" />
+			</h:selectOneMenu>
+		</h:panelGroup>
+		<h:outputText value="</td>" escape="false"/>
+		<h:outputText value="</tr>" escape="false"/>
 		<h:outputText value="<tr>" escape="false"/>
 		<h:outputText value="<th><span class='required'>*</span> #{scouncilBundle['name']} (pt):</th><td>" escape="false"/>
 		<h:panelGroup>
-			<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" value="#{DegreeManagement.name}" maxlength="100" size="60"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" binding="#{DegreeManagement.nameInputComponent}" maxlength="100" size="60" disabled="#{DegreeManagement.ableToEditName == false}"/>
 			<h:message for="name" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</td>" escape="false"/>
@@ -35,12 +45,15 @@
 		<h:outputText value="<tr>" escape="false"/>
 		<h:outputText value="<th><span class='required'>*</span> #{scouncilBundle['name']} (en):</th><td>" escape="false"/>
 		<h:panelGroup>
-			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" value="#{DegreeManagement.nameEn}" maxlength="100" size="60"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEn" binding="#{DegreeManagement.nameEnInputComponent}" maxlength="100" size="60" disabled="#{DegreeManagement.ableToEditName == false}"/>
 			<h:message for="nameEn" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</td>" escape="false"/>
 		<h:outputText value="</tr>" escape="false"/>
 
+		<h:outputText value="</table><br/>" escape="false"/>
+		<h:outputText value="<table class='tstyle5 thlight thright'>" escape="false"/>
+		
 		<h:outputText value="<tr>" escape="false"/>
 		<h:outputText value="<th><span class='required'>*</span> #{scouncilBundle['acronym']}:</th><td>" escape="false"/>
 		<h:panelGroup>

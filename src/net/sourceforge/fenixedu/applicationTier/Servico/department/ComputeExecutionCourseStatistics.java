@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -70,9 +71,11 @@ public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
 	    degrees.add(curricularCourse.getDegreeCurricularPlan().getDegree());
 	}
 
+	ExecutionYear executionYear = executionCourse.getExecutionYear();
+	
 	List<String> degreeNames = new ArrayList<String>();
 	for (Degree degree : degrees) {
-	    degreeNames.add(degree.getNome());
+	    degreeNames.add(degree.getNameFor(executionYear).getContent());
 	}
 
 	return degreeNames;

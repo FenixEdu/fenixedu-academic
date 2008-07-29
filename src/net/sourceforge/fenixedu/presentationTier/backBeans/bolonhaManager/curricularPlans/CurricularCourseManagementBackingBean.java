@@ -46,6 +46,8 @@ import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     protected final ResourceBundle bolonhaBundle = getResourceBundle("resources/BolonhaManagerResources");
@@ -445,7 +447,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 	    checkCourseGroup();
 	    checkCurricularSemesterAndYear();
 
-	    ServiceUtils.executeService( "CreateCurricularCourse", getArgumentsToCreate());
+	    ServiceUtils.executeService("CreateCurricularCourse", getArgumentsToCreate());
 
 	} catch (FenixActionException e) {
 	    this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
@@ -490,7 +492,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public String editCurricularCourse() throws FenixFilterException {
 	try {
-	    ServiceUtils.executeService( "EditCurricularCourseBolonhaManager", getArgumentsToEdit());
+	    ServiceUtils.executeService("EditCurricularCourseBolonhaManager", getArgumentsToEdit());
 	    setContextID(0); // resetContextID
 	} catch (FenixServiceException e) {
 	    addErrorMessage(bolonhaBundle.getString(e.getMessage()));
@@ -562,7 +564,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 	    Object args[] = { getCurricularCourse(), getCourseGroup(), getBeginExecutionPeriodID(),
 		    getFinalEndExecutionPeriodID(), getCurricularYearID(), getCurricularSemesterID() };
 
-	    ServiceUtils.executeService( "AddContextToCurricularCourse", args);
+	    ServiceUtils.executeService("AddContextToCurricularCourse", args);
 
 	} catch (FenixActionException e) {
 	    this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
@@ -590,7 +592,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 	    checkCourseGroup();
 	    Object args[] = { getCurricularCourse(), getContext(getContextID()), getCourseGroup(), getCurricularYearID(),
 		    getCurricularSemesterID(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
-	    ServiceUtils.executeService( "EditContextFromCurricularCourse", args);
+	    ServiceUtils.executeService("EditContextFromCurricularCourse", args);
 	    setContextID(0); // resetContextID
 	} catch (FenixServiceException e) {
 	    addErrorMessage(e.getMessage());
@@ -619,7 +621,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public void deleteContext(ActionEvent event) throws FenixFilterException {
 	try {
 	    Object args[] = { getCurricularCourseID(), getContextIDToDelete() };
-	    ServiceUtils.executeService( "DeleteContextFromDegreeModule", args);
+	    ServiceUtils.executeService("DeleteContextFromDegreeModule", args);
 	    setContextID(0); // resetContextID
 	    addInfoMessage(bolonhaBundle.getString("successAction"));
 	} catch (FenixServiceException e) {
@@ -715,7 +717,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public String getDegreeLocaleSensitiveName() {
 	final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-	return locale.getLanguage().equals(Locale.ENGLISH.getLanguage()) ? getDegree().getNameEn() : getDegree().getNome();
+	return locale.getLanguage().equals(Locale.ENGLISH.getLanguage()) ? getDegree().getNameFor(getExecutionYear()).getContent(
+		Language.en) : getDegree().getNameFor(getExecutionYear()).getContent(Language.pt);
     }
 
     public List<CompetenceCourse> getDegreeCurricularPlanCompetenceCourses() {

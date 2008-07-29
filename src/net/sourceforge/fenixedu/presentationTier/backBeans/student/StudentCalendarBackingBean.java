@@ -119,8 +119,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	final List<SelectItem> result = new ArrayList<SelectItem>();
 
 	for (final Registration registration : getPerson().getStudent().getActiveRegistrations()) {
-	    result.add(new SelectItem(registration.getIdInternal(), registration.getLastDegreeCurricularPlan()
-		    .getPresentationName()));
+	    result.add(new SelectItem(registration.getIdInternal(), registration.getDegreeNameWithDegreeCurricularPlanName()));
 	}
 
 	if (!result.isEmpty()) {

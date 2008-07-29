@@ -35,124 +35,101 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  */
 public class StudentsListByDegreeDA extends FenixDispatchAction {
 
-	public ActionForward prepareByDegree(ActionMapping mapping,
-			ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) {
+    public ActionForward prepareByDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 
-		request.setAttribute("searchParametersBean",
-				new SearchStudentsByDegreeParametersBean());
-		return mapping.findForward("searchRegistrations");
+	request.setAttribute("searchParametersBean", new SearchStudentsByDegreeParametersBean());
+	return mapping.findForward("searchRegistrations");
+    }
+
+    public ActionForward postBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final Object renderedObject = getRenderedObject();
+	RenderUtils.invalidateViewState();
+	request.setAttribute("searchParametersBean", renderedObject);
+
+	return mapping.findForward("searchRegistrations");
+    }
+
+    public ActionForward searchByDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	final SearchStudentsByDegreeParametersBean searchBean = (SearchStudentsByDegreeParametersBean) getRenderedObject();
+
+	final List<RegistrationWithStateForExecutionYearBean> registrations = (List<RegistrationWithStateForExecutionYearBean>) executeService(
+		"SearchStudents", searchBean);
+
+	request.setAttribute("searchParametersBean", searchBean);
+	request.setAttribute("studentCurricularPlanList", registrations);
+
+	return mapping.findForward("searchRegistrations");
+    }
+
+    public ActionForward exportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+
+	final SearchStudentsByDegreeParametersBean searchBean = (SearchStudentsByDegreeParametersBean) getRenderedObject();
+	if (searchBean != null) {
+	    final List<RegistrationWithStateForExecutionYearBean> registrations = (List<RegistrationWithStateForExecutionYearBean>) executeService(
+		    "SearchStudents", (SearchStudentsByDegreeParametersBean) searchBean);
+
+	    try {
+		String filename;
+
+		ExecutionYear executionYear = searchBean.getExecutionYear();
+		filename = searchBean.getDegree().getNameFor(executionYear) + "_" + executionYear.getNextYearsYearString();
+
+		response.setContentType("application/vnd.ms-excel");
+		response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+		ServletOutputStream writer = response.getOutputStream();
+
+		exportToXls(registrations, writer, searchBean.getExecutionYear(), searchBean.getDegree());
+		writer.flush();
+		response.flushBuffer();
+
+	    } catch (IOException e) {
+		throw new FenixServiceException();
+	    }
 	}
+	return null;
+    }
 
-	public ActionForward postBack(ActionMapping mapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response) {
+    private void exportToXls(List<RegistrationWithStateForExecutionYearBean> registrationWithStateForExecutionYearBean,
+	    OutputStream outputStream, ExecutionYear executionYear, Degree degree) throws IOException {
 
-		final Object renderedObject = getRenderedObject();
-		RenderUtils.invalidateViewState();
-		request.setAttribute("searchParametersBean", renderedObject);
+	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("AlunosPorCurso");
+	spreadsheet.newHeaderRow();
+	spreadsheet.addHeader(degree.getNameFor(executionYear) + " - " + executionYear.getNextYearsYearString());
+	spreadsheet.newRow();
+	spreadsheet.newRow();
+	spreadsheet.addCell(registrationWithStateForExecutionYearBean.size() + " Alunos");
+	fillSpreadSheet(registrationWithStateForExecutionYearBean, spreadsheet, executionYear);
+	spreadsheet.getWorkbook().write(outputStream);
+    }
 
-		return mapping.findForward("searchRegistrations");
+    private void fillSpreadSheet(List<RegistrationWithStateForExecutionYearBean> registrations,
+	    final StyledExcelSpreadsheet spreadsheet, ExecutionYear executionYear) {
+	setHeaders(spreadsheet);
+	for (RegistrationWithStateForExecutionYearBean registrationWithStateForExecutionYearBean : registrations) {
+	    Registration registration = (Registration) registrationWithStateForExecutionYearBean.getRegistration();
+	    spreadsheet.newRow();
+	    spreadsheet.addCell(registration.getNumber().toString());
+	    spreadsheet.addCell(registration.getPerson().getName());
+	    final RegistrationState lastRegistrationState = registration.getLastRegistrationState(executionYear);
+
+	    spreadsheet.addCell(lastRegistrationState.getStateType().getDescription());
+	    spreadsheet.addCell(registration.getRegistrationAgreement().getName());
 	}
+    }
 
-	public ActionForward searchByDegree(ActionMapping mapping,
-			ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixFilterException,
-			FenixServiceException {
+    private void setHeaders(final StyledExcelSpreadsheet spreadsheet) {
+	spreadsheet.newHeaderRow();
+	spreadsheet.addHeader("Número");
+	spreadsheet.addHeader("Nome");
+	spreadsheet.addHeader("Estado da Matrícula");
+	spreadsheet.addHeader("Acordo");
 
-		final SearchStudentsByDegreeParametersBean searchBean = (SearchStudentsByDegreeParametersBean) getRenderedObject();
-
-		final List<RegistrationWithStateForExecutionYearBean> registrations = (List<RegistrationWithStateForExecutionYearBean>) executeService(
-				"SearchStudents", searchBean);
-
-		request.setAttribute("searchParametersBean", searchBean);
-		request.setAttribute("studentCurricularPlanList", registrations);
-
-		return mapping.findForward("searchRegistrations");
-	}
-
-	public ActionForward exportInfoToExcel(ActionMapping mapping,
-			ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixServiceException,
-			FenixFilterException {
-
-		final SearchStudentsByDegreeParametersBean searchBean = (SearchStudentsByDegreeParametersBean) getRenderedObject();
-		if (searchBean != null) {
-			final List<RegistrationWithStateForExecutionYearBean> registrations = (List<RegistrationWithStateForExecutionYearBean>) executeService(
-					"SearchStudents",
-					(SearchStudentsByDegreeParametersBean) searchBean);
-
-			try {
-				String filename;
-
-				filename = searchBean.getDegree().getName()
-						+ "_"
-						+ searchBean.getExecutionYear()
-								.getNextYearsYearString();
-
-				response.setContentType("application/vnd.ms-excel");
-				response.setHeader("Content-disposition",
-						"attachment; filename=" + filename + ".xls");
-				ServletOutputStream writer = response.getOutputStream();
-
-				exportToXls(registrations, writer, searchBean
-						.getExecutionYear(), searchBean.getDegree());
-				writer.flush();
-				response.flushBuffer();
-
-			} catch (IOException e) {
-				throw new FenixServiceException();
-			}
-		}
-		return null;
-	}
-
-	private void exportToXls(
-			List<RegistrationWithStateForExecutionYearBean> registrationWithStateForExecutionYearBean,
-			OutputStream outputStream, ExecutionYear executionYear,
-			Degree degree) throws IOException {
-
-		final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(
-				"AlunosPorCurso");
-		spreadsheet.newHeaderRow();
-		spreadsheet.addHeader(degree.getName() + " - "
-				+ executionYear.getNextYearsYearString());
-		spreadsheet.newRow();
-		spreadsheet.newRow();
-		spreadsheet.addCell(registrationWithStateForExecutionYearBean.size()
-				+ " Alunos");
-		fillSpreadSheet(registrationWithStateForExecutionYearBean, spreadsheet,
-				executionYear);
-		spreadsheet.getWorkbook().write(outputStream);
-	}
-
-	private void fillSpreadSheet(
-			List<RegistrationWithStateForExecutionYearBean> registrations,
-			final StyledExcelSpreadsheet spreadsheet,
-			ExecutionYear executionYear) {
-		setHeaders(spreadsheet);
-		for (RegistrationWithStateForExecutionYearBean registrationWithStateForExecutionYearBean : registrations) {
-			Registration registration = (Registration) registrationWithStateForExecutionYearBean
-					.getRegistration();
-			spreadsheet.newRow();
-			spreadsheet.addCell(registration.getNumber().toString());
-			spreadsheet.addCell(registration.getPerson().getName());
-			final RegistrationState lastRegistrationState = registration
-					.getLastRegistrationState(executionYear);
-
-			spreadsheet.addCell(lastRegistrationState.getStateType()
-					.getDescription());
-			spreadsheet.addCell(registration.getRegistrationAgreement()
-					.getName());
-		}
-	}
-
-	private void setHeaders(final StyledExcelSpreadsheet spreadsheet) {
-		spreadsheet.newHeaderRow();
-		spreadsheet.addHeader("Número");
-		spreadsheet.addHeader("Nome");
-		spreadsheet.addHeader("Estado da Matrícula");
-		spreadsheet.addHeader("Acordo");
-
-	}
+    }
 
 }

@@ -216,7 +216,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 
 	    label.append(studentCurricularPlan.getDegreeType().getLocalizedName());
 	    label.append(" ").append(applicationResources.getString("label.in"));
-	    label.append(" ").append(studentCurricularPlan.getDegree().getNome());
+	    label.append(" ").append(studentCurricularPlan.getRegistration().getDegreeName());
 	    label.append(", ").append(studentCurricularPlan.getDegreeCurricularPlan().getName());
 
 	    if (studentCurricularPlan.getSpecialization() != null) {

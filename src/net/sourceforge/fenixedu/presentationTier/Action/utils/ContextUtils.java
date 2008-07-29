@@ -482,7 +482,7 @@ public class ContextUtils {
         	final StringBuilder name = new StringBuilder();
         	name.append(degreeTypeString);
         	name.append(" ").append(applicationResources.getString("label.in")).append(" ");
-        	name.append(degree.getName());
+        	name.append(degree.getNameFor(executionDegree.getExecutionYear()).getContent());
         	if (duplicateDegreeInList(degree, executionYear)) {
         		name.append(" - ");
         		name.append(degreeCurricularPlan.getName());

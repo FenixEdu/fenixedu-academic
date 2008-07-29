@@ -7,14 +7,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EditDegree extends Service {
 
     public void run(Integer idInternal, String name, String nameEn, String acronym,
-            DegreeType degreeType, Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea) throws FenixServiceException, 
+            DegreeType degreeType, Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear) throws FenixServiceException, 
             ExcepcaoPersistencia {
         if (idInternal == null || name == null || nameEn == null || acronym == null
                 || degreeType == null || ectsCredits == null) {
@@ -26,7 +28,7 @@ public class EditDegree extends Service {
         if (degreeToEdit == null) {
             throw new NonExistingServiceException();
         } else if (!degreeToEdit.getSigla().equalsIgnoreCase(acronym)
-                || !degreeToEdit.getNome().equalsIgnoreCase(name)
+                || !degreeToEdit.getNameFor(executionYear).getContent(Language.pt).equalsIgnoreCase(name)
                 || !degreeToEdit.getDegreeType().equals(degreeType)) {
 
         	final List<Degree> degrees = rootDomainObject.getDegrees();
@@ -37,16 +39,16 @@ public class EditDegree extends Service {
                     if (degree.getSigla().equalsIgnoreCase(acronym)) {
                         throw new FenixServiceException("error.existing.degree.acronym");
                     }
-                    if ((degree.getNome().equalsIgnoreCase(name) || degree.getNameEn().equalsIgnoreCase(
-                            nameEn))
-                            && degree.getDegreeType().equals(degreeType)) {
+                    if ((degree.getNameFor(executionYear).getContent(Language.pt).equalsIgnoreCase(name) || degree.getNameFor(
+        		    executionYear).getContent(Language.en).equalsIgnoreCase(nameEn))
+        		    && degree.getDegreeType().equals(degreeType)) {
                         throw new FenixServiceException("error.existing.degree.name.and.type");
                     }
                 }
             }
         }
 
-        degreeToEdit.edit(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea);
+        degreeToEdit.edit(name, nameEn, acronym, degreeType, ectsCredits, gradeScale, prevailingScientificArea,executionYear);
     }
 
 }

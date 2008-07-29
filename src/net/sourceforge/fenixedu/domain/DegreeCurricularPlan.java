@@ -1434,21 +1434,29 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return isBolonhaDegree() ? getCycleCourseGroup(getDegreeType().getLastCycleType()) : null;
     }
 
-    final public String getGraduateTitle() {
+    public String getGraduateTitle(ExecutionYear executionYear) {
 	if (isBolonhaDegree()) {
-	    return getLastCycleCourseGroup().getGraduateTitle();
+	    return getLastCycleCourseGroup().getGraduateTitle(executionYear);
 	} else {
 	    final StringBuilder result = new StringBuilder(getDegreeType().getGraduateTitle());
 	    final String in = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(
 		    "label.in");
 	    result.append(" ").append(in);
-	    result.append(" ").append(getDegree().getFilteredName());
+	    result.append(" ").append(getDegree().getFilteredName(executionYear));
 
 	    return result.toString();
 	}
     }
 
+    final public String getGraduateTitle() {
+	return getGraduateTitle(ExecutionYear.readCurrentExecutionYear());
+    }
+
     final public String getGraduateTitle(final CycleType cycleType) {
+	return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), cycleType);
+    }
+    
+    final public String getGraduateTitle(ExecutionYear executionYear, final CycleType cycleType) {
 	if (cycleType == null) {
 	    return getGraduateTitle();
 	}
@@ -1461,7 +1469,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    throw new DomainException("DegreeCurricularPlan.doesnt.have.such.cycle.type");
 	}
 
-	return getCycleCourseGroup(cycleType).getGraduateTitle();
+	return getCycleCourseGroup(cycleType).getGraduateTitle(executionYear);
     }
 
     public List<CurricularCourse> getDissertationCurricularCourses(ExecutionYear year) {
@@ -1737,5 +1745,4 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
 	return result;
     }
-
 }

@@ -44,7 +44,7 @@
 	<bean:message key="label.candidacy.registration.declaration.section6"/> 
 	<bean:write name="executionYear" property="year"/> 
 	<bean:message key="label.candidacy.registration.declaration.section7"/> 
-	<bean:write name="registration" property="lastStudentCurricularPlan.degree.name"/> 
+	<bean:write name="registration" property="degreeName"/> 
 	<bean:message key="label.candidacy.registration.declaration.section8"/>
 	</p>
 	</div>

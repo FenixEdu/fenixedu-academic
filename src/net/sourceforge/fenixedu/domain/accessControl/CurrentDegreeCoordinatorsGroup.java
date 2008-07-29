@@ -31,7 +31,7 @@ public class CurrentDegreeCoordinatorsGroup extends DegreeGroup {
 
     @Override
     public String getName() {
-	String name = RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(), new Object[]{getDegree().getName()});
+	String name = RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(), new Object[]{getDegree().getNameI18N().getContent()});
 	return name != null ? name : getExpression();
     }
     

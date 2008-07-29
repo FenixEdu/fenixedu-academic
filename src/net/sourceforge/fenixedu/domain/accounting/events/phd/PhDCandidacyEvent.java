@@ -60,7 +60,7 @@ public class PhDCandidacyEvent extends PhDCandidacyEvent_Base {
 	final LabelFormatter labelFormatter = new LabelFormatter();
 	labelFormatter.appendLabel(entryType.name(), "enum").appendLabel(" (").appendLabel(
 		getDegree().getDegreeType().name(), "enum").appendLabel(" - ").appendLabel(
-		getDegree().getName()).appendLabel(" - ").appendLabel(getExecutionYear().getYear())
+			getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ").appendLabel(getExecutionYear().getYear())
 		.appendLabel(")");
 
 	return labelFormatter;
@@ -111,7 +111,7 @@ public class PhDCandidacyEvent extends PhDCandidacyEvent_Base {
 	final LabelFormatter labelFormatter = super.getDescription();
 	labelFormatter.appendLabel(" ");
 	labelFormatter.appendLabel(getDegree().getDegreeType().name(), "enum").appendLabel(" - ");
-	labelFormatter.appendLabel(getDegree().getName()).appendLabel(" - ");
+	labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
 	labelFormatter.appendLabel(getExecutionYear().getYear());
 	return labelFormatter;
     }

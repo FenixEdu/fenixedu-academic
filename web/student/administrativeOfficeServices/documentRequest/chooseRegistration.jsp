@@ -12,7 +12,7 @@
 	<logic:messagesPresent message="true">
 		<p>
 			<span class="error0"><!-- Error messages go here -->
-			<html:messages id="message" message="true"
+			<html:messages id="message" message="trupresentationNamee"
 				bundle="STUDENT_RESOURCES">
 				<bean:write name="message" />
 			</html:messages>
@@ -21,14 +21,13 @@
 	</logic:messagesPresent>
 
 
-
 	<html:form action="/documentRequest.do">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareCreateDocumentRequest" />
 
 		<p class="mtop2">
 			<bean:message key="label.registration" />: <html:select property="registrationId">
 			<html:options collection="registrations" property="idInternal"
-				labelProperty="lastStudentCurricularPlan.degreeCurricularPlan.presentationName" />
+				labelProperty="degreeNameWithDegreeCurricularPlanName" />
 			</html:select>
 		</p>
 

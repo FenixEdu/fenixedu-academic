@@ -38,7 +38,7 @@ public class DelegateSearchBean implements Serializable {
 
     private DelegateSearchType delegateSearchType;
 
-    static final public Comparator YEAR_DELEGATE_COMPARATOR_BY_EXECUTION_YEAR_AND_CURRICULAR_YEAR = new ComparatorChain();
+    static final public Comparator<DelegateSearchBean> YEAR_DELEGATE_COMPARATOR_BY_EXECUTION_YEAR_AND_CURRICULAR_YEAR = new ComparatorChain();
     static {
 	((ComparatorChain) YEAR_DELEGATE_COMPARATOR_BY_EXECUTION_YEAR_AND_CURRICULAR_YEAR).addComparator(new BeanComparator(
 		"executionYear.year"));
@@ -46,17 +46,21 @@ public class DelegateSearchBean implements Serializable {
 		"curricularYear.year"));
     }
 
-    static final public Comparator DELEGATE_COMPARATOR_BY_EXECUTION_YEAR = new BeanComparator("executionYear.year");
+    static final public Comparator<DelegateSearchBean> DELEGATE_COMPARATOR_BY_EXECUTION_YEAR = new BeanComparator(
+	    "executionYear.year");
 
     public DelegateSearchBean() {
 	setDegreeType(null);
 	setDegree(null);
 	setCurricularYear(null);
 	setExecutionYear(null);
+	setDelegate(null);
+	setDelegateFunction(null);
 	setDelegateSearchType(DelegateSearchType.ACTIVE_DELEGATES);
     }
 
     public DelegateSearchBean(Person person, PersonFunction delegateFunction) {
+	this();
 	setDelegate(person);
 	if (person.hasStudent()) {
 	    Registration registration = person.getStudent().getLastActiveRegistration();
@@ -73,6 +77,7 @@ public class DelegateSearchBean implements Serializable {
     }
 
     public DelegateSearchBean(Person person, FunctionType functionType, ExecutionYear executionYear) {
+	this();
 	setDelegate(person);
 	Registration lastActiveRegistration = person.getStudent().getLastActiveRegistration();
 	if (person.hasStudent()) {
@@ -89,7 +94,7 @@ public class DelegateSearchBean implements Serializable {
     }
 
     public Degree getDegree() {
-	return (degree == null ? null : degree.getObject());
+	return degree.getObject();
     }
 
     public void setDegree(Degree degree) {
@@ -121,7 +126,7 @@ public class DelegateSearchBean implements Serializable {
     }
 
     public Person getDelegate() {
-	return (delegate == null ? null : delegate.getObject());
+	return delegate.getObject();
     }
 
     public void setDelegate(Person delegate) {
@@ -137,7 +142,7 @@ public class DelegateSearchBean implements Serializable {
     }
 
     public CurricularYear getCurricularYear() {
-	return (curricularYear == null ? null : curricularYear.getObject());
+	return curricularYear.getObject();
     }
 
     public void setCurricularYear(CurricularYear curricularYear) {
@@ -145,7 +150,7 @@ public class DelegateSearchBean implements Serializable {
     }
 
     public ExecutionYear getExecutionYear() {
-	return (executionYear == null ? null : executionYear.getObject());
+	return executionYear.getObject();
     }
 
     public void setExecutionYear(ExecutionYear executionYear) {
@@ -153,7 +158,7 @@ public class DelegateSearchBean implements Serializable {
     }
 
     public PersonFunction getDelegateFunction() {
-	return (delegateFunction == null ? null : delegateFunction.getObject());
+	return delegateFunction.getObject();
     }
 
     public void setDelegateFunction(PersonFunction delegateFunction) {
@@ -165,11 +170,12 @@ public class DelegateSearchBean implements Serializable {
     }
 
     public YearMonthDay getStartDate() {
-	return delegateFunction.getObject().getBeginDate();
+	return getDelegateFunction().getBeginDate();
     }
 
     public YearMonthDay getEndDate() {
-	return (delegateFunction.getObject().isActive(new YearMonthDay()) ? null : delegateFunction.getObject().getEndDate());
+	PersonFunction delegateFunction = getDelegateFunction();
+	return delegateFunction.isActive(new YearMonthDay()) ? null : delegateFunction.getEndDate();
     }
 
     public String getDelegateFunctionNameIfGgaeDelegate() {
@@ -189,6 +195,6 @@ public class DelegateSearchBean implements Serializable {
     }
 
     public String getDegreeName() {
-	return (getDegree() != null ? getDegree().getName() : null);
+	return (getDegree() != null ? getDegree().getNameFor(getExecutionYear()).getContent() : null);
     }
 }

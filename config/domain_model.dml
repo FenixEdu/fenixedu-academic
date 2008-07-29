@@ -396,6 +396,7 @@ class DomainObject {
 		Double markAverage;
 		Double markMax;
 		Double markMin;
+		MultiLanguageString name;
 		MultiLanguageString additionalInfo;
 		MultiLanguageString description;
 		MultiLanguageString gratuity;

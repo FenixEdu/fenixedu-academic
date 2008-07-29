@@ -156,7 +156,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	    stringBuilder.append(" ");
 	    stringBuilder.append(resourceBundle.getString("label.in"));
 	    stringBuilder.append(" ");
-	    stringBuilder.append(studentCurricularPlan.getDegreeCurricularPlan().getDegree().getName());
+	    stringBuilder.append(studentCurricularPlan.getRegistration().getDegreeName());
 	    stringBuilder.append(" ");
 	    stringBuilder.append(resourceBundle
 		    .getString("message.declaration.registration.enroled.courses.prefix"));

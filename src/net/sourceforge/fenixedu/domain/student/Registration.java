@@ -105,6 +105,8 @@ import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
 public class Registration extends Registration_Base {
 
     static private final List<DegreeType> DEGREE_TYPES_TO_ENROL_BY_STUDENT = Arrays.asList(new DegreeType[] {
@@ -1771,6 +1773,28 @@ public class Registration extends Registration_Base {
 	return hasStudentCandidacy() ? getStudentCandidacy().getContigent() : null;
     }
 
+    public String getDegreeNameWithDegreeCurricularPlanName() {
+	StringBuffer buffer = new StringBuffer("");
+	buffer.append(getDegreeName());
+	buffer.append(" - ");
+	buffer.append(getStudentCurricularPlan(getStartExecutionYear()).getDegreeCurricularPlan().getName());
+
+	return buffer.toString();
+    }
+
+    public String getDegreeNameWithDescription() {
+	StringBuffer buffer = new StringBuffer("");
+	buffer.append(getDegree().getDegreeType().getLocalizedName());
+	buffer.append(" - ");
+	buffer.append(getDegreeName());
+
+	return buffer.toString();
+    }
+
+    public String getDegreeName() {
+	return getDegree().getNameFor(getStartExecutionYear()).getContent();
+    }
+
     final public String getDegreeDescription() {
 	final DegreeType degreeType = getDegreeType();
 	return getDegreeDescription(degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : getLastConcludedCycleType());
@@ -1792,7 +1816,7 @@ public class Registration extends Registration_Base {
 	if (cycleType != null && getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
 	    result.append(" (").append(cycleType.getDescription()).append(")");
 	}
-	result.append(" em ").append(degree.getFilteredName().toUpperCase());
+	result.append(" em ").append(degree.getFilteredName(this.getStartExecutionYear()).toUpperCase());
 
 	return result.toString();
     }
@@ -2193,7 +2217,7 @@ public class Registration extends Registration_Base {
 
     final public String getGraduateTitle() {
 	if (isConcluded()) {
-	    return getLastDegreeCurricularPlan().getGraduateTitle();
+	    return getLastDegreeCurricularPlan().getGraduateTitle(getStartExecutionYear());
 	}
 
 	throw new DomainException("Registration.is.not.concluded");
@@ -2205,7 +2229,7 @@ public class Registration extends Registration_Base {
 	}
 
 	if (hasConcludedCycle(cycleType)) {
-	    return getLastDegreeCurricularPlan().getGraduateTitle(cycleType);
+	    return getLastDegreeCurricularPlan().getGraduateTitle(getStartExecutionYear(), cycleType);
 	}
 
 	throw new DomainException("Registration.hasnt.concluded.requested.cycle");

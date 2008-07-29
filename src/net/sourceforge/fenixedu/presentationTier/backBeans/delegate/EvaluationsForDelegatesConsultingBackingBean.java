@@ -32,6 +32,8 @@ import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.util.MessageResources;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBean {
 
     private static final MessageResources messages = MessageResources.getMessageResources("resources/DelegateResources");
@@ -164,9 +166,14 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
 	return mostRecentExecutionPeriod;
     }
 
+    private ExecutionYear getExecutionYear() {
+	return getExecutionPeriod() == null ? null : getExecutionPeriod().getExecutionYear();
+    }
+    
     public String getDegreeName() {
 	final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-	return locale.getLanguage().equalsIgnoreCase("en") ? getDegree().getNameEn() : getDegree().getNome();
+	return locale.getLanguage().equals(Locale.ENGLISH.getLanguage()) ? getDegree().getNameFor(getExecutionYear()).getContent(
+		Language.en) : getDegree().getNameFor(getExecutionYear()).getContent(Language.pt);
     }
 
     public List<SelectItem> getDegreeCurricularPlanSelectItems() {

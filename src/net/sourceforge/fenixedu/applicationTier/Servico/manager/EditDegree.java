@@ -2,11 +2,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.List;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -14,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditDegree extends Service {
 
 	public void run(final Integer idInternal, final String code, final String name,
-			final String nameEn, final DegreeType degreeType, final GradeScale gradeScale)
+			final String nameEn, final DegreeType degreeType, final GradeScale gradeScale, ExecutionYear executionYear)
 			throws FenixServiceException, ExcepcaoPersistencia {
         if (idInternal == null || name == null || nameEn == null || code == null || degreeType == null) {
             throw new InvalidArgumentsServiceException();
@@ -25,7 +28,7 @@ public class EditDegree extends Service {
         if (degreeToEdit == null) {
             throw new NonExistingServiceException();
         } else if (!degreeToEdit.getSigla().equalsIgnoreCase(code)
-                || !degreeToEdit.getNome().equalsIgnoreCase(name)
+                || !degreeToEdit.getNameFor(executionYear).getContent(Language.pt).equalsIgnoreCase(name)
                 || !degreeToEdit.getTipoCurso().equals(degreeType)) {
             
         	final List<Degree> degrees = Degree.readOldDegrees();
@@ -36,7 +39,7 @@ public class EditDegree extends Service {
                     if (degree.getSigla().equalsIgnoreCase(code)) {
                         throw new FenixServiceException("error.existing.code");
                     }
-                    if ((degree.getNome().equalsIgnoreCase(name) || degree.getNameEn()
+                    if ((degree.getNameFor(executionYear).getContent(Language.pt).equalsIgnoreCase(name) || degree.getNameEn()
                             .equalsIgnoreCase(nameEn))
                             && degree.getTipoCurso().equals(degreeType)) {
                         throw new FenixServiceException("error.existing.name.and.type");
@@ -44,7 +47,7 @@ public class EditDegree extends Service {
                 }
             }
         }
-        degreeToEdit.edit(name, nameEn, code, degreeType, gradeScale);
+        degreeToEdit.edit(name, nameEn, code, degreeType, gradeScale, executionYear);
     }
 
 }

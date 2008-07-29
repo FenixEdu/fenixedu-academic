@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -43,6 +44,7 @@ public class Diploma extends AdministrativeOfficeDocument {
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("day", new YearMonthDay().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
 
+
 	if (diplomaRequest.hasFinalAverageDescription()) {
 	    addParameter("finalAverageDescription", StringUtils.capitalize(ResourceBundle.getBundle(
 		    "resources.EnumerationResources").getString(registrationConclusionBean.getFinalAverage().toString())));
@@ -52,11 +54,14 @@ public class Diploma extends AdministrativeOfficeDocument {
 	    addParameter("dissertationTitle", registration.getDissertationThesisTitle());
 	}
 
+	ExecutionYear executionYear = registrationConclusionBean.getStartExecutionYear();
+
 	addParameter("conclusionStatus", getConclusionStatusAndDegreeType(diplomaRequest, registration));
-	addParameter("degreeFilteredName", registration.getDegree().getFilteredName());
+	addParameter("degreeFilteredName", registration.getDegree().getFilteredName(executionYear));
 
 	final CycleType cycleToInspect = diplomaRequest.getWhatShouldBeRequestedCycle();
 	addParameter("graduateTitle", registration.getGraduateTitle(cycleToInspect));
+
     }
 
     private void addInstitutionParameters() {

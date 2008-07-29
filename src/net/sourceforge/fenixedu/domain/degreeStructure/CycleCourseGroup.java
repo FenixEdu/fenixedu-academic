@@ -5,10 +5,12 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.commons.lang.StringUtils;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CycleCourseGroup extends CycleCourseGroup_Base {
 
@@ -38,11 +40,15 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
     }
 
     final public String getGraduateTitle() {
+	return getGraduateTitle(ExecutionYear.readCurrentExecutionYear());
+    }
+    
+    final public String getGraduateTitle(ExecutionYear executionYear) {
 	final StringBuilder result = new StringBuilder();
 
 	result.append(getDegreeType().getGraduateTitle(getCycleType()));
 
-	final String degreeFilteredName = getDegree().getFilteredName();
+	final String degreeFilteredName = getDegree().getFilteredName(executionYear);
 	final String in = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(
 		"label.in");
 	result.append(" ").append(in);

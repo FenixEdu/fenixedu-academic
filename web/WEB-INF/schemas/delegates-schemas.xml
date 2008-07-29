@@ -16,7 +16,7 @@
 
 <schema name="delegates.selectedStudent.studentInfo" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
 	<slot name="delegate.name" key="label.name" />
-	<slot name="delegate.student.lastActiveRegistration.degree.name" key="label.degree" />
+	<slot name="delegate.student.lastActiveRegistration.degreeName" key="label.degree" />
 	<slot name="delegate.email" key="label.email" layout="link" >
 		<property name="useParent" value="true" />
 		<property name="linkFormat" value="mailto:${delegate.email}"/>
@@ -169,7 +169,7 @@
 </schema>
 
 <schema name="delegates.selectedDegreeTypeAndDegree" extends="delegates.selectedExecutionYear" bundle="DELEGATES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean" >
-	<slot name="degree.name" key="label.degree" />
+	<slot name="degreeName" key="label.degree" />
 	<slot name="degreeType.localizedName" key="label.degreeType" />
 </schema>
 

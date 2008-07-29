@@ -6,7 +6,7 @@
 			<property name="moduleRelative" value="true" />
 			<property name="linkFormat" value="/searchAlumni.do?method=visualizeAlumni&amp;studentId=${student.idInternal}"/>
 		</slot> 
-		<slot name="degree.name" key="list.column.degree" />
+		<slot name="degreeName" key="list.column.degree" />
 		<slot name="startExecutionYear.year" key="list.column.year" />
 	</schema>
 
