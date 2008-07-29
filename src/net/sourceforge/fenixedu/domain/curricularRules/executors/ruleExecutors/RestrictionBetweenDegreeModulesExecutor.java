@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
-import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -24,15 +24,15 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 
-	final CourseGroup courseGroup = rule.getPrecedenceDegreeModule();
+	final DegreeModule precedenceDegreeModule = rule.getPrecedenceDegreeModule();
 
-	if (isEnrolling(enrolmentContext, courseGroup)) {
+	if (isEnrolling(enrolmentContext, precedenceDegreeModule)) {
 	    return rule.hasMinimumCredits() ? createFalseRuleResultWithInvalidEcts(rule, sourceDegreeModuleToEvaluate)
 		    : RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
 
-	} else if (isEnroled(enrolmentContext, courseGroup)) {
+	} else if (isEnroled(enrolmentContext, precedenceDegreeModule)) {
 
-	    final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, courseGroup);
+	    final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, precedenceDegreeModule);
 
 	    if (!rule.hasMinimumCredits() || rule.allowCredits(curriculumModule.getAprovedEctsCredits())) {
 		return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
@@ -59,19 +59,20 @@ public class RestrictionBetweenDegreeModulesExecutor extends CurricularRuleExecu
 	    return RuleResult.createNA(sourceDegreeModuleToEvaluate.getDegreeModule());
 	}
 
-	final CourseGroup courseGroup = rule.getPrecedenceDegreeModule();
+	// final CourseGroup courseGroup = rule.getPrecedenceDegreeModule();
+	final DegreeModule precedenceDegreeModule = rule.getPrecedenceDegreeModule();
 
-	if (isEnrolling(enrolmentContext, courseGroup)) {
+	if (isEnrolling(enrolmentContext, precedenceDegreeModule)) {
 	    return rule.hasMinimumCredits() ? createFalseRuleResultWithInvalidEcts(rule, sourceDegreeModuleToEvaluate)
 		    : RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
 
-	} else if (isEnroled(enrolmentContext, courseGroup)) {
+	} else if (isEnroled(enrolmentContext, precedenceDegreeModule)) {
 
 	    if (!rule.hasMinimumCredits()) {
 		return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
 	    }
 
-	    final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, courseGroup);
+	    final CurriculumModule curriculumModule = searchCurriculumModule(enrolmentContext, precedenceDegreeModule);
 	    Double ectsCredits = curriculumModule.getAprovedEctsCredits();
 
 	    if (rule.allowCredits(ectsCredits)) {

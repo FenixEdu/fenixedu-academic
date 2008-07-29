@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
 public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeModules_Base {
 
-    private RestrictionBetweenDegreeModules(final CourseGroup precedenceDegreeModule, final Double minimumCredits) {
+    private RestrictionBetweenDegreeModules(final DegreeModule precedenceDegreeModule, final Double minimumCredits) {
 	super();
 	checkParameters(precedenceDegreeModule, minimumCredits);
 	setPrecedenceDegreeModule(precedenceDegreeModule);
@@ -27,30 +27,20 @@ public class RestrictionBetweenDegreeModules extends RestrictionBetweenDegreeMod
 	}
     }
 
-    protected RestrictionBetweenDegreeModules(final CourseGroup degreeModuleToApplyRule,
-	    final CourseGroup precedenceDegreeModule, final Double minimumCredits, final CourseGroup contextCourseGroup,
+    protected RestrictionBetweenDegreeModules(final DegreeModule degreeModuleToApplyRule,
+	    final DegreeModule precedenceDegreeModule, final Double minimumCredits, final CourseGroup contextCourseGroup,
 	    final ExecutionSemester begin, final ExecutionSemester end) {
 
 	this(precedenceDegreeModule, minimumCredits);
 	init(degreeModuleToApplyRule, contextCourseGroup, begin, end);
     }
 
-    protected void edit(final CourseGroup precedenceDegreeModule, final Double minimumCredits,
+    protected void edit(final DegreeModule precedenceDegreeModule, final Double minimumCredits,
 	    final CourseGroup contextCourseGroup) {
 	checkParameters(precedenceDegreeModule, minimumCredits);
 	setPrecedenceDegreeModule(precedenceDegreeModule);
 	setMinimumCredits(minimumCredits);
 	setContextCourseGroup(contextCourseGroup);
-    }
-
-    @Override
-    public CourseGroup getDegreeModuleToApplyRule() {
-	return (CourseGroup) super.getDegreeModuleToApplyRule();
-    }
-
-    @Override
-    public CourseGroup getPrecedenceDegreeModule() {
-	return (CourseGroup) super.getPrecedenceDegreeModule();
     }
 
     @Override

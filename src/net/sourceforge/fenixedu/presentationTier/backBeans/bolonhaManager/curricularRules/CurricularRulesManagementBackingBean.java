@@ -143,11 +143,14 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 		}
 
 	    case DEGREE_MODULES_SELECTION_LIMIT:
-	    case PRECEDENCY_BETWEEN_DEGREE_MODULES:
 		if (!getDegreeModule().isLeaf()) {
 		    result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType
 			    .getName())));
 		}
+		break;
+	    case PRECEDENCY_BETWEEN_DEGREE_MODULES:
+		result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType
+			.getName())));
 		break;
 
 	    case PRECEDENCY_APPROVED_DEGREE_MODULE:
@@ -651,8 +654,10 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
 	    case CREDITS_LIMIT:
 	    case DEGREE_MODULES_SELECTION_LIMIT:
-	    case PRECEDENCY_BETWEEN_DEGREE_MODULES:
 		getDegreeModules(CourseGroup.class, result);
+		break;
+	    case PRECEDENCY_BETWEEN_DEGREE_MODULES:
+		getDegreeModules(DegreeModule.class, result);
 		break;
 
 	    case EXCLUSIVENESS:
@@ -695,7 +700,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 	    checkSelectedAttributes();
 	    final Object[] args = { getDegreeModuleID(), CurricularRuleType.valueOf(getSelectedCurricularRuleType()),
 		    buildCurricularRuleParametersDTO(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
-	    ServiceUtils.executeService( "CreateRule", args);
+	    ServiceUtils.executeService("CreateRule", args);
 	    return "setCurricularRules";
 	} catch (FenixActionException e) {
 	    addErrorMessage(bolonhaResources.getString(e.getMessage()));
@@ -714,7 +719,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     public String editCurricularRule() {
 	try {
 	    final Object[] args = { getCurricularRuleID(), getBeginExecutionPeriodID(), getFinalEndExecutionPeriodID() };
-	    ServiceUtils.executeService( "EditCurricularRule", args);
+	    ServiceUtils.executeService("EditCurricularRule", args);
 	    return "setCurricularRules";
 	} catch (FenixFilterException e) {
 	    addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
@@ -729,7 +734,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     public String deleteCurricularRule() {
 	try {
 	    final Object[] args = { getCurricularRuleID() };
-	    ServiceUtils.executeService( "DeleteCurricularRule", args);
+	    ServiceUtils.executeService("DeleteCurricularRule", args);
 	    addInfoMessage(bolonhaResources.getString("curricularRule.deleted"));
 	    return "setCurricularRules";
 	} catch (FenixFilterException e) {

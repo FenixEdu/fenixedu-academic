@@ -125,8 +125,8 @@ public class CurricularRulesManager {
 	final CourseGroup contextCourseGroup = (CourseGroup) RootDomainObject.getInstance().readDegreeModuleByOID(
 		parametersDTO.getContextCourseGroupID());
 
-	return new RestrictionBetweenDegreeModules((CourseGroup) toApplyRule, (CourseGroup) precedenceDegreeModule, parametersDTO
-		.getMinimumCredits(), contextCourseGroup, begin, end);
+	return new RestrictionBetweenDegreeModules(toApplyRule, precedenceDegreeModule, parametersDTO.getMinimumCredits(),
+		contextCourseGroup, begin, end);
     }
 
     private static CurricularRule createEnrolmentToBeApprovedByCoordinator(DegreeModule toApplyRule, ExecutionSemester begin,
