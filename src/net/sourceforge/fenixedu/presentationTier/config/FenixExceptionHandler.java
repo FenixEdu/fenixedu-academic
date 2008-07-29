@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.log.requests.ErrorLog;
 import net.sourceforge.fenixedu.domain.log.requests.RequestLog;
 import net.sourceforge.fenixedu.domain.support.SupportRequestPriority;
 import net.sourceforge.fenixedu.domain.support.SupportRequestType;
@@ -64,6 +66,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
      */
     public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping, ActionForm formInstance,
 	    HttpServletRequest request, HttpServletResponse response) throws ServletException {
+	
 	ActionForward forward = null;
 	ActionError error = null;
 
@@ -74,7 +77,6 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	    errors.add("error.invalid.session", error);
 	    request.setAttribute(Globals.ERROR_KEY, errors);
 	    return mapping.findForward("firstPage");
-
 	}
 
 	request.setAttribute(SessionConstants.ORIGINAL_MAPPING_KEY, mapping);
@@ -95,7 +97,6 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	} else {
 	    exceptionInfo.append("No user logged in, or session was lost.\n");
 	}
-	request.setAttribute("requestBean", requestBean);
 
 	exceptionInfo.append("RequestURI: " + request.getRequestURI() + "\n");
 	exceptionInfo.append("RequestURL: " + request.getRequestURL() + "\n");
@@ -105,7 +106,6 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	final String sessionContext = sessionContextGetter(request);
 	exceptionInfo.append("SessionContext: \n" + sessionContext + "\n\n\n");
 
-	final ActionForward actionForward;
 	if (mapping != null) {
 	    exceptionInfo.append("Path: " + mapping.getPath() + "\n");
 	    exceptionInfo.append("Name: " + mapping.getName() + "\n");
@@ -143,12 +143,16 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	errorLogger.start();
 	try {
 	    errorLogger.join();
+	    requestBean.setErrorLog(errorLogger.getErrorLog());
 	} catch (InterruptedException e) {
 	    e.printStackTrace();
 	}
 
+	request.setAttribute("requestBean", requestBean);
+
 	return super.execute(ex, ae, mapping, formInstance, request, response);
     }
+
 
     private String requestContextGetter(HttpServletRequest request) {
 
@@ -207,6 +211,8 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	private String stackTrace;
 
 	private String exceptionType;
+	
+	private ErrorLog errorLog;
 
 	public ErrorLogger(String path, String referer, String[] parameters, String queryString, String user,
 		String requestAttributes, String sessionAttributes, String stackTrace, String exceptionType) {
@@ -226,10 +232,14 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	public void run() {
 	    Transaction.withTransaction(new jvstm.TransactionalCommand() {
 		public void doIt() {
-		    RequestLog.registerError(path, referer, parameters, queryString, user, requestAttributes, sessionAttributes,
-			    stackTrace, exceptionType);
+		    errorLog = RequestLog.registerError(path, referer, parameters, queryString, user, requestAttributes, sessionAttributes,
+			    stackTrace, exceptionType).getErrorLog();
 		}
 	    });
+	}
+
+	public ErrorLog getErrorLog() {
+	    return this.errorLog;
 	}
 
     }

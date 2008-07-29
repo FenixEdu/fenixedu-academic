@@ -5,9 +5,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.support.SupportRequestPriority;
@@ -96,51 +94,25 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	return actionForward;
     }
 
-    private String stackTrace2String(StackTraceElement[] stackTrace) {
-	String result = "StackTrace: \n ";
-	int i = 0;
-	if (stackTrace != null) {
-	    while (i < stackTrace.length) {
-		result += stackTrace[i] + "\n";
-		i++;
-	    }
-	}
-	return result;
-    }
-
     private void sessionRemover(HttpServletRequest request) {
 	HttpSession session = request.getSession(false);
 	session.removeAttribute(Globals.ERROR_KEY);
 	session.removeAttribute(SessionConstants.REQUEST_CONTEXT);
     }
 
-    private String sessionContextGetter(HttpServletRequest request) {
-	HttpSession session = request.getSession(false);
-	Enumeration sessionContents = session.getAttributeNames();
-	String context = "";
-	while (sessionContents.hasMoreElements()) {
-	    String sessionElement = sessionContents.nextElement().toString();
-	    context += "Element:" + sessionElement + "\n";
-	    context += "Element Value:" + session.getAttribute(sessionElement) + "\n";
-	}
-
-	return context;
-    }
-
     public final ActionForward prepareSupportHelp(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	SupportRequestBean supportRequestBean = new SupportRequestBean();
-	supportRequestBean.setResponseEmail(getLoggedPerson(request).getEmail());
+	SupportRequestBean requestBean = new SupportRequestBean();
+	requestBean.setResponseEmail(getLoggedPerson(request).getInstitutionalOrDefaultEmailAddress().getValue());
+	requestBean.setRequestContext(RootDomainObject.getInstance().readContentByOID(
+		Integer.valueOf(request.getParameter("contextId"))));
 
-	String contextId = request.getParameter("contextId");
-	supportRequestBean.setRequestContext(RootDomainObject.getInstance().readContentByOID(Integer.valueOf(contextId)));
-	request.setAttribute("requestBean", supportRequestBean);
-
+	request.setAttribute("requestBean", requestBean);
 	return mapping.findForward("supportHelpInquiry");
     }
 
-    public final ActionForward processException(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public final ActionForward processExceptionLegacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
 	DynaActionForm emailForm = (DynaActionForm) form;
@@ -156,52 +128,38 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	return sendSupportEmail(mapping, form, request, response, requestBean);
     }
 
-    public final ActionForward supportHelpError(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	request.setAttribute("requestBean", (SupportRequestBean) getObjectFromViewState("requestBean"));
-	return mapping.findForward("supportHelpInquiry");
-    }
-
-    public final ActionForward supportHelpException(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public final ActionForward supportHelpFieldValidation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
 	request.setAttribute("exceptionInfo", request.getParameter("exceptionInfo"));
-	request.setAttribute("requestBean", (SupportRequestBean) getObjectFromViewState("requestBean"));
+	request.setAttribute("requestBean", getObjectFromViewState("requestBean"));
 	return mapping.findForward("supportHelpInquiry");
     }
 
     public final ActionForward processSupportRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	return sendSupportEmail(mapping, form, request, response, (SupportRequestBean) getObjectFromViewState("requestBean"));
+	SupportRequestBean supportRequestBean = (SupportRequestBean) getObjectFromViewState("requestBean");
+	return sendSupportEmail(mapping, form, request, response, supportRequestBean);
     }
 
     protected final ActionForward sendSupportEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response, SupportRequestBean requestBean) throws Exception {
 
 	StringBuilder builder = new StringBuilder();
-	List<String> roles;
-	if (getLoggedPerson(request) != null) {
-	    roles = getLoggedPerson(request).getMainRoles();
-	} else {
-	    roles = new ArrayList<String>(0);
-	}
-	String mailSubject = generateEmailSubject(request, requestBean, roles, builder);
-	builder.setLength(0);
-	String mailBody = generateEmailBody(request, requestBean, roles, builder);
 
-	final ActionForward actionForward = new ActionForward();
-	actionForward.setContextRelative(false);
-	actionForward.setRedirect(true);
-	actionForward.setPath("/showErrorPageRegistered.do");
+	String mailSubject = generateEmailSubject(request, requestBean, getLoggedPerson(request), builder);
+	builder.setLength(0);
+	String mailBody = generateEmailBody(request, requestBean, getLoggedPerson(request), builder);
 
 	try {
 	    executeService("CreateSupportRequest", getLoggedPerson(request), requestBean);
 	} catch (DomainException e) {
-	    // fail silently
 	    // a mail must be always sent, no need to give error feedback
 	}
+
+	// System.out.println(mailSubject);
+	// System.out.println(mailBody);
 
 	EMail email = null;
 	try {
@@ -213,64 +171,113 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	    final ResourceBundle gBundle = ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale());
 	    email.send(gBundle.getString("suporte.mail"), mailSubject, mailBody);
 
-	    System.out.println(mailSubject);
-	    System.out.println(mailBody);
-
 	} catch (Throwable t) {
 	    t.printStackTrace();
 	    throw new Error(t);
 	}
 
 	sessionRemover(request);
+
+	final ActionForward actionForward = new ActionForward();
+	actionForward.setContextRelative(false);
+	actionForward.setRedirect(true);
+	actionForward.setPath("/showErrorPageRegistered.do");
 	return actionForward;
     }
 
-    private String generateEmailSubject(HttpServletRequest request, SupportRequestBean requestBean, List<String> roles,
+    private String generateEmailSubject(HttpServletRequest request, SupportRequestBean requestBean, Person loggedPerson,
 	    StringBuilder builder) {
 
 	builder.append(request.getServerName().equals("localhost") ? "Localhost " : "");
-	builder.append("[").append(roles.size() > 0 ? roles.get(0) : "").append("] ");
-	builder.append("[").append(requestBean.getRequestType()).append("] ");
-	builder.append("[").append(requestBean.getRequestPriority().getName()).append("] ");
-
-	if (!StringUtils.isEmpty(requestBean.getSubject())) {
-	    builder.append(requestBean.getSubject());
-	}
+	appendContextInfo(builder, requestBean);
+	builder.append(" ").append(requestBean.getSubject());
 	return builder.toString();
     }
 
-    private String generateEmailBody(HttpServletRequest request, SupportRequestBean requestBean, List<String> roles,
+    private String generateEmailBody(HttpServletRequest request, SupportRequestBean requestBean, Person loggedPerson,
 	    StringBuilder builder) {
 
-	builder.append("Support Report").append("\n\n");
-	builder.append("Sender: ").append(requestBean.getResponseEmail()).append("\n\n");
+	appendNewLine(builder);
+	appendSeparator(builder);
+	appendNewLine(builder);
+	appendUserInfo(builder, loggedPerson, requestBean);
+	appendNewLine(builder);
+	appendContextInfo(builder, requestBean);
+	appendNewLine(builder);
+	appendSeparator(builder);
+	appendNewLine(builder, 2);
+	appendComments(builder, requestBean, (String) request.getParameter("exceptionInfo"));
+	appendNewLine(builder, 2);
+	appendSeparator(builder);
+	appendNewLine(builder);
+	appendText(builder, (String) request.getParameter("userAgent"));
+	appendNewLine(builder);
+	appendSeparator(builder);
+	return builder.toString();
+    }
 
-	builder.append("Roles: ");
-	if (roles.size() > 0) {
-	    for (String role : roles) {
+    private void appendText(StringBuilder builder, String text) {
+	if (!StringUtils.isEmpty(text)) {
+	    builder.append(text);
+	}
+    }
+
+    private void appendComments(StringBuilder builder, SupportRequestBean requestBean, String exceptionInfo) {
+
+	builder.append(requestBean.getMessage());
+	if (!StringUtils.isEmpty(exceptionInfo)) {
+	    appendNewLine(builder);
+	    appendNewLine(builder);
+	    appendSeparator(builder);
+	    appendNewLine(builder);
+	    builder.append(exceptionInfo);
+	    appendNewLine(builder);
+	}
+    }
+
+    private void appendContextInfo(StringBuilder builder, SupportRequestBean requestBean) {
+
+	builder.append("[");
+	if (requestBean.getRequestContext() != null) {
+	    builder.append(requestBean.getRequestContext().getName());
+	}
+	builder.append("] [").append(requestBean.getRequestType().getName()).append("] ");
+	builder.append("[").append(requestBean.getRequestPriority().getName()).append("]");
+    }
+
+    private void appendUserInfo(StringBuilder builder, Person loggedPerson, SupportRequestBean requestBean) {
+
+	builder.append("[");
+	if (loggedPerson != null) {
+
+	    for (String role : loggedPerson.getMainRoles()) {
 		builder.append(role).append(", ");
 	    }
 	    builder.setLength(builder.length() - 2);
+	    builder.append("] [").append(loggedPerson.getName()).append("]");
+
+	    appendNewLine(builder);
+
+	    builder.append("[").append(loggedPerson.getUsername()).append("] [").append(requestBean.getResponseEmail());
 	} else {
 	    final ResourceBundle aBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
-	    builder.append(aBundle.getString("support.mail.roles.error"));
+	    builder.append(aBundle.getString("support.mail.session.error"));
 	}
-	builder.append("\n\n");
+	builder.append("]");
+    }
 
-	if (requestBean.getRequestContext() != null) {
-	    builder.append("Portal: ").append(requestBean.getRequestContext().getName()).append("\n\n");
+    private void appendSeparator(StringBuilder builder) {
+	builder.append("===========================================================================");
+    }
+
+    private void appendNewLine(StringBuilder builder) {
+	appendNewLine(builder, 1);
+    }
+
+    private void appendNewLine(StringBuilder builder, int number) {
+	for (int i = 0; i < number; i++) {
+	    builder.append("\n");
 	}
-
-	builder.append("Type: ").append(requestBean.getRequestType().getName()).append("\n\n");
-	builder.append("Priority: ").append(requestBean.getRequestPriority().getName()).append("\n\n");
-
-	builder.append("User Agent: ").append(
-		StringUtils.isEmpty(request.getParameter("userAgent")) ? "" : request.getParameter("userAgent")).append("\n\n");
-
-	builder.append("User Comment: \n").append(requestBean.getMessage()).append("\n\n");
-	builder.append(request.getParameter("exceptionInfo") != null ? request.getParameter("exceptionInfo").toString() : "");
-
-	return builder.toString();
     }
 
 }

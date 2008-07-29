@@ -37,10 +37,16 @@ background: transparent;
 Structural Classes: Header & Tables
 ******************************************/
 
-#container {
-margin: 60px auto 0 auto;
-background: #fff;
+table#wrapper {
 width: 600px;
+margin: 60px auto 0 auto;
+border-collapse: collapse;
+border: none;
+}
+
+#container {
+background: #fff;
+/* width: 600px; */
 border: 1px solid #113344;
 padding: 0 0 20px 0;
 }
@@ -68,39 +74,39 @@ color: #c00;
 div.form {
 margin: 20px 0 10px 0;
 }
-table {
+table.tform {
 border-collapse: collapse;
 border: 1px solid #ddd;
 }
-table td, table th {
+table.tform td, table.tform th {
 border-top: 1px solid #ddd;
 border-bottom: 1px solid #ddd;
 padding: 10px 10px;
 }
-table th {
+table.tform th {
 font-weight: normal;
 text-align: left;
 vertical-align: top;
 padding-right: 10px;
 }
-table p {
+table.tform p {
 margin: 0;
 }
-table .smalltxt {
+table.tform .smalltxt {
 color: #888;
 font-size: 0.9em;
 }
-div.form table tr.inputtext td input {
+div.form table.tform tr.inputtext td input {
 background: #fafafa;
 padding: 4px 4px;
 border: 1px solid #7f9db9;
 }
-div.form table tr.textarea td textarea {
+div.form table.tform tr.textarea td textarea {
 background: #fafafa;
 padding: 4px 4px;
 border: 1px solid #7f9db9;
 }
-div.form table tr.select td select {
+div.form table.tform tr.select td select {
 background: #fafafa;
 border: 1px solid #7f9db9;
 padding: 1px;

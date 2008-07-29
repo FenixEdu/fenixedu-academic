@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.log.requests.ErrorLog;
 import net.sourceforge.fenixedu.domain.support.SupportRequestPriority;
 import net.sourceforge.fenixedu.domain.support.SupportRequestType;
 
@@ -15,6 +16,7 @@ public class SupportRequestBean implements Serializable {
     private String subject;
     private String message;
     private SupportRequestPriority requestPriority;
+    private DomainReference<ErrorLog> errorLog;
 
     public SupportRequestBean() {
     }
@@ -70,6 +72,14 @@ public class SupportRequestBean implements Serializable {
 
     public void setRequestPriority(SupportRequestPriority requestPriority) {
 	this.requestPriority = requestPriority;
+    }
+
+    public ErrorLog getErrorLog() {
+	return (this.errorLog != null) ? this.errorLog.getObject() : null;
+    }
+
+    public void setErrorLog(ErrorLog errorLog) {
+	this.errorLog = (errorLog != null) ? new DomainReference<ErrorLog>(errorLog) : null;
     }
 
 }

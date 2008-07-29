@@ -4390,7 +4390,7 @@ class DomainObject {
 		ThesisVisibilityType visibility;
 		DateTime confirmmedDocuments;
 	}
-	
+
 	class thesis.ThesisLibraryOperation extends DomainObject {
 	   DateTime operation;
 	}
@@ -13051,7 +13051,9 @@ relation SupportRequestContent {
 }
 
 relation SupportExceptionErrorLog {
-	support.SupportException playsRole supportException;
+	support.SupportException playsRole supportExceptions {
+		multiplicity *;
+	}
 	log.requests.ErrorLog playsRole errorLog;
 }
 

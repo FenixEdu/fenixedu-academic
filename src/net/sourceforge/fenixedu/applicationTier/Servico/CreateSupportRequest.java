@@ -9,7 +9,7 @@ public class CreateSupportRequest extends Service {
     public void run(Person person, SupportRequestBean bean) {
 
 	SupportRequestFactory.createSupportRequest(bean.getRequestType(), bean.getRequestContext(), bean.getRequestPriority(),
-		person, bean.getResponseEmail(), bean.getSubject(), bean.getMessage());
+		person, bean.getResponseEmail(), bean.getSubject(), bean.getMessage(), bean.getErrorLog());
     }
 
 }
