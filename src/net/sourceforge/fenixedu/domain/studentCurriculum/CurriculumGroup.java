@@ -693,8 +693,6 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	    return ConclusionValue.create(checkCreditsLimits(executionYear));
 	} else if (isToCheckDegreeModulesSelectionLimit(executionYear)) {
 	    return ConclusionValue.create(checkDegreeModulesSelectionLimit(executionYear));
-	} else if (hasAnyNotConcludedChilds(executionYear)) {
-	    return ConclusionValue.NOT_CONCLUDED;
 	} else {
 	    return ConclusionValue.UNKNOWN;
 	}
@@ -762,16 +760,6 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 
 	    return modulesConcluded >= degreeModulesSelectionLimit.getMinimumLimit();
 	}
-    }
-
-    private boolean hasAnyNotConcludedChilds(final ExecutionYear executionYear) {
-	for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
-	    if (!curriculumModule.isConcluded(executionYear).isValid()) {
-		return true;
-	    }
-	}
-
-	return false;
     }
 
     @Override
