@@ -151,38 +151,38 @@
 	<li class="alerts">um serviço de alertas com mensagens úteis e concisas</li>
 	<li class="mailfwd">endereço de <html:link target="_blank" href="https://ciist.ist.utl.pt/servicos/mail.php#webmail">mail personalizado</html:link> e, se necessário, com <em>forward</em> automático</li>
 	<li class="homepage">alojamento de página web institucional</li>
-	<li class="library">acesso à <a href="http://bist.ist.utl.pt">Biblioteca do IST</a> (cartão de utilizador + recursos electrónicos)</li>
+	<li class="library">acesso à <a target="_blank" href="http://bist.ist.utl.pt">Biblioteca do IST</a> (cartão de utilizador + recursos electrónicos)</li>
 </ul>
 
 </div>
 <h2>Descontos especiais</h2>
 <ul>
-	<li>na aquisição de publicações da <a href="http://www.istpress.ist.utl.pt/">IST Press</a>;</li>
-	<li>na aquisição de produtos de <a href="http://gcrp.ist.utl.pt/html/relacoespublicas/produtos.shtml">merchandising</a>;</li>
-	<li>na utilização de espaços do <a href="http://centrocongressos.ist.utl.pt/">Centro de Congressos do IST</a>.</li>
+	<li>na aquisição de publicações da <a target="_blank" href="http://www.istpress.ist.utl.pt/">IST Press</a>;</li>
+	<li>na aquisição de produtos de <a target="_blank" href="http://gcrp.ist.utl.pt/html/relacoespublicas/produtos.shtml">merchandising</a>;</li>
+	<li>na utilização de espaços do <a target="_blank" href="http://centrocongressos.ist.utl.pt/">Centro de Congressos do IST</a>.</li>
 
 </ul>
 <h2>Oportunidades, aconselhamento e apoio informativo</h2>
 <ul>
-	<li><a href="http://gcrp.ist.utl.pt/html/recrutamento/index.shtml">Procura/Oferta de Estágio/Emprego</a></li>
-	<li><a href="http://www.ist.utl.pt/html/ensino">Ensino, Pós-graduações e Formação</a></li>
-	<li><a href="http://galtec.ist.utl.pt">Licenciamento de Tecnologia</a></li>
-	<li><a href="http://www.istpress.ist.utl.pt/">Oportunidades de publicação de livros</a></li>
+	<li><a target="_blank" href="http://gcrp.ist.utl.pt/html/recrutamento/index.shtml">Procura/Oferta de Estágio/Emprego</a></li>
+	<li><a target="_blank" href="http://www.ist.utl.pt/html/ensino">Ensino, Pós-graduações e Formação</a></li>
+	<li><a target="_blank" href="http://galtec.ist.utl.pt">Licenciamento de Tecnologia</a></li>
+	<li><a target="_blank" href="http://www.istpress.ist.utl.pt/">Oportunidades de publicação de livros</a></li>
 	<li><a href="mailto:empreendedorismo@ist.utl.pt">Empreendedorismo</a></li>
-	<li><a href="http://gep.ist.utl.pt/html/oe">Empregabilidade</a></li>
-	<li><a href="http://gep.ist.utl.pt">Estudos, Projectos e Estatísticas do IST</a></li>
-	<li><a href="http://namp.ist.utl.pt">Apoio Médico e Psicológico</a></li>
-	<li><a href="http://nape.ist.utl.pt">Cultura e Desporto</a></li>	
+	<li><a target="_blank" href="http://gep.ist.utl.pt/html/oe">Empregabilidade</a></li>
+	<li><a target="_blank" href="http://gep.ist.utl.pt">Estudos, Projectos e Estatísticas do IST</a></li>
+	<li><a target="_blank" href="http://namp.ist.utl.pt">Apoio Médico e Psicológico</a></li>
+	<li><a target="_blank" href="http://nape.ist.utl.pt">Cultura e Desporto</a></li>	
 </ul>
 
 <h2>Links Úteis</h2>
 <ul>
-	<li><a href="http://aaa.ist.utl.pt">Associação dos Antigos Alunos do Instituto Superior Técnico (AAAIST)</a> <em>"Uma ponte entre o Técnico e os seus Antigos Alunos"</em></li>
-	<li><a href="http://www.ordemengenheiros.pt">Ordem dos Engenheiros</a></li>
-	<li><a href="http://www.academia-engenharia.org">Academia da Engenharia</a></li>
-	<li><a href="http://www.apengsaude.org">Associação Portuguesa de Engenharia da Saúde</a></li>
-	<li><a href="http://www.dec.uc.pt/aciv/index.php?section=18">Associação para o Desenvolvimento da Engenharia Civil</a></li>
-	<li><a href="http://www.apea.pt">Associação Portuguesa de Engenharia do Ambiente</a></li>
+	<li><a target="_blank" href="http://aaa.ist.utl.pt">Associação dos Antigos Alunos do Instituto Superior Técnico (AAAIST)</a> <em>"Uma ponte entre o Técnico e os seus Antigos Alunos"</em></li>
+	<li><a target="_blank" href="http://www.ordemengenheiros.pt">Ordem dos Engenheiros</a></li>
+	<li><a target="_blank" href="http://www.academia-engenharia.org">Academia da Engenharia</a></li>
+	<li><a target="_blank" href="http://www.apengsaude.org">Associação Portuguesa de Engenharia da Saúde</a></li>
+	<li><a target="_blank" href="http://www.dec.uc.pt/aciv/index.php?section=18">Associação para o Desenvolvimento da Engenharia Civil</a></li>
+	<li><a target="_blank" href="http://www.apea.pt">Associação Portuguesa de Engenharia do Ambiente</a></li>
 </ul>
 
 <h2>Comentários ou sugestões</h2>
