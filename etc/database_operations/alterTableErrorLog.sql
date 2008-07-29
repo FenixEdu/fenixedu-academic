@@ -1,0 +1,1 @@
+alter table ERROR_LOG drop column KEY_SUPPORT_EXCEPTION;
