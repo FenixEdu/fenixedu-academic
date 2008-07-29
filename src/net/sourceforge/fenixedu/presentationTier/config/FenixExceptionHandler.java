@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.log.requests.ErrorLog;
 import net.sourceforge.fenixedu.domain.log.requests.RequestLog;
 import net.sourceforge.fenixedu.domain.support.SupportRequestPriority;
@@ -66,8 +65,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
      */
     public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping, ActionForm formInstance,
 	    HttpServletRequest request, HttpServletResponse response) throws ServletException {
-	
-	ActionForward forward = null;
+
 	ActionError error = null;
 
 	if (ex instanceof InvalidSessionActionException) {
@@ -93,7 +91,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	IUserView userView = UserView.getUser();
 	if (userView != null) {
 	    exceptionInfo.append("UserLogedIn: " + userView.getUtilizador() + "\n");
-	    requestBean.setResponseEmail(userView.getPerson().getEmail());
+	    requestBean.setResponseEmail(userView.getPerson().getDefaultEmailAddress().getValue());
 	} else {
 	    exceptionInfo.append("No user logged in, or session was lost.\n");
 	}
@@ -134,7 +132,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
 
 	// Store the exception
 	request.setAttribute(Globals.EXCEPTION_KEY, ex);
-	super.storeException(request, property, error, forward, ae.getScope());
+	super.storeException(request, property, error, null, ae.getScope());
 
 	String[] parameters = ArrayUtils.toStringArray(request.getParameterNames(), "_request_checksum_", "jsessionid");
 	ErrorLogger errorLogger = new ErrorLogger(request.getRequestURI(), request.getHeader("referer"), parameters, request
@@ -152,7 +150,6 @@ public class FenixExceptionHandler extends ExceptionHandler {
 
 	return super.execute(ex, ae, mapping, formInstance, request, response);
     }
-
 
     private String requestContextGetter(HttpServletRequest request) {
 
@@ -211,7 +208,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	private String stackTrace;
 
 	private String exceptionType;
-	
+
 	private ErrorLog errorLog;
 
 	public ErrorLogger(String path, String referer, String[] parameters, String queryString, String user,
@@ -232,8 +229,8 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	public void run() {
 	    Transaction.withTransaction(new jvstm.TransactionalCommand() {
 		public void doIt() {
-		    errorLog = RequestLog.registerError(path, referer, parameters, queryString, user, requestAttributes, sessionAttributes,
-			    stackTrace, exceptionType).getErrorLog();
+		    errorLog = RequestLog.registerError(path, referer, parameters, queryString, user, requestAttributes,
+			    sessionAttributes, stackTrace, exceptionType).getErrorLog();
 		}
 	    });
 	}

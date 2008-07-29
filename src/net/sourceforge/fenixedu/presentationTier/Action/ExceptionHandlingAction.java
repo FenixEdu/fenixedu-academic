@@ -36,6 +36,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public class ExceptionHandlingAction extends FenixDispatchAction {
 
+    private final int INDENT = 12;
+
     public ActionForward sendEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -158,8 +160,8 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	    // a mail must be always sent, no need to give error feedback
 	}
 
-	// System.out.println(mailSubject);
-	// System.out.println(mailBody);
+	System.out.println(mailSubject);
+	System.out.println(mailBody);
 
 	EMail email = null;
 	try {
@@ -189,8 +191,11 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	    StringBuilder builder) {
 
 	builder.append(request.getServerName().equals("localhost") ? "Localhost " : "");
-	appendContextInfo(builder, requestBean);
-	builder.append(" ").append(requestBean.getSubject());
+	builder.append("[").append(requestBean.getRequestContext() != null ? requestBean.getRequestContext().getName() : "")
+		.append("] ");
+	builder.append("[").append(requestBean.getRequestType().getName()).append("] ");
+	builder.append("[").append(requestBean.getRequestPriority()).append("] ");
+	builder.append(requestBean.getSubject());
 	return builder.toString();
     }
 
@@ -198,76 +203,86 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	    StringBuilder builder) {
 
 	appendNewLine(builder);
-	appendSeparator(builder);
+	builder.append("===========================================================================");
+	appendNewLine(builder);
+	appendRoles(builder, loggedPerson);
 	appendNewLine(builder);
 	appendUserInfo(builder, loggedPerson, requestBean);
 	appendNewLine(builder);
-	appendContextInfo(builder, requestBean);
+	appendFormInfo(builder, requestBean);
 	appendNewLine(builder);
-	appendSeparator(builder);
+	appendUserInfo(builder, (String) request.getParameter("userAgent"));
+	appendNewLine(builder);
+	builder.append("===========================================================================");
 	appendNewLine(builder, 2);
 	appendComments(builder, requestBean, (String) request.getParameter("exceptionInfo"));
-	appendNewLine(builder, 2);
-	appendSeparator(builder);
-	appendNewLine(builder);
-	appendText(builder, (String) request.getParameter("userAgent"));
-	appendNewLine(builder);
-	appendSeparator(builder);
 	return builder.toString();
     }
 
-    private void appendText(StringBuilder builder, String text) {
-	if (!StringUtils.isEmpty(text)) {
-	    builder.append(text);
-	}
+    private void appendUserInfo(StringBuilder builder, String userAgent) {
+	generateLabel(builder, "Browser/SO:").append("[").append(userAgent).append("]");
     }
 
     private void appendComments(StringBuilder builder, SupportRequestBean requestBean, String exceptionInfo) {
 
 	builder.append(requestBean.getMessage());
 	if (!StringUtils.isEmpty(exceptionInfo)) {
-	    appendNewLine(builder);
-	    appendNewLine(builder);
-	    appendSeparator(builder);
-	    appendNewLine(builder);
+	    appendNewLine(builder, 4);
 	    builder.append(exceptionInfo);
 	    appendNewLine(builder);
 	}
     }
 
-    private void appendContextInfo(StringBuilder builder, SupportRequestBean requestBean) {
+    private void appendFormInfo(StringBuilder builder, SupportRequestBean requestBean) {
 
-	builder.append("[");
-	if (requestBean.getRequestContext() != null) {
-	    builder.append(requestBean.getRequestContext().getName());
-	}
-	builder.append("] [").append(requestBean.getRequestType().getName()).append("] ");
-	builder.append("[").append(requestBean.getRequestPriority().getName()).append("]");
+	generateLabel(builder, "Email:").append("[").append(requestBean.getResponseEmail()).append("]");
+	appendNewLine(builder);
+
+	generateLabel(builder, "Portal:").append("[").append(
+		requestBean.getRequestContext() != null ? requestBean.getRequestContext().getName() : "").append("]");
+	appendNewLine(builder);
+
+	generateLabel(builder, "Tipo:").append("[").append(requestBean.getRequestType().getName()).append("]");
+	appendNewLine(builder);
+
+	generateLabel(builder, "Prioridade:").append("[").append(requestBean.getRequestPriority()).append("]");
     }
 
-    private void appendUserInfo(StringBuilder builder, Person loggedPerson, SupportRequestBean requestBean) {
-
+    private void appendRoles(StringBuilder builder, Person loggedPerson) {
+	generateLabel(builder, "Roles:");
 	builder.append("[");
 	if (loggedPerson != null) {
 
 	    for (String role : loggedPerson.getMainRoles()) {
-		builder.append(role).append(", ");
+		builder.append("#").append(role).append(", ");
 	    }
 	    builder.setLength(builder.length() - 2);
-	    builder.append("] [").append(loggedPerson.getName()).append("]");
+	}
+	builder.append("] ");
+    }
 
+    private StringBuilder generateLabel(StringBuilder builder, String label) {
+	builder.append(label);
+	for (int i = label.length(); i <= 15; i++) {
+	    builder.append(" ");
+	}
+	return builder;
+    }
+
+    private void appendUserInfo(StringBuilder builder, Person loggedPerson, SupportRequestBean requestBean) {
+	generateLabel(builder, "Nome:");
+	builder.append("[");
+	if (loggedPerson != null) {
+
+	    builder.append(loggedPerson.getName()).append("]");
 	    appendNewLine(builder);
-
-	    builder.append("[").append(loggedPerson.getUsername()).append("] [").append(requestBean.getResponseEmail());
+	    generateLabel(builder, "Username:");
+	    builder.append("[").append(loggedPerson.getUsername()).append("]");
 	} else {
 	    final ResourceBundle aBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 	    builder.append(aBundle.getString("support.mail.session.error"));
 	}
 	builder.append("]");
-    }
-
-    private void appendSeparator(StringBuilder builder) {
-	builder.append("===========================================================================");
     }
 
     private void appendNewLine(StringBuilder builder) {
