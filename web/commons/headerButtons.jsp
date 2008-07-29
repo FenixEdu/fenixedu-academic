@@ -12,14 +12,14 @@
 
 <ul>
 	<li class="institution"><a href="<%= institutionUrl %>" target="_blank"><bean:message key="label.institution" bundle="GLOBAL_RESOURCES"/></a></li>
-	<li class="support"><a href="<%= supportLink %>"><bean:message key="link.suporte" bundle="GLOBAL_RESOURCES"/></a></li>
 <%--
+	<li class="support"><a href="<%= supportLink %>"><bean:message key="link.suporte" bundle="GLOBAL_RESOURCES"/></a></li>
+--%>
 	<li class="support">
 		<a href="<%= request.getContextPath() + "/exceptionHandlingAction.do?method=prepareSupportHelp" + "&contextId=" + contextId %>" target="_blank">
 			<bean:message key="link.suporte" bundle="GLOBAL_RESOURCES"/>
 		</a>
 	</li>
---%>
 	<li class="logout"><!-- HAS_CONTEXT --><a href="<%= request.getContextPath() %>/logoff.do"><bean:message key="link.logout" bundle="GLOBAL_RESOURCES"/></a></li>
 
 
