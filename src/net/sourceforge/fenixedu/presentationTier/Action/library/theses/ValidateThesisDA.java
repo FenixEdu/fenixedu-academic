@@ -31,18 +31,6 @@ public class ValidateThesisDA extends FenixDispatchAction {
 	return mapping.findForward("view");
     }
 
-    public ActionForward prepareOperation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	DynaValidatorForm operationBean = (DynaValidatorForm) actionForm;
-	String operation = operationBean.getString("operation");
-	if (operation.equals("validate")) {
-	    request.setAttribute("validate", true);
-	} else if (operation.equals("pending")) {
-	    request.setAttribute("pending", true);
-	}
-	return mapping.findForward("view");
-    }
-
     public ActionForward prepareValidate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	request.setAttribute("validate", true);
@@ -67,6 +55,19 @@ public class ValidateThesisDA extends FenixDispatchAction {
 	return prepare(mapping, actionForm, request, response);
     }
 
+    public ActionForward prepareEditPending(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	request.setAttribute("editPending", true);
+	request.setAttribute("lastOperation", getThesis(request).getLastLibraryOperation());
+	return mapping.findForward("view");
+    }
+    
+    public ActionForward editPending(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	addActionMessage("success", request, "message.thesis.confirmation.undo.success");
+	return prepare(mapping, actionForm, request, response);
+    }
+    
     public ActionForward cancel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	addActionMessage("success", request, "message.thesis.cancel.confirmation");

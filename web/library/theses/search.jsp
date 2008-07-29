@@ -26,6 +26,8 @@
 	</logic:empty>
 
 	<logic:notEmpty name="theses">
+		<bean:message key="message.library.theses.found"
+			arg0="<%=request.getAttribute("thesesFound").toString()%>" />
 		<logic:messagesPresent property="success" message="true">
 			<html:messages id="message" message="true" property="warning">
 				<p><span class="success0"> <bean:write name="message" /></span></p>
@@ -33,7 +35,7 @@
 		</logic:messagesPresent>
 
 		<bean:define id="sortedBy">
-			<%=request.getParameter("sortBy") == null ? "enrolment.executionYear.name" : request
+			<%=request.getParameter("sortBy") == null ? "discussed=descending" : request
 				.getParameter("sortBy")%>
 		</bean:define>
 
@@ -44,7 +46,7 @@
 
 				<fr:property name="sortParameter" value="sortBy" />
 				<fr:property name="sortUrl"
-					value="<%= "/theses/search.do?method=update" + request.getAttribute("searchArgs") %>" />
+					value="<%="/theses/search.do?method=update" + request.getAttribute("searchArgs")%>" />
 				<fr:property name="sortBy" value="<%=sortedBy%>" />
 
 				<fr:property name="link(verify)"

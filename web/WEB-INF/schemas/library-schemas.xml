@@ -23,6 +23,7 @@
 <schema name="library.thesis.list" type="net.sourceforge.fenixedu.domain.thesis.Thesis"
 	bundle="LIBRARY_RESOURCES">
 	<slot name="enrolment.executionYear.name" key="label.thesis.year" />
+    <slot name="discussed" key="label.thesis.aproval" layout="no-time"/>
 	<slot name="libraryState" key="label.thesis.state" />
 	<slot name="libraryReference" key="label.thesis.library.ref" layout="null-as-label" />
 	<slot name="finalFullTitle" key="label.thesis.title" layout="short">
@@ -57,14 +58,21 @@
     <!--  		layout="tabular-nonNullValues" />-->
 	<slot name="pendingComment" key="label.thesis.library.comment" />
 	<slot name="performer" layout="name-with-alias" key="label.thesis.library.operator" />
+    <slot name="operation" key="label.thesis.library.operation.time" />
 </schema>
 
 <schema name="library.thesis.validate" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryArchiveOperation"
 	constructor="thesisId, performerId, libraryReference">
 	<slot name="thesisId" hidden="true" />
 	<slot name="performerId" hidden="true" />
-	<slot name="libraryReference" key="label.thesis.library.ref"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="libraryReference" key="label.thesis.library.ref">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+			<property name="regexp" value="[^\s]+" />
+			<property name="message" value="error.thesis.library.ref.empty" />
+			<property name="key" value="true" />
+		</validator>
+	</slot>
 </schema>
 
 <schema name="library.thesis.pending" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryPendingOperation"
@@ -98,6 +106,7 @@
 		<property name="classes" value="nobullet indent0 mvert0" />
 	</slot>
 	<slot name="enrolment.executionYear.name" key="label.thesis.year" />
+    <slot name="discussed" key="label.thesis.aproval" layout="no-time"/>
 	<slot name="extendedAbstract.filename" layout="link" key="label.thesis.abstract.file">
 		<property name="useParent" value="true" />
 		<property name="linkFormat" value="${extendedAbstract.downloadUrl}" />

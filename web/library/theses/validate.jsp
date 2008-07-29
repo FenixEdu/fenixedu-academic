@@ -38,20 +38,30 @@
 	</logic:empty>
 
 	<logic:notEqual name="thesisState" value="ARCHIVE">
-		<div class="mtop05 mbottom15"><html:form
+		<div class="mtop05 mbottom15">
+		<html:form
 			action="<%="/theses/validate.do?thesisID=" + thesisId%>">
 			<html:hidden property="method" value="" />
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
 				onclick="this.form.method.value='prepareValidate';">
 				<bean:message key="link.thesis.validate" />
 			</html:submit>
+            <!-- 
+            <logic:equal name="thesisState" value="PENDING_ARCHIVE">
+                <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
+                    onclick="this.form.method.value='prepareEditPending';">
+                    <bean:message key="link.thesis.pending.edit" />
+                </html:submit>
+            </logic:equal>
+             -->
 			<logic:equal name="thesisState" value="NOT_DEALT">
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
 					onclick="this.form.method.value='preparePending';">
 					<bean:message key="link.thesis.pending" />
 				</html:submit>
 			</logic:equal>
-		</html:form></div>
+		</html:form>
+        </div>
 	</logic:notEqual>
 
 	<logic:equal name="thesisState" value="ARCHIVE">
@@ -79,6 +89,8 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mvert05 thmiddle" />
 		</fr:layout>
+		<fr:destination name="invalid"
+			path="<%="/theses/validate.do?method=prepareValidate&amp;thesisID=" + thesisId%>" />
 	</fr:create>
 </logic:present>
 
@@ -91,8 +103,24 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mvert05 thtop" />
 		</fr:layout>
+        <fr:destination name="invalid"
+            path="<%="/theses/validate.do?method=preparePending&amp;thesisID=" + thesisId%>" />
 	</fr:create>
 </logic:present>
+
+<!-- 
+<logic:present name="editPending">
+	<fr:edit id="edit" name="lastOperation" schema="library.thesis.pending"
+		type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryPendingOperation"
+		action="<%="/theses/validate.do?method=editPending&amp;thesisID=" + thesisId%>">
+		<fr:layout name="tabular-editable">
+			<fr:property name="classes" value="tstyle5 thlight thright mvert05 thtop" />
+		</fr:layout>
+		<fr:destination name="invalid"
+			path="<%="/theses/validate.do?method=preparePending&amp;thesisID=" + thesisId%>" />
+	</fr:edit>
+</logic:present>
+ -->
 
 <h3 class="mtop2 mbottom05"><bean:message key="label.thesis.author" /></h3>
 <fr:view name="thesis" schema="library.thesis.author">

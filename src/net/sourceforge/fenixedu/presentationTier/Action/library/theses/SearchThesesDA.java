@@ -27,7 +27,9 @@ public class SearchThesesDA extends FenixDispatchAction {
 	    request.setAttribute("sortBy", request.getAttribute("sortBy"));
 	request.setAttribute("searchFilter", search);
 	request.setAttribute("searchArgs", buildSearchArgs(search));
-	request.setAttribute("theses", doSearch(search));
+	List<Thesis> result = doSearch(search);
+	request.setAttribute("thesesFound", result.size());
+	request.setAttribute("theses", result);
 	return mapping.findForward("search");
     }
 
@@ -41,7 +43,9 @@ public class SearchThesesDA extends FenixDispatchAction {
 	    request.setAttribute("sortBy", request.getAttribute("sortBy"));
 	request.setAttribute("searchFilter", search);
 	request.setAttribute("searchArgs", buildSearchArgs(search));
-	request.setAttribute("theses", doSearch(search));
+	List<Thesis> result = doSearch(search);
+	request.setAttribute("thesesFound", result.size());
+	request.setAttribute("theses", result);
 	return mapping.findForward("search");
     }
 
@@ -52,7 +56,9 @@ public class SearchThesesDA extends FenixDispatchAction {
 	    request.setAttribute("sortBy", request.getAttribute("sortBy"));
 	request.setAttribute("searchFilter", search);
 	request.setAttribute("searchArgs", buildSearchArgs(search));
-	request.setAttribute("theses", doSearch(search));
+	List<Thesis> result = doSearch(search);
+	request.setAttribute("thesesFound", result.size());
+	request.setAttribute("theses", result);
 	return mapping.findForward("search");
     }
 
