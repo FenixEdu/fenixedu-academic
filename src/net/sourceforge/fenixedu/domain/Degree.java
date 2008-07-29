@@ -475,16 +475,16 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     final public MultiLanguageString getNameI18N() {
 	return getNameFor(ExecutionYear.readCurrentExecutionYear());
-    }
+	}
 
     final public MultiLanguageString getNameI18N(ExecutionYear executionYear) {
 	return getNameFor(executionYear);
-    }
+	}
 
     final public String getPresentationName() {
 	return getPresentationName(ExecutionYear.readCurrentExecutionYear());
     }
-    
+
     final public String getPresentationName(ExecutionYear executionYear) {
 	final ResourceBundle enumResourceBundle = ResourceBundle
 		.getBundle("resources.EnumerationResources", Language.getLocale());
@@ -510,7 +510,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return result.toString();
     }
 
-    
     public OldInquiriesCoursesRes getOldInquiriesCoursesResByCourseCodeAndExecutionPeriod(String code,
 	    ExecutionSemester executionSemester) {
 	for (OldInquiriesCoursesRes oldInquiriesCoursesRes : this.getAssociatedOldInquiriesCoursesRes()) {
@@ -736,6 +735,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return getMostRecentDegreeInfo(executionYear).getQualificationLevel();
     }
 
+    public MultiLanguageString getProfessionalExits(final ExecutionYear executionYear) {
+	return getMostRecentDegreeInfo(executionYear).getProfessionalExits();
+    }
+
     public DegreeInfo getMostRecentDegreeInfo() {
 	return getMostRecentDegreeInfo(ExecutionYear.readCurrentExecutionYear());
     }
@@ -774,7 +777,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	DegreeInfo mostRecentDegreeInfo = this.getMostRecentDegreeInfo(executionYear);
 	return (mostRecentDegreeInfo != null) ? new DegreeInfo(mostRecentDegreeInfo, executionYear) : new DegreeInfo(this,
 		executionYear);
-    }
+	}
     
     public DegreeInfo createCurrentDegreeInfo() {
 	return createCurrentDegreeInfo(ExecutionYear.readCurrentExecutionYear());
@@ -1358,6 +1361,4 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	}
 	return false;
     }
-
-
 }
