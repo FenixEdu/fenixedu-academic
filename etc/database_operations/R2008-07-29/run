@@ -40,3 +40,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Data fix" dataFix.sql IST
+execute "Library Thesis Operations" createTableThesisLibraryOperation.sql
+execute "Fix DegreeInfo Objects" fixDegreeInfos.sql IST
+execute "MigrateDegreeNameToDegreeInfo" migrateDegreeNameToDegreeInfo.sql
