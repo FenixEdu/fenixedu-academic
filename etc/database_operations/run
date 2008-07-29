@@ -40,3 +40,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Remove error log support exception key" alterTableErrorLog.sql IST
