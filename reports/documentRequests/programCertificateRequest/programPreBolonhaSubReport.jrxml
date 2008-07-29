@@ -56,9 +56,9 @@
 			<band height="427"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="20"
+						x="67"
 						y="10"
-						width="567"
+						width="516"
 						height="20"
 						key="textField-1"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -81,9 +81,9 @@
 				</break>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="20"
+						x="67"
 						y="40"
-						width="482"
+						width="516"
 						height="20"
 						key="textField-2"
 						positionType="Float"/>
@@ -99,9 +99,9 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="20"
+						x="67"
 						y="60"
-						width="482"
+						width="516"
 						height="20"
 						key="textField-3"
 						positionType="Float"/>
@@ -119,9 +119,9 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Opaque"
-						x="20"
+						x="67"
 						y="113"
-						width="556"
+						width="516"
 						height="20"
 						backcolor="#F0F0F0"
 						key="textField-4"
@@ -142,9 +142,9 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Opaque"
-						x="20"
+						x="67"
 						y="195"
-						width="556"
+						width="516"
 						height="20"
 						backcolor="#F0F0F0"
 						key="textField-6"
@@ -167,9 +167,9 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Opaque"
-						x="20"
+						x="67"
 						y="362"
-						width="556"
+						width="516"
 						height="20"
 						backcolor="#F0F0F0"
 						key="textField-7"
@@ -191,9 +191,9 @@
 				<elementGroup><!--  Start: 4 !-->
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="20"
+						x="67"
 						y="219"
-						width="556"
+						width="516"
 						height="38"
 						key="textField-10"
 						positionType="Float"
@@ -214,9 +214,9 @@
 				<elementGroup><!--  Start: 5 !-->
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="20"
+						x="67"
 						y="386"
-						width="556"
+						width="516"
 						height="38"
 						key="textField-11"
 						positionType="Float"
@@ -237,9 +237,9 @@
 				<elementGroup><!--  Start: 6 !-->
 				<subreport  isUsingCache="true">
 					<reportElement
-						x="20"
+						x="67"
 						y="137"
-						width="556"
+						width="516"
 						height="39"
 						key="subreport-1"/>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$F{contexts}))]]></dataSourceExpression>
@@ -248,9 +248,9 @@
 				</elementGroup><!-- End 6 !-->
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="20"
+						x="67"
 						y="302"
-						width="556"
+						width="516"
 						height="38"
 						key="textField-12"
 						positionType="Float"
@@ -270,9 +270,9 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						mode="Opaque"
-						x="20"
+						x="67"
 						y="278"
-						width="556"
+						width="516"
 						height="20"
 						backcolor="#F0F0F0"
 						key="textField-13"
