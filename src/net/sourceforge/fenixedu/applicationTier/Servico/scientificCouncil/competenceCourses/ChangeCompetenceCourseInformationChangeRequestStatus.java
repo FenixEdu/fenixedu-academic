@@ -60,7 +60,7 @@ public class ChangeCompetenceCourseInformationChangeRequestStatus extends Servic
 	CompetenceCourseLoad courseLoad = new CompetenceCourseLoad(changeRequest.getTheoreticalHours(), changeRequest
 		.getProblemsHours(), changeRequest.getLaboratorialHours(), changeRequest.getSeminaryHours(), changeRequest
 		.getFieldWorkHours(), changeRequest.getTrainingPeriodHours(), changeRequest.getTutorialOrientationHours(),
-		changeRequest.getAutonomousWorkHours(), changeRequest.getEctsCredits(), new Integer(0), (changeRequest
+		changeRequest.getAutonomousWorkHours(), changeRequest.getEctsCredits(), new Integer(1), (changeRequest
 			.getRegime() == RegimeType.SEMESTRIAL) ? AcademicPeriod.SEMESTER : AcademicPeriod.YEAR);
 
 	information.addCompetenceCourseLoads(courseLoad);
@@ -70,7 +70,7 @@ public class ChangeCompetenceCourseInformationChangeRequestStatus extends Servic
 		    changeRequest.getSecondProblemsHours(), changeRequest.getSecondLaboratorialHours(), changeRequest
 			    .getSecondSeminaryHours(), changeRequest.getSecondFieldWorkHours(), changeRequest
 			    .getSecondTrainingPeriodHours(), changeRequest.getSecondTutorialOrientationHours(), changeRequest
-			    .getSecondAutonomousWorkHours(), changeRequest.getSecondEctsCredits(), new Integer(1),
+			    .getSecondAutonomousWorkHours(), changeRequest.getSecondEctsCredits(), new Integer(2),
 		    AcademicPeriod.YEAR);
 
 	    information.addCompetenceCourseLoads(secondCourseLoad);
