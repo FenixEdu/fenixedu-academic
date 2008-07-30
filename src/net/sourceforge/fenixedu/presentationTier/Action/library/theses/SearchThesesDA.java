@@ -17,19 +17,11 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Pedro Santos (pmrsa)
  */
-// @Mapping(path="/theses/search", module="library")
-// @Forward(name="search", path="/library/theses/search.jsp")
 public class SearchThesesDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	ThesisSearchBean search = new ThesisSearchBean();
-	if (request.getAttribute("sortBy") != null)
-	    request.setAttribute("sortBy", request.getAttribute("sortBy"));
-	request.setAttribute("searchFilter", search);
-	request.setAttribute("searchArgs", buildSearchArgs(search));
-	List<Thesis> result = doSearch(search);
-	request.setAttribute("thesesFound", result.size());
-	request.setAttribute("theses", result);
+	performSearch(request, search);
 	return mapping.findForward("search");
     }
 
@@ -39,30 +31,22 @@ public class SearchThesesDA extends FenixDispatchAction {
 	String state = (String) request.getParameter("state");
 	String year = (String) request.getParameter("year");
 	ThesisSearchBean search = new ThesisSearchBean(text, state, year);
-	if (request.getAttribute("sortBy") != null)
-	    request.setAttribute("sortBy", request.getAttribute("sortBy"));
-	request.setAttribute("searchFilter", search);
-	request.setAttribute("searchArgs", buildSearchArgs(search));
-	List<Thesis> result = doSearch(search);
-	request.setAttribute("thesesFound", result.size());
-	request.setAttribute("theses", result);
+	performSearch(request, search);
 	return mapping.findForward("search");
     }
 
     public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final ThesisSearchBean search = (ThesisSearchBean) getRenderedObject("search");
+	performSearch(request, search);
+	return mapping.findForward("search");
+    }
+
+    private void performSearch(HttpServletRequest request, ThesisSearchBean search) {
 	if (request.getAttribute("sortBy") != null)
 	    request.setAttribute("sortBy", request.getAttribute("sortBy"));
 	request.setAttribute("searchFilter", search);
 	request.setAttribute("searchArgs", buildSearchArgs(search));
-	List<Thesis> result = doSearch(search);
-	request.setAttribute("thesesFound", result.size());
-	request.setAttribute("theses", result);
-	return mapping.findForward("search");
-    }
-
-    private List<Thesis> doSearch(ThesisSearchBean search) {
 	List<Thesis> theses = new ArrayList<Thesis>();
 	for (Thesis thesis : Thesis.getEvaluatedThesis()) {
 	    if (!thesis.isFinalAndApprovedThesis())
@@ -70,7 +54,9 @@ public class SearchThesesDA extends FenixDispatchAction {
 	    if (search.isMatch(thesis))
 		theses.add(thesis);
 	}
-	return theses;
+	List<Thesis> result = theses;
+	request.setAttribute("thesesFound", result.size());
+	request.setAttribute("theses", result);
     }
 
     private String buildSearchArgs(ThesisSearchBean search) {

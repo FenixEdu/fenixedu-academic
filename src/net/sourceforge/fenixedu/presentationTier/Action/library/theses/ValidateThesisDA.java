@@ -10,7 +10,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ValidateThesisDA extends FenixDispatchAction {
     protected Thesis getThesis(HttpServletRequest request) {
@@ -25,7 +26,7 @@ public class ValidateThesisDA extends FenixDispatchAction {
 	return super.execute(mapping, actionForm, request, response);
     }
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward view(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	request.setAttribute("view", true);
 	return mapping.findForward("view");
@@ -37,40 +38,16 @@ public class ValidateThesisDA extends FenixDispatchAction {
 	return mapping.findForward("view");
     }
 
-    public ActionForward validate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	addActionMessage("success", request, "message.thesis.confirmation.success");
-	return prepare(mapping, actionForm, request, response);
-    }
-
     public ActionForward preparePending(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	request.setAttribute("pending", true);
 	return mapping.findForward("view");
     }
 
-    public ActionForward pending(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	addActionMessage("success", request, "message.thesis.confirmation.undo.success");
-	return prepare(mapping, actionForm, request, response);
-    }
-
     public ActionForward prepareEditPending(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
+	RenderUtils.invalidateViewState();
 	request.setAttribute("editPending", true);
-	request.setAttribute("lastOperation", getThesis(request).getLastLibraryOperation());
 	return mapping.findForward("view");
-    }
-    
-    public ActionForward editPending(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	addActionMessage("success", request, "message.thesis.confirmation.undo.success");
-	return prepare(mapping, actionForm, request, response);
-    }
-    
-    public ActionForward cancel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	addActionMessage("success", request, "message.thesis.cancel.confirmation");
-	return prepare(mapping, actionForm, request, response);
     }
 }

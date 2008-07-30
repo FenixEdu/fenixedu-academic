@@ -5,7 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<html:xhtml />
+
+<%@page import="net.sourceforge.fenixedu.domain.thesis.Thesis"%><html:xhtml />
 
 <bean:define id="thesisId" name="thesis" property="idInternal" />
 <bean:define id="thesisState" name="thesis" property="libraryState.name" />
@@ -15,11 +16,11 @@
 
 <h2><bean:message key="title.library.thesis.verify" /></h2>
 
-<ul>
-	<li><html:link page="/theses/search.do?method=prepare">
-		<bean:message key="link.back" />
-	</html:link></li>
-</ul>
+<p>
+    <html:link page="/theses/search.do?method=prepare">
+		« <bean:message key="link.back" />
+    </html:link>
+</p>
 
 <logic:present name="view">
 	<logic:notEmpty name="thesis" property="lastLibraryOperation">
@@ -38,35 +39,31 @@
 	</logic:empty>
 
 	<logic:notEqual name="thesisState" value="ARCHIVE">
-		<div class="mtop05 mbottom15">
-		<html:form
+		<div class="mtop05 mbottom15"><html:form
 			action="<%="/theses/validate.do?thesisID=" + thesisId%>">
 			<html:hidden property="method" value="" />
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
 				onclick="this.form.method.value='prepareValidate';">
 				<bean:message key="link.thesis.validate" />
 			</html:submit>
-            <!-- 
-            <logic:equal name="thesisState" value="PENDING_ARCHIVE">
-                <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
-                    onclick="this.form.method.value='prepareEditPending';">
-                    <bean:message key="link.thesis.pending.edit" />
-                </html:submit>
-            </logic:equal>
-             -->
+			<logic:equal name="thesisState" value="PENDING_ARCHIVE">
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
+					onclick="this.form.method.value='prepareEditPending';">
+					<bean:message key="link.thesis.pending.edit" />
+				</html:submit>
+			</logic:equal>
 			<logic:equal name="thesisState" value="NOT_DEALT">
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
 					onclick="this.form.method.value='preparePending';">
 					<bean:message key="link.thesis.pending" />
 				</html:submit>
 			</logic:equal>
-		</html:form>
-        </div>
+		</html:form></div>
 	</logic:notEqual>
 
 	<logic:equal name="thesisState" value="ARCHIVE">
 		<div class="mtop05 mbottom15"><fr:form
-			action="<%="/theses/validate.do?method=cancel&amp;thesisID=" + thesisId%>">
+			action="<%="/theses/validate.do?method=view&amp;thesisID=" + thesisId%>">
 			<fr:create id="cancel" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryCancelOperation"
 				schema="library.thesis.cancel">
 				<fr:hidden slot="thesisId" name="thesis" property="idInternal" />
@@ -83,7 +80,7 @@
 	<fr:create id="validate"
 		type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryArchiveOperation"
 		schema="library.thesis.validate"
-		action="<%="/theses/validate.do?method=validate&amp;thesisID=" + thesisId%>">
+		action="<%="/theses/validate.do?method=view&amp;thesisID=" + thesisId%>">
 		<fr:hidden slot="thesisId" name="thesis" property="idInternal" />
 		<fr:hidden slot="performerId" name="person" property="idInternal" />
 		<fr:layout name="tabular">
@@ -97,30 +94,31 @@
 <logic:present name="pending">
 	<fr:create id="pending" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryPendingOperation"
 		schema="library.thesis.pending"
-		action="<%="/theses/validate.do?method=pending&amp;thesisID=" + thesisId%>">
+		action="<%="/theses/validate.do?method=view&amp;thesisID=" + thesisId%>">
 		<fr:hidden slot="thesisId" name="thesis" property="idInternal" />
 		<fr:hidden slot="performerId" name="person" property="idInternal" />
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mvert05 thtop" />
 		</fr:layout>
-        <fr:destination name="invalid"
-            path="<%="/theses/validate.do?method=preparePending&amp;thesisID=" + thesisId%>" />
+		<fr:destination name="invalid"
+			path="<%="/theses/validate.do?method=preparePending&amp;thesisID=" + thesisId%>" />
 	</fr:create>
 </logic:present>
 
-<!-- 
 <logic:present name="editPending">
-	<fr:edit id="edit" name="lastOperation" schema="library.thesis.pending"
-		type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryPendingOperation"
-		action="<%="/theses/validate.do?method=editPending&amp;thesisID=" + thesisId%>">
-		<fr:layout name="tabular-editable">
-			<fr:property name="classes" value="tstyle5 thlight thright mvert05 thtop" />
-		</fr:layout>
-		<fr:destination name="invalid"
-			path="<%="/theses/validate.do?method=preparePending&amp;thesisID=" + thesisId%>" />
-	</fr:edit>
+    <fr:create id="edit" type="net.sourceforge.fenixedu.domain.thesis.ThesisLibraryPendingOperation"
+        schema="library.thesis.pending"
+        action="<%="/theses/validate.do?method=view&amp;thesisID=" + thesisId%>">
+        <fr:hidden slot="thesisId" name="thesis" property="idInternal" />
+        <fr:hidden slot="performerId" name="person" property="idInternal" />
+        <fr:layout name="tabular">
+            <fr:property name="classes" value="tstyle5 thlight thright mvert05 thtop" />
+        </fr:layout>
+        <fr:default slot="pendingComment" name="thesis" property="lastLibraryOperation.pendingComment" />
+        <fr:destination name="invalid"
+            path="<%="/theses/validate.do?method=prepareEditPending&amp;thesisID=" + thesisId%>" />
+    </fr:create>
 </logic:present>
- -->
 
 <h3 class="mtop2 mbottom05"><bean:message key="label.thesis.author" /></h3>
 <fr:view name="thesis" schema="library.thesis.author">

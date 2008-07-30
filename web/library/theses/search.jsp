@@ -13,6 +13,7 @@
 	<fr:edit id="search" name="searchFilter" schema="library.thesis.search">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mbottom05" />
+            <fr:property name="columnClasses" value=",,tdclear"/>
 		</fr:layout>
 	</fr:edit>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
@@ -26,13 +27,10 @@
 	</logic:empty>
 
 	<logic:notEmpty name="theses">
-		<bean:message key="message.library.theses.found"
-			arg0="<%=request.getAttribute("thesesFound").toString()%>" />
-		<logic:messagesPresent property="success" message="true">
-			<html:messages id="message" message="true" property="warning">
-				<p><span class="success0"> <bean:write name="message" /></span></p>
-			</html:messages>
-		</logic:messagesPresent>
+		<p class="mbottom05">
+			<bean:message key="message.library.theses.found"
+				arg0="<%=request.getAttribute("thesesFound").toString()%>" />
+        </p>
 
 		<bean:define id="sortedBy">
 			<%=request.getParameter("sortBy") == null ? "discussed=descending" : request
@@ -42,15 +40,14 @@
 		<fr:view name="theses" schema="library.thesis.list">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle1 thnowrap mtop1" />
-				<fr:property name="columnClasses" value=",nowrap acenter,acenter,,,acenter,," />
+				<fr:property name="columnClasses" value=",acenter,nowrap acenter,acenter,,,acenter,," />
 
 				<fr:property name="sortParameter" value="sortBy" />
 				<fr:property name="sortUrl"
 					value="<%="/theses/search.do?method=update" + request.getAttribute("searchArgs")%>" />
 				<fr:property name="sortBy" value="<%=sortedBy%>" />
 
-				<fr:property name="link(verify)"
-					value="<%="/theses/validate.do?method=prepare&amp;index=0&amp;sortedBy=" + sortedBy%>" />
+				<fr:property name="link(verify)" value="/theses/validate.do?method=view" />
 				<fr:property name="param(verify)" value="idInternal/thesisID" />
 				<fr:property name="key(verify)" value="link.thesis.verify" />
 			</fr:layout>
