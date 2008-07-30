@@ -2438,7 +2438,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getCycle(cycleType) != null;
     }
 
-    public Collection<? extends CurriculumGroup> getCurricularCoursePossibleGroups(final CurricularCourse curricularCourse) {
+    public Collection<CurriculumGroup> getCurricularCoursePossibleGroups(final CurricularCourse curricularCourse) {
 	return getRoot().getCurricularCoursePossibleGroups(curricularCourse);
     }
 

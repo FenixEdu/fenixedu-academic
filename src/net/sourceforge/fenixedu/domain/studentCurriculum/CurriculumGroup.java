@@ -839,7 +839,7 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	return getDegreeModule().hasDegreeModuleOnChilds(curriculumLine.getCurricularCourse());
     }
 
-    public Collection<? extends CurriculumGroup> getCurricularCoursePossibleGroups(final CurricularCourse curricularCourse) {
+    public Collection<CurriculumGroup> getCurricularCoursePossibleGroups(final CurricularCourse curricularCourse) {
 	Collection<CurriculumGroup> result = new HashSet<CurriculumGroup>();
 	if (getDegreeModule().hasDegreeModuleOnChilds(curricularCourse)) {
 	    result.add(this);
