@@ -40,7 +40,8 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_SABBATICAL)
 		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_WITH_DEBITS)
 		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY)
-		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITHOUT_SALARY);
+		|| getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITHOUT_SALARY)
+		|| getSituationType().equals(ProfessionalSituationType.SPECIAL_LICENCE_FOR_CHILD_ASSISTENCE);
     }
 
     public boolean isForCountInCreditsBecauseIsSabbaticalOrEquivalent() {
@@ -55,7 +56,8 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 
 	    if (getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITHOUT_SALARY)
 		    || getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_WITH_DEBITS)
-		    || getSituationType().equals(ProfessionalSituationType.TEACHER_SERVICE_EXEMPTION_DL24_84_ART51_N6_EST_DISC)) {
+		    || getSituationType().equals(ProfessionalSituationType.TEACHER_SERVICE_EXEMPTION_DL24_84_ART51_N6_EST_DISC)
+		    || getSituationType().equals(ProfessionalSituationType.SPECIAL_LICENCE_FOR_CHILD_ASSISTENCE)) {
 		return true;
 	    }
 
@@ -75,8 +77,7 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 		|| getSituationType().equals(ProfessionalSituationType.MATERNAL_LICENSE_WITH_SALARY_80PERCENT)
 		|| getSituationType().equals(ProfessionalSituationType.MATERNAL_LICENSE)
 		|| getSituationType().equals(ProfessionalSituationType.DANGER_MATERNAL_LICENSE)
-		|| getSituationType().equals(ProfessionalSituationType.CHILDBIRTH_LICENSE)
-		|| getSituationType().equals(ProfessionalSituationType.SPECIAL_LICENCE_FOR_CHILD_ASSISTENCE);
+		|| getSituationType().equals(ProfessionalSituationType.CHILDBIRTH_LICENSE);
     }
 
     @Override
