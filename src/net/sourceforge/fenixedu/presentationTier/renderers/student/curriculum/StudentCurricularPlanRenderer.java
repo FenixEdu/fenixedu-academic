@@ -402,6 +402,11 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private ExecutionYear initializeExecutionYear() {
+	    
+	    if (!studentCurricularPlan.getRegistration().hasConcluded()) {
+		return ExecutionYear.readCurrentExecutionYear();
+	    }
+	    
 	    final ExecutionYear lastApprovementExecutionYear = studentCurricularPlan.getLastApprovementExecutionYear();
 	    if (lastApprovementExecutionYear != null) {
 		return lastApprovementExecutionYear;
