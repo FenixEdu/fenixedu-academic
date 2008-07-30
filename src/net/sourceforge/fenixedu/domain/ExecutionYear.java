@@ -191,7 +191,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     public DegreeInfo getDegreeInfo(final Degree degree) {
 	for (final DegreeInfo degreeInfo : getDegreeInfos()) {
-	    if (degreeInfo.getDegree().equals(degree)) {
+	    if (degreeInfo.getDegree() == degree) {
 		return degreeInfo;
 	    }
 	}
