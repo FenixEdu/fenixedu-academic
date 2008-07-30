@@ -4,13 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -184,12 +181,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 
 	public PreBolonhaCourseLoadEntry(final Enrolment enrolment) {
 	    super(enrolment.getCurricularCourse().getName(), enrolment.getExecutionYear().getYear());
-
-	    if (enrolment.hasAttendsFor(enrolment.getExecutionPeriod())) {
-		initInformation(enrolment.getAttendsFor(enrolment.getExecutionPeriod()).getExecutionCourse());
-	    } else {
-		initInformation(enrolment.getCurricularCourse());
-	    }
+	    initInformation(enrolment.getCurricularCourse());
 	}
 
 	private void initInformation(final CurricularCourse curricularCourse) {
@@ -198,23 +190,6 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	    setLabHours(curricularCourse.getLabHours());
 	    setTheoPratHours(curricularCourse.getTheoPratHours());
 	    setTotal(calculateTotal(curricularCourse));
-	}
-
-	private void initInformation(final ExecutionCourse executionCourse) {
-	    setTheoreticalHours(getWeeklyHours(executionCourse, ShiftType.TEORICA));
-	    setPraticalHours(getWeeklyHours(executionCourse, ShiftType.PRATICA));
-	    setLabHours(getWeeklyHours(executionCourse, ShiftType.LABORATORIAL));
-	    setTheoPratHours(getWeeklyHours(executionCourse, ShiftType.TEORICO_PRATICA));
-	    setTotal(calculateTotal());
-	}
-
-	private Double calculateTotal() {
-	    return getTheoreticalHours() + getPraticalHours() + getLabHours() + getTheoPratHours();
-	}
-
-	private Double getWeeklyHours(final ExecutionCourse executionCourse, final ShiftType type) {
-	    final CourseLoad courseLoad = executionCourse.getCourseLoadByShiftType(type);
-	    return courseLoad == null ? 0d : courseLoad.getWeeklyHours().doubleValue();
 	}
 
 	public Double getLabHours() {
