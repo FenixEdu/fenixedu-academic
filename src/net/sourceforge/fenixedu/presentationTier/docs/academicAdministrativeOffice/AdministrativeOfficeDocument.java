@@ -2,6 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Map.Entry;
@@ -52,34 +55,49 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     public static class AdministrativeOfficeDocumentCreator {
 
-	public static AdministrativeOfficeDocument create(final DocumentRequest documentRequest) {
+	public static List<? extends AdministrativeOfficeDocument> create(final DocumentRequest documentRequest) {
 	    switch (documentRequest.getDocumentRequestType()) {
 	    case ENROLMENT_CERTIFICATE:
-		return new EnrolmentCertificate(documentRequest);
+		return Collections.singletonList(new EnrolmentCertificate(documentRequest));
 	    case APPROVEMENT_CERTIFICATE:
-		return new ApprovementCertificate(documentRequest);
+		return Collections.singletonList(new ApprovementCertificate(documentRequest));
 	    case DEGREE_FINALIZATION_CERTIFICATE:
-		return new DegreeFinalizationCertificate(documentRequest);
+		return Collections.singletonList(new DegreeFinalizationCertificate(documentRequest));
 	    case SCHOOL_REGISTRATION_DECLARATION:
-		return new RegistrationDeclaration(documentRequest);
+		return Collections.singletonList(new RegistrationDeclaration(documentRequest));
 	    case ENROLMENT_DECLARATION:
-		return new EnrolmentDeclaration(documentRequest);
+		return Collections.singletonList(new EnrolmentDeclaration(documentRequest));
 	    case IRS_DECLARATION:
-		return new IRSDeclaration(documentRequest);
+		return Collections.singletonList(new IRSDeclaration(documentRequest));
 	    case DIPLOMA_REQUEST:
-		return new Diploma(documentRequest);
+		final Diploma diploma = new Diploma(documentRequest);
+		if (false) {
+		    final List<AdministrativeOfficeDocument> result = new ArrayList<AdministrativeOfficeDocument>();
+
+		    result.add(diploma);
+		    for (final Locale locale : DiplomaSupplement.suportedLocales) {
+			result.add(new DiplomaSupplement(documentRequest, locale));
+		    }
+
+		    return result;
+		} else {
+		    return Collections.singletonList(diploma);
+		}
 	    case EXAM_DATE_CERTIFICATE:
-		return new ExamDateCertificate(documentRequest);
+		return Collections.singletonList(new ExamDateCertificate(documentRequest));
 	    case COURSE_LOAD:
-		return new CourseLoadRequestDocument((CourseLoadRequest) documentRequest);
+		return Collections.singletonList(new CourseLoadRequestDocument((CourseLoadRequest) documentRequest));
 	    case EXTERNAL_COURSE_LOAD:
-		return new ExternalCourseLoadRequestDocument((ExternalCourseLoadRequest) documentRequest);
+		return Collections.singletonList(new ExternalCourseLoadRequestDocument(
+			(ExternalCourseLoadRequest) documentRequest));
 	    case PROGRAM_CERTIFICATE:
-		return new ProgramCertificateRequestDocument((ProgramCertificateRequest) documentRequest);
+		return Collections.singletonList(new ProgramCertificateRequestDocument(
+			(ProgramCertificateRequest) documentRequest));
 	    case EXTERNAL_PROGRAM_CERTIFICATE:
-		return new ExternalProgramCertificateRequestDocument((ExternalProgramCertificateRequest) documentRequest);
+		return Collections.singletonList(new ExternalProgramCertificateRequestDocument(
+			(ExternalProgramCertificateRequest) documentRequest));
 	    default:
-		return new AdministrativeOfficeDocument(documentRequest);
+		return Collections.singletonList(new AdministrativeOfficeDocument(documentRequest));
 	    }
 	}
 
@@ -89,12 +107,16 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	super();
     }
 
-    protected AdministrativeOfficeDocument(final DocumentRequest documentRequest) {
+    public AdministrativeOfficeDocument(final DocumentRequest documentRequest, final Locale locale) {
 	super(new ArrayList());
-	this.resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
+	this.resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", locale);
 	this.documentRequestDomainReference = new DomainReference<DocumentRequest>(documentRequest);
 
 	fillReport();
+    }
+
+    protected AdministrativeOfficeDocument(final DocumentRequest documentRequest) {
+	this(documentRequest, Language.getDefaultLanguage().getLocale());
     }
 
     protected DocumentRequest getDocumentRequest() {
