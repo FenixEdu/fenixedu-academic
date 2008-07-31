@@ -23,28 +23,43 @@
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
 
+	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="universityPrincipalName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="registration" isForPrompting="false" class="net.sourceforge.fenixedu.domain.student.Registration"/>
+	<parameter name="registrationNumber" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="name" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="familyName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="givenName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="birthDay" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="nationality" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="documentIdType" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="documentIdNumber" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="documentIdExpiration" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="degreeFilteredName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="graduateTitle" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="prevailingScientificArea" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="qualificationLevel" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="years" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="semesters" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="weeksOfStudyPerYear" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="ectsCredits" isForPrompting="false" class="java.lang.Double"/>
+	<parameter name="degreeCurricularPlanDescription" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="gradeDistribution" isForPrompting="false" class="net.sourceforge.fenixedu.domain.GradeDistribution"/>
+	<parameter name="finalAverage" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="finalAverageQualified" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="finalAverageDistribution" isForPrompting="false" class="net.sourceforge.fenixedu.domain.GradeDistribution.Distribution"/>
 	<parameter name="bundle" isForPrompting="false" class="java.util.ResourceBundle"/>
 	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="accessToHigherLevelOfEducation" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="professionalExits" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="aditionalInfoSources" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
 		<defaultValueExpression ><![CDATA[".\\"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="test" isForPrompting="false" class="java.util.Collection"/>
-	<parameter name="documentRequest" isForPrompting="false" class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest"/>
-	<parameter name="registration" isForPrompting="false" class="net.sourceforge.fenixedu.domain.student.Registration"/>
-	<parameter name="name" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="birthLocale" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="nameOfFather" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="nameOfMother" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="conclusionDate" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="universityPrincipalName" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="finalAverageDescription" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="conclusionStatus" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="graduateTitle" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="finalAverageQualified" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="degreeFilteredName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="entries" isForPrompting="false" class="java.util.Collection"/>
+	<parameter name="academicUnitIdentifiers" isForPrompting="false" class="java.util.Collection"/>
 
 
 		<group  name="body" >
@@ -121,9 +136,9 @@
 			<band height="25"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="194"
+						x="0"
 						y="7"
-						width="250"
+						width="444"
 						height="12"
 						key="textField-19">
 							<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
@@ -136,7 +151,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
 						<font fontName="Arial" pdfFontName="Arial.ttf" size="7" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{name} + "|" + $P{bundle}.getString("student.identification.number") + ":" + $P{registration}.getNumber()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{name} + " | " + $P{bundle}.getString("student.identification.number") + ":" + $P{registrationNumber}]]></textFieldExpression>
 				</textField>
 			</band>
 		</pageHeader>
@@ -145,7 +160,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="54"  isSplitAllowed="true" >
+			<band height="158"  isSplitAllowed="true" >
 				<subreport  isUsingCache="true">
 					<reportElement
 						x="0"
@@ -156,11 +171,11 @@
 					<subreportParameter  name="bundle">
 						<subreportParameterExpression><![CDATA[$P{bundle}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="test">
-						<subreportParameterExpression><![CDATA[$P{test}]]></subreportParameterExpression>
+					<subreportParameter  name="entries">
+						<subreportParameterExpression><![CDATA[$P{entries}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="documentRequest">
-						<subreportParameterExpression><![CDATA[$P{documentRequest}]]></subreportParameterExpression>
+					<subreportParameter  name="academicUnitIdentifiers">
+						<subreportParameterExpression><![CDATA[$P{academicUnitIdentifiers}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="registration">
 						<subreportParameterExpression><![CDATA[$P{registration}]]></subreportParameterExpression>
@@ -171,17 +186,112 @@
 					<subreportParameter  name="day">
 						<subreportParameterExpression><![CDATA[$P{day}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="birthLocale">
-						<subreportParameterExpression><![CDATA[$P{birthLocale}]]></subreportParameterExpression>
+					<subreportParameter  name="universityName">
+						<subreportParameterExpression><![CDATA[$P{universityName}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="nameOfFather">
-						<subreportParameterExpression><![CDATA[$P{nameOfFather}]]></subreportParameterExpression>
+					<subreportParameter  name="universityPrincipalName">
+						<subreportParameterExpression><![CDATA[$P{universityPrincipalName}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="nameOfMother">
-						<subreportParameterExpression><![CDATA[$P{nameOfMother}]]></subreportParameterExpression>
+					<subreportParameter  name="institutionName">
+						<subreportParameterExpression><![CDATA[$P{institutionName}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="conclusionDate">
-						<subreportParameterExpression><![CDATA[$P{conclusionDate}]]></subreportParameterExpression>
+					<subreportParameter  name="familyName">
+						<subreportParameterExpression><![CDATA[$P{familyName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="givenName">
+						<subreportParameterExpression><![CDATA[$P{givenName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="birthDay">
+						<subreportParameterExpression><![CDATA[$P{birthDay}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="nationality">
+						<subreportParameterExpression><![CDATA[$P{nationality}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="documentIdType">
+						<subreportParameterExpression><![CDATA[$P{documentIdType}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="documentIdNumber">
+						<subreportParameterExpression><![CDATA[$P{documentIdNumber}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="documentIdExpiration">
+						<subreportParameterExpression><![CDATA[$P{documentIdExpiration}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="degreeFilteredName">
+						<subreportParameterExpression><![CDATA[$P{degreeFilteredName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="graduateTitle">
+						<subreportParameterExpression><![CDATA[$P{graduateTitle}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="path">
+						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="registrationNumber">
+						<subreportParameterExpression><![CDATA[$P{registrationNumber}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="prevailingScientificArea">
+						<subreportParameterExpression><![CDATA[$P{prevailingScientificArea}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="qualificationLevel">
+						<subreportParameterExpression><![CDATA[$P{qualificationLevel}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="years">
+						<subreportParameterExpression><![CDATA[$P{years}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="semesters">
+						<subreportParameterExpression><![CDATA[$P{semesters}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="weeksOfStudyPerYear">
+						<subreportParameterExpression><![CDATA[$P{weeksOfStudyPerYear}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="ectsCredits">
+						<subreportParameterExpression><![CDATA[$P{ectsCredits}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="degreeCurricularPlanDescription">
+						<subreportParameterExpression><![CDATA[$P{degreeCurricularPlanDescription}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="gradeDistribution">
+						<subreportParameterExpression><![CDATA[$P{gradeDistribution}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="finalAverage">
+						<subreportParameterExpression><![CDATA[$P{finalAverage}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="finalAverageQualified">
+						<subreportParameterExpression><![CDATA[$P{finalAverageQualified}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="finalAverageDistribution">
+						<subreportParameterExpression><![CDATA[$P{finalAverageDistribution}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{entries}))]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "/WEB-INF/classes/reports/documentRequests/diploma/diplomaSupplementBody.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="53"
+						width="444"
+						height="52"
+						key="subreport-2"
+						positionType="Float"/>
+					<subreportParameter  name="bundle">
+						<subreportParameterExpression><![CDATA[$P{bundle}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="entries">
+						<subreportParameterExpression><![CDATA[$P{entries}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="academicUnitIdentifiers">
+						<subreportParameterExpression><![CDATA[$P{academicUnitIdentifiers}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="registration">
+						<subreportParameterExpression><![CDATA[$P{registration}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="name">
+						<subreportParameterExpression><![CDATA[$P{name}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="day">
+						<subreportParameterExpression><![CDATA[$P{day}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="universityName">
 						<subreportParameterExpression><![CDATA[$P{universityName}]]></subreportParameterExpression>
@@ -192,26 +302,193 @@
 					<subreportParameter  name="institutionName">
 						<subreportParameterExpression><![CDATA[$P{institutionName}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="finalAverageDescription">
-						<subreportParameterExpression><![CDATA[$P{finalAverageDescription}]]></subreportParameterExpression>
+					<subreportParameter  name="familyName">
+						<subreportParameterExpression><![CDATA[$P{familyName}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="conclusionStatus">
-						<subreportParameterExpression><![CDATA[$P{conclusionStatus}]]></subreportParameterExpression>
+					<subreportParameter  name="givenName">
+						<subreportParameterExpression><![CDATA[$P{givenName}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="path">
-						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
+					<subreportParameter  name="birthDay">
+						<subreportParameterExpression><![CDATA[$P{birthDay}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="graduateTitle">
-						<subreportParameterExpression><![CDATA[$P{graduateTitle}]]></subreportParameterExpression>
+					<subreportParameter  name="nationality">
+						<subreportParameterExpression><![CDATA[$P{nationality}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="finalAverageQualified">
-						<subreportParameterExpression><![CDATA[$P{finalAverageQualified}]]></subreportParameterExpression>
+					<subreportParameter  name="documentIdType">
+						<subreportParameterExpression><![CDATA[$P{documentIdType}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="documentIdNumber">
+						<subreportParameterExpression><![CDATA[$P{documentIdNumber}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="documentIdExpiration">
+						<subreportParameterExpression><![CDATA[$P{documentIdExpiration}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="degreeFilteredName">
 						<subreportParameterExpression><![CDATA[$P{degreeFilteredName}]]></subreportParameterExpression>
 					</subreportParameter>
-					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{test}))]]></dataSourceExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "/WEB-INF/classes/reports/documentRequests/diploma/diplomaSupplementBody.jasper"]]></subreportExpression>
+					<subreportParameter  name="graduateTitle">
+						<subreportParameterExpression><![CDATA[$P{graduateTitle}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="path">
+						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="registrationNumber">
+						<subreportParameterExpression><![CDATA[$P{registrationNumber}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="prevailingScientificArea">
+						<subreportParameterExpression><![CDATA[$P{prevailingScientificArea}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="qualificationLevel">
+						<subreportParameterExpression><![CDATA[$P{qualificationLevel}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="years">
+						<subreportParameterExpression><![CDATA[$P{years}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="semesters">
+						<subreportParameterExpression><![CDATA[$P{semesters}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="weeksOfStudyPerYear">
+						<subreportParameterExpression><![CDATA[$P{weeksOfStudyPerYear}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="ectsCredits">
+						<subreportParameterExpression><![CDATA[$P{ectsCredits}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="degreeCurricularPlanDescription">
+						<subreportParameterExpression><![CDATA[$P{degreeCurricularPlanDescription}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="gradeDistribution">
+						<subreportParameterExpression><![CDATA[$P{gradeDistribution}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="finalAverage">
+						<subreportParameterExpression><![CDATA[$P{finalAverage}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="finalAverageQualified">
+						<subreportParameterExpression><![CDATA[$P{finalAverageQualified}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="finalAverageDistribution">
+						<subreportParameterExpression><![CDATA[$P{finalAverageDistribution}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{entries}))]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "/WEB-INF/classes/reports/documentRequests/diploma/diplomaSupplementBody2.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="106"
+						width="444"
+						height="52"
+						key="subreport-3"
+						positionType="Float"/>
+					<subreportParameter  name="bundle">
+						<subreportParameterExpression><![CDATA[$P{bundle}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="entries">
+						<subreportParameterExpression><![CDATA[$P{entries}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="academicUnitIdentifiers">
+						<subreportParameterExpression><![CDATA[$P{academicUnitIdentifiers}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="registration">
+						<subreportParameterExpression><![CDATA[$P{registration}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="name">
+						<subreportParameterExpression><![CDATA[$P{name}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="day">
+						<subreportParameterExpression><![CDATA[$P{day}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="universityName">
+						<subreportParameterExpression><![CDATA[$P{universityName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="universityPrincipalName">
+						<subreportParameterExpression><![CDATA[$P{universityPrincipalName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="institutionName">
+						<subreportParameterExpression><![CDATA[$P{institutionName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="familyName">
+						<subreportParameterExpression><![CDATA[$P{familyName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="givenName">
+						<subreportParameterExpression><![CDATA[$P{givenName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="birthDay">
+						<subreportParameterExpression><![CDATA[$P{birthDay}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="nationality">
+						<subreportParameterExpression><![CDATA[$P{nationality}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="documentIdType">
+						<subreportParameterExpression><![CDATA[$P{documentIdType}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="documentIdNumber">
+						<subreportParameterExpression><![CDATA[$P{documentIdNumber}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="documentIdExpiration">
+						<subreportParameterExpression><![CDATA[$P{documentIdExpiration}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="degreeFilteredName">
+						<subreportParameterExpression><![CDATA[$P{degreeFilteredName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="graduateTitle">
+						<subreportParameterExpression><![CDATA[$P{graduateTitle}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="path">
+						<subreportParameterExpression><![CDATA[$P{path}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="registrationNumber">
+						<subreportParameterExpression><![CDATA[$P{registrationNumber}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="prevailingScientificArea">
+						<subreportParameterExpression><![CDATA[$P{prevailingScientificArea}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="qualificationLevel">
+						<subreportParameterExpression><![CDATA[$P{qualificationLevel}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="years">
+						<subreportParameterExpression><![CDATA[$P{years}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="semesters">
+						<subreportParameterExpression><![CDATA[$P{semesters}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="weeksOfStudyPerYear">
+						<subreportParameterExpression><![CDATA[$P{weeksOfStudyPerYear}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="ectsCredits">
+						<subreportParameterExpression><![CDATA[$P{ectsCredits}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="degreeCurricularPlanDescription">
+						<subreportParameterExpression><![CDATA[$P{degreeCurricularPlanDescription}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="gradeDistribution">
+						<subreportParameterExpression><![CDATA[$P{gradeDistribution}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="finalAverage">
+						<subreportParameterExpression><![CDATA[$P{finalAverage}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="finalAverageQualified">
+						<subreportParameterExpression><![CDATA[$P{finalAverageQualified}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="finalAverageDistribution">
+						<subreportParameterExpression><![CDATA[$P{finalAverageDistribution}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="accessToHigherLevelOfEducation">
+						<subreportParameterExpression><![CDATA[$P{accessToHigherLevelOfEducation}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="professionalExits">
+						<subreportParameterExpression><![CDATA[$P{professionalExits}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="aditionalInfoSources">
+						<subreportParameterExpression><![CDATA[$P{aditionalInfoSources}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{entries}))]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "/WEB-INF/classes/reports/documentRequests/diploma/diplomaSupplementBody3.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</detail>
