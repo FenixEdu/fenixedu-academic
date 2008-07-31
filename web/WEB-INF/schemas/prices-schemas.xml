@@ -97,9 +97,11 @@
 	<slot name="dfaPartialAcceptedPercentage" />
 </schema>
 
-<schema name="DFAGratuityPR.edit" 
-		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR"
+<schema name="DFAGratuityPREditor.edit" 
+		type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR$DFAGratuityPREditor"
 		bundle="APPLICATION_RESOURCES">
+	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	
 	<slot name="dfaTotalAmount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
@@ -112,7 +114,6 @@
     	<property name="size" value="10"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<setter signature="edit(dfaTotalAmount,dfaAmountPerEctsCredit,dfaPartialAcceptedPercentage)"/>
 </schema>
 
 <schema name="BaseAmountPlusAmountPerUnitPR.view"

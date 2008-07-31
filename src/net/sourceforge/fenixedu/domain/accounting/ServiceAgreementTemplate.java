@@ -170,4 +170,16 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 	return getPostingRuleByEventTypeAndDate(eventType, new DateTime()) != null;
     }
 
+    public Set<PostingRule> getAllPostingRulesFor(final EventType eventType) {
+	final Set<PostingRule> result = new HashSet<PostingRule>();
+
+	for (final PostingRule postingRule : super.getPostingRulesSet()) {
+	    if (postingRule.getEventType() == eventType) {
+		result.add(postingRule);
+	    }
+	}
+
+	return result;
+    }
+
 }

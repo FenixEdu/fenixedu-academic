@@ -9,7 +9,9 @@
 
 	<h2><bean:message
 		key="label.payments.postingRules.degreeCurricularPlan.rulesFor"
-		bundle="MANAGER_RESOURCES" /> <bean:write name="degreeCurricularPlan" property="degree.name"/> - <bean:write name="degreeCurricularPlan" property="name"/></h2>
+		bundle="MANAGER_RESOURCES" /> <bean:write name="degreeCurricularPlan"
+		property="degree.name" /> - <bean:write name="degreeCurricularPlan"
+		property="name" /></h2>
 
 	<br />
 
@@ -17,6 +19,14 @@
 		property="class.simpleName" />
 	<bean:define id="degreeCurricularPlanId" name="degreeCurricularPlan"
 		property="idInternal" />
+		
+	<logic:messagesPresent message="true">
+		<ul class="nobullet list6">
+			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
+				<li><span class="error0"><bean:write name="messages" /></span></li>
+			</html:messages>
+		</ul>
+	</logic:messagesPresent>
 
 	<fr:view name="degreeCurricularPlan"
 		property="serviceAgreementTemplate.postingRules"
@@ -35,8 +45,18 @@
 				value="<%="/postingRules.do?method=prepareEditDFADegreeCurricularPlanPostingRule&amp;postingRuleId=${idInternal}&amp;degreeCurricularPlanId=" + degreeCurricularPlanId%>" />
 			<fr:property name="key(edit)" value="label.edit" />
 			<fr:property name="bundle(edit)" value="APPLICATION_RESOURCES" />
-			<fr:property name="visibleIf(edit)" value="active" />
+			<fr:property name="visibleIf(edit)" value="mostRecent" />
 			<fr:property name="order(edit)" value="1" />
+			
+			
+			<fr:property name="linkFormat(delete)"
+				value="<%="/postingRules.do?method=deleteDFADegreeCurricularPlanPostingRule&amp;postingRuleId=${idInternal}&amp;degreeCurricularPlanId=" + degreeCurricularPlanId%>" />
+			<fr:property name="key(delete)" value="label.delete" />
+			<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES" />
+			<fr:property name="visibleIf(delete)" value="mostRecent" />
+			<fr:property name="order(delete)" value="2" />
+			<fr:property name="confirmationKey(delete)" value="label.payments.postingRules.confirmDeletePostingRule" />
+			<fr:property name="confirmationBundle(delete)" value="MANAGER_RESOURCES"></fr:property>
 		</fr:layout>
 	</fr:view>
 
@@ -51,8 +71,8 @@
 		<br />
 		<br />
 	</logic:equal>
-	
-	
+
+
 	<html:link
 		action="<%="/postingRules.do?method=chooseDFADegreeCurricularPlan"%>">
 		<bean:message key="label.back" bundle="APPLICATION_RESOURCES" />

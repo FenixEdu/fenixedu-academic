@@ -11,15 +11,34 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.Create
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityPR.DFAGratuityPREditor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/postingRules", module = "manager")
+@Forwards( {
+
+	@Forward(name = "chooseCategory", path = "/manager/payments/postingRules/management/chooseCategory.jsp"),
+	@Forward(name = "chooseDFADegreeCurricularPlan", path = "/manager/payments/postingRules/management/chooseDFADegreeCurricularPlan.jsp"),
+	@Forward(name = "showPostingRulesForDFADegreeCurricularPlan", path = "/manager/payments/postingRules/management/showPostingRulesForDFADegreeCurricularPlan.jsp"),
+	@Forward(name = "viewDFAPostingRuleDetails", path = "/manager/payments/postingRules/management/viewDFAPostingRuleDetails.jsp"),
+	@Forward(name = "createDFAGratuityPR", path = "/manager/payments/postingRules/management/createDFAGratuityPR.jsp"),
+	@Forward(name = "editDFAGratuityPR", path = "/manager/payments/postingRules/management/editDFAGratuityPR.jsp"),
+	@Forward(name = "editDFADegreeCurricularPlanPostingRule", path = "/manager/payments/postingRules/management/editDFADegreeCurricularPlanPostingRule.jsp")
+
+})
 public class PostingRulesManagementDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -112,8 +131,14 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     public ActionForward prepareEditDFADegreeCurricularPlanPostingRule(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 
+	final PostingRule postingRule = getPostingRule(request);
+
+	if (postingRule instanceof DFAGratuityPR) {
+	    return prepareEditDFAGratuityPR(mapping, form, request, response);
+	}
+
 	request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));
-	request.setAttribute("postingRule", getPostingRule(request));
+	request.setAttribute("postingRule", postingRule);
 
 	return mapping.findForward("editDFADegreeCurricularPlanPostingRule");
     }
@@ -122,9 +147,58 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));
-	request.setAttribute("postingRule", getPostingRule(request));
+	request.setAttribute("postingRule", getRenderedObject("postingRule"));
 
 	return mapping.findForward("editDFADegreeCurricularPlanPostingRule");
+
+    }
+
+    public ActionForward prepareEditDFAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));
+	request.setAttribute("postingRuleEditor", DFAGratuityPREditor.buildFrom((DFAGratuityPR) getPostingRule(request)));
+
+	return mapping.findForward("editDFAGratuityPR");
+    }
+
+    public ActionForward prepareEditDFAGratuityPRInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));
+	request.setAttribute("postingRuleEditor", getRenderedObject("postingRuleEditor"));
+
+	return mapping.findForward("editDFAGratuityPR");
+    }
+
+    public ActionForward editDFAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	try {
+
+	    executeFactoryMethod((FactoryExecutor) getRenderedObject("postingRuleEditor"));
+	    request.setAttribute("degreeCurricularPlanId", getDegreeCurricularPlan(request).getIdInternal());
+
+	    return showPostingRulesForDFADegreeCurricularPlan(mapping, form, request, response);
+
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
+	    request.setAttribute("postingRuleEditor", getRenderedObject());
+	    return mapping.findForward("editDFADegreeCurricularPlanPostingRule");
+	}
+    }
+
+    public ActionForward deleteDFADegreeCurricularPlanPostingRule(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	try {
+	    executeService("DeletePostingRule", getPostingRule(request));
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
+
+	}
+
+	return showPostingRulesForDFADegreeCurricularPlan(mapping, form, request, response);
 
     }
 

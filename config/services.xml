@@ -12397,4 +12397,11 @@
 			<chain name="ManagerOrGEPAuthorization"/>
 		</filterChains>
 	</service>	    
+	<service>
+        <name>DeletePostingRule</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.DeletePostingRule</implementationClass>
+        <description />
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>	    
 </serviceDefinitions>

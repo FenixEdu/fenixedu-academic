@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
@@ -18,13 +20,94 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEve
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+
 public class DFAGratuityPR extends DFAGratuityPR_Base {
+
+    public static class DFAGratuityPREditor implements FactoryExecutor, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5454487291500203873L;
+
+	private DateTime beginDate;
+
+	private Money dfaTotalAmount;
+
+	private Money dfaAmountPerEctsCredit;
+
+	private BigDecimal dfaPartialAcceptedPercentage;
+
+	private DomainReference<DFAGratuityPR> dfaGratuityPR;
+
+	private DFAGratuityPREditor() {
+	}
+
+	public DateTime getBeginDate() {
+	    return beginDate;
+	}
+
+	public void setBeginDate(DateTime beginDate) {
+	    this.beginDate = beginDate;
+	}
+
+	public Money getDfaTotalAmount() {
+	    return dfaTotalAmount;
+	}
+
+	public void setDfaTotalAmount(Money dfaTotalAmount) {
+	    this.dfaTotalAmount = dfaTotalAmount;
+	}
+
+	public Money getDfaAmountPerEctsCredit() {
+	    return dfaAmountPerEctsCredit;
+	}
+
+	public void setDfaAmountPerEctsCredit(Money dfaAmountPerEctsCredit) {
+	    this.dfaAmountPerEctsCredit = dfaAmountPerEctsCredit;
+	}
+
+	public BigDecimal getDfaPartialAcceptedPercentage() {
+	    return dfaPartialAcceptedPercentage;
+	}
+
+	public void setDfaPartialAcceptedPercentage(BigDecimal dfaPartialAcceptedPercentage) {
+	    this.dfaPartialAcceptedPercentage = dfaPartialAcceptedPercentage;
+	}
+
+	public DFAGratuityPR getDfaGratuityPR() {
+	    return (this.dfaGratuityPR != null) ? this.dfaGratuityPR.getObject() : null;
+	}
+
+	public void setDfaGratuityPR(DFAGratuityPR dfaGratuityPR) {
+	    this.dfaGratuityPR = (dfaGratuityPR != null) ? new DomainReference<DFAGratuityPR>(dfaGratuityPR) : null;
+	}
+
+	@Override
+	public Object execute() {
+	    return getDfaGratuityPR().edit(getBeginDate(), getDfaTotalAmount(), getDfaAmountPerEctsCredit(),
+		    getDfaPartialAcceptedPercentage());
+
+	}
+
+	public static DFAGratuityPREditor buildFrom(final DFAGratuityPR dfaGratuityPR) {
+	    final DFAGratuityPREditor result = new DFAGratuityPREditor();
+	    result.setDfaGratuityPR(dfaGratuityPR);
+	    result.setDfaAmountPerEctsCredit(dfaGratuityPR.getDfaAmountPerEctsCredit());
+	    result.setDfaPartialAcceptedPercentage(dfaGratuityPR.getDfaPartialAcceptedPercentage());
+	    result.setDfaTotalAmount(dfaGratuityPR.getDfaTotalAmount());
+
+	    return result;
+	}
+
+    }
 
     protected DFAGratuityPR() {
 	super();
@@ -181,10 +264,16 @@ public class DFAGratuityPR extends DFAGratuityPR_Base {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     public DFAGratuityPR edit(Money dfaTotalAmount, Money dfaAmountPerEctsCredit, BigDecimal partialAcceptedPercentage) {
+	return edit(new DateTime(), dfaTotalAmount, dfaAmountPerEctsCredit, partialAcceptedPercentage);
+    }
 
-	deactivate();
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public DFAGratuityPR edit(DateTime startDate, Money dfaTotalAmount, Money dfaAmountPerEctsCredit,
+	    BigDecimal partialAcceptedPercentage) {
 
-	return new DFAGratuityPR(new DateTime(), null, getServiceAgreementTemplate(), dfaTotalAmount, partialAcceptedPercentage,
+	deactivate(startDate);
+
+	return new DFAGratuityPR(startDate, null, getServiceAgreementTemplate(), dfaTotalAmount, partialAcceptedPercentage,
 		dfaAmountPerEctsCredit);
 
     }

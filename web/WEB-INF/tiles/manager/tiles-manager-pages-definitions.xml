@@ -973,29 +973,7 @@
     
     
 	<!-- End: Payments Management -->
-	
-	<!-- Start: Posting Rules Management -->
-	<definition name="payments.postingRules.management.chooseCategory" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/payments/postingRules/management/chooseCategory.jsp"></put>
-    </definition>
-	<definition name="payments.postingRules.management.chooseDFADegreeCurricularPlan" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/payments/postingRules/management/chooseDFADegreeCurricularPlan.jsp"></put>
-    </definition>
-	<definition name="payments.postingRules.management.showPostingRulesForDFADegreeCurricularPlan" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/payments/postingRules/management/showPostingRulesForDFADegreeCurricularPlan.jsp"></put>
-    </definition>
-    <definition name="payments.postingRules.management.viewDFAPostingRuleDetails" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/payments/postingRules/management/viewDFAPostingRuleDetails.jsp"></put>
-    </definition>
-    <definition name="payments.postingRules.management.createDFAGratuityPR" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/payments/postingRules/management/createDFAGratuityPR.jsp"></put>
-    </definition>
-    <definition name="payments.postingRules.management.editDFADegreeCurricularPlanPostingRule" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/payments/postingRules/management/editDFADegreeCurricularPlanPostingRule.jsp"></put>
-    </definition>
-    
-    
-    <!-- End: Posting Rules Management -->
+	    
 	
 	<!-- =====================  ====================== -->
 	<definition name="show.markSheetManagement.search.page" extends="definition.manager.masterPage">

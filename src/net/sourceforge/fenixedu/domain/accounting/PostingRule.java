@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +13,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.accountingTransactions.detail.SibsTransactionDetail;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -33,6 +35,24 @@ public abstract class PostingRule extends PostingRule_Base {
 	    int comparationResult = leftPostingRule.getStartDate().compareTo(rightPostingRule.getStartDate());
 	    return (comparationResult == 0) ? leftPostingRule.getIdInternal().compareTo(rightPostingRule.getIdInternal())
 		    : comparationResult;
+	}
+    };
+
+    public static Comparator<PostingRule> COMPARATOR_BY_END_DATE = new Comparator<PostingRule>() {
+	@Override
+	public int compare(PostingRule left, PostingRule right) {
+	    int comparationResult;
+	    if (!left.hasEndDate() && !right.hasEndDate()) {
+		comparationResult = 0;
+	    } else if (!left.hasEndDate()) {
+		comparationResult = 1;
+	    } else if (!right.hasEndDate()) {
+		return comparationResult = -1;
+	    } else {
+		comparationResult = left.getEndDate().compareTo(right.getEndDate());
+	    }
+
+	    return comparationResult == 0 ? left.getIdInternal().compareTo(right.getIdInternal()) : comparationResult;
 	}
     };
 
@@ -172,9 +192,10 @@ public abstract class PostingRule extends PostingRule_Base {
 	throw new DomainException("error.accounting.agreement.postingRule.cannot.modify.eventType");
     }
 
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     @Override
     public void setStartDate(DateTime startDate) {
-	throw new DomainException("error.accounting.PostingRule.cannot.modify.startDate");
+	super.setStartDate(startDate);
     }
 
     @Override
@@ -187,9 +208,14 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     public void deactivate() {
-	setEndDate(new DateTime().minus(10000));
+	deactivate(new DateTime());
     }
 
+    public void deactivate(final DateTime when) {
+	super.setEndDate(when.minus(10000));
+    }
+
+    @Checked("RolePredicates.MANAGER_PREDICATE")
     public final void delete() {
 	super.setServiceAgreementTemplate(null);
 	removeRootDomainObject();
@@ -277,6 +303,12 @@ public abstract class PostingRule extends PostingRule_Base {
 	    final Account toAccount, final Money amount, final EntryType entryType,
 	    final AccountingTransactionDetailDTO transactionDetailDTO) {
 	throw new DomainException("error.accounting.PostingRule.does.not.implement.deposit.amount");
+    }
+
+    public boolean isMostRecent() {
+	return Collections.max(getServiceAgreementTemplate().getAllPostingRulesFor(getEventType()),
+		PostingRule.COMPARATOR_BY_END_DATE).equals(this);
+
     }
 
     abstract public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount);
