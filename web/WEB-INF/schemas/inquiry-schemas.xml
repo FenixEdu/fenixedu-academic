@@ -51,14 +51,18 @@
 		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO" bundle="INQUIRIES_RESOURCES">
 	<slot name="curricularCourse.name" key="label.curricularCourse.name" read-only="true"/>
 	<slot name="curricularCourse.competenceCourse.ectsCredits" key="label.competenceCourse.ectsCredits" read-only="true"/>
-	<slot name="weeklyContactLoad" key="label.contactLoad" read-only="true">
+	<slot name="weeklyContactLoad" key="label.contactLoad.b" read-only="true">
 		<property name="headerToolTip" value="toolTip.studentInquiries.weeklyScheduleLoad" />
 	</slot>	
-	<slot name="weeklyHoursSpentPercentage" key="label.weeklyHoursSpentPercentage" read-only="true" />
-	<slot name="studyDaysSpentInExamsSeason" key="label.studyDaysSpentInExamsSeason" >
+	<slot name="weeklyHoursSpentPercentage" key="label.weeklyHoursSpentPercentage.c" read-only="true" >
+		<property name="headerToolTip" value="toolTip.studentInquiries.weeklyHoursSpentPercentage" />
+	</slot>
+	<slot name="studyDaysSpentInExamsSeason" key="label.studyDaysSpentInExamsSeason.d" >
 		<property name="headerToolTip" value="toolTip.studentInquiries.studyDaysSpentInExamsSeason" />
 	</slot>
-	<slot name="calculatedECTSCredits" key="label.calculatedEctsCredits" read-only="true"/>
+	<slot name="calculatedECTSCredits" key="label.calculatedEctsCredits" read-only="true">
+		<property name="headerToolTip" value="toolTip.studentInquiries.calculatedEctsCredits" />
+	</slot>
 </schema>
 
 <schema name="curricularCourseInquiriesRegistryDTO.submitHoursAndDays.edit"
@@ -68,6 +72,7 @@
 		<property name="headerToolTip" value="toolTip.studentInquiries.weeklyScheduleLoad" />
 	</slot>
 	<slot name="weeklyHoursSpentPercentage" key="label.weeklyHoursSpentPercentage.withBreaks">
+		<property name="headerToolTip" value="toolTip.studentInquiries.weeklyHoursSpentPercentage" />
 		<property name="size" value="5" />
 		<property name="maxLength" value="3" />	
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
