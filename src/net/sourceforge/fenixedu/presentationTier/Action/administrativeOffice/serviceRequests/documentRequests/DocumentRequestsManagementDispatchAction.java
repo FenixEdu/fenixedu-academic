@@ -58,14 +58,17 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	    HttpServletResponse response) throws JRException, IOException {
 
 	final DocumentRequest documentRequest = getDocumentRequest(request);
-	final AdministrativeOfficeDocument administrativeOfficeDocument = AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
+	final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		.create(documentRequest);
-	administrativeOfficeDocument.addParameter("path", getServlet().getServletContext().getRealPath("/"));
+	for (final AdministrativeOfficeDocument document : documents) {
+	    document.addParameter("path", getServlet().getServletContext().getRealPath("/"));
+	}
 
-	byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(administrativeOfficeDocument);
+	final AdministrativeOfficeDocument[] array = {};
+	byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
 	response.setContentLength(data.length);
 	response.setContentType("application/pdf");
-	response.addHeader("Content-Disposition", "attachment; filename=" + administrativeOfficeDocument.getReportFileName()
+	response.addHeader("Content-Disposition", "attachment; filename=" + documents.iterator().next().getReportFileName()
 		+ ".pdf");
 
 	final ServletOutputStream writer = response.getOutputStream();
