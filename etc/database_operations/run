@@ -40,3 +40,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Creating Residence Price Table" createResidecePriceTable.sql
+execute "Creating Specific Data for IST" specificResidencePriceTableSetup.sql IST

@@ -19,12 +19,12 @@
 			<bean:message key="label.roomValues" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
 		</th>
 		<td>
-			<logic:present name="currentResidenceYear" property="singleRoomValue">
-				<fr:view name="currentResidenceYear" property="singleRoomValue"/> 
+			<logic:present name="currentResidence" property="currentSingleRoomValue">
+				<fr:view name="currentResidence" property="currentSingleRoomValue"/> 
 				<bean:message key="label.currency.symbol" bundle="GLOBAL_RESOURCES"/> | 
 			</logic:present>
-			<logic:present name="currentResidenceYear" property="doubleRoomValue">
-				<fr:view name="currentResidenceYear" property="doubleRoomValue"/> <bean:message key="label.currency.symbol" bundle="GLOBAL_RESOURCES"/>
+			<logic:present name="currentResidence" property="currentDoubleRoomValue">
+				<fr:view name="currentResidence" property="currentDoubleRoomValue"/> <bean:message key="label.currency.symbol" bundle="GLOBAL_RESOURCES"/>
 			</logic:present> 
 		</td>
 	</tr>
@@ -33,7 +33,7 @@
 			<bean:message key="label.paymentDate" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
 		</th>
 		<td>
-			<fr:view name="currentResidenceYear" property="paymentLimitDay" type="java.lang.Integer">
+			<fr:view name="currentResidence" property="currentPaymentLimitDay" type="java.lang.Integer">
 				<fr:layout name="null-as-label">
 					<property name="subLayout" value="values"/>
 					<property name="label" value="-"/>			
@@ -59,10 +59,12 @@
 		<bean:define id="monthOID" name="searchBean" property="residenceMonth.OID"/>
 
 		<p class="mtop05">
-			<html:link page="<%=  "/residenceManagement.do?method=importData&monthOID=" + monthOID %>">
-				<bean:message key="label.importFile" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
-			</html:link>
-			|
+			<logic:equal name="currentResidence" property="residencePriceTableConfigured" value="true">
+				<html:link page="<%=  "/residenceManagement.do?method=importData&monthOID=" + monthOID %>">
+					<bean:message key="label.importFile" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
+				</html:link>
+				|
+			</logic:equal>
 			<html:link page="<%=  "/residenceManagement.do?method=editPaymentLimitDay&monthOID=" + monthOID %>">
 				<bean:message key="label.modify.limitPaymentDay" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
 			</html:link>
@@ -90,7 +92,7 @@
 			
 			<p  class="mtop2 mbottom05"><bean:message key="label.residents.with.no.paymentCodes" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>:</p>
 			<logic:notEmpty name="searchBean" property="residenceMonth.eventsWithoutPaymentCodes">
-				<fr:view name="searchBean" property="residenceMonth.eventsWithoutPaymentCodes" schema="show.residenceEvent">	
+				<fr:view name="searchBean" property="residenceMonth.eventsWithoutPaymentCodes" schema="show.residenceEvent.with.dates">	
 						<fr:layout name="tabular">
 							<fr:property name="classes" value="tstyle1 tdcenter thlight mtop05"/>
 							<fr:property name="columnClasses" value=",,aleft,,,,,"/>

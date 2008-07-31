@@ -5015,6 +5015,9 @@ class candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry extends Domai
 
 class residence.ResidenceYear extends DomainObject {
 	Integer year;
+}
+
+class residence.ResidencePriceTable extends DomainObject {
 	Integer paymentLimitDay;
 	Money singleRoomValue;
 	Money doubleRoomValue;
@@ -13158,4 +13161,18 @@ relation FormationUnit {
 		multiplicity *;
 	}
 	organizationalStructure.Unit playsRole institution;
+}
+
+relation ResidencePriceTableRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	residence.ResidencePriceTable playsRole residencePriceTables {
+		multiplicity *;
+	}
+}
+
+relation ResidencePriceTableResidenceManagementUnit {
+  organizationalStructure.ResidenceManagementUnit playsRole units {
+    multiplicity *;
+  }
+  residence.ResidencePriceTable playsRole residencePriceTable;
 }

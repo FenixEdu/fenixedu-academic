@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.residenceManagement;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.domain.residence.ResidenceYear;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Money;
@@ -85,7 +86,8 @@ public class ResidenceEventBean implements Serializable {
 	
 	
 	ResidenceYear year = ResidenceYear.getCurrentYear();	
-	if (!roomValue.equals(year.getSingleRoomValue()) && !roomValue.equals(year.getDoubleRoomValue())) {
+	ResidenceManagementUnit unit = year.getUnit();
+	if (!roomValue.equals(unit.getCurrentSingleRoomValue()) && !roomValue.equals(unit.getCurrentDoubleRoomValue())) {
 	    statusMessage = "label.error.invalid.payment.amount";
 	    return false;
 	}

@@ -30,7 +30,7 @@ public class ImportResidenceEventBean extends SimpleFileBean {
     public void setResidenceYear(ResidenceYear residenceYear) {
 	this.residenceYear = new DomainReference<ResidenceYear>(residenceYear);
 	if (residenceYear != null) {
-	    setPaymentLimitDay(residenceYear.getPaymentLimitDay());
+	    setPaymentLimitDay(residenceYear.getUnit().getCurrentPaymentLimitDay());
 	}
     }
 

@@ -45,5 +45,5 @@
 	</fr:view>
 </logic:notEmpty>
 <logic:empty name="residenceEvents">
-	<bean:message key="message.person.empty.events" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
+	<bean:message key="message.person.has.no.events" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
 </logic:empty>

@@ -12,7 +12,7 @@
 <div class="dinline forminline">
 	<fr:form action="<%= "/residenceEventManagement.do?method=manageResidenceEvents&monthOID=" + monthOID%>">
 		
-		<fr:edit name="residenceMonth" property="year" schema="residenceYear.configuration.paymentLimitDay" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<fr:edit name="priceTable"  schema="configuration.paymentLimitDay" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thleft"/>
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>

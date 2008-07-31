@@ -114,11 +114,11 @@
 	</slot>	
 </schema>
 
-<schema  name="residenceYear.configuration.roomValues" type="net.sourceforge.fenixedu.domain.residence.ResidenceYear" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
+<schema  name="configuration.roomValues" type="net.sourceforge.fenixedu.domain.residence.ResidencePriceTable" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
 	<slot name="singleRoomValue" key="label.singleRoom.value" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="doubleRoomValue" key="label.doubleRoom.value" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
-<schema  name="residenceYear.configuration.paymentLimitDay" type="net.sourceforge.fenixedu.domain.residence.ResidenceYear" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
+<schema  name="configuration.paymentLimitDay" type="net.sourceforge.fenixedu.domain.residence.ResidencePriceTable" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
 	<slot name="paymentLimitDay" key="label.paymentLimitDay" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>

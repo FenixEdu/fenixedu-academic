@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportRes
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidenceEventBean;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidentListsHolderBean;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -84,22 +85,28 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward editPaymentLimitDay(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	return editResidenceYearProperty(mapping, actionForm, request, response, "editPaymentLimitDay");
+	return editResidencePriceTableProperty(mapping, actionForm, request, response, "editPaymentLimitDay");
     }
 
     public ActionForward editRoomValues(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	return editResidenceYearProperty(mapping, actionForm, request, response, "editRoomValues");
+	return editResidencePriceTableProperty(mapping, actionForm, request, response, "editRoomValues");
     }
 
-    private ActionForward editResidenceYearProperty(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    private ActionForward editResidencePriceTableProperty(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response, String forwardName) throws Exception {
 
+	ResidenceManagementUnit unit = getManagementUnit(request);
 	ResidenceMonth month = getResidenceMonth(request);
 	request.setAttribute("residenceMonth", month);
-
+	request.setAttribute("priceTable", unit.getResidencePriceTable());
+	
 	return mapping.findForward(forwardName);
+    }
+
+    private ResidenceManagementUnit getManagementUnit(HttpServletRequest request) {
+	return (ResidenceManagementUnit) getLoggedPerson(request).getEmployee().getCurrentWorkingPlace();
     }
 
     private ResidenceMonth getResidenceMonth(HttpServletRequest request) {

@@ -1,15 +1,11 @@
 package net.sourceforge.fenixedu.domain.residence;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.util.Month;
 
@@ -49,7 +45,7 @@ public class ResidenceMonth extends ResidenceMonth_Base {
 
     public DateTime getPaymentLimitDateTime() {
 	ResidenceYear residenceYear = getYear();
-	LocalDate date = new LocalDate(residenceYear.getYear(), getMonth().getNumberOfMonth(), residenceYear.getPaymentLimitDay());
+	LocalDate date = new LocalDate(residenceYear.getYear(), getMonth().getNumberOfMonth(), getManagementUnit().getCurrentPaymentLimitDay());
 	return date.toDateTimeAtStartOfDay();
     }
 
@@ -61,7 +57,7 @@ public class ResidenceMonth extends ResidenceMonth_Base {
 	Set<ResidenceEvent> eventsWithCodes = new HashSet<ResidenceEvent>();
 
 	for (ResidenceEvent event : getEvents()) {
-	    if (event.getPaymentCodesCount() > 0) {
+	    if (event.getPaymentCodesCount() > 0 && !event.isCancelled()) {
 		eventsWithCodes.add(event);
 	    }
 	}
@@ -72,7 +68,7 @@ public class ResidenceMonth extends ResidenceMonth_Base {
 	Set<ResidenceEvent> eventsWithoutCodes = new HashSet<ResidenceEvent>();
 
 	for (ResidenceEvent event : getEvents()) {
-	    if (event.getPaymentCodesCount() == 0) {
+	    if (event.getPaymentCodesCount() == 0 && !event.isCancelled()) {
 		eventsWithoutCodes.add(event);
 	    }
 	}

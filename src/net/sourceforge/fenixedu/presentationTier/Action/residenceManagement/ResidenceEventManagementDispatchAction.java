@@ -7,12 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportResidenceEventBean;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
@@ -23,7 +21,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -45,7 +42,8 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
 	}
 
 	RenderUtils.invalidateViewState();
-	request.setAttribute("currentResidenceYear", ResidenceYear.getCurrentYear());
+	
+	request.setAttribute("currentResidence", getLoggedPerson(request).getEmployee().getCurrentWorkingPlace());
 	request.setAttribute("searchBean", importResidenceEventBean);
 	return mapping.findForward("manageResidenceEvents");
     }
