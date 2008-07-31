@@ -53,6 +53,9 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     }
 
     public void edit(final PhysicalAddressData data) {
+	if (data == null) {
+	    return;
+	}
 	super.setAddress(data.getAddress());
 	super.setAreaCode(data.getAreaCode());
 	super.setAreaOfAreaCode(data.getAreaOfAreaCode());
