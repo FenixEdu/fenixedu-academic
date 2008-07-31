@@ -24,7 +24,7 @@
 
 <c:if test="${student.weeklySpentHoursSubmittedForCurrentPeriod}">
 
-	<bean:message key="label.weeklySpentHours" bundle="INQUIRIES_RESOURCES"/>: <b><c:out value="${student.currentInquiriesStudentExecutionPeriod.weeklyHoursSpentInClassesSeason}" /></b> <bean:message key="label.hoursPerWeek" bundle="INQUIRIES_RESOURCES"/>
+	<bean:message key="label.weeklySpentHours" bundle="INQUIRIES_RESOURCES"/>: <b><c:out value="${student.currentInquiriesStudentExecutionPeriod.weeklyHoursSpentInClassesSeason}" /></b> <bean:message key="label.hoursPerWeek.a" bundle="INQUIRIES_RESOURCES"/>
 
 	<fr:view name="courses" schema="curricularCourseInquiriesRegistryDTO.submitHoursAndDays" >
 		<fr:layout name="tabular" >
@@ -81,6 +81,8 @@
 				<fr:property name="hideValidators" value="false"/>
 			</fr:layout>
 		</fr:edit>
+		
+		<p><bean:message key="message.inquiries.estimatedECTS" bundle="INQUIRIES_RESOURCES"/></p><br/>
 
 		<html:submit><bean:message key="button.submit" bundle="INQUIRIES_RESOURCES"/></html:submit>	
 	</fr:form>

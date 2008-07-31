@@ -24,6 +24,8 @@
 
 <h3 class="separator2 mtop2"><span style="font-weight: normal ;"><bean:message key="title.inquiries.separator.courses_1" bundle="INQUIRIES_RESOURCES"/></span></h3>
 
+<bean:message key="message.inquiries.anonimousFromNow" bundle="INQUIRIES_RESOURCES"/>
+
 <div class="forminline dinline">
 	<div class="relative">
 		<fr:form action="/studentInquiry.do?method=showInquiries2ndPage">
@@ -37,6 +39,7 @@
 			<fr:edit name="studentInquiry" property="firstPageThirdBlock" />
 			<fr:edit name="studentInquiry" property="firstPageFourthBlock" />
 			<h4 class="mtop15 mbottom05"><bean:message key="title.studentInquiries.firstPageFifthBlock" bundle="INQUIRIES_RESOURCES"/></h4>
+			<p><bean:message key="message.studentInquiries.firstPageFifthBlock" bundle="INQUIRIES_RESOURCES"/></p>
 			<fr:edit name="studentInquiry" property="firstPageFifthBlock" />
 			
 			<fr:edit name="studentInquiry" id="studentInquiry" visible="false"/>
