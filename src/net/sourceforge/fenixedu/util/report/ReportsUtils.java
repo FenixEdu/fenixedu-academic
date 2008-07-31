@@ -258,6 +258,12 @@ public class ReportsUtils extends PropertiesManager {
 	aux = createFont("Quadraat-BoldItalic", "QUADBDI_.ttf");
 	result.put(aux.getLeft(), aux.getRight());
 
+	aux = createFont("Arial", "Arial.ttf");
+	result.put(aux.getLeft(), aux.getRight());
+
+	aux = createFont("Arial Black", "Arial_Black.ttf");
+	result.put(aux.getLeft(), aux.getRight());
+
 	return result;
     }
 
