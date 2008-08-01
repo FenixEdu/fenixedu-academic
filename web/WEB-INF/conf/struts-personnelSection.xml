@@ -33,6 +33,26 @@
 	    </form-bean>
 	</form-beans>
 	
+	<!-- ========== Global Exception Definitions ============================== -->
+	<global-exceptions>
+        <exception
+			type="java.lang.Exception"
+			key="error.Exception"
+            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
+			/>
+		<exception
+			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
+			key="error.NotAuthorized"
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
+			/>
+		<exception
+			type="net.sourceforge.fenixedu.domain.exceptions.DomainException"
+			key=""
+			handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"
+			/>
+	</global-exceptions>
+	
+	
 	<!-- ========== Global Forward Definitions =============================== -->
 	<global-forwards type="org.apache.struts.action.ActionForward"/>      
 	<!-- ========== Action Mapping Definitions =============================== -->      		  
