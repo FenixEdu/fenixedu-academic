@@ -13,8 +13,8 @@ public class SecondCycleCandidacyPeriod extends SecondCycleCandidacyPeriod_Base 
 	super();
     }
 
-    public SecondCycleCandidacyPeriod(final SecondCycleCandidacyProcess candidacyProcess,
-	    final ExecutionYear executionInterval, final DateTime start, final DateTime end) {
+    public SecondCycleCandidacyPeriod(final SecondCycleCandidacyProcess candidacyProcess, final ExecutionYear executionInterval,
+	    final DateTime start, final DateTime end) {
 	this();
 	init(candidacyProcess, executionInterval, start, end);
     }
@@ -22,7 +22,7 @@ public class SecondCycleCandidacyPeriod extends SecondCycleCandidacyPeriod_Base 
     private void init(final SecondCycleCandidacyProcess candidacyProcess, final ExecutionInterval executionInterval,
 	    final DateTime start, final DateTime end) {
 	checkParameters(candidacyProcess);
-	checkIfCanCreate(executionInterval);
+	checkIfCanCreate(executionInterval, start, end);
 	super.init(executionInterval, start, end);
 	addCandidacyProcesses(candidacyProcess);
     }
@@ -33,19 +33,48 @@ public class SecondCycleCandidacyPeriod extends SecondCycleCandidacyPeriod_Base 
 	}
     }
 
-    private void checkIfCanCreate(final ExecutionInterval executionInterval) {
-	if (executionInterval.hasSecondCycleCandidacyPeriod()) {
-	    throw new DomainException("error.SecondCycleCandidacyPeriod.executionInterval.already.contains.candidacyPeriod.type",
-		    executionInterval.getName());
+    private void checkIfCanCreate(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
+	for (final SecondCycleCandidacyPeriod secondCycleCandidacyPeriod : executionInterval.getSecondCycleCandidacyPeriods()) {
+	    if (secondCycleCandidacyPeriod.intercept(start, end)) {
+		throw new DomainException("error.SecondCycleCandidacyPeriod.interception", executionInterval.getName(), start
+			.toString("dd/MM/yyyy HH:mm"), end.toString("dd/MM/yyyy HH:mm"));
+	    }
 	}
+    }
+
+    private boolean intercept(final DateTime start, final DateTime end) {
+	assert start.isBefore(end);
+	return contains(start) || contains(end);
     }
 
     public SecondCycleCandidacyProcess getSecondCycleCandidacyProcess() {
 	return (SecondCycleCandidacyProcess) (hasAnyCandidacyProcesses() ? getCandidacyProcesses().get(0) : null);
     }
-    
+
     @Override
     public ExecutionYear getExecutionInterval() {
-        return (ExecutionYear) super.getExecutionInterval();
+	return (ExecutionYear) super.getExecutionInterval();
+    }
+
+    public String getPresentationName() {
+	return getStart().toString("dd/MM/yyyy") + " - " + getEnd().toString("dd/MM/yyyy");
+    }
+
+    @Override
+    public void edit(final DateTime start, final DateTime end) {
+	checkDates(start, end);
+	checkIfCandEdit(start, end);
+	super.setStart(start);
+	super.setEnd(end);
+    }
+
+    private void checkIfCandEdit(DateTime start, DateTime end) {
+	for (final SecondCycleCandidacyPeriod secondCycleCandidacyPeriod : getExecutionInterval()
+		.getSecondCycleCandidacyPeriods()) {
+	    if (secondCycleCandidacyPeriod != this && secondCycleCandidacyPeriod.intercept(start, end)) {
+		throw new DomainException("error.SecondCycleCandidacyPeriod.interception", getExecutionInterval().getName(),
+			start.toString("dd/MM/yyyy HH:mm"), end.toString("dd/MM/yyyy HH:mm"));
+	    }
+	}
     }
 }

@@ -42,7 +42,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	if (process == null) {
 	    throw new DomainException("error.IndividualCandidacy.invalid.process");
 	}
-	if (candidacyDate == null || !process.hasOpenCandidacyPeriod(candidacyDate.toDateTimeAtStartOfDay())) {
+	if (candidacyDate == null || !process.hasOpenCandidacyPeriod(candidacyDate.toDateTimeAtCurrentTime())) {
 	    throw new DomainException("error.IndividualCandidacy.invalid.candidacyDate", process.getCandidacyStart().toString(
 		    DateFormatUtil.DEFAULT_DATE_FORMAT), process.getCandidacyEnd().toString(DateFormatUtil.DEFAULT_DATE_FORMAT));
 	}

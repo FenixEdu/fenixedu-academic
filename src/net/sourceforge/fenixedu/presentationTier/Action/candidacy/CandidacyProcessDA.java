@@ -115,7 +115,7 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 		.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType()));
     }
 
-    abstract protected CandidacyProcess getCandidacyProcess(final ExecutionInterval executionInterval);
+    abstract protected CandidacyProcess getCandidacyProcess(HttpServletRequest request, final ExecutionInterval executionInterval);
 
     static public class CandidacyProcessForm extends FenixActionForm {
 	private Integer executionIntervalId;

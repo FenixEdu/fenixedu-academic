@@ -70,7 +70,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 	if (!hasExecutionInterval(request)) {
 	    request.setAttribute("executionInterval", ExecutionYear.readCurrentExecutionYear());
 	}
-	setCandidacyProcessInformation(request, getCandidacyProcess(getExecutionInterval(request)));
+	setCandidacyProcessInformation(request, getCandidacyProcess(request, getExecutionInterval(request)));
     }
 
     protected ActionForward introForward(ActionMapping mapping) {
@@ -78,7 +78,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
     }
 
     @Override
-    protected Over23CandidacyProcess getCandidacyProcess(final ExecutionInterval executionInterval) {
+    protected Over23CandidacyProcess getCandidacyProcess(HttpServletRequest request, final ExecutionInterval executionInterval) {
 	return executionInterval.hasOver23CandidacyPeriod() ? executionInterval.getOver23CandidacyPeriod()
 		.getOver23CandidacyProcess() : null;
     }

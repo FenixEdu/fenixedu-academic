@@ -71,12 +71,11 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
 	return hasCandidacyPeriods(Over23CandidacyPeriod.class);
     }
 
-    public SecondCycleCandidacyPeriod getSecondCycleCandidacyPeriod() {
-	final List<SecondCycleCandidacyPeriod> candidacyPeriods = (List<SecondCycleCandidacyPeriod>) getCandidacyPeriods(SecondCycleCandidacyPeriod.class);
-	return candidacyPeriods.isEmpty() ? null : candidacyPeriods.get(0);
+    public List<SecondCycleCandidacyPeriod> getSecondCycleCandidacyPeriods() {
+	return (List<SecondCycleCandidacyPeriod>) getCandidacyPeriods(SecondCycleCandidacyPeriod.class);
     }
 
-    public boolean hasSecondCycleCandidacyPeriod() {
+    public boolean hasAnySecondCycleCandidacyPeriod() {
 	return hasCandidacyPeriods(SecondCycleCandidacyPeriod.class);
     }
 

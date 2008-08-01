@@ -70,7 +70,7 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     @Override
-    protected CandidacyProcess getCandidacyProcess(final ExecutionInterval executionInterval) {
+    protected CandidacyProcess getCandidacyProcess(HttpServletRequest request, final ExecutionInterval executionInterval) {
 	return executionInterval.hasDegreeTransferCandidacyPeriod() ? executionInterval.getDegreeTransferCandidacyPeriod()
 		.getDegreeTransferCandidacyProcess() : null;
     }
@@ -90,7 +90,7 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
 	if (!hasExecutionInterval(request)) {
 	    request.setAttribute("executionInterval", ExecutionYear.readCurrentExecutionYear());
 	}
-	setCandidacyProcessInformation(request, getCandidacyProcess(getExecutionInterval(request)));
+	setCandidacyProcessInformation(request, getCandidacyProcess(request, getExecutionInterval(request)));
     }
 
     public ActionForward prepareExecuteSendToCoordinator(ActionMapping mapping, ActionForm actionForm,

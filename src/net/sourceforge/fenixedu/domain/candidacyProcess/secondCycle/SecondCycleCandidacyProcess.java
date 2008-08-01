@@ -15,35 +15,16 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.DateTime;
 
-import dml.runtime.RelationAdapter;
-
 public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Base {
-
-    static {
-	CandidacyPeriodCandidacyProcess.addListener(new RelationAdapter<CandidacyProcess, CandidacyPeriod>() {
-	    @Override
-	    public void beforeAdd(CandidacyProcess candidacyProcess, CandidacyPeriod candidacyPeriod) {
-		super.beforeAdd(candidacyProcess, candidacyPeriod);
-
-		if (candidacyProcess != null && candidacyPeriod != null && candidacyPeriod instanceof SecondCycleCandidacyPeriod) {
-		    if (candidacyPeriod.hasAnyCandidacyProcesses()) {
-			throw new DomainException("error.SecondCycleCandidacyProcess.candidacy.period.already.has.process");
-		    }
-		}
-	    }
-	});
-    }
 
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
@@ -92,10 +73,10 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
     public List<Activity> getActivities() {
 	return activities;
     }
-    
+
     @Override
     public ExecutionYear getCandidacyExecutionInterval() {
-        return (ExecutionYear) super.getCandidacyExecutionInterval();
+	return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
 
     public List<SecondCycleIndividualCandidacyProcess> getValidSecondCycleIndividualCandidacies() {

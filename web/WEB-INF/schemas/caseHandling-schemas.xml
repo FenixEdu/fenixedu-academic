@@ -13,8 +13,12 @@
 	<slot name="candidacyExecutionInterval.name" key="label.executionInterval">
 		<property name="classes" value="bold" />
 	</slot>
-	<slot name="candidacyStart" key="label.begin" />
-	<slot name="candidacyEnd" key="label.end" />
+	<slot name="candidacyStart" key="label.begin">
+		<property name="classes" value="italic" />
+	</slot>
+	<slot name="candidacyEnd" key="label.end">
+		<property name="classes" value="italic" />
+	</slot>
 	<slot name="state" key="label.candidacy.process.state" />
 </schema>
 

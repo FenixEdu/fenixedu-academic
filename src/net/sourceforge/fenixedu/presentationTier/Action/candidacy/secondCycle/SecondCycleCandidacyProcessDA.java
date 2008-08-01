@@ -16,16 +16,12 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.SpreadsheetXLSExporter;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
@@ -34,11 +30,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "academicAdminOffice", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
+@Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "academicAdminOffice", formBeanClass = SecondCycleCandidacyProcessDA.SecondCycleCandidacyProcessForm.class)
 @Forwards( {
-	@Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
+	@Forward(name = "intro", path = "/candidacy/secondCycle/mainCandidacyProcess.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
 	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
 	@Forward(name = "send-to-coordinator", path = "/candidacy/sendToCoordinator.jsp"),
@@ -49,6 +48,18 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 })
 public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
+
+    static public class SecondCycleCandidacyProcessForm extends CandidacyProcessForm {
+	private Integer selectedProcessId;
+
+	public Integer getSelectedProcessId() {
+	    return selectedProcessId;
+	}
+
+	public void setSelectedProcessId(Integer selectedProcessId) {
+	    this.selectedProcessId = selectedProcessId;
+	}
+    }
 
     @Override
     protected Class getProcessType() {
@@ -73,9 +84,63 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     @Override
     protected void setStartInformation(ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
 	if (!hasExecutionInterval(request)) {
-	    request.setAttribute("executionInterval", ExecutionYear.readCurrentExecutionYear());
+	    final List<ExecutionInterval> executionIntervals = getExecutionIntervalsWithCandidacyPeriod();
+
+	    if (executionIntervals.size() == 1) {
+		final ExecutionInterval executionInterval = executionIntervals.get(0);
+		final List<SecondCycleCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
+
+		if (candidacyProcesses.size() == 1) {
+		    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
+		    setCandidacyProcessInformation(actionForm, getProcess(request));
+		    request.setAttribute("candidacyProcesses", candidacyProcesses);
+		    return;
+		}
+	    }
+
+	    request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
+	    request.setAttribute("executionIntervals", executionIntervals);
+
+	} else {
+	    final ExecutionInterval executionInterval = getExecutionInterval(request);
+	    final SecondCycleCandidacyProcess candidacyProcess = getCandidacyProcess(request, executionInterval);
+
+	    if (candidacyProcess != null) {
+		setCandidacyProcessInformation(request, candidacyProcess);
+		setCandidacyProcessInformation(actionForm, getProcess(request));
+	    } else {
+		request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
+		request.setAttribute("executionIntervals", getExecutionIntervalsWithCandidacyPeriod());
+	    }
+	    request.setAttribute("candidacyProcesses", getCandidacyProcesses(executionInterval));
 	}
-	setCandidacyProcessInformation(request, getCandidacyProcess(getExecutionInterval(request)));
+    }
+
+    private List<ExecutionInterval> getExecutionIntervalsWithCandidacyPeriod() {
+	return ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType());
+    }
+
+    private List<SecondCycleCandidacyProcess> getCandidacyProcesses(final ExecutionInterval executionInterval) {
+	final List<SecondCycleCandidacyProcess> result = new ArrayList<SecondCycleCandidacyProcess>();
+	for (final SecondCycleCandidacyPeriod period : executionInterval.getSecondCycleCandidacyPeriods()) {
+	    result.add(period.getSecondCycleCandidacyProcess());
+	}
+	return result;
+    }
+
+    @Override
+    public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	setCandidacyProcessInformation(request, getProcess(request));
+	setCandidacyProcessInformation(form, getProcess(request));
+	request.setAttribute("candidacyProcesses", getCandidacyProcesses(getProcess(request).getCandidacyExecutionInterval()));
+	return introForward(mapping);
+    }
+
+    private void setCandidacyProcessInformation(final ActionForm actionForm, final SecondCycleCandidacyProcess process) {
+	final SecondCycleCandidacyProcessForm form = (SecondCycleCandidacyProcessForm) actionForm;
+	form.setSelectedProcessId(process.getIdInternal());
+	form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
     }
 
     @Override
@@ -84,9 +149,18 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     @Override
-    protected SecondCycleCandidacyProcess getCandidacyProcess(final ExecutionInterval executionInterval) {
-	return executionInterval.hasSecondCycleCandidacyPeriod() ? executionInterval.getSecondCycleCandidacyPeriod()
-		.getSecondCycleCandidacyProcess() : null;
+    protected SecondCycleCandidacyProcess getCandidacyProcess(final HttpServletRequest request,
+	    final ExecutionInterval executionInterval) {
+
+	final Integer selectedProcessId = getIntegerFromRequest(request, "selectedProcessId");
+	if (selectedProcessId != null) {
+	    for (final SecondCycleCandidacyPeriod candidacyPeriod : executionInterval.getSecondCycleCandidacyPeriods()) {
+		if (candidacyPeriod.getSecondCycleCandidacyProcess().getIdInternal().equals(selectedProcessId)) {
+		    return candidacyPeriod.getSecondCycleCandidacyProcess();
+		}
+	    }
+	}
+	return null;
     }
 
     public ActionForward prepareExecuteSendToCoordinator(ActionMapping mapping, ActionForm actionForm,

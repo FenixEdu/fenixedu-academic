@@ -31,7 +31,7 @@ abstract public class CandidacyPeriod extends CandidacyPeriod_Base {
 	checkDates(start, end);
     }
 
-    private void checkDates(final DateTime start, final DateTime end) {
+    protected void checkDates(final DateTime start, final DateTime end) {
 	if (start == null || end == null || start.isAfter(end)) {
 	    throw new DomainException("error.CandidacyPeriod.invalid.dates");
 	}
