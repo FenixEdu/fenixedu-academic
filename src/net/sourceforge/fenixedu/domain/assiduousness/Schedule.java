@@ -110,6 +110,7 @@ public class Schedule extends Schedule_Base {
 		    Language.getLocale()).getString(month.name()), ((Integer) closedMonth.getClosedYearMonth().get(
 		    DateTimeFieldType.year())).toString());
 	}
+	setAssiduousness(employeeExceptionScheduleBean.getEmployee().getAssiduousness());
 	if (overLapsAnotherSchedule(employeeExceptionScheduleBean.getBeginDate(), employeeExceptionScheduleBean.getEndDate(),
 		true)) {
 	    throw new DomainException("error.schedule.overlapsAnotherException");
