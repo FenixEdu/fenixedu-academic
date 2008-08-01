@@ -88,6 +88,7 @@ font-weight: normal;
 text-align: left;
 vertical-align: top;
 padding-right: 10px;
+white-space: nowrap;
 }
 table.tform p {
 margin: 0;

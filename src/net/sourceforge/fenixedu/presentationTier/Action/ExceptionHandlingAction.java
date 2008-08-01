@@ -15,12 +15,14 @@ import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.support.SupportRequestPriority;
 import net.sourceforge.fenixedu.domain.support.SupportRequestType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.validator.EmailValidator;
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -36,7 +38,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public class ExceptionHandlingAction extends FenixDispatchAction {
 
-    private final int INDENT = 12;
+    private final int INDENT = 15;
+    private final String INDENT_TOKEN = "_";
+    private final String SEPARATOR = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
 
     public ActionForward sendEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
@@ -60,6 +64,9 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	actionForward.setContextRelative(false);
 	actionForward.setRedirect(true);
 	actionForward.setPath("/showErrorPageRegistered.do");
+
+	System.out.println(subject);
+	System.out.println(mailBody);
 
 	EMail email = null;
 	try {
@@ -122,15 +129,15 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	String formSubject = (String) emailForm.get("subject");
 	String formBody = (String) emailForm.get("body");
 
-	SupportRequestBean requestBean = new SupportRequestBean(SupportRequestType.EXCEPTION, SupportRequestPriority.IMPEDIMENT);
+	SupportRequestBean requestBean = new SupportRequestBean(SupportRequestType.EXCEPTION, SupportRequestPriority.EXCEPTION);
 	requestBean.setResponseEmail(formEmail);
 	requestBean.setSubject(formSubject);
 	requestBean.setMessage(formBody);
 
-	return sendSupportEmail(mapping, form, request, response, requestBean);
+	return prepareSendEmail(mapping, form, request, response, requestBean);
     }
 
-    public final ActionForward supportHelpFieldValidation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public final ActionForward supportFormFieldValidation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
 	request.setAttribute("exceptionInfo", request.getParameter("exceptionInfo"));
@@ -141,8 +148,20 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
     public final ActionForward processSupportRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	SupportRequestBean supportRequestBean = (SupportRequestBean) getObjectFromViewState("requestBean");
-	return sendSupportEmail(mapping, form, request, response, supportRequestBean);
+	return prepareSendEmail(mapping, form, request, response, (SupportRequestBean) getObjectFromViewState("requestBean"));
+    }
+
+    protected final ActionForward prepareSendEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response, SupportRequestBean requestBean) throws Exception {
+
+	if (requestBean.getRequestContext() == null) {
+	    if (AbstractFunctionalityContext.getCurrentContext(request) != null) {
+		requestBean.setRequestContext(AbstractFunctionalityContext.getCurrentContext(request)
+			.getSelectedTopLevelContainer());
+	    }
+	}
+
+	return sendSupportEmail(mapping, form, request, response, requestBean);
     }
 
     protected final ActionForward sendSupportEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -163,13 +182,11 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	System.out.println(mailSubject);
 	System.out.println(mailBody);
 
-	EMail email = null;
 	try {
-	    if (!request.getServerName().equals("localhost")) {
-		email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
-	    } else {
-		email = new EMail("mail.rnl.ist.utl.pt", "erro@dot.ist.utl.pt");
-	    }
+	    EMail email = new EMail(!request.getServerName().equals("localhost") ? "mail.adm" : "mail.rnl.ist.utl.pt",
+		    EmailValidator.getInstance().isValid(requestBean.getResponseEmail()) ? requestBean.getResponseEmail()
+			    : "erro@dot.ist.utl.pt");
+	    
 	    final ResourceBundle gBundle = ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale());
 	    email.send(gBundle.getString("suporte.mail"), mailSubject, mailBody);
 
@@ -193,8 +210,8 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	builder.append(request.getServerName().equals("localhost") ? "Localhost " : "");
 	builder.append("[").append(requestBean.getRequestContext() != null ? requestBean.getRequestContext().getName() : "")
 		.append("] ");
-	builder.append("[").append(requestBean.getRequestType().getName()).append("] ");
-	builder.append("[").append(requestBean.getRequestPriority()).append("] ");
+	builder.append("[").append(getRequestTypeAsString(requestBean)).append("] ");
+	builder.append("[").append(getRequestPriorityAsString(requestBean)).append("] ");
 	builder.append(requestBean.getSubject());
 	return builder.toString();
     }
@@ -203,7 +220,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	    StringBuilder builder) {
 
 	appendNewLine(builder);
-	builder.append("===========================================================================");
+	builder.append(SEPARATOR);
 	appendNewLine(builder);
 	appendRoles(builder, loggedPerson);
 	appendNewLine(builder);
@@ -213,14 +230,14 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	appendNewLine(builder);
 	appendUserInfo(builder, (String) request.getParameter("userAgent"));
 	appendNewLine(builder);
-	builder.append("===========================================================================");
+	builder.append(SEPARATOR);
 	appendNewLine(builder, 2);
 	appendComments(builder, requestBean, (String) request.getParameter("exceptionInfo"));
 	return builder.toString();
     }
 
     private void appendUserInfo(StringBuilder builder, String userAgent) {
-	generateLabel(builder, "Browser/SO:").append("[").append(userAgent).append("]");
+	generateLabel(builder, "Browser/SO").append("[").append(userAgent).append("]");
     }
 
     private void appendComments(StringBuilder builder, SupportRequestBean requestBean, String exceptionInfo) {
@@ -235,21 +252,22 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 
     private void appendFormInfo(StringBuilder builder, SupportRequestBean requestBean) {
 
-	generateLabel(builder, "Email:").append("[").append(requestBean.getResponseEmail()).append("]");
+	generateLabel(builder, "Email").append("[").append(requestBean.getResponseEmail()).append("]");
 	appendNewLine(builder);
 
-	generateLabel(builder, "Portal:").append("[").append(
-		requestBean.getRequestContext() != null ? requestBean.getRequestContext().getName() : "").append("]");
+	generateLabel(builder, "Portal").append("[").append(
+		requestBean.getRequestContext() != null ? requestBean.getRequestContext().getName().getContent() : "")
+		.append("]");
 	appendNewLine(builder);
 
-	generateLabel(builder, "Tipo:").append("[").append(requestBean.getRequestType().getName()).append("]");
+	generateLabel(builder, "Tipo").append("[").append(getRequestTypeAsString(requestBean)).append("]");
 	appendNewLine(builder);
 
-	generateLabel(builder, "Prioridade:").append("[").append(requestBean.getRequestPriority()).append("]");
+	generateLabel(builder, "Prioridade").append("[").append(getRequestPriorityAsString(requestBean)).append("]");
     }
 
     private void appendRoles(StringBuilder builder, Person loggedPerson) {
-	generateLabel(builder, "Roles:");
+	generateLabel(builder, "Roles");
 	builder.append("[");
 	if (loggedPerson != null) {
 
@@ -263,20 +281,20 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 
     private StringBuilder generateLabel(StringBuilder builder, String label) {
 	builder.append(label);
-	for (int i = label.length(); i <= 15; i++) {
-	    builder.append(" ");
+	for (int i = label.length(); i <= INDENT; i++) {
+	    builder.append(INDENT_TOKEN);
 	}
 	return builder;
     }
 
     private void appendUserInfo(StringBuilder builder, Person loggedPerson, SupportRequestBean requestBean) {
-	generateLabel(builder, "Nome:");
+	generateLabel(builder, "Nome");
 	builder.append("[");
 	if (loggedPerson != null) {
 
 	    builder.append(loggedPerson.getName()).append("]");
 	    appendNewLine(builder);
-	    generateLabel(builder, "Username:");
+	    generateLabel(builder, "Username");
 	    builder.append("[").append(loggedPerson.getUsername()).append("]");
 	} else {
 	    final ResourceBundle aBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
@@ -293,6 +311,24 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	for (int i = 0; i < number; i++) {
 	    builder.append("\n");
 	}
+    }
+
+    private String getRequestTypeAsString(SupportRequestBean requestBean) {
+
+	if (requestBean.getRequestType() != null) {
+	    final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+	    return RESOURCES.getString(requestBean.getRequestType().getQualifiedName());
+	}
+	return "";
+    }
+
+    private String getRequestPriorityAsString(SupportRequestBean requestBean) {
+
+	if (requestBean.getRequestPriority() != null) {
+	    final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+	    return RESOURCES.getString(requestBean.getRequestPriority().getQualifiedName()).split(" \\(")[0]; // FIXME
+	}
+	return "";
     }
 
 }

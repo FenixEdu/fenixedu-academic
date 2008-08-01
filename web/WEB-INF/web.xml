@@ -150,6 +150,11 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
+		<filter-name>CloseTxFilter</filter-name>
+		<url-pattern>/uncaughtException.jsp</url-pattern>
+        <dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
 		<filter-name>SetUserViewFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>

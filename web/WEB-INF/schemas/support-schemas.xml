@@ -2,6 +2,8 @@
 	<schema name="support.request.form" type="net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean" bundle="APPLICATION_RESOURCES">
 		<slot name="responseEmail" key="label.support.form.responseEmail" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="size" value="30" />
+			<property name="size" value="30" />
+			<property name="readOnly" value="true" />
 		</slot>
 		<slot name="requestContext" key="label.support.form.requestContext" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PortalProvider" />
@@ -23,6 +25,7 @@
 			<property name="commentClasses" value="smalltxt color555"/>
 		</slot>
 		<slot name="requestPriority" key="label.support.form.priority" layout="input-with-comment" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="subProperty(excludedValues)" value="EXCEPTION" />
 			<property name="subLayout" value="radio"/>
 			<property name="bundle" value="APPLICATION_RESOURCES"/>
 			<property name="commentLocation" value="top"/>
@@ -34,6 +37,7 @@
 	<schema name="support.error.form" type="net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean" bundle="APPLICATION_RESOURCES">
 		<slot name="responseEmail" key="label.support.form.responseEmail" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="size" value="30" />
+			<property name="readOnly" value="true" />
 		</slot>
 		<slot name="subject" key="label.support.form.subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<property name="size" value="30" />

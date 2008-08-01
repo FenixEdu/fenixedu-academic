@@ -67,7 +67,8 @@
 
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
-		<action path="/showErrorPage" forward="/supportHelpInquiry.jsp" />
+		<action path="/showErrorPage" forward="/uncaughtException.jsp" />
+		<!-- /exception/error.jsp -->
 		<action path="/showErrorPageRegistered" forward="/exception/errorRegistered.jsp"/>
         <action path="/naoAutorizado" forward="/error.jsp"/>
         <action path="/naoExecutado" forward="/error.jsp"/>
@@ -77,7 +78,6 @@
         <action path="/nonExistingObject" forward="/nonExistingError.jsp"/>
         <action path="/publicNotAuthorized" forward="/exception/publicNotAuthorized.jsp"/>
         
-
 	    <action path="/changeLocaleTo"
 	    		name="changeLocaleForm"
 	    		validate="false"

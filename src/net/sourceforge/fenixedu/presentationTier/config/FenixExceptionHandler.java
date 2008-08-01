@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
+import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.log.requests.ErrorLog;
 import net.sourceforge.fenixedu.domain.log.requests.RequestLog;
 import net.sourceforge.fenixedu.domain.support.SupportRequestPriority;
@@ -78,7 +79,6 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	}
 
 	request.setAttribute(SessionConstants.ORIGINAL_MAPPING_KEY, mapping);
-
 	request.setAttribute(SessionConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
 
 	final String requestContext = requestContextGetter(request);
@@ -87,11 +87,15 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	final StringBuilder exceptionInfo = new StringBuilder("Error Origin: \n");
 	exceptionInfo.append("Exception: \n" + ex + "\n\n");
 
-	SupportRequestBean requestBean = new SupportRequestBean(SupportRequestType.EXCEPTION, SupportRequestPriority.IMPEDIMENT);
+	SupportRequestBean requestBean = new SupportRequestBean(SupportRequestType.EXCEPTION, SupportRequestPriority.EXCEPTION);
 	IUserView userView = UserView.getUser();
 	if (userView != null) {
 	    exceptionInfo.append("UserLogedIn: " + userView.getUtilizador() + "\n");
 	    requestBean.setResponseEmail(userView.getPerson().getDefaultEmailAddress().getValue());
+	    if (AbstractFunctionalityContext.getCurrentContext(request) != null) {
+		requestBean.setRequestContext(AbstractFunctionalityContext.getCurrentContext(request)
+			.getSelectedTopLevelContainer());
+	    }
 	} else {
 	    exceptionInfo.append("No user logged in, or session was lost.\n");
 	}
@@ -147,7 +151,6 @@ public class FenixExceptionHandler extends ExceptionHandler {
 	}
 
 	request.setAttribute("requestBean", requestBean);
-
 	return super.execute(ex, ae, mapping, formInstance, request, response);
     }
 

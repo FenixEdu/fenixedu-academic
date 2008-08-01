@@ -123,10 +123,10 @@
                 <a href="mailto:alumni-lemat@mlists.ist.utl.pt">Engenharia de Materiais</a>
             </td>
             <td>
-                Patrícia Almeida Carvalho
+                José Carlos Pereira<br/>Augusto Moita de Deus
             </td>
             <td>
-                GEP
+                DEMat
             </td>
         </tr>
         <tr class="bluecell">
