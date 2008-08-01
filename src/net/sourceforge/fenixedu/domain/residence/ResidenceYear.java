@@ -53,5 +53,9 @@ public class ResidenceYear extends ResidenceYear_Base {
 	}
 	return null;
     }
+
+    public static boolean hasCurrentYear() {
+	return getCurrentYear() != null;
+    }
     
 }
