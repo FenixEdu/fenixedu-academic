@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeState;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
@@ -27,11 +28,11 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 import net.sourceforge.fenixedu.util.Money;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import dml.runtime.RelationAdapter;
 
 public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOfficeFeeAndInsuranceEvent_Base {
@@ -132,13 +133,27 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     @Override
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
 	final Money totalAmount = calculateTotalAmount();
-	getNonProcessedPaymentCode().update(new YearMonthDay(), calculatePaymentCodeEndDate(), totalAmount, totalAmount);
+	final AccountingEventPaymentCode nonProcessedPaymentCode = getNonProcessedPaymentCode();
+
+	if (nonProcessedPaymentCode != null) {
+	    nonProcessedPaymentCode.update(new YearMonthDay(), calculatePaymentCodeEndDate(), totalAmount, totalAmount);
+	} else {
+	    final AccountingEventPaymentCode paymentCode = getCancelledPaymentCode();
+	    if (paymentCode != null) {
+		paymentCode.update(new YearMonthDay(), calculatePaymentCodeEndDate(), totalAmount, totalAmount);
+		paymentCode.setState(PaymentCodeState.NEW);
+	    }
+	}
 
 	return getNonProcessedPaymentCodes();
     }
 
+    private AccountingEventPaymentCode getCancelledPaymentCode() {
+	return (getCancelledPaymentCodes().isEmpty() ? null : getCancelledPaymentCodes().get(0));
+    }
+
     private AccountingEventPaymentCode getNonProcessedPaymentCode() {
-	return (getNonProcessedPaymentCodes().isEmpty() ? null : getNonProcessedPaymentCodes().iterator().next());
+	return (getNonProcessedPaymentCodes().isEmpty() ? null : getNonProcessedPaymentCodes().get(0));
     }
 
     private YearMonthDay calculatePaymentCodeEndDate() {
