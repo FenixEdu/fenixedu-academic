@@ -16,7 +16,7 @@ public class SQLUpdateGenerator {
     public static void main(String[] args) {
 	Connection connection = null;
 	try {
-	    Config config = PropertiesManager.getFenixFrameworkConfig("build/WEB-INF/classes/domain_model.dml");
+	    Config config = PropertiesManager.getFenixFrameworkConfig("web/WEB-INF/classes/domain_model.dml");
 	    FenixFramework.initialize(config);
 
 	    final PersistenceBroker persistenceBroker = PersistenceBrokerFactory.defaultPersistenceBroker();

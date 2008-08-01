@@ -15,7 +15,7 @@ public class SQLGenerator {
 
     public static void main(String[] args) {
 	try {
-	    Config config = PropertiesManager.getFenixFrameworkConfig("build/WEB-INF/classes/domain_model.dml");
+	    Config config = PropertiesManager.getFenixFrameworkConfig("web/WEB-INF/classes/domain_model.dml");
 	    MetadataManager.init(config);
 	    generate(args[0]);
 	} catch (Exception ex) {
