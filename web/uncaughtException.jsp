@@ -79,8 +79,6 @@ padding: 0 20px;
 
 		<logic:notPresent name="requestBean">
 
-		<% request.getAttribute("dfdsfsd"); %>
-
 			<html:form action="/exceptionHandlingAction.do?method=processExceptionLegacy">
 			
 				<html:hidden property="userAgent" value="<%= request.getHeader("User-Agent") %>" />
