@@ -648,16 +648,14 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
 	for (final Degree degree : rootDomainObject.getDegreesSet()) {
 	    if (degree.getDegreeType() == degreeType) {
-		if (isActive(degree, executionYear)) {
-		    for (final Registration registration : degree.getRegistrationsSet()) {
-			for (final RegistrationState registrationState : registration.getRegistrationStates()) {
-			    final RegistrationStateType registrationStateType = registrationState.getStateType();
-			    if (registrationStateType == RegistrationStateType.FLUNKED
-				    && registrationState.getExecutionYear() == executionYear) {
-				final Row row = spreadsheet.addRow();
-				row.setCell(registration.getNumber());
-				setDegreeColumns(row, degree);
-			    }
+		for (final Registration registration : degree.getRegistrationsSet()) {
+		    for (final RegistrationState registrationState : registration.getRegistrationStates()) {
+			final RegistrationStateType registrationStateType = registrationState.getStateType();
+			if (registrationStateType == RegistrationStateType.FLUNKED
+				&& registrationState.getExecutionYear() == executionYear) {
+			    final Row row = spreadsheet.addRow();
+			    row.setCell(registration.getNumber());
+			    setDegreeColumns(row, degree);
 			}
 		    }
 		}
