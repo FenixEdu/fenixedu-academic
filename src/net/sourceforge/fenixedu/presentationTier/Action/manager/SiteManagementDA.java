@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
@@ -109,16 +108,18 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     public ActionForward deleteItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final Item item = getItem(request);
-	final Section section = item.getSection();
+	if (item != null) {
+	    final Section section = item.getSection();
 
-	try {
-	    final Object[] args = { section.getSite(), item };
-	    executeService(request, "DeleteItem", args);
-	} catch (DomainException e) {
-	    addErrorMessage(request, "items", e.getKey(), (Object[]) e.getArgs());
+	    try {
+		final Object[] args = { section.getSite(), item };
+		executeService(request, "DeleteItem", args);
+	    } catch (DomainException e) {
+		addErrorMessage(request, "items", e.getKey(), (Object[]) e.getArgs());
+	    }
+
+	    selectSection(request, section);
 	}
-
-	selectSection(request, section);
 	return mapping.findForward("section");
     }
 

@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
+import net.sourceforge.fenixedu.domain.thesis.ThesisState;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.cms.messaging.mailSender.MailBean;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -33,8 +34,10 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
 
     @Override
     void process(Thesis thesis) {
-	createAnnouncement(thesis);
-	thesis.approveProposal();
+	if (thesis.getState() != ThesisState.APPROVED) {
+	    createAnnouncement(thesis);
+	    thesis.approveProposal();
+	}
     }
 
     @Override

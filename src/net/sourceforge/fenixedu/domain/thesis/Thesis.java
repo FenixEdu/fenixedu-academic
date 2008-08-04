@@ -574,14 +574,16 @@ public class Thesis extends Thesis_Base {
 
     // SUBMITTED -> APPROVED
     public void approveProposal() {
-	if (getState() != ThesisState.SUBMITTED) {
-	    throw new DomainException("thesis.approve.notSubmitted");
+	if (getState() != ThesisState.APPROVED) {
+	    if (getState() != ThesisState.SUBMITTED) {
+		throw new DomainException("thesis.approve.notSubmitted");
+	    }
+
+	    setApproval(new DateTime());
+	    setProposalApprover(AccessControl.getPerson());
+
+	    setState(ThesisState.APPROVED);
 	}
-
-	setApproval(new DateTime());
-	setProposalApprover(AccessControl.getPerson());
-
-	setState(ThesisState.APPROVED);
     }
 
     // (SUBMITTED | APPROVED) -> DRAFT
@@ -710,26 +712,30 @@ public class Thesis extends Thesis_Base {
 
     // CONFIRMED -> REVISION
     public void allowRevision() {
-	if (getState() != ThesisState.CONFIRMED) {
-	    throw new DomainException("thesis.confirm.notConfirmed");
-	}
+	if (getState() != ThesisState.REVISION) {
+	    if (getState() != ThesisState.CONFIRMED) {
+		throw new DomainException("thesis.confirm.notConfirmed");
+	    }
 
-	setConfirmer(null);
-	setState(ThesisState.REVISION);
+	    setConfirmer(null);
+	    setState(ThesisState.REVISION);
+	}
     }
 
     // CONFIRMED -> EVALUATED
     public void approveEvaluation() {
-	if (getState() != ThesisState.CONFIRMED) {
-	    throw new DomainException("thesis.confirm.notConfirmed");
+	if (getState() != ThesisState.EVALUATED) {
+	    if (getState() != ThesisState.CONFIRMED) {
+		throw new DomainException("thesis.confirm.notConfirmed");
+	    }
+
+	    setEvaluation(new DateTime());
+	    setEvaluationApprover(AccessControl.getPerson());
+
+	    setState(ThesisState.EVALUATED);
+
+	    updateMarkSheet();
 	}
-
-	setEvaluation(new DateTime());
-	setEvaluationApprover(AccessControl.getPerson());
-
-	setState(ThesisState.EVALUATED);
-
-	updateMarkSheet();
     }
 
     public ThesisLibraryState getLibraryState() {
