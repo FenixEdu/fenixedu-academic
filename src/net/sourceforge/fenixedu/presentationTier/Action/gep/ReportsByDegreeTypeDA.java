@@ -606,9 +606,12 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     private void reportRegistrations(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
 	spreadsheet.setHeader("número aluno");
 	setDegreeHeaders(spreadsheet);
-	spreadsheet.setHeader("código regime de ingresso");
-	spreadsheet.setHeader("regime de ingresso");
-	spreadsheet.setHeader("ano léctivo de ingresso");
+	spreadsheet.setHeader("código regime de ingresso na matrícula");
+	spreadsheet.setHeader("regime de ingresso na matrícula");
+	spreadsheet.setHeader("ano léctivo de início da matrícula");
+	spreadsheet.setHeader("código regime de ingresso na escola");
+	spreadsheet.setHeader("regime de ingresso na escola");
+	spreadsheet.setHeader("ano léctivo de ingresso na escola");
 	spreadsheet.setHeader("tipo de aluno");
 	spreadsheet.setHeader("ano curricular");
 
@@ -620,15 +623,12 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 			    final Row row = spreadsheet.addRow();
 			    row.setCell(registration.getNumber());
 			    setDegreeColumns(row, degree);
-			    final Ingression ingression = registration.getIngression();
-			    if (ingression != null) {
-				row.setCell(ingression.getName());
-				row.setCell(ingression.getDescription());
-			    } else {
-				row.setCell("");
-				row.setCell("");
-			    }
-			    row.setCell(registration.getStartExecutionYear().getYear());
+
+			    reportIngression(row, registration);
+
+			    final Registration firstRegistration = findFirstRegistration(registration.getStudent());
+			    reportIngression(row, firstRegistration);
+
 			    if (registration.getRegistrationAgreement() != null) {
 				row.setCell(registration.getRegistrationAgreement().getName()); //TODO: "tipo de aluno": check this
 			    } else {
@@ -640,6 +640,22 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 		}
 	    }
 	}
+    }
+
+    private Registration findFirstRegistration(final Student student) {
+	return Collections.min(student.getRegistrationsSet(), Registration.COMPARATOR_BY_START_DATE);
+    }
+
+    private void reportIngression(final Row row, final Registration registration) {
+	final Ingression ingression = registration.getIngression();
+	if (ingression != null) {
+	    row.setCell(ingression.getName());
+	    row.setCell(ingression.getDescription());
+	} else {
+	    row.setCell("");
+	    row.setCell("");
+	}
+	row.setCell(registration.getStartExecutionYear().getYear());
     }
 
     private void reportFlunked(Spreadsheet spreadsheet, DegreeType degreeType, ExecutionYear executionYear) {
