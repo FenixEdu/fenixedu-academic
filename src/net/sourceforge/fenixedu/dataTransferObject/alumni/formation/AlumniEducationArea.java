@@ -31,7 +31,7 @@ public class AlumniEducationArea implements Serializable {
 	this.educationArea = (educationArea != null) ? new DomainReference<EducationArea>(educationArea) : null;
     }
 
-    //FIXME
+    //FIXME only used for presentation display purposes
     public String getCodeIndentationValue() {
 	String indent = "";
 	for (int i = 1; i < getEducationArea().getCode().length(); i++) {
