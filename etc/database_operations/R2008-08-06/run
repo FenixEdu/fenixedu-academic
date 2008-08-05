@@ -40,3 +40,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Changing Library Portal Links" libraryFunctionalitiesModification.sql
