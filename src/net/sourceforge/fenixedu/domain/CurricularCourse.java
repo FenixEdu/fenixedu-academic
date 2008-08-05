@@ -933,7 +933,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     final public Double getContactLoad(final CurricularPeriod curricularPeriod, final ExecutionYear executionYear) {
-	return getContactLoad(curricularPeriod, executionYear == null ? null : executionYear.getFirstExecutionPeriod());
+	return getContactLoad(curricularPeriod, executionYear == null ? null : executionYear.getLastExecutionPeriod());
     }
 
     final public Double getContactLoad(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
@@ -968,7 +968,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     final public Double getTotalLoad(final CurricularPeriod curricularPeriod, final ExecutionYear executionYear) {
-	return getTotalLoad(curricularPeriod, executionYear == null ? null : executionYear.getFirstExecutionPeriod());
+	return getTotalLoad(curricularPeriod, executionYear == null ? null : executionYear.getLastExecutionPeriod());
     }
 
     final public Double getTotalLoad(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
@@ -1057,7 +1057,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public Double getEctsCredits(final CurricularPeriod curricularPeriod, final ExecutionYear executionYear) {
-	return getEctsCredits(curricularPeriod, executionYear == null ? null : executionYear.getFirstExecutionPeriod());
+	return getEctsCredits(curricularPeriod, executionYear == null ? null : executionYear.getLastExecutionPeriod());
     }
 
     public Double getEctsCredits(final CurricularPeriod curricularPeriod, final ExecutionSemester executionSemester) {
