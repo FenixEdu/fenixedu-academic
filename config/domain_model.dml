@@ -1273,9 +1273,9 @@ class DomainObject {
 				YearMonthDay paymentEndDate;
 			}
 			
-			class accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent extends accounting.events.AnnualEvent {
-				Money pastAdministrativeOfficeFeeAndInsuranceAmount;
-			}
+				class accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent extends accounting.events.AdministrativeOfficeFeeAndInsuranceEvent {
+					Money pastAdministrativeOfficeFeeAndInsuranceAmount;
+				}
 			
 			class accounting.events.gratuity.GratuityEvent extends accounting.events.AnnualEvent {
 			}

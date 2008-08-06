@@ -73,21 +73,20 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 
 	return labelFormatter;
     }
-
+    
     @Override
     protected AdministrativeOfficeServiceAgreementTemplate getServiceAgreementTemplate() {
 	return getAdministrativeOffice().getServiceAgreementTemplate();
     }
 
     @Override
-    public Account getToAccount() {
-	return getAdministrativeOffice().getUnit().getAccountBy(AccountType.INTERNAL);
-
+    protected Account getFromAccount() {
+	return getPerson().getExternalAccount();
     }
 
     @Override
-    protected Account getFromAccount() {
-	return getPerson().getAccountBy(AccountType.EXTERNAL);
+    public Account getToAccount() {
+	return getAdministrativeOffice().getUnit().getInternalAccount();
     }
 
     public boolean hasToPayInsurance() {
