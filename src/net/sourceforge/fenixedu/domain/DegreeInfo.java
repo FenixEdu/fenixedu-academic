@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -29,11 +31,34 @@ public class DegreeInfo extends DegreeInfo_Base {
 
     @Override
     public void setName(MultiLanguageString name) {
-	if (this.getExecutionYear().isBeforeOrEquals(ExecutionYear.readCurrentExecutionYear())) {
+	if (hasSameName(name)) {
+	    return;
+	}
+
+	if (!canEdit()) {
 	    throw new DomainException(
 		    "error.net.sourceforge.fenixedu.domain.DegreeInfo.can.only.change.name.for.future.execution.years");
 	}
 	super.setName(name);
+    }
+
+    private boolean hasName() {
+	return getName() != null && !getName().isEmpty();
+    }
+
+    private boolean hasSameName(final MultiLanguageString name) {
+	return hasName() && getName().equals(name);
+    }
+
+    private boolean canEdit() {
+	if (getExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear())) {
+	    return true;
+	} else if (getExecutionYear().isCurrent()) {
+	    return new YearMonthDay().isBefore(getExecutionYear().getFirstExecutionPeriod().getBeginDateYearMonthDay());
+	} else {
+	    return false;
+	}
+
     }
 
     protected DegreeInfo(DegreeInfo degreeInfo, ExecutionYear executionYear) {

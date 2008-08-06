@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -25,6 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -338,12 +340,18 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	DegreeInfo degreeInfo = getDegree().getDegreeInfoFor(executionYear);
 	if (degreeInfo == null) {
 	    degreeInfo = getDegree().getMostRecentDegreeInfo();
-	    setSelectedExecutionYearId(degreeInfo.getExecutionYear().getIdInternal());
+	    //setSelectedExecutionYearId(degreeInfo.getExecutionYear().getIdInternal());
 	}
 	return degreeInfo;
     }
 
     public boolean isAbleToEditName() {
-	return getSelectedExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear());
+	if (getSelectedExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear())) {
+	    return true;
+	} else if (getSelectedExecutionYear().isCurrent()) {
+	    return new YearMonthDay().isBefore(getSelectedExecutionYear().getFirstExecutionPeriod().getBeginDateYearMonthDay());
+	} else {
+	    return false;
+	}
     }
 }

@@ -127,6 +127,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	}
 	degreeInfo.setName(MultiLanguageString.i18n().add("pt", name.trim()).add("en", nameEn.trim()).finish());
 
+	this.setNome(name);
+	this.setNameEn(nameEn);
 	this.setSigla(code.trim());
 	this.setGradeScale(gradeScale);
     }
