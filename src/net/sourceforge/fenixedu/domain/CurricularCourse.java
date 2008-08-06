@@ -1464,6 +1464,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return getType() == CurricularCourseType.TFC_COURSE;
     }
 
+    @Override
     public boolean isDissertation() {
 	CompetenceCourse competenceCourse = getCompetenceCourse();
 	return competenceCourse == null ? false : competenceCourse.isDissertation();

@@ -467,6 +467,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return getName();
     }
 
+    /**
+     * @deprecated Use {@link #getNameFor(ExecutionYear)}
+     */
     @Deprecated
     final public String getName() {
 	DegreeInfo degreeInfo = getMostRecentDegreeInfo();

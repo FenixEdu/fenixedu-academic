@@ -280,7 +280,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	}
 	return false;
     }
-    
+
     public boolean hasAnyOpenParentContexts(final ExecutionSemester executionSemester) {
 	for (final Context context : getParentContextsSet()) {
 	    if (executionSemester == null || context.isOpen(executionSemester)) {
@@ -527,6 +527,10 @@ abstract public class DegreeModule extends DegreeModule_Base {
 	    res.add(context.getParentCourseGroup());
 	}
 	return res;
+    }
+
+    public boolean isDissertation() {
+	return false;
     }
 
     abstract public DegreeCurricularPlan getParentDegreeCurricularPlan();
