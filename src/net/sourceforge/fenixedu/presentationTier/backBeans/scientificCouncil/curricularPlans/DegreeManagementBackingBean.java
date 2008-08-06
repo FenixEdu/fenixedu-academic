@@ -98,7 +98,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public String getName() {
-	return (name == null && getDegree() != null) ? (name = getDegree().getDegreeInfoFor(getSelectedExecutionYear()).getName().getContent(Language.pt)) : name;
+	return (name == null && getDegree() != null) ? (name = getDegree().getDegreeInfoFor(getSelectedExecutionYear()).getName()
+		.getContent(Language.pt)) : name;
     }
 
     public void setName(String name) {
@@ -106,7 +107,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public String getNameEn() {
-	return (nameEn == null && getDegree() != null) ? (nameEn = getDegree().getDegreeInfoFor(getSelectedExecutionYear()).getName().getContent(Language.en)): nameEn;
+	return (nameEn == null && getDegree() != null) ? (nameEn = getDegree().getDegreeInfoFor(getSelectedExecutionYear())
+		.getName().getContent(Language.en)) : nameEn;
     }
 
     public void setNameEn(String nameEn) {
@@ -263,10 +265,18 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	    setSelectedExecutionYearId(executionYearId);
 	    ExecutionYear executionYear = getSelectedExecutionYear();
 	    DegreeInfo degreeInfo = getDegree().getMostRecentDegreeInfo(executionYear);
-	    this.name = degreeInfo.getName().getContent(Language.pt);
-	    this.nameEn = degreeInfo.getName().getContent(Language.en);
-	    this.nameInputComponent.setValue(degreeInfo.getName().getContent(Language.pt));
-	    this.nameEnInputComponent.setValue(degreeInfo.getName().getContent(Language.en));
+	    if (degreeInfo == null) {
+		addErrorMessage(getFormatedMessage(scouncilBundle, "error.Degree.doesnot.have.degreeInfo.for.year", executionYear
+			.getName()));
+		degreeInfo = getDegree().getMostRecentDegreeInfo();
+	    }
+
+	    if (degreeInfo != null) {
+		this.name = degreeInfo.getName().getContent(Language.pt);
+		this.nameEn = degreeInfo.getName().getContent(Language.en);
+		this.nameInputComponent.setValue(degreeInfo.getName().getContent(Language.pt));
+		this.nameEnInputComponent.setValue(degreeInfo.getName().getContent(Language.en));
+	    }
 	}
     }
 
@@ -297,7 +307,9 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	    this.nameInputComponent = new HtmlInputText();
 	    ExecutionYear executionYear = (getSelectedExecutionYear() != null) ? getSelectedExecutionYear() : ExecutionYear
 		    .readCurrentExecutionYear();
-	    this.nameInputComponent.setValue(getDegree().getDegreeInfoFor(executionYear).getName().getContent(Language.pt));
+
+	    final DegreeInfo degreeInfo = getDegreeInfo(executionYear);
+	    this.nameInputComponent.setValue(degreeInfo.getName().getContent(Language.pt));
 	}
 	return this.nameInputComponent;
     }
@@ -311,7 +323,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	    this.nameEnInputComponent = new HtmlInputText();
 	    ExecutionYear executionYear = (getSelectedExecutionYear() != null) ? getSelectedExecutionYear() : ExecutionYear
 		    .readCurrentExecutionYear();
-	    this.nameEnInputComponent.setValue(getDegree().getDegreeInfoFor(executionYear).getName().getContent(Language.en));
+	    final DegreeInfo degreeInfo = getDegreeInfo(executionYear);
+	    this.nameEnInputComponent.setValue(degreeInfo.getName().getContent(Language.en));
 	}
 
 	return this.nameEnInputComponent;
@@ -321,7 +334,16 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	this.nameEnInputComponent = nameEnInputComponent;
     }
 
+    private DegreeInfo getDegreeInfo(final ExecutionYear executionYear) {
+	DegreeInfo degreeInfo = getDegree().getDegreeInfoFor(executionYear);
+	if (degreeInfo == null) {
+	    degreeInfo = getDegree().getMostRecentDegreeInfo();
+	    setSelectedExecutionYearId(degreeInfo.getExecutionYear().getIdInternal());
+	}
+	return degreeInfo;
+    }
+
     public boolean isAbleToEditName() {
-	return getSelectedExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear()); 
+	return getSelectedExecutionYear().isAfter(ExecutionYear.readCurrentExecutionYear());
     }
 }
