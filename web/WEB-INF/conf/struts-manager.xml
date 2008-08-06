@@ -2431,25 +2431,7 @@
 			<forward name="chooseNotNeedToEnrol" path="studentCredit.chooseNotNeedToEnrol"/>
 		  </action>
 	  	<!-- End: Student Dismissals Management -->
-		
-		<!-- Begin: Payments Management -->
-       	<action path="/payments"
-				scope="request"		
-		        parameter="method"
-			    type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PaymentsManagementDA">
-			    
-			<forward name="searchPersons" path="payments.events.searchPersons" />    
-			<forward name="choosePerson" path="payments.events.choosePerson" />
-			<forward name="showEvents" path="payments.events.showEvents" />    
-			<forward name="editCancelEventJustification" path="payments.events.editCancelEventJustification" />
-			<forward name="showPaymentsForEvent" path="payments.events.showPaymentsForEvent" />
-			<forward name="chooseTargetEventForPaymentsTransfer" path="payments.events.chooseTargetEventForPaymentsTransfer" />
-			<forward name="annulTransaction" path="payments.events.annulTransaction"></forward>
-			<forward name="showOperations" path="payments.showOperations" />
-			<forward name="showReceipts" path="payments.receipts.showReceipts" />
-			<forward name="showReceipt" path="payments.receipts.showReceipt" />
-		</action>
-				
+						
 		<!-- Marksheet Management -->
 		<action path="/markSheetManagement"
 				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.MarkSheetSearchDispatchAction"

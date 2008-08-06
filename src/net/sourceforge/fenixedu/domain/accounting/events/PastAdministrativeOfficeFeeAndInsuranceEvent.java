@@ -1,7 +1,11 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
+import java.util.Collections;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -42,5 +46,10 @@ public class PastAdministrativeOfficeFeeAndInsuranceEvent extends PastAdministra
     @Override
     public boolean isExemptionAppliable() {
 	return false;
+    }
+    
+    @Override
+    public Set<EntryType> getPossibleEntryTypesForDeposit() {
+	return Collections.emptySet();
     }
 }

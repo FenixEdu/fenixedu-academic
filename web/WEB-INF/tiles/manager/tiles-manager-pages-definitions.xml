@@ -940,40 +940,7 @@
 		<put name="body" value="/manager/bolonha/dismissal/chooseCreditNotNeedToEnrol.jsp"/>
 	</definition>
     <!-- End: Student Dismissals Management -->
-    
-    <!-- Start: Payments Management -->
-    <definition name="payments.events.searchPersons" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/payments/events/searchPersons.jsp"></put>
-    </definition>
-    <definition name="payments.events.showEvents" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/payments/events/showEvents.jsp"></put>
-    </definition>
-    <definition name="payments.events.editCancelEventJustification" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/payments/events/editCancelEventJustification.jsp"></put>
-    </definition>
-    <definition name="payments.events.showPaymentsForEvent" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/payments/events/showPaymentsForEvent.jsp"></put>
-    </definition>
-    <definition name="payments.events.chooseTargetEventForPaymentsTransfer" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/payments/events/chooseTargetEventForPaymentsTransfer.jsp"></put>
-    </definition>
-    <definition name="payments.events.annulTransaction" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/payments/events/annulTransaction.jsp"></put>
-    </definition>
-    <definition name="payments.showOperations" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/payments/showOperations.jsp"></put>
-    </definition>
-    <definition name="payments.receipts.showReceipts" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/payments/receipts/showReceipts.jsp"></put>
-    </definition>
-    <definition name="payments.receipts.showReceipt" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/payments/receipts/showReceipt.jsp"></put>
-    </definition>
-    
-    
-    
-	<!-- End: Payments Management -->
-	    
+    	    
 	
 	<!-- =====================  ====================== -->
 	<definition name="show.markSheetManagement.search.page" extends="definition.manager.masterPage">

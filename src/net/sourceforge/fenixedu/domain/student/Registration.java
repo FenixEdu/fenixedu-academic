@@ -105,8 +105,6 @@ import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-
 public class Registration extends Registration_Base {
 
     static private final List<DegreeType> DEGREE_TYPES_TO_ENROL_BY_STUDENT = Arrays.asList(new DegreeType[] {
@@ -192,7 +190,6 @@ public class Registration extends Registration_Base {
 
 	setStudent(person.hasStudent() ? person.getStudent() : new Student(person, registrationNumber));
 	setNumber(registrationNumber == null ? getStudent().getNumber() : registrationNumber);
-	setPayedTuition(true);
 	setRegistrationYear(executionYear == null ? ExecutionYear.readCurrentExecutionYear() : executionYear);
 	setRequestedChangeDegree(false);
 	setRequestedChangeBranch(false);
@@ -2772,13 +2769,13 @@ public class Registration extends Registration_Base {
 	super.removeStudentCandidacy();
     }
 
-    @Override
     final public Boolean getPayedTuition() {
-	return super.getPayedTuition() != null && super.getPayedTuition() && !hasAnyNotPayedGratuityEventsForPreviousYears();
+	return !hasAnyNotPayedGratuityEventsForPreviousYears();
     }
-
-    final public Boolean getPayedOldTuition() {
-	return super.getPayedTuition() != null && super.getPayedTuition();
+    
+    @Deprecated
+    public void setPayedTuition(Boolean value){
+	throw new UnsupportedOperationException();
     }
 
     final public boolean getHasGratuityDebtsCurrently() {
@@ -2786,7 +2783,7 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean hasGratuityDebtsCurrently() {
-	return !super.getPayedTuition() || hasAnyNotPayedGratuityEvents();
+	return hasAnyNotPayedGratuityEvents();
     }
 
     final public boolean hasInsuranceDebtsCurrently() {
@@ -2798,7 +2795,7 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean hasGratuityDebts(final ExecutionYear executionYear) {
-	return !super.getPayedTuition() || hasAnyNotPayedGratuityEventUntil(executionYear);
+	return hasAnyNotPayedGratuityEventUntil(executionYear);
     }
 
     final public boolean hasInsuranceDebts(final ExecutionYear executionYear) {

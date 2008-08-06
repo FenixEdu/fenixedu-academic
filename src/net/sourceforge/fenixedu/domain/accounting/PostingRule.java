@@ -302,7 +302,16 @@ public abstract class PostingRule extends PostingRule_Base {
     public AccountingTransaction depositAmount(final User responsibleUser, final Event event, final Account fromAcount,
 	    final Account toAccount, final Money amount, final EntryType entryType,
 	    final AccountingTransactionDetailDTO transactionDetailDTO) {
-	throw new DomainException("error.accounting.PostingRule.does.not.implement.deposit.amount");
+	
+	checkEntryTypeForDeposit(event, entryType);
+
+	return makeAccountingTransaction(responsibleUser, event, fromAcount, toAccount, entryType, amount, transactionDetailDTO);
+    }
+
+    protected void checkEntryTypeForDeposit(final Event event, final EntryType entryType) {
+	if (!event.getPossibleEntryTypesForDeposit().contains(entryType)) {
+	    throw new DomainException("error.accounting.PostingRule.entry.type.not.supported.for.deposit");
+	}
     }
 
     public boolean isMostRecent() {

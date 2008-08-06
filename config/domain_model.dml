@@ -3756,7 +3756,6 @@ class DomainObject {
 		Character entryGradeClassification;
 		YearMonthDay homologationDate;
 		Integer number;
-		Boolean payedTuition;
 		RegistrationAgreement registrationAgreement;
 		String agreementInformation;
 		Boolean requestedChangeBranch;

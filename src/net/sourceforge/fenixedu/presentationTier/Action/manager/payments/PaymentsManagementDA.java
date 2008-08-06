@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AnnulAccountingTransactionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CancelEventBean;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.DepositAmountBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.TransferPaymentsToOtherEventAndCancelBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.SimpleSearchPersonWithStudentBean;
 import net.sourceforge.fenixedu.domain.Person;
@@ -28,8 +29,25 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
+@Mapping(path = "/payments", module = "manager")
+@Forwards( {
+	@Forward(name = "searchPersons", path = "/manager/payments/events/searchPersons.jsp"),
+	@Forward(name = "showEvents", path = "/manager/payments/events/showEvents.jsp"),
+	@Forward(name = "editCancelEventJustification", path = "/manager/payments/events/editCancelEventJustification.jsp"),
+	@Forward(name = "showPaymentsForEvent", path = "/manager/payments/events/showPaymentsForEvent.jsp"),
+	@Forward(name = "chooseTargetEventForPaymentsTransfer", path = "/manager/payments/events/chooseTargetEventForPaymentsTransfer.jsp"),
+	@Forward(name = "annulTransaction", path = "/manager/payments/events/annulTransaction.jsp"),
+	@Forward(name = "showOperations", path = "/manager/payments/showOperations.jsp"),
+	@Forward(name = "showReceipts", path = "/manager/payments/receipts/showReceipts.jsp"),
+	@Forward(name = "showReceipt", path = "/manager/payments/receipts/showReceipt.jsp"),
+	@Forward(name = "depositAmount", path = "/manager/payments/events/depositAmount.jsp")
+
+})
 public class PaymentsManagementDA extends FenixDispatchAction {
 
     public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -307,5 +325,38 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	bundleMappings.put("enum", "ENUMERATION_RESOURCES");
 	bundleMappings.put("application", "DEFAULT");
 	return bundleMappings;
+    }
+
+    public ActionForward prepareDepositAmount(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("depositAmountBean", new DepositAmountBean(getEvent(request)));
+
+	return mapping.findForward("depositAmount");
+    }
+
+    public ActionForward prepareDepositAmountInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("depositAmountBean", getRenderedObject("depositAmountBean"));
+
+	return mapping.findForward("depositAmount");
+    }
+
+    public ActionForward depositAmount(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	final DepositAmountBean renderedObject = (DepositAmountBean) getRenderedObject("depositAmountBean");
+	try {
+	    executeService("DepositAmountOnEvent", renderedObject);
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
+
+	    request.setAttribute("depositAmountBean", renderedObject);
+
+	    return mapping.findForward("depositAmount");
+	}
+
+	return showEvents(mapping, form, request, response);
     }
 }

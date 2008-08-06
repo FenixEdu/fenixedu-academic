@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.events;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -310,5 +311,14 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	result = result.subtract(getPerson().hasInsuranceEventFor(getExecutionYear()) ? getInsuranceAmount() : Money.ZERO);
 
 	return result.isPositive() ? result : Money.ZERO;
+    }
+
+    @Override
+    public Set<EntryType> getPossibleEntryTypesForDeposit() {
+	final Set<EntryType> result = new HashSet<EntryType>();
+	result.add(EntryType.ADMINISTRATIVE_OFFICE_FEE);
+	result.add(EntryType.INSURANCE_FEE);
+
+	return result;
     }
 }

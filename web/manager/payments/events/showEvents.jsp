@@ -36,11 +36,17 @@
 				<fr:property name="visibleIf(detail)" value="notCancelled" />
 				<fr:property name="order(detail)" value="0" />
 				
+				<fr:property name="linkFormat(deposit)" value="/payments.do?method=prepareDepositAmount&amp;eventId=${idInternal}" />
+				<fr:property name="key(deposit)" value="label.deposit" />
+				<fr:property name="bundle(deposit)" value="APPLICATION_RESOURCES" />
+				<fr:property name="visibleIf(deposit)" value="depositSupported" />
+				<fr:property name="order(deposit)" value="1" />
+				
 				<fr:property name="linkFormat(transferPaymentsAndCancel)" value="/payments.do?method=prepareTransferPaymentsToOtherEventAndCancel&amp;eventId=${idInternal}" />
 				<fr:property name="key(transferPaymentsAndCancel)" value="label.payments.transferPaymentsAndCancel" />
 				<fr:property name="bundle(transferPaymentsAndCancel)" value="ACADEMIC_OFFICE_RESOURCES" />
 				<fr:property name="visibleIf(transferPaymentsAndCancel)" value="notCancelled" />
-				<fr:property name="order(transferPaymentsAndCancel)" value="1" />
+				<fr:property name="order(transferPaymentsAndCancel)" value="2" />
 				
 				<fr:property name="linkFormat(open)" value="/payments.do?method=openEvent&amp;eventId=${idInternal}" />
 				<fr:property name="key(open)" value="label.open" />
@@ -53,7 +59,7 @@
 				<fr:property name="linkFormat(cancel)" value="/payments.do?method=prepareCancelEvent&amp;eventId=${idInternal}" />
 				<fr:property name="key(cancel)" value="label.cancel" />
 				<fr:property name="bundle(cancel)" value="APPLICATION_RESOURCES" />
-				<fr:property name="order(cancel)" value="3" />
+				<fr:property name="order(cancel)" value="5" />
 				<fr:property name="visibleIfNot(cancel)" value="cancelled" />
 
 			</fr:layout>

@@ -473,3 +473,17 @@
 	</slot>
 </schema>
 
+
+<schema name="DepositAmountBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.accounting.DepositAmountBean"  bundle="APPLICATION_RESOURCES">
+	<slot name="entryType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">	
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.payments.EntryTypeForDepositProvider" />
+		<property name="eachLayout" value="this-does-not-exist" />
+        <property name="saveOptions" value="true"/>
+	</slot>
+	<slot name="whenRegistered" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="amount" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="reason" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="longText"/>
+	
+</schema>
+
+

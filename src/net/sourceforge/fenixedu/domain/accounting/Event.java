@@ -893,4 +893,12 @@ public abstract class Event extends Event_Base {
     public boolean isPayableOnAdministrativeOffice(AdministrativeOffice administrativeOffice) {
 	return false;
     }
+
+    public Set<EntryType> getPossibleEntryTypesForDeposit() {
+	return Collections.EMPTY_SET;
+    }
+
+    public boolean isDepositSupported() {
+	return !isCancelled() && !getPossibleEntryTypesForDeposit().isEmpty();
+    }
 }

@@ -46,9 +46,13 @@ public abstract class GenericSingleEntryTypePR extends GenericSingleEntryTypePR_
 
     @Override
     @Checked("RolePredicates.MANAGER_PREDICATE")
-    public AccountingTransaction depositAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount, Money amount,
-	    AccountingTransactionDetailDTO transactionDetailDTO) {
-	return makeAccountingTransaction(responsibleUser, event, fromAcount, toAccount, getEntryType(), amount, transactionDetailDTO);
+    public AccountingTransaction depositAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount,
+	    Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
+
+	checkEntryTypeForDeposit(event, getEntryType());
+
+	return makeAccountingTransaction(responsibleUser, event, fromAcount, toAccount, getEntryType(), amount,
+		transactionDetailDTO);
     }
 
 }

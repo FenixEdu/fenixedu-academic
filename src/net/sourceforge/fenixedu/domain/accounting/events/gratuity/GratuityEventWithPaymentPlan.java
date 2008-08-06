@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -381,6 +382,11 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     @Override
     public GratuityWithPaymentPlanPR getPostingRule() {
 	return (GratuityWithPaymentPlanPR) super.getPostingRule();
+    }
+    
+    @Override
+    public Set<EntryType> getPossibleEntryTypesForDeposit() {
+        return Collections.singleton(EntryType.GRATUITY_FEE);
     }
 
 }
