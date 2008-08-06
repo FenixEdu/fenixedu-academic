@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.publico;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -27,68 +28,77 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
     private Map<Category, List<Teacher>> teachersByCategory;
 
     public List<DepartmentUnit> getDepartmentUnits() {
-        List<DepartmentUnit> result = UnitUtils.readAllDepartmentUnits();         
-        Collections.sort(result, new BeanComparator("department.realName"));        
-        return result;
+	final List<DepartmentUnit> result = new ArrayList<DepartmentUnit>(UnitUtils.readAllDepartmentUnits());
+	removeUnitsWithoutDepartment(result);
+	Collections.sort(result, new BeanComparator("department.realName"));
+	return result;
     }
-    
+
+    private void removeUnitsWithoutDepartment(final List<DepartmentUnit> result) {
+	final Iterator<DepartmentUnit> iterator = result.iterator();
+	while (iterator.hasNext()) {
+	    if (!iterator.next().hasDepartment()) {
+		iterator.remove();
+	    }
+	}
+    }
+
     public Department getDepartment() {
-        Integer selectedDepartmentUnitID = getAndHoldIntegerParameter("selectedDepartmentUnitID");
-        if (selectedDepartmentUnitID != null) {
-            Unit departmentUnit = (Unit) rootDomainObject.readPartyByOID(selectedDepartmentUnitID);
-            return departmentUnit.getDepartment();
-        } else {
-            return null;
-        }
+	Integer selectedDepartmentUnitID = getAndHoldIntegerParameter("selectedDepartmentUnitID");
+	if (selectedDepartmentUnitID != null) {
+	    Unit departmentUnit = (Unit) rootDomainObject.readPartyByOID(selectedDepartmentUnitID);
+	    return departmentUnit.getDepartment();
+	} else {
+	    return null;
+	}
     }
 
     private List<Teacher> getDepartmentTeachers() {
-        final SortedSet<Teacher> result = new TreeSet<Teacher>(
-                Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
+	final SortedSet<Teacher> result = new TreeSet<Teacher>(Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
 
-        Department department = getDepartment();
-        if (department != null) {
-            YearMonthDay today = new YearMonthDay();
-            YearMonthDay tomorrow = today.plusDays(1);
-            result.addAll(department.getAllTeachers(today, tomorrow));
-        }
+	Department department = getDepartment();
+	if (department != null) {
+	    YearMonthDay today = new YearMonthDay();
+	    YearMonthDay tomorrow = today.plusDays(1);
+	    result.addAll(department.getAllTeachers(today, tomorrow));
+	}
 
-        return new ArrayList<Teacher>(result);
+	return new ArrayList<Teacher>(result);
     }
 
     private void initializeStructures() {
-        teachersByCategory = new TreeMap<Category, List<Teacher>>();
+	teachersByCategory = new TreeMap<Category, List<Teacher>>();
 
-        for (final Teacher teacher : getDepartmentTeachers()) {
-            Category category = teacher.getCategory();
+	for (final Teacher teacher : getDepartmentTeachers()) {
+	    Category category = teacher.getCategory();
 
-            if (!teachersByCategory.containsKey(category)) {
-                final List<Teacher> categoryTeachers = new ArrayList<Teacher>();
-                categoryTeachers.add(teacher);
+	    if (!teachersByCategory.containsKey(category)) {
+		final List<Teacher> categoryTeachers = new ArrayList<Teacher>();
+		categoryTeachers.add(teacher);
 
-                teachersByCategory.put(category, categoryTeachers);
-                sortedDepartmentCategories.add(category);
-            } else {
-                final List<Teacher> categoryTeachers = teachersByCategory.get(category);
-                categoryTeachers.add(teacher);
-            }
-        }
+		teachersByCategory.put(category, categoryTeachers);
+		sortedDepartmentCategories.add(category);
+	    } else {
+		final List<Teacher> categoryTeachers = teachersByCategory.get(category);
+		categoryTeachers.add(teacher);
+	    }
+	}
     }
 
     public Map<Category, List<Teacher>> getTeachersByCategory() {
-        if (teachersByCategory == null) {
-            initializeStructures();
-        }
+	if (teachersByCategory == null) {
+	    initializeStructures();
+	}
 
-        return teachersByCategory;
+	return teachersByCategory;
     }
 
     public List<Category> getSortedDepartmentCategories() {
-        if (sortedDepartmentCategories.isEmpty()) {
-            initializeStructures();
-        }
+	if (sortedDepartmentCategories.isEmpty()) {
+	    initializeStructures();
+	}
 
-        return new ArrayList<Category>(sortedDepartmentCategories);
+	return new ArrayList<Category>(sortedDepartmentCategories);
     }
 
 }

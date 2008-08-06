@@ -50,32 +50,32 @@ public class Department extends Department_Base {
 
     public List<Employee> getAllCurrentActiveWorkingEmployees() {
 	Unit departmentUnit = getDepartmentUnit();
-	return (departmentUnit != null) ? departmentUnit.getAllCurrentActiveWorkingEmployees() : new ArrayList<Employee>();
+	return (departmentUnit != null) ? departmentUnit.getAllCurrentActiveWorkingEmployees() : new ArrayList<Employee>(0);
     }
 
     public List<Employee> getAllWorkingEmployees(YearMonthDay begin, YearMonthDay end) {
 	Unit departmentUnit = getDepartmentUnit();
-	return (departmentUnit != null) ? departmentUnit.getAllWorkingEmployees(begin, end) : new ArrayList<Employee>();
+	return (departmentUnit != null) ? departmentUnit.getAllWorkingEmployees(begin, end) : new ArrayList<Employee>(0);
     }
 
     public List<Employee> getAllWorkingEmployees() {
 	Unit departmentUnit = getDepartmentUnit();
-	return (departmentUnit != null) ? departmentUnit.getAllWorkingEmployees() : new ArrayList<Employee>();
+	return (departmentUnit != null) ? departmentUnit.getAllWorkingEmployees() : new ArrayList<Employee>(0);
     }
 
     public List<Teacher> getAllCurrentTeachers() {
 	Unit departmentUnit = getDepartmentUnit();
-	return (departmentUnit != null) ? departmentUnit.getAllCurrentTeachers() : new ArrayList<Teacher>();
+	return (departmentUnit != null) ? departmentUnit.getAllCurrentTeachers() : new ArrayList<Teacher>(0);
     }
 
     public List<Teacher> getAllTeachers() {
 	Unit departmentUnit = getDepartmentUnit();
-	return (departmentUnit != null) ? departmentUnit.getAllTeachers() : new ArrayList<Teacher>();
+	return (departmentUnit != null) ? departmentUnit.getAllTeachers() : new ArrayList<Teacher>(0);
     }
 
     public List<Teacher> getAllTeachers(YearMonthDay begin, YearMonthDay end) {
 	Unit departmentUnit = getDepartmentUnit();
-	return (departmentUnit != null) ? departmentUnit.getAllTeachers(begin, end) : new ArrayList<Teacher>();
+	return (departmentUnit != null) ? departmentUnit.getAllTeachers(begin, end) : new ArrayList<Teacher>(0);
     }
 
     public Teacher getTeacherByPeriod(Integer teacherNumber, YearMonthDay begin, YearMonthDay end) {
@@ -85,7 +85,7 @@ public class Department extends Department_Base {
 	    }
 	}
 	return null;
-    }       
+    }
 
     public List<CompetenceCourse> getCompetenceCoursesByExecutionYear(ExecutionYear executionYear) {
 	List<CompetenceCourse> competenceCourses = this.getCompetenceCourses();
@@ -99,7 +99,8 @@ public class Department extends Department_Base {
 	return competenceCoursesByExecutionYear;
     }
 
-    public void addAllCompetenceCoursesByExecutionPeriod(final Collection<CompetenceCourse> competenceCourses, final ExecutionSemester executionSemester) {
+    public void addAllCompetenceCoursesByExecutionPeriod(final Collection<CompetenceCourse> competenceCourses,
+	    final ExecutionSemester executionSemester) {
 	for (CompetenceCourse competenceCourse : getCompetenceCourses()) {
 	    if (competenceCourse.hasActiveScopesInExecutionPeriod(executionSemester)) {
 		competenceCourses.add(competenceCourse);
@@ -108,10 +109,12 @@ public class Department extends Department_Base {
     }
 
     public List<TeacherPersonalExpectation> getTeachersPersonalExpectationsByExecutionYear(ExecutionYear executionYear) {
-	List<Teacher> teachersFromDepartment = getAllTeachers(executionYear.getBeginDateYearMonthDay(),	executionYear.getEndDateYearMonthDay());
+	List<Teacher> teachersFromDepartment = getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear
+		.getEndDateYearMonthDay());
 	List<TeacherPersonalExpectation> personalExpectations = new ArrayList<TeacherPersonalExpectation>();
 	for (Teacher teacher : teachersFromDepartment) {
-	    TeacherPersonalExpectation teacherPersonalExpectation = teacher.getTeacherPersonalExpectationByExecutionYear(executionYear);
+	    TeacherPersonalExpectation teacherPersonalExpectation = teacher
+		    .getTeacherPersonalExpectationByExecutionYear(executionYear);
 	    if (teacherPersonalExpectation != null) {
 		personalExpectations.add(teacherPersonalExpectation);
 	    }
@@ -126,17 +129,13 @@ public class Department extends Department_Base {
     }
 
     @SuppressWarnings("unchecked")
-    public List<TSDProcess> getTSDProcessesByExecutionPeriods(
-	    final List<ExecutionSemester> executionPeriodList) {
-	return (List<TSDProcess>) CollectionUtils.select(
-		getTSDProcesses(), new Predicate() {
-		    public boolean evaluate(Object arg0) {
-			TSDProcess tsdProcess = (TSDProcess) arg0;
-			return !CollectionUtils.intersection(
-				tsdProcess.getExecutionPeriods(), executionPeriodList)
-				.isEmpty();
-		    }
-		});
+    public List<TSDProcess> getTSDProcessesByExecutionPeriods(final List<ExecutionSemester> executionPeriodList) {
+	return (List<TSDProcess>) CollectionUtils.select(getTSDProcesses(), new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		TSDProcess tsdProcess = (TSDProcess) arg0;
+		return !CollectionUtils.intersection(tsdProcess.getExecutionPeriods(), executionPeriodList).isEmpty();
+	    }
+	});
     }
 
     public List<TSDProcess> getTSDProcessesByExecutionPeriod(final ExecutionSemester executionSemester) {
@@ -165,7 +164,8 @@ public class Department extends Department_Base {
 	return courses;
     }
 
-    public void addAllBolonhaCompetenceCourses(final Collection<CompetenceCourse> competenceCourses, final ExecutionSemester period) {
+    public void addAllBolonhaCompetenceCourses(final Collection<CompetenceCourse> competenceCourses,
+	    final ExecutionSemester period) {
 	for (CompetenceCourse course : getBolonhaCompetenceCourses()) {
 	    if (!course.getCurricularCoursesWithActiveScopesInExecutionPeriod(period).isEmpty()) {
 		competenceCourses.add(course);
@@ -176,7 +176,7 @@ public class Department extends Department_Base {
     public TeacherPersonalExpectationPeriod getTeacherPersonalExpectationPeriodForExecutionYear(ExecutionYear executionYear,
 	    Class<? extends TeacherPersonalExpectationPeriod> clazz) {
 
-	if(executionYear != null) {
+	if (executionYear != null) {
 	    for (TeacherPersonalExpectationPeriod period : getTeacherPersonalExpectationPeriods()) {
 		if (period.getExecutionYear().equals(executionYear) && period.getClass().equals(clazz)) {
 		    return period;
@@ -186,36 +186,43 @@ public class Department extends Department_Base {
 	return null;
     }
 
-    public TeacherAutoEvaluationDefinitionPeriod getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(ExecutionYear executionYear) {
-	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, TeacherAutoEvaluationDefinitionPeriod.class);
-	return period != null ? (TeacherAutoEvaluationDefinitionPeriod)period : null;
+    public TeacherAutoEvaluationDefinitionPeriod getTeacherAutoEvaluationDefinitionPeriodForExecutionYear(
+	    ExecutionYear executionYear) {
+	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear,
+		TeacherAutoEvaluationDefinitionPeriod.class);
+	return period != null ? (TeacherAutoEvaluationDefinitionPeriod) period : null;
     }
 
     public TeacherExpectationDefinitionPeriod getTeacherExpectationDefinitionPeriodForExecutionYear(ExecutionYear executionYear) {
-	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, TeacherExpectationDefinitionPeriod.class);
-	return period != null ? (TeacherExpectationDefinitionPeriod)period : null;
+	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear,
+		TeacherExpectationDefinitionPeriod.class);
+	return period != null ? (TeacherExpectationDefinitionPeriod) period : null;
     }
 
-    public TeacherPersonalExpectationsVisualizationPeriod getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(ExecutionYear executionYear) {	
-	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, TeacherPersonalExpectationsVisualizationPeriod.class);
-	return period != null ? (TeacherPersonalExpectationsVisualizationPeriod)period : null;
+    public TeacherPersonalExpectationsVisualizationPeriod getTeacherPersonalExpectationsVisualizationPeriodByExecutionYear(
+	    ExecutionYear executionYear) {
+	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear,
+		TeacherPersonalExpectationsVisualizationPeriod.class);
+	return period != null ? (TeacherPersonalExpectationsVisualizationPeriod) period : null;
     }
 
-    public TeacherPersonalExpectationsEvaluationPeriod getTeacherPersonalExpectationsEvaluationPeriodByExecutionYear(ExecutionYear executionYear) {	
-	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear, TeacherPersonalExpectationsEvaluationPeriod.class);
-	return period != null ? (TeacherPersonalExpectationsEvaluationPeriod)period : null;
+    public TeacherPersonalExpectationsEvaluationPeriod getTeacherPersonalExpectationsEvaluationPeriodByExecutionYear(
+	    ExecutionYear executionYear) {
+	TeacherPersonalExpectationPeriod period = getTeacherPersonalExpectationPeriodForExecutionYear(executionYear,
+		TeacherPersonalExpectationsEvaluationPeriod.class);
+	return period != null ? (TeacherPersonalExpectationsEvaluationPeriod) period : null;
     }
 
-    public List<Teacher> getPossibleTutors(){		
+    public List<Teacher> getPossibleTutors() {
 	List<Teacher> teachers = new ArrayList<Teacher>();
 
-	for(Teacher teacher : this.getAllTeachers()) {
-	    if(teacher.canBeTutorOfDepartment(this)) {
+	for (Teacher teacher : this.getAllTeachers()) {
+	    if (teacher.canBeTutorOfDepartment(this)) {
 		teachers.add(teacher);
 	    }
 	}
 
-	Collections.sort(teachers,Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
+	Collections.sort(teachers, Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
 	return teachers;
 
     }
@@ -260,7 +267,7 @@ public class Department extends Department_Base {
 		department.getDegreesSet().add(degree);
 	    }
 	    return null;
-	}	
+	}
     }
 
     public void delete() {
@@ -278,15 +285,12 @@ public class Department extends Department_Base {
      *         the department's name
      */
     public MultiLanguageString getNameI18n() {
-	return MultiLanguageString.i18n()
-	.add("pt", getRealName())
-	.add("en", getRealNameEn())
-	.finish();
+	return MultiLanguageString.i18n().add("pt", getRealName()).add("en", getRealNameEn()).finish();
     }
 
     public Integer getCompetenceCourseInformationChangeRequestsCount() {
-	int count=0;
-	for(CompetenceCourse course : getDepartmentUnit().getCompetenceCourses()) {
+	int count = 0;
+	for (CompetenceCourse course : getDepartmentUnit().getCompetenceCourses()) {
 	    count += course.getCompetenceCourseInformationChangeRequestsCount();
 	}
 
@@ -294,8 +298,8 @@ public class Department extends Department_Base {
     }
 
     public Integer getDraftCompetenceCourseInformationChangeRequestsCount() {
-	int count=0;
-	for(CompetenceCourse course : getDepartmentUnit().getCompetenceCourses()) {
+	int count = 0;
+	for (CompetenceCourse course : getDepartmentUnit().getCompetenceCourses()) {
 	    count += course.getDraftCompetenceCourseInformationChangeRequestsCount();
 	}
 
