@@ -67,7 +67,7 @@
 
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
-		<action path="/showErrorPage" forward="/uncaughtException.jsp" />
+		<action path="/showErrorPage" forward="/supportHelpInquiry.jsp" />
 		<action path="/showErrorPageRegistered" forward="/exception/errorRegistered.jsp"/>
         <action path="/naoAutorizado" forward="/error.jsp"/>
         <action path="/naoExecutado" forward="/error.jsp"/>

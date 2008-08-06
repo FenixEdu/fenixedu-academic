@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
-import net.sourceforge.fenixedu.domain.support.SupportRequestPriority;
-import net.sourceforge.fenixedu.domain.support.SupportRequestType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionConstants;
 
@@ -40,7 +38,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 
     private final int INDENT = 15;
     private final String INDENT_TOKEN = "_";
-    private final String SEPARATOR = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
+    private final String SEPARATOR = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
 
     public ActionForward sendEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
@@ -119,22 +117,6 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 
 	request.setAttribute("requestBean", requestBean);
 	return mapping.findForward("supportHelpInquiry");
-    }
-
-    public final ActionForward processExceptionLegacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	DynaActionForm emailForm = (DynaActionForm) form;
-	String formEmail = (String) emailForm.get("email");
-	String formSubject = (String) emailForm.get("subject");
-	String formBody = (String) emailForm.get("body");
-
-	SupportRequestBean requestBean = new SupportRequestBean(SupportRequestType.EXCEPTION, SupportRequestPriority.EXCEPTION);
-	requestBean.setResponseEmail(formEmail);
-	requestBean.setSubject(formSubject);
-	requestBean.setMessage(formBody);
-
-	return prepareSendEmail(mapping, form, request, response, requestBean);
     }
 
     public final ActionForward supportFormFieldValidation(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.support;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.log.requests.ErrorLog;
 import net.sourceforge.fenixedu.domain.support.SupportRequestPriority;
@@ -21,9 +22,14 @@ public class SupportRequestBean implements Serializable {
     public SupportRequestBean() {
     }
 
-    public SupportRequestBean(SupportRequestType requestType, SupportRequestPriority requestPriority) {
-	setRequestType(requestType);
-	setRequestPriority(requestPriority);
+    public static SupportRequestBean GenerateExceptionBean(Person person) {
+	SupportRequestBean bean = new SupportRequestBean();
+	bean.setRequestType(SupportRequestType.EXCEPTION);
+	bean.setRequestPriority(SupportRequestPriority.EXCEPTION);
+	if (person.getInstitutionalOrDefaultEmailAddress() != null) {
+	    bean.setResponseEmail(person.getInstitutionalOrDefaultEmailAddress().getValue());
+	}
+	return bean;
     }
 
     public void setRequestContext(Content content) {

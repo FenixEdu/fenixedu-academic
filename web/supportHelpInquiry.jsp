@@ -8,6 +8,7 @@
 <%@page import="pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter"%>
 <%@page import="pt.ist.fenixWebFramework.security.UserView"%>
 <%@page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
+<%@page import="net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean"%>
 <html:html xhtml="true">
 
 <head>
@@ -54,7 +55,6 @@ padding: 0 20px;
 		</div>
 	</div>
 
-
 	<div class="form">
 
 		<fr:form id="supportForm" action="/exceptionHandlingAction.do?method=processSupportRequest" >
@@ -63,7 +63,7 @@ padding: 0 20px;
 			<html:hidden property="userAgent" value="<%= request.getHeader("User-Agent") %>" />
 	
 			<bean:define id="schema" value="support.request.form" />
-			
+
 			<logic:notPresent name="exceptionInfo">
 				<fr:edit id="view_state_id" name="requestBean" schema="<%= schema %>" >
 					<fr:layout name="tabular">

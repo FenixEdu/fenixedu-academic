@@ -131,7 +131,10 @@
 	    <filter-name>ContentFilter</filter-name>
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentFilter</filter-class>
 	</filter>
-
+   	<filter>
+	    <filter-name>UncaughtExceptionFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.UncaughtExceptionFilter</filter-class>
+	</filter>
 	<!-- Filter Mapping -->
 	<filter-mapping>
  		 <filter-name>LoginPageFilter</filter-name>
@@ -150,12 +153,11 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>CloseTxFilter</filter-name>
-		<url-pattern>/uncaughtException.jsp</url-pattern>
-        <dispatcher>FORWARD</dispatcher>
+		<filter-name>SetUserViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>SetUserViewFilter</filter-name>
+		<filter-name>UncaughtExceptionFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
@@ -220,7 +222,6 @@
 		<filter-name>ContentFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
     <!-- Listeners -->
 	<listener>
 		<listener-class>
@@ -330,7 +331,6 @@
 	    <exception-type>java.lang.Exception</exception-type>
 	    <location>/showErrorPage.do</location>
 	</error-page>
-
     <jsp-config>
         <taglib>
             <taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>
