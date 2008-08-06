@@ -21,8 +21,12 @@ public class LibraryCard extends LibraryCard_Base {
     public void edit(LibraryCardDTO libraryCardDTO) {
 	setUserName(libraryCardDTO.getUserName());
 	setUnitName(libraryCardDTO.getChosenUnitName());
-	setValidUntil(libraryCardDTO.getValidUntil());
 	setPartyClassification(libraryCardDTO.getPartyClassification());
+	if (getValidUntil() == null || libraryCardDTO.getValidUntil() == null
+		|| !getValidUntil().equals(libraryCardDTO.getValidUntil())) {
+	    setValidUntil(libraryCardDTO.getValidUntil());
+	    setCardEmitionDate(null);
+	}
     }
 
     public void delete() {

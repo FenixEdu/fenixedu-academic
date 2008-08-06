@@ -261,7 +261,6 @@
 
 <schema name="library.card.generate.date" type="net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO" bundle="LIBRARY_RESOURCES">
 	<slot name="validUntil" key="label.card.date">
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
 	</slot>
 </schema>
