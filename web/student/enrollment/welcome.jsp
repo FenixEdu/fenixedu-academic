@@ -1,9 +1,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/joda.tld" prefix="joda"%>
+<html:xhtml/>
 
 <logic:present role="STUDENT">
 
@@ -13,7 +13,7 @@
 <div class="infoop6">
 
 <p class="mtop05">
-As inscrições em unidades curriculares e a reserva de turnos para o 2º semestre de 2007/2008 decorrerão online através do sistema Fénix a partir do dia <strong>16 de Fevereiro de 2008 pelas 16h</strong> e <strong>até</strong> ao dia <strong>22 de Fevereiro de 2008</strong>. 
+As inscrições em unidades curriculares e a reserva de turnos para o 1º semestre de 2008/2009 decorrerão online através do sistema Fénix a partir do dia <strong>01 de Setembro de 2008 pelas 09h</strong> e <strong>até</strong> ao dia <strong>8 de Setembro de 2008</strong>. 
 </p>
 
 <p class="mtop05">
@@ -32,25 +32,37 @@ Se existir(em) equivalência(s) que não se encontre(m) registada(s) no seu curríc
 
 <p class="mtop05">
 <strong>3. Número máximo de inscrições</strong><br/> 
-Devido à transição para Bolonha, alunos que tenham estado inscritos o ano passado em Licenciatura (5 anos) encontram-se pela primeira vez nos cursos Bolonha. Todas as inscrições em disciplinas que seriam repetências são consideradas como em 1ª vez nos cursos Bolonha e contabilizados os ECTS a 100%.<br/> 
-Assim, para dar resposta a esta situação, foi decidido pelo Conselho Directivo, para o ano lectivo de 2007/2008, aumentar para 42 ECTS o número máximo de créditos para inscrição por semestre.<br/>
-Esta regra não se aplica a inscrições em disciplinas em que não houve aprovação já nos cursos Bolonha, valendo nesse caso os ECTS a 75% na próxima inscrição.
+Um aluno não poderá inscrever-se em cada semestre a um conjunto de unidades curriculares que correspondam a mais de 40,5 créditos ECTS. Para este efeito, considera-se que o número de créditos ECTS de uma unidade curricular em repetência de inscrição é ponderado em 75%.
+
+No caso de inscrição na unidade curricular de Dissertação, as normas específicas de cada curso, a definir pela coordenação de curso, deverão prever qual o número mínimo de créditos ECTS aprovados necessários para a inscrição.
 </p>
 
 <p class="mtop05">
 <strong>4. Inscrição simultânea em 1º e 2º ciclo</strong><br/> 
-Os alunos de cursos não integrados que ainda não tenham concluído o 1º ciclo e que se inscrevam em unidade(s) curricular(es) de 2º ciclo deverão respeitar os seguintes limites:
+No caso de cursos não integrados e de acordo com o DL 74/2006 de 24 de Março o acesso ao 2o ciclo está condicionado à titularidade de um curso de 1o ciclo. Contudo é permitida a frequência de unidades curriculares de ciclos subsequentes. Neste sentido, no ano lectivo de 2008/2009 será permitido aos alunos de cursos de 1ociclo a frequência de unidades curriculares de 2o ciclo, com excepção da unidade curricular de Dissertação, dentro das seguintes condições:
 </p>
 <p class="indent1">     
-- a soma de número de créditos entre as unidades curriculares aprovadas e as inscritas no 2º ciclo não podem exceder os 80 ECTS;
+1 - Existência de coerência científica entre o curso de 1o ciclo frequentado e o curso de 2o ciclo cujas unidades curriculares se pretende frequentar;
 </p>
 <p class="indent1"> 
-- os alunos que não tenham concluído o 1º ciclo estão impedidos de inscrição na unidade curricular de Dissertação/Projecto.
+2 - Aprovação em mais de 120 ECTS do curso de 1o ciclo;
+</p>
+<p class="indent1"> 
+3 - Inscrição em todas as unidades curriculares do curso de 1o ciclo necessárias para a conclusão do mesmo e que estejam em funcionamento nesse semestre;
+</p>
+<p class="indent1"> 
+4 - A soma do número de créditos já aprovados em unidades curriculares de 2o ciclo com o número de créditos de 2o ciclo em que se inscreve, ECTS 2ociclo, terá que verificar a seguinte desigualdade: ECTS 2ociclo &lt;= 1.4 x ECTS 1ociclo - 168, onde ECTS 1ociclo corresponde à soma do número de créditos ECTS de unidades curriculares do 1o ciclo concluídas.
+</p>
+<p class="indent1"> 
+5 - Respeito das restantes regras e limites de inscrição.
+</p>
+<p class="indent1"> 
+6 - A inscrição na unidade curricular de Dissertação está vedada a alunos do 1o ciclo, apenas podendo ser efectuada por alunos do 2o ciclo. 
 </p>
 
 <p class="mtop05">
 <strong>5. Inscrição em Melhoria de Nota</strong><br/>
-Estas inscrições são realizadas <strong>exclusivamente junto dos Serviços Académicos</strong> de acordo com os prazos constantes no <html:link href="http://www.ist.utl.pt/files/ensino/reg_1e2ciclo_20072008.pdf">regulamento</html:link> 
+Estas inscrições são realizadas <strong>exclusivamente junto dos Serviços Académicos</strong> de acordo com os prazos constantes no <html:link href="http://www.ist.utl.pt/files/ensino/reg_1e2ciclo_20082009.pdf">regulamento</html:link> 
 </p>
 
 <p class="mtop05">
@@ -58,16 +70,8 @@ Estas inscrições são realizadas <strong>exclusivamente junto dos Serviços Académ
 </p>
 
 <p class="mtop05">
-<strong>7. Alunos com inscrição apenas no 2º semestre</strong><br/>
-Se ainda <strong>não realizou a transição</strong> e por isso não consegue inscrever-se, então <strong>envie-nos o seu pedido por email.</strong><br/>
-Deve indicar "Transitar para Bolonha" no assunto do mail a enviar para o endereço <html:link href="mailto:inscricoes@ist.utl.pt?subject=Transitar para Bolonha">inscricoes@ist.utl.pt</html:link><br/>
-Assim que tiver a matrícula Bolonha disponível deve proceder à sua inscrição.<br/>
+<strong>7.</strong> Para apoio ao processo de inscrições deste semestre foi criado um endereço específico para onde deverá encaminhar as suas dúvidas ou dificuldades que não se vejam respondidas pelas instruções acima:     
 </p>
-
-<p class="mtop05">
-<strong>8.</strong> Para apoio ao processo de inscrições deste semestre foi criado um endereço específico para onde deverá encaminhar as suas dúvidas ou dificuldades que não se vejam respondidas pelas instruções acima:     
-</p>
-
 <p class="indent1">   
 <html:link href="mailto:inscricoes@ist.utl.pt">inscricoes@ist.utl.pt</html:link>
 </p>
