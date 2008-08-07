@@ -11,17 +11,21 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
+import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlActionLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
@@ -368,7 +372,8 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 
 	    // if (curriculumGroup.isConcluded()) {
 	    // result.append(" -
-	    // ").append(studentResources.getString("label.curriculum.group.concluded"));
+	    // ").append(studentResources.getString("label.curriculum.group.
+	    // concluded"));
 	    // }
 
 	    return result.toString();
@@ -455,7 +460,59 @@ public class BolonhaStudentEnrollmentInputRenderer extends InputRenderer {
 			    + degreeModuleToEvaluate.getContext().getIdInternal());
 		    linkTableCell.setBody(actionLink);
 		}
+
+		encodeCurricularRules(groupTable, degreeModuleToEvaluate);
 	    }
+	}
+
+	private void encodeCurricularRules(final HtmlTable groupTable, final IDegreeModuleToEvaluate degreeModuleToEvaluate) {
+
+	    final List<CurricularRule> curricularRules = getVisibleRules(degreeModuleToEvaluate.getDegreeModule(),
+		    degreeModuleToEvaluate.getCurriculumGroup(), degreeModuleToEvaluate.getExecutionPeriod());
+	    if (!curricularRules.isEmpty()) {
+		final HtmlTableRow htmlTableRow = groupTable.createRow();
+
+		final HtmlTable rulesTable = new HtmlTable();
+		final HtmlTableCell cellRules = htmlTableRow.createCell();
+
+		cellRules.setClasses(getCurricularCourseToEnrolNameClasses());
+		cellRules.setBody(rulesTable);
+		cellRules.setColspan(5);
+
+		rulesTable.setClasses("smalltxt noborder");
+		rulesTable.setStyle("width: 100%;");
+
+		for (final CurricularRule curricularRule : curricularRules) {
+		    final HtmlTableCell cellName = rulesTable.createRow().createCell();
+		    cellName.setStyle("color: #888");
+		    cellName.setBody(new HtmlText(CurricularRuleLabelFormatter.getLabel(curricularRule, Language.getLocale())));
+		}
+
+		// final HtmlTableRow htmlTableRow = groupTable.createRow();
+		// final HtmlTableCell cellRules = htmlTableRow.createCell();
+		//cellRules.setClasses(getCurricularCourseToEnrolNameClasses());
+		// cellRules.setColspan(5);
+		//		
+		// final StringBuilder names = new StringBuilder();
+		// int count = curricularRules.size();
+		// for (final CurricularRule curricularRule : curricularRules) {
+		// names.append("<span style=\"color: #888\">");
+		// names.append(CurricularRuleLabelFormatter.getLabel(
+		// curricularRule, Language.getLocale()));
+		// names.append("</span>");
+		// if (count > 1) {
+		// names.append("; ");
+		// }
+		// count--;
+		// }
+		// cellRules.setBody(new HtmlText(names.toString(), false));
+	    }
+	}
+
+	private List<CurricularRule> getVisibleRules(final DegreeModule degreeModule, final CurriculumModule curriculumModule,
+		final ExecutionSemester executionSemester) {
+	    final CourseGroup parent = curriculumModule.isRoot() ? null : curriculumModule.getCurriculumGroup().getDegreeModule();
+	    return degreeModule.getVisibleCurricularRules(parent, executionSemester);
 	}
 
 	private void generateEnrolments(final StudentCurriculumGroupBean studentCurriculumGroupBean, final HtmlTable groupTable) {
