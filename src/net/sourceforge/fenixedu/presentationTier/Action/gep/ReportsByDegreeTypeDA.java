@@ -554,28 +554,17 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 				    if (curriculumModule.isEnrolment()) {
 					final Enrolment enrolment = (Enrolment) curriculumModule;
 					if (enrolment.getExecutionYear() == executionYear) {
-
 					    final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
-					    final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
-					    final Registration registration = studentCurricularPlan.getRegistration();
-					    final Degree studentsDegree = registration.getDegree();
-					    final Student student = registration.getStudent();
-					    
-					    final Row row = spreadsheet.addRow();
-					    row.setCell(student.getNumber().toString());
-					    setDegreeColumns(row, degree);
 					    if (curricularCourse.isAnual()) {
-						row.setCell("");
+						addEtiRow(spreadsheet, degree, curricularCourse, enrolment, executionSemester, executionSemester);
+						if (executionSemester.getSemester().intValue() == 1) {
+						    final ExecutionSemester nextSemester = executionSemester.getNextExecutionPeriod();
+						    addEtiRow(spreadsheet, degree, curricularCourse, enrolment, nextSemester, executionSemester);
+						}
 					    } else {
-						row.setCell(executionSemester.getSemester().toString());
+						addEtiRow(spreadsheet, degree, curricularCourse, enrolment, executionSemester, executionSemester);
 					    }
-					    row.setCell(curricularCourse.getName());
-					    setDegreeColumns(row, curricularCourse.getDegree());
-					    row.setCell(enrolment.getGradeValue());
-					    row.setCell(enrolment.getEnrollmentState().getDescription());
-					    row.setCell(enrolment.getEnrolmentEvaluationType().getDescription());
-					    row.setCell(registration.getRegistrationAgreement().getName());
-					    row.setCell(countPreviousEnrolments(curricularCourse, executionSemester, student));
+
 					}
 				    }
 				}
@@ -585,6 +574,25 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 		}
 	    }
 	}
+    }
+
+    private void addEtiRow(final Spreadsheet spreadsheet, final Degree degree, final CurricularCourse curricularCourse,
+	    final Enrolment enrolment, final ExecutionSemester executionSemester, final ExecutionSemester executionSemesterForPreviousEnrolmentCount) {
+	final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
+	final Registration registration = studentCurricularPlan.getRegistration();
+	final Student student = registration.getStudent();
+	    
+	final Row row = spreadsheet.addRow();
+	row.setCell(student.getNumber().toString());
+	setDegreeColumns(row, degree);
+	row.setCell(executionSemester.getSemester().toString());
+	row.setCell(curricularCourse.getName());
+	setDegreeColumns(row, curricularCourse.getDegree());
+	row.setCell(enrolment.getGradeValue());
+	row.setCell(enrolment.getEnrollmentState().getDescription());
+	row.setCell(enrolment.getEnrolmentEvaluationType().getDescription());
+	row.setCell(registration.getRegistrationAgreement().getName());
+	row.setCell(countPreviousEnrolments(curricularCourse, executionSemesterForPreviousEnrolmentCount, student));
     }
 
     private String countPreviousEnrolments(final CurricularCourse curricularCourse, final ExecutionSemester executionPeriod,
