@@ -417,8 +417,8 @@ public class CloseAssiduousnessMonth extends Service {
 		    extra150 = extra150.plus(thisDayExtraWork.minus(hourDuration));
 		    extra150Map.put(workDaySheet.getWorkSchedule().getWorkScheduleType(), extra150);
 
-		    extra150WithLimits = new Duration(Math.min(extra150WithLimits.plus(thisDayExtraWork.minus(hourDuration))
-			    .getMillis(), DAY_HOUR_LIMIT.minus(hourDuration).getMillis()));
+		    extra150WithLimits = new Duration(extra150WithLimits.plus(Math.min(thisDayExtraWork.minus(hourDuration)
+			    .getMillis(), DAY_HOUR_LIMIT.minus(hourDuration).getMillis())));
 		    extra150WithLimitsMap.put(workDaySheet.getWorkSchedule().getWorkScheduleType(), extra150WithLimits);
 
 		    extra125 = extra125.plus(hourDuration);

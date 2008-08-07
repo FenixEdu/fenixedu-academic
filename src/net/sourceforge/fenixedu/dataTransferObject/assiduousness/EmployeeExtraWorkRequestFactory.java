@@ -360,20 +360,6 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	return null;
     }
 
-    private Double getExpendedOnExtraWorkDoneInWeekDays() {
-	Double total = new Double(0);
-	for (ExtraWorkRequest request : getEmployee().getAssiduousness().getExtraWorkRequests()) {
-	    if (getExtraWorkRequest() == null || !getExtraWorkRequest().equals(request)) {
-		if (request.getPartialPayingDate().get(DateTimeFieldType.year()) == getExtraWorkRequestFactory()
-			.getPartialPayingDate().get(DateTimeFieldType.year())
-			&& request.getApproved()) {
-		    total = total.doubleValue() + request.getWorkdayAmount();
-		}
-	    }
-	}
-	return total;
-    }
-
     private boolean hasNightSchedule() {
 	HashMap<LocalDate, WorkSchedule> workSchedules = getEmployee().getAssiduousness().getWorkSchedulesBetweenDates(
 		getExtraWorkRequestFactory().getPartialPayingDate());
@@ -544,20 +530,18 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	    if (!getAddToVacations()) {
 		Double workdayHoursFirstLevelAmount = getAmount(hourValue, firstHourPercentage, getWorkdayHoursFirstLevel());
 		Double workdayHoursSecondLevelAmount = getAmount(hourValue, secondHourPercentage, getWorkdayHoursSecondLevel());
-		Double expendedOnExtraWorkDoneInWeekDays = getExpendedOnExtraWorkDoneInWeekDays();
 		double limit = Math.pow(paymentLimitCoefficient, -1);
 		if (getEmployeeExtraWorkAuthorization().getExecutiveAuxiliarPersonel()) {
 		    limit = executiveAuxiliarPaymentLimitPercentage;
 		}
 		Double monthLimit = (monthValue.doubleValue() * limit);
-		if ((expendedOnExtraWorkDoneInWeekDays + workdayHoursFirstLevelAmount + workdayHoursSecondLevelAmount) > monthLimit) {
-		    if ((expendedOnExtraWorkDoneInWeekDays + workdayHoursFirstLevelAmount) > monthLimit) {
+		if ((workdayHoursFirstLevelAmount + workdayHoursSecondLevelAmount) > monthLimit) {
+		    if (workdayHoursFirstLevelAmount > monthLimit) {
 			setWorkdayHoursSecondLevel(0);
-			int hourLimit = Math.max((int) ((monthLimit - expendedOnExtraWorkDoneInWeekDays) / (hourValue
-				.doubleValue() * firstHourPercentage)), 0);
+			int hourLimit = Math.max((int) ((monthLimit) / (hourValue.doubleValue() * firstHourPercentage)), 0);
 			setWorkdayHoursFirstLevel(hourLimit);
 		    } else {
-			int hourLimit = (int) (((monthLimit - expendedOnExtraWorkDoneInWeekDays) / (hourValue.doubleValue()) - getWorkdayHoursFirstLevel()
+			int hourLimit = (int) (((monthLimit) / (hourValue.doubleValue()) - getWorkdayHoursFirstLevel()
 				* firstHourPercentage) / secondHourPercentage);
 			setWorkdayHoursSecondLevel(hourLimit);
 		    }
