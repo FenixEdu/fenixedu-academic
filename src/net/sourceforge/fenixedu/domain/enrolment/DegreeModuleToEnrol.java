@@ -67,16 +67,24 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 	return stringBuilder.toString();
     }
 
+    @Override
     public boolean isLeaf() {
 	return getDegreeModule().isLeaf();
     }
 
+    @Override
     public boolean isEnroled() {
 	return false;
     }
 
+    @Override
     public boolean isOptional() {
 	return false;
+    }
+
+    @Override
+    public boolean isDissertation() {
+	return getDegreeModule().isDissertation();
     }
 
     public boolean canCollectRules() {
@@ -155,9 +163,7 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 	if (getDegreeModule().isLeaf()) {
 	    return ((CurricularCourse) getDegreeModule()).isAnual(executionYear);
 	}
-
 	return false;
-
     }
 
 }

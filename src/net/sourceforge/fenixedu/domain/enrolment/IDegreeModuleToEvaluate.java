@@ -30,6 +30,8 @@ public interface IDegreeModuleToEvaluate {
     public boolean isEnroled();
         
     public boolean isEnroling();
+    
+    public boolean isDissertation();
 
     public boolean canCollectRules();
     

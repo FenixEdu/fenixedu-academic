@@ -92,6 +92,11 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
     public boolean isOptional() {
 	return false;
     }
+    
+    @Override
+    public boolean isDissertation() {
+        return false;
+    }
 
     public boolean canCollectRules() {
 	if (getCurriculumModule().isLeaf()) {

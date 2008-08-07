@@ -24,6 +24,10 @@ public class DismissalCurriculumModuleWrapper extends EnroledCurriculumModuleWra
 	this.dismissal = (dismissal != null) ? new DomainReference<Dismissal>(dismissal) : null;
     }
 
+    private boolean hasDismissal() {
+	return getDismissal() != null;
+    }
+
     @Override
     public boolean equals(Object obj) {
 	if (obj instanceof DismissalCurriculumModuleWrapper) {
@@ -49,6 +53,14 @@ public class DismissalCurriculumModuleWrapper extends EnroledCurriculumModuleWra
 	    return ((CurricularCourse) getDegreeModule()).isAnual(executionYear);
 	}
 
+	return false;
+    }
+
+    @Override
+    public boolean isDissertation() {
+	if (hasDismissal()) {
+	    return getDismissal().hasCurricularCourse() ? getDismissal().getCurricularCourse().isDissertation() : false;
+	}
 	return false;
     }
 }

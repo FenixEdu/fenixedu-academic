@@ -6,21 +6,31 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 
 public class EnroledEnrolmentWrapper extends EnroledCurriculumModuleWrapper {
 
     private static final long serialVersionUID = 8766503234444669518L;
 
-    public EnroledEnrolmentWrapper(CurriculumModule curriculumModule, ExecutionSemester executionSemester) {
-	super(curriculumModule, executionSemester);
+    public EnroledEnrolmentWrapper(final Enrolment enrolment, final ExecutionSemester executionSemester) {
+	super(enrolment, executionSemester);
+    }
+
+    @Override
+    public Enrolment getCurriculumModule() {
+	return (Enrolment) super.getCurriculumModule();
+    }
+    
+    private boolean isApproved() {
+	return getCurriculumModule().isApproved();
     }
 
     @Override
     public List<CurricularRule> getCurricularRulesFromDegreeModule(ExecutionSemester executionSemester) {
-	final Enrolment enrolment = (Enrolment) getCurriculumModule();
-
-	return enrolment.isApproved() ? Collections.EMPTY_LIST : super.getCurricularRulesFromDegreeModule(executionSemester);
+	return isApproved() ? Collections.EMPTY_LIST : super.getCurricularRulesFromDegreeModule(executionSemester);
     }
 
+    @Override
+    public boolean isDissertation() {
+        return getCurriculumModule().getDegreeModule().isDissertation();
+    }
 }
