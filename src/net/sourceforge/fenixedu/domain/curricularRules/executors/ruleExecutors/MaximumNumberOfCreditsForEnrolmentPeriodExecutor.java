@@ -23,7 +23,8 @@ public class MaximumNumberOfCreditsForEnrolmentPeriodExecutor extends Curricular
 	if (accumulated > MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS) {
 	    return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
 		    "curricularRules.ruleExecutors.MaximumNumberOfCreditsForEnrolmentPeriodExecutor", String
-			    .valueOf(MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS));
+			    .valueOf(MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS), String
+			    .valueOf(accumulated));
 	}
 
 	return RuleResult.createTrue(sourceDegreeModuleToEvaluate.getDegreeModule());
