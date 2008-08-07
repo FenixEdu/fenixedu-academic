@@ -29,8 +29,9 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     protected void init(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
 	    final ExecutionSemester begin, final ExecutionSemester end, final CurricularRuleType type) {
 
-	// TODO assure only one rule of a certain type for a given execution period
-	
+	// TODO assure only one rule of a certain type for a given execution
+	// period
+
 	init(degreeModuleToApplyRule, contextCourseGroup, begin, end);
 	checkCurricularRuleType(type);
 	setCurricularRuleType(type);
@@ -122,7 +123,8 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     }
 
     public boolean isValid(ExecutionSemester executionSemester) {
-	return (getBegin().isBeforeOrEquals(executionSemester) && (getEnd() == null || getEnd().isAfterOrEquals(executionSemester)));
+	return (getBegin().isBeforeOrEquals(executionSemester) && (getEnd() == null || getEnd()
+		.isAfterOrEquals(executionSemester)));
     }
 
     public boolean isValid(ExecutionYear executionYear) {
@@ -133,9 +135,9 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 	}
 	return false;
     }
-    
+
     public boolean isActive() {
-        return !hasEnd() || getEnd().containsDay(new YearMonthDay());
+	return !hasEnd() || getEnd().containsDay(new YearMonthDay());
     }
 
     protected void checkExecutionPeriods(ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
@@ -157,7 +159,6 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 	return createVerifyRuleExecutor().verify(this, level, enrolmentContext, degreeModuleToVerify, parentCourseGroup);
     }
 
-
     abstract protected void removeOwnParameters();
 
     abstract public boolean isLeaf();
@@ -178,5 +179,9 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
 	default:
 	    throw new DomainException("error.unsupported.logic.operator");
 	}
+    }
+
+    public boolean hasContextCourseGroup(final CourseGroup parent) {
+	return getContextCourseGroup() == parent;
     }
 }
