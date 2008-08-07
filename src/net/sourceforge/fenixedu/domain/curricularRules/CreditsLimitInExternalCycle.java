@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.curricularRules;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,12 +15,9 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup
 
 public class CreditsLimitInExternalCycle extends CurricularRuleNotPersistent {
 
-    private static final double MIN_CREDITS_IN_PREVIOUS_CYCLE = 150;
-
-    private static final double MAX_CREDITS_IN_EXTERNAL_CYCLE = 80;
+    private static final double MIN_CREDITS_IN_PREVIOUS_CYCLE = 120;
 
     private ExternalCurriculumGroup externalCurriculumGroup;
-
     private CycleCurriculumGroup previousCycleCurriculumGroup;
 
     public CreditsLimitInExternalCycle(final CycleCurriculumGroup previousCycleCurriculumGroup,
@@ -49,8 +47,9 @@ public class CreditsLimitInExternalCycle extends CurricularRuleNotPersistent {
 	return null;
     }
 
-    public boolean creditsExceedMaximumInExternalCycle(final Double numberOfCredits) {
-	return numberOfCredits.compareTo(MAX_CREDITS_IN_EXTERNAL_CYCLE) > 0;
+    public boolean creditsExceedMaximumInExternalCycle(final Double numberOfCreditsInExternalCycle,
+	    final Double numberOfCreditsInPreviousCycle) {
+	return numberOfCreditsInExternalCycle.compareTo(getMaxCreditsInExternalCycle(numberOfCreditsInPreviousCycle)) > 0;
     }
 
     public boolean creditsInPreviousCycleSufficient(final Double previousCycleCredits) {
@@ -78,10 +77,6 @@ public class CreditsLimitInExternalCycle extends CurricularRuleNotPersistent {
 	return previousCycleCurriculumGroup;
     }
 
-    public Double getMaxCreditsInExternalCycle() {
-	return MAX_CREDITS_IN_EXTERNAL_CYCLE;
-    }
-
     public Double getMinCreditsInPreviousCycle() {
 	return MIN_CREDITS_IN_PREVIOUS_CYCLE;
     }
@@ -90,4 +85,8 @@ public class CreditsLimitInExternalCycle extends CurricularRuleNotPersistent {
 	return VerifyRuleExecutor.NULL_VERIFY_EXECUTOR;
     }
 
+    public Double getMaxCreditsInExternalCycle(Double numberOfCreditsInPreviousCycle) {
+	final BigDecimal previous = new BigDecimal(numberOfCreditsInPreviousCycle);
+	return previous.multiply(new BigDecimal("1.4")).subtract(new BigDecimal("168")).doubleValue();
+    }
 }
