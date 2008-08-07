@@ -6,10 +6,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean.PrecedentDegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -26,6 +26,7 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
     }
 
     public DegreeTransferIndividualCandidacyProcessBean(final DegreeTransferIndividualCandidacyProcess process) {
+	setCandidacyProcess(process.getCandidacyProcess());
 	setCandidacyDate(process.getCandidacyDate());
 	setSelectedDegree(process.getCandidacySelectedDegree());
 	setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getCandidacyPrecedentDegreeInformation()));
@@ -42,7 +43,12 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
 
     @Override
     protected boolean isPreBolonhaPrecedentDegreeAllowed() {
-	return false;
+	return true;
+    }
+    
+    @Override
+    protected ExecutionYear getCandidacyExecutionInterval() {
+        return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
 
     @Override
@@ -53,7 +59,7 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
 	}
 
 	final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
-	for (final Registration registration : student.getActiveRegistrations()) {
+	for (final Registration registration : student.getActiveRegistrations(getCandidacyExecutionInterval())) {
 	    if (registration.isBolonha()) {
 		final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 

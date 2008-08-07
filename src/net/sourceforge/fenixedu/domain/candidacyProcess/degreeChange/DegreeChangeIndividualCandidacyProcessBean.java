@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
@@ -25,6 +26,7 @@ public class DegreeChangeIndividualCandidacyProcessBean extends IndividualCandid
     }
 
     public DegreeChangeIndividualCandidacyProcessBean(final DegreeChangeIndividualCandidacyProcess process) {
+	setCandidacyProcess(process.getCandidacyProcess());
 	setCandidacyDate(process.getCandidacyDate());
 	setSelectedDegree(process.getCandidacySelectedDegree());
 	setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getCandidacyPrecedentDegreeInformation()));
@@ -41,7 +43,12 @@ public class DegreeChangeIndividualCandidacyProcessBean extends IndividualCandid
 
     @Override
     protected boolean isPreBolonhaPrecedentDegreeAllowed() {
-	return false;
+	return true;
+    }
+    
+    @Override
+    protected ExecutionYear getCandidacyExecutionInterval() {
+        return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
 
     @Override
@@ -52,7 +59,7 @@ public class DegreeChangeIndividualCandidacyProcessBean extends IndividualCandid
 	}
 
 	final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
-	for (final Registration registration : student.getActiveRegistrations()) {
+	for (final Registration registration : student.getActiveRegistrations(getCandidacyExecutionInterval())) {
 	    if (registration.isBolonha()) {
 		final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 

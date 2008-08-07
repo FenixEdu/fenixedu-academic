@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess;
@@ -79,8 +80,14 @@ public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidac
     @Override
     protected void createCandidacyPrecedentDegreeInformation(IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean,
 	    StudentCurricularPlan studentCurricularPlan) {
-	super.createCandidacyPrecedentDegreeInformation(bean, studentCurricularPlan);
-	bean.getPrecedentDegreeInformation().initCurricularCoursesInformation(studentCurricularPlan);
+	
+	final CandidacyPrecedentDegreeInformationBean info = new CandidacyPrecedentDegreeInformationBean();
+	
+	info.setDegreeDesignation(studentCurricularPlan.getName());
+	info.setInstitutionUnitName(rootDomainObject.getInstitutionUnit().getUnitName());
+	info.initCurricularCoursesInformation(studentCurricularPlan);
+	
+	bean.setPrecedentDegreeInformation(info);
     }
 
     public ActionForward prepareExecuteEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,
