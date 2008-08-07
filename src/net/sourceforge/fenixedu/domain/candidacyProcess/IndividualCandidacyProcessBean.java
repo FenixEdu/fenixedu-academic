@@ -5,6 +5,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.DomainReference;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 
 import org.joda.time.LocalDate;
@@ -70,5 +71,9 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 
     public Person getOrCreatePersonFromBean() {
 	return getPersonBean().hasPerson() ? getPersonBean().getPerson().edit(getPersonBean()) : new Person(getPersonBean());
+    }
+    
+    protected ExecutionInterval getCandidacyExecutionInterval() {
+	return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyExecutionInterval() : null;
     }
 }
