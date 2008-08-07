@@ -160,6 +160,16 @@ public class Student extends Student_Base {
 	return result;
     }
 
+    public List<Registration> getActiveRegistrations(final ExecutionYear executionYear) {
+	final List<Registration> result = new ArrayList<Registration>();
+	for (final Registration registration : getRegistrationsSet()) {
+	    if (registration.isActive() && registration.isInRegisteredState(executionYear)) {
+		result.add(registration);
+	    }
+	}
+	return result;
+    }
+
     public Registration getLastActiveRegistration() {
 	List<Registration> activeRegistrations = getActiveRegistrations();
 	return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(activeRegistrations, new BeanComparator(
@@ -551,7 +561,7 @@ public class Student extends Student_Base {
 	}
 	return aprovedEnrolments;
     }
-    
+
     public List<Enrolment> getApprovedEnrolments(final AdministrativeOffice administrativeOffice) {
 	final List<Enrolment> aprovedEnrolments = new ArrayList<Enrolment>();
 	for (final Registration registration : getRegistrationsFor(administrativeOffice)) {
@@ -695,7 +705,7 @@ public class Student extends Student_Base {
 	}
 	return false;
     }
-    
+
     public boolean isWeeklySpentHoursSubmittedForCurrentPeriod() {
 	return isWeeklySpentHoursSubmittedForPeriod(ExecutionSemester.readActualExecutionSemester());
     }
@@ -720,7 +730,7 @@ public class Student extends Student_Base {
 	    }
 	}
 	return null;
-    }    
+    }
 
     /**
      * -> Temporary overrides due migrations - Filter 'InTransition'
@@ -744,8 +754,8 @@ public class Student extends Student_Base {
 
     /**
      * -> Temporary overrides due migrations - Filter 'InTransition'
-     * registrations -> Do not use this method to add new registrations
-     * directly (use {@link addRegistrations} method)
+     * registrations -> Do not use this method to add new registrations directly
+     * (use {@link addRegistrations} method)
      */
     @Override
     public Set<Registration> getRegistrationsSet() {
@@ -838,7 +848,7 @@ public class Student extends Student_Base {
     public boolean hasRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
 	return getRegistrationFor(degreeCurricularPlan) != null;
     }
-    
+
     public boolean hasActiveRegistrationFor(final DegreeCurricularPlan degreeCurricularPlan) {
 	return getActiveRegistrationFor(degreeCurricularPlan) != null;
     }
@@ -851,7 +861,7 @@ public class Student extends Student_Base {
 	}
 	return null;
     }
-    
+
     public boolean hasRegistrationFor(final Degree degree) {
 	return getRegistrationFor(degree) != null;
     }
@@ -1092,7 +1102,8 @@ public class Student extends Student_Base {
 
     public void createEnrolmentOutOfPeriodEvent(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester, final Integer numberOfDelayDays) {
-	new AccountingEventsManager().createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionSemester, numberOfDelayDays);
+	new AccountingEventsManager()
+		.createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionSemester, numberOfDelayDays);
     }
 
     public Collection<EnrolmentLog> getEnrolmentLogsByPeriod(final ExecutionSemester executionSemester) {
@@ -1105,7 +1116,8 @@ public class Student extends Student_Base {
 
     public boolean hasActiveStatuteInPeriod(StudentStatuteType studentStatuteType, ExecutionSemester executionSemester) {
 	for (StudentStatute studentStatute : getStudentStatutesSet()) {
-	    if (studentStatute.getStatuteType() == studentStatuteType && studentStatute.isValidInExecutionPeriod(executionSemester)) {
+	    if (studentStatute.getStatuteType() == studentStatuteType
+		    && studentStatute.isValidInExecutionPeriod(executionSemester)) {
 		return true;
 	    }
 	}
@@ -1123,17 +1135,17 @@ public class Student extends Student_Base {
 	}
 	return false;
     }
-    
+
     public Map<CurricularCourse, InquiriesRegistry> getOrCreateInquiriesRegistriesForPeriod(ExecutionSemester executionSemester) {
 	final Map<CurricularCourse, InquiriesRegistry> coursesToAnswer = new HashMap<CurricularCourse, InquiriesRegistry>();
 
 	for (Registration registration : getRegistrations()) {
-	    
-	    //TODO: Chack degree types and response period!
-	    if(!registration.isAvailableDegreeTypeForInquiries()){
+
+	    // TODO: Chack degree types and response period!
+	    if (!registration.isAvailableDegreeTypeForInquiries()) {
 		continue;
 	    }
-	    
+
 	    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
 	    if (studentCurricularPlan != null) {
 
@@ -1152,8 +1164,8 @@ public class Student extends Student_Base {
 		    final CurricularCourse curricularCourse = executionCourse.getCurricularCourseFor(degreeCurricularPlan);
 
 		    if (!coursesToAnswer.containsKey(curricularCourse)) {
-			final InquiriesRegistry inquiriesRegistry = new InquiriesRegistry(executionCourse,
-				executionSemester, registration);
+			final InquiriesRegistry inquiriesRegistry = new InquiriesRegistry(executionCourse, executionSemester,
+				registration);
 			coursesToAnswer.put(curricularCourse, inquiriesRegistry);
 		    }
 		}
@@ -1162,7 +1174,7 @@ public class Student extends Student_Base {
 	}
 	return coursesToAnswer;
     }
-    
+
     public boolean learnsAt(final Campus campus) {
 	for (final Registration registration : getActiveRegistrations()) {
 	    if (registration.getCampus() == campus) {
@@ -1170,6 +1182,6 @@ public class Student extends Student_Base {
 	    }
 	}
 	return false;
-    }    
-    
+    }
+
 }
