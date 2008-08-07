@@ -96,7 +96,11 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	request.setAttribute("cardGenerationProblem", cardGenerationProblem);
 	final CardGenerationBatch cardGenerationBatch = cardGenerationProblem.getCardGenerationBatch();
 	final Person person = cardGenerationProblem.getPerson();
-	request.setAttribute("cardGenerationProblems", person.getCardGenerationProblems(cardGenerationBatch));
+	if (person != null) {
+	    request.setAttribute("cardGenerationProblems", person.getCardGenerationProblems(cardGenerationBatch));
+	} else {
+	    request.setAttribute("cardGenerationProblems", null);
+	}
 	return mapping.findForward("showCardGenerationProblem");
     }
 

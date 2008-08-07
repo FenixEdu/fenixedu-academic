@@ -95,7 +95,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 
     @Override
     public void setLine(final String line) {
-	final String name = line.substring(178);
+	final String name = line.substring(178, 262);
 	for (int i = 0; i < name.length(); i++) {
 	    char c = name.charAt(i);
 	    if (c != '\r' && c != '\n' && c != ' ' && !Character.isLetter(c) && c != '-' && c != '\'') {
