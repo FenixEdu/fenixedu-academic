@@ -40,3 +40,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Change colum credits from int to double in CurricularRule table" alterTableCurricularRule.sql
