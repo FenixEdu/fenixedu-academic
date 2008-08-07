@@ -202,6 +202,11 @@ enum 	  net.sourceforge.fenixedu.domain.FormationType																 as Formati
 enum 	  net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType							 as AcademicalInstitutionType;
 enum 	  net.sourceforge.fenixedu.domain.AlumniRequestType															 as AlumniRequestType;
 enum 	  net.sourceforge.fenixedu.domain.ContractType															 	 as ContractType;
+enum 	  net.sourceforge.fenixedu.domain.SchoolLevelType															 as SchoolLevelType;
+enum 	  net.sourceforge.fenixedu.domain.ProfessionType															 as ProfessionType;
+enum 	  net.sourceforge.fenixedu.domain.GrantOwnerType															 as GrantOwnerType;
+enum 	  net.sourceforge.fenixedu.domain.HighSchoolType															 as HighSchoolType;
+enum 	  net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType										 as ProfessionalSituationConditionType;
 
 /*
 *
