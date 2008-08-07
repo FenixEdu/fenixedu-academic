@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -161,21 +160,26 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
 
     private EntryDTO findEntryDTOForPaymentCode(List<EntryDTO> entryDTOs, AccountingEventPaymentCode paymentCode) {
 
-	for (final EntryDTO entryDTO : entryDTOs) {
-	    if (entryDTO instanceof EntryWithInstallmentDTO) {
-		if (paymentCode instanceof InstallmentPaymentCode) {
+	if (paymentCode instanceof InstallmentPaymentCode) {
+	    for (final EntryDTO entryDTO : entryDTOs) {
+		if (entryDTO instanceof EntryWithInstallmentDTO) {
 		    if (((InstallmentPaymentCode) paymentCode).getInstallment() == ((EntryWithInstallmentDTO) entryDTO)
 			    .getInstallment()) {
 			return entryDTO;
 		    }
 		}
-	    } else {
-		return entryDTO;
+	    }
+
+	} else {
+	    for (final EntryDTO entryDTO : entryDTOs) {
+		if (!(entryDTO instanceof EntryWithInstallmentDTO)) {
+		    return entryDTO;
+		}
 	    }
 	}
 
 	return null;
-
+	
 	// throw new DomainException(
 	// "error.accounting.events.gratuity.GratuityEventWithPaymentPlan.paymentCode.does.not.have.corresponding.entryDTO.because.data.is.corrupted");
 
@@ -383,10 +387,10 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     public GratuityWithPaymentPlanPR getPostingRule() {
 	return (GratuityWithPaymentPlanPR) super.getPostingRule();
     }
-    
+
     @Override
     public Set<EntryType> getPossibleEntryTypesForDeposit() {
-        return Collections.singleton(EntryType.GRATUITY_FEE);
+	return Collections.singleton(EntryType.GRATUITY_FEE);
     }
 
 }

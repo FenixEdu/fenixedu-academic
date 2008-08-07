@@ -4,10 +4,10 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.joda.time.DateTime;
 
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import dml.runtime.RelationAdapter;
 
 public abstract class Exemption extends Exemption_Base {
@@ -70,9 +70,11 @@ public abstract class Exemption extends Exemption_Base {
     public void delete() {
 	removeRootDomainObject();
 	removeEmployee();
-	removeEvent();
 	getExemptionJustification().delete();
-
+	final Event event = getEvent();
+	removeEvent();
+	event.recalculateState(new DateTime());
+	
 	super.deleteDomainObject();
     }
 

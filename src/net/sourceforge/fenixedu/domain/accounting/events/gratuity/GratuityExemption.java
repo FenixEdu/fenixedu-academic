@@ -64,19 +64,6 @@ public abstract class GratuityExemption extends GratuityExemption_Base {
 	return (GratuityExemptionJustification) super.getExemptionJustification();
     }
 
-    public void delete() {
-	checkRulesToDelete();
-	super.delete();
-
-    }
-
-    private void checkRulesToDelete() {
-	if (!getGratuityEvent().canRemoveExemption(new DateTime())) {
-	    throw new DomainException(
-		    "error.accounting.events.gratuity.GratuityExemption.remove.gratuity.exemption.will.cause.event.to.open");
-	}
-    }
-
     public boolean isValueExemption() {
 	return false;
     }

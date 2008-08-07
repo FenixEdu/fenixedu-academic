@@ -147,15 +147,6 @@ public class DfaGratuityEvent extends DfaGratuityEvent_Base {
 	}
     }
 
-    // TODO: Perhaps this method should be in superclass and each subclass
-    // should reimplement
-    // logic to reopen payment codes
-    private void reopenCancelledCodes() {
-	for (final AccountingEventPaymentCode paymentCode : getCancelledPaymentCodes()) {
-	    paymentCode.setState(PaymentCodeState.NEW);
-	}
-    }
-
     @Override
     public boolean isOtherPartiesPaymentsSupported() {
 	return true;

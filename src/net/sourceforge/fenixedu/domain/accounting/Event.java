@@ -132,8 +132,7 @@ public abstract class Event extends Event_Base {
     }
 
     protected void closeEvent() {
-	final AccountingTransaction accountingTransaction = getLastNonAdjustingAccountingTransaction();
-	changeState(EventState.CLOSED, accountingTransaction == null ? new DateTime() : accountingTransaction.getWhenRegistered());
+	changeState(EventState.CLOSED, hasEventCloseDate() ? getEventCloseDate() : new DateTime());
     }
 
     public AccountingTransaction getLastNonAdjustingAccountingTransaction() {
@@ -336,7 +335,7 @@ public abstract class Event extends Event_Base {
 	    return calculatePayedAmountByPersonFor(civilYear);
 	}
 
-	final Money maxAmountForCivilYear = calculateTotalAmountToPay(getEventStateDate()).subtract(
+	final Money maxAmountForCivilYear = calculateTotalAmountToPay(getEventCloseDate()).subtract(
 		getPayedAmountUntil(civilYear - 1)).subtract(calculatePayedAmountByOtherPartiesFor(civilYear));
 
 	if (maxAmountForCivilYear.isPositive()) {
@@ -403,9 +402,31 @@ public abstract class Event extends Event_Base {
     }
 
     protected void internalRecalculateState(final DateTime whenRegistered) {
-	if (isOpen() && canCloseEvent(whenRegistered)) {
-	    closeNonProcessedCodes();
-	    closeEvent();
+	final DateTime previousStateDate = getEventStateDate();
+	final EventState previousState = super.getEventState();
+
+	if (isOpen()) {
+	    if (canCloseEvent(whenRegistered)) {
+		closeNonProcessedCodes();
+		closeEvent();
+	    }
+	} else {
+	    if (!canCloseEvent(hasEventCloseDate() ? getEventCloseDate() : whenRegistered)) {
+		changeState(EventState.OPEN, new DateTime());
+		reopenCancelledCodes();
+	    }
+	}
+
+	// state does not change so keep previous date
+	if (previousState == super.getEventState()) {
+	    super.setEventStateDate(previousStateDate);
+	}
+
+    }
+
+    protected void reopenCancelledCodes() {
+	for (final AccountingEventPaymentCode paymentCode : getCancelledPaymentCodes()) {
+	    paymentCode.setState(PaymentCodeState.NEW);
 	}
     }
 
@@ -591,7 +612,7 @@ public abstract class Event extends Event_Base {
 	    return Money.ZERO;
 	}
 
-	final Money extraPayedAmount = getPayedAmount().subtract(calculateTotalAmountToPay(getEventStateDate()));
+	final Money extraPayedAmount = getPayedAmount().subtract(calculateTotalAmountToPay(getEventCloseDate()));
 
 	if (extraPayedAmount.isPositive()) {
 	    final Money amountPayedByPerson = calculatePayedAmountByPerson();
@@ -599,6 +620,21 @@ public abstract class Event extends Event_Base {
 	}
 
 	return Money.ZERO;
+
+    }
+
+    protected boolean hasEventCloseDate() {
+	return getEventCloseDate() != null;
+    }
+
+    protected DateTime getEventCloseDate() {
+	for (final AccountingTransaction transaction : getSortedNonAdjustingTransactions()) {
+	    if (canCloseEvent(transaction.getWhenRegistered())) {
+		return transaction.getWhenRegistered();
+	    }
+	}
+
+	return null;
 
     }
 
