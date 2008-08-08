@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
 import net.sourceforge.fenixedu.util.report.StyledExcelSpreadsheet;
 
 import org.joda.time.Duration;
+import org.joda.time.Hours;
 import org.joda.time.MutablePeriod;
 import org.joda.time.PeriodType;
 import org.joda.time.format.PeriodFormatter;
@@ -47,6 +48,8 @@ public class AssiduousnessMonthlyResume implements Serializable {
     Integer payedNightlyBalance;
 
     Integer payedWorkWeekBalance;
+
+    protected final Duration midHourDuration = new Duration(1800000);
 
     public AssiduousnessMonthlyResume(Employee employee, Duration totalBalance, Duration totalComplementaryWeeklyRestBalance,
 	    Duration totalWeeklyRestBalance, Duration holidayRest, Duration nightWork, Duration unjustified) {
@@ -104,9 +107,9 @@ public class AssiduousnessMonthlyResume implements Serializable {
 			Duration diference = totalWithoutLimits.minus(assiduousnessClosedMonth.getBalance().getMillis());
 			secondLevelBalanceWithoutLimits = secondLevelBalanceWithoutLimits.minus(diference);
 		    }
-		    addFirstLevelBalance(firstLevelBalance);
-		    addSecondLevelBalance(secondLevelBalance);
-		    addSecondLevelBalanceWithoutLimits(secondLevelBalanceWithoutLimits);
+		    addFirstLevelBalance(roundToHalfHour(firstLevelBalance));
+		    addSecondLevelBalance(roundToHalfHour(secondLevelBalance));
+		    addSecondLevelBalanceWithoutLimits(roundToHalfHour(secondLevelBalanceWithoutLimits));
 		}
 	    }
 	}
@@ -120,6 +123,17 @@ public class AssiduousnessMonthlyResume implements Serializable {
 		addPayedWorkWeekBalance(extraWorkRequest.getWorkdayHours() == null ? 0 : extraWorkRequest.getWorkdayHours());
 	    }
 	}
+    }
+
+    private Duration roundToHalfHour(Duration duration) {
+	if (duration.toPeriod(PeriodType.dayTime()).getMinutes() >= 30) {
+	    return new Duration(Hours.hours(duration.toPeriod(PeriodType.dayTime()).getHours() + 1).toStandardDuration());
+	}
+	Duration result = Hours.hours(duration.toPeriod(PeriodType.dayTime()).getHours()).toStandardDuration();
+	if (duration.toPeriod(PeriodType.dayTime()).getMinutes() != 0) {
+	    result = result.plus(midHourDuration);
+	}
+	return result;
     }
 
     public Employee getEmployee() {
