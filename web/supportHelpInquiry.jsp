@@ -79,7 +79,11 @@ padding: 0 20px;
 			<logic:present name="exceptionInfo">
 				<bean:define id="exceptionInfo" name="exceptionInfo" type="java.lang.String"/>
 				<html:hidden property="exceptionInfo" value="<%= exceptionInfo %>"/>
+				
 				<bean:define id="schema" value="support.error.form" />
+				<logic:empty name="requestBean" property="responseEmail">
+					<bean:define id="schema" value="support.error.form.unknown.user"/>
+				</logic:empty>
 
 				<fr:edit id="view_state_id" name="requestBean" schema="<%= schema %>" >
 					<fr:layout name="tabular">

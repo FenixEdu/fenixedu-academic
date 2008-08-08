@@ -924,6 +924,11 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	return hasInstitutionalEmailAddress() ? getInstitutionalEmailAddress() : getDefaultEmailAddress();
     }
 
+    public String getInstitutionalOrDefaultEmailAddressValue() {
+	EmailAddress email = getInstitutionalOrDefaultEmailAddress();
+	return (email != null ? email.getValue() : "");
+    }
+
     public boolean hasInstitutionalEmailAddress() {
 	return hasInstitutionalPartyContact(EmailAddress.class);
     }

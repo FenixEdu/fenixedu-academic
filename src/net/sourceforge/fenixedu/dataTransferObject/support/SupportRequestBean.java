@@ -26,9 +26,7 @@ public class SupportRequestBean implements Serializable {
 	SupportRequestBean bean = new SupportRequestBean();
 	bean.setRequestType(SupportRequestType.EXCEPTION);
 	bean.setRequestPriority(SupportRequestPriority.EXCEPTION);
-	if (person.getInstitutionalOrDefaultEmailAddress() != null) {
-	    bean.setResponseEmail(person.getInstitutionalOrDefaultEmailAddress().getValue());
-	}
+	bean.setResponseEmail(person.getInstitutionalOrDefaultEmailAddressValue());
 	return bean;
     }
 

@@ -102,5 +102,19 @@
 		<li>
 			<html:link page="/evaluationMethodControl.do?method=search"><bean:message key="label.evaluationMethodControl" bundle="APPLICATION_RESOURCES"/></html:link>
 		</li>
+<%--
+		<li class="navheader">
+			<bean:message key="link.tutorship" bundle="PEDAGOGICAL_COUNCIL"/>
+		</li>
+		<li>
+			<html:link page="/studentTutorship.do?method=prepareStudentSearch"><bean:message key="link.teacher.tutorship.history" bundle="APPLICATION_RESOURCES"/></html:link>
+		</li>
+		<li>
+			<html:link page="/tutorTutorship.do?method=prepareTutorSearch"><bean:message key="label.attends.shifts.tutorialorientation" bundle="APPLICATION_RESOURCES"/></html:link>
+		</li>
+		<li>
+			<html:link page="/studentTutorship.do?method=prepareStudentCurriculum"><bean:message key="link.teacher.tutorship.students.viewCurriculum" bundle="APPLICATION_RESOURCES"/></html:link>
+		</li>
+--%>
 	</ul>
 </logic:present>

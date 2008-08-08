@@ -51,3 +51,20 @@
 			<property name="commentClasses" value="smalltxt color555"/>
 		</slot>
 	</schema>
+
+	<schema name="support.error.form.unknown.user" type="net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean" bundle="APPLICATION_RESOURCES">
+		<slot name="responseEmail" key="label.support.form.responseEmail" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="size" value="30" />
+		</slot>
+		<slot name="subject" key="label.support.form.subject" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="size" value="30" />
+		</slot>
+		<slot name="message" key="label.support.form.message" layout="input-with-comment" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<property name="subLayout" value="longText"/>
+			<property name="subProperty(columns)" value="36" />
+			<property name="subProperty(rows)" value="5" />
+			<property name="bundle" value="APPLICATION_RESOURCES"/>
+			<property name="comment" value="support.form.message.exception"/>
+			<property name="commentClasses" value="smalltxt color555"/>
+		</slot>
+	</schema>

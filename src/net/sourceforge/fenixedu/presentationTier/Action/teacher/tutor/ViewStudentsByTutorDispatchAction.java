@@ -24,57 +24,62 @@ import org.apache.struts.action.ActionMapping;
 
 public class ViewStudentsByTutorDispatchAction extends FenixDispatchAction {
 
-	public ActionForward viewStudentsByTutor(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		final Person person = getLoggedPerson(request);
-		final Teacher teacher = person.getTeacher();
-		
-		if(!teacher.getTutorships().isEmpty()) {
-			TutorTutorshipsHistoryBean tutorshipHistory = new TutorTutorshipsHistoryBean(teacher);
-			
-			List<StudentsByTutorBean> activeTutorshipsByEntryYear = getTutorshipsByEntryYear(teacher.getActiveTutorships());
-			tutorshipHistory.setActiveTutorshipsByEntryYear(activeTutorshipsByEntryYear);
-			
-			List<StudentsByTutorBean> pastTutorshipsByEntryYear = getTutorshipsByEntryYear(teacher.getPastTutorships());
-			tutorshipHistory.setPastTutorshipsByEntryYear(pastTutorshipsByEntryYear);
-			
-			request.setAttribute("tutorshipHistory", tutorshipHistory);
-		}
-		
-		request.setAttribute("tutor", person);
-		return mapping.findForward("viewStudentsByTutor");
+    public ActionForward viewStudentsByTutor(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	final Person person = getLoggedPerson(request);
+	final Teacher teacher = person.getTeacher();
+
+	getTutorships(request, teacher);
+
+	request.setAttribute("tutor", person);
+	return mapping.findForward("viewStudentsByTutor");
+    }
+
+    /*
+     * AUXILIARY METHODS
+     */
+    protected void getTutorships(HttpServletRequest request, final Teacher teacher) {
+
+	if (!teacher.getTutorships().isEmpty()) {
+	    TutorTutorshipsHistoryBean tutorshipHistory = new TutorTutorshipsHistoryBean(teacher);
+
+	    List<StudentsByTutorBean> activeTutorshipsByEntryYear = getTutorshipsByEntryYear(teacher.getActiveTutorships());
+	    tutorshipHistory.setActiveTutorshipsByEntryYear(activeTutorshipsByEntryYear);
+
+	    List<StudentsByTutorBean> pastTutorshipsByEntryYear = getTutorshipsByEntryYear(teacher.getPastTutorships());
+	    tutorshipHistory.setPastTutorshipsByEntryYear(pastTutorshipsByEntryYear);
+
+	    request.setAttribute("tutorshipHistory", tutorshipHistory);
 	}
-	
-	/*
-	 * AUXILIARY METHODS
-	 */
-	
-	private List<StudentsByTutorBean> getTutorshipsByEntryYear(List<Tutorship> tutorships){
-		Map<ExecutionYear,StudentsByTutorBean> tutorshipsMapByEntryYear = new HashMap<ExecutionYear,StudentsByTutorBean>();
-		
-		for (final Tutorship tutorship : tutorships) {
-			ExecutionYear entryYear = ExecutionYear.getExecutionYearByDate(tutorship.getStudentCurricularPlan().getRegistration().getStartDate());
-			if(tutorshipsMapByEntryYear.containsKey(entryYear)) {
-				List<Tutorship> studentsByEntryYearList = tutorshipsMapByEntryYear.get(entryYear).getStudentsList();
-				studentsByEntryYearList.add(tutorship);
-				Collections.sort(studentsByEntryYearList, Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
-				tutorshipsMapByEntryYear.get(entryYear).setStudentsList(studentsByEntryYearList);
-			} 
-			else {
-				List<Tutorship> studentsByEntryYearList = new ArrayList<Tutorship>();
-				studentsByEntryYearList.add(tutorship);
-				Collections.sort(studentsByEntryYearList, Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);		
-				StudentsByTutorBean studentsByTutorBean = new StudentsByTutorBean(tutorship.getTeacher(), entryYear, studentsByEntryYearList);
-				tutorshipsMapByEntryYear.put(entryYear, studentsByTutorBean);
-			}
-		}
-		
-		List<StudentsByTutorBean> tutorshipsByEntryYear = new ArrayList<StudentsByTutorBean>(tutorshipsMapByEntryYear.values());
-		Collections.sort(tutorshipsByEntryYear, new BeanComparator("studentsEntryYear"));
-		Collections.reverse(tutorshipsByEntryYear);
-		
-		return tutorshipsByEntryYear;
+    }
+
+    private List<StudentsByTutorBean> getTutorshipsByEntryYear(List<Tutorship> tutorships) {
+	Map<ExecutionYear, StudentsByTutorBean> tutorshipsMapByEntryYear = new HashMap<ExecutionYear, StudentsByTutorBean>();
+
+	for (final Tutorship tutorship : tutorships) {
+	    ExecutionYear entryYear = ExecutionYear.getExecutionYearByDate(tutorship.getStudentCurricularPlan().getRegistration()
+		    .getStartDate());
+	    if (tutorshipsMapByEntryYear.containsKey(entryYear)) {
+		List<Tutorship> studentsByEntryYearList = tutorshipsMapByEntryYear.get(entryYear).getStudentsList();
+		studentsByEntryYearList.add(tutorship);
+		Collections.sort(studentsByEntryYearList, Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
+		tutorshipsMapByEntryYear.get(entryYear).setStudentsList(studentsByEntryYearList);
+	    } else {
+		List<Tutorship> studentsByEntryYearList = new ArrayList<Tutorship>();
+		studentsByEntryYearList.add(tutorship);
+		Collections.sort(studentsByEntryYearList, Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
+		StudentsByTutorBean studentsByTutorBean = new StudentsByTutorBean(tutorship.getTeacher(), entryYear,
+			studentsByEntryYearList);
+		tutorshipsMapByEntryYear.put(entryYear, studentsByTutorBean);
+	    }
 	}
-	
+
+	List<StudentsByTutorBean> tutorshipsByEntryYear = new ArrayList<StudentsByTutorBean>(tutorshipsMapByEntryYear.values());
+	Collections.sort(tutorshipsByEntryYear, new BeanComparator("studentsEntryYear"));
+	Collections.reverse(tutorshipsByEntryYear);
+
+	return tutorshipsByEntryYear;
+    }
+
 }

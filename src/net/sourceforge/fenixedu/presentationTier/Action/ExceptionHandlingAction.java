@@ -63,8 +63,8 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	actionForward.setRedirect(true);
 	actionForward.setPath("/showErrorPageRegistered.do");
 
-//	System.out.println(subject);
-//	System.out.println(mailBody);
+	// System.out.println(subject);
+	// System.out.println(mailBody);
 
 	EMail email = null;
 	try {
@@ -111,7 +111,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	SupportRequestBean requestBean = new SupportRequestBean();
-	requestBean.setResponseEmail(getLoggedPerson(request).getInstitutionalOrDefaultEmailAddress().getValue());
+	requestBean.setResponseEmail(getLoggedPerson(request).getInstitutionalOrDefaultEmailAddressValue());
 	requestBean.setRequestContext(RootDomainObject.getInstance().readContentByOID(
 		Integer.valueOf(request.getParameter("contextId"))));
 
@@ -161,14 +161,14 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 	    // a mail must be always sent, no need to give error feedback
 	}
 
-//	System.out.println(mailSubject);
-//	System.out.println(mailBody);
+	// System.out.println(mailSubject);
+	// System.out.println(mailBody);
 
 	try {
 	    EMail email = new EMail(!request.getServerName().equals("localhost") ? "mail.adm" : "mail.rnl.ist.utl.pt",
 		    EmailValidator.getInstance().isValid(requestBean.getResponseEmail()) ? requestBean.getResponseEmail()
 			    : "erro@dot.ist.utl.pt");
-	    
+
 	    final ResourceBundle gBundle = ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale());
 	    email.send(gBundle.getString("suporte.mail"), mailSubject, mailBody);
 

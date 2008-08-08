@@ -21,7 +21,19 @@
             <form-property name="executionPeriod" type="java.lang.String"/>
             <form-property name="department" type="java.lang.String"/>           
     	</form-bean> 	
+
+		 <form-bean name="studentCurricularPlanAndEnrollmentsSelectionForm"
+		               type="org.apache.struts.validator.DynaValidatorForm"
+		               dynamic="true">
+			<form-property name="studentCPID" type="java.lang.String" />
+			<form-property name="select" type="java.lang.String" />
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>        
+			<form-property name="organizedBy" type="java.lang.String"/>
+			<form-property name="detailed" type="java.lang.Boolean" initial="false"/>
+			<form-property name="viewType" type="java.lang.String"/>
+		</form-bean>
     </form-beans>
+
 
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
@@ -151,7 +163,7 @@
 				parameter="method">
 			<forward name="search" path="evaluationMethodControl"/>
 		</action>
-
+    
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->
@@ -166,16 +178,22 @@
     <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
 	<message-resources parameter="resources.GroupNameResources" key="GROUP_NAME_RESOURCES" null="false"/>
 	<message-resources parameter="resources.DelegateResources" key="DELEGATES_RESOURCES" null="false"/>
+	<message-resources parameter="resources.StudentResources" key="STUDENT_RESOURCES" null="false"/>
+	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
+	
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
         <set-property property="pathnames" 
             value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-pedagogicalCouncil.xml"/>
     </plug-in>
-    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+    <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin" >
         <set-property property="definitions-config" 
             value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/pedagogicalCouncil/tiles-pedagogicalCouncil-definitions.xml,/WEB-INF/tiles/pedagogicalCouncil/tiles-pedagogicalCouncil-pages-definitions.xml" />
         <set-property property="moduleAware" value="true" />
         <set-property property="definitions-parser-validate" value="true" />
+        <set-property property="factoryClassname" value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" />
+        <set-property property="defaultTileDefinition" value="pedagogicalCouncil.masterPage" />
     </plug-in>
+    <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn" />
 </struts-config>

@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -115,5 +117,15 @@ public class Tutorship extends Tutorship_Base {
 			return true;
 		
 		return false;
+	}
+	
+	public static List<Tutorship> getStudentActiveTutorships(Integer studentNumber) {
+	    List<Tutorship> tutorships = new ArrayList<Tutorship>();
+	    for (Tutorship t : RootDomainObject.getInstance().getTutorships()) {
+		if (t.getStudent().getNumber().equals(studentNumber) && t.isActive()) {
+		    tutorships.add(t);
+		}
+	    }
+	    return tutorships;
 	}
 }
