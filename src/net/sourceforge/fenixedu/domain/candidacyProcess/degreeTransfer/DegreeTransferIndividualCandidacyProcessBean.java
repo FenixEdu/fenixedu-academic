@@ -45,10 +45,14 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
     protected boolean isPreBolonhaPrecedentDegreeAllowed() {
 	return true;
     }
-    
+
     @Override
     protected ExecutionYear getCandidacyExecutionInterval() {
-        return (ExecutionYear) super.getCandidacyExecutionInterval();
+	return (ExecutionYear) super.getCandidacyExecutionInterval();
+    }
+
+    private ExecutionYear getStartExecutionYear() {
+	return getCandidacyExecutionInterval().getNextExecutionYear();
     }
 
     @Override
@@ -59,7 +63,7 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
 	}
 
 	final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
-	for (final Registration registration : student.getActiveRegistrations(getCandidacyExecutionInterval())) {
+	for (final Registration registration : student.getActiveRegistrations(getStartExecutionYear())) {
 	    if (registration.isBolonha()) {
 		final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
 
