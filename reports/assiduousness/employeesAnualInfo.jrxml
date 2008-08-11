@@ -3102,7 +3102,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Total]]></text>
 				</staticText>
@@ -3119,7 +3119,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Jun]]></text>
 				</staticText>
@@ -3136,7 +3136,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Ago]]></text>
 				</staticText>
@@ -3153,7 +3153,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Abr]]></text>
 				</staticText>
@@ -3170,7 +3170,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Mar]]></text>
 				</staticText>
@@ -3187,7 +3187,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Jan]]></text>
 				</staticText>
@@ -3204,7 +3204,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Fev]]></text>
 				</staticText>
@@ -3221,7 +3221,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Out]]></text>
 				</staticText>
@@ -3238,7 +3238,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Nov]]></text>
 				</staticText>
@@ -3255,7 +3255,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Jul]]></text>
 				</staticText>
@@ -3272,7 +3272,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Dez]]></text>
 				</staticText>
@@ -3289,7 +3289,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Set]]></text>
 				</staticText>
@@ -3306,7 +3306,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Mai]]></text>
 				</staticText>
@@ -3323,7 +3323,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Categoria]]></text>
 				</staticText>
@@ -3340,7 +3340,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Falta Injustificada]]></text>
 				</staticText>
@@ -3357,7 +3357,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Left">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Atestado médico (total)]]></text>
 				</staticText>
@@ -3374,7 +3374,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Atestado médico (filho)]]></text>
 				</staticText>
@@ -3391,7 +3391,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Atestado médico (familiar)]]></text>
 				</staticText>
@@ -3408,7 +3408,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Atestado por deficiência]]></text>
 				</staticText>
@@ -3425,7 +3425,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Atestado médico internamento]]></text>
 				</staticText>
@@ -3442,7 +3442,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Atest.Med.Internamento Filho]]></text>
 				</staticText>
@@ -3459,7 +3459,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Artigo 66]]></text>
 				</staticText>
@@ -3476,7 +3476,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Nojo]]></text>
 				</staticText>
@@ -3493,7 +3493,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Licença para casamento]]></text>
 				</staticText>
@@ -3510,7 +3510,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Licença de parto]]></text>
 				</staticText>
@@ -3527,7 +3527,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Licença sem vencimento]]></text>
 				</staticText>
@@ -3544,7 +3544,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Tolerância de ponto]]></text>
 				</staticText>
@@ -3561,7 +3561,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Artigo 17 IST]]></text>
 				</staticText>
@@ -3578,7 +3578,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Férias adquir. p/horas extras]]></text>
 				</staticText>
@@ -3595,7 +3595,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Férias gozadas p/horas extras]]></text>
 				</staticText>
@@ -3612,7 +3612,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Dispensas adquiridas no mes]]></text>
 				</staticText>
@@ -3629,7 +3629,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Dispensas gozadas]]></text>
 				</staticText>
@@ -3646,7 +3646,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Férias em dias úteis]]></text>
 				</staticText>
@@ -3663,7 +3663,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Atest. médico em dias úteis]]></text>
 				</staticText>
@@ -3680,7 +3680,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Nojo em dias úteis]]></text>
 				</staticText>
@@ -3697,7 +3697,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Parto em dias úteis]]></text>
 				</staticText>
@@ -3714,7 +3714,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Licença s/venc em dias úteis]]></text>
 				</staticText>
@@ -3731,7 +3731,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Artigo 52 DL100/99 (dias)]]></text>
 				</staticText>
@@ -3748,7 +3748,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Trat.Amb.Familiar (dias)]]></text>
 				</staticText>
@@ -3765,7 +3765,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Junta médica]]></text>
 				</staticText>
@@ -3782,7 +3782,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[AFCT]]></text>
 				</staticText>
@@ -3799,7 +3799,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Infecto-contagiosa]]></text>
 				</staticText>
@@ -3816,7 +3816,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Acidente em serviço in local]]></text>
 				</staticText>
@@ -3833,7 +3833,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Acidente em servico itinere]]></text>
 				</staticText>
@@ -3850,7 +3850,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Doação de sangue]]></text>
 				</staticText>
@@ -3867,7 +3867,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Nascimento ou Paternidade]]></text>
 				</staticText>
@@ -3884,7 +3884,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Trab. estudante (vesp.exame)]]></text>
 				</staticText>
@@ -3901,7 +3901,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Trab. estudante (dia exame)]]></text>
 				</staticText>
@@ -3918,7 +3918,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Form./Cursos (não autoriz.CD)]]></text>
 				</staticText>
@@ -3935,7 +3935,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Formação/Cursos (autoriz.CD)]]></text>
 				</staticText>
@@ -3952,7 +3952,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Prisão]]></text>
 				</staticText>
@@ -3969,7 +3969,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Faltas p/ cumprim.obrigações]]></text>
 				</staticText>
@@ -3986,7 +3986,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Actividade sindical]]></text>
 				</staticText>
@@ -4003,7 +4003,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Faltas c/ perda vencim (A68)]]></text>
 				</staticText>
@@ -4020,7 +4020,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Greve]]></text>
 				</staticText>
@@ -4037,7 +4037,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Right">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[]]></text>
 				</staticText>
@@ -4054,7 +4054,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Right">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[]]></text>
 				</staticText>
@@ -4071,7 +4071,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Right">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[]]></text>
 				</staticText>
@@ -4088,7 +4088,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Right">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[]]></text>
 				</staticText>
@@ -4105,7 +4105,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Right">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[]]></text>
 				</staticText>
@@ -4122,7 +4122,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Right">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[]]></text>
 				</staticText>
@@ -4139,7 +4139,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Right">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[]]></text>
 				</staticText>
@@ -4156,7 +4156,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Right">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[]]></text>
 				</staticText>
@@ -4173,7 +4173,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Right">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[]]></text>
 				</staticText>
@@ -4190,7 +4190,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Right">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[]]></text>
 				</staticText>
@@ -4207,7 +4207,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Right">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[]]></text>
 				</staticText>
@@ -4224,7 +4224,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Right">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[]]></text>
 				</staticText>
@@ -4241,7 +4241,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Right">
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[]]></text>
 				</staticText>
@@ -13524,7 +13524,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Casamento em dias úteis]]></text>
 				</staticText>
@@ -13785,7 +13785,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Trat.Amb.Filho menor (dias)]]></text>
 				</staticText>
@@ -14028,7 +14028,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Férias gozadas]]></text>
 				</staticText>
@@ -14045,7 +14045,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Férias Transferidas gozadas]]></text>
 				</staticText>
@@ -14062,7 +14062,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Férias gozadas  por horas Ano Anterior]]></text>
 				</staticText>
@@ -14079,7 +14079,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Férias gozadas A17 ano anterior]]></text>
 				</staticText>
@@ -14096,7 +14096,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Férias Época Baixa]]></text>
 				</staticText>
@@ -15243,7 +15243,7 @@
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" size="9"/>
+						<font fontName="Verdana" size="9"/>
 					</textElement>
 				<text><![CDATA[Meios Dias de Férias gozados]]></text>
 				</staticText>

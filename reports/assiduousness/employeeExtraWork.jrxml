@@ -57,7 +57,6 @@
 	<field name="employeeExtraWorkAuthorization.normalExtraWorkPlusTwoHours" class="java.lang.Boolean"/>
 	<field name="employeeExtraWorkAuthorization.nightExtraWork" class="java.lang.Boolean"/>
 	<field name="employeeSalary" class="java.math.BigDecimal"/>
-	<field name="totalWeekDaysAmountPayedInYear" class="java.math.BigDecimal"/>
 	<field name="totalWeekDaysHoursPayedInYear" class="java.lang.Integer"/>
 	<field name="totalVacationsDaysInYear" class="java.lang.Integer"/>
 
@@ -762,7 +761,9 @@
 +
 ($F{holidayAmount}==null? new Double(0):$F{holidayAmount}).doubleValue()
 +
-($F{sundayAmount}==null? new Double(0):$F{sundayAmount}).doubleValue())]]></textFieldExpression>
+($F{sundayAmount}==null? new Double(0):$F{sundayAmount}).doubleValue()
++
+($F{workdayAmount}==null? new Double(0):$F{workdayAmount}).doubleValue())]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -1226,7 +1227,7 @@ $F{employeeExtraWorkAuthorization.normalExtraWork}.equals(Boolean.TRUE)
 					<textElement>
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{totalWeekDaysAmountPayedInYear}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{workdayAmount}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -1287,7 +1288,7 @@ $F{employeeExtraWorkAuthorization.normalExtraWork}.equals(Boolean.TRUE)
 					<textElement>
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{totalWeekDaysAmountPayedInYear}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{workdayAmount}]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>
