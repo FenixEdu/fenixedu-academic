@@ -24,7 +24,7 @@ public class ThesisLibraryCancelOperation extends ThesisLibraryCancelOperation_B
 
     @Override
     public ThesisLibraryState getState() {
-	return ThesisLibraryState.NOT_DEALT;
+	return ThesisLibraryState.ARCHIVE_CANCELED;
     }
 
     @Override

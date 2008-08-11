@@ -496,10 +496,13 @@ public class Thesis extends Thesis_Base {
 	super.setEnrolment(null);
     }
 
-    public Department getDepartment() {
+    public String getDepartmentName() {
 	final CompetenceCourse competenceCourse = getEnrolment().getCurricularCourse().getCompetenceCourse();
-	return getEnrolment().isBolonhaDegree() ? competenceCourse.getDepartmentUnit().getDepartment() : competenceCourse
-		.getDepartments().get(0);
+	if (getEnrolment().isBolonhaDegree())
+	    return competenceCourse.getDepartmentUnit().getDepartment().getRealName();
+	if (competenceCourse.hasAnyDepartments())
+	    return competenceCourse.getDepartments().get(0).getRealName();
+	return null;
     }
 
     public Student getStudent() {

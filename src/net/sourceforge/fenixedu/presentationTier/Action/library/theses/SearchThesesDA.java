@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.thesis.ThesisSearchBean;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -17,7 +16,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Pedro Santos (pmrsa)
  */
-public class SearchThesesDA extends FenixDispatchAction {
+public class SearchThesesDA extends ThesisLibraryDA {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	ThesisSearchBean search = new ThesisSearchBean();
@@ -57,25 +56,5 @@ public class SearchThesesDA extends FenixDispatchAction {
 	List<Thesis> result = theses;
 	request.setAttribute("thesesFound", result.size());
 	request.setAttribute("theses", result);
-    }
-
-    private String buildSearchArgs(ThesisSearchBean search) {
-	StringBuffer buffer = new StringBuffer();
-	if (search.getText() != null && !search.getText().isEmpty())
-	    appendSearchArg(buffer, "text=" + search.getText());
-	if (search.getState() != null)
-	    appendSearchArg(buffer, "state=" + search.getState().getName());
-	if (search.getYear() != null)
-	    appendSearchArg(buffer, "year=" + search.getYear().getName());
-	return buffer.toString();
-    }
-
-    private void appendSearchArg(StringBuffer buffer, String arg) {
-	if (buffer.length() == 0)
-	    buffer.append('&');
-	else if (buffer.charAt(buffer.length() - 1) != '&') {
-	    buffer.append('&');
-	}
-	buffer.append(arg);
     }
 }

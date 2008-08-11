@@ -45,7 +45,11 @@
 		layout="person-name" />
 	<slot name="enrolment.studentCurricularPlan.registration.student.number" key="label.thesis.author.number" />
 	<slot name="enrolment.studentCurricularPlan.degree.name" key="label.thesis.author.degree" />
-	<slot name="department.name" key="label.thesis.author.department" />
+	<slot name="departmentName" key="label.thesis.author.department" layout="null-as-label"/>
+</schema>
+
+<schema name="library.thesis.department" type="net.sourceforge.fenixedu.domain.Department">
+    <slot name="realName" />
 </schema>
 
 <schema name="library.thesis.state.null" type="net.sourceforge.fenixedu.domain.thesis.Thesis">

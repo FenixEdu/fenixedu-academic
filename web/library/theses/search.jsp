@@ -47,7 +47,7 @@
 					value="<%="/theses/search.do?method=update" + request.getAttribute("searchArgs")%>" />
 				<fr:property name="sortBy" value="<%=sortedBy%>" />
 
-				<fr:property name="link(verify)" value="/theses/validate.do?method=view" />
+				<fr:property name="link(verify)" value="<%="/theses/validate.do?method=view" + request.getAttribute("searchArgs") %>" />
 				<fr:property name="param(verify)" value="idInternal/thesisID" />
 				<fr:property name="key(verify)" value="link.thesis.verify" />
 			</fr:layout>
