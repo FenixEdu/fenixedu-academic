@@ -40,3 +40,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Change Assiduousness Extra Work menu." interceptedExtraWork.sql
