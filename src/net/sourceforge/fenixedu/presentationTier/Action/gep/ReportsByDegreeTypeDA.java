@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
+import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -535,13 +536,16 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("número Aluno");
 	setDegreeHeaders(spreadsheet, "aluno");
 	spreadsheet.setHeader("semestre");
+	spreadsheet.setHeader("ano lectivo");
 	spreadsheet.setHeader("nome Disciplina");
 	setDegreeHeaders(spreadsheet, "disciplina");
 	spreadsheet.setHeader("nota");
+	spreadsheet.setHeader("creditos");
 	spreadsheet.setHeader("estado");
 	spreadsheet.setHeader("época");
 	spreadsheet.setHeader("tipo Aluno");
 	spreadsheet.setHeader("número inscricoes anteriores");
+	spreadsheet.setHeader("codigo execucao");
 
 	for (final Degree degree : rootDomainObject.getDegreesSet()) {
 	    if (degree.getDegreeType() == degreeType) {
@@ -586,13 +590,21 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	row.setCell(student.getNumber().toString());
 	setDegreeColumns(row, degree);
 	row.setCell(executionSemester.getSemester().toString());
+	row.setCell(executionSemester.getExecutionYear().getYear());
 	row.setCell(curricularCourse.getName());
 	setDegreeColumns(row, curricularCourse.getDegree());
 	row.setCell(enrolment.getGradeValue());
+	row.setCell(enrolment.getEctsCredits());
 	row.setCell(enrolment.getEnrollmentState().getDescription());
 	row.setCell(enrolment.getEnrolmentEvaluationType().getDescription());
 	row.setCell(registration.getRegistrationAgreement().getName());
 	row.setCell(countPreviousEnrolments(curricularCourse, executionSemesterForPreviousEnrolmentCount, student));
+	final Attends attends = enrolment.getAttendsFor(executionSemester);
+	if (attends == null) {
+	    row.setCell("");
+	} else {
+	    row.setCell(attends.getExecutionCourse().getSigla());	    
+	}
     }
 
     private String countPreviousEnrolments(final CurricularCourse curricularCourse, final ExecutionSemester executionPeriod,
