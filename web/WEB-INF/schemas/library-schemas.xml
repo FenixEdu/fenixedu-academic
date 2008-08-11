@@ -98,11 +98,15 @@
 <schema name="library.thesis.details" type="net.sourceforge.fenixedu.domain.thesis.Thesis"
 	bundle="LIBRARY_RESOURCES">
 	<slot name="finalTitle" key="label.thesis.title" />
-	<slot name="finalSubtitle" key="label.thesis.subtitle" layout="null-as-label" />
-	<slot name="thesisAbstract" key="label.thesis.note" layout="short">
+	<slot name="finalSubtitle" key="label.thesis.subtitle" />
+	<slot name="thesisAbstractPt" key="label.thesis.note.pt" layout="short">
 		<property name="length" value="300" />
 	</slot>
-	<slot name="keywords" key="label.thesis.keywords" />
+    <slot name="thesisAbstractEn" key="label.thesis.note.en" layout="short">
+        <property name="length" value="300" />
+    </slot>
+	<slot name="keywordsPt" key="label.thesis.keywords.pt" />
+    <slot name="keywordsEn" key="label.thesis.keywords.en" />
 	<slot name="language" key="label.thesis.language" />
 	<slot name="orientation" layout="list" key="label.thesis.orientation">
 		<property name="eachSchema" value="thesis.participant.name-with-alias" />
@@ -121,6 +125,7 @@
 		<property name="linkFormat" value="${dissertation.downloadUrl}" />
 		<property name="contextRelative" value="false" />
 	</slot>
+    <slot name="visibility" key="label.thesis.visibility" />
 </schema>
 
 <schema name="thesis.participant.name-with-alias" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
