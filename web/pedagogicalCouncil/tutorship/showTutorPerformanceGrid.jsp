@@ -27,14 +27,15 @@
 
 </fr:form>
 
+<br/>
 
 <html:messages id="message" message="true" bundle="PEDAGOGICAL_COUNCIL">
-<br/><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
+	<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
 </html:messages>
 
 <logic:present name="tutor">
 	<logic:notPresent name="tutorshipHistory">
-	<br/><em><bean:message key="error.tutor.noStudent" bundle="APPLICATION_RESOURCES" /></em>
+	<em><bean:message key="error.tutor.noStudent" bundle="APPLICATION_RESOURCES" /></em>
 	</logic:notPresent>
 </logic:present>
 
@@ -57,7 +58,7 @@
 				</li>
 			</ul>
 			<bean:define id="students" name="studentsByTutorBean" property="studentsList" />
-			<fr:view name="students" layout="tabular" schema="teacher.viewStudentsByTutor">
+			<fr:view name="students" layout="tabular" schema="tutorship.tutorate.student.byTutor">
 				<fr:layout>
 					<fr:property name="classes" value="tstyle1 thlight mtop0 mbottom15 tdcenter"/>
 					<fr:property name="columnClasses" value=",aleft,,,"/>

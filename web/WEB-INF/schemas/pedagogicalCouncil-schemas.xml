@@ -634,6 +634,7 @@
 
 <schema name="tutorship.tutorate.student" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.Person">
 	<slot name="name" key="label.name" />
+	<slot name="documentIdNumber" key="label.documentId" />
 	<slot name="institutionalOrDefaultEmailAddressValue" key="label.email" />
 	<slot name="defaultMobilePhone.number" key="label.phone" />
 </schema>
@@ -656,4 +657,23 @@
 	</slot>
 	<slot name="entryGrade" key="label.entryGrade"/>
 	<slot name="aritmeticAverage" key="label.aritmeticAverage"/>
+</schema>
+
+<schema name="tutorship.tutorate.student.byTutor" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Tutorship">
+	<slot name="studentCurricularPlan.registration" key="label.studentNumber" layout="link">
+		<property name="contextRelative" value="true"/>
+		<property name="moduleRelative" value="true"/>
+		<property name="blankTarget" value="false"/>
+		<property name="linkFormat" value="/studentTutorship.do?method=showStudentRegistration&amp;studentNumber=${student.number}"/>	
+		<property name="subLayout" value="values"/>
+		<property name="subSchema" value="registration.number"/>
+	</slot>
+	<slot name="studentCurricularPlan.person.name" key="label.name" />
+	<slot name="studentCurricularPlan.registration.startExecutionYear.year" key="label.entryYear" />
+	<slot name="studentCurricularPlan.registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla" />
+	<slot name="studentCurricularPlan.person" key="label.email" layout="link">
+		<property name="linkFormat" value="mailto:${email}"/>
+		<property name="subLayout" value="values" />
+		<property name="subSchema" value="teacher.person.email" />
+	</slot>
 </schema>

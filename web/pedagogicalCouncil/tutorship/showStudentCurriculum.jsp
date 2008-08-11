@@ -49,11 +49,11 @@
 	<!-- Person and Student short info -->
 	<p class="mvert2">
 		<span class="showpersonid">
-		<bean:message key="label.student" bundle="ACADEMIC_OFFICE_RESOURCES"/>: 
-			<fr:view name="registration" property="student" schema="student.show.personAndStudentInformation.short">
-				<fr:layout name="flow">
-					<fr:property name="labelExcluded" value="true"/>
-				</fr:layout>
+			<fr:view name="registration" property="student.person" schema="tutorship.tutorate.student">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle1 thright thlight mtop0"/>
+					<fr:property name="rowClasses" value=",,,,,,"/>
+			    </fr:layout>
 			</fr:view>
 		</span>
 	</p>
