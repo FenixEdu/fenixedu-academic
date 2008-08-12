@@ -451,28 +451,8 @@ public class Person extends Person_Base {
 	    throw new DomainException("error.person.unExistingUser");
 	}
 
-	if (!PasswordEncryptor.areEquals(getPassword(), oldPassword)) {
-	    throw new DomainException("error.person.invalidExistingPassword");
-	}
-
-	if (PasswordEncryptor.areEquals(getPassword(), newPassword)) {
-	    throw new DomainException("error.person.invalidSamePassword");
-	}
-
 	if (newPassword.equals("")) {
 	    throw new DomainException("error.person.invalidEmptyPassword");
-	}
-
-	if (getDocumentIdNumber().equalsIgnoreCase(newPassword)) {
-	    throw new DomainException("error.person.invalidIDPassword");
-	}
-
-	if (getFiscalCode() != null && getFiscalCode().equalsIgnoreCase(newPassword)) {
-	    throw new DomainException("error.person.invalidFiscalCodePassword");
-	}
-
-	if (getSocialSecurityNumber() != null && getSocialSecurityNumber().equalsIgnoreCase(newPassword)) {
-	    throw new DomainException("error.person.invalidTaxPayerPassword");
 	}
 
 	setPassword(PasswordEncryptor.encryptPassword(newPassword));
