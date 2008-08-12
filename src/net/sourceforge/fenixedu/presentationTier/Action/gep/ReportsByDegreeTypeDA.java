@@ -545,7 +545,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("época");
 	spreadsheet.setHeader("tipo Aluno");
 	spreadsheet.setHeader("número inscricoes anteriores");
-	spreadsheet.setHeader("codigo execucao");
+	spreadsheet.setHeader("executionCourseId");
 
 	for (final Degree degree : rootDomainObject.getDegreesSet()) {
 	    if (degree.getDegreeType() == degreeType) {
@@ -603,7 +603,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	if (attends == null) {
 	    row.setCell("");
 	} else {
-	    row.setCell(attends.getExecutionCourse().getSigla());	    
+	    row.setCell(attends.getExecutionCourse().getIdInternal());	    
 	}
     }
 
