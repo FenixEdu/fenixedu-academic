@@ -16,8 +16,15 @@ import net.sourceforge.fenixedu.domain.FileEntry;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
+import net.sourceforge.fenixedu.domain.contacts.Phone;
+import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.student.Registration;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -31,21 +38,29 @@ public class PersonInformationDTO {
 
     private String phone;
 
-    private String workPhone;
-
     private String mobile;
 
     private String webAddress;
 
     private String email;
 
+    private List<String> personalPhones = new ArrayList<String>();
+
+    private List<String> workPhones = new ArrayList<String>();
+
+    private List<String> personalMobiles = new ArrayList<String>();
+
+    private List<String> workMobiles = new ArrayList<String>();
+
+    private List<String> personalWebAdresses = new ArrayList<String>();
+
+    private List<String> workWebAdresses = new ArrayList<String>();
+
+    private List<String> personalEmails = new ArrayList<String>();
+
+    private List<String> workEmails = new ArrayList<String>();
+
     private String gender;
-
-    private Boolean availableEmail;
-
-    private Boolean availableWebSite;
-
-    private Boolean availablePhoto;
 
     private String userUID;
 
@@ -55,7 +70,9 @@ public class PersonInformationDTO {
 
     private byte[] photo;
 
-    private String citizenIdNumber;
+    private String identificationDocumentNumber;
+
+    private String identificationDocumentType;
 
     private String teacherDepartment;
 
@@ -66,20 +83,30 @@ public class PersonInformationDTO {
     public PersonInformationDTO(final Person person) {
 	this.name = person.getName();
 	this.displayName = person.getNickname();
-	this.phone = person.getPhone();
-	this.workPhone = person.getWorkPhone();
-	this.mobile = person.getMobile();
-	this.webAddress = person.getWebAddress();
-	this.email = person.getDefaultEmailAddress().getValue();
+
+	final Phone defaultPhone = person.getDefaultPhone();
+	this.phone = defaultPhone != null ? defaultPhone.getPresentationValue() : StringUtils.EMPTY;
+
+	final MobilePhone defaultMobilePhone = person.getDefaultMobilePhone();
+	this.mobile = defaultMobilePhone != null ? defaultMobilePhone.getPresentationValue() : StringUtils.EMPTY;
+
+	final WebAddress defaultWebAddress = person.getDefaultWebAddress();
+	this.webAddress = defaultWebAddress != null ? defaultWebAddress.getPresentationValue() : StringUtils.EMPTY;
+
+	final EmailAddress defaultEmailAddress = person.getDefaultEmailAddress();
+	this.email = defaultEmailAddress != null ? defaultEmailAddress.getPresentationValue() : StringUtils.EMPTY;
+
 	this.gender = person.getGender() != null ? person.getGender().name() : null;
-	this.availableEmail = person.isDefaultEmailVisible();
-	this.availableWebSite = person.isDefaultWebAddressVisible();
-	this.availablePhoto = person.getAvailablePhoto();
 	this.userUID = person.getIstUsername();
 
-	if (person.getIdDocumentType() == IDDocumentType.IDENTITY_CARD) {
-	    this.citizenIdNumber = person.getDocumentIdNumber();
-	}
+	this.identificationDocumentNumber = person.getDocumentIdNumber();
+	this.identificationDocumentType = person.getIdDocumentType() != null ? person.getIdDocumentType().name()
+		: StringUtils.EMPTY;
+
+	fillPersonalAndWorkContacts(person.getPhones(), this.personalPhones, this.workPhones);
+	fillPersonalAndWorkContacts(person.getMobilePhones(), this.personalMobiles, this.workMobiles);
+	fillPersonalAndWorkContacts(person.getWebAddresses(), this.personalWebAdresses, this.workWebAdresses);
+	fillPersonalAndWorkContacts(person.getEmailAddresses(), this.personalEmails, this.workEmails);
 
 	this.roles = new ArrayList<String>();
 	for (Role role : person.getPersonRoles()) {
@@ -108,6 +135,17 @@ public class PersonInformationDTO {
 	    this.alias.add(loginAlias.getAlias());
 	}
 
+    }
+
+    private void fillPersonalAndWorkContacts(final List<? extends PartyContact> contacts, List<String> personalContacts,
+	    List<String> workContacts) {
+	for (final PartyContact partyContact : contacts) {
+	    if (partyContact.getType() == PartyContactType.PERSONAL) {
+		personalContacts.add(partyContact.getPresentationValue());
+	    } else if (partyContact.getType() == PartyContactType.WORK) {
+		workContacts.add(partyContact.getPresentationValue());
+	    }
+	}
     }
 
     private byte[] getJpegPhoto(final FileEntry personalPhoto) {
@@ -148,14 +186,6 @@ public class PersonInformationDTO {
 	this.phone = phone;
     }
 
-    public String getWorkPhone() {
-	return workPhone;
-    }
-
-    public void setWorkPhone(String workPhone) {
-	this.workPhone = workPhone;
-    }
-
     public String getMobile() {
 	return mobile;
     }
@@ -186,30 +216,6 @@ public class PersonInformationDTO {
 
     public void setGender(String gender) {
 	this.gender = gender;
-    }
-
-    public Boolean getAvailableEmail() {
-	return availableEmail;
-    }
-
-    public void setAvailableEmail(Boolean availableEmail) {
-	this.availableEmail = availableEmail;
-    }
-
-    public Boolean getAvailableWebSite() {
-	return availableWebSite;
-    }
-
-    public void setAvailableWebSite(Boolean availableWebSite) {
-	this.availableWebSite = availableWebSite;
-    }
-
-    public Boolean getAvailablePhoto() {
-	return availablePhoto;
-    }
-
-    public void setAvailablePhoto(Boolean availablePhoto) {
-	this.availablePhoto = availablePhoto;
     }
 
     public String getUserUID() {
@@ -244,12 +250,20 @@ public class PersonInformationDTO {
 	this.alias = alias;
     }
 
-    public String getCitizenIdNumber() {
-	return citizenIdNumber;
+    public String getIdentificationDocumentNumber() {
+	return identificationDocumentNumber;
     }
 
-    public void setCitizenIdNumber(String citizenIdNumber) {
-	this.citizenIdNumber = citizenIdNumber;
+    public void setIdentificationDocumentNumber(String identificationDocumentNumber) {
+	this.identificationDocumentNumber = identificationDocumentNumber;
+    }
+
+    public String getIdentificationDocumentType() {
+	return identificationDocumentType;
+    }
+
+    public void setIdentificationDocumentType(String identificationDocumentType) {
+	this.identificationDocumentType = identificationDocumentType;
     }
 
     public String getTeacherDepartment() {
@@ -274,6 +288,70 @@ public class PersonInformationDTO {
 
     public void setStudentDegrees(List<String> studentDegrees) {
 	this.studentDegrees = studentDegrees;
+    }
+
+    public List<String> getPersonalPhones() {
+	return personalPhones;
+    }
+
+    public void setPersonalPhones(List<String> personalPhones) {
+	this.personalPhones = personalPhones;
+    }
+
+    public List<String> getWorkPhones() {
+	return workPhones;
+    }
+
+    public void setWorkPhones(List<String> workPhones) {
+	this.workPhones = workPhones;
+    }
+
+    public List<String> getPersonalMobiles() {
+	return personalMobiles;
+    }
+
+    public void setPersonalMobiles(List<String> personalMobiles) {
+	this.personalMobiles = personalMobiles;
+    }
+
+    public List<String> getWorkMobiles() {
+	return workMobiles;
+    }
+
+    public void setWorkMobiles(List<String> workMobiles) {
+	this.workMobiles = workMobiles;
+    }
+
+    public List<String> getPersonalWebAdresses() {
+	return personalWebAdresses;
+    }
+
+    public void setPersonalWebAdresses(List<String> personalWebAdresses) {
+	this.personalWebAdresses = personalWebAdresses;
+    }
+
+    public List<String> getWorkWebAdresses() {
+	return workWebAdresses;
+    }
+
+    public void setWorkWebAdresses(List<String> workWebAdresses) {
+	this.workWebAdresses = workWebAdresses;
+    }
+
+    public List<String> getPersonalEmails() {
+	return personalEmails;
+    }
+
+    public void setPersonalEmails(List<String> personalEmails) {
+	this.personalEmails = personalEmails;
+    }
+
+    public List<String> getWorkEmails() {
+	return workEmails;
+    }
+
+    public void setWorkEmails(List<String> workEmails) {
+	this.workEmails = workEmails;
     }
 
 }
