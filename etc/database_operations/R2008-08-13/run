@@ -40,3 +40,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Update Library Permissions" libraryPermissions.sql IST
