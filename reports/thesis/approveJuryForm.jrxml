@@ -85,7 +85,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
-						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+						<font fontName="Verdana" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Nome: " + $P{vowel3Name} + 
 "\nCategoria: " + $P{vowel3Category} + 
@@ -104,7 +104,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
-						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+						<font fontName="Verdana" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Nome: " + $P{vowel2Name} + 
 "\nCategoria: " + $P{vowel2Category} + 
@@ -123,7 +123,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
-						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+						<font fontName="Verdana" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Vogais:" + 
 "\nNome: " + $P{vowel1Name} + 
@@ -143,7 +143,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
-						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+						<font fontName="Verdana" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["JÚRI" + 
 "\nPresidente:" + 
@@ -286,7 +286,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" pdfFontName="Helvetica" size="10" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
+						<font fontName="Verdana" pdfFontName="Helvetica" size="10" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
 					</textElement>
 				<text><![CDATA[Data:                                                 Nome: 
 
@@ -306,7 +306,7 @@ Assinatura: ]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" pdfFontName="Helvetica" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
+						<font fontName="Verdana" pdfFontName="Helvetica" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
 					</textElement>
 				<text><![CDATA[A COORDENAÇÃO DO CURSO]]></text>
 				</staticText>
@@ -324,7 +324,7 @@ Assinatura: ]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="Single">
-						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+						<font fontName="Verdana" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Data: " + $P{date} +
 "\n" +
@@ -344,7 +344,7 @@ Assinatura: ]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement>
-						<font fontName="Arial" pdfFontName="Helvetica" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
+						<font fontName="Verdana" pdfFontName="Helvetica" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
 					</textElement>
 				<text><![CDATA[HOMOLOGAÇÃO DO JÚRI PELO CONSELHO CIENTÍFICO]]></text>
 				</staticText>
@@ -457,7 +457,7 @@ Assinatura: ]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Center">
-						<font fontName="Arial" pdfFontName="Helvetica" size="14" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
+						<font fontName="Verdana" pdfFontName="Helvetica" size="14" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{institutionName}]]></textFieldExpression>
 				</textField>
@@ -476,7 +476,7 @@ Assinatura: ]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Left">
-						<font fontName="Arial" pdfFontName="Helvetica" size="14" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
+						<font fontName="Verdana" pdfFontName="Helvetica" size="14" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Curso em " + $P{studentDegreeName}]]></textFieldExpression>
 				</textField>
@@ -538,7 +538,7 @@ Assinatura: ]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
-						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+						<font fontName="Verdana" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Nome: " + $P{coorientatorName} + 
 "\nCategoria: " + $P{coorientatorCategory} + 
@@ -557,7 +557,7 @@ Assinatura: ]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
-						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+						<font fontName="Verdana" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["ORIENTAÇÃO" + 
 "\nNome: " + $P{orientatorName} + 
@@ -577,7 +577,7 @@ Assinatura: ]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
-						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+						<font fontName="Verdana" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["ALUNO" + 
 "\nNúmero: " + $P{studentNumber} +
@@ -684,7 +684,7 @@ Assinatura: ]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
-						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+						<font fontName="Verdana" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["DISSERTAÇÃO"]]></textFieldExpression>
 				</textField>
@@ -723,7 +723,7 @@ Assinatura: ]]></text>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="Single">
-						<font fontName="Arial" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+						<font fontName="Verdana" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["Título: " + $P{thesisTitle}]]></textFieldExpression>
 				</textField>
