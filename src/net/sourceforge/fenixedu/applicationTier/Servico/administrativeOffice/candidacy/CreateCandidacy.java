@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.joda.time.YearMonthDay;
 
@@ -26,6 +27,11 @@ public class CreateCandidacy extends Service {
 	person.setSocialSecurityNumber(contributorNumber);
 	person.addPersonRoleByRoleType(RoleType.CANDIDATE);
 	person.addPersonRoleByRoleType(RoleType.PERSON);
+
+	if (!person.hasStudent()) {
+	    new Student(person);
+	}
+	person.setIstUsername();
 
 	Candidacy candidacy = CandidacyFactory.newCandidacy(degreeType, person, executionDegree, startDate);
 
