@@ -333,7 +333,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	spreadsheet.setHeader("carga estágio");
 	spreadsheet.setHeader("carga orientação tutorial");
 	spreadsheet.setHeader("carga trabalho autónomo");
-	
+
 	for (final Degree degree : rootDomainObject.getDegreesSet()) {
 	    if (degree.getDegreeType() == degreeType) {
 		for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
@@ -588,7 +588,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    
 	final Row row = spreadsheet.addRow();
 	row.setCell(student.getNumber().toString());
-	setDegreeColumns(row, degree);
+	setDegreeColumns(row, registration.getDegree());
 	row.setCell(executionSemester.getSemester().toString());
 	row.setCell(executionSemester.getExecutionYear().getYear());
 	row.setCell(curricularCourse.getName());
