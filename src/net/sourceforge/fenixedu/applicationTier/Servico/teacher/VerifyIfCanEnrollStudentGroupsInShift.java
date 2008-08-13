@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class VerifyIfCanEnrollStudentGroupsInShift extends Service {
 
     public boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 
         if (grouping == null) {

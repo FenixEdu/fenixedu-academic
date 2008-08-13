@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadDegreeCurricularPlansByDegreeType extends Service {
 
-    public List run(final DegreeType tipoCurso) throws ExcepcaoPersistencia {
+    public List run(final DegreeType tipoCurso) {
         final List degreeCurricularPlans = DegreeCurricularPlan.readByCurricularStage(CurricularStage.OLD);
         return constructInfoDegreeCurricularPlans(tipoCurso, degreeCurricularPlans);
     }

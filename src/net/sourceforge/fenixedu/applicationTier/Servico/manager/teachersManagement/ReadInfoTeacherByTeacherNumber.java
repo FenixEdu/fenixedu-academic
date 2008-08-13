@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadInfoTeacherByTeacherNumber extends Service {
 
-    public InfoTeacher run(Integer teacherNumber) throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoTeacher run(Integer teacherNumber) throws FenixServiceException{
         if (teacherNumber == null) {
             throw new FenixServiceException("error.readInfoTeacherByTeacherNumber.nullTeacherNumber");
         }

@@ -40,7 +40,7 @@ import org.joda.time.YearMonthDay;
 
 public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Service {
 
-    public List<InfoObject> run(AllocatableSpace room, YearMonthDay day) throws ExcepcaoPersistencia, FenixServiceException {
+    public List<InfoObject> run(AllocatableSpace room, YearMonthDay day) throws FenixServiceException {
 
 	List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 

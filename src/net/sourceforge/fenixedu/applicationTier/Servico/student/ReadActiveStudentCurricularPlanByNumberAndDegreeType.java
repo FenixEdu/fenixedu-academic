@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadActiveStudentCurricularPlanByNumberAndDegreeType extends Service {
 
     public InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType)
-            throws ExcepcaoPersistencia {
+            {
         Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
         if(registration == null) {
         	return null;

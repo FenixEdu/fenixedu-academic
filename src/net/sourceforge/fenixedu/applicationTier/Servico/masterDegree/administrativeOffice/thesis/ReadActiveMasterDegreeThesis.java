@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadActiveMasterDegreeThesis extends Service {
 
     public Collection<MasterDegreeThesis> run(MasterDegreeThesisState thesisState, Integer year,
-	    Degree degree) throws ExcepcaoPersistencia {
+	    Degree degree) {
 
 	Collection<MasterDegreeThesis> result = new ArrayList<MasterDegreeThesis>();
 	for (MasterDegreeThesis masterDegreeThesis : rootDomainObject.getMasterDegreeThesiss()) {

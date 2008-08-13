@@ -14,16 +14,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditCurricularCourse extends Service {
 
     public void run(CurricularCourse curricularCourse, Double weight, String prerequisites, String prerequisitesEn,
-	    CompetenceCourse competenceCourse) throws ExcepcaoPersistencia, FenixServiceException {
+	    CompetenceCourse competenceCourse) throws FenixServiceException {
 	curricularCourse.edit(weight, prerequisites, prerequisitesEn, CurricularStage.DRAFT, competenceCourse);
     }
 
-    public void run(CurricularCourse curricularCourse, String name, String nameEn) throws ExcepcaoPersistencia,
+    public void run(CurricularCourse curricularCourse, String name, String nameEn) throws
 	    FenixServiceException {
 	curricularCourse.edit(name, nameEn, CurricularStage.DRAFT);
     }
 
-    public void run(OptionalCurricularCourse curricularCourse, String name, String nameEn) throws ExcepcaoPersistencia,
+    public void run(OptionalCurricularCourse curricularCourse, String name, String nameEn) throws
 	    FenixServiceException {
 	run((CurricularCourse) curricularCourse, name, nameEn);
     }

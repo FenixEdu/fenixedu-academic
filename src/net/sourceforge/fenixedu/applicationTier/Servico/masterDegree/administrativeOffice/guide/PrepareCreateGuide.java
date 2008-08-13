@@ -40,7 +40,7 @@ import org.apache.commons.collections.Predicate;
 public class PrepareCreateGuide extends Service {
     
     public InfoGuide run(String graduationType, InfoExecutionDegree infoExecutionDegree, Integer number,
-            String requesterType, Party contributorParty) throws FenixServiceException, ExcepcaoPersistencia {
+            String requesterType, Party contributorParty) throws FenixServiceException{
 
         MasterDegreeCandidate masterDegreeCandidate = null;
         InfoGuide infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributor();

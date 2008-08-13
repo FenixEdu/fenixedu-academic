@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllExecutionPeriods extends Service {
 
-	public List run() throws ExcepcaoPersistencia {
+	public List run() {
 		final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
 		for (final ExecutionSemester executionSemester : rootDomainObject.getExecutionPeriods()) {
 			infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));

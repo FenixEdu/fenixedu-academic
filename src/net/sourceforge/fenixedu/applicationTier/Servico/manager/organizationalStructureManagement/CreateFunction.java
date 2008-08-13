@@ -15,7 +15,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class CreateFunction extends Service {
 
     public void run(MultiLanguageString functionName, YearMonthDay begin, YearMonthDay end, FunctionType type, Integer unitID)
-	    throws ExcepcaoPersistencia, FenixServiceException, DomainException {
+	    throws FenixServiceException, DomainException {
 
 	Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);
 	if (unit == null) {

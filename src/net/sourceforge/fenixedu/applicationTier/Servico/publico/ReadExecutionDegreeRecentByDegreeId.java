@@ -22,7 +22,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  */
 public class ReadExecutionDegreeRecentByDegreeId extends Service {
 
-    public InfoExecutionDegree run(final Integer degreeId) throws ExcepcaoPersistencia{
+    public InfoExecutionDegree run(final Integer degreeId) {
         List<ExecutionDegree> listExecutionDegrees = new ArrayList<ExecutionDegree>();
         
         Degree degree = rootDomainObject.readDegreeByOID(degreeId);

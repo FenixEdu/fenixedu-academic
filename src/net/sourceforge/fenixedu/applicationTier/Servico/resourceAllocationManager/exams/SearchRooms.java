@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class SearchRooms extends Service {
 
     public List run(String name, String building, Integer floor, RoomClassification type, Integer normal,
-	    Integer exam) throws FenixServiceException, ExcepcaoPersistencia {
+	    Integer exam) throws FenixServiceException{
 
 	final List<AllocatableSpace> rooms = AllocatableSpace.findActiveAllocatableSpacesBySpecifiedArguments(name, building, floor, type, normal, exam);
 	final List<InfoRoom> infoRooms = new ArrayList();

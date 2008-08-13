@@ -14,13 +14,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
  */
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ApagarTurma extends Service {
 
-    public Boolean run(InfoClass infoClass) throws ExcepcaoPersistencia {
-        rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal()).delete();
-        return Boolean.TRUE;
+    public Boolean run(InfoClass infoClass) {
+	rootDomainObject.readSchoolClassByOID(infoClass.getIdInternal()).delete();
+	return Boolean.TRUE;
     }
 
 }

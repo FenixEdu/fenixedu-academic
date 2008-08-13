@@ -55,7 +55,7 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia {
+    private boolean hasPrivilege(IUserView id, Object[] arguments) {
         if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             return true;
         }

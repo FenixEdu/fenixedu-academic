@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditGrantType extends EditDomainObjectService {
 
     @Override
-    protected DomainObject readObjectByUnique(InfoObject infoObject) throws ExcepcaoPersistencia {
+    protected DomainObject readObjectByUnique(InfoObject infoObject) {
         InfoGrantType infoGrantType = (InfoGrantType) infoObject;
         return GrantType.readBySigla(infoGrantType.getSigla());
     }

@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteUnit extends Service {
     
-    public void run(Integer unitID) throws ExcepcaoPersistencia, FenixServiceException{
+    public void run(Integer unitID) throws FenixServiceException{
         Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);
         if(unit == null){
             throw new FenixServiceException("error.noUnit");

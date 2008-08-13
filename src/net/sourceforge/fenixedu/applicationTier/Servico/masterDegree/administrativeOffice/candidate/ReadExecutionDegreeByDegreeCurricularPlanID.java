@@ -30,7 +30,7 @@ import org.apache.commons.collections.Predicate;
 public class ReadExecutionDegreeByDegreeCurricularPlanID extends Service {
 
     public InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionDegreeIndex)
-            throws ExcepcaoPersistencia {
+            {
         List infoExecutionDegreeList = null;
         List executionDegrees = null;
 
@@ -68,7 +68,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID extends Service {
      * @throws ExcepcaoPersistencia
      */
     public InfoExecutionDegree run(Integer degreeCurricularPlanID, final String executionYear)
-            throws ExcepcaoPersistencia {
+            {
         DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(
                         degreeCurricularPlanID);
 

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class RemoveExamCoordinatorRole extends Service {
 
-    public void run(Person person) throws ExcepcaoPersistencia {
+    public void run(Person person) {
 
         person.removeRoleByType(RoleType.EXAM_COORDINATOR);
 

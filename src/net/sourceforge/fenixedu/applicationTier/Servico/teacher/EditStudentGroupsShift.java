@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditStudentGroupsShift extends Service {
 
 	public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode,
-			List<Integer> studentGroupsCodes) throws FenixServiceException, ExcepcaoPersistencia {
+			List<Integer> studentGroupsCodes) throws FenixServiceException{
 
 		Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 		if (grouping == null) {
@@ -49,7 +49,7 @@ public class EditStudentGroupsShift extends Service {
         return Boolean.TRUE;
 	}
 
-	private List<StudentGroup> buildStudentGroupsList(List<Integer> studentGroupsCodes) throws ExcepcaoPersistencia,
+	private List<StudentGroup> buildStudentGroupsList(List<Integer> studentGroupsCodes) throws
 			InvalidSituationServiceException {
 
 		List<StudentGroup> studentGroups = new ArrayList<StudentGroup>();

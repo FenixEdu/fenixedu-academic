@@ -8,21 +8,20 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author PTRLV
  */
 public class EditSite extends Service {
 
-    public Boolean run(InfoSite infoSiteOld, final String alternativeSite, final String mail,
-            final String initialStatement, final String introduction) throws FenixServiceException,
-            ExcepcaoPersistencia {
-    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoSiteOld.getInfoExecutionCourse().getIdInternal());
-        final ExecutionCourseSite site = executionCourse.getSite();
+    public Boolean run(InfoSite infoSiteOld, final String alternativeSite, final String mail, final String initialStatement,
+	    final String introduction) throws FenixServiceException {
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoSiteOld.getInfoExecutionCourse()
+		.getIdInternal());
+	final ExecutionCourseSite site = executionCourse.getSite();
 
-        site.edit(initialStatement, introduction, mail, alternativeSite);
+	site.edit(initialStatement, introduction, mail, alternativeSite);
 
-        return true;
+	return true;
     }
 }

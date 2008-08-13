@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExternalPersonsByInstitution extends Service {
 
-    public List run(Integer institutionID) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer institutionID) throws FenixServiceException{
         List infoExternalPersons = new ArrayList();
         
         Unit institution = (Unit) rootDomainObject.readPartyByOID(institutionID);

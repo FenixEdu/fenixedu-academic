@@ -11,12 +11,11 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics {
 
     public List<DegreeCourseStatisticsDTO> run(Integer competenceCourseId, Integer executionPeriodId)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException {
 	CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseId);
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 	Map<Degree, List<CurricularCourse>> groupedCourses = competenceCourse.getAssociatedCurricularCoursesGroupedByDegree();

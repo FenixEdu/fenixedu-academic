@@ -26,7 +26,7 @@ public class CreateScormPackage extends CreateFileContent {
 
 	public void run(Site site, Item item, File file, String originalFilename, String displayName,
 			Group permittedGroup, Person person, EducationalResourceType type) throws DomainException,
-			FenixServiceException, ExcepcaoPersistencia, IOException {
+			FenixServiceException, IOException {
 
 		super.run(site, item, file, originalFilename, displayName, permittedGroup, person, type);
 	}

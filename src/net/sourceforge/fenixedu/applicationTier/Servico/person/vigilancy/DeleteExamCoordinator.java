@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteExamCoordinator extends Service {
 
-    public void run(ExamCoordinator coordinator) throws ExcepcaoPersistencia {
+    public void run(ExamCoordinator coordinator) {
 
         Person person = coordinator.getPerson();
         coordinator.delete();

@@ -35,7 +35,7 @@ public class ReadStudentsWithoutGroup extends Service {
     }
 
     public ISiteComponent run(final Integer groupPropertiesCode, final String username)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException{
 
 	final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);

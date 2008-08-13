@@ -54,7 +54,7 @@ public class ExecutionDegreeCoordinatorAuthorizationFilter extends Filtro {
 
     }
 
-    public static boolean verifyCondition(IUserView id, Integer objectId) throws ExcepcaoPersistencia {
+    public static boolean verifyCondition(IUserView id, Integer objectId) {
     	if (id != null) {
         final Person person = id.getPerson();
         if (person != null) {

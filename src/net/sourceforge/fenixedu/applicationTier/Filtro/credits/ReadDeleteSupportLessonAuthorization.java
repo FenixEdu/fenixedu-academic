@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
 import net.sourceforge.fenixedu.domain.SupportLesson;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author jpvl
@@ -14,15 +13,14 @@ public class ReadDeleteSupportLessonAuthorization extends AbstractTeacherDepartm
     public final static ReadDeleteSupportLessonAuthorization filter = new ReadDeleteSupportLessonAuthorization();
 
     public static ReadDeleteSupportLessonAuthorization getInstance() {
-        return filter;
+	return filter;
     }
 
-    protected Integer getTeacherId(Object[] arguments)
-            throws ExcepcaoPersistencia {
-        Integer supportLessonId = (Integer) arguments[0];
+    protected Integer getTeacherId(Object[] arguments) {
+	Integer supportLessonId = (Integer) arguments[0];
 
-        SupportLesson supportLesson = rootDomainObject.readSupportLessonByOID(supportLessonId);
-        return supportLesson != null ? supportLesson.getProfessorship().getTeacher().getIdInternal() : null;
+	SupportLesson supportLesson = rootDomainObject.readSupportLessonByOID(supportLessonId);
+	return supportLesson != null ? supportLesson.getProfessorship().getTeacher().getIdInternal() : null;
     }
 
 }

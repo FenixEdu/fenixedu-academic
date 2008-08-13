@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadCertificateList extends Service {
 
-	public List run(GraduationType graduationType, List<DocumentType> documentTypes) throws FenixServiceException, ExcepcaoPersistencia {
+	public List run(GraduationType graduationType, List<DocumentType> documentTypes) throws FenixServiceException{
 		final List<InfoPrice> result = new ArrayList<InfoPrice>();
         for (final Price price : Price.readByGraduationTypeAndDocumentTypes(graduationType, documentTypes)) {
             result.add(InfoPrice.newInfoFromDoaim(price));

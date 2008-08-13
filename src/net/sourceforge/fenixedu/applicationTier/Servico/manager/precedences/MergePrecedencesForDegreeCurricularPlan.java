@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class MergePrecedencesForDegreeCurricularPlan extends Service {
 
-	public void run(Integer firstPrecedenceID, Integer secondPrecedenceID) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(Integer firstPrecedenceID, Integer secondPrecedenceID) throws FenixServiceException{
 
 		if (firstPrecedenceID.intValue() == secondPrecedenceID.intValue()) {
 			throw new InvalidArgumentsServiceException("error.manager.samePrecedencesForMerge");

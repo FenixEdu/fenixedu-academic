@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class UpdateDepartmentsCompetenceCourseManagementGroup extends Service {
 
-    public void run(Department department, Integer[] add, Integer[] remove) throws ExcepcaoPersistencia {
+    public void run(Department department, Integer[] add, Integer[] remove) {
         List<Person> toAdd = materializePersons(add);
         List<Person> toRemove = materializePersons(remove);
         List<Person> finalList = new ArrayList<Person>();
@@ -48,7 +48,7 @@ public class UpdateDepartmentsCompetenceCourseManagementGroup extends Service {
         department.setCompetenceCourseMembersGroup(new FixedSetGroup(finalList));
     }
 
-    private List<Person> materializePersons(Integer[] personsIDs) throws ExcepcaoPersistencia {
+    private List<Person> materializePersons(Integer[] personsIDs) {
         if (personsIDs != null) {
             List<Person> result = new ArrayList<Person>();
             
@@ -62,13 +62,13 @@ public class UpdateDepartmentsCompetenceCourseManagementGroup extends Service {
         }
     }
 
-    private void addBolonhaRole(Person person, Role bolonhaRole) throws ExcepcaoPersistencia {
+    private void addBolonhaRole(Person person, Role bolonhaRole) {
         if (!person.hasRole(RoleType.BOLONHA_MANAGER)) {
             person.addPersonRoles(bolonhaRole);    
         }
     }
 
-    private boolean belongsToOtherGroupsWithSameRole(Department departmentWhoAsks, Person person) throws ExcepcaoPersistencia {
+    private boolean belongsToOtherGroupsWithSameRole(Department departmentWhoAsks, Person person) {
         List<Department> departments = rootDomainObject.getDepartments();
         for (Department department : departments) {
             if (department != departmentWhoAsks) {

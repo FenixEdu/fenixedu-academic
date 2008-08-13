@@ -7,32 +7,31 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class AddCoordinator extends Service {
 
-    public Boolean run(Integer executionDegreeId, Integer number) throws FenixServiceException, ExcepcaoPersistencia {
+    public Boolean run(Integer executionDegreeId, Integer number) throws FenixServiceException {
 
-        final Employee employee = Employee.readByNumber(number);
+	final Employee employee = Employee.readByNumber(number);
 
-        if (employee == null) {
-            throw new FenixServiceException("error.noTeacher");
-        }
+	if (employee == null) {
+	    throw new FenixServiceException("error.noTeacher");
+	}
 
-        final Person person = employee.getPerson();
+	final Person person = employee.getPerson();
 
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
-        if (executionDegree == null) {
-            throw new FenixServiceException("error.noExecutionDegree");
-        }
-        
-        Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
-        if (coordinator == null) {
-            new Coordinator(executionDegree, person, Boolean.FALSE);
-            person.addPersonRoleByRoleType(RoleType.COORDINATOR);
-        }
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+	if (executionDegree == null) {
+	    throw new FenixServiceException("error.noExecutionDegree");
+	}
 
-        return Boolean.TRUE;
+	Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
+	if (coordinator == null) {
+	    new Coordinator(executionDegree, person, Boolean.FALSE);
+	    person.addPersonRoleByRoleType(RoleType.COORDINATOR);
+	}
+
+	return Boolean.TRUE;
     }
 
 }

@@ -19,7 +19,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 
     @Override
     protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject)
-	    throws ExcepcaoPersistencia {
+	    {
 
 	InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
 
@@ -56,7 +56,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
     }
 
     @Override
-    protected DomainObject readObjectByUnique(InfoObject infoObject) throws ExcepcaoPersistencia {
+    protected DomainObject readObjectByUnique(InfoObject infoObject) {
 	InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
 	return rootDomainObject.readGrantContractRegimeByOID(infoGrantContractRegime.getIdInternal());
     }
@@ -67,7 +67,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 
     @Override
     protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException{
 
 	InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
 	if (infoGrantContractRegime.getState().equals(InfoGrantContractRegime.getActiveState())) {

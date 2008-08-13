@@ -28,7 +28,7 @@ public class EditWrittenEvaluation extends Service {
     public void run(Integer executionCourseID, Date writtenEvaluationDate, Date writtenEvaluationStartTime,
 	    Date writtenEvaluationEndTime, List<String> executionCourseIDs, List<String> degreeModuleScopeIDs,
 	    List<String> roomIDs, Integer writtenEvaluationOID, Season examSeason, String writtenTestDescription)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException{
 
 	final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject
 		.readEvaluationByOID(writtenEvaluationOID);
@@ -70,7 +70,7 @@ public class EditWrittenEvaluation extends Service {
 	return hourDiference > 0 || minuteDifference > 5;
     }
 
-    private List<AllocatableSpace> readRooms(final List<String> roomIDs) throws ExcepcaoPersistencia, FenixServiceException {
+    private List<AllocatableSpace> readRooms(final List<String> roomIDs) throws FenixServiceException {
 	final List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
 	for (final String roomID : roomIDs) {
 	    final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(Integer.valueOf(roomID));
@@ -83,7 +83,7 @@ public class EditWrittenEvaluation extends Service {
     }
 
     private List<DegreeModuleScope> readCurricularCourseScopesAndContexts(final List<String> degreeModuleScopeIDs)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException{
 
 	List<DegreeModuleScope> result = new ArrayList<DegreeModuleScope>();
 	for (String key : degreeModuleScopeIDs) {
@@ -100,7 +100,7 @@ public class EditWrittenEvaluation extends Service {
 	return result;
     }
 
-    private List<ExecutionCourse> readExecutionCourses(final List<String> executionCourseIDs) throws ExcepcaoPersistencia,
+    private List<ExecutionCourse> readExecutionCourses(final List<String> executionCourseIDs) throws
 	    FenixServiceException {
 
 	if (executionCourseIDs.isEmpty()) {

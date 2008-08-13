@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 public class GiveUpQuestion extends Service {
 
     public void run(Registration registration, DistributedTest distributedTest, Integer exerciseCode, Integer itemCode,
-	    String path) throws FenixServiceException, ExcepcaoPersistencia {
+	    String path) throws FenixServiceException{
 	if (distributedTest == null) {
 	    throw new FenixServiceException();
 	}

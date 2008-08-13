@@ -23,8 +23,8 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class ReadSummaryReport extends Service {
 
-    public InfoCoordinatorReport run(String username, String costCenter, Integer coordinatorCode,
-	    String userNumber) throws ExcepcaoPersistencia {
+    public InfoCoordinatorReport run(String username, String costCenter, Integer coordinatorCode, String userNumber)
+	    throws ExcepcaoPersistencia {
 	InfoCoordinatorReport infoReport = new InfoCoordinatorReport();
 
 	PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
@@ -32,13 +32,11 @@ public class ReadSummaryReport extends Service {
 	    coordinatorCode = new Integer(userNumber);
 	List lines = null;
 	if (Integer.valueOf(userNumber).equals(coordinatorCode)) {
-	    lines = p.getIPersistentSummaryReport().readByCoordinatorCode(ReportType.SUMMARY,
-		    coordinatorCode);
+	    lines = p.getIPersistentSummaryReport().readByCoordinatorCode(ReportType.SUMMARY, coordinatorCode);
 	} else {
 	    List<Integer> projectCodes = new ArrayList<Integer>();
 
-	    List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndCoordinator(username,
-		    coordinatorCode, false);
+	    List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndCoordinator(username, coordinatorCode, false);
 	    for (ProjectAccess access : accesses) {
 		Integer keyProject = access.getKeyProject();
 		if (keyProject == null && access.getCostCenter()) {
@@ -48,18 +46,17 @@ public class ReadSummaryReport extends Service {
 		    projectCodes.add(keyProject);
 		}
 	    }
-	    lines = p.getIPersistentSummaryReport().readByCoordinatorAndProjectCodes(ReportType.SUMMARY,
-		    coordinatorCode, projectCodes);
+	    lines = p.getIPersistentSummaryReport().readByCoordinatorAndProjectCodes(ReportType.SUMMARY, coordinatorCode,
+		    projectCodes);
 
 	}
 	if (lines != null) {
-	    infoReport.setInfoCoordinator(InfoRubric.newInfoFromDomain(p.getIPersistentProjectUser()
-		    .readProjectCoordinator(coordinatorCode)));
+	    infoReport.setInfoCoordinator(InfoRubric.newInfoFromDomain(p.getIPersistentProjectUser().readProjectCoordinator(
+		    coordinatorCode)));
 	    List<IReportLine> infoLines = new ArrayList<IReportLine>();
 
 	    for (int line = 0; line < lines.size(); line++)
-		infoLines.add(InfoSummaryReportLine.newInfoFromDomain((ISummaryReportLine) lines
-			.get(line)));
+		infoLines.add(InfoSummaryReportLine.newInfoFromDomain((ISummaryReportLine) lines.get(line)));
 	    infoReport.setLines(infoLines);
 	}
 

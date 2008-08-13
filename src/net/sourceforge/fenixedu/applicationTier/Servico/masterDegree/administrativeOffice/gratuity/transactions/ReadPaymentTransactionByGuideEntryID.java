@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadPaymentTransactionByGuideEntryID extends Service {
 
-    public InfoPaymentTransaction run(Integer guideEntryId) throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoPaymentTransaction run(Integer guideEntryId) throws FenixServiceException{
         GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryId);
         PaymentTransaction paymentTransaction = guideEntry.getPaymentTransaction();
         if (paymentTransaction == null) {

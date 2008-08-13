@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.tests.NewCorrector;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteCorrector extends Service {
-	public void run(NewCorrector corrector) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(NewCorrector corrector) throws FenixServiceException{
 		corrector.delete();
 	}
 }

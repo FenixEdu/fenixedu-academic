@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadMasterDegrees extends Service {
 
-    public List run(String executionYearString) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(String executionYearString) throws FenixServiceException{
         final ExecutionYear executionYear;
         if (executionYearString != null) {
             executionYear = ExecutionYear.readExecutionYearByName(executionYearString);

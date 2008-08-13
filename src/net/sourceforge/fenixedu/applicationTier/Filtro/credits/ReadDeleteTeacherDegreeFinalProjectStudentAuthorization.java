@@ -5,31 +5,30 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author jpvl
  */
-public class ReadDeleteTeacherDegreeFinalProjectStudentAuthorization extends
-        AbstractTeacherDepartmentAuthorization {
+public class ReadDeleteTeacherDegreeFinalProjectStudentAuthorization extends AbstractTeacherDepartmentAuthorization {
     public final static ReadDeleteTeacherDegreeFinalProjectStudentAuthorization filter = new ReadDeleteTeacherDegreeFinalProjectStudentAuthorization();
 
     public static ReadDeleteTeacherDegreeFinalProjectStudentAuthorization getInstance() {
-        return filter;
+	return filter;
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
+     * @see
+     * ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization
+     * #getTeacherId(java.lang.Object[])
      */
-    protected Integer getTeacherId(Object[] arguments)
-            throws ExcepcaoPersistencia {
-        Integer teacherDegreeFinalProjectStudentId = (Integer) arguments[0];
+    protected Integer getTeacherId(Object[] arguments) {
+	Integer teacherDegreeFinalProjectStudentId = (Integer) arguments[0];
 
-        TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = rootDomainObject.readTeacherDegreeFinalProjectStudentByOID(teacherDegreeFinalProjectStudentId);
-        return teacherDegreeFinalProjectStudent != null ? teacherDegreeFinalProjectStudent.getTeacher()
-                .getIdInternal() : null;
+	TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = rootDomainObject
+		.readTeacherDegreeFinalProjectStudentByOID(teacherDegreeFinalProjectStudentId);
+	return teacherDegreeFinalProjectStudent != null ? teacherDegreeFinalProjectStudent.getTeacher().getIdInternal() : null;
     }
 
 }

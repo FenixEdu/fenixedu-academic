@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class ReadCurricularCoursesByUsername extends Service {
 
-	public List run(String username) throws BDException, ExcepcaoPersistencia, NonExistingServiceException {
+	public List run(String username) throws BDException, NonExistingServiceException {
 		List curricularCourses = new LinkedList();
 
     	Registration registration = Registration.readByUsername(username);

@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.util.SituationName;
  */
 public class ReadCandidateForRegistration extends Service {
 
-    public List run(Integer executionDegreeCode) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer executionDegreeCode) throws FenixServiceException{
 
         List<SituationName> situationNames = Arrays.asList(
                 new SituationName[] {

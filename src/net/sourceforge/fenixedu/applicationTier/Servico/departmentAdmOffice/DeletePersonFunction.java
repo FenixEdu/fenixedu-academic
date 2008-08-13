@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeletePersonFunction extends Service {
 
-    public void run(Integer personFunctionID) throws ExcepcaoPersistencia, FenixServiceException {
+    public void run(Integer personFunctionID) throws FenixServiceException {
         PersonFunction personFunction = (PersonFunction) rootDomainObject.readAccountabilityByOID(personFunctionID);
         if(personFunction == null) {
             throw new FenixServiceException("error.delete.personFunction.no.personFunction");

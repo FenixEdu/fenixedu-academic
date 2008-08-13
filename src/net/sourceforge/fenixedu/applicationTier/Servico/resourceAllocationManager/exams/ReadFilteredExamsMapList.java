@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadFilteredExamsMapList extends Service {
 
     public InfoExamsMap run(List infoExecutionDegreeList, List curricularYears, InfoExecutionPeriod infoExecutionPeriod)
-	    throws ExcepcaoPersistencia {
+	    {
 	// Object to be returned
 	InfoExamsMap infoExamsMap = new InfoExamsMap();
 

@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
 
 public class ReadShiftsByClass extends Service {
 
-    public Object run(InfoClass infoClass) throws ExcepcaoPersistencia {
+    public Object run(InfoClass infoClass) {
         SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(
                 infoClass.getIdInternal());
 

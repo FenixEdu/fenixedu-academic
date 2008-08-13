@@ -108,7 +108,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
     }
 
     public boolean checkNotEnroledInGroup(Grouping grouping, StudentGroup studentGroup,
-            String studentUsername) throws ExcepcaoPersistencia {
+            String studentUsername) {
 
         final Attends studentAttend = grouping.getStudentAttend(studentUsername);
 
@@ -145,7 +145,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
     }
 
     public boolean checkStudentInGrouping(Grouping grouping, String username)
-            throws ExcepcaoPersistencia {
+            {
 
         final Attends attend = grouping.getStudentAttend(username);          
         return attend != null;
@@ -168,6 +168,6 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
             Shift shift);
 
     public abstract boolean checkNumberOfGroupElements(Grouping grouping, StudentGroup studentGroup)
-            throws ExcepcaoPersistencia;
+            ;
 
 }

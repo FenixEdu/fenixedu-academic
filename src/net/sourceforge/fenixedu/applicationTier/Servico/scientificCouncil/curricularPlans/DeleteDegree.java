@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteDegree extends Service {
 
-    public void run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(Integer idInternal) throws FenixServiceException{
         if (idInternal == null) {
             throw new InvalidArgumentsServiceException();
         }

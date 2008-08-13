@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.util.ProposalState;
 public class NewProjectProposal extends Service {
 
     public Boolean run(Integer objectCode, Integer goalExecutionCourseId, Integer groupPropertiesId,
-            String senderPersonUsername) throws FenixServiceException, ExcepcaoPersistencia {
+            String senderPersonUsername) throws FenixServiceException{
 
         Boolean result = Boolean.FALSE;
 

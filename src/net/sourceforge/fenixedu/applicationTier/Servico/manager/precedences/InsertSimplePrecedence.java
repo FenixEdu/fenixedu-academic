@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class InsertSimplePrecedence extends Service {
 
     public void run(String className, Integer curricularCourseToAddPrecedenceID,
-            Integer precedentCurricularCourseID, Integer number) throws FenixServiceException, ExcepcaoPersistencia {
+            Integer precedentCurricularCourseID, Integer number) throws FenixServiceException{
         CurricularCourse curricularCourseToAddPrecedence = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseToAddPrecedenceID);
         if (curricularCourseToAddPrecedence == null) {
             throw new FenixServiceException("curricularCourseToAddPrecedence.NULL");

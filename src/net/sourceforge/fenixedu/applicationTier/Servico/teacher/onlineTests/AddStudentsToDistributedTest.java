@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import com.sun.faces.el.impl.parser.ParseException;
@@ -28,7 +27,7 @@ import com.sun.faces.el.impl.parser.ParseException;
 public class AddStudentsToDistributedTest extends Service {
 
     public void run(Integer executionCourseId, Integer distributedTestId, List<InfoStudent> infoStudentList, String contextPath)
-	    throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
+	    throws InvalidArgumentsServiceException {
 	if (infoStudentList == null || infoStudentList.size() == 0)
 	    return;
 	DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
@@ -39,16 +38,18 @@ public class AddStudentsToDistributedTest extends Service {
 		.findStudentTestQuestionsOfFirstStudentOrderedByTestQuestionOrder();
 	int order = 0;
 	for (StudentTestQuestion studentTestQuestionExample : studentTestQuestions) {
-	    if (studentTestQuestionExample.getQuestion().getSubQuestions() == null || studentTestQuestionExample.getQuestion().getSubQuestions().size() == 0) {
+	    if (studentTestQuestionExample.getQuestion().getSubQuestions() == null
+		    || studentTestQuestionExample.getQuestion().getSubQuestions().size() == 0) {
 		try {
-		    new ParseSubQuestion().parseSubQuestion(studentTestQuestionExample.getQuestion(), contextPath.replace('\\', '/'));
+		    new ParseSubQuestion().parseSubQuestion(studentTestQuestionExample.getQuestion(), contextPath.replace('\\',
+			    '/'));
 		} catch (ParseException e) {
 		    throw new InvalidArgumentsServiceException();
 		} catch (ParseQuestionException e) {
 		    throw new InvalidArgumentsServiceException();
 		}
 	    }
-		
+
 	    if (!studentTestQuestionExample.isSubQuestion()) {
 		order++;
 		List<Question> questionList = new ArrayList<Question>();

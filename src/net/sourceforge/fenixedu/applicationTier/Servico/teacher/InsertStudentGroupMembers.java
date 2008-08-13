@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class InsertStudentGroupMembers extends Service {
 
     public Boolean run(Integer executionCourseID, Integer studentGroupID, Integer groupPropertiesID,
-            List<String> studentUsernames) throws FenixServiceException, ExcepcaoPersistencia {
+            List<String> studentUsernames) throws FenixServiceException{
 
         final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
         if (studentGroup == null) {

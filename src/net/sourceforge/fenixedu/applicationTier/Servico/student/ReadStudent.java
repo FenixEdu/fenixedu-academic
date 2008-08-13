@@ -21,7 +21,7 @@ public class ReadStudent extends Service {
 
     // FIXME: We have to read the student by type also !!
 
-    public Object run(Integer number) throws ExcepcaoPersistencia {
+    public Object run(Integer number) {
 
         InfoStudent infoStudent = null;
 

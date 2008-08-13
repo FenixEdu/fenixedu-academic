@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class RejectNewProjectProposal extends Service {
 
 	public Boolean run(Integer executionCourseId, Integer groupPropertiesId, String rejectorUserName)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException{
 
 		if (groupPropertiesId == null) {
 			return Boolean.FALSE;

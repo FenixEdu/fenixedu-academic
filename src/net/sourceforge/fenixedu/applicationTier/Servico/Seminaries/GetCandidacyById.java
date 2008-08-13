@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetCandidacyById extends Service {
 
-	public InfoCandidacy run(Integer id) throws BDException, ExcepcaoPersistencia {
+	public InfoCandidacy run(Integer id) throws BDException{
 		InfoCandidacy infoCandidacy = null;
 
 		SeminaryCandidacy candidacy = rootDomainObject.readSeminaryCandidacyByOID(id);

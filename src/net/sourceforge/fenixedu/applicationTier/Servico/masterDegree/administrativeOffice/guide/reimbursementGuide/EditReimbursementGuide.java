@@ -49,7 +49,7 @@ import net.sourceforge.fenixedu.util.State;
 public class EditReimbursementGuide extends Service {
 
     public void run(Integer reimbursementGuideId, String situation, Date officialDate, String remarks,
-            IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
+            IUserView userView) throws FenixServiceException{
         ReimbursementGuide reimbursementGuide = rootDomainObject
                 .readReimbursementGuideByOID(reimbursementGuideId);
         if (reimbursementGuide == null) {
@@ -213,7 +213,7 @@ public class EditReimbursementGuide extends Service {
      * @throws ExcepcaoPersistencia
      */
     private boolean checkReimbursementGuideEntriesSum(ReimbursementGuideEntry reimbursementGuideEntry)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         GuideEntry guideEntry = reimbursementGuideEntry.getGuideEntry();
         Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue()
                 * guideEntry.getQuantity().intValue());

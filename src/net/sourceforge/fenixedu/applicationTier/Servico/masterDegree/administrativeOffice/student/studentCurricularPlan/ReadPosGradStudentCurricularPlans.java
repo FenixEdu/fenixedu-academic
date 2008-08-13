@@ -12,12 +12,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadPosGradStudentCurricularPlans extends Service {
 
-    public List<InfoStudentCurricularPlan> run(Integer studentId) throws FenixServiceException,
-	    ExcepcaoPersistencia {
+    public List<InfoStudentCurricularPlan> run(Integer studentId) throws FenixServiceException {
 	List<InfoStudentCurricularPlan> result = new ArrayList<InfoStudentCurricularPlan>();
 
 	Registration registration = rootDomainObject.readRegistrationByOID(studentId);

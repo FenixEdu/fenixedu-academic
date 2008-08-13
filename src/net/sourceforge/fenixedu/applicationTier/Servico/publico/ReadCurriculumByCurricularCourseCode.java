@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.util.PeriodState;
 public class ReadCurriculumByCurricularCourseCode extends Service {
 
     public InfoCurriculum run(final Integer curricularCourseCode)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         if (curricularCourseCode == null) {
             throw new FenixServiceException("nullCurricularCourse");

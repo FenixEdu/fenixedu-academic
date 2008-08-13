@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadTeacherDFPStudentsService extends Service {
 
     public TeacherDegreeFinalProjectStudentsDTO run(InfoTeacher infoTeacher, Integer executionPeriodId)
-	    throws ExcepcaoPersistencia {
+	    {
 	TeacherDegreeFinalProjectStudentsDTO teacherDfpStudentsDTO = new TeacherDegreeFinalProjectStudentsDTO();
 
 	ExecutionSemester executionSemester = getExecutionPeriod(executionPeriodId);
@@ -51,7 +51,7 @@ public class ReadTeacherDFPStudentsService extends Service {
 
     }
 
-    private ExecutionSemester getExecutionPeriod(Integer executionPeriodId) throws ExcepcaoPersistencia {
+    private ExecutionSemester getExecutionPeriod(Integer executionPeriodId) {
 
 	final ExecutionSemester executionSemester;
 	if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {

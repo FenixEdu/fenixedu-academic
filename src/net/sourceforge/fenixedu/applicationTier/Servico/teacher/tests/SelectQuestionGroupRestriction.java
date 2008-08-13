@@ -5,12 +5,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.tests.NewModelGroup;
 import net.sourceforge.fenixedu.domain.tests.NewModelRestriction;
 import net.sourceforge.fenixedu.domain.tests.NewTestModel;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class SelectQuestionGroupRestriction extends Service {
-	public void run(NewTestModel testModel, NewModelRestriction atomicRestriction,
-			NewModelGroup destinationGroup, Integer count, Double value) throws FenixServiceException,
-			ExcepcaoPersistencia {
-		testModel.selectQuestionGroupRestriction(atomicRestriction, destinationGroup, count, value);
-	}
+    public void run(NewTestModel testModel, NewModelRestriction atomicRestriction, NewModelGroup destinationGroup, Integer count,
+	    Double value) throws FenixServiceException {
+	testModel.selectQuestionGroupRestriction(atomicRestriction, destinationGroup, count, value);
+    }
 }

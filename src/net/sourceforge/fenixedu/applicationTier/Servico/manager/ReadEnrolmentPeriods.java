@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadEnrolmentPeriods extends Service {
 
-    public List<InfoEnrolmentPeriod> run(final Integer executionPeriodID) throws ExcepcaoPersistencia {
+    public List<InfoEnrolmentPeriod> run(final Integer executionPeriodID) {
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
 	final List<EnrolmentPeriod> enrolmentPeriods = executionSemester.getEnrolmentPeriod();

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.SubQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Susana Fernandes
@@ -22,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class CleanSubQuestions extends Service {
 
     public void run(Registration registration, DistributedTest distributedTest, Integer exerciseCode, Integer itemCode,
-	    String path) throws FenixServiceException, ExcepcaoPersistencia {
+	    String path) throws FenixServiceException {
 	if (distributedTest == null) {
 	    throw new FenixServiceException();
 	}

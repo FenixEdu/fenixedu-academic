@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EstablishFinalDegreeWorkStudentGroup extends Service {
 
-    public boolean run(Person person, Integer executionDegreeOID) throws ExcepcaoPersistencia,
+    public boolean run(Person person, Integer executionDegreeOID) throws
             FenixServiceException {
     	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
 

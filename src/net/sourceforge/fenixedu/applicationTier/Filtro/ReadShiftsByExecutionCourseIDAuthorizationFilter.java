@@ -65,7 +65,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia {
+    private boolean hasPrivilege(IUserView id, Object[] arguments) {
         if (id.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             return true;
         }

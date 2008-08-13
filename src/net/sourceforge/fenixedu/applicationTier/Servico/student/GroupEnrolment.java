@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class GroupEnrolment extends Service {
 
     public boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List studentUsernames,
-            String studentUsername) throws FenixServiceException, ExcepcaoPersistencia {
+            String studentUsername) throws FenixServiceException{
         final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
         if (grouping == null) {
             throw new NonExistingServiceException();

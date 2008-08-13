@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class RemoveCoordinators extends Service {
 
-    public void run(Integer executionDegreeID, List<Integer> coordinatorsToRemoveIDs) throws ExcepcaoPersistencia {
+    public void run(Integer executionDegreeID, List<Integer> coordinatorsToRemoveIDs) {
 
         for (final Integer coordinatorToRemoveID : coordinatorsToRemoveIDs) {
             final Coordinator coordinator = rootDomainObject.readCoordinatorByOID(coordinatorToRemoveID);

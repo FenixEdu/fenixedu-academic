@@ -28,34 +28,31 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class ReadOverheadReport extends Service {
 
-    public InfoOverheadReport run(String userView, String costCenter, ReportType reportType,
-	    Integer projectCode, String userNumber) throws ExcepcaoPersistencia {
+    public InfoOverheadReport run(String userView, String costCenter, ReportType reportType, Integer projectCode,
+	    String userNumber) throws ExcepcaoPersistencia {
 	InfoOverheadReport infoReport = new InfoOverheadReport();
 	List<IReportLine> infoLines = new ArrayList<IReportLine>();
 	IPersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
-	infoReport.setInfoCostCenter(InfoRubric.newInfoFromDomain(p.getIPersistentProjectUser()
-		.getCostCenterByID(new Integer(costCenter))));
+	infoReport.setInfoCostCenter(InfoRubric.newInfoFromDomain(p.getIPersistentProjectUser().getCostCenterByID(
+		new Integer(costCenter))));
 	if (userNumber.equals(costCenter) || hasFullCostCenterAccess(userView, costCenter)) {
 	    if (reportType.equals(ReportType.GENERATED_OVERHEADS)) {
-		List<IGeneratedOverheadsReportLine> lines = p.getIPersistentGeneratedOverheadsReport()
-			.getCompleteReport(reportType, new Integer(costCenter));
+		List<IGeneratedOverheadsReportLine> lines = p.getIPersistentGeneratedOverheadsReport().getCompleteReport(
+			reportType, new Integer(costCenter));
 		for (IGeneratedOverheadsReportLine generatedOverheadsReportLine : lines) {
-		    infoLines.add(InfoGeneratedOverheadsReportLine
-			    .newInfoFromDomain(generatedOverheadsReportLine));
+		    infoLines.add(InfoGeneratedOverheadsReportLine.newInfoFromDomain(generatedOverheadsReportLine));
 		}
 	    } else if (reportType.equals(ReportType.TRANSFERED_OVERHEADS)) {
-		List<ITransferedOverheadsReportLine> lines = p.getIPersistentTransferedOverheadsReport()
-			.getCompleteReport(reportType, new Integer(costCenter));
+		List<ITransferedOverheadsReportLine> lines = p.getIPersistentTransferedOverheadsReport().getCompleteReport(
+			reportType, new Integer(costCenter));
 		for (ITransferedOverheadsReportLine transferedOverheadsReportLine : lines) {
-		    infoLines.add(InfoTransferedOverheadsReportLine
-			    .newInfoFromDomain(transferedOverheadsReportLine));
+		    infoLines.add(InfoTransferedOverheadsReportLine.newInfoFromDomain(transferedOverheadsReportLine));
 		}
 	    } else if (reportType.equals(ReportType.OVERHEADS_SUMMARY)) {
-		List<IOverheadsSummaryReportLine> lines = p.getIPersistentOverheadsSummaryReport()
-			.getCompleteReport(reportType, new Integer(costCenter));
+		List<IOverheadsSummaryReportLine> lines = p.getIPersistentOverheadsSummaryReport().getCompleteReport(reportType,
+			new Integer(costCenter));
 		for (IOverheadsSummaryReportLine overheadsSummaryReportLine : lines) {
-		    infoLines.add(InfoOverheadsSummaryReportLine
-			    .newInfoFromDomain(overheadsSummaryReportLine));
+		    infoLines.add(InfoOverheadsSummaryReportLine.newInfoFromDomain(overheadsSummaryReportLine));
 		}
 	    }
 	}
@@ -64,8 +61,7 @@ public class ReadOverheadReport extends Service {
     }
 
     private boolean hasFullCostCenterAccess(String username, String costCenter) {
-	List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(
-		username, costCenter);
+	List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter);
 	for (ProjectAccess access : accesses) {
 	    if (access.getKeyProject() == null && access.getCostCenter()
 		    && access.getKeyProjectCoordinator().equals(new Integer(costCenter))) {

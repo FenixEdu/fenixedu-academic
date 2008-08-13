@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * Created at 11:23, February the 28th, 2005
  */
 public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername extends Service {
-    public Collection run(Integer executionCourseID, String username) throws ExcepcaoPersistencia {
+    public Collection run(Integer executionCourseID, String username) {
 	Collection result = new ArrayList();
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
@@ -52,7 +52,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
     }
 
     private InfoExternalStudentGroup searchForStudentInGrouping(Grouping group, String username)
-	    throws ExcepcaoPersistencia {
+	    {
 	InfoExternalStudentGroup result = null;
 	Collection studentGroups = group.getStudentGroups();
 
@@ -79,7 +79,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
          * @return
          * @throws ExcepcaoPersistencia
          */
-    private Collection buildStudentInfos(Iterator iterator) throws ExcepcaoPersistencia {
+    private Collection buildStudentInfos(Iterator iterator) {
 	Collection result = new ArrayList();
 	for (Iterator iter = iterator; iter.hasNext();) {
 	    Attends attend = (Attends) iter.next();
@@ -97,7 +97,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
          * @throws ExcepcaoPersistencia
          * @throws ExcepcaoPersistencia
          */
-    private InfoExternalStudentInfo getStudentInformation(Attends attend) throws ExcepcaoPersistencia {
+    private InfoExternalStudentInfo getStudentInformation(Attends attend) {
 	InfoExternalStudentInfo student = new InfoExternalStudentInfo();
 	student.setCourse(InfoExternalExecutionCourseInfo.newFromExecutionCourse(attend
 		.getExecutionCourse()));
@@ -127,7 +127,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
     }
 
     private Collection findShifts(Registration aluno, ExecutionCourse disciplinaExecucao)
-	    throws ExcepcaoPersistencia {
+	    {
 	List<Shift> shifts = aluno.getShifts();
 	List result = new ArrayList();
 	for (Shift shift : shifts) {

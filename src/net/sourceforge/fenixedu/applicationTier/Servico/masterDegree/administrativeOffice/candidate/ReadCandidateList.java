@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.util.SituationName;
 public class ReadCandidateList extends Service {
 
     public List run(String degreeName, Specialization degreeType, SituationName candidateSituation,
-            Integer candidateNumber, String executionYearString) throws ExcepcaoPersistencia {
+            Integer candidateNumber, String executionYearString) {
      
         final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearString);
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(degreeName));

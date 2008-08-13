@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExecutionCoursesByDegreeAndExecutionPeriod extends Service {
 
     public Object run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException{
 
 	List infoExecutionCourseList = new ArrayList();
 

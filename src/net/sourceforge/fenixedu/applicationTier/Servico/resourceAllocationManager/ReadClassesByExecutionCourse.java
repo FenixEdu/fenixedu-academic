@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadClassesByExecutionCourse extends Service {
 
-    public List<InfoClass> run(ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+    public List<InfoClass> run(ExecutionCourse executionCourse) {
 
 	final Set<SchoolClass> classes = executionCourse.findSchoolClasses();
         final List<InfoClass> infoClasses = new ArrayList<InfoClass>(classes.size());

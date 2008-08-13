@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadDistributedTests extends Service {
 
-    public List<InfoDistributedTest> run(Integer executionCourseId) throws ExcepcaoPersistencia {
+    public List<InfoDistributedTest> run(Integer executionCourseId) {
         final TestScope testScope = TestScope.readByDomainObject(ExecutionCourse.class, executionCourseId);
         List<InfoDistributedTest> infoDistributedTestList = new ArrayList<InfoDistributedTest>();
         if (testScope != null) {

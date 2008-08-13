@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class VerifyStudentGroupWithoutShift extends Service {
 
 	public Integer run(Integer executionCourseCode, Integer studentGroupCode,
-			Integer groupPropertiesCode, String shiftCodeString) throws FenixServiceException, ExcepcaoPersistencia {
+			Integer groupPropertiesCode, String shiftCodeString) throws FenixServiceException{
 		Grouping groupProperties = rootDomainObject.readGroupingByOID(
 				groupPropertiesCode);
 

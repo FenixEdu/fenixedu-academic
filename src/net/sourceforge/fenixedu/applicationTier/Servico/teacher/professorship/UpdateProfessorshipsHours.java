@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class UpdateProfessorshipsHours extends Service {
 
     public Boolean run(Integer teacherId, Integer executionYearId, final HashMap hours)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         Iterator entries = hours.entrySet().iterator();
         while (entries.hasNext()) {

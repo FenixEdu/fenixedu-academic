@@ -21,8 +21,7 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOra
  */
 public class ReviewProjectAccess extends Service {
 
-    public void run(Person person, String costCenter, String userNumber) throws FenixServiceException,
-	    ExcepcaoPersistencia {
+    public void run(Person person, String costCenter, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
 	IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getProjectDBInstance();
 
 	Role role = Role.getRoleByRoleType(RoleType.PROJECTS_MANAGER);
@@ -41,8 +40,7 @@ public class ReviewProjectAccess extends Service {
 	    if (personNumber == null) {
 		throw new FenixServiceException();
 	    }
-	    if ((persistentSupportOracle.getIPersistentProjectUser().getInstitucionalProjectCoordId(
-		    personNumber).size() == 0)) {
+	    if ((persistentSupportOracle.getIPersistentProjectUser().getInstitucionalProjectCoordId(personNumber).size() == 0)) {
 		cleanProjectsAccess(person, personNumber, role, true, false);
 	    }
 	}
@@ -58,10 +56,9 @@ public class ReviewProjectAccess extends Service {
 	return null;
     }
 
-    private void cleanProjectsAccess(Person person, Integer number, Role role, boolean isCostCenter,
-	    boolean limitDates) throws FenixServiceException, ExcepcaoPersistencia {
-	List<ProjectAccess> accessesToDelete = ProjectAccess.getAllByPersonAndCostCenter(person,
-		isCostCenter, limitDates);
+    private void cleanProjectsAccess(Person person, Integer number, Role role, boolean isCostCenter, boolean limitDates)
+	    throws FenixServiceException {
+	List<ProjectAccess> accessesToDelete = ProjectAccess.getAllByPersonAndCostCenter(person, isCostCenter, limitDates);
 	for (ProjectAccess access : accessesToDelete) {
 	    access.delete();
 	}

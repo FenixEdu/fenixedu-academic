@@ -25,7 +25,7 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID extends Servi
     }
 
     public InfoInsuranceTransaction run(Integer studentId, Integer executionYearId)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         InfoInsuranceTransaction infoInsuranceTransaction = null;
 

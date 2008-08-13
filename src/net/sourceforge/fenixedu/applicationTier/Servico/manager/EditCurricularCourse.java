@@ -23,7 +23,7 @@ public class EditCurricularCourse extends Service {
     public EditCurricularCourse() {
     }
 
-    public void run(InfoCurricularCourseEditor newInfoCurricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoCurricularCourseEditor newInfoCurricularCourse) throws FenixServiceException{
         CurricularCourse oldCurricularCourse = null;
         String newName = null;
         String newNameEn = null;

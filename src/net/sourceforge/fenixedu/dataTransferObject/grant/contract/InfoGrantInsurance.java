@@ -157,7 +157,7 @@ public class InfoGrantInsurance extends InfoObject {
     }
 
     public void copyToDomain(InfoGrantInsurance infoGrantInsurance, GrantInsurance grantInsurance)
-            throws ExcepcaoPersistencia {
+            {
         super.copyToDomain(infoGrantInsurance, grantInsurance);
 
         grantInsurance.setDateBeginInsurance(infoGrantInsurance.getDateBeginInsurance());

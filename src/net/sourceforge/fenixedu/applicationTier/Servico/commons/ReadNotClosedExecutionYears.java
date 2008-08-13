@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadNotClosedExecutionYears extends Service {
 
-    public List<InfoExecutionYear> run() throws ExcepcaoPersistencia {
+    public List<InfoExecutionYear> run() {
         final List<InfoExecutionYear> result = new ArrayList<InfoExecutionYear>();
         for (final ExecutionYear executionYear : ExecutionYear.readNotClosedExecutionYears()) {
             result.add(InfoExecutionYear.newInfoFromDomain(executionYear));

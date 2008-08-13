@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DefineFinalDegreeWorkProposalSubmisionPeriod extends Service {
 
     public void run(Integer executionDegreeOID, Date startOfProposalPeriod, Date endOfProposalPeriod)
-            throws ExcepcaoPersistencia {
+            {
         if (executionDegreeOID != null && startOfProposalPeriod != null && endOfProposalPeriod != null) {
             ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
 

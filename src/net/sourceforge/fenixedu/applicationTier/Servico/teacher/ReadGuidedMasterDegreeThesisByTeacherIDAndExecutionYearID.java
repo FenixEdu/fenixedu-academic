@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadGuidedMasterDegreeThesisByTeacherIDAndExecutionYearID extends Service {
 
     public List<MasterDegreeThesisDataVersion> run(Integer teacherID, Integer executionYearID)
-            throws ExcepcaoPersistencia, FenixServiceException {
+            throws FenixServiceException {
         Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
         List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions;
 

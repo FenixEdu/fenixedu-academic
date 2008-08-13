@@ -12,12 +12,11 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnr
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateEnrolmentPeriods extends Service {
 
     public void run(final Integer executionPeriodID, final DegreeType degreeType, final String enrolmentPeriodClassName,
-	    final Date startDate, final Date endDate) throws ExcepcaoPersistencia, FenixServiceException {
+	    final Date startDate, final Date endDate) throws FenixServiceException {
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 	for (final ExecutionDegree executionDegree : executionSemester.getExecutionYear().getExecutionDegrees()) {
 	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();

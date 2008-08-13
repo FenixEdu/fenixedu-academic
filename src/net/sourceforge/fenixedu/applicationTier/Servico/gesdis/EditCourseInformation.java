@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EditCourseInformation extends Service {
 
-    public void run(Integer courseReportID, InfoCourseReport infoCourseReport, String newReport) throws ExcepcaoPersistencia,
+    public void run(Integer courseReportID, InfoCourseReport infoCourseReport, String newReport) throws
             FenixServiceException {
         final CourseReport courseReport;
         if (courseReportID != 0) {

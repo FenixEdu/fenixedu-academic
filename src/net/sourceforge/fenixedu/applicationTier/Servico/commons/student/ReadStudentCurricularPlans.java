@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadStudentCurricularPlans extends Service {
 
     public List run(Integer studentNumber, DegreeType degreeType) throws ExcepcaoInexistente,
-            FenixServiceException, ExcepcaoPersistencia {
+            FenixServiceException{
 
     	Registration registration = Registration.readStudentByNumberAndDegreeType(studentNumber, degreeType);
     	if(registration == null) {

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
 
     public void run(Integer objectID, InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent)
-	    throws ExcepcaoPersistencia, FenixServiceException {
+	    throws FenixServiceException {
 
 	final Registration registration = Registration.readStudentByNumberAndDegreeType(infoTeacherDegreeFinalProjectStudent
 		.getInfoStudent().getNumber(), DegreeType.DEGREE);

@@ -18,7 +18,7 @@ public class EditDegree extends Service {
 
 	public void run(final Integer idInternal, final String code, final String name,
 			final String nameEn, final DegreeType degreeType, final GradeScale gradeScale, ExecutionYear executionYear)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException{
         if (idInternal == null || name == null || nameEn == null || code == null || degreeType == null) {
             throw new InvalidArgumentsServiceException();
         }

@@ -41,7 +41,7 @@ public class InsertDistributedTest extends Service {
     public void run(Integer executionCourseId, Integer testId, String testInformation, String evaluationTitle,
 	    Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour, TestType testType,
 	    CorrectionAvailability correctionAvaiability, Boolean imsFeedback, List<InfoStudent> infoStudentList,
-	    String contextPath) throws FenixServiceException, ExcepcaoPersistencia {
+	    String contextPath) throws FenixServiceException{
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 	if (executionCourse == null)
 	    throw new InvalidArgumentsServiceException();

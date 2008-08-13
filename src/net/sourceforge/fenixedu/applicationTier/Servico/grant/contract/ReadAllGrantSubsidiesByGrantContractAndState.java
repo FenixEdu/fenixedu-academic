@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsi
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidyWithContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -26,21 +25,19 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadAllGrantSubsidiesByGrantContractAndState extends Service {
 
-	public List run(Integer idContract, Integer state) throws FenixServiceException,
-			ExcepcaoPersistencia {
-        final GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
-		final Set<GrantSubsidy> subsidies = grantContract.findGrantSubsidiesByState(state);
-		if (subsidies == null)
-			return new ArrayList();
+    public List run(Integer idContract, Integer state) throws FenixServiceException {
+	final GrantContract grantContract = rootDomainObject.readGrantContractByOID(idContract);
+	final Set<GrantSubsidy> subsidies = grantContract.findGrantSubsidiesByState(state);
+	if (subsidies == null)
+	    return new ArrayList();
 
-		List infoSubsidyList = (List) CollectionUtils.collect(subsidies, new Transformer() {
-			public Object transform(Object input) {
-				GrantSubsidy grantSubsidy = (GrantSubsidy) input;
-				InfoGrantSubsidy infoGrantSubsidy = InfoGrantSubsidyWithContract
-						.newInfoFromDomain(grantSubsidy);
-				return infoGrantSubsidy;
-			}
-		});
-		return infoSubsidyList;
-	}
+	List infoSubsidyList = (List) CollectionUtils.collect(subsidies, new Transformer() {
+	    public Object transform(Object input) {
+		GrantSubsidy grantSubsidy = (GrantSubsidy) input;
+		InfoGrantSubsidy infoGrantSubsidy = InfoGrantSubsidyWithContract.newInfoFromDomain(grantSubsidy);
+		return infoGrantSubsidy;
+	    }
+	});
+	return infoSubsidyList;
+    }
 }

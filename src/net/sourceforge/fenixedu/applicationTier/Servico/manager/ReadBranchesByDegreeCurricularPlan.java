@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadBranchesByDegreeCurricularPlan extends Service {
 
-	public List<InfoBranch> run(Integer idDegreeCurricularPlan) throws FenixServiceException, ExcepcaoPersistencia {
+	public List<InfoBranch> run(Integer idDegreeCurricularPlan) throws FenixServiceException{
 		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idDegreeCurricularPlan);
 		if (degreeCurricularPlan == null) {
 			throw new NonExistingServiceException();

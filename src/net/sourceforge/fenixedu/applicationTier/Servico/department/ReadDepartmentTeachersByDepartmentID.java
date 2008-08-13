@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadDepartmentTeachersByDepartmentID extends Service {
 
-    public List<InfoTeacher> run(Integer departmentID) throws ExcepcaoPersistencia,
+    public List<InfoTeacher> run(Integer departmentID) throws
             FenixServiceException {
 
         List<InfoTeacher> result = new ArrayList<InfoTeacher>();

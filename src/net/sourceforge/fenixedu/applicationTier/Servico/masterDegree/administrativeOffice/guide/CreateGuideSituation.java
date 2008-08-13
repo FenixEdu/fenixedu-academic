@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.util.State;
 public class CreateGuideSituation extends Service {
 
     public void run(Integer guideID, String remarks, GuideState situation, Date date)
-            throws ExcepcaoPersistencia {
+            {
 
         Guide guide = rootDomainObject.readGuideByOID(guideID);
 

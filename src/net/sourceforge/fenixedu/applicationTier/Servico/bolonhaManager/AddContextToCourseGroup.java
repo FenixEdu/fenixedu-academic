@@ -7,12 +7,11 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class AddContextToCourseGroup extends Service {
 
     public void run(CourseGroup courseGroup, CourseGroup parentCourseGroup, Integer beginExecutionPeriodID,
-	    Integer endExecutionPeriodID) throws ExcepcaoPersistencia, FenixServiceException {
+	    Integer endExecutionPeriodID) throws FenixServiceException {
 
 	if (courseGroup == null || parentCourseGroup == null) {
 	    throw new FenixServiceException("error.noCourseGroup");

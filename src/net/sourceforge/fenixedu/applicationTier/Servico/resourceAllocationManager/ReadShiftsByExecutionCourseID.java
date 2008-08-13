@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadShiftsByExecutionCourseID extends Service {
 
-    public InfoExecutionCourseOccupancy run(Integer executionCourseID) throws ExcepcaoPersistencia {
+    public InfoExecutionCourseOccupancy run(Integer executionCourseID) {
        
 	final InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = new InfoExecutionCourseOccupancy();
         infoExecutionCourseOccupancy.setInfoShifts(new ArrayList());

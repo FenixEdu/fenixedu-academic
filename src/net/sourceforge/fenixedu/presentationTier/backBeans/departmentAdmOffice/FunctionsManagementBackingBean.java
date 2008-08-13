@@ -465,7 +465,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	return accountabilityTypeEnums;
     }
 
-    public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
+    public String getUnits() throws FenixFilterException, FenixServiceException{
 	StringBuilder buffer = new StringBuilder();
 	YearMonthDay currentDate = new YearMonthDay();
 	buffer.append("<ul class='padding nobullet'>");

@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditGrantSubsidy extends EditDomainObjectService {
 
     @Override
-    protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject) throws ExcepcaoPersistencia {
+    protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject) {
         InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) infoObject;
         GrantSubsidy grantSubsidy = (GrantSubsidy) domainObject;
         grantSubsidy.setDateBeginSubsidy(infoGrantSubsidy.getDateBeginSubsidy());
@@ -35,7 +35,7 @@ public class EditGrantSubsidy extends EditDomainObjectService {
 
     @Override
     protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         /*
          * In case of a new Subsidy, the Contract associated needs to be set.
          */

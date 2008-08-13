@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetAllThemes extends Service {
 
-	public List run() throws BDException, ExcepcaoPersistencia {
+	public List run() throws BDException{
 		List seminariesInfo = new LinkedList();
 
 		List themes = Theme.getAllThemes();

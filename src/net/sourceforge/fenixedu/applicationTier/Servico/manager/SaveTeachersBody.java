@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class SaveTeachersBody extends Service {
 
     public Boolean run(final List responsibleTeachersIds, final List<Integer> professorShipTeachersIds,
-            final Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
+            final Integer executionCourseId) throws FenixServiceException{
 
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 

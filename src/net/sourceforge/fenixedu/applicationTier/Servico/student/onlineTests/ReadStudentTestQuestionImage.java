@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadStudentTestQuestionImage extends Service {
     public String run(Integer registrationId, Integer distributedTestId, Integer questionId,
             Integer imageId, String feedbackId, Integer itemIndex, String path)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         final DistributedTest distributedTest = rootDomainObject
                 .readDistributedTestByOID(distributedTestId);
         final Registration registration = rootDomainObject.readRegistrationByOID(registrationId);
@@ -26,7 +26,7 @@ public class ReadStudentTestQuestionImage extends Service {
 
     public String run(Registration otherRegistration, DistributedTest distributedTest, Integer questionId,
             Integer imageId, String feedbackId, Integer itemIndex, String path)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 	for (final Registration registration : otherRegistration.getStudent().getRegistrationsSet()) {
 	    for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
 		if (studentTestQuestion.getKeyDistributedTest().equals(distributedTest.getIdInternal())

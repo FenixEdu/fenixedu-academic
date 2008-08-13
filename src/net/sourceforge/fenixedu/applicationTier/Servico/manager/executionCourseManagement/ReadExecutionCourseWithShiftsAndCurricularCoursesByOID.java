@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID extends Service {
 
-    public InfoExecutionCourse run(final Integer oid) throws ExcepcaoPersistencia {
+    public InfoExecutionCourse run(final Integer oid) {
 	InfoExecutionCourse infoExecutionCourse = null;
 
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(oid);

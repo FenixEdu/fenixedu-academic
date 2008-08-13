@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteAnswer extends Service {
-	public void run(NewAtomicQuestion atomicQuestion) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(NewAtomicQuestion atomicQuestion) throws FenixServiceException{
 		atomicQuestion.deleteAnswer();
 	}
 }

@@ -46,7 +46,6 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -69,7 +68,7 @@ public class ExecutionCourseSiteComponentBuilder {
     }
 
     public ISiteComponent getComponent(ISiteComponent component, ExecutionCourseSite site, ISiteComponent commonComponent,
-	    Integer sectionIndex, Integer curricularCourseId) throws FenixServiceException, ExcepcaoPersistencia {
+	    Integer sectionIndex, Integer curricularCourseId) throws FenixServiceException {
 
 	if (component instanceof InfoSiteCommon) {
 	    return getInfoSiteCommon((InfoSiteCommon) component, site);
@@ -113,8 +112,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	return component;
     }
 
-    private ISiteComponent getInfoSiteCommon(InfoSiteCommon component, ExecutionCourseSite site) throws FenixServiceException,
-	    ExcepcaoPersistencia {
+    private ISiteComponent getInfoSiteCommon(InfoSiteCommon component, ExecutionCourseSite site) throws FenixServiceException {
 
 	List allSections = null;
 	List<InfoSection> infoSectionsList = null;
@@ -153,7 +151,7 @@ public class ExecutionCourseSiteComponentBuilder {
     }
 
     private ISiteComponent getInfoSiteSection(InfoSiteSection component, ExecutionCourseSite site,
-	    InfoSiteCommon commonComponent, Integer sectionIndex) throws FenixServiceException, ExcepcaoPersistencia {
+	    InfoSiteCommon commonComponent, Integer sectionIndex) throws FenixServiceException {
 
 	final InfoSection infoSection = (InfoSection) commonComponent.getSections().get(sectionIndex.intValue());
 	component.setSection(infoSection);
@@ -206,7 +204,7 @@ public class ExecutionCourseSiteComponentBuilder {
     }
 
     private ISiteComponent getInfoSiteTimetable(InfoSiteTimetable component, ExecutionCourseSite site)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException {
 	List<InfoLesson> infoLessonList = null;
 
 	ExecutionCourse executionCourse = site.getExecutionCourse();
@@ -242,7 +240,7 @@ public class ExecutionCourseSiteComponentBuilder {
     }
 
     private ISiteComponent getInfoSiteFirstPage(InfoSiteFirstPage component, ExecutionCourseSite site)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException {
 
 	ExecutionCourse executionCourse = site.getExecutionCourse();
 
@@ -269,7 +267,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	return component;
     }
 
-    private List<InfoTeacher> readLecturingTeachers(ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+    private List<InfoTeacher> readLecturingTeachers(ExecutionCourse executionCourse) {
 	List domainLecturingTeachersList = executionCourse.getProfessorships();
 
 	List<InfoTeacher> lecturingInfoTeachersList = new ArrayList<InfoTeacher>();
@@ -286,7 +284,7 @@ public class ExecutionCourseSiteComponentBuilder {
 	return lecturingInfoTeachersList;
     }
 
-    private List<InfoTeacher> readResponsibleTeachers(ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+    private List<InfoTeacher> readResponsibleTeachers(ExecutionCourse executionCourse) {
 
 	List responsibleDomainTeachersList = executionCourse.responsibleFors();
 
@@ -382,7 +380,8 @@ public class ExecutionCourseSiteComponentBuilder {
 	// infoCurricularCourse.setInfoScopes(infoCurricularCourseScopeList);
 	//	
 	// String currentSigla =
-	// infoCurricularCourse.getInfoDegreeCurricularPlan().getInfoDegree().getSigla();
+	// infoCurricularCourse.getInfoDegreeCurricularPlan().getInfoDegree().
+	// getSigla();
 	//			
 	// if (!infoCurricularCourseList.isEmpty() &&
 	// StringUtils.contains(allSiglas.toString(),currentSigla)) {
@@ -390,7 +389,8 @@ public class ExecutionCourseSiteComponentBuilder {
 	// String sigla = ((InfoDegree) ((InfoDegreeCurricularPlan)
 	// ((InfoCurricularCourse)
 	// ((List)
-	// infoCurricularCourseList.get(k)).get(0)).getInfoDegreeCurricularPlan()).getInfoDegree()).getSigla();
+	//infoCurricularCourseList.get(k)).get(0)).getInfoDegreeCurricularPlan()
+	// ).getInfoDegree()).getSigla();
 	// if (sigla.equals(currentSigla)) {
 	// ((List)infoCurricularCourseList.get(k)).add(infoCurricularCourse);
 	// break;

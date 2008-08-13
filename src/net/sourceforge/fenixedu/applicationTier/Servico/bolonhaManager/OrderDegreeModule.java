@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class OrderDegreeModule extends Service {
 
-    public void run(final Integer contextID, final Integer position) throws ExcepcaoPersistencia, FenixServiceException {
+    public void run(final Integer contextID, final Integer position) throws FenixServiceException {
         if (contextID == null) {
             throw new FenixServiceException();
         }

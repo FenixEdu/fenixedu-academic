@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class SelectRooms extends Service {
 
-    public Object run(InfoRoomEditor infoRoom) throws ExcepcaoPersistencia {
+    public Object run(InfoRoomEditor infoRoom) {
 
 	List<AllocatableSpace> salas = AllocatableSpace.findActiveAllocatableSpacesBySpecifiedArguments(infoRoom.getNome(), 
 		infoRoom.getEdificio(), infoRoom.getPiso(), infoRoom.getTipo(), 

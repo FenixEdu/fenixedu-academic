@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author lmac1
@@ -16,15 +15,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadDegreeCurricularPlan extends Service {
 
-    public InfoDegreeCurricularPlan run(final Integer idInternal) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public InfoDegreeCurricularPlan run(final Integer idInternal) throws FenixServiceException {
 
-		final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idInternal);
+	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(idInternal);
 
-        if (degreeCurricularPlan == null) {
-            throw new NonExistingServiceException();
-        }
+	if (degreeCurricularPlan == null) {
+	    throw new NonExistingServiceException();
+	}
 
-        return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+	return InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
     }
 }

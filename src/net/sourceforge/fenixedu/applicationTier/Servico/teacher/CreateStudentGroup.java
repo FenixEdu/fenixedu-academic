@@ -23,7 +23,7 @@ public class CreateStudentGroup extends Service {
 
   
     private List buildStudentList(List<String> studentUserNames, Grouping grouping)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
       
         List studentList = new ArrayList();
         for (final String studantUserName : studentUserNames) {
@@ -35,7 +35,7 @@ public class CreateStudentGroup extends Service {
     }
 
     public boolean run(Integer executionCourseID, Integer groupNumber, Integer groupingID,
-            Integer shiftID, List studentUserNames) throws FenixServiceException, ExcepcaoPersistencia {
+            Integer shiftID, List studentUserNames) throws FenixServiceException{
         final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
         
         if (grouping == null)

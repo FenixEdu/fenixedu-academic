@@ -28,7 +28,7 @@ public class ReadGrantContract extends ReadDomainObjectService {
                 .newInfoFromDomain((GrantContract) domainObject);
     }
 
-    public InfoObject run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoObject run(Integer objectId) throws FenixServiceException{
 
         GrantContract grantContract = rootDomainObject.readGrantContractByOID(objectId);
         InfoGrantContract infoGrantContract = (InfoGrantContract) newInfoFromDomain(grantContract);

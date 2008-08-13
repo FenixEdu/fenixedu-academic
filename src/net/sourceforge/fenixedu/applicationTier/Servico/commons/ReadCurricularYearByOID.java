@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadCurricularYearByOID extends Service {
 
-    public InfoCurricularYear run(Integer oid) throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoCurricularYear run(Integer oid) throws FenixServiceException{
         InfoCurricularYear result = null;
 
         CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(oid);

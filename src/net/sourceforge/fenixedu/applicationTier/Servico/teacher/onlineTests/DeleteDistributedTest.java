@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteDistributedTest extends Service {
 
-    public void run(Integer executionCourseId, final Integer distributedTestId) throws ExcepcaoPersistencia {
+    public void run(Integer executionCourseId, final Integer distributedTestId) {
         final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
 
         for (Metadata metadata : rootDomainObject.getMetadatasSet()) {

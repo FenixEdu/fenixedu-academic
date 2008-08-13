@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditCurricularCourseScope extends Service {
 
-    public void run(InfoCurricularCourseScopeEditor newInfoCurricularCourseScope) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoCurricularCourseScopeEditor newInfoCurricularCourseScope) throws FenixServiceException{
 
         CurricularCourseScope oldCurricularCourseScope = null;
         CurricularSemester newCurricularSemester = null;

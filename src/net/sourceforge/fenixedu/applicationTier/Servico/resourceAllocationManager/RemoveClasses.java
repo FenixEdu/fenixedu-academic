@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class RemoveClasses extends Service {
 
-    public Boolean run(InfoShift infoShift, List classOIDs) throws ExcepcaoPersistencia {
+    public Boolean run(InfoShift infoShift, List classOIDs) {
 
         boolean result = false;
 

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class SetPersonRoles extends Service {
 
-    public void run(final Person person, final Set<Role> roles) throws ExcepcaoPersistencia {
+    public void run(final Person person, final Set<Role> roles) {
         person.indicatePrivledges(roles);
     }
 

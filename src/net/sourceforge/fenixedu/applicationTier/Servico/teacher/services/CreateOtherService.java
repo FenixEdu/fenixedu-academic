@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateOtherService extends Service {
 
-    public void run(Integer teacherID, Integer executionPeriodID, Double credits, String reason) throws ExcepcaoPersistencia {
+    public void run(Integer teacherID, Integer executionPeriodID, Double credits, String reason) {
 
 	Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);

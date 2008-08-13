@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditGrantContractMovement extends EditDomainObjectService {
 
     @Override
-    protected DomainObject readObjectByUnique(InfoObject infoObject) throws ExcepcaoPersistencia {
+    protected DomainObject readObjectByUnique(InfoObject infoObject) {
         InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
         return rootDomainObject.readGrantContractMovementByOID(infoGrantContractMovement.getIdInternal());
     }
@@ -51,7 +51,7 @@ public class EditGrantContractMovement extends EditDomainObjectService {
 
     @Override
     protected void copyInformationFromInfoToDomain(InfoObject infoObject,
-            DomainObject domainObject) throws ExcepcaoPersistencia {
+            DomainObject domainObject) {
         InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
         GrantContractMovement grantContractMovement = (GrantContractMovement) domainObject;
 

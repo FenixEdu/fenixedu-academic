@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateVigilants extends Service {
 
-    public void run(List<Person> persons, VigilantGroup vigilantGroup) throws ExcepcaoPersistencia {
+    public void run(List<Person> persons, VigilantGroup vigilantGroup) {
 
         for (Person person : persons) {
             Vigilant vigilant = new Vigilant(person);

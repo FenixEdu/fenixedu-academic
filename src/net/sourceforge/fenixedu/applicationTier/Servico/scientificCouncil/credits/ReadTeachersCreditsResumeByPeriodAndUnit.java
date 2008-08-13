@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadTeachersCreditsResumeByPeriodAndUnit extends Service {
 
     public List<TeacherCreditsReportDTO> run(Unit department, ExecutionSemester fromExecutionPeriod,
-            ExecutionSemester untilExecutionPeriod) throws ExcepcaoPersistencia, ParseException {
+            ExecutionSemester untilExecutionPeriod) throws ParseException {
 
         SortedSet<ExecutionSemester> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod,
                 untilExecutionPeriod);

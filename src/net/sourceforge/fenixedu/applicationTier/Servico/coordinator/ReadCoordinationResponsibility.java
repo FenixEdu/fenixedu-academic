@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author João Mota 17/Set/2003
@@ -17,14 +16,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadCoordinationResponsibility extends Service {
 
-    public Boolean run(Integer executionDegreeId, IUserView userView) throws FenixServiceException,
-            ExcepcaoPersistencia {
-        ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
-        Coordinator coordinator = executionDegree.getCoordinatorByTeacher(userView.getPerson());
-        
-        if (coordinator == null || !coordinator.getResponsible().booleanValue()) {
-            return Boolean.FALSE;
-        }
-        return Boolean.TRUE;
+    public Boolean run(Integer executionDegreeId, IUserView userView) throws FenixServiceException {
+	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
+	Coordinator coordinator = executionDegree.getCoordinatorByTeacher(userView.getPerson());
+
+	if (coordinator == null || !coordinator.getResponsible().booleanValue()) {
+	    return Boolean.FALSE;
+	}
+	return Boolean.TRUE;
     }
 }

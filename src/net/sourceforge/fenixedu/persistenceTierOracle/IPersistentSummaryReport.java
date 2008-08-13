@@ -17,5 +17,5 @@ public interface IPersistentSummaryReport {
     public abstract List readByCoordinatorCode(ReportType reportType, Integer coordinatorCode) throws ExcepcaoPersistencia;
 
     public abstract List readByCoordinatorAndProjectCodes(ReportType reportType, Integer coordinatorCode, List projectCodes)
-            throws ExcepcaoPersistencia;
+	    throws ExcepcaoPersistencia;
 }

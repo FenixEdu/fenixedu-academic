@@ -21,18 +21,15 @@ import org.apache.commons.lang.StringUtils;
  */
 public class ReadUserProjects extends Service {
 
-    public List<InfoProject> run(String username, String costCenter, Boolean all, String userNumber)
-	    throws ExcepcaoPersistencia {
+    public List<InfoProject> run(String username, String costCenter, Boolean all, String userNumber) throws ExcepcaoPersistencia {
 	List<InfoProject> infoProjectList = new ArrayList<InfoProject>();
 
 	List<Integer> projectCodes = new ArrayList<Integer>();
 	List<Integer> costCenterCodes = new ArrayList<Integer>();
-	List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(
-		username, costCenter);
+	List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(username, costCenter);
 	for (ProjectAccess access : accesses) {
 	    Integer keyProject = access.getKeyProject();
-	    if (keyProject == null && access.getCostCenter()
-		    && !costCenterCodes.contains(access.getKeyProjectCoordinator())) {
+	    if (keyProject == null && access.getCostCenter() && !costCenterCodes.contains(access.getKeyProjectCoordinator())) {
 		costCenterCodes.add(access.getKeyProjectCoordinator());
 	    } else if (!projectCodes.contains(keyProject)) {
 		projectCodes.add(keyProject);
@@ -48,8 +45,7 @@ public class ReadUserProjects extends Service {
 	if (all) {
 	    projectList.addAll(p.getIPersistentProject().readByProjectsCodes(projectCodes));
 	    for (Integer ccCode : costCenterCodes) {
-		projectList.addAll(p.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(
-			ccCode, null));
+		projectList.addAll(p.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(ccCode, null));
 	    }
 	}
 	for (Project project : projectList) {

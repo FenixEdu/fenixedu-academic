@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditBranch extends Service {
 
-    public void run(InfoBranch infoBranch) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoBranch infoBranch) throws FenixServiceException{
 		Branch branch = rootDomainObject.readBranchByOID(infoBranch.getIdInternal());
 
         if (branch == null) {

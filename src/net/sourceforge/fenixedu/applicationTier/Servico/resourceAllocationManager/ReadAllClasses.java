@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadAllClasses extends Service {
 
-    public SiteView run(Integer keyExecutionPeriod) throws FenixServiceException, ExcepcaoPersistencia {
+    public SiteView run(Integer keyExecutionPeriod) throws FenixServiceException{
 	List<InfoClass> infoClasses = null;
 
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(keyExecutionPeriod);

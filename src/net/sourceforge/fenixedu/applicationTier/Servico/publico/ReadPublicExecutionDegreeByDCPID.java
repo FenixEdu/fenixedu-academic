@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadPublicExecutionDegreeByDCPID extends Service {
 
-    public List<InfoExecutionDegree> run(Integer degreeCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
+    public List<InfoExecutionDegree> run(Integer degreeCurricularPlanID) throws FenixServiceException{
         DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         
         List<InfoExecutionDegree> result = new ArrayList<InfoExecutionDegree>();
@@ -28,7 +28,7 @@ public class ReadPublicExecutionDegreeByDCPID extends Service {
         return result;
     }
 
-    public InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionYearID) throws ExcepcaoPersistencia {
+    public InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionYearID) {
         DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
         ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
         

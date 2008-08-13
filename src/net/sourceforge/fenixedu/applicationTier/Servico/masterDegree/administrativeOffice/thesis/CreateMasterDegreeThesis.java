@@ -31,7 +31,7 @@ public class CreateMasterDegreeThesis extends Service {
     public void run(IUserView userView, Integer studentCurricularPlanID, String dissertationTitle,
             List<Integer> guidersNumbers, List<Integer> assistentGuidersNumbers,
             List<Integer> externalGuidersIDs, List<Integer> externalAssistentGuidersIDs)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         // check duplicate guiders and assistent guiders
         if (CollectionUtils.intersection(guidersNumbers, assistentGuidersNumbers).size() > 0) {

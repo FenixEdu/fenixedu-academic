@@ -6,27 +6,23 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditInstitution extends Service {
 
-    public void run(Integer oldInstitutionOID, String newInstitutionName) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public void run(Integer oldInstitutionOID, String newInstitutionName) throws FenixServiceException {
 
-        Unit storedInstitution = UnitUtils.readExternalInstitutionUnitByName(newInstitutionName);
-        
-        Unit oldInstitution = (Unit) rootDomainObject.readPartyByOID(oldInstitutionOID);
-        if (oldInstitution == null) {
-            throw new NonExistingServiceException(
-                    "error.exception.commons.institution.institutionNotFound");
-        }
+	Unit storedInstitution = UnitUtils.readExternalInstitutionUnitByName(newInstitutionName);
 
-        if ((storedInstitution != null) && (!storedInstitution.equals(oldInstitution))) {
-            throw new ExistingServiceException(
-                    "error.exception.commons.institution.institutionAlreadyExists");
-        }
+	Unit oldInstitution = (Unit) rootDomainObject.readPartyByOID(oldInstitutionOID);
+	if (oldInstitution == null) {
+	    throw new NonExistingServiceException("error.exception.commons.institution.institutionNotFound");
+	}
 
-        oldInstitution.setName(newInstitutionName);
+	if ((storedInstitution != null) && (!storedInstitution.equals(oldInstitution))) {
+	    throw new ExistingServiceException("error.exception.commons.institution.institutionAlreadyExists");
+	}
+
+	oldInstitution.setName(newInstitutionName);
     }
-    
+
 }

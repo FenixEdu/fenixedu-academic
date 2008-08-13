@@ -7,27 +7,26 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateDegreeCurricularPlan extends Service {
 
-    public void run(Integer degreeId, String name, GradeScale gradeScale) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(Integer degreeId, String name, GradeScale gradeScale) throws FenixServiceException {
 
-        if (degreeId == null || name == null) {
-            throw new InvalidArgumentsServiceException();
-        }
+	if (degreeId == null || name == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
 
-        final Person creator = AccessControl.getPerson();
-        if (creator == null) {
-            throw new FenixServiceException("error.degreeCurricularPlan.non.existing.creator");
-        }
-        
-        final Degree degree = rootDomainObject.readDegreeByOID(degreeId);
-        if (degree == null) {
-            throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
-        }
+	final Person creator = AccessControl.getPerson();
+	if (creator == null) {
+	    throw new FenixServiceException("error.degreeCurricularPlan.non.existing.creator");
+	}
 
-        degree.createBolonhaDegreeCurricularPlan(name, gradeScale, creator);
+	final Degree degree = rootDomainObject.readDegreeByOID(degreeId);
+	if (degree == null) {
+	    throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
+	}
+
+	degree.createBolonhaDegreeCurricularPlan(name, gradeScale, creator);
     }
 
 }

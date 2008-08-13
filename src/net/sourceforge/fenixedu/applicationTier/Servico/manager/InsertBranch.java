@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class InsertBranch extends Service {
 
-    public void run(InfoBranch infoBranch) throws ExcepcaoPersistencia, NonExistingServiceException {
+    public void run(InfoBranch infoBranch) throws NonExistingServiceException {
         final Integer degreeCurricularPlanId = infoBranch.getInfoDegreeCurricularPlan().getIdInternal();
         final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 

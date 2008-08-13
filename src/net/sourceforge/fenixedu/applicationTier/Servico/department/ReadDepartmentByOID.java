@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadDepartmentByOID extends Service {
 
-    public InfoDepartment run(Integer oid) throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoDepartment run(Integer oid) throws FenixServiceException{
         Department department = rootDomainObject.readDepartmentByOID( oid);
         return InfoDepartment.newInfoFromDomain(department);
     }

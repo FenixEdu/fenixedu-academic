@@ -20,7 +20,7 @@ import pt.ist.fenixframework.pstm.IllegalWriteException;
  */
 public class InsertCurricularCourseScopeAtCurricularCourse extends Service {
 
-    public void run(InfoCurricularCourseScopeEditor infoCurricularCourseScope) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoCurricularCourseScopeEditor infoCurricularCourseScope) throws FenixServiceException{
         Branch branch = null;
         CurricularSemester curricularSemester = null;
         try {

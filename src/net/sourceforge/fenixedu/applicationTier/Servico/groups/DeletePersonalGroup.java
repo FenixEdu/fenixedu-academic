@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeletePersonalGroup extends Service {
     
-    public void run(Integer groupId) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(Integer groupId) throws FenixServiceException{
         PersonalGroup personalGroup = rootDomainObject.readPersonalGroupByOID(groupId);
         if (personalGroup == null) {
             throw new FenixServiceException("error.noPersonalGroup");

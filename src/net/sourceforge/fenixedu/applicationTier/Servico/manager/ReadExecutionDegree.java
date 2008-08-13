@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author lmac1
@@ -16,15 +15,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionDegree extends Service {
 
-    public InfoExecutionDegree run(Integer idInternal) throws FenixServiceException,
-            ExcepcaoPersistencia {
-        final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(idInternal);
+    public InfoExecutionDegree run(Integer idInternal) throws FenixServiceException {
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(idInternal);
 
-        if (executionDegree == null) {
-            throw new NonExistingServiceException();
-        }
+	if (executionDegree == null) {
+	    throw new NonExistingServiceException();
+	}
 
-        return InfoExecutionDegree.newInfoFromDomain(executionDegree);
+	return InfoExecutionDegree.newInfoFromDomain(executionDegree);
     }
 
 }

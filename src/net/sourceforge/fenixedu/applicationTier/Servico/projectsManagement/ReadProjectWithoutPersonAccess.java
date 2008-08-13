@@ -20,31 +20,35 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOra
  */
 public class ReadProjectWithoutPersonAccess extends Service {
 
-    public List run(String userName, String costCenter, List<InfoProjectAccess> projectAccessList, String userNumber) throws ExcepcaoPersistencia {
-        Integer coordinatorId = new Integer(userNumber);
-        
-        List<Integer> projectCodes = new ArrayList<Integer>();
-        
-//        List<ProjectAccess> accesses = ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(userName, costCenter);
-//        for (ProjectAccess access : accesses) {
-//            Integer keyProject = access.getKeyProject();
-//            
-//            if (! projectCodes.contains(keyProject)) {
-//                projectCodes.add(keyProject);
-//            }
-//        }
-        
-        for (InfoProjectAccess infoProjectAccess : projectAccessList) {
-            projectCodes.add(infoProjectAccess.getKeyProject());
-        }
-        
-        IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getProjectDBInstance();
-        List<Project> projectList = persistentSupportOracle.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorId, projectCodes);
-        List<InfoProject> infoProjects = new ArrayList<InfoProject>();
-        for (Project project : projectList) {
-            infoProjects.add(InfoProject.newInfoFromDomain(project));
-        }
-        return infoProjects;
+    public List run(String userName, String costCenter, List<InfoProjectAccess> projectAccessList, String userNumber)
+	    throws ExcepcaoPersistencia {
+	Integer coordinatorId = new Integer(userNumber);
+
+	List<Integer> projectCodes = new ArrayList<Integer>();
+
+	// List<ProjectAccess> accesses =
+	// ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(userName,
+	// costCenter);
+	// for (ProjectAccess access : accesses) {
+	// Integer keyProject = access.getKeyProject();
+	//            
+	// if (! projectCodes.contains(keyProject)) {
+	// projectCodes.add(keyProject);
+	// }
+	// }
+
+	for (InfoProjectAccess infoProjectAccess : projectAccessList) {
+	    projectCodes.add(infoProjectAccess.getKeyProject());
+	}
+
+	IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getProjectDBInstance();
+	List<Project> projectList = persistentSupportOracle.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(
+		coordinatorId, projectCodes);
+	List<InfoProject> infoProjects = new ArrayList<InfoProject>();
+	for (Project project : projectList) {
+	    infoProjects.add(InfoProject.newInfoFromDomain(project));
+	}
+	return infoProjects;
     }
 
 }

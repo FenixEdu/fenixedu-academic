@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteRoomClassification extends Service {
 
-    public void run(final RoomClassification roomClassification) throws ExcepcaoPersistencia {
+    public void run(final RoomClassification roomClassification) {
     	roomClassification.delete();
     }
 

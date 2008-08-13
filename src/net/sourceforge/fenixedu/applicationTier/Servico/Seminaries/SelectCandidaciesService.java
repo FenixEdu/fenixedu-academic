@@ -27,7 +27,7 @@ import org.apache.commons.collections.Predicate;
 public class SelectCandidaciesService extends Service {
 
 	public SelectCandidaciesDTO run(Boolean inEnrollmentPeriod, Integer seminaryID)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException{
 		SelectCandidaciesDTO result = new SelectCandidaciesDTO();
 
 		List<Seminary> seminaries = rootDomainObject.getSeminarys();

@@ -29,7 +29,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear extends Service {
 
 	public Object run(Integer degreeCurricularPlanID, String executionYearName)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException{
 		if (degreeCurricularPlanID == null || executionYearName == null) {
 			throw new FenixServiceException("error.impossible.noGratuityValues");
 		}

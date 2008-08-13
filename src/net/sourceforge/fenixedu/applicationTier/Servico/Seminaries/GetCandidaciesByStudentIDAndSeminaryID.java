@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetCandidaciesByStudentIDAndSeminaryID extends Service {
 
-    public List run(Integer studentID, Integer seminaryID) throws BDException, ExcepcaoPersistencia {
+    public List run(Integer studentID, Integer seminaryID) throws BDException{
         List candidaciesInfo = new LinkedList();
 
         Registration registration = rootDomainObject.readRegistrationByOID(studentID);

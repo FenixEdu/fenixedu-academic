@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class CreateGuideEntry extends Service {
 
     public void run(Integer guideID, GraduationType graduationType, DocumentType documentType,
-            String description, Double price, Integer quantity) throws ExcepcaoPersistencia {
+            String description, Double price, Integer quantity) {
 
         Guide guide = rootDomainObject.readGuideByOID(guideID);
 

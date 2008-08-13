@@ -9,24 +9,22 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadNotClosedPublicExecutionPeriodsByExecutionYear extends Service {
 
-    public List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException {
 
-        final ExecutionYear executionYear;
-        if (infoExecutionYear == null) {
-            executionYear = ExecutionYear.readCurrentExecutionYear();
-        } else {
-            executionYear = rootDomainObject.readExecutionYearByOID(infoExecutionYear.getIdInternal());
-        }
+	final ExecutionYear executionYear;
+	if (infoExecutionYear == null) {
+	    executionYear = ExecutionYear.readCurrentExecutionYear();
+	} else {
+	    executionYear = rootDomainObject.readExecutionYearByOID(infoExecutionYear.getIdInternal());
+	}
 
-        final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
-        for (final ExecutionSemester executionSemester : executionYear.readNotClosedPublicExecutionPeriods()) {
-            result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
-        }
-        return result;
+	final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
+	for (final ExecutionSemester executionSemester : executionYear.readNotClosedPublicExecutionPeriods()) {
+	    result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
+	}
+	return result;
     }
 }

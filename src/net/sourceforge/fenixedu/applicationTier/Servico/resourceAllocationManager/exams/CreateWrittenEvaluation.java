@@ -21,7 +21,7 @@ public class CreateWrittenEvaluation extends Service {
     public void run(Integer executionCourseID, Date writtenEvaluationDate,
 	    Date writtenEvaluationStartTime, Date writtenEvaluationEndTime,
 	    List<String> executionCourseIDs, List<String> degreeModuleScopeIDs, 
-	    List<String> roomIDs, Season examSeason, String writtenTestDescription) throws FenixServiceException, ExcepcaoPersistencia {
+	    List<String> roomIDs, Season examSeason, String writtenTestDescription) throws FenixServiceException{
 
 	final List<ExecutionCourse> executionCoursesToAssociate = readExecutionCourses(executionCourseIDs);
 	final List<DegreeModuleScope> degreeModuleScopesToAssociate = readCurricularCourseScopesAndContexts(degreeModuleScopeIDs);
@@ -46,7 +46,7 @@ public class CreateWrittenEvaluation extends Service {
 	}
     }
 
-    private List<ExecutionCourse> readExecutionCourses(final List<String> executionCourseIDs) throws ExcepcaoPersistencia, FenixServiceException {
+    private List<ExecutionCourse> readExecutionCourses(final List<String> executionCourseIDs) throws FenixServiceException {
 	if (executionCourseIDs.isEmpty()) {
 	    throw new FenixServiceException("error.invalidExecutionCourse");
 	}
@@ -62,7 +62,7 @@ public class CreateWrittenEvaluation extends Service {
 	return result;
     }
 
-    private List<DegreeModuleScope> readCurricularCourseScopesAndContexts(final List<String> degreeModuleScopeIDs) throws FenixServiceException, ExcepcaoPersistencia {
+    private List<DegreeModuleScope> readCurricularCourseScopesAndContexts(final List<String> degreeModuleScopeIDs) throws FenixServiceException{
 
 	List<DegreeModuleScope> result = new ArrayList<DegreeModuleScope>();
 	for (String key : degreeModuleScopeIDs) {
@@ -79,7 +79,7 @@ public class CreateWrittenEvaluation extends Service {
 	return result;
     }
 
-    private List<AllocatableSpace> readRooms(final List<String> roomIDs) throws ExcepcaoPersistencia, FenixServiceException {
+    private List<AllocatableSpace> readRooms(final List<String> roomIDs) throws FenixServiceException {
 	final List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
 	for (final String roomID : roomIDs) {
 	    final AllocatableSpace room = (AllocatableSpace) rootDomainObject.readResourceByOID(Integer.valueOf(roomID));

@@ -14,7 +14,7 @@ import org.joda.time.DateTime;
 public class CreateUnavailablePeriod extends Service {
 
 	public void run(Vigilant vigilant, DateTime begin, DateTime end, String justification)
-			throws ExcepcaoPersistencia {
+			{
 
 		CreateUnavailable(vigilant, begin, end,justification);
 		for(VigilantGroup group : vigilant.getVigilantGroups()) {
@@ -23,7 +23,7 @@ public class CreateUnavailablePeriod extends Service {
 	}
 
 	public void run(Vigilant vigilant, DateTime begin, DateTime end, String justification,
-			VigilantGroup group) throws ExcepcaoPersistencia {
+			VigilantGroup group) {
 		CreateUnavailable(vigilant, begin, end,justification);
 		sendEmail(vigilant, begin, end, justification, group);
 	}

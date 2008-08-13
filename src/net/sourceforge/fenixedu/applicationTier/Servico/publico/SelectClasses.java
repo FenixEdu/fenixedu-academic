@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class SelectClasses extends Service {
 
-    public Object run(InfoClass infoClass) throws ExcepcaoPersistencia {
+    public Object run(InfoClass infoClass) {
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoClass.getInfoExecutionDegree()
 		.getIdInternal());
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoClass

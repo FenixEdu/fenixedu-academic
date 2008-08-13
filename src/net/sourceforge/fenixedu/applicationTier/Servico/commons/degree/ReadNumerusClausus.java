@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadNumerusClausus extends Service {
 
-    public Integer run(Integer degreeCurricularPlanID) throws NonExistingServiceException, ExcepcaoPersistencia {
+    public Integer run(Integer degreeCurricularPlanID) throws NonExistingServiceException{
 
         DegreeCurricularPlan degreeCurricularPlan = null;
 

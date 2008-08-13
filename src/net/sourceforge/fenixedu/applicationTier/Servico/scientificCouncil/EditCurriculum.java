@@ -20,7 +20,7 @@ public class EditCurriculum extends Service {
 
 	public Boolean run(Integer curriculumId, String program, String programEn,
 			String operacionalObjectives, String operacionalObjectivesEn, String generalObjectives,
-			String generalObjectivesEn, Boolean basic) throws FenixServiceException, ExcepcaoPersistencia {
+			String generalObjectivesEn, Boolean basic) throws FenixServiceException{
 
 		Curriculum curriculum = rootDomainObject.readCurriculumByOID(curriculumId);
 		if (curriculum.getCurricularCourse().getBasic().equals(basic)) {

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ExecutionCourseHasProposals extends Service {
 
-	public boolean run(Integer executionCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
+	public boolean run(Integer executionCourseCode) throws FenixServiceException{
 		boolean result = false;
 		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 

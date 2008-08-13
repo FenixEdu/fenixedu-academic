@@ -37,7 +37,7 @@ import net.sourceforge.fenixedu.util.State;
 public class CreateGuideFromTransactions extends Service {
 
     public InfoGuide run(InfoGuide infoGuide, String remarks, GuideState situationOfGuide,
-            List transactionsIDs) throws FenixServiceException, ExcepcaoPersistencia {
+            List transactionsIDs) throws FenixServiceException{
         
         GuideSituation guideSituation = null;
 

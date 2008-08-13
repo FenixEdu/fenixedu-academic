@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class DeleteGratuitySituationById extends Service {
 
-	public Boolean run(Integer gratuitySituationID) throws FenixServiceException, ExcepcaoPersistencia {
+	public Boolean run(Integer gratuitySituationID) throws FenixServiceException{
 		GratuitySituation gratuitySituation = rootDomainObject.readGratuitySituationByOID(gratuitySituationID);
 		if (gratuitySituation == null) {
 			return Boolean.TRUE;

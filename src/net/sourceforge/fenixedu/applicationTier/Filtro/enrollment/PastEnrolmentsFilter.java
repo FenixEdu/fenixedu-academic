@@ -48,7 +48,7 @@ public class PastEnrolmentsFilter extends Filtro {
         throw new NotAuthorizedFilterException("error.no.enrolment.two.previous.executions");
     }
 
-    protected Registration readStudent(IUserView id) throws ExcepcaoPersistencia {
+    protected Registration readStudent(IUserView id) {
         return Registration.readByUsername(id.getUtilizador());
     }
 

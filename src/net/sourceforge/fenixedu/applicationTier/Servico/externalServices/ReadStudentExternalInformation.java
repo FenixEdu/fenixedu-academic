@@ -73,7 +73,7 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class ReadStudentExternalInformation extends Service {
 
-    public Collection run(String username) throws ExcepcaoPersistencia, FenixServiceException {
+    public Collection run(String username) throws FenixServiceException {
 	Person person = Person.readPersonByUsername(username);
 
 	if (!person.getStudent().hasAnyActiveRegistration()) {

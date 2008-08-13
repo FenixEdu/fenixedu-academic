@@ -28,7 +28,7 @@ public abstract class SearchService extends Service {
      * @throws FenixServiceException
      *             if it can't get persistent support
      */
-    public List run(HashMap searchParameters) throws ExcepcaoPersistencia {
+    public List run(HashMap searchParameters) {
         final List domainList = doSearch(searchParameters);
 
         final List infoList = (List) CollectionUtils.collect(domainList, new Transformer() {
@@ -56,6 +56,6 @@ public abstract class SearchService extends Service {
      * @return A list of DomainObject.
      */
     abstract protected List doSearch(HashMap searchParameters)
-            throws ExcepcaoPersistencia;
+            ;
 
 }

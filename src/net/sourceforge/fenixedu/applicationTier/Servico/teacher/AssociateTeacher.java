@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -21,30 +20,31 @@ public class AssociateTeacher extends Service {
 
     /**
      * Executes the service.
-     * @throws ExcepcaoPersistencia 
+     * 
+     * @throws ExcepcaoPersistencia
      */
-    public boolean run(Integer infoExecutionCourseCode, Integer teacherNumber)
-            throws FenixServiceException, ExcepcaoPersistencia {
-        Teacher iTeacher = Teacher.readByNumber(teacherNumber);
-        if (iTeacher == null) {
-            throw new InvalidArgumentsServiceException();
-        }
+    public boolean run(Integer infoExecutionCourseCode, Integer teacherNumber) throws FenixServiceException {
+	Teacher iTeacher = Teacher.readByNumber(teacherNumber);
+	if (iTeacher == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
 
-        ExecutionCourse iExecutionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourseCode);
-        if (lectures(iTeacher, iExecutionCourse.getProfessorships())) {
-            throw new ExistingServiceException();
-        }
+	ExecutionCourse iExecutionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourseCode);
+	if (lectures(iTeacher, iExecutionCourse.getProfessorships())) {
+	    throw new ExistingServiceException();
+	}
 
-        Professorship.create(false, iExecutionCourse, iTeacher, null);
-        return true;
+	Professorship.create(false, iExecutionCourse, iTeacher, null);
+	return true;
     }
 
     protected boolean lectures(final Teacher teacher, final List professorships) {
-        return CollectionUtils.find(professorships, new Predicate() {
+	return CollectionUtils.find(professorships, new Predicate() {
 
-            public boolean evaluate(Object arg0) {
-                Professorship professorship = (Professorship) arg0;
-                return professorship.getTeacher().getIdInternal().equals(teacher.getIdInternal());
-            }}) != null;
+	    public boolean evaluate(Object arg0) {
+		Professorship professorship = (Professorship) arg0;
+		return professorship.getTeacher().getIdInternal().equals(teacher.getIdInternal());
+	    }
+	}) != null;
     }
 }

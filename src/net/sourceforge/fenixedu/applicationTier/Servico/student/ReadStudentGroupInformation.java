@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithAttendsAn
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -29,58 +28,56 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class ReadStudentGroupInformation extends Service {
 
-    public ISiteComponent run(Integer studentGroupCode) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public ISiteComponent run(Integer studentGroupCode) throws FenixServiceException {
 
-        InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-        StudentGroup studentGroup = null;
-        Grouping grouping = null;
-        List groupAttendsList = null;
+	InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+	StudentGroup studentGroup = null;
+	Grouping grouping = null;
+	List groupAttendsList = null;
 
-        studentGroup = rootDomainObject.readStudentGroupByOID(
-                studentGroupCode);
+	studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 
-        if (studentGroup == null) {
-            return null;
-        }
+	if (studentGroup == null) {
+	    return null;
+	}
 
-        List studentGroupInformationList = new ArrayList();
-        grouping = studentGroup.getGrouping();
-        groupAttendsList = studentGroup.getAttends();
+	List studentGroupInformationList = new ArrayList();
+	grouping = studentGroup.getGrouping();
+	groupAttendsList = studentGroup.getAttends();
 
-        Iterator iter = groupAttendsList.iterator();
-        InfoSiteStudentInformation infoSiteStudentInformation = null;
-        Attends attend = null;
+	Iterator iter = groupAttendsList.iterator();
+	InfoSiteStudentInformation infoSiteStudentInformation = null;
+	Attends attend = null;
 
-        while (iter.hasNext()) {
-            infoSiteStudentInformation = new InfoSiteStudentInformation();
+	while (iter.hasNext()) {
+	    infoSiteStudentInformation = new InfoSiteStudentInformation();
 
-            attend = (Attends) iter.next();
+	    attend = (Attends) iter.next();
 
-            infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
+	    infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
 
-            infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
+	    infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
 
-            infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
+	    infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
 
-            infoSiteStudentInformation.setUsername(attend.getRegistration().getPerson().getUsername());
+	    infoSiteStudentInformation.setUsername(attend.getRegistration().getPerson().getUsername());
 
-            studentGroupInformationList.add(infoSiteStudentInformation);
+	    studentGroupInformationList.add(infoSiteStudentInformation);
 
-        }
+	}
 
-        Collections.sort(studentGroupInformationList, new BeanComparator("number"));
-        infoSiteStudentGroup.setInfoSiteStudentInformationList(studentGroupInformationList);
-        infoSiteStudentGroup.setInfoStudentGroup(InfoStudentGroupWithAttendsAndGroupingAndShift.newInfoFromDomain(studentGroup));
+	Collections.sort(studentGroupInformationList, new BeanComparator("number"));
+	infoSiteStudentGroup.setInfoSiteStudentInformationList(studentGroupInformationList);
+	infoSiteStudentGroup.setInfoStudentGroup(InfoStudentGroupWithAttendsAndGroupingAndShift.newInfoFromDomain(studentGroup));
 
-        if (grouping.getMaximumCapacity() != null) {
+	if (grouping.getMaximumCapacity() != null) {
 
-            int vagas = grouping.getMaximumCapacity().intValue() - groupAttendsList.size();
+	    int vagas = grouping.getMaximumCapacity().intValue() - groupAttendsList.size();
 
-            infoSiteStudentGroup.setNrOfElements(new Integer(vagas));
-        } else
-            infoSiteStudentGroup.setNrOfElements("Sem limite");
+	    infoSiteStudentGroup.setNrOfElements(new Integer(vagas));
+	} else
+	    infoSiteStudentGroup.setNrOfElements("Sem limite");
 
-        return infoSiteStudentGroup;
+	return infoSiteStudentGroup;
     }
 }

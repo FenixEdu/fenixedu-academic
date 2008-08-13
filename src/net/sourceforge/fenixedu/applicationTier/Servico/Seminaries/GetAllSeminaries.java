@@ -14,7 +14,7 @@ import org.joda.time.DateTime;
 
 public class GetAllSeminaries extends Service {
 
-    public List run(Boolean inEnrollmentPeriod) throws BDException, ExcepcaoPersistencia {
+    public List run(Boolean inEnrollmentPeriod) throws BDException{
 	List<InfoSeminary> result = new LinkedList<InfoSeminary>();
 
 	List<Seminary> seminaries = rootDomainObject.getSeminarys();

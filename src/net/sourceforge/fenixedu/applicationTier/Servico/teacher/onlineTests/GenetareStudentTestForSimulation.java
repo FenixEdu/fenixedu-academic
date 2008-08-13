@@ -26,7 +26,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class GenetareStudentTestForSimulation extends Service {
     public List run(Integer executionCourseId, Integer testId, String path, TestType testType, CorrectionAvailability correctionAvailability,
-            Boolean imsfeedback, String testInformation) throws FenixServiceException, ExcepcaoPersistencia {
+            Boolean imsfeedback, String testInformation) throws FenixServiceException{
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
         path = path.replace('\\', '/');
         final Test test = rootDomainObject.readTestByOID(testId);

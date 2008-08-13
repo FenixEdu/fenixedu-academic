@@ -50,7 +50,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -67,8 +66,7 @@ public class MergeExecutionCourses extends Service {
 	private static final long serialVersionUID = 3761968254943244338L;
     }
 
-    public void run(Integer executionCourseDestinationId, Integer executionCourseSourceId) throws FenixServiceException,
-	    ExcepcaoPersistencia {
+    public void run(Integer executionCourseDestinationId, Integer executionCourseSourceId) throws FenixServiceException {
 
 	if (executionCourseDestinationId.equals(executionCourseSourceId)) {
 	    throw new SourceAndDestinationAreTheSameException();
@@ -198,7 +196,7 @@ public class MergeExecutionCourses extends Service {
     }
 
     private void removeEvaluations(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
-	    throws ExcepcaoPersistencia, FenixServiceException {
+	    throws FenixServiceException {
 	while (!executionCourseFrom.getAssociatedEvaluations().isEmpty()) {
 	    final Evaluation evaluation = executionCourseFrom.getAssociatedEvaluations().get(0);
 	    if (evaluation instanceof FinalEvaluation) {
@@ -254,7 +252,7 @@ public class MergeExecutionCourses extends Service {
     }
 
     private void copyAttends(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
-	    throws ExcepcaoPersistencia, FenixServiceException {
+	    throws FenixServiceException {
 	while (!executionCourseFrom.getAttends().isEmpty()) {
 	    final Attends attends = executionCourseFrom.getAttends().get(0);
 	    final Attends otherAttends = executionCourseTo.getAttendsByStudent(attends.getRegistration());
@@ -267,7 +265,7 @@ public class MergeExecutionCourses extends Service {
 		    // do nothing.
 		} else if (otherAttends.hasEnrolment() && attends.hasEnrolment()) {
 		    throw new FenixServiceException("Unable to merge execution courses. Registration "
-			    + attends.getRegistration().getNumber() + " has an enrolment in both.");		    
+			    + attends.getRegistration().getNumber() + " has an enrolment in both.");
 		}
 		for (; !attends.getAssociatedMarks().isEmpty(); otherAttends.addAssociatedMarks(attends.getAssociatedMarks().get(
 			0)))
@@ -332,8 +330,8 @@ public class MergeExecutionCourses extends Service {
 	    message.append("dos conteúdos logo que possível.\n\n");
 	    message.append("Os melhores cumprimentos,\n\nO sistema Fénix.");
 
-	    new Email("Sistema Fénix", "no-reply@ist.utl.pt", new String[] {}, tos, Collections.EMPTY_LIST, Collections.EMPTY_LIST,
-		    "Junção de disciplinas: " + executionCourseTo.getNome(), message.toString());
+	    new Email("Sistema Fénix", "no-reply@ist.utl.pt", new String[] {}, tos, Collections.EMPTY_LIST,
+		    Collections.EMPTY_LIST, "Junção de disciplinas: " + executionCourseTo.getNome(), message.toString());
 	}
     }
 

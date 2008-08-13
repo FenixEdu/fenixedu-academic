@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class RemoveVigilantsFromGroup extends Service {
 
-    public List<Vigilant> run(Map<VigilantGroup,List<Vigilant>> vigilantsToRemove) throws ExcepcaoPersistencia {
+    public List<Vigilant> run(Map<VigilantGroup,List<Vigilant>> vigilantsToRemove) {
 
         List<Vigilant> unableToRemove = new ArrayList<Vigilant>();
 

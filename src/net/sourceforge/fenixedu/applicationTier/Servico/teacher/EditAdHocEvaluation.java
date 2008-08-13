@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditAdHocEvaluation extends Service {
 
     public void run(Integer executionCourseID, Integer adHocEvaluationID, String name, String description, GradeScale gradeScale)
-	    throws ExcepcaoPersistencia, FenixServiceException {
+	    throws FenixServiceException {
 
 	AdHocEvaluation adHocEvaluation = (AdHocEvaluation) rootDomainObject.readEvaluationByOID(adHocEvaluationID);
 

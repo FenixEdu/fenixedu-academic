@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EditExternalActivity extends Service {
 
-    public void run(Integer externalActivityId, InfoExternalActivity infoExternalActivity) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(Integer externalActivityId, InfoExternalActivity infoExternalActivity) throws FenixServiceException{
 		ExternalActivity externalActivity = rootDomainObject.readExternalActivityByOID(externalActivityId);
 		//If it doesn't exist in the database, a new one has to be created
 		if(externalActivity == null) {

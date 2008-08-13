@@ -8,25 +8,23 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class AddSchoolClassesToShift extends Service {
 
-	public void run(InfoShift infoShift, List<Integer> schoolClassOIDs) throws ExcepcaoPersistencia,
-			FenixServiceException {
+    public void run(InfoShift infoShift, List<Integer> schoolClassOIDs) throws FenixServiceException {
 
-		final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
-		if (shift == null)
-			throw new InvalidArgumentsServiceException();
+	final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
+	if (shift == null)
+	    throw new InvalidArgumentsServiceException();
 
-		for (final Integer schoolClassOID : schoolClassOIDs) {
-			final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(schoolClassOID);
-			if (schoolClass == null) {
-				throw new InvalidArgumentsServiceException();
-			}
-			
-			shift.associateSchoolClass(schoolClass);
-		}
+	for (final Integer schoolClassOID : schoolClassOIDs) {
+	    final SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(schoolClassOID);
+	    if (schoolClass == null) {
+		throw new InvalidArgumentsServiceException();
+	    }
+
+	    shift.associateSchoolClass(schoolClass);
 	}
+    }
 
 }

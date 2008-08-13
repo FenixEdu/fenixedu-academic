@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 
 public class WriteStudentPersonalDataAuthorizationAnswer extends Service {
 
-    public void run(Integer studentID, String answer) throws ExcepcaoPersistencia {
+    public void run(Integer studentID, String answer) {
 	final Registration registration = rootDomainObject.readRegistrationByOID(studentID);
 	registration.getStudent().setPersonalDataAuthorizationForCurrentExecutionYear(
 		StudentPersonalDataAuthorizationChoice.valueOf(answer));

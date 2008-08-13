@@ -37,7 +37,7 @@ public class InsertExerciseVariation extends Service {
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
     public List run(Integer executionCourseId, Integer metadataId, UploadedFile xmlZipFile, String path) throws FenixServiceException,
-            NotExecuteException, ExcepcaoPersistencia {
+            NotExecuteException{
         List<String> badXmls = new ArrayList<String>();
         String replacedPath = path.replace('\\', '/');
         ExecutionCourse executionCourse = (ExecutionCourse) rootDomainObject.readExecutionCourseByOID(executionCourseId);

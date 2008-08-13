@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadPersonsByName extends Service {
 
-    public List<InfoPerson> run(String stringtoSearch) throws ExcepcaoPersistencia {
+    public List<InfoPerson> run(String stringtoSearch) {
 
         String names[] = stringtoSearch.split(" ");
         StringBuilder authorName = new StringBuilder("%");

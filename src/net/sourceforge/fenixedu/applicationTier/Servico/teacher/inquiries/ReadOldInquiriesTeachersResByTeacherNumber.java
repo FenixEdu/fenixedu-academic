@@ -22,7 +22,7 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadOldInquiriesTeachersResByTeacherNumber extends Service {
 
-	public List run(Integer teacherNumber) throws FenixServiceException, ExcepcaoPersistencia {
+	public List run(Integer teacherNumber) throws FenixServiceException{
 		Teacher teacher = Teacher.readByNumber(teacherNumber);
 
 		if (teacher == null) {

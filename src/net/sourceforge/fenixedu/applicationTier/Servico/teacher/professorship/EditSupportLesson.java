@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditSupportLesson extends Service {
 
-    public void run(SupportLessonDTO supportLessonDTO, RoleType roleType) throws ExcepcaoPersistencia {
+    public void run(SupportLessonDTO supportLessonDTO, RoleType roleType) {
 
         Professorship professorship = rootDomainObject.readProfessorshipByOID(supportLessonDTO
                 .getProfessorshipID());

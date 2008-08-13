@@ -202,7 +202,7 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 	return getAssiduousness().getEmployeeSalary(date);
     }
 
-    public Integer getTotalWeekDaysHoursPayedInYear() throws ExcepcaoPersistencia {
+    public Integer getTotalWeekDaysHoursPayedInYear() {
 	int result = 0;
 	YearMonth yearMonth = getPaymentYearMonth();
 	for (ExtraWorkRequest extraWorkRequest : getAssiduousness().getExtraWorkRequests()) {
@@ -215,7 +215,7 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 	return result;
     }
 
-    public BigDecimal getTotalWeekDaysAmountPayedInYear() throws ExcepcaoPersistencia {
+    public BigDecimal getTotalWeekDaysAmountPayedInYear() {
 	BigDecimal result = new BigDecimal(0);
 	YearMonth yearMonth = getPaymentYearMonth();
 	for (ExtraWorkRequest extraWorkRequest : getAssiduousness().getExtraWorkRequests()) {
@@ -229,7 +229,7 @@ public class ExtraWorkRequest extends ExtraWorkRequest_Base {
 	return result;
     }
 
-    public Integer getTotalVacationsDaysInYear() throws ExcepcaoPersistencia {
+    public Integer getTotalVacationsDaysInYear() {
 	int result = 0;
 	YearMonth yearMonth = getPaymentYearMonth();
 	for (ExtraWorkRequest extraWorkRequest : getAssiduousness().getExtraWorkRequests()) {

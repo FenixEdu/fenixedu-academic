@@ -14,7 +14,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class EditFunction extends Service {
 
     public void run(Integer functionID, MultiLanguageString functionName, YearMonthDay begin, YearMonthDay end,
-            FunctionType type) throws ExcepcaoPersistencia, FenixServiceException, DomainException {
+            FunctionType type) throws FenixServiceException, DomainException {
 
         Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);
         if (function == null) {

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class UserCoordinatorByExecutionDegree extends Service {
 
     public Boolean run(Integer executionDegreeCode, final Person person, String degree2Compare)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeCode);
         final Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
         

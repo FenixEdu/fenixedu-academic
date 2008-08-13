@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstractService {
 
-    public List run(IUserView userView, Integer executionPeriodCode) throws ExcepcaoPersistencia {
+    public List run(IUserView userView, Integer executionPeriodCode) {
 
 	ExecutionSemester executionSemester = null;
 	if (executionPeriodCode != null) {

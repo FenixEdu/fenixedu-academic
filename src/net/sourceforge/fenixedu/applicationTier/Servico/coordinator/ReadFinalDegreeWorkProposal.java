@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadFinalDegreeWorkProposal extends Service {
 
-    public InfoProposal run(Integer finalDegreeWorkProposalOID) throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoProposal run(Integer finalDegreeWorkProposalOID) throws FenixServiceException{
 	return InfoProposal.newInfoFromDomain(rootDomainObject.readProposalByOID(finalDegreeWorkProposalOID));
     }
     

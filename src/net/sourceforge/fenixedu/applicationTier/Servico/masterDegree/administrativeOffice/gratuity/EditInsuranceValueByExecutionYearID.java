@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditInsuranceValueByExecutionYearID extends Service {
 
     public void run(Integer executionYearID, Double annualValue, Date endDate)
-            throws ExcepcaoPersistencia {
+            {
 
         final ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
 

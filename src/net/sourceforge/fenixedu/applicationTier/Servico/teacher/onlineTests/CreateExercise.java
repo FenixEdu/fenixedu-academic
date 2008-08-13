@@ -29,7 +29,7 @@ public class CreateExercise extends Service {
             QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject, Calendar learningTime, String level,
             SubQuestion subQuestion, String questionText, String secondQuestionText, String[] options, String[] correctOptions, String[] shuffle,
             String correctFeedbackText, String wrongFeedbackText, Boolean breakLineBeforeResponseBox, Boolean breakLineAfterResponseBox, String path)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {

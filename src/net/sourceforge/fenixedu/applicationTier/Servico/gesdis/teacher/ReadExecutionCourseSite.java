@@ -11,23 +11,21 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionCourseSite extends Service {
 
-    public InfoSite run(Integer executionCourseId) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public InfoSite run(Integer executionCourseId) throws FenixServiceException {
 
-        InfoSite infoSite = null;
+	InfoSite infoSite = null;
 
-    	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-        final ExecutionCourseSite site = executionCourse.getSite();
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+	final ExecutionCourseSite site = executionCourse.getSite();
 
-        if (site != null) {
-            infoSite = InfoSite.newInfoFromDomain(site);
-            infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
-        }
+	if (site != null) {
+	    infoSite = InfoSite.newInfoFromDomain(site);
+	    infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
+	}
 
-        return infoSite;
+	return infoSite;
     }
 }

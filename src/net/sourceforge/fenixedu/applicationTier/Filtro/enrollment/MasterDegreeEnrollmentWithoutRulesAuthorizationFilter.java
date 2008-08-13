@@ -58,7 +58,7 @@ public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends
 	return isNonMaster;
     }
 
-    private boolean verifyStudentIsFromMasterDegree(Object[] arguments) throws ExcepcaoPersistencia {
+    private boolean verifyStudentIsFromMasterDegree(Object[] arguments) {
 	Object object = (Object) arguments[0];
 	DegreeType degreeType = null;
 	if(object instanceof Registration) {

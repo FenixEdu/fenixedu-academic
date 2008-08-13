@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteTestGroup extends Service {
-	public void run(NewTestGroup testGroup) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(NewTestGroup testGroup) throws FenixServiceException{
 		testGroup.delete();
 	}
 }

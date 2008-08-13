@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod extends Service {
 
-    public List<InfoCurricularCourse> run(Integer studentCurricularPlanId, Integer executionPeriodId) throws ExcepcaoPersistencia {
+    public List<InfoCurricularCourse> run(Integer studentCurricularPlanId, Integer executionPeriodId) {
 	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 	List<Enrolment> enrollments = studentCurricularPlan.getEnrolmentsByExecutionPeriod(executionSemester);

@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadNonAffiliatedTeachersByName extends Service {
 
-    public List run(String nameToSearch) throws ExcepcaoPersistencia{
+    public List run(String nameToSearch) {
         String names[] = nameToSearch.split(" ");
         StringBuilder nonAffiliatedTeacherName = new StringBuilder(".*");
 

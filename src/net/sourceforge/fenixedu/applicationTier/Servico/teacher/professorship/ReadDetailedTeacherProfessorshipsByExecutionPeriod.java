@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadDetailedTeacherProfessorshipsByExecutionPeriod extends ReadDetailedTeacherProfessorshipsAbstractService {
 
-    public List run(Integer teacherOID, Integer executionPeriodOID) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer teacherOID, Integer executionPeriodOID) throws FenixServiceException{
 
 	final ExecutionSemester executionSemester;
 	if (executionPeriodOID == null) {

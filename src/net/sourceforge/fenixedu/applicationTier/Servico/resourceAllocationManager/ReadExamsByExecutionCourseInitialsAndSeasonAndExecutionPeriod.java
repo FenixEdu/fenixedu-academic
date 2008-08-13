@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.util.Season;
 public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod extends Service {
 
     public InfoViewExamByDayAndShift run(String executionCourseInitials, Season season, InfoExecutionPeriod infoExecutionPeriod)
-	    throws ExcepcaoPersistencia {
+	    {
 	InfoViewExamByDayAndShift infoViewExamByDayAndShift = new InfoViewExamByDayAndShift();
 
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());

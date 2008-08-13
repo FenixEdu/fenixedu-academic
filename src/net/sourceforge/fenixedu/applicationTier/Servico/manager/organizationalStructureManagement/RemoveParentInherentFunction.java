@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class RemoveParentInherentFunction extends Service {
 
-    public void run(Integer functionID) throws ExcepcaoPersistencia, FenixServiceException,
+    public void run(Integer functionID) throws FenixServiceException,
             DomainException {
 
         Function function = (Function) rootDomainObject.readAccountabilityTypeByOID(functionID);

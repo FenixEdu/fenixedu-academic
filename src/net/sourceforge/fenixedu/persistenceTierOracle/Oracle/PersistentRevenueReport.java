@@ -25,38 +25,38 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 public class PersistentRevenueReport extends PersistentReport implements IPersistentReport {
 
     public List<IRevenueReportLine> getCompleteReport(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
-        List<IRevenueReportLine> result = new ArrayList<IRevenueReportLine>();
+	List<IRevenueReportLine> result = new ArrayList<IRevenueReportLine>();
 
-        try {
-            PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
-            p.startTransaction();
-            String tableOrView = getTableOrViewName(p, reportType);
+	try {
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	    p.startTransaction();
+	    String tableOrView = getTableOrViewName(p, reportType);
 
-            String query = "select \"idMov\", \"Ent. Financ.\", \"Rubrica\", \"Data\", \"Descrição\", \"Valor\" from " + tableOrView
-                    + " where PROJECTCODE='" + projectCode + "' order by \"Data\", \"idMov\"";
-            PreparedStatement stmt = p.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                IRevenueReportLine report = new RevenueReportLine();
-                report.setProjectCode(projectCode);
-                report.setMovementId(rs.getString("idMov"));
-                report.setFinancialEntity(rs.getString("Ent. Financ."));
-                report.setRubric(new Integer(rs.getInt("Rubrica")));
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                Date date = rs.getDate("Data");
-                report.setDate(formatter.format(date));
-                report.setDescription(rs.getString("Descrição"));
-                report.setValue(new Double(rs.getDouble("Valor")));
-                result.add(report);
-            }
+	    String query = "select \"idMov\", \"Ent. Financ.\", \"Rubrica\", \"Data\", \"Descrição\", \"Valor\" from "
+		    + tableOrView + " where PROJECTCODE='" + projectCode + "' order by \"Data\", \"idMov\"";
+	    PreparedStatement stmt = p.prepareStatement(query);
+	    ResultSet rs = stmt.executeQuery(query);
+	    while (rs.next()) {
+		IRevenueReportLine report = new RevenueReportLine();
+		report.setProjectCode(projectCode);
+		report.setMovementId(rs.getString("idMov"));
+		report.setFinancialEntity(rs.getString("Ent. Financ."));
+		report.setRubric(new Integer(rs.getInt("Rubrica")));
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = rs.getDate("Data");
+		report.setDate(formatter.format(date));
+		report.setDescription(rs.getString("Descrição"));
+		report.setValue(new Double(rs.getDouble("Valor")));
+		result.add(report);
+	    }
 
-            rs.close();
-            p.commitTransaction();
-        } catch (SQLException e) {
-            throw new ExcepcaoPersistencia();
-        }
+	    rs.close();
+	    p.commitTransaction();
+	} catch (SQLException e) {
+	    throw new ExcepcaoPersistencia();
+	}
 
-        return result;
+	return result;
     }
 
 }

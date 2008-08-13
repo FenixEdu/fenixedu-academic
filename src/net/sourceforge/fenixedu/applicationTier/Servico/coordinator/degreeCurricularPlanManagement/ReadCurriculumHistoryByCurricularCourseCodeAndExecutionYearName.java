@@ -29,7 +29,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName extends Service {
 
     public InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode,
-            String stringExecutionYear) throws FenixServiceException, ExcepcaoPersistencia {
+            String stringExecutionYear) throws FenixServiceException{
         InfoCurriculum infoCurriculum = null;
 
         if (curricularCourseCode == null) {
@@ -86,7 +86,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
     }
 
     private InfoCurriculum createInfoCurriculum(Curriculum curriculum, List allCurricularCourseScopes,
-            List allExecutionCourses) throws ExcepcaoPersistencia {
+            List allExecutionCourses) {
 
         InfoCurriculum infoCurriculum = InfoCurriculumWithInfoCurricularCourse
                 .newInfoFromDomain(curriculum);

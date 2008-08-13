@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadTransactionByID extends Service {
 
-	public InfoTransaction run(Integer transactionId) throws FenixServiceException, ExcepcaoPersistencia {
+	public InfoTransaction run(Integer transactionId) throws FenixServiceException{
 		Transaction transaction = rootDomainObject.readTransactionByOID(transactionId);
 		if (transaction == null) {
 			throw new ExcepcaoInexistente();

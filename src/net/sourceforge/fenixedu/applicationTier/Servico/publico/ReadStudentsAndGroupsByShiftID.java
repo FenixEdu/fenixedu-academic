@@ -33,7 +33,7 @@ import org.apache.commons.beanutils.BeanComparator;
 public class ReadStudentsAndGroupsByShiftID extends Service {
 
     public InfoSiteStudentsAndGroups run(Integer groupPropertiesId, Integer shiftId)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
         Grouping groupProperties = rootDomainObject.readGroupingByOID(

@@ -13,7 +13,7 @@ import org.apache.commons.collections.Predicate;
 
 public class ReadCurrentExecutionDegreeByDegreeCurricularPlanID extends Service {
 
-    public InfoExecutionDegree run(final Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
+    public InfoExecutionDegree run(final Integer degreeCurricularPlanID) {
 
         final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 

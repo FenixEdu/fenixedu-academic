@@ -34,7 +34,7 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro {
         }
 	}
 
-    protected Department getEmployeeDepartment(IUserView userView) throws ExcepcaoPersistencia, NotAuthorizedFilterException {
+    protected Department getEmployeeDepartment(IUserView userView) throws NotAuthorizedFilterException {
         final Person person = userView.getPerson();
         if(person == null) {
             throw new NotAuthorizedFilterException("error.noPerson");
@@ -46,11 +46,11 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro {
         return getDepartment(employee);
     }
 
-    protected Department getTeacherDepartment(Object[] argumentos) throws NotAuthorizedFilterException, ExcepcaoPersistencia {
+    protected Department getTeacherDepartment(Object[] argumentos) throws NotAuthorizedFilterException{
         return getDepartment(getTeacher(argumentos));
     }
 
-    protected Department getDepartment(Teacher teacher) throws ExcepcaoPersistencia, NotAuthorizedFilterException {
+    protected Department getDepartment(Teacher teacher) throws NotAuthorizedFilterException {
         final Department department = teacher.getCurrentWorkingDepartment();
         if(department == null) {
             throw new NotAuthorizedFilterException("error.noDepartment");
@@ -58,7 +58,7 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro {
         return department;
     }
     
-    protected Department getDepartment(Employee employee) throws ExcepcaoPersistencia, NotAuthorizedFilterException {
+    protected Department getDepartment(Employee employee) throws NotAuthorizedFilterException {
         final Department department = employee.getCurrentDepartmentWorkingPlace();
         if(department == null) {
             throw new NotAuthorizedFilterException("error.noDepartment");
@@ -66,7 +66,7 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro {
         return department;
     }
 
-    protected Teacher getTeacher(Object[] argumentos) throws ExcepcaoPersistencia, NotAuthorizedFilterException {
+    protected Teacher getTeacher(Object[] argumentos) throws NotAuthorizedFilterException {
         final String teacherNumber = getTeacherNumber(argumentos);
         final Teacher teacher = Teacher.readByNumber(new Integer(teacherNumber));
         if(teacher == null) {

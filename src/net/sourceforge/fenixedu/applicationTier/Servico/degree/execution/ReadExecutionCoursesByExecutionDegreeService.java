@@ -22,7 +22,7 @@ public class ReadExecutionCoursesByExecutionDegreeService extends Service {
 	}
     }
 
-    public List run(Integer executionDegreeId, Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer executionDegreeId, Integer executionPeriodId) throws FenixServiceException{
 
 	final ExecutionSemester executionSemester;
 	if (executionPeriodId == null) {

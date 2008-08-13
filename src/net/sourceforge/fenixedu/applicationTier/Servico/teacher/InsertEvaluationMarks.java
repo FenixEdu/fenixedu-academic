@@ -37,7 +37,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class InsertEvaluationMarks extends Service {
 
     public Object run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks)
-            throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
+            throws ExcepcaoInexistente, FenixServiceException{
 
         ExecutionCourseSite site = null;
         Evaluation evaluation = null;
@@ -103,7 +103,7 @@ public class InsertEvaluationMarks extends Service {
 
     private Object createSiteView(ExecutionCourseSite site, Evaluation evaluation, HashMap hashMarks,
             List marksErrorsInvalidMark, List attendList, HashMap nonExistingStudents)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
 
         infoSiteMarks.setInfoEvaluation(InfoEvaluation.newInfoFromDomain(evaluation));

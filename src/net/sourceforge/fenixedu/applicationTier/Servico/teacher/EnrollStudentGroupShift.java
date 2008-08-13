@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author joaosa & rmalo
@@ -22,12 +21,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EnrollStudentGroupShift extends Service {
 
-    public Boolean run(Integer executionCourseCode, Integer studentGroupCode,
-	    Integer groupPropertiesCode, Integer newShiftCode) throws FenixServiceException,
-	    ExcepcaoPersistencia {
+    public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode)
+	    throws FenixServiceException {
 
-	Grouping grouping = rootDomainObject.readGroupingByOID(
-		groupPropertiesCode);
+	Grouping grouping = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 
 	if (grouping == null) {
 	    throw new ExistingServiceException();

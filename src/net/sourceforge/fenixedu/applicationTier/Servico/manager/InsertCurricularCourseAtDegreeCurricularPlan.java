@@ -16,7 +16,7 @@ import org.apache.commons.collections.Predicate;
 
 public class InsertCurricularCourseAtDegreeCurricularPlan extends Service {
 
-    public void run(InfoCurricularCourseEditor infoCurricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoCurricularCourseEditor infoCurricularCourse) throws FenixServiceException{
 
         Integer degreeCurricularPlanId = infoCurricularCourse.getInfoDegreeCurricularPlan().getIdInternal();
         DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);

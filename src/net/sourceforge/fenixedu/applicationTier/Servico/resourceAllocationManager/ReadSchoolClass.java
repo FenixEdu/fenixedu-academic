@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadSchoolClass extends Service {
 
-	public InfoClass run(InfoClass infoSchoolClass) throws FenixServiceException, ExcepcaoPersistencia {
+	public InfoClass run(InfoClass infoSchoolClass) throws FenixServiceException{
 		InfoClass result = null;
 		SchoolClass schoolClass = rootDomainObject.readSchoolClassByOID(
 				infoSchoolClass.getIdInternal());

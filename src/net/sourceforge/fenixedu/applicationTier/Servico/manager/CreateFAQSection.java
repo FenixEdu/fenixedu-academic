@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class CreateFAQSection extends Service {
 
-    public void run(InfoFAQSection infoFAQSection) throws ExcepcaoPersistencia {
+    public void run(InfoFAQSection infoFAQSection) {
         FAQSection parentFAQSection = null;
         if (infoFAQSection.getParentSection() != null
                 && infoFAQSection.getParentSection().getIdInternal() != null) {

@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.State;
 
 /**
@@ -26,8 +25,7 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class GetCandidatesByID extends Service {
 
-    public InfoMasterDegreeCandidate run(Integer candidateID) throws FenixServiceException,
-	    ExcepcaoPersistencia {
+    public InfoMasterDegreeCandidate run(Integer candidateID) throws FenixServiceException {
 	MasterDegreeCandidate masterDegreeCandidate = null;
 
 	if (candidateID == null) {
@@ -40,8 +38,7 @@ public class GetCandidatesByID extends Service {
 		.newInfoFromDomain(masterDegreeCandidate);
 
 	final ExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
-	final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
-		.newInfoFromDomain(executionDegree);
+	final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
 	infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
 
 	Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();

@@ -34,7 +34,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadDistributedTestMarksToString extends Service {
 
     public String run(Integer executionCourseId, Integer distributedTestId)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
@@ -95,7 +95,7 @@ public class ReadDistributedTestMarksToString extends Service {
     }
 
     public String run(Integer executionCourseId, String[] distributedTestCodes)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         StringBuilder result = new StringBuilder();
         result.append("Número\tNome\t");
 

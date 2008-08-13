@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadGlossaryEntries extends Service {
 
-    public List<InfoGlossaryEntry> run() throws ExcepcaoPersistencia {
+    public List<InfoGlossaryEntry> run() {
         List<InfoGlossaryEntry> result = new ArrayList<InfoGlossaryEntry>();
         
         for (GlossaryEntry glossaryEntry : rootDomainObject.getGlossaryEntrys()) {

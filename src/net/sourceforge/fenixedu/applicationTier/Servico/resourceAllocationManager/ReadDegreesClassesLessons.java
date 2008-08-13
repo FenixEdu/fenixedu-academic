@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadDegreesClassesLessons extends Service {
 
-	public List run(List infoExecutionDegrees, InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
+	public List run(List infoExecutionDegrees, InfoExecutionPeriod infoExecutionPeriod) {
 
 		List infoViewClassScheduleList = new ArrayList();
 

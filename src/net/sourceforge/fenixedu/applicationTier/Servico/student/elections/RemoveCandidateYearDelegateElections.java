@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class RemoveCandidateYearDelegateElections extends Service  {
 	
-	public void run(YearDelegateElection yearDelegateElection, Student student) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(YearDelegateElection yearDelegateElection, Student student) throws FenixServiceException{
 		
 		try {
 			yearDelegateElection.removeCandidates(student);

@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class UnEnrollGroupShift extends Service {
 
     public boolean run(Integer studentGroupCode, Integer groupPropertiesCode, String username)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 
         if (groupProperties == null) {
@@ -76,7 +76,7 @@ public class UnEnrollGroupShift extends Service {
     }
 
     private boolean checkStudentInStudentGroup(Registration registration, StudentGroup studentGroup)
-            throws ExcepcaoPersistencia {
+            {
         boolean found = false;
 
         List studentGroupAttends = studentGroup.getAttends();

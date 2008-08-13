@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadOpenExecutionYears extends Service {
 
-    public List<ExecutionYear> run() throws FenixServiceException, ExcepcaoPersistencia {
+    public List<ExecutionYear> run() throws FenixServiceException{
         return ExecutionYear.readOpenExecutionYears();
     }
 }

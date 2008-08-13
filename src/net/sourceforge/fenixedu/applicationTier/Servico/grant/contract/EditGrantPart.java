@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditGrantPart extends Service {
 
-    public void run(InfoGrantPart infoGrantPart) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoGrantPart infoGrantPart) throws FenixServiceException{
 
         GrantPart grantPart = rootDomainObject.readGrantPartByOID(infoGrantPart.getIdInternal());
         if (grantPart == null) {

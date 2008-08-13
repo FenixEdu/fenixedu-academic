@@ -11,7 +11,7 @@ import org.apache.commons.collections.Predicate;
 
 public class DeleteTestQuestion extends Service {
 
-    public void run(Integer executionCourseId, Integer testId, final Integer questionId) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
+    public void run(Integer executionCourseId, Integer testId, final Integer questionId) throws InvalidArgumentsServiceException {
         Test test = rootDomainObject.readTestByOID(testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();

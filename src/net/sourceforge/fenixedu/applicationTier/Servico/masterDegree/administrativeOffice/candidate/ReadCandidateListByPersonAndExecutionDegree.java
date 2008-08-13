@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.util.State;
 public class ReadCandidateListByPersonAndExecutionDegree extends Service {
 
     public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson,
-            Integer number) throws FenixServiceException, ExcepcaoPersistencia {
+            Integer number) throws FenixServiceException{
 
         final Person person = (Person) rootDomainObject.readPartyByOID(infoPerson.getIdInternal());
         final ExecutionDegree executionDegree = rootDomainObject

@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.util.ProposalState;
  */
 public class ExecutionCourseWaitingAnswer extends Service {
 
-    public boolean run(Integer executionCourseID) throws FenixServiceException, ExcepcaoPersistencia {
+    public boolean run(Integer executionCourseID) throws FenixServiceException{
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();

@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadAllMasterDegrees extends Service {
 
-	public List run(DegreeType degreeType) throws FenixServiceException, ExcepcaoPersistencia {
+	public List run(DegreeType degreeType) throws FenixServiceException{
 		List<Degree> result = Degree.readAllByDegreeType(degreeType);
 
 		if (result == null || result.size() == 0) {

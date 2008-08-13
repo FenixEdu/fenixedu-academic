@@ -19,7 +19,7 @@ public class DefineFinalDegreeWorkCandidacyRequirements extends Service {
     		Integer minimumNumberOfStudents, Integer maximumNumberOfStudents,
     		Integer maximumNumberOfProposalCandidaciesPerGroup, Boolean attributionByTeachers,
     		Boolean allowSimultaneousCoorientationAndCompanion, Integer minimumCompletedCreditsSecondCycle)
-    		throws ExcepcaoPersistencia {
+    		{
 
         if (executionDegreeOID != null) {
 

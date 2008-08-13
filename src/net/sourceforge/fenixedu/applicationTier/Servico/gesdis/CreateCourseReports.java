@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * 
@@ -19,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class CreateCourseReports extends Service {
 
-    public void run(Integer executionPeriodID) throws ExcepcaoPersistencia {
+    public void run(Integer executionPeriodID) {
 	Set<Integer> courseReportsExecutionCoursesIDs = new HashSet<Integer>();
 
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);

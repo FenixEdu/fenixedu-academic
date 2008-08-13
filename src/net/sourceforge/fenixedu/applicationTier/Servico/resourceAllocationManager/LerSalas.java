@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LerSalas extends Service {
 
-    public Object run() throws ExcepcaoPersistencia {
+    public Object run() {
 	final List<InfoRoom> infoSalas = new ArrayList<InfoRoom>();
 	for (final AllocatableSpace room : AllocatableSpace.getAllActiveAllocatableSpacesForEducation()) {
 	    infoSalas.add(InfoRoom.newInfoFromDomain(room));

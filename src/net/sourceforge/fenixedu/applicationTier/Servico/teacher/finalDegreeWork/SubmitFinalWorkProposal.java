@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class SubmitFinalWorkProposal extends Service {
 
-    public void run(InfoProposalEditor infoProposal) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoProposalEditor infoProposal) throws FenixServiceException{
         Integer executionDegreeId = infoProposal.getExecutionDegree().getIdInternal();
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
 

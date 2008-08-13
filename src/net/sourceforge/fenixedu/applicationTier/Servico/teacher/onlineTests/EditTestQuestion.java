@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 public class EditTestQuestion extends Service {
 
     public void run(Integer executionCourseId, Integer testQuestionId, Integer testQuestionOrder, Double testQuestionValue, CorrectionFormula formula)
-            throws ExcepcaoPersistencia, FenixServiceException {
+            throws FenixServiceException {
         TestQuestion testQuestion = rootDomainObject.readTestQuestionByOID(testQuestionId);
         if (testQuestion == null) {
             throw new InvalidArgumentsServiceException();

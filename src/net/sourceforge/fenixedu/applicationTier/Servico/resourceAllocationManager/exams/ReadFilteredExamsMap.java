@@ -31,7 +31,7 @@ public class ReadFilteredExamsMap extends Service {
     }
 
     public InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List<Integer> curricularYears,
-	    InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException, ExcepcaoPersistencia {
+	    InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException{
 
 	InfoExamsMap result = new InfoExamsMap();
 	result.setInfoExecutionDegree(infoExecutionDegree);
@@ -79,7 +79,7 @@ public class ReadFilteredExamsMap extends Service {
     }
 
     private List<InfoExecutionCourse> obtainInfoExecutionCourses(List<Integer> curricularYears,
-	    InfoExecutionPeriod infoExecutionPeriod, ExecutionDegree executionDegree) throws ExcepcaoPersistencia {
+	    InfoExecutionPeriod infoExecutionPeriod, ExecutionDegree executionDegree) {
 	List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>();
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod.getIdInternal());
 	for (Integer curricularYear : curricularYears) {
@@ -104,7 +104,7 @@ public class ReadFilteredExamsMap extends Service {
     }
 
     private List<InfoExam> obtainInfoExams(ExecutionDegree executionDegree, Integer executionPeriodId,
-	    Integer wantedCurricularYear, ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+	    Integer wantedCurricularYear, ExecutionCourse executionCourse) {
 	List<InfoExam> result = new ArrayList<InfoExam>();
 	for (Exam exam : executionCourse.getAssociatedExams()) {
 	    InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear

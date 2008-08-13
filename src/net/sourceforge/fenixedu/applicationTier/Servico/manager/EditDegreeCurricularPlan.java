@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditDegreeCurricularPlan extends Service {
 
-    public void run(InfoDegreeCurricularPlanEditor infoDcp) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoDegreeCurricularPlanEditor infoDcp) throws FenixServiceException{
 
         if (infoDcp.getIdInternal() == null || infoDcp.getName() == null
                 || infoDcp.getInitialDate() == null || infoDcp.getDegreeDuration() == null

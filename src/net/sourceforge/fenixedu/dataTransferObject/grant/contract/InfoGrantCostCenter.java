@@ -41,7 +41,7 @@ public class InfoGrantCostCenter extends InfoGrantPaymentEntity {
     }
 
     public void copyToDomain(InfoGrantCostCenter infoGrantCostCenter, GrantCostCenter grantCostCenter)
-            throws ExcepcaoPersistencia {
+            {
         super.copyToDomain(infoGrantCostCenter, grantCostCenter);
 
         grantCostCenter.setDesignation(infoGrantCostCenter.getDesignation());

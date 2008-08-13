@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadShiftsByDistributedTest extends Service {
 
 	public List<InfoShift> run(Integer executionCourseId, Integer distributedTestId)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException{
 
         final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         final Set<Registration> students = distributedTest != null ? distributedTest.findStudents() : new HashSet<Registration>();

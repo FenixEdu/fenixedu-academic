@@ -17,7 +17,7 @@ public class CreateProject extends Service {
 
     public void run(Integer executionCourseID, String name, Date begin, Date end, String description,
             Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, Integer groupingID)
-            throws ExcepcaoPersistencia, FenixServiceException {
+            throws FenixServiceException {
 
         final ExecutionCourse executionCourse = rootDomainObject
                 .readExecutionCourseByOID(executionCourseID);

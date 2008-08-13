@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public abstract class ReadDomainObjectService extends Service {
 
-	public InfoObject run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
+	public InfoObject run(Integer objectId) throws FenixServiceException{
 		DomainObject domainObject = readDomainObject(objectId);
 		InfoObject infoObject = null;
 

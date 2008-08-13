@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadStudentByUsername extends Service {
     
-    public Registration run(String studentUsername) throws ExcepcaoPersistencia, FenixServiceException {
+    public Registration run(String studentUsername) throws FenixServiceException {
         final Registration registration = Registration.readByUsername(studentUsername);
         if (registration == null) {
             throw new FenixServiceException("error.noStudent");

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteGuideEntryAndPaymentTransactionInManager extends Service {
 
-    public void run(Integer guideEntryID) throws ExcepcaoPersistencia, InvalidChangeServiceException {
+    public void run(Integer guideEntryID) throws InvalidChangeServiceException {
         GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);
 
         if (!guideEntry.canBeDeleted()) {

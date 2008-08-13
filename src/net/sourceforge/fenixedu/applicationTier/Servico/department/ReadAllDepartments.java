@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllDepartments extends Service {
 
-    public List<InfoDepartment> run() throws FenixServiceException, ExcepcaoPersistencia {
+    public List<InfoDepartment> run() throws FenixServiceException{
         final List<InfoDepartment> result = new ArrayList<InfoDepartment>();
         for (final Department department : rootDomainObject.getDepartments()) {
             result.add(InfoDepartment.newInfoFromDomain(department));

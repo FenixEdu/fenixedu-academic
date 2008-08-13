@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
 public class EditUnavailablePeriod extends Service {
 
     public void run(Integer idInternal, DateTime begin, DateTime end, String justification)
-            throws ExcepcaoPersistencia {
+            {
 
         UnavailablePeriod unavailablePeriod = (UnavailablePeriod) RootDomainObject
                 .readDomainObjectByOID(UnavailablePeriod.class, idInternal);

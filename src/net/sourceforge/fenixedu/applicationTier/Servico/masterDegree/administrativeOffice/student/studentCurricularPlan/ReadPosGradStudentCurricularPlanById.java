@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadPosGradStudentCurricularPlanById extends Service {
 
-    public Object run(Integer studentCurricularPlanId) throws ExcepcaoPersistencia {
+    public Object run(Integer studentCurricularPlanId) {
         StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanId);
         return studentCurricularPlan == null ? null : InfoStudentCurricularPlan.newInfoFromDomain(studentCurricularPlan);
     }

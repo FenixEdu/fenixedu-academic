@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadInstitutionWorkTimeByOID extends Service {
 
-    public InstitutionWorkTime run(Integer institutionWorkTimeID) throws ExcepcaoPersistencia{
+    public InstitutionWorkTime run(Integer institutionWorkTimeID) {
         return (InstitutionWorkTime) rootDomainObject.readTeacherServiceItemByOID( institutionWorkTimeID);
     }
 

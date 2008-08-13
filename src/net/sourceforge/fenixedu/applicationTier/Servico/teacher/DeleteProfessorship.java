@@ -20,7 +20,7 @@ import org.apache.commons.collections.Predicate;
 public class DeleteProfessorship extends Service {
 
     public Boolean run(Integer infoExecutionCourseCode, Integer teacherCode)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         Teacher teacher = rootDomainObject.readTeacherByOID(teacherCode);
         ExecutionCourse executionCourse = rootDomainObject

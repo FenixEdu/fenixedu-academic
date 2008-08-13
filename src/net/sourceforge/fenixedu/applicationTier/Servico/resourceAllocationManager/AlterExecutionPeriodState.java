@@ -6,25 +6,23 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 public class AlterExecutionPeriodState extends Service {
 
-    public void run(InfoExecutionPeriod infoExecutionPeriod, PeriodState periodState)
-            throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoExecutionPeriod infoExecutionPeriod, PeriodState periodState) throws FenixServiceException {
 
-        final ExecutionSemester executionSemester = ExecutionYear.readExecutionYearByName(
-                infoExecutionPeriod.getInfoExecutionYear().getYear()).readExecutionPeriodForSemester(
-                infoExecutionPeriod.getSemester());
-        if (executionSemester == null) {
-            throw new InvalidArgumentsServiceException();
-        }
-        if (periodState.getStateCode().equals(PeriodState.CURRENT)) {
-            // Deactivate the current
-            ExecutionSemester.readActualExecutionSemester().setState(new PeriodState(PeriodState.OPEN));
-        }
-        executionSemester.setState(periodState);
+	final ExecutionSemester executionSemester = ExecutionYear.readExecutionYearByName(
+		infoExecutionPeriod.getInfoExecutionYear().getYear()).readExecutionPeriodForSemester(
+		infoExecutionPeriod.getSemester());
+	if (executionSemester == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
+	if (periodState.getStateCode().equals(PeriodState.CURRENT)) {
+	    // Deactivate the current
+	    ExecutionSemester.readActualExecutionSemester().setState(new PeriodState(PeriodState.OPEN));
+	}
+	executionSemester.setState(periodState);
     }
 
 }

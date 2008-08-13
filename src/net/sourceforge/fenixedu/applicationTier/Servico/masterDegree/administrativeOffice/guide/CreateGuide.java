@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.util.State;
 
@@ -34,8 +33,7 @@ import net.sourceforge.fenixedu.util.State;
 public class CreateGuide extends Service {
 
     public InfoGuide run(InfoGuide infoGuide, String othersRemarks, Double othersPrice, String remarks,
-	    GuideState situationOfGuide, String paymentType) throws FenixServiceException,
-	    ExcepcaoPersistencia {
+	    GuideState situationOfGuide, String paymentType) throws FenixServiceException {
 
 	GuideSituation guideSituation = null;
 
@@ -73,12 +71,11 @@ public class CreateGuide extends Service {
 	infoGuideSituation.setDate(calendar.getTime());
 	infoGuideSituation.setSituation(situationOfGuide);
 
-	Person person = (Person) rootDomainObject.readPartyByOID(infoGuide.getInfoPerson()
+	Person person = (Person) rootDomainObject.readPartyByOID(infoGuide.getInfoPerson().getIdInternal());
+	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoGuide.getInfoExecutionDegree()
 		.getIdInternal());
-	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoGuide
-		.getInfoExecutionDegree().getIdInternal());
-	final Party contributor = infoGuide.getInfoContributor() != null ? rootDomainObject
-		.readPartyByOID(infoGuide.getInfoContributor().getIdInternal()) : person;
+	final Party contributor = infoGuide.getInfoContributor() != null ? rootDomainObject.readPartyByOID(infoGuide
+		.getInfoContributor().getIdInternal()) : person;
 
 	Guide guide = new Guide();
 	guide.setExecutionDegree(executionDegree);
@@ -114,8 +111,7 @@ public class CreateGuide extends Service {
 	}
 
 	// Write the New Guide Situation
-	guideSituation = new GuideSituation(situationOfGuide, remarks, calendar.getTime(), guide,
-		new State(State.ACTIVE));
+	guideSituation = new GuideSituation(situationOfGuide, remarks, calendar.getTime(), guide, new State(State.ACTIVE));
 
 	InfoGuide result = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
 	result.setInfoGuideEntries(infoGuide.getInfoGuideEntries());

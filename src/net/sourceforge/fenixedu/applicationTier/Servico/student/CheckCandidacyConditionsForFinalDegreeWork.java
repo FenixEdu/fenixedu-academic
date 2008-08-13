@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
@@ -25,267 +24,270 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Luis Cruz
  */
 public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
 
+    public boolean run(IUserView userView, Integer executionDegreeOID) throws FenixServiceException {
+	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
+	Scheduleing scheduleing = executionDegree.getScheduling();
 
-    public boolean run(IUserView userView, Integer executionDegreeOID) throws ExcepcaoPersistencia,
-            FenixServiceException {
-    	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
-        Scheduleing scheduleing = executionDegree.getScheduling();
+	if (scheduleing == null || scheduleing.getStartOfCandidacyPeriod() == null
+		|| scheduleing.getEndOfCandidacyPeriod() == null) {
+	    throw new CandidacyPeriodNotDefinedException();
+	}
 
-        if (scheduleing == null || scheduleing.getStartOfCandidacyPeriod() == null
-                || scheduleing.getEndOfCandidacyPeriod() == null) {
-            throw new CandidacyPeriodNotDefinedException();
-        }
+	if (!isStudentOfScheduling(userView, scheduleing)) {
+	    throw new CandidacyInOtherExecutionDegreesNotAllowed();
+	}
 
-        if (!isStudentOfScheduling(userView, scheduleing)) {
-            throw new CandidacyInOtherExecutionDegreesNotAllowed();
-        }
+	Calendar now = Calendar.getInstance();
+	if (scheduleing.getStartOfCandidacyPeriod().after(now.getTime())
+		|| scheduleing.getEndOfCandidacyPeriod().before(now.getTime())) {
+	    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	    String start = simpleDateFormat.format(new Date(scheduleing.getStartOfCandidacyPeriod().getTime()));
+	    String end = simpleDateFormat.format(new Date(scheduleing.getEndOfCandidacyPeriod().getTime()));
+	    throw new OutOfCandidacyPeriodException(start + " - " + end);
+	}
 
-        Calendar now = Calendar.getInstance();
-        if (scheduleing.getStartOfCandidacyPeriod().after(now.getTime())
-                || scheduleing.getEndOfCandidacyPeriod().before(now.getTime())) {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-            String start = simpleDateFormat.format(new Date(scheduleing.getStartOfCandidacyPeriod()
-                    .getTime()));
-            String end = simpleDateFormat.format(new Date(scheduleing.getEndOfCandidacyPeriod()
-                    .getTime()));
-            throw new OutOfCandidacyPeriodException(start + " - " + end);
-        }
+	Registration registration = findStudent(userView.getPerson());
 
-        Registration registration = findStudent(userView.getPerson());
+	if (registration == null) {
+	    throw new NoDegreeStudentCurricularPlanFoundException();
+	}
 
-        if (registration == null) {
-            throw new NoDegreeStudentCurricularPlanFoundException();
-        }
+	// if (scheduleing.getMinimumNumberOfCompletedCourses() == null) {
+	// throw new NumberOfNecessaryCompletedCoursesNotSpecifiedException();
+	// }
+	if (scheduleing.getMinimumCompletedCreditsSecondCycle() == null) {
+	    throw new NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException();
+	}
+	final Integer maximumCurricularYearToCountCompletedCourses = scheduleing
+		.getMaximumCurricularYearToCountCompletedCourses();
+	final Integer minimumCompletedCurricularYear = scheduleing.getMinimumCompletedCurricularYear();
+	// final Integer minimumNumberOfCompletedCourses =
+	// scheduleing.getMinimumNumberOfCompletedCourses();
+	final Integer minimumCompletedCreditsSecondCycle = scheduleing.getMinimumCompletedCreditsSecondCycle();
 
-//        if (scheduleing.getMinimumNumberOfCompletedCourses() == null) {
-//            throw new NumberOfNecessaryCompletedCoursesNotSpecifiedException();
-//        }        
-        if (scheduleing.getMinimumCompletedCreditsSecondCycle() == null) {
-            throw new NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException();
-        }
-    	final Integer maximumCurricularYearToCountCompletedCourses = scheduleing.getMaximumCurricularYearToCountCompletedCourses();
-    	final Integer minimumCompletedCurricularYear = scheduleing.getMinimumCompletedCurricularYear();
-//    	final Integer minimumNumberOfCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
-    	final Integer minimumCompletedCreditsSecondCycle = scheduleing.getMinimumCompletedCreditsSecondCycle();
+	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+	final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+	final Collection<DegreeModuleScope> degreesActiveCurricularCourseScopes = degreeCurricularPlan.getDegreeModuleScopes();
+	final StringBuilder notCompletedCurricularCourses = new StringBuilder();
+	final Set<CurricularCourse> notCompletedCurricularCoursesForMinimumCurricularYear = new HashSet<CurricularCourse>();
+	final Set<CurricularCourse> completedCurricularCourses = new HashSet<CurricularCourse>();
+	// int numberCompletedCurricularCourses = 0;
+	for (final DegreeModuleScope degreeModuleScope : degreesActiveCurricularCourseScopes) {
+	    final CurricularCourse curricularCourse = degreeModuleScope.getCurricularCourse();
+	    final boolean isCurricularCourseApproved = (studentCurricularPlan.isBoxStructure() && studentCurricularPlan.getRoot()
+		    .isApproved(curricularCourse))
+		    || studentCurricularPlan.isCurricularCourseApproved(curricularCourse);
 
-    	final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
-    	final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-    	final Collection<DegreeModuleScope> degreesActiveCurricularCourseScopes = degreeCurricularPlan.getDegreeModuleScopes();
-    	final StringBuilder notCompletedCurricularCourses = new StringBuilder();
-    	final Set<CurricularCourse> notCompletedCurricularCoursesForMinimumCurricularYear = new HashSet<CurricularCourse>();
-    	final Set<CurricularCourse> completedCurricularCourses = new HashSet<CurricularCourse>();
-    	//int numberCompletedCurricularCourses = 0;
-		for (final DegreeModuleScope degreeModuleScope : degreesActiveCurricularCourseScopes) {
-			final CurricularCourse curricularCourse = degreeModuleScope.getCurricularCourse();
-			final boolean isCurricularCourseApproved =
-			        (studentCurricularPlan.isBoxStructure() && studentCurricularPlan.getRoot().isApproved(curricularCourse))
-		                || studentCurricularPlan.isCurricularCourseApproved(curricularCourse);
+	    final Integer curricularYear = degreeModuleScope.getCurricularYear();
 
-			final Integer curricularYear = degreeModuleScope.getCurricularYear();
-
-			if (minimumCompletedCurricularYear != null && curricularYear <= minimumCompletedCurricularYear) {
-				if (!isCurricularCourseApproved) {
-					notCompletedCurricularCoursesForMinimumCurricularYear.add(curricularCourse);
-				}
-			}
-
-			if (maximumCurricularYearToCountCompletedCourses == null || curricularYear <= maximumCurricularYearToCountCompletedCourses) {
-				if (isCurricularCourseApproved) {
-					completedCurricularCourses.add(degreeModuleScope.getCurricularCourse());
-					//numberCompletedCurricularCourses++;
-				} else {
-					if (notCompletedCurricularCourses.length() > 0) {
-						notCompletedCurricularCourses.append(", ");
-					}
-					notCompletedCurricularCourses.append(degreeModuleScope.getCurricularCourse().getName());
-				}
-			}
+	    if (minimumCompletedCurricularYear != null && curricularYear <= minimumCompletedCurricularYear) {
+		if (!isCurricularCourseApproved) {
+		    notCompletedCurricularCoursesForMinimumCurricularYear.add(curricularCourse);
 		}
+	    }
 
-		if (!notCompletedCurricularCoursesForMinimumCurricularYear.isEmpty()) {
-			final StringBuilder stringBuilder = new StringBuilder();
-			for (final CurricularCourse curricularCourse : notCompletedCurricularCoursesForMinimumCurricularYear) {
-				if (stringBuilder.length() > 0) {
-					stringBuilder.append(", ");
-				}
-				stringBuilder.append(curricularCourse.getName());
-			}
-			final String[] args = { minimumCompletedCurricularYear.toString(), stringBuilder.toString()};
-			throw new NotCompletedCurricularYearException(null, args);
+	    if (maximumCurricularYearToCountCompletedCourses == null
+		    || curricularYear <= maximumCurricularYearToCountCompletedCourses) {
+		if (isCurricularCourseApproved) {
+		    completedCurricularCourses.add(degreeModuleScope.getCurricularCourse());
+		    // numberCompletedCurricularCourses++;
+		} else {
+		    if (notCompletedCurricularCourses.length() > 0) {
+			notCompletedCurricularCourses.append(", ");
+		    }
+		    notCompletedCurricularCourses.append(degreeModuleScope.getCurricularCourse().getName());
 		}
+	    }
+	}
 
-//		int numberCompletedCurricularCourses = completedCurricularCourses.size();
-//		if (numberCompletedCurricularCourses < minimumNumberOfCompletedCourses) {
-//			final int numberMissingCurricularCourses = minimumNumberOfCompletedCourses - numberCompletedCurricularCourses;
-//			final String[] args = { Integer.toString(numberMissingCurricularCourses), notCompletedCurricularCourses.toString()};
-//			throw new InsufficientCompletedCoursesException(null, args);
-//		}
-
-
-		final Double completedCredits = studentCurricularPlan.getSecondCycle().getAprovedEctsCredits();
-		if (minimumCompletedCreditsSecondCycle > completedCredits) {
-		    final String[] args = { completedCredits.toString(), minimumCompletedCreditsSecondCycle.toString()};
-		    throw new InsufficientCompletedCreditsInSecondCycleException(null, args);
+	if (!notCompletedCurricularCoursesForMinimumCurricularYear.isEmpty()) {
+	    final StringBuilder stringBuilder = new StringBuilder();
+	    for (final CurricularCourse curricularCourse : notCompletedCurricularCoursesForMinimumCurricularYear) {
+		if (stringBuilder.length() > 0) {
+		    stringBuilder.append(", ");
 		}
-        return true;
+		stringBuilder.append(curricularCourse.getName());
+	    }
+	    final String[] args = { minimumCompletedCurricularYear.toString(), stringBuilder.toString() };
+	    throw new NotCompletedCurricularYearException(null, args);
+	}
+
+	// int numberCompletedCurricularCourses =
+	// completedCurricularCourses.size();
+	// if (numberCompletedCurricularCourses <
+	// minimumNumberOfCompletedCourses) {
+	// final int numberMissingCurricularCourses =
+	// minimumNumberOfCompletedCourses - numberCompletedCurricularCourses;
+	// final String[] args = {
+	// Integer.toString(numberMissingCurricularCourses),
+	// notCompletedCurricularCourses.toString()};
+	// throw new InsufficientCompletedCoursesException(null, args);
+	// }
+
+	final Double completedCredits = studentCurricularPlan.getSecondCycle().getAprovedEctsCredits();
+	if (minimumCompletedCreditsSecondCycle > completedCredits) {
+	    final String[] args = { completedCredits.toString(), minimumCompletedCreditsSecondCycle.toString() };
+	    throw new InsufficientCompletedCreditsInSecondCycleException(null, args);
+	}
+	return true;
     }
 
     private boolean isStudentOfScheduling(final IUserView userView, final Scheduleing scheduleing) {
-        for (final ExecutionDegree otherExecutionDegree : scheduleing.getExecutionDegreesSet()) {
-            final DegreeCurricularPlan degreeCurricularPlan = otherExecutionDegree.getDegreeCurricularPlan();
-            final Degree degree = degreeCurricularPlan.getDegree();
-            final Student student = userView.getPerson().getStudent();
-            for (final Registration registration : student.getRegistrationsSet()) {
-                for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-                    if (studentCurricularPlan.getDegree() == degree) {
-                        return true;
-                    } else {
-                	final CurriculumGroup curriculumGroup = studentCurricularPlan.getSecondCycle();
-                	if (curriculumGroup != null && curriculumGroup.getDegreeCurricularPlanOfDegreeModule().getDegree() == degree) {
-                	    return true;
-                	}
-                    }
-                }
-            }
-        }
-        return false;
+	for (final ExecutionDegree otherExecutionDegree : scheduleing.getExecutionDegreesSet()) {
+	    final DegreeCurricularPlan degreeCurricularPlan = otherExecutionDegree.getDegreeCurricularPlan();
+	    final Degree degree = degreeCurricularPlan.getDegree();
+	    final Student student = userView.getPerson().getStudent();
+	    for (final Registration registration : student.getRegistrationsSet()) {
+		for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+		    if (studentCurricularPlan.getDegree() == degree) {
+			return true;
+		    } else {
+			final CurriculumGroup curriculumGroup = studentCurricularPlan.getSecondCycle();
+			if (curriculumGroup != null
+				&& curriculumGroup.getDegreeCurricularPlanOfDegreeModule().getDegree() == degree) {
+			    return true;
+			}
+		    }
+		}
+	    }
+	}
+	return false;
     }
 
     private Registration findStudent(final Person person) {
-    	if (person != null) {
-    	    for (final Registration registration : person.getStudent().getRegistrationsSet()) {
-    		if (registration.getActiveStudentCurricularPlan() != null) {
-    		    return registration;
-    		}
-    	    }
-    	}
+	if (person != null) {
+	    for (final Registration registration : person.getStudent().getRegistrationsSet()) {
+		if (registration.getActiveStudentCurricularPlan() != null) {
+		    return registration;
+		}
+	    }
+	}
 	return null;
     }
 
     public class CandidacyInOtherExecutionDegreesNotAllowed extends FenixServiceException {
-        public CandidacyInOtherExecutionDegreesNotAllowed() {
-            super();
-        }
+	public CandidacyInOtherExecutionDegreesNotAllowed() {
+	    super();
+	}
     }
 
-	public class CandidacyPeriodNotDefinedException extends FenixServiceException {
+    public class CandidacyPeriodNotDefinedException extends FenixServiceException {
 
-        public CandidacyPeriodNotDefinedException() {
-            super();
-        }
+	public CandidacyPeriodNotDefinedException() {
+	    super();
+	}
 
-        public CandidacyPeriodNotDefinedException(int errorType) {
-            super(errorType);
-        }
+	public CandidacyPeriodNotDefinedException(int errorType) {
+	    super(errorType);
+	}
 
-        public CandidacyPeriodNotDefinedException(String s) {
-            super(s);
-        }
+	public CandidacyPeriodNotDefinedException(String s) {
+	    super(s);
+	}
 
-        public CandidacyPeriodNotDefinedException(Throwable cause) {
-            super(cause);
-        }
+	public CandidacyPeriodNotDefinedException(Throwable cause) {
+	    super(cause);
+	}
 
-        public CandidacyPeriodNotDefinedException(String message, Throwable cause) {
-            super(message, cause);
-        }
+	public CandidacyPeriodNotDefinedException(String message, Throwable cause) {
+	    super(message, cause);
+	}
 
     }
 
     public class OutOfCandidacyPeriodException extends FenixServiceException {
 
-        public OutOfCandidacyPeriodException() {
-            super();
-        }
+	public OutOfCandidacyPeriodException() {
+	    super();
+	}
 
-        public OutOfCandidacyPeriodException(int errorType) {
-            super(errorType);
-        }
+	public OutOfCandidacyPeriodException(int errorType) {
+	    super(errorType);
+	}
 
-        public OutOfCandidacyPeriodException(String s) {
-            super(s);
-        }
+	public OutOfCandidacyPeriodException(String s) {
+	    super(s);
+	}
 
-        public OutOfCandidacyPeriodException(Throwable cause) {
-            super(cause);
-        }
+	public OutOfCandidacyPeriodException(Throwable cause) {
+	    super(cause);
+	}
 
-        public OutOfCandidacyPeriodException(String message, Throwable cause) {
-            super(message, cause);
-        }
+	public OutOfCandidacyPeriodException(String message, Throwable cause) {
+	    super(message, cause);
+	}
 
     }
 
     public class NotCompletedCurricularYearException extends FenixServiceException {
-        public NotCompletedCurricularYearException(String s, String[] args) {
-            super(s, args);
-        }
+	public NotCompletedCurricularYearException(String s, String[] args) {
+	    super(s, args);
+	}
     }
 
     public class InsufficientCompletedCreditsInSecondCycleException extends FenixServiceException {
-        public InsufficientCompletedCreditsInSecondCycleException(String s, String[] args) {
-            super(s, args);
-        }
+	public InsufficientCompletedCreditsInSecondCycleException(String s, String[] args) {
+	    super(s, args);
+	}
     }
 
     public class InsufficientCompletedCoursesException extends FenixServiceException {
-        public InsufficientCompletedCoursesException(String s, String[] args) {
-            super(s, args);
-        }
+	public InsufficientCompletedCoursesException(String s, String[] args) {
+	    super(s, args);
+	}
     }
 
     public class NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException extends FenixServiceException {
 
-        public NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException() {
-            super();
-        }
+	public NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException() {
+	    super();
+	}
 
-        public NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException(int errorType) {
-            super(errorType);
-        }
+	public NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException(int errorType) {
+	    super(errorType);
+	}
 
-        public NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException(String s) {
-            super(s);
-        }
+	public NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException(String s) {
+	    super(s);
+	}
 
-        public NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException(Throwable cause) {
-            super(cause);
-        }
+	public NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException(Throwable cause) {
+	    super(cause);
+	}
 
-        public NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException(String message, Throwable cause) {
-            super(message, cause);
-        }
+	public NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException(String message, Throwable cause) {
+	    super(message, cause);
+	}
 
     }
 
     public class NumberOfNecessaryCompletedCoursesNotSpecifiedException extends FenixServiceException {
 
-        public NumberOfNecessaryCompletedCoursesNotSpecifiedException() {
-            super();
-        }
+	public NumberOfNecessaryCompletedCoursesNotSpecifiedException() {
+	    super();
+	}
 
-        public NumberOfNecessaryCompletedCoursesNotSpecifiedException(int errorType) {
-            super(errorType);
-        }
+	public NumberOfNecessaryCompletedCoursesNotSpecifiedException(int errorType) {
+	    super(errorType);
+	}
 
-        public NumberOfNecessaryCompletedCoursesNotSpecifiedException(String s) {
-            super(s);
-        }
+	public NumberOfNecessaryCompletedCoursesNotSpecifiedException(String s) {
+	    super(s);
+	}
 
-        public NumberOfNecessaryCompletedCoursesNotSpecifiedException(Throwable cause) {
-            super(cause);
-        }
+	public NumberOfNecessaryCompletedCoursesNotSpecifiedException(Throwable cause) {
+	    super(cause);
+	}
 
-        public NumberOfNecessaryCompletedCoursesNotSpecifiedException(String message, Throwable cause) {
-            super(message, cause);
-        }
+	public NumberOfNecessaryCompletedCoursesNotSpecifiedException(String message, Throwable cause) {
+	    super(message, cause);
+	}
 
     }
 

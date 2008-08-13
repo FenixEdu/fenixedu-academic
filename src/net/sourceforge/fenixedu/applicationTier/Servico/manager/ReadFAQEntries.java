@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadFAQEntries extends Service {
 
-    public Collection run() throws ExcepcaoPersistencia {
+    public Collection run() {
         List<InfoFAQEntry> result = new ArrayList<InfoFAQEntry>();
         
         for (FAQEntry faqEntry : rootDomainObject.getFAQEntrys()) {

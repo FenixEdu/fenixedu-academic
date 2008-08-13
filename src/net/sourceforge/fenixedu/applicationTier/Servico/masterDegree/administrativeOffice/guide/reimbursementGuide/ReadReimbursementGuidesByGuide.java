@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadReimbursementGuidesByGuide extends Service {
 
-    public List run(Integer guideId) throws ExcepcaoPersistencia {
+    public List run(Integer guideId) {
         List<InfoReimbursementGuide> result = new ArrayList<InfoReimbursementGuide>();
 
         Guide guide = rootDomainObject.readGuideByOID(guideId);

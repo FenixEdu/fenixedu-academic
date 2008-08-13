@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadGratuitySituationByExecutionDegreeIDAndStudentID extends Service {
 
     public InfoGratuitySituation run(Integer executionDegreeID, Integer studentID)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         InfoGratuitySituation infoGratuitySituation = null;
 

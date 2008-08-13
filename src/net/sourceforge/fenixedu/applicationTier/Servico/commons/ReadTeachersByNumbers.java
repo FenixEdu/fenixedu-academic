@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadTeachersByNumbers extends Service {
 
-    public Collection<InfoTeacher> run(Collection<Integer> teacherNumbers) throws ExcepcaoPersistencia {
+    public Collection<InfoTeacher> run(Collection<Integer> teacherNumbers) {
         Collection<InfoTeacher> infoTeachers = new ArrayList(teacherNumbers.size());
         Collection<Teacher> teachers = Teacher.readByNumbers(teacherNumbers);
 

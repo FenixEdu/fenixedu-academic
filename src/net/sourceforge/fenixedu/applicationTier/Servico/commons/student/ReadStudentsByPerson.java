@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadStudentsByPerson extends Service {
 
-    public List run(InfoPerson infoPerson) throws ExcepcaoPersistencia {
+    public List run(InfoPerson infoPerson) {
         final List<InfoStudent> result = new ArrayList<InfoStudent>();
         
         Person person = (Person) rootDomainObject.readPartyByOID(infoPerson.getIdInternal());

@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCode extends Service {
 
     public List run(Integer executionPeriodId, Integer degreeId, Integer curricularYear, String courseCode)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException{
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 
 	Degree degree = rootDomainObject.readDegreeByOID(degreeId);

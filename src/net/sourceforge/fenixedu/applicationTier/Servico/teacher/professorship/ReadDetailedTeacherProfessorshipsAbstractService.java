@@ -84,7 +84,7 @@ public class ReadDetailedTeacherProfessorshipsAbstractService extends Service {
         return detailedProfessorshipList;
     }
 
-    protected Teacher readTeacher(Integer teacherId) throws NotFoundTeacher, ExcepcaoPersistencia {
+    protected Teacher readTeacher(Integer teacherId) throws NotFoundTeacher{
         final Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
         if (teacher == null) {
             throw new NotFoundTeacher();

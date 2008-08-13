@@ -77,7 +77,7 @@ public class GroupCheckService extends Service {
          * user=ISTnnnn;role=ROLE;type=SECTION;unit=IST.<TheUnit>{.<SubUnit>}[;year=<TheYear>][;semester=<TheSemester>]
          * 
          */
-    public Boolean run(String query) throws FenixServiceException, ExcepcaoPersistencia {
+    public Boolean run(String query) throws FenixServiceException{
 
 	GroupCheckQuery groupCheckQuery = parseQuery(query);
 
@@ -137,7 +137,7 @@ public class GroupCheckService extends Service {
          * @throws ExcepcaoPersistencia
          */
     private Boolean checkExecutionCourseGroup(Person person, GroupCheckQuery groupCheckQuery)
-	    throws NonExistingServiceException, ExcepcaoPersistencia {
+	    throws NonExistingServiceException{
 	String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
 
 	if (groupCheckQuery.roleType != RoleType.TEACHER && groupCheckQuery.roleType != RoleType.STUDENT) {
@@ -190,7 +190,7 @@ public class GroupCheckService extends Service {
          * @throws ExcepcaoPersistencia
          */
     private Boolean checkCurricularCourseGroup(Person person, GroupCheckQuery groupCheckQuery)
-	    throws NonExistingServiceException, ExcepcaoPersistencia {
+	    throws NonExistingServiceException{
 	final String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
 
 	if (groupCheckQuery.roleType != RoleType.STUDENT) {
@@ -230,7 +230,7 @@ public class GroupCheckService extends Service {
          * @throws FenixServiceException
          */
     private Boolean checkDegreeGroup(Person person, GroupCheckQuery groupCheckQuery)
-	    throws ExcepcaoPersistencia, NonExistingServiceException {
+	    throws NonExistingServiceException {
 	String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
 
 	if (groupCheckQuery.roleType != RoleType.TEACHER && groupCheckQuery.roleType != RoleType.STUDENT) {
@@ -250,7 +250,7 @@ public class GroupCheckService extends Service {
 
     }
 
-    private Degree getDegree(String[] unitAcronyms) throws ExcepcaoPersistencia,
+    private Degree getDegree(String[] unitAcronyms) throws
 	    NonExistingServiceException {
 	Unit unit = getUnit(unitAcronyms, 3);
 
@@ -262,7 +262,7 @@ public class GroupCheckService extends Service {
 	return degree;
     }
 
-    private Department getDepartment(String[] unitAcronyms) throws ExcepcaoPersistencia,
+    private Department getDepartment(String[] unitAcronyms) throws
 	    NonExistingServiceException {
 	final Unit unit = getUnit(unitAcronyms, 2);
 	if (!unit.isDepartmentUnit()) {
@@ -272,7 +272,7 @@ public class GroupCheckService extends Service {
 	return unit.getDepartment();
     }
 
-    private Unit getUnit(String[] unitAcronyms, int maxIndex) throws ExcepcaoPersistencia,
+    private Unit getUnit(String[] unitAcronyms, int maxIndex) throws
 	    NonExistingServiceException {
 	Unit unit = UnitUtils.readInstitutionUnit();
 	if (unit == null || StringUtils.isEmpty(unit.getAcronym())
@@ -303,7 +303,7 @@ public class GroupCheckService extends Service {
          * @throws FenixServiceException
          */
     private Boolean checkDepartmentGroup(Person person, GroupCheckQuery groupCheckQuery)
-	    throws ExcepcaoPersistencia, NonExistingServiceException {
+	    throws NonExistingServiceException {
 
 	final String[] unitAcronyms = groupCheckQuery.unitFullPath.split("\\.");
 	if (groupCheckQuery.roleType != RoleType.TEACHER && groupCheckQuery.roleType != RoleType.STUDENT

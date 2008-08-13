@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionCoursesByTeacherResponsibility extends Service {
 
-    public List run(Integer teacherNumber) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer teacherNumber) throws FenixServiceException{
 
         final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
        

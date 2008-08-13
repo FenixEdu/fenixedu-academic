@@ -22,7 +22,7 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadOldIquiriesSummaryByDegreeID extends Service {
 
-	public List run(Integer degreeID) throws FenixServiceException, ExcepcaoPersistencia {
+	public List run(Integer degreeID) throws FenixServiceException{
 		Degree degree = rootDomainObject.readDegreeByOID(degreeID);
 
 		if (degree == null) {

@@ -30,7 +30,7 @@ import org.apache.commons.collections.Transformer;
 
 public class ReadAllRoomsExamsMap extends Service {
 
-    public List run(InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
+    public List run(InfoExecutionPeriod infoExecutionPeriod) {
 
         // Object to be returned
         List<InfoRoomExamsMap> infoRoomExamMapList = new ArrayList<InfoRoomExamsMap>();

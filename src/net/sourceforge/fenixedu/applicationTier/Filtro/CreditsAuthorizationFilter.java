@@ -52,7 +52,7 @@ public class CreditsAuthorizationFilter extends Filtro {
 
     }
 
-    private Teacher readTeacher(Object object) throws ExcepcaoPersistencia {
+    private Teacher readTeacher(Object object) {
 	Integer teacherOID = null;
 	if (object instanceof InfoTeacher) {
 	    teacherOID = ((InfoTeacher) object).getIdInternal();

@@ -25,7 +25,7 @@ import org.apache.commons.collections.CollectionUtils;
 
 public class ReadRoomsWithNoExamsInDayAndBeginning extends Service {
 
-    public List run(Calendar day, Calendar beginning) throws ExcepcaoPersistencia {
+    public List run(Calendar day, Calendar beginning) {
         List exams = Exam.getAllByDate(day, beginning);
         Collection<AllocatableSpace> allRooms = AllocatableSpace.getAllActiveAllocatableSpacesForEducation();
 

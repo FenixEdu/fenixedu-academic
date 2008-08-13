@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditExecutionDegreePeriods extends Service {
 
-    public void run(InfoExecutionDegreeEditor infoExecutionDegree) throws ExcepcaoPersistencia {
+    public void run(InfoExecutionDegreeEditor infoExecutionDegree) {
 
         final ExecutionDegree oldExecutionDegree = rootDomainObject.readExecutionDegreeByOID(infoExecutionDegree.getIdInternal());
 
@@ -31,7 +31,7 @@ public class EditExecutionDegreePeriods extends Service {
     }
 
     // retorna o primeiro period do executiondegree
-    private OccupationPeriod setCompositePeriod(InfoPeriod infoPeriod) throws ExcepcaoPersistencia {
+    private OccupationPeriod setCompositePeriod(InfoPeriod infoPeriod) {
         List<InfoPeriod> infoPeriodList = new ArrayList<InfoPeriod>();
 
         infoPeriodList.add(infoPeriod);

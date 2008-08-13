@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan extends Service {
 
     public InfoMasterDegreeThesisDataVersion run(InfoStudentCurricularPlan infoStudentCurricularPlan)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
         StudentCurricularPlan studentCurricularPlan = rootDomainObject

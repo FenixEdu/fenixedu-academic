@@ -106,7 +106,7 @@ public class InfoGrantPart extends InfoObject {
     }
 
     public void copyToDomain(InfoGrantPart infoGrantPart, GrantPart grantPart)
-            throws ExcepcaoPersistencia {
+            {
         super.copyToDomain(infoGrantPart, grantPart);
 
         grantPart.setPercentage(infoGrantPart.getPercentage());

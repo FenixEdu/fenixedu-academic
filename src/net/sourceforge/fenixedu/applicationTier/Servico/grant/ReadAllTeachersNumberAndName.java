@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllTeachersNumberAndName extends Service {
 
-    public List run() throws FenixServiceException, ExcepcaoPersistencia {
+    public List run() throws FenixServiceException{
         final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
 
         final Collection<Teacher> teachers = rootDomainObject.getTeachers();

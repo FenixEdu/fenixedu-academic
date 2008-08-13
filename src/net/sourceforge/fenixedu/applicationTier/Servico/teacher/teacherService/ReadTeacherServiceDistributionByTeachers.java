@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadTeacherServiceDistributionByTeachers extends Service {
 
-    public List run(Integer departmentId, List<Integer> executionPeriodsIDs) throws FenixServiceException, ExcepcaoPersistencia,
+    public List run(Integer departmentId, List<Integer> executionPeriodsIDs) throws FenixServiceException,
 	    ParseException {
 
 	final List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();

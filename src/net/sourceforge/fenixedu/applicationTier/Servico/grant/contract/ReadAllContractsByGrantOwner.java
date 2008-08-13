@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllContractsByGrantOwner extends Service {
 
-    public List run(Integer grantOwnerId) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer grantOwnerId) throws FenixServiceException{
 
         final GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(grantOwnerId);
         if (grantOwner == null) {

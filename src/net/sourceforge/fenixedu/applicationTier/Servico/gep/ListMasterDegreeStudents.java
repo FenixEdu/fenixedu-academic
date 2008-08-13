@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
  */
 public class ListMasterDegreeStudents extends Service {
 
-    public Collection run(String executionYearName) throws ExcepcaoPersistencia {
+    public Collection run(String executionYearName) {
 	final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
 
 	final Collection<InfoStudentCurricularPlanWithFirstTimeEnrolment> infoStudentCurricularPlans = new ArrayList();

@@ -26,7 +26,7 @@ public class ExecutionCourseSiteComponentService extends Service {
     public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent,
             Integer infoSiteCode, Integer infoExecutionCourseCode, Integer sectionIndex,
             Integer curricularCourseId) throws FenixServiceException,
-            NonExistingAssociatedCurricularCoursesServiceException, ExcepcaoPersistencia {
+            NonExistingAssociatedCurricularCoursesServiceException{
         final ExecutionCourseSite site;
         if (infoSiteCode != null)
             site = ExecutionCourseSite.readExecutionCourseSiteByOID(infoSiteCode);

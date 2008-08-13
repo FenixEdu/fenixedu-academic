@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditGrouping extends Service {
 
     public List run(Integer executionCourseID, InfoGrouping infoGroupProperties)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         final Grouping grouping = rootDomainObject.readGroupingByOID(
                 infoGroupProperties.getIdInternal());
         if (grouping == null) {

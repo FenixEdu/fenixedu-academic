@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadStudentById extends Service {
 
-	public Object run(Integer id) throws FenixServiceException, ExcepcaoPersistencia {
+	public Object run(Integer id) throws FenixServiceException{
 		InfoStudent infoStudent = null;
 
 		Registration registration = rootDomainObject.readRegistrationByOID(id);

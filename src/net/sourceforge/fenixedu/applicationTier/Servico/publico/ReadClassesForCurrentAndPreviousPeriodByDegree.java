@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadClassesForCurrentAndPreviousPeriodByDegree extends Service {
 
-    public Object run(Integer degreeOID) throws ExcepcaoPersistencia {
+    public Object run(Integer degreeOID) {
         ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
         ExecutionSemester previouseExecutionPeriod = currentExecutionPeriod
                 .getPreviousExecutionPeriod();

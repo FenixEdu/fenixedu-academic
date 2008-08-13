@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadStudentDistributedTest extends Service {
     public List<StudentTestQuestion> run(Integer executionCourseId, Integer distributedTestId,
-            Integer studentId, String path) throws FenixServiceException, ExcepcaoPersistencia {
+            Integer studentId, String path) throws FenixServiceException{
 
         List<StudentTestQuestion> studentTestQuestionList = new ArrayList<StudentTestQuestion>();
         Registration registration = rootDomainObject.readRegistrationByOID(studentId);

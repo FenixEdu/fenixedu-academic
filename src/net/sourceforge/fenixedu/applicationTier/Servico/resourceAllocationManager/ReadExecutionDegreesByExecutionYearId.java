@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionDegreesByExecutionYearId extends Service {
 
-    public List run(Integer executionYearId) throws ExcepcaoPersistencia {
+    public List run(Integer executionYearId) {
 
         List<InfoExecutionDegree> infoExecutionDegreeList = null;
 

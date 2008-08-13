@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan extends Service {
 
-    public List run(Integer executionDegreeOID) throws ExcepcaoPersistencia {
+    public List run(Integer executionDegreeOID) {
 	final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);

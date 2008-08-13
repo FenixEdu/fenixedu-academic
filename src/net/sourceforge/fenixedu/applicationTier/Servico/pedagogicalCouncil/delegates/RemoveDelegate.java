@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class RemoveDelegate extends Service {
 	
-	public void run(Student student) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(Student student) throws FenixServiceException{
 		this.run(student, FunctionType.DELEGATE_OF_YEAR);
 	}
 	
-	public void run(Student student, FunctionType delegateFunctionType) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(Student student, FunctionType delegateFunctionType) throws FenixServiceException{
 		final DegreeUnit degreeUnit = student.getLastActiveRegistration().getDegree().getUnit();
 		
 		if(delegateFunctionType.equals(FunctionType.DELEGATE_OF_YEAR)) {
@@ -41,7 +41,7 @@ public class RemoveDelegate extends Service {
 		}
 	}
 	
-	public void run(Person person, Function delegateFunction) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(Person person, Function delegateFunction) throws FenixServiceException{
 		PedagogicalCouncilUnit unit = (PedagogicalCouncilUnit)delegateFunction.getUnit();
 
 		unit.removeActiveDelegatePersonFunctionFromPersonByFunction(person, delegateFunction);

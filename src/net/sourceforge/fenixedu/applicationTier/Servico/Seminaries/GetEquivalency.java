@@ -27,7 +27,7 @@ import org.apache.commons.collections.Transformer;
  */
 public class GetEquivalency extends Service {
 
-	public InfoEquivalency run(Integer equivalencyID) throws BDException, ExcepcaoPersistencia {
+	public InfoEquivalency run(Integer equivalencyID) throws BDException{
 		InfoEquivalency infoEquivalency = null;
 
 		CourseEquivalency equivalency = rootDomainObject.readCourseEquivalencyByOID(equivalencyID);

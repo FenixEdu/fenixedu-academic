@@ -23,45 +23,46 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOra
  */
 public class RemoveProjectAccess extends Service {
 
-    public void run(String username, String costCenter, String personUsername, Integer projectCode, String userNumber) throws ExcepcaoPersistencia {
-        Person person = Person.readPersonByUsername(personUsername);
+    public void run(String username, String costCenter, String personUsername, Integer projectCode, String userNumber)
+	    throws ExcepcaoPersistencia {
+	Person person = Person.readPersonByUsername(personUsername);
 
-        RoleType roleType = RoleType.PROJECTS_MANAGER;
-        Boolean isCostCenter = false;
-        if (costCenter != null && !costCenter.equals("")) {
-            roleType = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
-            isCostCenter = true;
-        }
+	RoleType roleType = RoleType.PROJECTS_MANAGER;
+	Boolean isCostCenter = false;
+	if (costCenter != null && !costCenter.equals("")) {
+	    roleType = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
+	    isCostCenter = true;
+	}
 
-        List<ProjectAccess> projectAccesses = ProjectAccess.getAllByPersonAndCostCenter(person, isCostCenter, true);
-        
-        if (projectAccesses.size() == 1) {
-            IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getProjectDBInstance();
-            if (persistentSupportOracle.getIPersistentProject().countUserProject(getUserNumber(person)) == 0) {
-                Iterator iter = person.getPersonRolesIterator();
-                while (iter.hasNext()) {
-                    Role role = (Role) iter.next();
-                    if (role.getRoleType().equals(roleType)) {
-                        iter.remove();
-                    }                    
-                }
-            }
-        }
-        
-        ProjectAccess projectAccess = ProjectAccess.getByPersonAndProject(person, projectCode);
-        projectAccess.delete();
+	List<ProjectAccess> projectAccesses = ProjectAccess.getAllByPersonAndCostCenter(person, isCostCenter, true);
+
+	if (projectAccesses.size() == 1) {
+	    IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getProjectDBInstance();
+	    if (persistentSupportOracle.getIPersistentProject().countUserProject(getUserNumber(person)) == 0) {
+		Iterator iter = person.getPersonRolesIterator();
+		while (iter.hasNext()) {
+		    Role role = (Role) iter.next();
+		    if (role.getRoleType().equals(roleType)) {
+			iter.remove();
+		    }
+		}
+	    }
+	}
+
+	ProjectAccess projectAccess = ProjectAccess.getByPersonAndProject(person, projectCode);
+	projectAccess.delete();
     }
 
-    private Integer getUserNumber(Person person) throws ExcepcaoPersistencia {
-        Integer userNumber = null;
-        Teacher teacher = person.getTeacher();
-        if (teacher != null)
-            userNumber = teacher.getTeacherNumber();
-        else {
-            Employee employee = person.getEmployee();
-            if (employee != null)
-                userNumber = employee.getEmployeeNumber();
-        }
-        return userNumber;
+    private Integer getUserNumber(Person person) {
+	Integer userNumber = null;
+	Teacher teacher = person.getTeacher();
+	if (teacher != null)
+	    userNumber = teacher.getTeacherNumber();
+	else {
+	    Employee employee = person.getEmployee();
+	    if (employee != null)
+		userNumber = employee.getEmployeeNumber();
+	}
+	return userNumber;
     }
 }

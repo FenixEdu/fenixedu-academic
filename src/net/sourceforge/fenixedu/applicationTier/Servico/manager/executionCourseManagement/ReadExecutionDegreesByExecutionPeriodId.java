@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionDegreesByExecutionPeriodId extends Service {
 
-    public List run(Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer executionPeriodId) throws FenixServiceException{
 	if (executionPeriodId == null) {
 	    throw new FenixServiceException("nullId");
 	}

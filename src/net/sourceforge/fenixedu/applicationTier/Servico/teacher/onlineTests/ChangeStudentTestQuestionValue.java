@@ -24,14 +24,13 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ChangeStudentTestQuestionValue extends Service {
     public void run(Integer executionCourseId, Integer distributedTestId, Double newValue, Integer questionId, Integer studentId,
-	    TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, ExcepcaoPersistencia {
+	    TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
 
 	DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
 	Question question = distributedTest.findQuestionByOID(questionId);
@@ -80,7 +79,7 @@ public class ChangeStudentTestQuestionValue extends Service {
 	}
     }
 
-    private String getNewStudentMark(DistributedTest dt, Registration s) throws ExcepcaoPersistencia {
+    private String getNewStudentMark(DistributedTest dt, Registration s) {
 	double totalMark = 0;
 	Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(s, dt);
 	for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {

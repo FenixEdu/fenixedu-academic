@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadBranch extends Service {
 
-    public InfoBranch run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoBranch run(Integer idInternal) throws FenixServiceException{
 		Branch branch = rootDomainObject.readBranchByOID(idInternal);
         if (branch == null) {
             throw new NonExistingServiceException();

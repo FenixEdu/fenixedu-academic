@@ -19,14 +19,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadCourseHistoric extends Service {
 
-	public List run(Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
+	public List run(Integer executionCourseId) throws FenixServiceException{
 		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 		Integer semester = executionCourse.getExecutionPeriod().getSemester();
 		List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
 		return getInfoSiteCoursesHistoric(executionCourse, curricularCourses, semester);
 	}
 
-	private List<InfoSiteCourseHistoric> getInfoSiteCoursesHistoric(ExecutionCourse executionCourse, List<CurricularCourse> curricularCourses, Integer semester) throws ExcepcaoPersistencia {
+	private List<InfoSiteCourseHistoric> getInfoSiteCoursesHistoric(ExecutionCourse executionCourse, List<CurricularCourse> curricularCourses, Integer semester) {
 		List<InfoSiteCourseHistoric> result = new ArrayList<InfoSiteCourseHistoric>();
 		
         for (CurricularCourse curricularCourse : curricularCourses) {
@@ -40,7 +40,7 @@ public class ReadCourseHistoric extends Service {
         return result;
 	}
 
-	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(final ExecutionYear executionYear, CurricularCourse curricularCourse, Integer semester) throws ExcepcaoPersistencia {
+	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(final ExecutionYear executionYear, CurricularCourse curricularCourse, Integer semester) {
 		InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();
 
 		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);

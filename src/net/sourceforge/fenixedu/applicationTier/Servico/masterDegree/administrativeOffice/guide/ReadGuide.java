@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadGuide extends Service {
 
-	public InfoGuide run(Integer guideId) throws FenixServiceException, ExcepcaoPersistencia {
+	public InfoGuide run(Integer guideId) throws FenixServiceException{
 		Guide guide;
 		InfoGuide infoGuide = null;
 		guide = rootDomainObject.readGuideByOID(guideId);

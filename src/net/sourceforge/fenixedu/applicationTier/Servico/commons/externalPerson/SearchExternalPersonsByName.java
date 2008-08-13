@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class SearchExternalPersonsByName extends Service {
 
-    public List run(String name) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(String name) throws FenixServiceException{
         List infoExternalPersons = new ArrayList();
         List<ExternalContract> externalPersons = ExternalContract.readByPersonName(name);
 

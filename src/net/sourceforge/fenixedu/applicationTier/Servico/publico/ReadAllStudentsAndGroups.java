@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -30,68 +29,64 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class ReadAllStudentsAndGroups extends Service {
 
-    public InfoSiteStudentsAndGroups run(Integer groupingId) throws FenixServiceException,
-            ExcepcaoPersistencia {
-        InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
+    public InfoSiteStudentsAndGroups run(Integer groupingId) throws FenixServiceException {
+	InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
-        Grouping grouping = rootDomainObject.readGroupingByOID(groupingId);
+	Grouping grouping = rootDomainObject.readGroupingByOID(groupingId);
 
-        if (grouping == null) {
-            throw new ExistingServiceException();
-        }
+	if (grouping == null) {
+	    throw new ExistingServiceException();
+	}
 
-        List infoSiteStudentsAndGroupsList = new ArrayList();
-        List studentGroups = getAllStudentGroups(grouping);
-        Iterator iterStudentGroups = studentGroups.iterator();
-        while (iterStudentGroups.hasNext()) {
+	List infoSiteStudentsAndGroupsList = new ArrayList();
+	List studentGroups = getAllStudentGroups(grouping);
+	Iterator iterStudentGroups = studentGroups.iterator();
+	while (iterStudentGroups.hasNext()) {
 
-            List studentGroupAttendList = new ArrayList();
-            StudentGroup studentGroup = (StudentGroup) iterStudentGroups.next();
+	    List studentGroupAttendList = new ArrayList();
+	    StudentGroup studentGroup = (StudentGroup) iterStudentGroups.next();
 
-            studentGroupAttendList = studentGroup.getAttends();
+	    studentGroupAttendList = studentGroup.getAttends();
 
-            Iterator iterStudentGroupAttendList = studentGroupAttendList.iterator();
-            InfoSiteStudentInformation infoSiteStudentInformation = null;
-            InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
-            Attends attend = null;
-            
-            while (iterStudentGroupAttendList.hasNext()) {
-                infoSiteStudentInformation = new InfoSiteStudentInformation();
-                infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
+	    Iterator iterStudentGroupAttendList = studentGroupAttendList.iterator();
+	    InfoSiteStudentInformation infoSiteStudentInformation = null;
+	    InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
+	    Attends attend = null;
 
-                attend = (Attends) iterStudentGroupAttendList.next();
+	    while (iterStudentGroupAttendList.hasNext()) {
+		infoSiteStudentInformation = new InfoSiteStudentInformation();
+		infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
 
-                infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup
-                        .newInfoFromDomain(studentGroup));
+		attend = (Attends) iterStudentGroupAttendList.next();
 
-                infoSiteStudentInformation.setNumber(attend.getRegistration()
-                        .getNumber());
+		infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
 
-                infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
+		infoSiteStudentInformation.setNumber(attend.getRegistration().getNumber());
 
-                infoSiteStudentInformation.setUsername((attend.getRegistration().getPerson().getUsername()));
+		infoSiteStudentInformation.setName(attend.getRegistration().getPerson().getName());
 
-                infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
+		infoSiteStudentInformation.setUsername((attend.getRegistration().getPerson().getUsername()));
 
-                infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
+		infoSiteStudentInformation.setEmail(attend.getRegistration().getPerson().getEmail());
 
-                infoSiteStudentsAndGroupsList.add(infoSiteStudentAndGroup);
-            }
-        }
+		infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
 
-        Collections.sort(infoSiteStudentsAndGroupsList, new BeanComparator(
-                "infoSiteStudentInformation.number"));
+		infoSiteStudentsAndGroupsList.add(infoSiteStudentAndGroup);
+	    }
+	}
 
-        infoSiteStudentsAndGroups.setInfoSiteStudentsAndGroupsList(infoSiteStudentsAndGroupsList);
-        infoSiteStudentsAndGroups.setInfoGrouping(InfoGrouping.newInfoFromDomain(grouping));
+	Collections.sort(infoSiteStudentsAndGroupsList, new BeanComparator("infoSiteStudentInformation.number"));
 
-        return infoSiteStudentsAndGroups;
+	infoSiteStudentsAndGroups.setInfoSiteStudentsAndGroupsList(infoSiteStudentsAndGroupsList);
+	infoSiteStudentsAndGroups.setInfoGrouping(InfoGrouping.newInfoFromDomain(grouping));
+
+	return infoSiteStudentsAndGroups;
     }
 
     private List getAllStudentGroups(Grouping groupProperties) {
-        List result = new ArrayList();
-        List studentGroups = groupProperties.getStudentGroups();
-        result.addAll(studentGroups);
-        return result;
+	List result = new ArrayList();
+	List studentGroups = groupProperties.getStudentGroups();
+	result.addAll(studentGroups);
+	return result;
     }
 }

@@ -41,7 +41,7 @@ public class EditGroupShift extends Service {
             .getMessageResources("resources/GlobalResources");
 
     public boolean run(Integer studentGroupID, Integer groupingID, Integer newShiftID, String username)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
         if (grouping == null) {

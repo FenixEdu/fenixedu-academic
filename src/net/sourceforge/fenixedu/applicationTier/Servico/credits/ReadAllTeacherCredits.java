@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllTeacherCredits extends Service {
 
-    public List<CreditLineDTO> run(Integer teacherID) throws ExcepcaoPersistencia, ParseException {
+    public List<CreditLineDTO> run(Integer teacherID) throws ParseException {
 
 	List<CreditLineDTO> creditLines = new ArrayList<CreditLineDTO>();
 	final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);

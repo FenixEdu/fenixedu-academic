@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Closure;
@@ -56,8 +55,7 @@ public class CreateClassificationsForStudents extends Service {
 	public void execute(Object input) {
 	    if (input instanceof GenericPair<?, ?>) {
 		GenericPair<Registration, Character> pairStudentClassification = (GenericPair<Registration, Character>) input;
-		pairStudentClassification.getLeft().setEntryGradeClassification(
-			pairStudentClassification.getRight());
+		pairStudentClassification.getLeft().setEntryGradeClassification(pairStudentClassification.getRight());
 	    }
 	}
     };
@@ -66,8 +64,7 @@ public class CreateClassificationsForStudents extends Service {
 	public void execute(Object input) {
 	    if (input instanceof GenericPair<?, ?>) {
 		GenericPair<Registration, Character> pairStudentClassification = (GenericPair<Registration, Character>) input;
-		pairStudentClassification.getLeft().setApprovationRatioClassification(
-			pairStudentClassification.getRight());
+		pairStudentClassification.getLeft().setApprovationRatioClassification(pairStudentClassification.getRight());
 	    }
 	}
     };
@@ -76,33 +73,32 @@ public class CreateClassificationsForStudents extends Service {
 	public void execute(Object input) {
 	    if (input instanceof GenericPair<?, ?>) {
 		GenericPair<Registration, Character> pairStudentClassification = (GenericPair<Registration, Character>) input;
-		pairStudentClassification.getLeft().setArithmeticMeanClassification(
-			pairStudentClassification.getRight());
+		pairStudentClassification.getLeft().setArithmeticMeanClassification(pairStudentClassification.getRight());
 	    }
 	}
     };
 
     public ByteArrayOutputStream run(Integer[] entryGradeLimits, Integer[] approvationRatioLimits,
-	    Integer[] arithmeticMeanLimits, Integer degreeCurricularPlanID) throws ExcepcaoPersistencia,
-	    FileNotFoundException {
+	    Integer[] arithmeticMeanLimits, Integer degreeCurricularPlanID) throws FileNotFoundException {
 
 	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
 	List<Registration> otherYearsStudents = new ArrayList<Registration>();
 	List<Registration> firstYearStudents = new ArrayList<Registration>();
 
-	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
-		.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
+	DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);
 	for (Registration registration : degreeCurricularPlan.getRegistrations()) {
 	    if (registration.isInRegisteredState() && registration.getRegistrationAgreement().isNormal()) {
 		if (registration.getRegistrationYear() == currentExecutionYear) {
-                    try {
-                        if (registration.getEntryGrade() != null) {
-		    firstYearStudents.add(registration);
-                        }
-                    } catch (ClassCastException ex) {
-                        // hack due to bad implementation of StudentCandidacy and subclasses that are wrongly cast to DegreeCandidacy
-                    }
+		    try {
+			if (registration.getEntryGrade() != null) {
+			    firstYearStudents.add(registration);
+			}
+		    } catch (ClassCastException ex) {
+			// hack due to bad implementation of StudentCandidacy
+			// and subclasses that are wrongly cast to
+			// DegreeCandidacy
+		    }
 		} else {
 		    registration.calculateApprovationRatioAndArithmeticMeanIfActive(true);
 		    otherYearsStudents.add(registration);
@@ -114,44 +110,39 @@ public class CreateClassificationsForStudents extends Service {
 	Arrays.sort(approvationRatioLimits);
 	Arrays.sort(arithmeticMeanLimits);
 
-        ByteArrayOutputStream entryGradeStream;
-        if (firstYearStudents.size() > 0) {
-	HashMap<Character, List<Registration>> splitedStudentsByEntryGrade = splitStudentsByClassification(
-		entryGradeLimits, firstYearStudents, "entryGrade", getEntryGradeTransformer,
-		setEntryGradeClosure);
-            entryGradeStream = studentsRenderer(splitedStudentsByEntryGrade,
-		getEntryGradeTransformer);
-        } else {
-            entryGradeStream = new ByteArrayOutputStream();
-        }
+	ByteArrayOutputStream entryGradeStream;
+	if (firstYearStudents.size() > 0) {
+	    HashMap<Character, List<Registration>> splitedStudentsByEntryGrade = splitStudentsByClassification(entryGradeLimits,
+		    firstYearStudents, "entryGrade", getEntryGradeTransformer, setEntryGradeClosure);
+	    entryGradeStream = studentsRenderer(splitedStudentsByEntryGrade, getEntryGradeTransformer);
+	} else {
+	    entryGradeStream = new ByteArrayOutputStream();
+	}
 
-        ByteArrayOutputStream approvationRatioStream;
-        ByteArrayOutputStream arithmeticMeanStream;
-        if (otherYearsStudents.size() > 0) {
-	HashMap<Character, List<Registration>> splitedStudentsByApprovationRatio = splitStudentsByClassification(
-		approvationRatioLimits, otherYearsStudents, "approvationRatio",
-		getApprovationRatioTransformer, setApprovationRatioClosure);
-            approvationRatioStream = studentsRenderer(
-		splitedStudentsByApprovationRatio, getApprovationRatioTransformer);
+	ByteArrayOutputStream approvationRatioStream;
+	ByteArrayOutputStream arithmeticMeanStream;
+	if (otherYearsStudents.size() > 0) {
+	    HashMap<Character, List<Registration>> splitedStudentsByApprovationRatio = splitStudentsByClassification(
+		    approvationRatioLimits, otherYearsStudents, "approvationRatio", getApprovationRatioTransformer,
+		    setApprovationRatioClosure);
+	    approvationRatioStream = studentsRenderer(splitedStudentsByApprovationRatio, getApprovationRatioTransformer);
 
-	HashMap<Character, List<Registration>> splitedStudentsByArithmeticMean = splitStudentsByClassification(
-		arithmeticMeanLimits, otherYearsStudents, "arithmeticMean",
-		getArithmeticMeanTransformer, setArithmeticMeanClosure);
-            arithmeticMeanStream = studentsRenderer(splitedStudentsByArithmeticMean,
-		getArithmeticMeanTransformer);
-        } else {
-            approvationRatioStream = new ByteArrayOutputStream();
-            arithmeticMeanStream = new ByteArrayOutputStream();
-        }
+	    HashMap<Character, List<Registration>> splitedStudentsByArithmeticMean = splitStudentsByClassification(
+		    arithmeticMeanLimits, otherYearsStudents, "arithmeticMean", getArithmeticMeanTransformer,
+		    setArithmeticMeanClosure);
+	    arithmeticMeanStream = studentsRenderer(splitedStudentsByArithmeticMean, getArithmeticMeanTransformer);
+	} else {
+	    approvationRatioStream = new ByteArrayOutputStream();
+	    arithmeticMeanStream = new ByteArrayOutputStream();
+	}
 
 	return zipResults(entryGradeStream, approvationRatioStream, arithmeticMeanStream);
 
     }
 
-    private HashMap<Character, List<Registration>> splitStudentsByClassification(Integer[] limits,
-	    List<Registration> students, String field, Transformer fieldGetter, Closure fieldSetter) {
-	HashMap<Character, List<Registration>> studentsClassifications = new HashMap<Character, List<Registration>>(
-		limits.length);
+    private HashMap<Character, List<Registration>> splitStudentsByClassification(Integer[] limits, List<Registration> students,
+	    String field, Transformer fieldGetter, Closure fieldSetter) {
+	HashMap<Character, List<Registration>> studentsClassifications = new HashMap<Character, List<Registration>>(limits.length);
 
 	Collections.sort(students, new BeanComparator(field));
 
@@ -170,30 +161,29 @@ public class CreateClassificationsForStudents extends Service {
 	ListIterator<Registration> studentsIter = otherStudents.listIterator(otherStudents.size());
 	for (int i = limits.length - 1; i > 0; i--) {
 
-            int groundLimitIndex = Math.min(otherStudents.size() - 1, (int) Math.ceil(otherStudents.size() * (limits[i - 1] / 100.0)));
-            Double groundLimitValue = (Double) fieldGetter.transform(otherStudents.get(groundLimitIndex));            
-            Double  maxValue = (Double) fieldGetter.transform(otherStudents.get(otherStudents.size() - 1));
+	    int groundLimitIndex = Math.min(otherStudents.size() - 1, (int) Math.ceil(otherStudents.size()
+		    * (limits[i - 1] / 100.0)));
+	    Double groundLimitValue = (Double) fieldGetter.transform(otherStudents.get(groundLimitIndex));
+	    Double maxValue = (Double) fieldGetter.transform(otherStudents.get(otherStudents.size() - 1));
 	    if (maxValue.equals(groundLimitValue)) {
 		groundLimitValue -= 0.0000000001;
 	    }
 
 	    int limitIndex = studentsIter.previousIndex() + 1;
-	    for (Registration registration = studentsIter.previous(); (Double) fieldGetter
-		    .transform(registration) > groundLimitValue; registration = studentsIter.previous()) {
-		fieldSetter.execute(new GenericPair<Registration, Character>(registration,
-			classification));
+	    for (Registration registration = studentsIter.previous(); (Double) fieldGetter.transform(registration) > groundLimitValue; registration = studentsIter
+		    .previous()) {
+		fieldSetter.execute(new GenericPair<Registration, Character>(registration, classification));
 	    }
 	    studentsIter.next();
 	    groundLimitIndex = studentsIter.nextIndex();
 
-	    studentsClassifications.put(classification, otherStudents.subList(groundLimitIndex,
-		    limitIndex));
+	    studentsClassifications.put(classification, otherStudents.subList(groundLimitIndex, limitIndex));
 
 	    classification++;
 	}
 
-	List<Registration> lastStudents = otherStudents.subList((int) Math.ceil(otherStudents.size()
-		* (limits[0] / 100.0)), studentsIter.nextIndex());
+	List<Registration> lastStudents = otherStudents.subList((int) Math.ceil(otherStudents.size() * (limits[0] / 100.0)),
+		studentsIter.nextIndex());
 	for (Registration lastStudent : lastStudents) {
 	    fieldSetter.execute(new GenericPair<Registration, Character>(lastStudent, 'E'));
 	}
@@ -203,8 +193,8 @@ public class CreateClassificationsForStudents extends Service {
 	return studentsClassifications;
     }
 
-    private ByteArrayOutputStream studentsRenderer(
-	    HashMap<Character, List<Registration>> studentsClassifications, Transformer transformer) {
+    private ByteArrayOutputStream studentsRenderer(HashMap<Character, List<Registration>> studentsClassifications,
+	    Transformer transformer) {
 
 	List<Character> keys = new ArrayList<Character>(studentsClassifications.keySet());
 	Collections.sort(keys);
@@ -213,12 +203,11 @@ public class CreateClassificationsForStudents extends Service {
 	Formatter fmt = new Formatter(outputStream);
 
 	for (Character classification : keys) {
-	    for (ListIterator<Registration> studentIter = studentsClassifications.get(classification)
-		    .listIterator(studentsClassifications.get(classification).size()); studentIter
-		    .hasPrevious();) {
+	    for (ListIterator<Registration> studentIter = studentsClassifications.get(classification).listIterator(
+		    studentsClassifications.get(classification).size()); studentIter.hasPrevious();) {
 		Registration registration = (Registration) studentIter.previous();
-		fmt.format("%d\t%s\t%f\t%c\n", registration.getNumber(), registration.getPerson()
-			.getName(), transformer.transform(registration), classification);
+		fmt.format("%d\t%s\t%f\t%c\n", registration.getNumber(), registration.getPerson().getName(), transformer
+			.transform(registration), classification);
 	    }
 	}
 
@@ -232,8 +221,8 @@ public class CreateClassificationsForStudents extends Service {
 	    ByteArrayOutputStream approvationRatioStream, ByteArrayOutputStream arithmeticMeanStream) {
 
 	String[] filenames = new String[] { "entryGrade", "approvationRatio", "arithmeticMean" };
-	ByteArrayOutputStream[] outputStreams = new ByteArrayOutputStream[] { entryGradeStream,
-		approvationRatioStream, arithmeticMeanStream };
+	ByteArrayOutputStream[] outputStreams = new ByteArrayOutputStream[] { entryGradeStream, approvationRatioStream,
+		arithmeticMeanStream };
 
 	try {
 

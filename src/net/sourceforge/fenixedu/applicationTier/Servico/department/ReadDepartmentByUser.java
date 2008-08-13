@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadDepartmentByUser extends Service {
 
-    public InfoDepartment run(String username) throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoDepartment run(String username) throws FenixServiceException{
         InfoDepartment infoDepartment = null;
 
         final Person person = Person.readPersonByUsername(username);

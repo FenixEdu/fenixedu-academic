@@ -24,7 +24,7 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 public class CreateFileContentForBoard extends FileContentService {
 
     public void run(AnnouncementBoard board, File file, String originalFilename, String displayName, Group permittedGroup,
-	    Person person) throws FenixServiceException, ExcepcaoPersistencia, DomainException, IOException {
+	    Person person) throws FenixServiceException, DomainException, IOException {
 
 	if (!board.hasWriter(person)) {
 	    throw new FenixServiceException("error.person.not.board.writer");

@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class GetAllEquivalencies extends Service {
 
-	public List<InfoEquivalency> run() throws ExcepcaoPersistencia { 
+	public List<InfoEquivalency> run() { 
 		List<InfoEquivalency> result = new LinkedList<InfoEquivalency>();
 
 		List<CourseEquivalency> courseEquivalencies = rootDomainObject.getCourseEquivalencys();

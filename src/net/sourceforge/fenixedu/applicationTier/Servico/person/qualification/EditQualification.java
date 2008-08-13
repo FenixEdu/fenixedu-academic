@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EditQualification extends Service {
 
-    public void run(Integer qualificationId, InfoQualification infoQualification) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(Integer qualificationId, InfoQualification infoQualification) throws FenixServiceException{
 		Qualification qualification = rootDomainObject.readQualificationByOID(qualificationId);
 		//If it doesn't exist in the database, a new one has to be created
 		Country country = rootDomainObject.readCountryByOID(infoQualification.getInfoCountry().getIdInternal());

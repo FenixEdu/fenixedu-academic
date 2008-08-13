@@ -22,7 +22,7 @@ public class DeleteWrittenEvaluation extends Service {
      *            used in filtering
      *            (ExecutionCourseLecturingTeacherAuthorizationFilter)
      */
-    public void run(Integer executionCourseOID, Integer writtenEvaluationOID) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(Integer executionCourseOID, Integer writtenEvaluationOID) throws FenixServiceException{
         final WrittenEvaluation writtenEvaluationToDelete = (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationOID);
         if (writtenEvaluationToDelete == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");

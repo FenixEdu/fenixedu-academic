@@ -18,10 +18,10 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import org.apache.struts.util.LabelValueBean;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author Susana Fernandes
@@ -29,7 +29,7 @@ import org.apache.struts.util.LabelValueBean;
 public class ReadStudentsByIdArray extends Service {
 
     public List<InfoStudent> run(Integer executionCourseId, String[] selected, Boolean insertByShifts)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException {
 
 	List<InfoStudent> studentList = new ArrayList<InfoStudent>();
 	if (selected != null && selected.length != 0) {
@@ -41,9 +41,8 @@ public class ReadStudentsByIdArray extends Service {
 	return studentList;
     }
 
-    public List<InfoStudent> run(Integer executionCourseId, Integer distributedTestId,
-	    String[] selected, Boolean insertByShifts) throws FenixServiceException,
-	    ExcepcaoPersistencia {
+    public List<InfoStudent> run(Integer executionCourseId, Integer distributedTestId, String[] selected, Boolean insertByShifts)
+	    throws FenixServiceException {
 
 	List<InfoStudent> studentList = new ArrayList<InfoStudent>();
 	DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
@@ -55,30 +54,26 @@ public class ReadStudentsByIdArray extends Service {
 	    if (insertByShifts.booleanValue())
 		studentList = returnStudentsFromShiftsArray(distributedTest, selected);
 	    else
-		studentList = returnStudentsFromStudentsArray(distributedTest, selected,
-			executionCourseId);
+		studentList = returnStudentsFromStudentsArray(distributedTest, selected, executionCourseId);
 	}
 	return studentList;
     }
 
-    public List<InfoStudent> run(Integer executionCourseId, ArrayList lavelValueBeanList)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+    public List<InfoStudent> run(Integer executionCourseId, ArrayList lavelValueBeanList) throws FenixServiceException {
 	List<InfoStudent> studentList = new ArrayList<InfoStudent>();
 	for (LabelValueBean lvb : (ArrayList<LabelValueBean>) lavelValueBeanList) {
 	    if (!lvb.getLabel().equals(" (Ficha Fechada)")) {
 		Integer number = new Integer(lvb.getValue());
-		studentList.add(InfoStudent.newInfoFromDomain(Registration
-			.readAllStudentsBetweenNumbers(number, number).get(0)));
+		studentList.add(InfoStudent.newInfoFromDomain(Registration.readAllStudentsBetweenNumbers(number, number).get(0)));
 	    }
 	}
 
 	return studentList;
     }
 
-    private List<InfoStudent> returnStudentsFromShiftsArray(DistributedTest distributedTest,
-	    String[] shifts) throws FenixServiceException, ExcepcaoPersistencia {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources",
-		Language.getLocale());
+    private List<InfoStudent> returnStudentsFromShiftsArray(DistributedTest distributedTest, String[] shifts)
+	    throws FenixServiceException {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 	List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
 	for (int i = 0; i < shifts.length; i++) {
 	    if (shifts[i].equals(bundle.getString("label.allShifts"))) {
@@ -89,8 +84,8 @@ public class ReadStudentsByIdArray extends Service {
 	    for (Registration registration : studentList) {
 		InfoStudent infoStudent = InfoStudent.newInfoFromDomain(registration);
 		if (!infoStudentList.contains(infoStudent)
-			&& (distributedTest == null || !StudentTestQuestion.hasStudentTestQuestions(
-				registration.getStudent(), distributedTest))) {
+			&& (distributedTest == null || !StudentTestQuestion.hasStudentTestQuestions(registration.getStudent(),
+				distributedTest))) {
 		    infoStudentList.add(infoStudent);
 		}
 	    }
@@ -99,11 +94,9 @@ public class ReadStudentsByIdArray extends Service {
 	return infoStudentList;
     }
 
-    private List<InfoStudent> returnStudentsFromStudentsArray(DistributedTest distributedTest,
-	    String[] students, Integer executionCourseId) throws FenixServiceException,
-	    ExcepcaoPersistencia {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources",
-		Language.getLocale());
+    private List<InfoStudent> returnStudentsFromStudentsArray(DistributedTest distributedTest, String[] students,
+	    Integer executionCourseId) throws FenixServiceException {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 	List<InfoStudent> studentsList = new ArrayList<InfoStudent>();
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 
@@ -113,8 +106,8 @@ public class ReadStudentsByIdArray extends Service {
 		for (Attends attend : attendList) {
 		    InfoStudent infoStudent = InfoStudent.newInfoFromDomain(attend.getRegistration());
 		    if (!studentsList.contains(infoStudent)
-			    && (distributedTest == null || !StudentTestQuestion.hasStudentTestQuestions(
-				    attend.getRegistration().getStudent(), distributedTest))) {
+			    && (distributedTest == null || !StudentTestQuestion.hasStudentTestQuestions(attend.getRegistration()
+				    .getStudent(), distributedTest))) {
 			studentsList.add(infoStudent);
 		    }
 		}
@@ -124,8 +117,8 @@ public class ReadStudentsByIdArray extends Service {
 	    InfoStudent infoStudent = InfoStudent.newInfoFromDomain(registration);
 	    if (!studentsList.contains(infoStudent)) {
 		if (!studentsList.contains(infoStudent)
-			&& (distributedTest == null || !StudentTestQuestion.hasStudentTestQuestions(
-				registration.getStudent(), distributedTest))) {
+			&& (distributedTest == null || !StudentTestQuestion.hasStudentTestQuestions(registration.getStudent(),
+				distributedTest))) {
 		    studentsList.add(infoStudent);
 		}
 	    }

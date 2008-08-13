@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan extends Service {
 
     public InfoMasterDegreeProofVersion run(Integer studentCurricularPlanID)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         StudentCurricularPlan studentCurricularPlan = rootDomainObject
                 .readStudentCurricularPlanByOID(studentCurricularPlanID);

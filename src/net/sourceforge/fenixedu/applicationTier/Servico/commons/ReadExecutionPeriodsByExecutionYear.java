@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionPeriodsByExecutionYear extends Service {
 
-    public List run(Integer executionYearId) throws ExcepcaoPersistencia {
+    public List run(Integer executionYearId) {
         final ExecutionYear executionYear = executionYearId != null ?
                 rootDomainObject.readExecutionYearByOID(executionYearId)
                 : ExecutionYear.readCurrentExecutionYear();

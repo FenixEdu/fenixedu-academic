@@ -10,14 +10,12 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EditDegree extends Service {
 
     public void run(Integer idInternal, String name, String nameEn, String acronym, DegreeType degreeType, Double ectsCredits,
-	    GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear) throws FenixServiceException,
-	    ExcepcaoPersistencia {
+	    GradeScale gradeScale, String prevailingScientificArea, ExecutionYear executionYear) throws FenixServiceException {
 	if (idInternal == null || name == null || nameEn == null || acronym == null || degreeType == null || ectsCredits == null) {
 	    throw new InvalidArgumentsServiceException();
 	}

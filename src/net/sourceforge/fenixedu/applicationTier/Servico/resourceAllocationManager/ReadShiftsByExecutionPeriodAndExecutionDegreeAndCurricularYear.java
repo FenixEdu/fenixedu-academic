@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear extends Service {
 
     public List<InfoShift> run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
-	    InfoCurricularYear infoCurricularYear) throws ExcepcaoPersistencia {
+	    InfoCurricularYear infoCurricularYear) {
 
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod
 		.getIdInternal());

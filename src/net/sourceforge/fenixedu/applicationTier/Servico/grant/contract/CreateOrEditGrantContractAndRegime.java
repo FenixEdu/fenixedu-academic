@@ -50,7 +50,7 @@ public class CreateOrEditGrantContractAndRegime extends Service {
     }
 
     private GrantContract createOrEditGrantContract(InfoGrantContract infoGrantContract)
-	    throws GrantTypeNotFoundException, FenixServiceException, ExcepcaoPersistencia,
+	    throws GrantTypeNotFoundException, FenixServiceException,
 	    InvalidGrantPaymentEntityException {
 	final GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(infoGrantContract
 		.getGrantOwnerInfo().getIdInternal());
@@ -108,7 +108,7 @@ public class CreateOrEditGrantContractAndRegime extends Service {
 
     private GrantOrientationTeacher createNewGrantOrientationTeacher(
 	    InfoGrantOrientationTeacher grantOrientationTeacherInfo, GrantContract grantContract)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException{
 
 	final Teacher teacher = Teacher.readByNumber(grantOrientationTeacherInfo
 		.getOrientationTeacherInfo().getTeacherNumber());

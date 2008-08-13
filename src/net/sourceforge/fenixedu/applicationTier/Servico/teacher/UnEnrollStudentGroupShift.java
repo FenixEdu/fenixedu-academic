@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class UnEnrollStudentGroupShift extends Service {
 
 	public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException{
 
 		Grouping groupProperties = rootDomainObject.readGroupingByOID(
 				groupPropertiesCode);

@@ -52,7 +52,7 @@ public class DeleteProfessorshipAuthorizationFilter extends AuthorizationByRoleF
     }
 
     private boolean isSamePersonAsBeingRemoved(Person loggedPerson, Person selectedPerson)
-            throws ExcepcaoPersistencia {
+            {
         return loggedPerson == selectedPerson;
     }
 

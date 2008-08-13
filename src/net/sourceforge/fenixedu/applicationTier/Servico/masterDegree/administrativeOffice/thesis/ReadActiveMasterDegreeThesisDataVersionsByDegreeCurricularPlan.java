@@ -20,7 +20,7 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan extends Service {
 
-    public List run(Integer degreeCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer degreeCurricularPlanID) throws FenixServiceException{
 
         DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
                 .readDegreeCurricularPlanByOID(degreeCurricularPlanID);

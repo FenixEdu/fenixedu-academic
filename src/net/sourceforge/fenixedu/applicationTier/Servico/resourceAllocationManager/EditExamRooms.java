@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EditExamRooms extends Service {
 
-    public InfoExam run(InfoExam infoExam, final List<Integer> roomsForExam) throws ExcepcaoPersistencia,
+    public InfoExam run(InfoExam infoExam, final List<Integer> roomsForExam) throws
             FenixServiceException {
 
         final List<AllocatableSpace> finalRoomList = new ArrayList<AllocatableSpace>();

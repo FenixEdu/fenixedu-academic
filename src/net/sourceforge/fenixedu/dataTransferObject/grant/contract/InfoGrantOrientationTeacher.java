@@ -109,7 +109,7 @@ public class InfoGrantOrientationTeacher extends InfoObject {
     }
 
     public void copyToDomain(InfoGrantOrientationTeacher infoGrantOrientationTeacher,
-            GrantOrientationTeacher grantOrientationTeacher) throws ExcepcaoPersistencia {
+            GrantOrientationTeacher grantOrientationTeacher) {
         super.copyToDomain(infoGrantOrientationTeacher, grantOrientationTeacher);
 
         grantOrientationTeacher.setBeginDate(infoGrantOrientationTeacher.getBeginDate());

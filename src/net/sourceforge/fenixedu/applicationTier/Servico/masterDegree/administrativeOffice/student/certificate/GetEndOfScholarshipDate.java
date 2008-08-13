@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class GetEndOfScholarshipDate extends Service {
 
-    public Date run(Integer studentCurricularPlanID) throws ExcepcaoPersistencia {
+    public Date run(Integer studentCurricularPlanID) {
         StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);
 
         IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory

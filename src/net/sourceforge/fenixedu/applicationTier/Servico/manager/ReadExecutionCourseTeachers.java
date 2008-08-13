@@ -25,7 +25,7 @@ public class ReadExecutionCourseTeachers extends Service {
 	 * @throws ExcepcaoPersistencia 
 	 */
 
-	public List run(Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
+	public List run(Integer executionCourseId) throws FenixServiceException{
 
 		List professorShips = null;
 		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);

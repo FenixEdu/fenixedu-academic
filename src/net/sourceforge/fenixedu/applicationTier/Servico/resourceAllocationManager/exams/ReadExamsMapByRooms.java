@@ -114,7 +114,7 @@ public class ReadExamsMapByRooms extends Service {
     // return result;
     // }
     //
-    private InfoPeriod calculateExamsSeason(final String year, final int semester) throws ExcepcaoPersistencia {
+    private InfoPeriod calculateExamsSeason(final String year, final int semester) {
 
 	ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
 	final List<ExecutionDegree> executionDegreesList = executionYear.getExecutionDegrees();

@@ -19,7 +19,7 @@ public class FindTeachersService extends SearchService {
     }
 
     @Override
-    protected List doSearch(HashMap searchParameters) throws ExcepcaoPersistencia {
+    protected List doSearch(HashMap searchParameters) {
 
         Teacher teacher = Teacher.readByNumber(
                 Integer.valueOf((String) searchParameters.get("teacherNumber")));

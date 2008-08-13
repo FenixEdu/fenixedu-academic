@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author joaosa & rmalo
@@ -23,34 +22,33 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteAllGroupingMembers extends Service {
 
-    public boolean run(Integer objectCode, Integer groupingCode) throws FenixServiceException,
-            ExcepcaoPersistencia {
-        Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
+    public boolean run(Integer objectCode, Integer groupingCode) throws FenixServiceException {
+	Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
 
-        if (grouping == null) {
-            throw new ExistingServiceException();
-        }
+	if (grouping == null) {
+	    throw new ExistingServiceException();
+	}
 
-        List attendsElements = new ArrayList();
-        attendsElements.addAll(grouping.getAttends());
-        Iterator iterator = attendsElements.iterator();
-        while (iterator.hasNext()) {
-            Attends attend = (Attends) iterator.next();
+	List attendsElements = new ArrayList();
+	attendsElements.addAll(grouping.getAttends());
+	Iterator iterator = attendsElements.iterator();
+	while (iterator.hasNext()) {
+	    Attends attend = (Attends) iterator.next();
 
-            boolean found = false;
-            Iterator iterStudentsGroups = grouping.getStudentGroups().iterator();
-            while (iterStudentsGroups.hasNext() && !found) {
+	    boolean found = false;
+	    Iterator iterStudentsGroups = grouping.getStudentGroups().iterator();
+	    while (iterStudentsGroups.hasNext() && !found) {
 
-                StudentGroup studentGroup = (StudentGroup) iterStudentsGroups.next();
-                
-                if (studentGroup != null) {
-                    studentGroup.removeAttends(attend);
-                    found = true;
-                }
-            }
-           grouping.removeAttends(attend);
-        }
+		StudentGroup studentGroup = (StudentGroup) iterStudentsGroups.next();
 
-        return true;
+		if (studentGroup != null) {
+		    studentGroup.removeAttends(attend);
+		    found = true;
+		}
+	    }
+	    grouping.removeAttends(attend);
+	}
+
+	return true;
     }
 }

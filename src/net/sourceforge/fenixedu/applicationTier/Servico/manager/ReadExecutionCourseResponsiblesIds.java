@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionCourseResponsiblesIds extends Service {
 
-    public List run(Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer executionCourseId) throws FenixServiceException{
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( executionCourseId);
         
         List<Professorship> responsibles = executionCourse.responsibleFors();

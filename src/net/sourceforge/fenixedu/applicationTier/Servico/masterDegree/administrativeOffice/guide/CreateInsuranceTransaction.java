@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class CreateInsuranceTransaction extends Service {
 
-    public void run(Integer guideEntryID, IUserView userView) throws ExcepcaoPersistencia,
+    public void run(Integer guideEntryID, IUserView userView) throws
             ExistingServiceException {
 
         GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);

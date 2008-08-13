@@ -175,7 +175,7 @@ public class InfoGrantSubsidy extends InfoObject {
     }
 
     public void copyToDomain(InfoGrantSubsidy infoGrantSubsidy, GrantSubsidy grantSubsidy)
-            throws ExcepcaoPersistencia {
+            {
         super.copyToDomain(infoGrantSubsidy, grantSubsidy);
 
         grantSubsidy.setDateBeginSubsidy(infoGrantSubsidy.getDateBeginSubsidy());

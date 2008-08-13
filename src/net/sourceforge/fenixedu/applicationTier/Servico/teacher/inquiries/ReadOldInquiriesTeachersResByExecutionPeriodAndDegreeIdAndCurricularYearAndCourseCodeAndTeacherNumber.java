@@ -26,7 +26,7 @@ public class ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricula
 	Service {
 
     public List run(Integer executionPeriodId, Integer degreeId, Integer curricularYear, String courseCode, Integer teacherNumber)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException{
 
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 

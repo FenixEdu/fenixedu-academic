@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionPeriodsByDegreeCurricularPlan extends Service {
 
-    public List run(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
+    public List run(Integer degreeCurricularPlanID) {
 
         // Start date of the DegreeCurricularPlan
         final Date startDate = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID).getInitialDate();

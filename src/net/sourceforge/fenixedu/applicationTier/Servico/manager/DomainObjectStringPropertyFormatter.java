@@ -19,7 +19,7 @@ import org.apache.commons.beanutils.PropertyUtils;
  */
 public class DomainObjectStringPropertyFormatter extends Service {
 
-    public void run(Class clazz, String slotName) throws ExcepcaoPersistencia, IllegalAccessException,
+    public void run(Class clazz, String slotName) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException {
 
         Collection<DomainObject> domainObjects = rootDomainObject.readAllDomainObjects(clazz);

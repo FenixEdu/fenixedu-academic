@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllTeachers extends Service {
 
-    public List<InfoTeacher> run() throws FenixServiceException, ExcepcaoPersistencia {
+    public List<InfoTeacher> run() throws FenixServiceException{
         final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
 
         for (final Teacher teacher : rootDomainObject.getTeachers()) {

@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadInquiriesRegistriesByStudent extends Service {
 
     public List<InfoInquiriesRegistry> run(Registration registration) throws FenixServiceException,
-            ExcepcaoPersistencia, NoSuchMethodException, InvocationTargetException,
+              NoSuchMethodException, InvocationTargetException,
             NoSuchMethodException, IllegalAccessException {
 
         if (registration == null) {

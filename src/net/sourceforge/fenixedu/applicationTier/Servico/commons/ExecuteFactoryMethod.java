@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ExecuteFactoryMethod extends Service {
 
-    public Object run(FactoryExecutor factoryExecutor) throws ExcepcaoPersistencia {
+    public Object run(FactoryExecutor factoryExecutor) {
 	if (factoryExecutor != null) {
 	    return factoryExecutor.execute();
 	} else {

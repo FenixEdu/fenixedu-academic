@@ -20,7 +20,7 @@ import org.apache.commons.collections.Transformer;
 
 public class ReadGratuityValuesByExecutionDegree extends Service {
 
-	public Object run(Integer executionDegreeID) throws FenixServiceException, ExcepcaoPersistencia {
+	public Object run(Integer executionDegreeID) throws FenixServiceException{
 		if (executionDegreeID == null) {
 			throw new FenixServiceException("error.impossible.noGratuityValues");
 		}

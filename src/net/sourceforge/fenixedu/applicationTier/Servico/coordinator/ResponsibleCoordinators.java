@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ResponsibleCoordinators extends Service {
 
     public void run(Integer executionDegreeId, List<Integer> coordinatorsToBeResponsibleIDs)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
         if (executionDegree == null) {

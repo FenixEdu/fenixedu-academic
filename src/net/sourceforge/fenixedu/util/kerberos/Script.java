@@ -22,9 +22,9 @@ public class Script {
 	return StringAppender.append(script, " ", user);
     }
 
-    public static void runCommand(final String commandString, final String user, final String pass)
-    		throws ExcepcaoPersistencia, KerberosException {
-        long time1 = System.currentTimeMillis();
+    public static void runCommand(final String commandString, final String user, final String pass) throws KerberosException,
+	    ExcepcaoPersistencia {
+	long time1 = System.currentTimeMillis();
 	final String command = createCommand(commandString, user);
 	long time2 = System.currentTimeMillis();
 	ScriptResult scriptResult = runCmd(command, pass);
@@ -39,22 +39,22 @@ public class Script {
 	    }
 	}
     }
-    
+
     private static void outputRunCommandTime(final String commandString, final long time1, final long time2, final long time3) {
-        if (LogLevel.INFO) {
-            System.out.print("Command ");
-            System.out.print(commandString);
-            System.out.print(" took ");
-            System.out.print(time2 - time1);
-            System.out.print(" + ");
-            System.out.print(time3 - time2);
-            System.out.print(" = ");
-            System.out.print(time3 - time1);
-            System.out.print(" (ms)");
-        }
+	if (LogLevel.INFO) {
+	    System.out.print("Command ");
+	    System.out.print(commandString);
+	    System.out.print(" took ");
+	    System.out.print(time2 - time1);
+	    System.out.print(" + ");
+	    System.out.print(time3 - time2);
+	    System.out.print(" = ");
+	    System.out.print(time3 - time1);
+	    System.out.print(" (ms)");
+	}
     }
 
-    public static DateTime returnExpirationDate(String user) throws ExcepcaoPersistencia, KerberosException {
+    public static DateTime returnExpirationDate(String user) throws KerberosException, ExcepcaoPersistencia {
 	final String command = createCommand("passExpirationScript", user);
 	final ScriptResult scriptResult = runCmd(command, "");
 
@@ -65,26 +65,23 @@ public class Script {
 		throw new KerberosException(scriptResult.getExitCode(), scriptResult.getReturnCode());
 	    }
 	}
-	
+
 	String dateString = scriptResult.getReturnCode();
-	return new DateTime(Long.valueOf(dateString) * (long)1000);
+	return new DateTime(Long.valueOf(dateString) * (long) 1000);
     }
 
-    public static void changeKerberosPass(String user, String pass) throws ExcepcaoPersistencia,
-	    KerberosException {
-        System.out.println("Calling change password script.");
+    public static void changeKerberosPass(String user, String pass) throws KerberosException, ExcepcaoPersistencia {
+	System.out.println("Calling change password script.");
 	runCommand("changePassScript", user, pass);
     }
 
-    public static void createUser(String user, String pass) throws ExcepcaoPersistencia,
-	    KerberosException {
-        System.out.println("Calling create user script.");
+    public static void createUser(String user, String pass) throws KerberosException, ExcepcaoPersistencia {
+	System.out.println("Calling create user script.");
 	runCommand("createUserScript", user, pass);
     }
 
-    public static void verifyPass(String user, String pass) throws ExcepcaoPersistencia,
-	    KerberosException {
-        System.out.println("Calling verify password script.");
+    public static void verifyPass(String user, String pass) throws KerberosException, ExcepcaoPersistencia {
+	System.out.println("Calling verify password script.");
 	runCommand("verifyPassScript", user, pass);
     }
 
@@ -92,8 +89,7 @@ public class Script {
 	Process process = null;
 	BufferedWriter outCommand = null;
 	BufferedReader bufferedReader = null;
-	ScriptWatchDog watchDog = new ScriptWatchDog(Float.valueOf(
-		PropertiesManager.getProperty("scriptTimeout")).longValue());
+	ScriptWatchDog watchDog = new ScriptWatchDog(Float.valueOf(PropertiesManager.getProperty("scriptTimeout")).longValue());
 
 	try {
 	    process = Runtime.getRuntime().exec(cmd);
@@ -122,11 +118,11 @@ public class Script {
 	    System.out.println(Runtime.getRuntime().freeMemory());
 	    System.out.println(Runtime.getRuntime().totalMemory());
 	    ex.printStackTrace();
-            try {
-                Custodian.dumpThreadTrace();
-            } catch (Exception e) {
-                // do nothing. no log will be produced.
-            }
+	    try {
+		Custodian.dumpThreadTrace();
+	    } catch (Exception e) {
+		// do nothing. no log will be produced.
+	    }
 	    return new ScriptResult(-1, ex.getMessage());
 	} catch (Exception ex) {
 	    ex.printStackTrace();

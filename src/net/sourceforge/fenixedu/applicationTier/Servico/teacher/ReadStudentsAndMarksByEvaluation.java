@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -32,74 +31,68 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadStudentsAndMarksByEvaluation extends Service {
 
-    public Object run(Integer executionCourseCode, Integer evaluationCode) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public Object run(Integer executionCourseCode, Integer evaluationCode) throws FenixServiceException {
 
-        InfoEvaluation infoEvaluation = new InfoEvaluation();
+	InfoEvaluation infoEvaluation = new InfoEvaluation();
 
-        // Execution Course
-        final ExecutionCourse executionCourse = rootDomainObject
-                .readExecutionCourseByOID(executionCourseCode);
+	// Execution Course
+	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 
-        // Site
-        final ExecutionCourseSite site = executionCourse.getSite();
+	// Site
+	final ExecutionCourseSite site = executionCourse.getSite();
 
-        // Evaluation
-        Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationCode);
+	// Evaluation
+	Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationCode);
 
-        infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
+	infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
-        // Attends
-        List attendList = executionCourse.getAttends();
+	// Attends
+	List attendList = executionCourse.getAttends();
 
-        // Marks
-        List<Mark> marksList = evaluation.getMarks();
+	// Marks
+	List<Mark> marksList = evaluation.getMarks();
 
-        List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {
-            public Object transform(Object input) {
-                Attends attend = (Attends) input;
-                InfoFrequenta infoAttend = InfoFrequentaWithAll.newInfoFromDomain(attend);
-                // Melhoria Alterar isto depois: isto está feio assim
-                if (attend.getEnrolment() != null) {
-                    if (!attend.getEnrolment().getExecutionPeriod().equals(
-                            executionCourse.getExecutionPeriod())) {
-                	infoAttend.setEnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);
-                    }
-                }
-                return infoAttend;
-            }
-        });
+	List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {
+	    public Object transform(Object input) {
+		Attends attend = (Attends) input;
+		InfoFrequenta infoAttend = InfoFrequentaWithAll.newInfoFromDomain(attend);
+		// Melhoria Alterar isto depois: isto está feio assim
+		if (attend.getEnrolment() != null) {
+		    if (!attend.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod())) {
+			infoAttend.setEnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);
+		    }
+		}
+		return infoAttend;
+	    }
+	});
 
-        List infoMarkList = (List) CollectionUtils.collect(marksList, new Transformer() {
-            public Object transform(Object input) {
-                Mark mark = (Mark) input;
+	List infoMarkList = (List) CollectionUtils.collect(marksList, new Transformer() {
+	    public Object transform(Object input) {
+		Mark mark = (Mark) input;
 
-                InfoMark infoMark = InfoMark.newInfoFromDomain(mark);
-                return infoMark;
-            }
-        });
+		InfoMark infoMark = InfoMark.newInfoFromDomain(mark);
+		return infoMark;
+	    }
+	});
 
-        HashMap hashMarks = new HashMap();
-        Iterator iter = infoMarkList.iterator();
-        while (iter.hasNext()) {
-            InfoMark infoMark = (InfoMark) iter.next();
-            hashMarks.put(infoMark.getInfoFrequenta().getAluno().getNumber().toString(), infoMark
-                    .getMark());
-        }
-        InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
-        infoSiteMarks.setMarksList(infoMarkList);
-        infoSiteMarks.setInfoEvaluation(infoEvaluation);
-        infoSiteMarks.setInfoAttends(infoAttendList);
-        infoSiteMarks.setHashMarks(hashMarks);
+	HashMap hashMarks = new HashMap();
+	Iterator iter = infoMarkList.iterator();
+	while (iter.hasNext()) {
+	    InfoMark infoMark = (InfoMark) iter.next();
+	    hashMarks.put(infoMark.getInfoFrequenta().getAluno().getNumber().toString(), infoMark.getMark());
+	}
+	InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
+	infoSiteMarks.setMarksList(infoMarkList);
+	infoSiteMarks.setInfoEvaluation(infoEvaluation);
+	infoSiteMarks.setInfoAttends(infoAttendList);
+	infoSiteMarks.setHashMarks(hashMarks);
 
-        TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
-        ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null,
-                null, null);
+	TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
+	ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
 
-        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent,
-                infoSiteMarks);
+	TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent, infoSiteMarks);
 
-        return siteView;
+	return siteView;
 
     }
 }

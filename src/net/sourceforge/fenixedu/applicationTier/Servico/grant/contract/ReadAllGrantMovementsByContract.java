@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllGrantMovementsByContract extends Service {
 
-	public List run(Integer grantContractId) throws FenixServiceException, ExcepcaoPersistencia {
+	public List run(Integer grantContractId) throws FenixServiceException{
 		List<InfoGrantContractMovement> result = new ArrayList<InfoGrantContractMovement>();
 
 		GrantContract grantContract = rootDomainObject.readGrantContractByOID(grantContractId);

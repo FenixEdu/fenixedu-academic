@@ -55,7 +55,7 @@ public class InfoGrantProject extends InfoGrantPaymentEntity {
     }
 
     public void copyToDomain(InfoGrantProject infoGrantProject, GrantProject grantProject)
-            throws ExcepcaoPersistencia {
+            {
         super.copyToDomain(infoGrantProject, grantProject);
 
         grantProject.setDesignation(infoGrantProject.getDesignation());

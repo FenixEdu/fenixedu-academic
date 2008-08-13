@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteGrantContractMovement extends DeleteDomainObjectService {
 
-	protected void deleteDomainObject(DomainObject domainObject) throws ExcepcaoPersistencia {
+	protected void deleteDomainObject(DomainObject domainObject) {
         GrantContractMovement grantContractMovement = (GrantContractMovement) domainObject;
         grantContractMovement.delete();
 	}

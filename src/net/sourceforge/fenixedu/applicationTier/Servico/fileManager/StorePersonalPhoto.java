@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.util.ContentType;
 public class StorePersonalPhoto extends Service {
 
     public void run(byte[] contents, ContentType contentType, String personUsername)
-            throws ExcepcaoPersistencia, ExcepcaoInexistente {
+            throws ExcepcaoInexistente {
         Person person = Person.readPersonByUsername(personUsername);
 
         if (person == null) {
@@ -27,7 +27,7 @@ public class StorePersonalPhoto extends Service {
     }
 
     public void run(byte[] contents, ContentType contentType, Integer personID)
-            throws ExcepcaoPersistencia {
+            {
         Person person = (Person) rootDomainObject.readPartyByOID(personID);
 
         storePersonalPhoto(contents, contentType, person);

@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteDegrees extends Service {
 
     // delete a set of degrees
-    public List run(List degreesInternalIds) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(List degreesInternalIds) throws FenixServiceException{
             Iterator iter = degreesInternalIds.iterator();
 
             List<String> undeletedDegreesNames = new ArrayList<String>();

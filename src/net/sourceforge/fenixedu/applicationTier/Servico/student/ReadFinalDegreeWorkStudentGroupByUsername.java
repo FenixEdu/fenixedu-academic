@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
 
-    public InfoGroup run(final Person personUser, final ExecutionYear executionYear) throws ExcepcaoPersistencia {
+    public InfoGroup run(final Person personUser, final ExecutionYear executionYear) {
 	final FinalDegreeWorkGroup finalDegreeWorkGroup = findFinalDegreeWorkGroup(personUser, executionYear);
         return InfoGroup.newInfoFromDomain(finalDegreeWorkGroup);
     }

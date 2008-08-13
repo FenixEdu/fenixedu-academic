@@ -22,7 +22,7 @@ import org.joda.time.YearMonthDay;
 public class TransferTutorship extends TutorshipManagement {
 
 	public List<TutorshipErrorBean> run(Integer executionDegreeID, TutorshipManagementBean bean,
-			List<TutorshipManagementByEntryYearBean> tutorshipsToTransfer) throws FenixServiceException, ExcepcaoPersistencia {
+			List<TutorshipManagementByEntryYearBean> tutorshipsToTransfer) throws FenixServiceException{
 		
 		final Teacher teacher = Teacher.readByNumber(bean.getTeacherNumber());
 		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);

@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EditGrantPaymentEntity extends Service {
 
-    public void run(InfoGrantCostCenter infoObject) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoGrantCostCenter infoObject) throws FenixServiceException{
         GrantCostCenter grantCostCenter = (GrantCostCenter) rootDomainObject
                 .readGrantPaymentEntityByOID(infoObject.getIdInternal());
         if (grantCostCenter == null) {
@@ -39,7 +39,7 @@ public class EditGrantPaymentEntity extends Service {
         }
     }
 
-    public void run(InfoGrantProject infoObject) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(InfoGrantProject infoObject) throws FenixServiceException{
         GrantProject grantProject = (GrantProject) rootDomainObject
                 .readGrantPaymentEntityByOID(infoObject.getIdInternal());
         if (grantProject == null) {

@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class InsertStudentsInGrouping extends Service {
 
     public Boolean run(final Integer executionCourseCode, final Integer groupPropertiesCode, final String[] selected)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
 	if (selected == null) {
             return Boolean.TRUE;

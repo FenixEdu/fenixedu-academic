@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadClassByOID extends Service {
 
-	public InfoClass run(Integer oid) throws FenixServiceException, ExcepcaoPersistencia {
+	public InfoClass run(Integer oid) throws FenixServiceException{
 		InfoClass result = null;
 		SchoolClass turma = rootDomainObject.readSchoolClassByOID( oid);
 		if (turma != null) {

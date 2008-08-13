@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Luis Cruz
@@ -18,65 +17,61 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ConfirmAttributionOfFinalDegreeWork extends Service {
 
     public ConfirmAttributionOfFinalDegreeWork() {
-        super();
+	super();
     }
 
-    public boolean run(String username, Integer selectedGroupProposalOID) throws ExcepcaoPersistencia,
-            FenixServiceException {
-        GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(selectedGroupProposalOID);
+    public boolean run(String username, Integer selectedGroupProposalOID) throws FenixServiceException {
+	GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(selectedGroupProposalOID);
 
-        if (groupProposal != null) {
-            FinalDegreeWorkGroup groupAttributed = groupProposal.getFinalDegreeWorkProposal()
-                    .getGroupAttributedByTeacher();
+	if (groupProposal != null) {
+	    FinalDegreeWorkGroup groupAttributed = groupProposal.getFinalDegreeWorkProposal().getGroupAttributedByTeacher();
 
-            if (groupAttributed == null) {
-                throw new NoAttributionToConfirmException();
-            }
+	    if (groupAttributed == null) {
+		throw new NoAttributionToConfirmException();
+	    }
 
-            FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
-            if (group != null) {
-                if (!group.getIdInternal().equals(groupAttributed.getIdInternal())) {
-                    throw new NoAttributionToConfirmException();
-                }
+	    FinalDegreeWorkGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
+	    if (group != null) {
+		if (!group.getIdInternal().equals(groupAttributed.getIdInternal())) {
+		    throw new NoAttributionToConfirmException();
+		}
 
-                List groupStudents = group.getGroupStudents();
-                if (groupStudents != null && !groupStudents.isEmpty()) {
-                    for (int i = 0; i < groupStudents.size(); i++) {
-                        GroupStudent groupStudent = (GroupStudent) groupStudents.get(i);
-                        if (groupStudent != null
-                                && groupStudent.getRegistration().getPerson().hasUsername(username)) {
-                            groupStudent.setFinalDegreeWorkProposalConfirmation(groupProposal
-                                    .getFinalDegreeWorkProposal());
-                        }
-                    }
-                }
-            }
-        }
+		List groupStudents = group.getGroupStudents();
+		if (groupStudents != null && !groupStudents.isEmpty()) {
+		    for (int i = 0; i < groupStudents.size(); i++) {
+			GroupStudent groupStudent = (GroupStudent) groupStudents.get(i);
+			if (groupStudent != null && groupStudent.getRegistration().getPerson().hasUsername(username)) {
+			    groupStudent.setFinalDegreeWorkProposalConfirmation(groupProposal.getFinalDegreeWorkProposal());
+			}
+		    }
+		}
+	    }
+	}
 
-        return true;
+	return true;
     }
 
     public class NoAttributionToConfirmException extends FenixServiceException {
 
-        public NoAttributionToConfirmException() {
-            super();
-        }
+	public NoAttributionToConfirmException() {
+	    super();
+	}
 
-        public NoAttributionToConfirmException(int errorType) {
-            super(errorType);
-        }
+	public NoAttributionToConfirmException(int errorType) {
+	    super(errorType);
+	}
 
-        public NoAttributionToConfirmException(String s) {
-            super(s);
-        }
+	public NoAttributionToConfirmException(String s) {
+	    super(s);
+	}
 
-        public NoAttributionToConfirmException(Throwable cause) {
-            super(cause);
-        }
+	public NoAttributionToConfirmException(Throwable cause) {
+	    super(cause);
+	}
 
-        public NoAttributionToConfirmException(String message, Throwable cause) {
-            super(message, cause);
-        }
+	public NoAttributionToConfirmException(String message, Throwable cause) {
+	    super(message, cause);
+	}
     }
 
 }

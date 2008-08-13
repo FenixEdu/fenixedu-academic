@@ -26,7 +26,7 @@ public class ReadGrantSubsidy extends Service {
 		return InfoGrantSubsidyWithContract.newInfoFromDomain((GrantSubsidy) domainObject);
 	}
 
-	public InfoObject run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
+	public InfoObject run(Integer objectId) throws FenixServiceException{
 		final GrantSubsidy grantSubsidy = rootDomainObject.readGrantSubsidyByOID(objectId);
 		InfoGrantSubsidy infoGrantSubsidy = newInfoFromDomain(grantSubsidy);
 

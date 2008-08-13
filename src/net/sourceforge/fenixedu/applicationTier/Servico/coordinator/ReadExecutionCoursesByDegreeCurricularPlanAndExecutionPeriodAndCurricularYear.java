@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear extends Service {
 
     public List<ExecutionCourse> run(Integer degreeCurricularPlanID, Integer executionPeriodID, Integer curricularYearID)
-	    throws ExcepcaoPersistencia, FenixServiceException {
+	    throws FenixServiceException {
 
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 	if (executionSemester == null) {

@@ -134,7 +134,7 @@ public class CreateScormFile extends CreateFileContent {
 
     private ThreadLocal<ScormMetaDataHash> extraScormParam = null;
 
-    public void run(CreateScormFileItemForItemArgs args) throws FenixServiceException, ExcepcaoPersistencia, DomainException,
+    public void run(CreateScormFileItemForItemArgs args) throws FenixServiceException, DomainException,
 	    IOException {
 	extraScormParam = new ThreadLocal<ScormMetaDataHash>();
 	extraScormParam.set(args.getScormParameters());

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteVigilantGroupByOID extends Service {
 
-    public void run(Integer idInternal) throws ExcepcaoPersistencia {
+    public void run(Integer idInternal) {
 
         VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(
                 VigilantGroup.class, idInternal);

@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Jo�o Mota
@@ -28,49 +27,50 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ClassSiteComponentService extends Service {
 
-    public Object run(ISiteComponent bodyComponent, String executionYearName,
-            String executionPeriodName, String degreeInitials, String nameDegreeCurricularPlan,
-            String className, Integer curricularYear, Integer classId) throws FenixServiceException, ExcepcaoPersistencia {
-   
-        final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
+    public Object run(ISiteComponent bodyComponent, String executionYearName, String executionPeriodName, String degreeInitials,
+	    String nameDegreeCurricularPlan, String className, Integer curricularYear, Integer classId)
+	    throws FenixServiceException {
 
-        ExecutionSemester executionSemester = ExecutionSemester.readByNameAndExecutionYear(executionPeriodName, executionYear.getYear());
+	final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(executionYearName);
 
-        DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(nameDegreeCurricularPlan, degreeInitials);
-        ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan,
-                        executionYear.getYear());
-        PublicSiteComponentBuilder componentBuilder = PublicSiteComponentBuilder.getInstance();
-        SchoolClass domainClass;
-        if (classId == null) {
-            domainClass = getDomainClass(className, curricularYear, executionSemester, executionDegree);
-            if (domainClass == null) {
-                throw new NonExistingServiceException();
-            }
-        } else {
+	ExecutionSemester executionSemester = ExecutionSemester.readByNameAndExecutionYear(executionPeriodName, executionYear
+		.getYear());
 
-            domainClass = rootDomainObject.readSchoolClassByOID(classId);
-        }
-        bodyComponent = componentBuilder.getComponent(bodyComponent, domainClass);
-        SiteView siteView = new SiteView(bodyComponent);
+	DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(nameDegreeCurricularPlan,
+		degreeInitials);
+	ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan,
+		executionYear.getYear());
+	PublicSiteComponentBuilder componentBuilder = PublicSiteComponentBuilder.getInstance();
+	SchoolClass domainClass;
+	if (classId == null) {
+	    domainClass = getDomainClass(className, curricularYear, executionSemester, executionDegree);
+	    if (domainClass == null) {
+		throw new NonExistingServiceException();
+	    }
+	} else {
 
-        return siteView;
+	    domainClass = rootDomainObject.readSchoolClassByOID(classId);
+	}
+	bodyComponent = componentBuilder.getComponent(bodyComponent, domainClass);
+	SiteView siteView = new SiteView(bodyComponent);
+
+	return siteView;
     }
 
-    private SchoolClass getDomainClass(String className, Integer curricularYear,
-            ExecutionSemester executionSemester, ExecutionDegree executionDegree)
-            throws ExcepcaoPersistencia {
+    private SchoolClass getDomainClass(String className, Integer curricularYear, ExecutionSemester executionSemester,
+	    ExecutionDegree executionDegree) {
 
-        SchoolClass domainClass = null;
-        if (curricularYear == null) {
-        	domainClass = executionDegree.findSchoolClassesByExecutionPeriodAndName(executionSemester, className);
-        } else {
-            if (className == null && curricularYear == null) {
-            	Set<SchoolClass> domainList = executionDegree.findSchoolClassesByExecutionPeriod(executionSemester);
-                if (domainList.size() != 0) {
-                    domainClass = (SchoolClass) domainList.iterator().next();
-                }
-            }
-        }
-        return domainClass;
+	SchoolClass domainClass = null;
+	if (curricularYear == null) {
+	    domainClass = executionDegree.findSchoolClassesByExecutionPeriodAndName(executionSemester, className);
+	} else {
+	    if (className == null && curricularYear == null) {
+		Set<SchoolClass> domainList = executionDegree.findSchoolClassesByExecutionPeriod(executionSemester);
+		if (domainList.size() != 0) {
+		    domainClass = (SchoolClass) domainList.iterator().next();
+		}
+	    }
+	}
+	return domainClass;
     }
 }

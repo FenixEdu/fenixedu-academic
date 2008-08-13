@@ -12,34 +12,32 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class ReadDetailedTeacherProfessorshipsByExecutionYear extends
-        ReadDetailedTeacherProfessorshipsAbstractService {
+public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetailedTeacherProfessorshipsAbstractService {
 
-    public class NotFoundExecutionYear extends FenixServiceException {}
+    public class NotFoundExecutionYear extends FenixServiceException {
+    }
 
-    public List run(Integer teacherID, Integer executionYearID) throws FenixServiceException,
-            ExcepcaoPersistencia {
-            
-        final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
-        if (teacher == null) {
-            throw new DomainException("error.noTeacher");
-        }
+    public List run(Integer teacherID, Integer executionYearID) throws FenixServiceException {
 
-        final ExecutionYear executionYear;
-        if (executionYearID == null) {
-            executionYear = ExecutionYear.readCurrentExecutionYear();
-        } else{
-            executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
-        }
+	final Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+	if (teacher == null) {
+	    throw new DomainException("error.noTeacher");
+	}
 
-        final List<Professorship> responsibleFors = new ArrayList();        
-        for (final Professorship professorship : teacher.responsibleFors()){
-            if(professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear() == executionYear) {
-                responsibleFors.add(professorship);                
-            }
-        }                
-        return getDetailedProfessorships(teacher.getProfessorships(executionYear), responsibleFors);
+	final ExecutionYear executionYear;
+	if (executionYearID == null) {
+	    executionYear = ExecutionYear.readCurrentExecutionYear();
+	} else {
+	    executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);
+	}
+
+	final List<Professorship> responsibleFors = new ArrayList();
+	for (final Professorship professorship : teacher.responsibleFors()) {
+	    if (professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear() == executionYear) {
+		responsibleFors.add(professorship);
+	    }
+	}
+	return getDetailedProfessorships(teacher.getProfessorships(executionYear), responsibleFors);
     }
 }

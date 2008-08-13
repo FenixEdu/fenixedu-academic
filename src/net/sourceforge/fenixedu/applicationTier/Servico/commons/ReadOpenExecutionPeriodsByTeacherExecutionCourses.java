@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.util.PeriodState;
  */
 public class ReadOpenExecutionPeriodsByTeacherExecutionCourses extends Service {
 
-    public List run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(IUserView userView) throws FenixServiceException{
 
         final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
         final Person person = userView.getPerson();

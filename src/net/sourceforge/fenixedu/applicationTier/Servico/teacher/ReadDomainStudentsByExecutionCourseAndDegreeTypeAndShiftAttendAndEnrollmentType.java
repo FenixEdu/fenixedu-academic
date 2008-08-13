@@ -134,7 +134,7 @@ public class ReadDomainStudentsByExecutionCourseAndDegreeTypeAndShiftAttendAndEn
 
 	public Collection<Registration> run(Integer executionCourseId, List<Integer> curricularPlansIds,
 			List<AttendacyStateSelectionType> enrollmentTypeFilters, List<Integer> shiftIds)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException{
 
 		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 		List<Attends> attends = executionCourse.getAttends();

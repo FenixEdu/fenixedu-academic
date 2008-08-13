@@ -29,7 +29,7 @@ import org.apache.commons.beanutils.BeanComparator;
 public class PrepareCreateStudentGroup extends Service {
 
     public ISiteComponent run(Integer executionCourseCode, Integer groupPropertiesCode)
-            throws ExcepcaoPersistencia, ExistingServiceException {
+            throws ExistingServiceException {
 
         final Grouping grouping = rootDomainObject.readGroupingByOID(
                 groupPropertiesCode);

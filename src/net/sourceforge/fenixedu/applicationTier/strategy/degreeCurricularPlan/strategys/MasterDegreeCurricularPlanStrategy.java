@@ -35,7 +35,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
          * @return A boolean indicating if he has fineshed it or not.
          */
     public boolean checkEndOfScholarship(StudentCurricularPlan studentCurricularPlan)
-	    throws ExcepcaoPersistencia {
+	    {
 	double studentCredits = 0;
 
 	DegreeCurricularPlan degreeCurricularPlan = super.getDegreeCurricularPlan();
@@ -64,7 +64,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
     }
 
     public Date dateOfEndOfScholarship(StudentCurricularPlan studentCurricularPlan)
-	    throws ExcepcaoPersistencia {
+	    {
 
 	Date date = null;
 	InfoEnrolmentEvaluation infoEnrolmentEvaluation = null;

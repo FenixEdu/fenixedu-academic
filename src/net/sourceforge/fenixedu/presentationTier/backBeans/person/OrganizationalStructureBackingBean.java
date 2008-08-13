@@ -88,7 +88,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return result;
     }
 
-    public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
+    public String getUnits() throws FenixFilterException, FenixServiceException{
 	StringBuilder buffer = new StringBuilder();
 	YearMonthDay currentDate = new YearMonthDay();
 	String partyTypeOrClassificationName = null;
@@ -193,7 +193,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public Map<String, Set<Unit>> getAllInstitutionSubUnits() throws FenixFilterException,
-	    FenixServiceException, ExcepcaoPersistencia {
+	    FenixServiceException{
 
 	YearMonthDay currentDate = new YearMonthDay();
 
@@ -254,7 +254,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return result;
     }
 
-    public String getInstituitionName() throws ExcepcaoPersistencia, FenixServiceException {
+    public String getInstituitionName() throws FenixServiceException {
 	Unit institution = UnitUtils.readInstitutionUnit();
 	if (institution != null) {
 	    return institution.getName();
@@ -262,7 +262,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return null;
     }
 
-    public String getTitle() throws ExcepcaoPersistencia, FenixFilterException, FenixServiceException {
+    public String getTitle() throws FenixFilterException, FenixServiceException {
 	StringBuffer buffer = new StringBuffer();
 	buffer.append("<p><em>");
 	buffer.append(this.getUnit().getParentUnitsPresentationName());

@@ -22,7 +22,7 @@ public class CreateProjectParticipant extends Service  {
      * @throws ExcepcaoPersistencia
      * @throws FenixServiceException - In case the project doesn't exist.
      */
-    public ProjectParticipation run(ProjectParticipantSimpleCreationBean bean, Integer projectId) throws ExcepcaoPersistencia, FenixServiceException {
+    public ProjectParticipation run(ProjectParticipantSimpleCreationBean bean, Integer projectId) throws FenixServiceException {
         ProjectParticipation participation = null;
         final Project project = rootDomainObject.readProjectByOID(projectId);
         if(project == null){
@@ -44,7 +44,7 @@ public class CreateProjectParticipant extends Service  {
      * @throws ExcepcaoPersistencia
      * @throws FenixServiceException - In case the project doesn't exist.
      */
-    public ProjectParticipation run(ProjectParticipantFullCreationBean bean, Integer projectId) throws ExcepcaoPersistencia, FenixServiceException {
+    public ProjectParticipation run(ProjectParticipantFullCreationBean bean, Integer projectId) throws FenixServiceException {
         final ProjectParticipation participation;
         final ExternalContract externalPerson;
         
@@ -74,7 +74,7 @@ public class CreateProjectParticipant extends Service  {
     }    
     
     
-    public ProjectParticipation run(ProjectParticipantUnitCreationBean bean, Integer projectId) throws ExcepcaoPersistencia, FenixServiceException {
+    public ProjectParticipation run(ProjectParticipantUnitCreationBean bean, Integer projectId) throws FenixServiceException {
         final ProjectParticipation participation;
         final Unit unit;
         

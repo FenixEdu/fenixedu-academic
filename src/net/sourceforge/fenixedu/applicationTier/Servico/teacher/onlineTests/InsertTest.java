@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class InsertTest extends Service {
 
-    public Integer run(Integer executionCourseId, String title, String information) throws ExcepcaoPersistencia,
+    public Integer run(Integer executionCourseId, String title, String information) throws
 	    InvalidArgumentsServiceException {
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 	if (executionCourse == null) {

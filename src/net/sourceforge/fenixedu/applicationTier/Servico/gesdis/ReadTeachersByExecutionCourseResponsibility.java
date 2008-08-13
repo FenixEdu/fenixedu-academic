@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadTeachersByExecutionCourseResponsibility extends Service {
 
-    public List run(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
+    public List run(InfoExecutionCourse infoExecutionCourse) {
         return run(infoExecutionCourse.getIdInternal());
     }
 
-    public List run(Integer executionCourseID) throws ExcepcaoPersistencia {
+    public List run(Integer executionCourseID) {
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 
         final List<InfoTeacher> result = new ArrayList<InfoTeacher>();

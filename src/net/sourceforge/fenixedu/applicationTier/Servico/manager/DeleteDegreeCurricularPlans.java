@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteDegreeCurricularPlans extends Service {
 
-	public List run(List degreeCurricularPlansIds) throws FenixServiceException, ExcepcaoPersistencia {
+	public List run(List degreeCurricularPlansIds) throws FenixServiceException{
 		Iterator<Integer> iter = degreeCurricularPlansIds.iterator();
 
 		List<String> undeletedDegreeCurricularPlansNames = new ArrayList<String>();

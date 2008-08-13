@@ -14,7 +14,7 @@ import org.apache.commons.collections.Predicate;
 
 public class ReadDomainTeacherByUsername extends Service {
 
-    public Teacher run(final String username) throws ExcepcaoPersistencia {
+    public Teacher run(final String username) {
 	List<Role> roles = rootDomainObject.getRoles();
 	Role teacherRole = (Role) CollectionUtils.find(roles, new Predicate() {
 	    public boolean evaluate(Object object) {

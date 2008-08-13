@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class LoggedCoordinatorCanEdit extends Service {
 
     public Boolean run(Integer executionDegreeCode, Integer curricularCourseCode, String username)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         Boolean result = new Boolean(false);
 
         if (executionDegreeCode == null) {

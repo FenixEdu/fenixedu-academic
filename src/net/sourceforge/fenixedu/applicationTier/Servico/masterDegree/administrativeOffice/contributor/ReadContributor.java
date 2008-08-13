@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadContributor extends Service {
 
-	public InfoContributor run(Integer contributorNumber) throws FenixServiceException, ExcepcaoPersistencia {
+	public InfoContributor run(Integer contributorNumber) throws FenixServiceException{
         final Party contributor = Party.readByContributorNumber(contributorNumber.toString());
 		if (contributor == null) {
             throw new ExcepcaoInexistente();

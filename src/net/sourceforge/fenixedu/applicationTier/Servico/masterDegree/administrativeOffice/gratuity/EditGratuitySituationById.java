@@ -11,33 +11,28 @@ import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditGratuitySituationById extends Service {
 
-    public Object run(InfoGratuitySituation infoGratuitySituation) throws FenixServiceException,
-	    ExcepcaoPersistencia {
+    public Object run(InfoGratuitySituation infoGratuitySituation) throws FenixServiceException {
 	if (infoGratuitySituation == null) {
 	    throw new FenixServiceException();
 	}
 
-	StudentCurricularPlan studentCurricularPlan = rootDomainObject
-		.readStudentCurricularPlanByOID(infoGratuitySituation.getInfoStudentCurricularPlan()
-			.getIdInternal());
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(infoGratuitySituation
+		.getInfoStudentCurricularPlan().getIdInternal());
 
-	GratuityValues gratuityValues = rootDomainObject.readGratuityValuesByOID(infoGratuitySituation
-		.getInfoGratuityValues().getIdInternal());
+	GratuityValues gratuityValues = rootDomainObject.readGratuityValuesByOID(infoGratuitySituation.getInfoGratuityValues()
+		.getIdInternal());
 
-	final GratuitySituation gratuitySituation = studentCurricularPlan
-		.getGratuitySituationByGratuityValues(gratuityValues);
+	final GratuitySituation gratuitySituation = studentCurricularPlan.getGratuitySituationByGratuityValues(gratuityValues);
 
 	if (gratuitySituation == null) {
 	    throw new NonExistingServiceException("Gratuity Situation not exist yet.");
 	}
 
 	// set employee who made register
-	final Person person = Person.readPersonByUsername(infoGratuitySituation.getInfoEmployee()
-		.getPerson().getUsername());
+	final Person person = Person.readPersonByUsername(infoGratuitySituation.getInfoEmployee().getPerson().getUsername());
 	if (person != null) {
 	    gratuitySituation.setEmployee(person.getEmployee());
 	}

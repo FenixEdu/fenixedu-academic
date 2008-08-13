@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class EndCurricularCourseScope extends Service {
 
-    public void run(InfoCurricularCourseScopeEditor newInfoCurricularCourseScope) throws ExcepcaoPersistencia,
+    public void run(InfoCurricularCourseScopeEditor newInfoCurricularCourseScope) throws
             FenixServiceException {
 
         if (!newInfoCurricularCourseScope.getEndDate()

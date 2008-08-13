@@ -21,34 +21,34 @@ public interface IPersistentSuportOracle {
 
     public abstract PreparedStatement prepareStatement(String statement) throws ExcepcaoPersistencia;
 
-    public abstract IPersistentProject getIPersistentProject() throws ExcepcaoPersistencia;
+    public abstract IPersistentProject getIPersistentProject();
 
-    public abstract IPersistentProjectUser getIPersistentProjectUser() throws ExcepcaoPersistencia;
+    public abstract IPersistentProjectUser getIPersistentProjectUser();
 
-    public abstract IPersistentRubric getIPersistentRubric() throws ExcepcaoPersistencia;
+    public abstract IPersistentRubric getIPersistentRubric();
 
-    public abstract IPersistentExpensesReport getIPersistentExpensesReport() throws ExcepcaoPersistencia;
+    public abstract IPersistentExpensesReport getIPersistentExpensesReport();
 
-    public abstract IPersistentReport getIPersistentRevenueReport() throws ExcepcaoPersistencia;
+    public abstract IPersistentReport getIPersistentRevenueReport();
 
-    public abstract IPersistentSummaryReport getIPersistentSummaryReport() throws ExcepcaoPersistencia;
+    public abstract IPersistentSummaryReport getIPersistentSummaryReport();
 
-    public abstract IPersistentExpensesResume getIPersistentExpensesResume() throws ExcepcaoPersistencia;
+    public abstract IPersistentExpensesResume getIPersistentExpensesResume();
 
-    public abstract IPersistentReport getIPersistentMovementReport() throws ExcepcaoPersistencia;
+    public abstract IPersistentReport getIPersistentMovementReport();
 
-    public abstract IPersistentExpensesReport getIPersistentCompleteExpensesReport() throws ExcepcaoPersistencia;
+    public abstract IPersistentExpensesReport getIPersistentCompleteExpensesReport();
 
-    public abstract IPersistentOpeningProjectFileReport getIPersistentOpeningProjectFileReport() throws ExcepcaoPersistencia;
+    public abstract IPersistentOpeningProjectFileReport getIPersistentOpeningProjectFileReport();
 
-    public abstract IPersistentReport getIPersistentProjectMemberBudget() throws ExcepcaoPersistencia;
+    public abstract IPersistentReport getIPersistentProjectMemberBudget();
 
-    public abstract IPersistentReport getIPersistentProjectBudgetaryBalanceReport() throws ExcepcaoPersistencia;
+    public abstract IPersistentReport getIPersistentProjectBudgetaryBalanceReport();
 
-    public abstract IPersistentReport getIPersistentGeneratedOverheadsReport() throws ExcepcaoPersistencia;
+    public abstract IPersistentReport getIPersistentGeneratedOverheadsReport();
 
-    public abstract IPersistentReport getIPersistentTransferedOverheadsReport() throws ExcepcaoPersistencia;
+    public abstract IPersistentReport getIPersistentTransferedOverheadsReport();
 
-    public abstract IPersistentReport getIPersistentOverheadsSummaryReport() throws ExcepcaoPersistencia;
+    public abstract IPersistentReport getIPersistentOverheadsSummaryReport();
 
 }

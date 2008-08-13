@@ -21,7 +21,7 @@ import org.joda.time.YearMonthDay;
 public class ReadPersonFunctionsByPersonIDAndExecutionYearID extends Service {
 
     public List<PersonFunction> run(Integer personID, Integer executionYearID)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         Person person = (Person) rootDomainObject.readPartyByOID(personID);
 
         List<PersonFunction> personFunctions = null;

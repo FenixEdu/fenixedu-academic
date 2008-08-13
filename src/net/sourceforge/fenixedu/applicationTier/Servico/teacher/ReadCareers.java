@@ -20,7 +20,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class ReadCareers extends Service {
 
-    public SiteView run(CareerType careerType, String user) throws ExcepcaoPersistencia {
+    public SiteView run(CareerType careerType, String user) {
         final Teacher teacher = Teacher.readTeacherByUsername(user);
         
         final InfoSiteCareers bodyComponent = new InfoSiteCareers();
@@ -35,7 +35,7 @@ public class ReadCareers extends Service {
     }
 
     private List getInfoCareers(Teacher teacher, CareerType careerType)
-            throws ExcepcaoPersistencia {
+            {
 
         final List<InfoCareer> oldestCareers = new ArrayList();
         final List<InfoCareer> newestCareers = new ArrayList();

@@ -14,7 +14,7 @@ public class GroupSiteComponentService extends Service {
 
     public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent,
             Integer infoSiteCode, Integer groupPropertiesCode, Integer code, Integer shiftCode,
-            Integer value) throws FenixServiceException, ExcepcaoPersistencia {
+            Integer value) throws FenixServiceException{
         ExecutionCourseSite site = null;
         if (infoSiteCode != null) {
             site = ExecutionCourseSite.readExecutionCourseSiteByOID(infoSiteCode);

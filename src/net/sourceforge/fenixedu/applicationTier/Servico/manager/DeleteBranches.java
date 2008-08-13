@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteBranches extends Service {
 
 	// delete a set of branches
-	public List run(List internalIds, Boolean forceDelete) throws FenixServiceException, ExcepcaoPersistencia {
+	public List run(List internalIds, Boolean forceDelete) throws FenixServiceException{
 		Iterator iter = internalIds.iterator();
 
 		List undeletedCodes = new ArrayList();

@@ -66,7 +66,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
     }
 
     public Double calculateStudentRegularAverage(StudentCurricularPlan studentCurricularPlan)
-	    throws ExcepcaoPersistencia {
+	    {
 	float marks = 0;
 	int numberOfCourses = 0;
 
@@ -95,7 +95,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
     }
 
     public Double calculateStudentWeightedAverage(StudentCurricularPlan studentCurricularPlan)
-	    throws ExcepcaoPersistencia {
+	    {
 	float marks = 0;
 	float numberOfWeigths = 0;
 
@@ -129,7 +129,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
     }
 
     public void calculateStudentAverage(StudentCurricularPlan studentCurricularPlan,
-	    InfoFinalResult infoFinalResult) throws ExcepcaoPersistencia {
+	    InfoFinalResult infoFinalResult) {
 
 	// Degrees that use the Mixed Average (Average between Simple and
 	// Weighted average)

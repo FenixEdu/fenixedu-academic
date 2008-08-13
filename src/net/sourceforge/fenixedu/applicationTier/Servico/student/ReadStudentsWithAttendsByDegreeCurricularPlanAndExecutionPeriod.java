@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod extends Service {
 
     public List<InfoStudentWithAttendsAndInquiriesRegistries> run(final Integer degreeCurricularPlanId,
-	    final Integer executionPeriodId, final Boolean onlyAttendsWithTeachers) throws ExcepcaoPersistencia,
+	    final Integer executionPeriodId, final Boolean onlyAttendsWithTeachers) throws
 	    FenixServiceException {
 
 	if (degreeCurricularPlanId == null) {

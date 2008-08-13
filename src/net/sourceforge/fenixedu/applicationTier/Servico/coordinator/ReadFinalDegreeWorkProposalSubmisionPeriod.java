@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadFinalDegreeWorkProposalSubmisionPeriod extends Service {
 
-    public InfoScheduleing run(Integer executionDegreeOID) throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoScheduleing run(Integer executionDegreeOID) throws FenixServiceException{
 
         InfoScheduleing infoScheduleing = null;
 

@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class CreateGrouping extends Service {
 
     public boolean run(Integer executionCourseID, InfoGrouping infoGrouping)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
         if (executionCourse == null) {

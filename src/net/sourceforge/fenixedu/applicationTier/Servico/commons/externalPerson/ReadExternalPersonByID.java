@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExternalPersonByID extends Service {
 
-    public Object run(Integer externalPersonID) throws FenixServiceException, ExcepcaoPersistencia {
+    public Object run(Integer externalPersonID) throws FenixServiceException{
         InfoExternalPerson infoExternalPerson = null;
         ExternalContract externalPerson = null;
 

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditResearchActivityParticipants extends Service {
 
 	public List<ResearchActivityParticipantEditionBean> run(
-			List<ResearchActivityParticipantEditionBean> beans) throws ExcepcaoPersistencia,
+			List<ResearchActivityParticipantEditionBean> beans) throws
 			FenixServiceException {
 
 		List<ResearchActivityParticipantEditionBean> notEditedParticipants = new ArrayList<ResearchActivityParticipantEditionBean>();

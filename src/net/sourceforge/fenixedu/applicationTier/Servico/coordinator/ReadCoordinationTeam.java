@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadCoordinationTeam extends Service {
 
-    public List run(Integer executionDegreeId) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer executionDegreeId) throws FenixServiceException{
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
         if (executionDegree == null) {
             throw new FenixServiceException("errors.invalid.execution.degree");

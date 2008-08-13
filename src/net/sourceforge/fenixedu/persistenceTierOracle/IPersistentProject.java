@@ -18,7 +18,8 @@ public interface IPersistentProject {
 
     public abstract List<Project> readByProjectsCodes(List<Integer> projectCodes) throws ExcepcaoPersistencia;
 
-    public abstract List<Project> readByCoordinatorAndNotProjectsCodes(Integer coordinatorId, List projectCodes) throws ExcepcaoPersistencia;
+    public abstract List<Project> readByCoordinatorAndNotProjectsCodes(Integer coordinatorId, List projectCodes)
+	    throws ExcepcaoPersistencia;
 
     public abstract Project readProject(Integer projectCode) throws ExcepcaoPersistencia;
 

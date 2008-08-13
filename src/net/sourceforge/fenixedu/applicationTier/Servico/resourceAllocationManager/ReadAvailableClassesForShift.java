@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadAvailableClassesForShift extends Service {
 
-    public List run(Integer shiftOID) throws ExcepcaoPersistencia {
+    public List run(Integer shiftOID) {
 
         final Shift shift = rootDomainObject.readShiftByOID(shiftOID);
         final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();

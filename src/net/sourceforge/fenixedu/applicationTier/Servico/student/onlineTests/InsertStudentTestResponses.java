@@ -46,7 +46,7 @@ public class InsertStudentTestResponses extends Service {
     private String path;
 
     public InfoSiteStudentTestFeedback run(Registration registration, Integer studentNumber, final Integer distributedTestId,
-	    Response[] response, String path) throws FenixServiceException, ExcepcaoPersistencia {
+	    Response[] response, String path) throws FenixServiceException{
 
 	String logIdString = StringAppender.append("student num", studentNumber.toString(), " testId ", distributedTestId
 		.toString());

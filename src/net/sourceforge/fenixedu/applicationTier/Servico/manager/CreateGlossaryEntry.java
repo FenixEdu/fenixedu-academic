@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class CreateGlossaryEntry extends Service {
 
-    public void run(InfoGlossaryEntry infoGlossaryEntry) throws ExcepcaoPersistencia {
+    public void run(InfoGlossaryEntry infoGlossaryEntry) {
         GlossaryEntry glossaryEntry = new GlossaryEntry();
         glossaryEntry.setTerm(infoGlossaryEntry.getTerm());
         glossaryEntry.setDefinition(infoGlossaryEntry.getDefinition());

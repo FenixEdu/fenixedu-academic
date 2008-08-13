@@ -21,8 +21,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.ResponseLID;
@@ -30,10 +28,11 @@ import net.sourceforge.fenixedu.util.tests.ResponseNUM;
 import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ChangeStudentTestQuestionMark extends Service {
     public void run(Integer executionCourseId, Integer distributedTestId, Double newMark, Integer questionId, Integer studentId,
-	    TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, ExcepcaoPersistencia {
+	    TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
 	path = path.replace('\\', '/');
 
 	DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
@@ -105,7 +104,7 @@ public class ChangeStudentTestQuestionMark extends Service {
 	}
     }
 
-    private String getNewStudentMark(DistributedTest dt, Registration s) throws ExcepcaoPersistencia {
+    private String getNewStudentMark(DistributedTest dt, Registration s) {
 	double totalMark = 0;
 	Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(s, dt);
 	for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {

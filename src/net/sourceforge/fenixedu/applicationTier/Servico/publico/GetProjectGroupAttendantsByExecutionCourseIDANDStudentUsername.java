@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
 public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername extends Service {
 
     public StudentGroupAttendacyInformation run(Integer executionCourseID, String username)
-            throws BDException, ExcepcaoPersistencia {
+            throws BDException{
         
         Registration registration = Registration.readByUsername(username);
 

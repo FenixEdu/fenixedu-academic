@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetAllCasesStudy extends Service {
 
-	public List run() throws BDException, ExcepcaoPersistencia {
+	public List run() throws BDException{
 		List infoCases = new LinkedList();
 
 		List cases = CaseStudy.getAllCaseStudies();

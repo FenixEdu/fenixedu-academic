@@ -54,5 +54,5 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
         }
     }
 
-    abstract protected boolean verifyCondition(IUserView id, Integer objectId) throws ExcepcaoPersistencia;
+    abstract protected boolean verifyCondition(IUserView id, Integer objectId) ;
 }

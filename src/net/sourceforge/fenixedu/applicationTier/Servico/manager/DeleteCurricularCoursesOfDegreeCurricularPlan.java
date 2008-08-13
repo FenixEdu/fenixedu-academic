@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
 public class DeleteCurricularCoursesOfDegreeCurricularPlan extends Service {
 
     // delete a set of curricularCourses
-    public List run(List curricularCoursesIds) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(List curricularCoursesIds) throws FenixServiceException{
 
         Iterator iter = curricularCoursesIds.iterator();
         List undeletedCurricularCourses = new ArrayList();

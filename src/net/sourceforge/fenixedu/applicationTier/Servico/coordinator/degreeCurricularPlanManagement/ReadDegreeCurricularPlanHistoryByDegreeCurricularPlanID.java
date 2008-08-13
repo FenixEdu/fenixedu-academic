@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID extends Service {
-    public InfoDegreeCurricularPlan run(Integer degreeCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoDegreeCurricularPlan run(Integer degreeCurricularPlanID) throws FenixServiceException{
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 

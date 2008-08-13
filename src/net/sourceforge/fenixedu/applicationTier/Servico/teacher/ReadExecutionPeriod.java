@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionPeriod extends Service {
 
-	public InfoExecutionPeriod run(Integer executionCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
+	public InfoExecutionPeriod run(Integer executionCourseCode) throws FenixServiceException{
 		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 		ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
 		return InfoExecutionPeriod.newInfoFromDomain(executionSemester);

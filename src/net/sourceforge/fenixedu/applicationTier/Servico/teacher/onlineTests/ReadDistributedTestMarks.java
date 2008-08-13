@@ -33,7 +33,7 @@ import org.apache.commons.beanutils.BeanComparator;
 public class ReadDistributedTestMarks extends Service {
 
     public InfoSiteStudentsTestMarks run(Integer executionCourseId, Integer distributedTestId,
-            String path) throws FenixServiceException, ExcepcaoPersistencia {
+            String path) throws FenixServiceException{
 
         InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
 

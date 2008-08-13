@@ -17,7 +17,7 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadEmptyRoomsForExam extends Service {
 
-    public List run(InfoExam infoExam) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(InfoExam infoExam) throws FenixServiceException{
         List availableInfoRooms = null;
 
         Transformer TRANSFORM_TO_INFOROOM = new Transformer() {

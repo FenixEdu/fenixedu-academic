@@ -21,7 +21,7 @@ public class DegreeCurricularPlanAuthorizationFilter extends DomainObjectAuthori
 
     @Override
     protected boolean verifyCondition(IUserView id, Integer degreeCurricularPlanID)
-            throws ExcepcaoPersistencia {
+            {
         final Person person = id.getPerson();
         final Teacher teacher = person == null ? null : person.getTeacher();
 

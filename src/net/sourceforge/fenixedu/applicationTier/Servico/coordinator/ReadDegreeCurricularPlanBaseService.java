@@ -27,7 +27,7 @@ import org.apache.commons.collections.Transformer;
 abstract public class ReadDegreeCurricularPlanBaseService extends Service {
 
     protected List<InfoCurricularCourseScope> readActiveCurricularCourseScopes(final Integer degreeCurricularPlanId)
-            throws ExcepcaoPersistencia {
+            {
         List<InfoCurricularCourseScope> infoActiveScopes = null;
 
         if (degreeCurricularPlanId != null) {

@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod extends Service {
 
     public List run(Integer executionDegreeId, Integer semester, Integer teacherType)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         
         final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
 

@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
  */
 public class ReadDistributedTestMarksStatistics extends Service {
 
-    public SiteView run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException, ExcepcaoPersistencia {
+    public SiteView run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException{
 
         InfoSiteStudentsTestMarksStatistics infoSiteStudentsTestMarksStatistics = new InfoSiteStudentsTestMarksStatistics();
 

@@ -20,7 +20,7 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadShiftsByTypeFromExecutionCourse extends Service {
 
-    public List run(InfoExecutionCourse infoExecutionCourse, ShiftType tipoAula) throws ExcepcaoPersistencia {
+    public List run(InfoExecutionCourse infoExecutionCourse, ShiftType tipoAula) {
     	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
     	final Set<Shift> shifts = executionCourse.findShiftByType(tipoAula);
 

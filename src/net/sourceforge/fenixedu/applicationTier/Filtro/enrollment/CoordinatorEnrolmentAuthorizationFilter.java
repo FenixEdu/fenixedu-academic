@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author João Mota
@@ -28,77 +27,74 @@ public class CoordinatorEnrolmentAuthorizationFilter extends AuthorizationByMany
 
     @Override
     protected Collection<RoleType> getNeededRoleTypes() {
-        List<RoleType> roles = new ArrayList<RoleType>();
-        roles.add(RoleType.COORDINATOR);
-        return roles;
+	List<RoleType> roles = new ArrayList<RoleType>();
+	roles.add(RoleType.COORDINATOR);
+	return roles;
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByManyRolesFilter#hasPrevilege(ServidorAplicacao.IUserView,
-     *      java.lang.Object[])
+     * @see
+     * ServidorAplicacao.Filtro.AuthorizationByManyRolesFilter#hasPrevilege(
+     * ServidorAplicacao.IUserView, java.lang.Object[])
      */
     protected String hasPrevilege(IUserView id, Object[] arguments) {
-        if (id.hasRoleType(RoleType.COORDINATOR) && arguments[0] != null) {
-            if (!verifyCoordinator(id.getPerson(), arguments)) {
-                return "noAuthorization";
-            }
-        } else {
-            return "noAuthorization";
-        }
-        return null;
+	if (id.hasRoleType(RoleType.COORDINATOR) && arguments[0] != null) {
+	    if (!verifyCoordinator(id.getPerson(), arguments)) {
+		return "noAuthorization";
+	    }
+	} else {
+	    return "noAuthorization";
+	}
+	return null;
     }
 
     protected StudentCurricularPlan readStudentCurricularPlan(Object[] arguments) {
-        StudentCurricularPlan studentCurricularPlan = null;
-        if (arguments[1] != null) {
+	StudentCurricularPlan studentCurricularPlan = null;
+	if (arguments[1] != null) {
 
-            studentCurricularPlan = rootDomainObject
-                    .readStudentCurricularPlanByOID((Integer) arguments[1]);
-        } else {
-            Registration registration = Registration.readStudentByNumberAndDegreeType((Integer) arguments[2],
-                    DegreeType.DEGREE);
-            if (registration != null) {
-                studentCurricularPlan = registration.getLastStudentCurricularPlan();
-            }
-        }
-        return studentCurricularPlan;
+	    studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID((Integer) arguments[1]);
+	} else {
+	    Registration registration = Registration.readStudentByNumberAndDegreeType((Integer) arguments[2], DegreeType.DEGREE);
+	    if (registration != null) {
+		studentCurricularPlan = registration.getLastStudentCurricularPlan();
+	    }
+	}
+	return studentCurricularPlan;
     }
 
-    protected Registration readStudent(IUserView id) throws ExcepcaoPersistencia {
-        return Registration.readByUsername(id.getUtilizador());
+    protected Registration readStudent(IUserView id) {
+	return Registration.readByUsername(id.getUtilizador());
     }
 
-    protected Registration readStudent(Object[] arguments) throws ExcepcaoPersistencia {
-        StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments);
-        if (studentCurricularPlan == null) {
-            return null;
-        }
+    protected Registration readStudent(Object[] arguments) {
+	StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments);
+	if (studentCurricularPlan == null) {
+	    return null;
+	}
 
-        return studentCurricularPlan.getRegistration();
+	return studentCurricularPlan.getRegistration();
     }
 
     protected Teacher readTeacher(IUserView id) {
-        return id.getPerson().getTeacher();
+	return id.getPerson().getTeacher();
     }
 
     protected boolean verifyCoordinator(Person person, Object[] arguments) {
 
-        ExecutionDegree executionDegree = rootDomainObject
-                .readExecutionDegreeByOID((Integer) arguments[0]);
-        Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
+	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID((Integer) arguments[0]);
+	Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
 
-        if (coordinator == null) {
-            return false;
-        }
+	if (coordinator == null) {
+	    return false;
+	}
 
-        StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments);
-        if (studentCurricularPlan == null) {
-            return false;
-        }
-        return studentCurricularPlan.getDegreeCurricularPlan().equals(
-                coordinator.getExecutionDegree().getDegreeCurricularPlan());
+	StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments);
+	if (studentCurricularPlan == null) {
+	    return false;
+	}
+	return studentCurricularPlan.getDegreeCurricularPlan().equals(coordinator.getExecutionDegree().getDegreeCurricularPlan());
 
     }
 }

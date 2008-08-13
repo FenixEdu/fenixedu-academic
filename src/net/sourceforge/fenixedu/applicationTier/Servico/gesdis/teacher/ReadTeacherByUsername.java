@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadTeacherByUsername extends Service {
 
-    public InfoTeacher run(String username) throws ExcepcaoPersistencia {        
+    public InfoTeacher run(String username) {        
         final Teacher teacher = Teacher.readTeacherByUsername(username);
 
         if (teacher != null) {

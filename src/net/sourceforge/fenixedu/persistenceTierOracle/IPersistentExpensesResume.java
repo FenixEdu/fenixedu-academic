@@ -9,12 +9,16 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 public interface IPersistentExpensesResume {
 
-    public abstract ISummaryPTEReportLine getSummaryPTEReportLine(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia;
+    public abstract ISummaryPTEReportLine getSummaryPTEReportLine(ReportType reportType, Integer projectCode)
+	    throws ExcepcaoPersistencia;
 
-    public abstract ISummaryEURReportLine getSummaryEURReportLine(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia;
+    public abstract ISummaryEURReportLine getSummaryEURReportLine(ReportType reportType, Integer projectCode)
+	    throws ExcepcaoPersistencia;
 
-    public abstract IAdiantamentosReportLine getAdiantamentosReportLine(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia;
+    public abstract IAdiantamentosReportLine getAdiantamentosReportLine(ReportType reportType, Integer projectCode)
+	    throws ExcepcaoPersistencia;
 
-    public abstract ICabimentosReportLine getCabimentosReportLine(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia;
+    public abstract ICabimentosReportLine getCabimentosReportLine(ReportType reportType, Integer projectCode)
+	    throws ExcepcaoPersistencia;
 
 }

@@ -17,15 +17,16 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class PersistentReport {
 
-    protected String getTableOrViewName(PersistentSuportOracle p, ReportType reportType) throws ExcepcaoPersistencia, SQLException {
-        String query = "select TABLE_OR_VIEW from web_report where REPORT_TYPE = " + reportType.getReportType();
-        PreparedStatement stmt = p.prepareStatement(query);
-        ResultSet rs = stmt.executeQuery();
-        String tableOrView = null;
-        if (rs.next()) {
-            tableOrView = rs.getString(1);
-        }
-        rs.close();
-        return tableOrView;
+    protected String getTableOrViewName(PersistentSuportOracle p, ReportType reportType) throws SQLException,
+	    ExcepcaoPersistencia {
+	String query = "select TABLE_OR_VIEW from web_report where REPORT_TYPE = " + reportType.getReportType();
+	PreparedStatement stmt = p.prepareStatement(query);
+	ResultSet rs = stmt.executeQuery();
+	String tableOrView = null;
+	if (rs.next()) {
+	    tableOrView = rs.getString(1);
+	}
+	rs.close();
+	return tableOrView;
     }
 }

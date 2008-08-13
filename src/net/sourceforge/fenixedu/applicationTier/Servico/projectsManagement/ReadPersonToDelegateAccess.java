@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadPersonToDelegateAccess extends Service {
 
-    public InfoPerson run(String userView, String costCenter, String username, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoPerson run(String userView, String costCenter, String username, String userNumber) throws FenixServiceException{
         Person person = Person.readPersonByUsername(username);
         if (person == null) {
             throw new ExcepcaoInexistente();
@@ -27,7 +27,7 @@ public class ReadPersonToDelegateAccess extends Service {
         return InfoPerson.newInfoFromDomain(person);
     }
 
-    private boolean isTeacherOrEmployee(Person person) throws ExcepcaoPersistencia {
+    private boolean isTeacherOrEmployee(Person person) {
         if (person.getTeacher() == null) {
             if (person.getEmployee() == null) {
                 return false;

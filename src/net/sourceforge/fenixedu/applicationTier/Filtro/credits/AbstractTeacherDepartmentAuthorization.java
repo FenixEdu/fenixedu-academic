@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -27,30 +26,28 @@ import pt.utl.ist.berserk.ServiceResponse;
 public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
 
     public void execute(ServiceRequest serviceRequest, ServiceResponse serviceResponse) throws Exception {
-        IUserView requester = (IUserView) serviceRequest.getRequester();
-        if ((requester == null)
-                || !requester.hasRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER)) {
-            throw new NotAuthorizedException();
-        }
+	IUserView requester = (IUserView) serviceRequest.getRequester();
+	if ((requester == null) || !requester.hasRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER)) {
+	    throw new NotAuthorizedException();
+	}
 
-        Integer teacherId = getTeacherId(serviceRequest.getServiceParameters().parametersArray());
-        if (teacherId != null) {
+	Integer teacherId = getTeacherId(serviceRequest.getServiceParameters().parametersArray());
+	if (teacherId != null) {
 
-            final Person requesterPerson = requester.getPerson();
+	    final Person requesterPerson = requester.getPerson();
 
-            Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
+	    Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
 
-            Department teacherDepartment = teacher.getCurrentWorkingDepartment();
+	    Department teacherDepartment = teacher.getCurrentWorkingDepartment();
 
-            List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
+	    List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
 
-            if (!departmentsWithAccessGranted.contains(teacherDepartment)) {
-                throw new NotAuthorizedException();
-            }
-        }
+	    if (!departmentsWithAccessGranted.contains(teacherDepartment)) {
+		throw new NotAuthorizedException();
+	    }
+	}
 
     }
 
-    protected abstract Integer getTeacherId(Object[] arguments)
-    	throws FenixServiceException, ExcepcaoPersistencia;
+    protected abstract Integer getTeacherId(Object[] arguments) throws FenixServiceException;
 }

@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionDegreesByExecutionYear extends Service {
 
-    public List run(InfoExecutionYear infoExecutionYear) throws ExcepcaoPersistencia {
+    public List run(InfoExecutionYear infoExecutionYear) {
 
         final List infoExecutionDegreeList = new ArrayList();
         final List<ExecutionDegree>  executionDegrees = readExecutionDegrees(infoExecutionYear);
@@ -31,7 +31,7 @@ public class ReadExecutionDegreesByExecutionYear extends Service {
         return infoExecutionDegreeList;
     }
 
-    private List<ExecutionDegree> readExecutionDegrees(final InfoExecutionYear infoExecutionYear) throws ExcepcaoPersistencia {
+    private List<ExecutionDegree> readExecutionDegrees(final InfoExecutionYear infoExecutionYear) {
         if (infoExecutionYear == null) {
             return ExecutionDegree.getAllByExecutionYear(ExecutionYear.readCurrentExecutionYear()
                     .getYear());

@@ -16,7 +16,7 @@ import org.joda.time.YearMonthDay;
 public class EditPersonFunction extends Service {
 
     public void run(Integer personFunctionID, Integer functionID, YearMonthDay beginDate,
-            YearMonthDay endDate, Double credits) throws ExcepcaoPersistencia, FenixServiceException,
+            YearMonthDay endDate, Double credits) throws FenixServiceException,
             DomainException {
 
         PersonFunction person_Function = (PersonFunction) rootDomainObject

@@ -47,7 +47,7 @@ public class ReadCandidacies extends Service {
     public List run(Integer modalityID, Integer seminaryID, Integer themeID, Integer case1Id,
 	    Integer case2Id, Integer case3Id, Integer case4Id, Integer case5Id,
 	    Integer curricularCourseID, Integer degreeCurricularPlanID, Boolean approved)
-	    throws BDException, ExcepcaoPersistencia {
+	    throws BDException{
 	// IDs == -1 => not selected
 	// approved == nulll => not selected
 	//

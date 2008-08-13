@@ -53,7 +53,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
     public Object run(Integer executionCourseCode, List curricularPlansIds, List enrollmentTypeFilters, List shiftIds,
-	    List<WorkingStudentSelectionType> wsSelectionType) throws FenixServiceException, ExcepcaoPersistencia {
+	    List<WorkingStudentSelectionType> wsSelectionType) throws FenixServiceException{
 
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 	InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
@@ -302,7 +302,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
     }
 
     private TeacherAdministrationSiteView createSiteView(InfoForReadStudentsWithAttendsByExecutionCourse infoSiteStudents,
-	    ExecutionCourseSite site) throws FenixServiceException, ExcepcaoPersistencia {
+	    ExecutionCourseSite site) throws FenixServiceException{
 
 	TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
 	ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
@@ -329,7 +329,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
     }
 
     private Map getShiftsByAttends(final Set<Shift> shifts, final Attends attend, final Map<Integer, InfoShift> clonedShifts)
-	    throws ExcepcaoPersistencia {
+	    {
 	final Map result = new HashMap();
 
 	for (final Shift shift : shifts) {
@@ -395,7 +395,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 	return result;
     }
 
-    private Map getStudentGroupsMapFromGroupPropertiesList(List<Grouping> groupPropertiesList) throws ExcepcaoPersistencia {
+    private Map getStudentGroupsMapFromGroupPropertiesList(List<Grouping> groupPropertiesList) {
 
 	Map result = new HashMap();
 

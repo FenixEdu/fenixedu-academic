@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Angela 04/07/2003
@@ -19,7 +18,7 @@ public class AlterStudentEnrolmentEvaluation extends Service {
 
     public void run(Integer curricularCourseCode, Integer enrolmentEvaluationCode,
 	    InfoEnrolmentEvaluation infoEnrolmentEvaluation, Integer teacherNumber, IUserView userView)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException {
 
 	Person person = userView.getPerson();
 	if (person == null)

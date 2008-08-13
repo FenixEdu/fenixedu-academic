@@ -12,7 +12,7 @@ public class EditExercise extends Service {
 
 	public boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
 			String difficulty, Calendar learningTime, String level, String mainSubject,
-			String secondarySubject) throws FenixServiceException, ExcepcaoPersistencia {
+			String secondarySubject) throws FenixServiceException{
 		Metadata metadata = rootDomainObject.readMetadataByOID(metadataId);
 		if (metadata == null)
 			throw new InvalidArgumentsServiceException();

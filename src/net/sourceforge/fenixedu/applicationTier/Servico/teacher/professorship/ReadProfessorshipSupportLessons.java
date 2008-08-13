@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadProfessorshipSupportLessons extends Service {
 
     public ProfessorshipSupportLessonsDTO run(Integer teacherId, Integer executionCourseId)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         final ProfessorshipSupportLessonsDTO professorshipSupportLessonsDTO = new ProfessorshipSupportLessonsDTO();
 

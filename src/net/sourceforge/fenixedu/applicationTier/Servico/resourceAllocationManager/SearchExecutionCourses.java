@@ -37,7 +37,7 @@ import org.apache.commons.collections.Transformer;
 public class SearchExecutionCourses extends Service {
 
     public List<InfoExecutionCourse> run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
-	    InfoCurricularYear infoCurricularYear, String executionCourseName) throws ExcepcaoPersistencia {
+	    InfoCurricularYear infoCurricularYear, String executionCourseName) {
 
 	List<InfoExecutionCourse> result = null;
 

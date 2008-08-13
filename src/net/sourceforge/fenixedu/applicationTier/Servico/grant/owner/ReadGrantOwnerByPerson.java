@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadGrantOwnerByPerson extends Service {
 
-	public InfoGrantOwner run(Integer personId) throws FenixServiceException, ExcepcaoPersistencia {
+	public InfoGrantOwner run(Integer personId) throws FenixServiceException{
 
         InfoGrantOwner infoGrantOwner = null;
 		Person person = (Person) rootDomainObject.readPartyByOID(personId);

@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 
 public class PublishAprovedFinalDegreeWorkProposals extends Service {
 
-    public void run(Integer executionDegreeOID) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(Integer executionDegreeOID) throws FenixServiceException{
         if (executionDegreeOID != null) {
         	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
             Set<Proposal> aprovedFinalDegreeWorkProposals = executionDegree.getScheduling().findApprovedProposals();

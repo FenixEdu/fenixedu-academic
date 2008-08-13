@@ -41,7 +41,7 @@ public interface IDegreeCurricularPlanStrategy {
      * @return The Registration's Average
      */
     public Double calculateStudentRegularAverage(StudentCurricularPlan studentCurricularPlan)
-            throws ExcepcaoPersistencia;
+            ;
 
     /**
      * Calculate's the Registration's weighted average
@@ -53,7 +53,7 @@ public interface IDegreeCurricularPlanStrategy {
      * @return The Registration's Average
      */
     public Double calculateStudentWeightedAverage(StudentCurricularPlan studentCurricularPlan)
-            throws ExcepcaoPersistencia;
+            ;
 
     /**
      * 
@@ -62,6 +62,6 @@ public interface IDegreeCurricularPlanStrategy {
      * @throws ExcepcaoPersistencia
      */
     public void calculateStudentAverage(StudentCurricularPlan studentCurricularPlan,
-            InfoFinalResult infoFinalResult) throws ExcepcaoPersistencia;
+            InfoFinalResult infoFinalResult) ;
 
 }

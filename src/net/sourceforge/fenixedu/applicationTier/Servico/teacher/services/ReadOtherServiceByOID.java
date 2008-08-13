@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadOtherServiceByOID extends Service {
 
-    public OtherService run(Integer otherServiceID) throws ExcepcaoPersistencia {
+    public OtherService run(Integer otherServiceID) {
         return (OtherService) rootDomainObject.readTeacherServiceItemByOID(otherServiceID);
     }
     

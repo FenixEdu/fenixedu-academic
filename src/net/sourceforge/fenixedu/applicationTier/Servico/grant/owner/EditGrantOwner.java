@@ -39,7 +39,7 @@ public class EditGrantOwner extends Service {
 	return ((objectId == null) || objectId.equals(Integer.valueOf(0)));
     }
 
-    public Integer run(InfoGrantOwner infoGrantOwner) throws FenixServiceException, ExcepcaoPersistencia {
+    public Integer run(InfoGrantOwner infoGrantOwner) throws FenixServiceException{
 	Person person = null;
 	GrantOwner grantOwner = null;
 	Country country = null;

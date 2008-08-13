@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -25,8 +24,7 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
 
-    public List<CompetenceCourseStatisticsDTO> run(Integer departementID, Integer executionPeriodID)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+    public List<CompetenceCourseStatisticsDTO> run(Integer departementID, Integer executionPeriodID) throws FenixServiceException {
 	final List<CompetenceCourseStatisticsDTO> results = new ArrayList<CompetenceCourseStatisticsDTO>();
 
 	final Department department = rootDomainObject.readDepartmentByOID(departementID);

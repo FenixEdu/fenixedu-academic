@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
@@ -17,15 +16,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ViewReimbursementGuide extends Service {
 
-    public InfoReimbursementGuide run(Integer reimbursementGuideId) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public InfoReimbursementGuide run(Integer reimbursementGuideId) throws FenixServiceException {
 
-        ReimbursementGuide reimbursementGuide = rootDomainObject.readReimbursementGuideByOID(reimbursementGuideId);
-        if (reimbursementGuide == null) {
-            throw new NonExistingServiceException();
-        }
+	ReimbursementGuide reimbursementGuide = rootDomainObject.readReimbursementGuideByOID(reimbursementGuideId);
+	if (reimbursementGuide == null) {
+	    throw new NonExistingServiceException();
+	}
 
-        return InfoReimbursementGuide.newInfoFromDomain(reimbursementGuide);
+	return InfoReimbursementGuide.newInfoFromDomain(reimbursementGuide);
     }
 
 }

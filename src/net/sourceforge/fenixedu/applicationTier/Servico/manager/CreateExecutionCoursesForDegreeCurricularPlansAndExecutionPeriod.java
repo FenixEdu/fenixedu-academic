@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod extends Service {
 
-    public void run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID) throws ExcepcaoPersistencia {
+    public void run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID) {
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 	final Set<String> existentsExecutionCoursesSiglas = readExistingExecutionCoursesSiglas(executionSemester);
 	for (final Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {

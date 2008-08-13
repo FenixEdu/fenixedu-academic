@@ -20,7 +20,7 @@ public class EditCurriculumForCurricularCourse extends Service {
 
     public Boolean run(Integer infoExecutionDegreeId, Integer oldCurriculumId,
             Integer curricularCourseCode, InfoCurriculum newInfoCurriculum, String username,
-            String language) throws FenixServiceException, ExcepcaoPersistencia {
+            String language) throws FenixServiceException{
         Boolean result = new Boolean(false);
 
         if (oldCurriculumId == null) {

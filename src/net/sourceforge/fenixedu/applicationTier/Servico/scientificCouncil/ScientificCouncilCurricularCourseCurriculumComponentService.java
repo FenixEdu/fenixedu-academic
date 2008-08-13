@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ScientificCouncilCurricularCourseCurriculumComponentService extends Service {
 
     public SiteView run(ISiteComponent bodyComponent, Integer curricularCourseId, Integer curriculumId)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         ScientificCouncilCurricularCourseCurriculumComponentBuilder componentBuilder = ScientificCouncilCurricularCourseCurriculumComponentBuilder
                 .getInstance();

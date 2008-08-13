@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadInstitutionByName extends Service {
 
-    public Unit run(String institutionName) throws FenixServiceException, ExcepcaoPersistencia {        
+    public Unit run(String institutionName) throws FenixServiceException{        
         return UnitUtils.readExternalInstitutionUnitByName(institutionName);
     }
 }

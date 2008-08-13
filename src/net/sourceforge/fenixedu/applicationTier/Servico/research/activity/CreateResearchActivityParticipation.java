@@ -25,13 +25,13 @@ import org.joda.time.YearMonthDay;
 public class CreateResearchActivityParticipation extends Service {
 	
 	public void run(ResearchEvent event, ResearchActivityParticipationRole role, Person person, MultiLanguageString roleMessage)
-			throws ExcepcaoPersistencia, FenixServiceException {
+			throws FenixServiceException {
 
 		new EventParticipation(person, role, event, roleMessage);
 	}
 
 	public void run(ScientificJournal journal, ResearchActivityParticipationRole role, Person person, MultiLanguageString roleMessage, YearMonthDay begin, YearMonthDay end)
-			throws ExcepcaoPersistencia, FenixServiceException {
+			throws FenixServiceException {
 
 		new ScientificJournalParticipation(person, role, journal,roleMessage, begin, end);
 	}
@@ -43,7 +43,7 @@ public class CreateResearchActivityParticipation extends Service {
 		new ScientificJournalParticipation(unit, bean.getRole(), journal, bean.getRoleMessage(), bean.getBeginDate(), bean.getEndDate());
 	}
 	
-	public void run(ResearchEvent event, ParticipantBean bean) throws ExcepcaoPersistencia,
+	public void run(ResearchEvent event, ParticipantBean bean) throws
 		FenixServiceException {
 	
 		Unit unit = getUnit(bean.getUnit(), bean.getUnitName(), bean.isExternalParticipation());
@@ -59,7 +59,7 @@ public class CreateResearchActivityParticipation extends Service {
 	}
 		
 	public void run(ResearchCooperationCreationBean cooperationBean, Person person) 
-	throws ExcepcaoPersistencia, FenixServiceException {
+	throws FenixServiceException {
 
 		Unit unit = getUnit(cooperationBean.getUnit(), cooperationBean.getUnitName(), cooperationBean.isExternalParticipation());
 		

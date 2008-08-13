@@ -21,7 +21,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadActiveDegreeCurricularPlansByDegreeType extends Service {
 
     public Collection<InfoDegreeCurricularPlan> run(final DegreeType degreeType)
-            throws ExcepcaoPersistencia {
+            {
         
         List<DegreeCurricularPlan> degreeCurricularPlans = DegreeCurricularPlan.readByDegreeTypeAndState(degreeType, DegreeCurricularPlanState.ACTIVE);
         return CollectionUtils.collect(degreeCurricularPlans, new Transformer() {

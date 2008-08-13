@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class UpdateNonAffiliatedTeachersProfessorship extends Service {
 
     public void run(List<Integer> nonAffiliatedTeachersIds, Integer executionCourseId)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {

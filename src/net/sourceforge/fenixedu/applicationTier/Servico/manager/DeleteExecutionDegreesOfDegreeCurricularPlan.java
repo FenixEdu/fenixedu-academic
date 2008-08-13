@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 
-	public List run(List<Integer> executionDegreesIds) throws FenixServiceException, ExcepcaoPersistencia {
+	public List run(List<Integer> executionDegreesIds) throws FenixServiceException{
 		List<String> undeletedExecutionDegreesYears = new ArrayList<String>();
 
 		for (final Integer executionDegreeId : executionDegreesIds) {

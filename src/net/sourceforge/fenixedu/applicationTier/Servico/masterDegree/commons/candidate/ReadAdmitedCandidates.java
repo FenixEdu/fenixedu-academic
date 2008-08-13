@@ -23,7 +23,7 @@ public class ReadAdmitedCandidates extends Service {
      * @throws FenixServiceException
      * @throws ExcepcaoPersistencia 
      */
-    public List run(String[] candidateList, String[] ids) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(String[] candidateList, String[] ids) throws FenixServiceException{
         List<String> result = new ArrayList<String>();
 
         // Read the admited candidates

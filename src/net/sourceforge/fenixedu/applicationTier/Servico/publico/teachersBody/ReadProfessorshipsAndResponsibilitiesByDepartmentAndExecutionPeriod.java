@@ -26,7 +26,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod extends Service {
 
     public List run(Integer departmentId, Integer executionYearID, Integer semester, Integer teacherType)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         ExecutionYear executionYear = null;
         if (executionYearID != null) {

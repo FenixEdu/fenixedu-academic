@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadFinalDegreeWorksByTeacherIDAndExecutionYearID extends Service {
 
-    public List<Proposal> run(Integer teacherID, Integer executionYearID) throws ExcepcaoPersistencia,
+    public List<Proposal> run(Integer teacherID, Integer executionYearID) throws
             FenixServiceException {
         Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
         ExecutionYear executionYear = rootDomainObject.readExecutionYearByOID(executionYearID);

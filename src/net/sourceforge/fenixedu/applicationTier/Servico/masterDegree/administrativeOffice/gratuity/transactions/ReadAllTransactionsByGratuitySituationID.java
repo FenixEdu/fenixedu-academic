@@ -25,7 +25,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class ReadAllTransactionsByGratuitySituationID extends Service {
 
-    public List run(Integer gratuitySituationID) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer gratuitySituationID) throws FenixServiceException{
         GratuitySituation gratuitySituation = rootDomainObject
                 .readGratuitySituationByOID(gratuitySituationID);
         List<InsuranceTransaction> insuranceTransactionList = gratuitySituation

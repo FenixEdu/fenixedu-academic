@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DissociateProfessorShipsAndResponsibleFor extends Service {
 
     public Map run(Integer teacherNumber, List<Integer> professorships, List<Integer> responsibleFors)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         if (teacherNumber == null) {
             throw new FenixServiceException("nullTeacherNumber");

@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadTeacherServiceByTeacherIDAndExecutionPeriodID extends Service {
 
-    public TeacherService run(Integer teacherID, Integer executionPeriodID) throws ExcepcaoPersistencia {
+    public TeacherService run(Integer teacherID, Integer executionPeriodID) {
 	Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 

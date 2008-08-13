@@ -12,7 +12,7 @@ public class EditExternalPerson extends Service {
 
     public void run(Integer externalPersonID, String name, String address, Integer institutionID,
             String phone, String mobile, String homepage, String email) throws FenixServiceException,
-            ExcepcaoPersistencia, DomainException {
+              DomainException {
 
         ExternalContract storedExternalPerson = (ExternalContract) rootDomainObject.readAccountabilityByOID(externalPersonID);
         if (storedExternalPerson == null) {

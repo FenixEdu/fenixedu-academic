@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadAllCountries extends Service {
 
-    public Object run() throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
+    public Object run() throws ExcepcaoInexistente, FenixServiceException{
         List<InfoCountry> result = new ArrayList<InfoCountry>();
         
         List<Country> countries = rootDomainObject.getCountrys();

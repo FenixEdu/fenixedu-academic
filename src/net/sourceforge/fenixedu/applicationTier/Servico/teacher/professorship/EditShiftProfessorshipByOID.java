@@ -13,7 +13,7 @@ public class EditShiftProfessorshipByOID extends EditDomainObjectService {
 
     @Override
     protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject)
-            throws ExcepcaoPersistencia {
+            {
         InfoShiftProfessorship infoShiftProfessorship = (InfoShiftProfessorship) infoObject;
         ShiftProfessorship shiftProfessorship = (ShiftProfessorship) domainObject;
 

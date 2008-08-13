@@ -18,7 +18,7 @@ public class TeacherAdministrationSiteComponentService extends Service {
 
     public Object run(Integer infoExecutionCourseCode, ISiteComponent commonComponent,
             ISiteComponent bodyComponent, Integer infoSiteCode, Object obj1, Object obj2)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
     	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID( infoExecutionCourseCode);
         final ExecutionCourseSite site = executionCourse.getSite();

@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
  */
 public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup extends Service {
 
-    public List run(Integer groupOID) throws ExcepcaoPersistencia {
+    public List run(Integer groupOID) {
 	final List<FinalDegreeWorkProposalHeader> result = new ArrayList<FinalDegreeWorkProposalHeader>();
 
 	final FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);

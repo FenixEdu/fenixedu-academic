@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadPrecedencesFromDegreeCurricularPlan extends Service {
 
-	public Map run(Integer degreeCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
+	public Map run(Integer degreeCurricularPlanID) throws FenixServiceException{
 
 		Map finalListOfInfoPrecedences = new HashMap();
 

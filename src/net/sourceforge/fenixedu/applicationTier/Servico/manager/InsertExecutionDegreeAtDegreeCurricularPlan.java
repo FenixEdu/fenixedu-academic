@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
 
-	public void run(InfoExecutionDegreeEditor infoExecutionDegree) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(InfoExecutionDegreeEditor infoExecutionDegree) throws FenixServiceException{
 		final Campus campus = (Campus) rootDomainObject.readResourceByOID(infoExecutionDegree.getInfoCampus().getIdInternal());
 		if (campus == null) {
 			throw new NonExistingServiceException("message.nonExistingCampus", null);

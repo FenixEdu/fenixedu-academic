@@ -21,7 +21,7 @@ import org.joda.time.YearMonthDay;
 public class ReadAvailableRoomsForExam extends Service {
 
     public List<InfoRoom> run(YearMonthDay startDate, YearMonthDay endDate, HourMinuteSecond startTimeHMS, HourMinuteSecond endTimeHMS,
-	    DiaSemana dayOfWeek, Integer normalCapacity, FrequencyType frequency, Boolean withLabs) throws ExcepcaoPersistencia {
+	    DiaSemana dayOfWeek, Integer normalCapacity, FrequencyType frequency, Boolean withLabs) {
 
 	final Collection<AllocatableSpace> rooms = new HashSet<AllocatableSpace>();
 	final List<AllocatableSpace> roomsToCheck = new ArrayList<AllocatableSpace>();

@@ -85,7 +85,7 @@ public class InfoGrantOwner extends InfoObject {
     }
 
     public void copyToDomain(InfoGrantOwner infoGrantOwner, GrantOwner grantOwner)
-            throws ExcepcaoPersistencia {
+            {
         super.copyToDomain(infoGrantOwner, grantOwner);
 
         grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());

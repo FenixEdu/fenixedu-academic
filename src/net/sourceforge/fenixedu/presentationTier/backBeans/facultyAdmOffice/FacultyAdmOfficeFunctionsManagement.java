@@ -19,7 +19,7 @@ import org.joda.time.YearMonthDay;
 
 public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagementBackingBean {
 
-    public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
+    public String getUnits() throws FenixFilterException, FenixServiceException{
         StringBuilder buffer = new StringBuilder();
         getUnitTree(buffer, UnitUtils.readInstitutionUnit());
         return buffer.toString();

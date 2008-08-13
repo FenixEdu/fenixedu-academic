@@ -52,7 +52,7 @@ public class CreateReimbursementGuide extends Service {
      */
 
     public Integer run(Integer guideId, String remarks, List infoReimbursementGuideEntries,
-            IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
+            IUserView userView) throws FenixServiceException{
 
         Guide guide = rootDomainObject.readGuideByOID(guideId);
         if (!guide.getActiveSituation().getSituation().equals(GuideState.PAYED)) {

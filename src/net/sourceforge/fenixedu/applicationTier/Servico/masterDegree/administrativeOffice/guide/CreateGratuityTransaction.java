@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class CreateGratuityTransaction extends Service {
 
-    public void run(Integer guideEntryID, IUserView userView) throws ExcepcaoPersistencia {
+    public void run(Integer guideEntryID, IUserView userView) {
 
         GuideEntry guideEntry = rootDomainObject.readGuideEntryByOID(guideEntryID);
 

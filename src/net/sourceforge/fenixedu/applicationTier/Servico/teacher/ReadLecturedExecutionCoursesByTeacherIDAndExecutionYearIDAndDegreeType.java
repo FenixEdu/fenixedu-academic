@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType extends Service {
 
     public List<ExecutionCourse> run(Integer teacherID, Integer executionYearID, DegreeType degreeType)
-            throws ExcepcaoPersistencia, FenixServiceException {
+            throws FenixServiceException {
 
         Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
 

@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular extends Service {
 
     public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod, Integer curricularYearID)
-	    throws ExcepcaoPersistencia {
+	    {
 
 	List listInfoDE = new ArrayList();
 

@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteDelegateCandidacyPeriod extends Service {
 	
-	public void run(ElectionPeriodBean bean) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(ElectionPeriodBean bean) throws FenixServiceException{
 		try {
 			DelegateElection election = bean.getElection();
 			election.deleteCandidacyPeriod();
@@ -20,7 +20,7 @@ public class DeleteDelegateCandidacyPeriod extends Service {
 		}
 	}
 	
-	public void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException{
 		final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 		
 		Degree degree =  rootDomainObject.readDegreeByOID(Integer.parseInt(degreeOID));

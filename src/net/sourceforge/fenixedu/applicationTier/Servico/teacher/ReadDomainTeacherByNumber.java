@@ -12,7 +12,7 @@ import org.apache.commons.collections.Predicate;
 
 public class ReadDomainTeacherByNumber extends Service {
 
-    public Teacher run(final Integer teacherNumber) throws ExcepcaoPersistencia, FenixServiceException {
+    public Teacher run(final Integer teacherNumber) throws FenixServiceException {
         List<Teacher> teachers = rootDomainObject.getTeachers();
         
         Teacher teacher = (Teacher) CollectionUtils.find(teachers, new Predicate() {

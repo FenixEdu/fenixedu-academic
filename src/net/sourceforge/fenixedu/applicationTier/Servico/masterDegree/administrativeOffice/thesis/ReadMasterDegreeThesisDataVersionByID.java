@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadMasterDegreeThesisDataVersionByID extends Service {
 
-	public Object run(Integer masterDegreeThesisDataVersionID) throws FenixServiceException, ExcepcaoPersistencia {
+	public Object run(Integer masterDegreeThesisDataVersionID) throws FenixServiceException{
         MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = rootDomainObject.readMasterDegreeThesisDataVersionByOID(masterDegreeThesisDataVersionID);
 		if (masterDegreeThesisDataVersion == null)
 			throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeThesisDataVersion");

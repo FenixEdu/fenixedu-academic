@@ -18,7 +18,7 @@ import org.apache.commons.collections.Transformer;
 
 public class ReadQualifications extends Service {
 
-    public InfoSiteQualifications run(String user) throws ExcepcaoPersistencia {
+    public InfoSiteQualifications run(String user) {
 
 	final Person person = Person.readPersonByUsername(user);
 

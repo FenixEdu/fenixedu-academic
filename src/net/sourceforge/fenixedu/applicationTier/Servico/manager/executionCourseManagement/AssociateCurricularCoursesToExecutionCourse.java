@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /*
  * 
@@ -16,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class AssociateCurricularCoursesToExecutionCourse extends Service {
 
-    public void run(Integer executionCourseId, List curricularCourseIds) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(Integer executionCourseId, List curricularCourseIds) throws FenixServiceException {
 	if (executionCourseId == null) {
 	    throw new FenixServiceException("nullExecutionCourseId");
 	}

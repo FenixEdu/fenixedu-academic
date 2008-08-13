@@ -21,7 +21,7 @@ public class EditUnit extends Service {
     public void run(Integer unitID, MultiLanguageString unitName, String unitCostCenter, String acronym,
 	    YearMonthDay begin, YearMonthDay end, Integer departmentID, Integer degreeID, Integer administrativeOfficeID,
             String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Integer campusID)
-    		throws ExcepcaoPersistencia, FenixServiceException, DomainException, FenixFilterException {
+    		throws FenixServiceException, DomainException, FenixFilterException {
 
         Unit unit = (Unit) rootDomainObject.readPartyByOID(unitID);
         if (unit == null) {

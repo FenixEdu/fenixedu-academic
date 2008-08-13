@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadOldInquiryTeachersResById extends Service {
 
-	public InfoOldInquiriesTeachersRes run(Integer internalId) throws FenixServiceException, ExcepcaoPersistencia, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+	public InfoOldInquiriesTeachersRes run(Integer internalId) throws FenixServiceException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		InfoOldInquiriesTeachersRes oldInquiriesTeachersRes = null;
 
 		OldInquiriesTeachersRes oits = rootDomainObject.readOldInquiriesTeachersResByOID(internalId);

@@ -18,7 +18,7 @@ public class EditTeacherInformation extends Service {
 
     public Boolean run(InfoServiceProviderRegime infoServiceProviderRegime,
             InfoWeeklyOcupation infoWeeklyOcupation, List<InfoOrientation> infoOrientations,
-            List<InfoPublicationsNumber> infoPublicationsNumbers) throws ExcepcaoPersistencia {
+            List<InfoPublicationsNumber> infoPublicationsNumbers) {
 
         Teacher teacher = rootDomainObject.readTeacherByOID(infoServiceProviderRegime.getInfoTeacher().getIdInternal());
 
@@ -33,7 +33,7 @@ public class EditTeacherInformation extends Service {
     }
 	
 	private void editServiceProviderRegime(InfoServiceProviderRegime infoServiceProviderRegime,
-			Teacher teacher) throws ExcepcaoPersistencia {
+			Teacher teacher) {
 
         ServiceProviderRegime serviceProviderRegime = rootDomainObject.readServiceProviderRegimeByOID(infoServiceProviderRegime.getIdInternal());
 
@@ -48,7 +48,7 @@ public class EditTeacherInformation extends Service {
 		
 	}
 
-	private void editWeeklyOcupation(InfoWeeklyOcupation infoWeeklyOcupation, Teacher teacher) throws ExcepcaoPersistencia {
+	private void editWeeklyOcupation(InfoWeeklyOcupation infoWeeklyOcupation, Teacher teacher) {
         // Weekly Ocupation
         WeeklyOcupation weeklyOcupation = teacher.getWeeklyOcupation();
         if (weeklyOcupation == null) {
@@ -58,7 +58,7 @@ public class EditTeacherInformation extends Service {
         }
 	}
 
-	private void editOrientations(List<InfoOrientation> infoOrientations, Teacher teacher) throws ExcepcaoPersistencia {
+	private void editOrientations(List<InfoOrientation> infoOrientations, Teacher teacher) {
         // Orientations
         for (InfoOrientation infoOrientation : infoOrientations) {
             Orientation orientation = rootDomainObject.readOrientationByOID(infoOrientation.getIdInternal());
@@ -74,7 +74,7 @@ public class EditTeacherInformation extends Service {
 
 	}
 
-	private void editPublicationNumbers(List<InfoPublicationsNumber> infoPublicationsNumbers, Teacher teacher) throws ExcepcaoPersistencia {
+	private void editPublicationNumbers(List<InfoPublicationsNumber> infoPublicationsNumbers, Teacher teacher) {
         // Publications Number
         for (InfoPublicationsNumber infoPublicationsNumber : infoPublicationsNumbers) {
             PublicationsNumber publicationsNumber = rootDomainObject.readPublicationsNumberByOID(infoPublicationsNumber.getIdInternal());

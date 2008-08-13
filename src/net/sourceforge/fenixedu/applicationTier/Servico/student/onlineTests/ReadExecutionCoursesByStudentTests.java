@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionCoursesByStudentTests extends Service {
 
-    public Object run(final Registration someRegistration) throws ExcepcaoPersistencia {
+    public Object run(final Registration someRegistration) {
 	final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
 
 	final Student student = someRegistration.getStudent();

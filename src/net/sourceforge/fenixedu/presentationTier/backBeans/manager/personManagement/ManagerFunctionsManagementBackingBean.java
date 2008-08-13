@@ -69,7 +69,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         return "";
     }
 
-    public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
+    public String getUnits() throws FenixFilterException, FenixServiceException{
         StringBuilder buffer = new StringBuilder();
         YearMonthDay currentDate = new YearMonthDay();
         getUnitTree(buffer, UnitUtils.readInstitutionUnit(), currentDate);       

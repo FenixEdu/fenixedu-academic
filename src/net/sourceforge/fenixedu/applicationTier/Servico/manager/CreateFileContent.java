@@ -29,7 +29,7 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 public class CreateFileContent extends FileContentService {
 
     public void run(Site site, Container container, File file, String originalFilename, String displayName, Group permittedGroup,
-	    Person person, EducationalResourceType type) throws FenixServiceException, ExcepcaoPersistencia, DomainException,
+	    Person person, EducationalResourceType type) throws FenixServiceException, DomainException,
 	    IOException {
 
 	final VirtualPath filePath = getVirtualPath(site,container);

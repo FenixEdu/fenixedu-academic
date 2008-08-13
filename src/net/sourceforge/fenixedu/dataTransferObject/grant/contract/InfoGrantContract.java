@@ -182,7 +182,7 @@ public class InfoGrantContract extends InfoObject {
     }
 
     public void copyToDomain(InfoGrantContract infoGrantContract, GrantContract grantContract)
-            throws ExcepcaoPersistencia {
+            {
         super.copyToDomain(infoGrantContract, grantContract);
 
         grantContract.setContractNumber(infoGrantContract.getContractNumber());

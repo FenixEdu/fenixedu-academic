@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LerAlunosDeTurno extends Service {
 
-    public List<InfoStudent> run(ShiftKey keyTurno) throws ExcepcaoPersistencia {
+    public List<InfoStudent> run(ShiftKey keyTurno) {
     	
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(keyTurno.getInfoExecutionCourse().getIdInternal());
     	final Shift shift = executionCourse.findShiftByName(keyTurno.getShiftName());

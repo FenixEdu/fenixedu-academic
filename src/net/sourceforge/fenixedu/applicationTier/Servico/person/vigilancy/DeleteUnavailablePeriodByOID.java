@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteUnavailablePeriodByOID extends Service {
 
-    public void run(Integer idInternal) throws ExcepcaoPersistencia {
+    public void run(Integer idInternal) {
 
         UnavailablePeriod unavailablePeriod = (UnavailablePeriod) RootDomainObject
                 .readDomainObjectByOID(UnavailablePeriod.class, idInternal);

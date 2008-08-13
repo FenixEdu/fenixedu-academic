@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDRealTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * 
@@ -13,13 +12,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class AddTeacherToTeacherServiceDistribution extends Service {
 
-	public void run(Integer tsdId, final Integer teacherId) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(Integer tsdId, final Integer teacherId) throws FenixServiceException {
 
-		TeacherServiceDistribution rootTSD = rootDomainObject.readTeacherServiceDistributionByOID(tsdId).getRootTSD();
-		Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
+	TeacherServiceDistribution rootTSD = rootDomainObject.readTeacherServiceDistributionByOID(tsdId).getRootTSD();
+	Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
 
-		if(rootTSD.getTSDTeacherByTeacher(teacher) == null){	
-			rootTSD.addTSDTeachers(new TSDRealTeacher(teacher));
-		}
+	if (rootTSD.getTSDTeacherByTeacher(teacher) == null) {
+	    rootTSD.addTSDTeachers(new TSDRealTeacher(teacher));
 	}
+    }
 }

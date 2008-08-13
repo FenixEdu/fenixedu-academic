@@ -24,7 +24,7 @@ public class EditWrittenEvaluationAuthorization extends Filtro {
         }
     }
 
-    private WrittenEvaluation readWrittenEvaluation(final Object[] arguments) throws ExcepcaoPersistencia {
+    private WrittenEvaluation readWrittenEvaluation(final Object[] arguments) {
         final Integer writtenEvaluationID = getWrittenEvaluationID(arguments);
         return (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationID);
     }

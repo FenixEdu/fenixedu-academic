@@ -14,12 +14,11 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
 
     public List<ExecutionCourseStatisticsDTO> run(Integer competenceCourseId, Integer degreeId, Integer executionPeriodId)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException {
 	CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseId);
 	Degree degree = rootDomainObject.readDegreeByOID(degreeId);
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
@@ -72,7 +71,7 @@ public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
 	}
 
 	ExecutionYear executionYear = executionCourse.getExecutionYear();
-	
+
 	List<String> degreeNames = new ArrayList<String>();
 	for (Degree degree : degrees) {
 	    degreeNames.add(degree.getNameFor(executionYear).getContent());

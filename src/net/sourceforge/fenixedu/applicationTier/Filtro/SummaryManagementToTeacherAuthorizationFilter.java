@@ -78,7 +78,7 @@ public class SummaryManagementToTeacherAuthorizationFilter extends Authorization
 	return null;
     }
 
-    private Summary getSummary(Object[] arguments) throws ExcepcaoPersistencia {
+    private Summary getSummary(Object[] arguments) {
 	if (arguments[0] instanceof SummariesManagementBean) {
 	    return ((SummariesManagementBean) arguments[0]).getSummary();
 	} else if (arguments[1] instanceof Summary) {

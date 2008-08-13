@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditCurriculum extends Service {
 
     public void run(InfoCurriculum infoCurriculum, String language, String username)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurriculum.getInfoCurricularCourse().getIdInternal());
 
         if (curricularCourse == null) {

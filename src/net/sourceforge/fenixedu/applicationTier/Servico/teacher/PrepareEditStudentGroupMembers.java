@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author asnr and scpo
@@ -22,27 +21,27 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class PrepareEditStudentGroupMembers extends Service {
 
-    public List run(Integer executionCourseID, Integer studentGroupID) throws FenixServiceException,
-            ExcepcaoPersistencia {
-        final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
-        if (studentGroup == null) {
-            throw new InvalidArgumentsServiceException();
-        }
+    public List run(Integer executionCourseID, Integer studentGroupID) throws FenixServiceException {
+	final StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupID);
+	if (studentGroup == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
 
-        final List<Attends> groupingAttends = new ArrayList<Attends>();
-        groupingAttends.addAll(studentGroup.getGrouping().getAttends());;
+	final List<Attends> groupingAttends = new ArrayList<Attends>();
+	groupingAttends.addAll(studentGroup.getGrouping().getAttends());
+	;
 
-        final List<StudentGroup> studentsGroups = studentGroup.getGrouping().getStudentGroups();
-        for (final StudentGroup studentGroupIter : studentsGroups) {
-            for (final Attends attend : studentGroupIter.getAttends()) {
-                groupingAttends.remove(attend);                
-            }
-        }
-        final List<InfoStudent> infoStudents = new ArrayList<InfoStudent>();
-        for (final Attends attend : groupingAttends) {
-            infoStudents.add(InfoStudent.newInfoFromDomain(attend.getRegistration()));
-        }
-        return infoStudents;
+	final List<StudentGroup> studentsGroups = studentGroup.getGrouping().getStudentGroups();
+	for (final StudentGroup studentGroupIter : studentsGroups) {
+	    for (final Attends attend : studentGroupIter.getAttends()) {
+		groupingAttends.remove(attend);
+	    }
+	}
+	final List<InfoStudent> infoStudents = new ArrayList<InfoStudent>();
+	for (final Attends attend : groupingAttends) {
+	    infoStudents.add(InfoStudent.newInfoFromDomain(attend.getRegistration()));
+	}
+	return infoStudents;
     }
-    
+
 }

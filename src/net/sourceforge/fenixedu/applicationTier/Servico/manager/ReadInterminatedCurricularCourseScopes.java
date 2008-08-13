@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadInterminatedCurricularCourseScopes extends Service {
 
-	public List<InfoCurricularCourseScope> run(Integer curricularCourseId) throws FenixServiceException, ExcepcaoPersistencia {
+	public List<InfoCurricularCourseScope> run(Integer curricularCourseId) throws FenixServiceException{
 		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);
 		
         List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getInterminatedScopes();

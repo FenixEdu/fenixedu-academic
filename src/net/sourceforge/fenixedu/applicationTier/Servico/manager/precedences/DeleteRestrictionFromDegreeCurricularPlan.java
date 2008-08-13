@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteRestrictionFromDegreeCurricularPlan extends Service {
 
-	public void run(Integer restrictionID) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(Integer restrictionID) throws FenixServiceException{
 		Restriction restriction = rootDomainObject.readRestrictionByOID(restrictionID);
 
 		restriction.delete();

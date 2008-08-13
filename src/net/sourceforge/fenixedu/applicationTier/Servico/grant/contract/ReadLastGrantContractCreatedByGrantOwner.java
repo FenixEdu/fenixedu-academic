@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrien
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Barbosa
@@ -21,27 +20,25 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadLastGrantContractCreatedByGrantOwner extends Service {
 
-    public InfoGrantContract run(Integer grantOwnerId) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public InfoGrantContract run(Integer grantOwnerId) throws FenixServiceException {
 
-        GrantOrientationTeacher grantOrientationTeacher = null;
-        final GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(grantOwnerId);
-        final GrantContract grantContract = grantOwner.readGrantContractWithMaximumContractNumber();
-        if (grantContract == null) {
-            return new InfoGrantContract();
-        }
-        grantOrientationTeacher = grantContract.readActualGrantOrientationTeacher();
-        if (grantOrientationTeacher == null) {
-            throw new FenixServiceException();
-        }
+	GrantOrientationTeacher grantOrientationTeacher = null;
+	final GrantOwner grantOwner = rootDomainObject.readGrantOwnerByOID(grantOwnerId);
+	final GrantContract grantContract = grantOwner.readGrantContractWithMaximumContractNumber();
+	if (grantContract == null) {
+	    return new InfoGrantContract();
+	}
+	grantOrientationTeacher = grantContract.readActualGrantOrientationTeacher();
+	if (grantOrientationTeacher == null) {
+	    throw new FenixServiceException();
+	}
 
-        InfoGrantContract infoGrantContract = null;
+	InfoGrantContract infoGrantContract = null;
 
-        infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(grantContract);
-        infoGrantContract
-                .setGrantOrientationTeacherInfo(InfoGrantOrientationTeacherWithTeacherAndGrantContract
-                        .newInfoFromDomain(grantOrientationTeacher));
+	infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(grantContract);
+	infoGrantContract.setGrantOrientationTeacherInfo(InfoGrantOrientationTeacherWithTeacherAndGrantContract
+		.newInfoFromDomain(grantOrientationTeacher));
 
-        return infoGrantContract;
+	return infoGrantContract;
     }
 }

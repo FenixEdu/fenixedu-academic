@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadActiveStudentCurricularPlanByDegreeType extends Service {
 
     public InfoStudentCurricularPlan run(IUserView userView, DegreeType degreeType)
-            throws ExcepcaoPersistencia {
+            {
 
     	final Person person = userView.getPerson();
     	final Registration registration = person.getStudentByType(degreeType);

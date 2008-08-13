@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateSites extends Service {
 
-    public Integer run(final Integer executionPeriodID) throws ExcepcaoPersistencia {
+    public Integer run(final Integer executionPeriodID) {
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
 	int numberCreatedSites = 0;

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionDegreesByDegree extends Service {
 
-    public List run(Integer idDegree) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer idDegree) throws FenixServiceException{
 
         Degree degree = rootDomainObject.readDegreeByOID(idDegree);
         

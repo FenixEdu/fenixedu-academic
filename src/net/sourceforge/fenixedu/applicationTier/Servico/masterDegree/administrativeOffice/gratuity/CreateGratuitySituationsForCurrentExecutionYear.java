@@ -28,7 +28,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends Service {
 
     private Set<GratuitySituation> gratuitySituationsToDelete;
 
-    public void run(String year) throws ExcepcaoPersistencia {
+    public void run(String year) {
 
         gratuitySituationsToDelete = new HashSet<GratuitySituation>();
 
@@ -77,7 +77,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends Service {
     }
 
     private ExecutionYear readExecutionYear(String year)
-            throws ExcepcaoPersistencia {
+            {
         
         final ExecutionYear executionYear;
         if (year == null || year.equals("")) {

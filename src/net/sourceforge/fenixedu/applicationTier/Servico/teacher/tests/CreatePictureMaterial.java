@@ -24,7 +24,7 @@ public class CreatePictureMaterial extends Service {
 
 	public NewPictureMaterial run(Teacher teacher, NewTestElement testElement, Boolean inline,
 			File mainFile, String originalFilename, String displayName) throws FenixServiceException,
-			ExcepcaoPersistencia, DomainException, IOException {
+			  DomainException, IOException {
 
 		final IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
 		final VirtualPath filePath = getVirtualPath();

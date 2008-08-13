@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LerTurnosDeDisciplinaExecucao extends Service {
 
-    public List<InfoShift> run(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
+    public List<InfoShift> run(InfoExecutionCourse infoExecutionCourse) {
 
         List<InfoShift> infoShifts = new ArrayList<InfoShift>();
         

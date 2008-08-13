@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadMasterDegreeProofVersionByID extends Service {
 
-    public Object run(Integer masterDegreeProofVersionID) throws FenixServiceException, ExcepcaoPersistencia {
+    public Object run(Integer masterDegreeProofVersionID) throws FenixServiceException{
         MasterDegreeProofVersion masterDegreeProofVersion = rootDomainObject.readMasterDegreeProofVersionByOID(masterDegreeProofVersionID);
         if (masterDegreeProofVersion == null)
             throw new NonExistingServiceException(

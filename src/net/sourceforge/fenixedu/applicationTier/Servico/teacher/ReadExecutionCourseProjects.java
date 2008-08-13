@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 // student package net.sourceforge.fenixedu.(ReadExecutionCourseProjects)
 public class ReadExecutionCourseProjects extends Service {
 
-	public ISiteComponent run(Integer executionCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
+	public ISiteComponent run(Integer executionCourseCode) throws FenixServiceException{
 
 		InfoSiteProjects infoSiteProjects = null;
 

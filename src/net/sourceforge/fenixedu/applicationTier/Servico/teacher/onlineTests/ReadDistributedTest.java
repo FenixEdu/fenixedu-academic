@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadDistributedTest extends Service {
 
-    public InfoDistributedTest run(Integer executionCourseId, Integer distributedTestId) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
+    public InfoDistributedTest run(Integer executionCourseId, Integer distributedTestId) throws InvalidArgumentsServiceException {
         DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();

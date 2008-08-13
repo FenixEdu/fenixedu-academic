@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadCurricularCourseScopeListByDegreeCurricularPlan extends Service {
 
-    public List run(Integer idDegreeCurricularPlan) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer idDegreeCurricularPlan) throws FenixServiceException{
         
         List allCurricularCourseScope = new ArrayList();
 

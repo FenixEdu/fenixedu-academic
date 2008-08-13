@@ -19,7 +19,7 @@ public class CreateProjectEventAssociation extends Service  {
      * @throws ExcepcaoPersistencia
      * @throws FenixServiceException - In case the project doesn't exist.
      */
-    public ProjectEventAssociation run(ProjectEventAssociationSimpleCreationBean bean, Integer projectId) throws ExcepcaoPersistencia, FenixServiceException {
+    public ProjectEventAssociation run(ProjectEventAssociationSimpleCreationBean bean, Integer projectId) throws FenixServiceException {
         ProjectEventAssociation association = null;
         final Project project = rootDomainObject.readProjectByOID(projectId);
         if(project == null){
@@ -41,7 +41,7 @@ public class CreateProjectEventAssociation extends Service  {
      * @throws ExcepcaoPersistencia
      * @throws FenixServiceException - In case the project doesn't exist.
      */
-    public ProjectEventAssociation run(ProjectEventAssociationFullCreationBean bean, Integer projectId) throws ExcepcaoPersistencia, FenixServiceException {
+    public ProjectEventAssociation run(ProjectEventAssociationFullCreationBean bean, Integer projectId) throws FenixServiceException {
         final ProjectEventAssociation association;
         
         final Project project = rootDomainObject.readProjectByOID(projectId);

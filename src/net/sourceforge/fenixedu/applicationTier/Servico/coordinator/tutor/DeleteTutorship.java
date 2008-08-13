@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteTutorship extends TutorshipManagement {
 
     public List<TutorshipErrorBean> run(Integer executionDegreeID, Integer tutorNumber, List<Tutorship> tutorsToDelete)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
     	
     	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
 		final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();

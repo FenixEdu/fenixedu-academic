@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionDegreesOfTypeDegree extends Service {
 
-	public List run() throws ExcepcaoPersistencia {
+	public List run() {
 		String year = ExecutionYear.readCurrentExecutionYear().getYear();
         List executionDegrees = ExecutionDegree.getAllByExecutionYearAndDegreeType(year, DegreeType.DEGREE);
         

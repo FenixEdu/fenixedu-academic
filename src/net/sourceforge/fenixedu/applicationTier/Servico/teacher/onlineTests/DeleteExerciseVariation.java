@@ -25,7 +25,7 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class DeleteExerciseVariation extends Service {
 
-    public List<LabelValueBean> run(Integer executionCourseId, Integer questionCode) throws ExcepcaoPersistencia,
+    public List<LabelValueBean> run(Integer executionCourseId, Integer questionCode) throws
 	    InvalidArgumentsServiceException {
 	List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 

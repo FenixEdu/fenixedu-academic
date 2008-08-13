@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteGroupingMembers extends Service {
 
     public boolean run(Integer executionCourseCode, Integer groupingCode, List<String> studentUsernames)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         final Grouping grouping = rootDomainObject.readGroupingByOID(groupingCode);
         if (grouping == null) {

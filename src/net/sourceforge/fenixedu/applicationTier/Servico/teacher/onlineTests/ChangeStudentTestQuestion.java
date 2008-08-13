@@ -30,17 +30,16 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import net.sourceforge.fenixedu.util.tests.TestQuestionChangesType;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ChangeStudentTestQuestion extends Service {
 
     public Boolean run(Integer executionCourseId, Integer distributedTestId, Integer oldQuestionId, Integer newMetadataId,
 	    Integer studentId, TestQuestionChangesType changesType, Boolean delete, TestQuestionStudentsChangesType studentsType,
-	    String path) throws FenixServiceException, ExcepcaoPersistencia {
+	    String path) throws FenixServiceException {
 
 	DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
 	Question oldQuestion = distributedTest.findQuestionByOID(oldQuestionId);
@@ -220,7 +219,7 @@ public class ChangeStudentTestQuestion extends Service {
 	}
     }
 
-    private String getNewStudentMark(DistributedTest dt, Registration s, double mark2Remove) throws ExcepcaoPersistencia {
+    private String getNewStudentMark(DistributedTest dt, Registration s, double mark2Remove) {
 	double totalMark = 0;
 	Set<StudentTestQuestion> studentTestQuestionList = StudentTestQuestion.findStudentTestQuestions(s, dt);
 	for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {

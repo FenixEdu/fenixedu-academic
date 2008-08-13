@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadPaymentEntityByNumberAndClass extends Service {
 
 	public InfoGrantPaymentEntity run(String paymentEntityNumber, String className)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException{
 		final GrantPaymentEntity grantPaymentEntity = GrantPaymentEntity.findGrantPaymentEntityByNumberAndConcreteClass(paymentEntityNumber, className);
 		return InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity);
 	}

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.tests.NewPermissionUnit;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeletePermissionUnit extends Service {
-    public void run(NewPermissionUnit permissionUnit) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(NewPermissionUnit permissionUnit) throws FenixServiceException{
         permissionUnit.delete();
     }
 }

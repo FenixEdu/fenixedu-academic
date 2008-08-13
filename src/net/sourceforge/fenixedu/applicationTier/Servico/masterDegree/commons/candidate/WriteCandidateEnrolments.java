@@ -20,7 +20,7 @@ import org.apache.commons.collections.Transformer;
 public class WriteCandidateEnrolments extends Service {
 
     public void run(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits,
-            String givenCreditsRemarks) throws FenixServiceException, ExcepcaoPersistencia {
+            String givenCreditsRemarks) throws FenixServiceException{
 
         MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(candidateID);
         if (masterDegreeCandidate == null) {
@@ -72,7 +72,7 @@ public class WriteCandidateEnrolments extends Service {
      * @throws ExcepcaoPersistencia
      */
     private void writeFilteredEnrollments(MasterDegreeCandidate masterDegreeCandidate, Collection<Integer> curricularCoursesToEnroll)
-            throws NonExistingServiceException, ExcepcaoPersistencia {
+            throws NonExistingServiceException{
         Iterator iterCurricularCourseIds = curricularCoursesToEnroll.iterator();
         while (iterCurricularCourseIds.hasNext()) {
 

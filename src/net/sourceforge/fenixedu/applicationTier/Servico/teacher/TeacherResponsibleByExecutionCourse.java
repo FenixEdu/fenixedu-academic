@@ -13,19 +13,19 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class TeacherResponsibleByExecutionCourse extends Service {
 
     public Boolean run(String teacherUserName, Integer executionCourseCode, Integer curricularCourseCode)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         return Boolean.valueOf(
         		ExecutionCourseResponsibleTeacher(teacherUserName, executionCourseCode) && CurricularCourseNotBasic(curricularCourseCode));
     }
 
     private boolean ExecutionCourseResponsibleTeacher(String teacherUserName, Integer executionCourseCode)
-            throws ExcepcaoPersistencia {
+            {
         final Teacher teacher = Teacher.readTeacherByUsername(teacherUserName);
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
         return teacher.isResponsibleFor(executionCourse) != null;
     }
 
-    private boolean CurricularCourseNotBasic(Integer curricularCourseCode) throws ExcepcaoPersistencia {
+    private boolean CurricularCourseNotBasic(Integer curricularCourseCode) {
         CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
         return curricularCourse.getBasic() == Boolean.FALSE;
     }

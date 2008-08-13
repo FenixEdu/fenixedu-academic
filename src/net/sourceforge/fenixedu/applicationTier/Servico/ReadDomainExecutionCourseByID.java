@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  *          lepc Exp $
  */
 public class ReadDomainExecutionCourseByID extends Service {
-    public ExecutionCourse run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
+    public ExecutionCourse run(Integer idInternal) throws FenixServiceException{
 
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(idInternal);
         if (executionCourse == null) {

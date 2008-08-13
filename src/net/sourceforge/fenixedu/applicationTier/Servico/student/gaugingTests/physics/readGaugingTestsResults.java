@@ -8,25 +8,23 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class readGaugingTestsResults extends Service {
 
-    public InfoGaugingTestResult run(IUserView userView) throws FenixServiceException,
-            ExcepcaoPersistencia {
-       
-        Person person = Person.readPersonByUsername(userView.getUtilizador());
+    public InfoGaugingTestResult run(IUserView userView) throws FenixServiceException {
 
-        Registration registration = person.readStudentByDegreeType(DegreeType.DEGREE);
-        if (registration == null) {
-            return null;
-        }
-        
-        GaugingTestResult gaugingTestsResult = registration.getAssociatedGaugingTestResult();
-		if (gaugingTestsResult != null) {
-			return InfoGaugingTestResult.newInfoFromDomain(gaugingTestsResult);
-		}
+	Person person = Person.readPersonByUsername(userView.getUtilizador());
 
-		return null;
+	Registration registration = person.readStudentByDegreeType(DegreeType.DEGREE);
+	if (registration == null) {
+	    return null;
+	}
+
+	GaugingTestResult gaugingTestsResult = registration.getAssociatedGaugingTestResult();
+	if (gaugingTestsResult != null) {
+	    return InfoGaugingTestResult.newInfoFromDomain(gaugingTestsResult);
+	}
+
+	return null;
     }
 }

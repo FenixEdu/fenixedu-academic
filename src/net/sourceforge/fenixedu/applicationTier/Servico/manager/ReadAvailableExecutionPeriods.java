@@ -15,7 +15,7 @@ import org.apache.commons.collections.Transformer;
 
 public class ReadAvailableExecutionPeriods extends Service {
 
-    public List run(List<Integer> unavailableExecutionPeriodsIDs) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(List<Integer> unavailableExecutionPeriodsIDs) throws FenixServiceException{
 
 	final Collection<ExecutionSemester> filteredExecutionPeriods = new ArrayList<ExecutionSemester>(rootDomainObject
 		.getExecutionPeriodsSet());

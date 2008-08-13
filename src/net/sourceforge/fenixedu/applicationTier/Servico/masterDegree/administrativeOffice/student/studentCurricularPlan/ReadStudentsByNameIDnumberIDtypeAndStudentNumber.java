@@ -18,7 +18,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber extends Service {
 
     public List run(String studentName, String idNumber, IDDocumentType idType, Integer studentNumber)
-            throws ExcepcaoPersistencia {
+            {
 
         List masterDegreeStudents = Registration
                 .readMasterDegreeStudentsByNameDocIDNumberIDTypeAndStudentNumber(studentName, idNumber,

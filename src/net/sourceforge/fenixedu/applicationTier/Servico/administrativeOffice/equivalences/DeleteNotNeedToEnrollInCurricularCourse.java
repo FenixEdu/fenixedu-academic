@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteNotNeedToEnrollInCurricularCourse extends Service {
 
-    public void run(Integer notNeedToEnrollInCurricularCourseID) throws ExcepcaoPersistencia {
+    public void run(Integer notNeedToEnrollInCurricularCourseID) {
         NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = rootDomainObject.readNotNeedToEnrollInCurricularCourseByOID(
                     notNeedToEnrollInCurricularCourseID);
         notNeedToEnrollInCurricularCourse.delete();

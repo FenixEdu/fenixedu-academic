@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class WriteCandidacy extends Service {
 
-    public void run(InfoCandidacy infoCandidacy) throws ExcepcaoPersistencia {
+    public void run(InfoCandidacy infoCandidacy) {
         SeminaryCandidacy candidacy = new SeminaryCandidacy();
         candidacy.setApproved(infoCandidacy.getApproved());
         candidacy.setMotivation(infoCandidacy.getMotivation());

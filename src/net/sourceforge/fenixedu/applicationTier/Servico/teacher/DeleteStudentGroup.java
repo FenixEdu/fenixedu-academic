@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteStudentGroup extends Service {
 
     public Boolean run(Integer executionCourseCode, Integer studentGroupCode)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         StudentGroup deletedStudentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
         
         if (deletedStudentGroup == null) {

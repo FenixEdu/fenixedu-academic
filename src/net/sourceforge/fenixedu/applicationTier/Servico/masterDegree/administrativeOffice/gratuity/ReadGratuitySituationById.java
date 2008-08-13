@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadGratuitySituationById extends Service {
 
-	public InfoGratuitySituation run(Integer gratuitySituationID) throws FenixServiceException, ExcepcaoPersistencia {
+	public InfoGratuitySituation run(Integer gratuitySituationID) throws FenixServiceException{
 		InfoGratuitySituation infoGratuitySituation = null;
 
 		GratuitySituation gratuitySituation = rootDomainObject.readGratuitySituationByOID(gratuitySituationID);

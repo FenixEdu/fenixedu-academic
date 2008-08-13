@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditTeacherMasterDegreeCredits extends Service {
 
-    public void run(Map<String,String> hoursMap, Map<String,String> creditsMap) throws ExcepcaoPersistencia, NumberFormatException {
+    public void run(Map<String,String> hoursMap, Map<String,String> creditsMap) throws NumberFormatException {
         Set<String> professorshipIDs = new HashSet<String>(hoursMap.keySet());
         professorshipIDs.addAll(creditsMap.keySet());
 

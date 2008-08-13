@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.util.State;
 public class ReadDegreeCandidatesWithFilter extends Service {
 
     public List run(Integer degreeCurricularPlanId, PrintAllCandidatesFilter filterBy, String filterValue)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         
         final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
         return createInfoMasterDegreeCandidateFromDomain(getMasterDegreeCandidates(degreeCurricularPlan, filterBy, filterValue));

@@ -12,7 +12,7 @@ public class CreateVigilantGroup extends Service {
 
     public void run(String name, Unit unit, String convokeStrategy, String contactEmail, String rulesLink, DateTime beginFirstAllowedPeriod,
             DateTime endFirstAllowedPeriod, DateTime beginSecondAllowedPeriod,
-            DateTime endSecondAllowedPeriod) throws ExcepcaoPersistencia {
+            DateTime endSecondAllowedPeriod) {
 
         VigilantGroup vigilantGroup = new VigilantGroup();
         vigilantGroup.setName(name);

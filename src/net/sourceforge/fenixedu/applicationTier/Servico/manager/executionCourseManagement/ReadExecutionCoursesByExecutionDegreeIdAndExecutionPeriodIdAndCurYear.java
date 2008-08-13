@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear extends Service {
 
     public Object run(Integer executionDegreeId, Integer executionPeriodId, Integer curricularYearInt)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException{
 
 	if (executionPeriodId == null) {
 	    throw new FenixServiceException("nullExecutionPeriodId");

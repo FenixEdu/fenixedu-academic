@@ -15,7 +15,7 @@ public class EditTeacherServiceNotes extends Service {
 
     public Boolean run(Integer teacherId, Integer executionPeriodId, String managementFunctionNote, String serviceExemptionNote,
 	    String otherNote, String masterDegreeTeachingNote, String functionsAccumulation, String thesisNote, RoleType roleType)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException{
 
 	Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);

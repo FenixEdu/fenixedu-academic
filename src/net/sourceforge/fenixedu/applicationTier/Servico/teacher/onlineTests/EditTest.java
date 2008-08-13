@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditTest extends Service {
 
-    public void run(Integer executionCourseId, Integer testId, String title, String information) throws ExcepcaoPersistencia {
+    public void run(Integer executionCourseId, Integer testId, String title, String information) {
         Test test = rootDomainObject.readTestByOID(testId);
         test.setTitle(title);
         test.setInformation(information);

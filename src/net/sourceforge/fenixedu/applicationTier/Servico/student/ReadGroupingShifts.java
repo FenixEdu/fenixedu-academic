@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadGroupingShifts extends Service {
 
 	public InfoSiteShifts run(Integer groupingCode, Integer studentGroupCode)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException{
 
 		InfoSiteShifts infoSiteShifts = new InfoSiteShifts();
 		List infoShifts = new ArrayList();

@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadStudentCurricularInformation extends Service {
 
     public List run(final Integer studentNumber, final DegreeType degreeType)
-	    throws ExcepcaoPersistencia {
+	    {
 
 	final List<InfoStudentCurricularPlan> infoStudentCurricularPlans = new ArrayList<InfoStudentCurricularPlan>();
 

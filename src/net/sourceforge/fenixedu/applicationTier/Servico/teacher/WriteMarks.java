@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class WriteMarks extends Service {
 
     public void run(final Integer executioCourseOID, final Integer evaluationOID,
-	    final Map<Integer, String> marks) throws ExcepcaoPersistencia, FenixServiceException {
+	    final Map<Integer, String> marks) throws FenixServiceException {
 	final List<DomainException> exceptionList = new ArrayList<DomainException>();
 
 	final Evaluation evaluation = rootDomainObject.readEvaluationByOID(evaluationOID);

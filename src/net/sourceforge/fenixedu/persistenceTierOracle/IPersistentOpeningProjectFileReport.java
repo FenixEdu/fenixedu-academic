@@ -8,7 +8,9 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 public interface IPersistentOpeningProjectFileReport {
 
-    public abstract IOpeningProjectFileReport getCompleteReport(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia;
+    public abstract IOpeningProjectFileReport getCompleteReport(ReportType reportType, Integer projectCode)
+	    throws ExcepcaoPersistencia;
 
-    public abstract List getReportRubricList(ReportType reportType, Integer projectCode, boolean getValue) throws ExcepcaoPersistencia;
+    public abstract List getReportRubricList(ReportType reportType, Integer projectCode, boolean getValue)
+	    throws ExcepcaoPersistencia;
 }

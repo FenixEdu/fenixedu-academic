@@ -17,7 +17,7 @@ public class ReadDegree extends Service {
      * Executes the service. Returns the current infodegree.
      * @throws ExcepcaoPersistencia 
      */
-    public InfoDegree run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
+    public InfoDegree run(Integer idInternal) throws FenixServiceException{
 		final Degree degree = rootDomainObject.readDegreeByOID(idInternal);
 
 		if (degree == null) {

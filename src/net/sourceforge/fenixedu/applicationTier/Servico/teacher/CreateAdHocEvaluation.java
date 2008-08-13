@@ -5,12 +5,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.AdHocEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateAdHocEvaluation extends Service {
 
     public void run(Integer executionCourseID, String name, String description, GradeScale gradeScale)
-	    throws ExcepcaoPersistencia, FenixServiceException {
+	    throws FenixServiceException {
 
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
 

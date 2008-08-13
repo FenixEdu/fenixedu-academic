@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteProjectProposal extends Service {
 
     public boolean run(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
-            String withdrawalPersonUsername) throws FenixServiceException, ExcepcaoPersistencia {
+            String withdrawalPersonUsername) throws FenixServiceException{
         
        
 

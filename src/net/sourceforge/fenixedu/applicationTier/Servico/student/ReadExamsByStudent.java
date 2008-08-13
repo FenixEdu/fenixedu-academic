@@ -33,7 +33,7 @@ import org.apache.commons.collections.Transformer;
 
 public class ReadExamsByStudent extends Service {
 
-    public Object run(String username) throws ExcepcaoPersistencia {
+    public Object run(String username) {
 
         List examsToEnroll = new ArrayList();
 

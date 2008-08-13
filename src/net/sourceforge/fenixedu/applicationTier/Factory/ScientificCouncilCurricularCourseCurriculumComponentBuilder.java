@@ -36,7 +36,7 @@ public class ScientificCouncilCurricularCourseCurriculumComponentBuilder {
 	}
 
 	public ISiteComponent getComponent(ISiteComponent component, Integer curricularCourseId,
-			Integer curriculumId) throws FenixServiceException, ExcepcaoPersistencia {
+			Integer curriculumId) throws FenixServiceException{
 		if (component instanceof InfoSiteCurriculum) {
 			return getInfoSiteCurriculum((InfoSiteCurriculum) component, curricularCourseId);
 		}
@@ -51,7 +51,7 @@ public class ScientificCouncilCurricularCourseCurriculumComponentBuilder {
 	 * @throws ExcepcaoPersistencia
 	 */
 	private ISiteComponent getInfoSiteCurriculum(InfoSiteCurriculum component, Integer curricularCourseId)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException{
 		CurricularCourse curricularCourse = (CurricularCourse) RootDomainObject.getInstance().readDegreeModuleByOID(curricularCourseId);
         
 		Curriculum curriculum = curricularCourse.findLatestCurriculum();

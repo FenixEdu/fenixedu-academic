@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadTeachersByExecutionCourseProfessorship extends Service {
 
-    public List run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException{
         ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(infoExecutionCourse.getIdInternal());
         return executionCourse == null ? null : executionCourse.getProfessorships();
     }

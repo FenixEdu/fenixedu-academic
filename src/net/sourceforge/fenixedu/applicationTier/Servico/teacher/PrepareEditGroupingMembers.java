@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.util.ProposalState;
 public class PrepareEditGroupingMembers extends Service {
 
     public List run(Integer executionCourseCode, Integer groupingID)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
         final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();

@@ -18,7 +18,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitials extends Servic
 
     public InfoExecutionDegree run(final InfoExecutionYear infoExecutionYear,
             final String degreeInitials, final String nameDegreeCurricularPlan)
-            throws ExcepcaoPersistencia {
+            {
 
         final DegreeCurricularPlan degreeCurricularPlan = DegreeCurricularPlan.readByNameAndDegreeSigla(nameDegreeCurricularPlan, degreeInitials);
         final ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan,

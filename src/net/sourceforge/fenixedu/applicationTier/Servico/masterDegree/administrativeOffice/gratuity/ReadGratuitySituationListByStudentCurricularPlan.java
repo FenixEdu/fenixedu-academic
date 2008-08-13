@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadGratuitySituationListByStudentCurricularPlan extends Service {
 
-    public List run(Integer studentCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer studentCurricularPlanID) throws FenixServiceException{
         List infoGratuitySituations = new ArrayList();
         List gratuitySituations = null;
         GratuitySituation gratuitySituation = null;

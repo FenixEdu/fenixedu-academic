@@ -15,7 +15,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public class InsertDegree extends Service {
 
     public void run(final String code, final String name, final String nameEn, final DegreeType degreeType,
-	    final GradeScale gradeScale) throws ExcepcaoPersistencia, FenixServiceException {
+	    final GradeScale gradeScale) throws FenixServiceException {
 	if (name == null || nameEn == null || code == null || degreeType == null) {
 	    throw new InvalidArgumentsServiceException();
 	}

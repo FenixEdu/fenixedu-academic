@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteEventProjectAssociation extends Service  {
 
 
-    public void run(Integer associationId) throws ExcepcaoPersistencia, FenixServiceException {
+    public void run(Integer associationId) throws FenixServiceException {
         ProjectEventAssociation association = rootDomainObject.readProjectEventAssociationByOID(associationId);
         if(association == null){
             throw new FenixServiceException();

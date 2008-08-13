@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadAttendsByStudentIdAndExecutionPeriodId extends Service {
 
     public List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> run(Integer studentId, Integer executionPeriodId,
-	    Boolean onlyEnrolledCourses, Boolean onlyAttendsWithTeachers) throws ExcepcaoPersistencia {
+	    Boolean onlyEnrolledCourses, Boolean onlyAttendsWithTeachers) {
 
 	final List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> infoAttendsList = new ArrayList<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers>();
 

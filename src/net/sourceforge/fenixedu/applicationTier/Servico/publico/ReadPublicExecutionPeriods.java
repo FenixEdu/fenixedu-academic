@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadPublicExecutionPeriods extends Service {
 
-	public List<InfoExecutionPeriod> run() throws FenixServiceException, ExcepcaoPersistencia {
+	public List<InfoExecutionPeriod> run() throws FenixServiceException{
 		final List<InfoExecutionPeriod> result = new ArrayList<InfoExecutionPeriod>();
 		for (final ExecutionSemester executionSemester : ExecutionSemester.readPublicExecutionPeriods()) {
             result.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));

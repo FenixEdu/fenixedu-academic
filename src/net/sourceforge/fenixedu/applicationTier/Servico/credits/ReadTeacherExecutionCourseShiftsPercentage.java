@@ -35,7 +35,7 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadTeacherExecutionCourseShiftsPercentage extends Service {
 
-    public TeacherExecutionCourseProfessorshipShiftsDTO run(InfoTeacher infoTeacher, InfoExecutionCourse infoExecutionCourse) throws FenixServiceException, ExcepcaoPersistencia {
+    public TeacherExecutionCourseProfessorshipShiftsDTO run(InfoTeacher infoTeacher, InfoExecutionCourse infoExecutionCourse) throws FenixServiceException{
 
         TeacherExecutionCourseProfessorshipShiftsDTO result = new TeacherExecutionCourseProfessorshipShiftsDTO();
 
@@ -91,11 +91,11 @@ public class ReadTeacherExecutionCourseShiftsPercentage extends Service {
         return result;
     }
 
-    private Teacher readTeacher(InfoTeacher infoTeacher) throws ExcepcaoPersistencia {
+    private Teacher readTeacher(InfoTeacher infoTeacher) {
         return rootDomainObject.readTeacherByOID(infoTeacher.getIdInternal());
     }
 
-    private ExecutionCourse readExecutionCourse(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
+    private ExecutionCourse readExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
         return rootDomainObject.readExecutionCourseByOID( infoExecutionCourse.getIdInternal());
     }
 }

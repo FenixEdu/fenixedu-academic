@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetSeminary extends Service {
 
-	public InfoSeminaryWithEquivalencies run(Integer seminaryID) throws BDException, ExcepcaoPersistencia {
+	public InfoSeminaryWithEquivalencies run(Integer seminaryID) throws BDException{
 		InfoSeminaryWithEquivalencies infoSeminary = null;
 
 		Seminary seminary = rootDomainObject.readSeminaryByOID(seminaryID);

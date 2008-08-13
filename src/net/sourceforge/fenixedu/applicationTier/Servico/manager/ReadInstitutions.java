@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadInstitutions extends Service {
 
-    public List run() throws ExcepcaoPersistencia {
+    public List run() {
                 
         List<Unit> institutions = UnitUtils.readAllExternalInstitutionUnits();
 

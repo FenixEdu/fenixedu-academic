@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class InsertNonAffiliatedTeacher extends Service {
 
-    public NonAffiliatedTeacher run(String nonAffiliatedTeacherName, Integer institutionID) throws ExcepcaoPersistencia,
+    public NonAffiliatedTeacher run(String nonAffiliatedTeacherName, Integer institutionID) throws
             NotExistingServiceException {
         final Unit institution = (Unit) rootDomainObject.readPartyByOID(institutionID);
         if (institution == null) {

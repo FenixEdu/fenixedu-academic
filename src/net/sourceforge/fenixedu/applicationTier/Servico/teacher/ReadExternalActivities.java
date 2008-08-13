@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadExternalActivities extends Service {
 
-    public SiteView run(String user) throws ExcepcaoPersistencia {
+    public SiteView run(String user) {
         Teacher teacher = Teacher.readTeacherByUsername(user);
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditGuideInformationInManager extends Service {
 
     public void run(Integer guideID, Integer degreeCurricularPlanID, String executionYear, String newPaymentType)
-            throws ExcepcaoPersistencia {
+            {
         Guide guide = rootDomainObject.readGuideByOID(guideID);
         
         DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanID);

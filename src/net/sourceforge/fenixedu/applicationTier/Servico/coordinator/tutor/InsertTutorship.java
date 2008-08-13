@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class InsertTutorship extends TutorshipManagement {
 	
 	public void run(Integer executionDegreeID, TutorshipManagementBean bean) 
-		throws FenixServiceException, ExcepcaoPersistencia {
+		throws FenixServiceException{
 		
 		final Integer studentNumber = bean.getStudentNumber();
 		final Teacher teacher = bean.getTeacher();
@@ -38,7 +38,7 @@ public class InsertTutorship extends TutorshipManagement {
 	}
 
 	public List<TutorshipErrorBean> run(Integer executionDegreeID, StudentsByEntryYearBean bean) 
-		throws FenixServiceException, ExcepcaoPersistencia {
+		throws FenixServiceException{
 		
 		final List<StudentCurricularPlan> students = bean.getStudentsToCreateTutorshipList();
 		final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);

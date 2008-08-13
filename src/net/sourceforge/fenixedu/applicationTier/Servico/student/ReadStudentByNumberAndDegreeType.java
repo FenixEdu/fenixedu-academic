@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadStudentByNumberAndDegreeType extends Service {
 
-    public Object run(Integer number, DegreeType degreeType) throws ExcepcaoPersistencia {
+    public Object run(Integer number, DegreeType degreeType) {
         
         final Registration registration = Registration.readStudentByNumberAndDegreeType(number, degreeType);
         

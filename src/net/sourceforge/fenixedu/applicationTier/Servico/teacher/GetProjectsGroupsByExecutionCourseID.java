@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetProjectsGroupsByExecutionCourseID extends Service {
 
-    public List run(Integer executionCourseID) throws BDException, ExcepcaoPersistencia {
+    public List run(Integer executionCourseID) throws BDException{
 
         final List infosGroupProjectStudents = new LinkedList();
 

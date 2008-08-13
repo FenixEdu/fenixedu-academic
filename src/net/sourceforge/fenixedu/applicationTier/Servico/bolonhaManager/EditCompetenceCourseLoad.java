@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditCompetenceCourseLoad extends Service {
 
     public void run(Integer competenceCourseID, RegimeType regimeType, Integer numberOfPeriods, List<CourseLoad> courseLoads)
-	    throws ExcepcaoPersistencia, FenixServiceException {
+	    throws FenixServiceException {
 	final CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);
 	if (competenceCourse == null) {
 	    throw new FenixServiceException("error.noCompetenceCourse");

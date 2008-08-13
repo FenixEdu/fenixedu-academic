@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditDelegateCandidacyPeriod extends Service {
-	public void run(ElectionPeriodBean bean) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(ElectionPeriodBean bean) throws FenixServiceException{
 		DelegateElection election = bean.getElection();
 		
 		try {
@@ -20,7 +20,7 @@ public class EditDelegateCandidacyPeriod extends Service {
 		}
 	}
 	
-	public void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(ElectionPeriodBean bean, String degreeOID) throws FenixServiceException{
 		final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 		final Degree degree =  rootDomainObject.readDegreeByOID(Integer.parseInt(degreeOID));
 		

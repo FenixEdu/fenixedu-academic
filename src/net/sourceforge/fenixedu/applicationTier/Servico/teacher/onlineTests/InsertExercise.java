@@ -46,7 +46,7 @@ public class InsertExercise extends Service {
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
     public List<String> run(Integer executionCourseId, UploadedFile xmlZipFile, String path)
-	    throws FenixServiceException, ExcepcaoPersistencia {
+	    throws FenixServiceException{
 
 	List<String> badXmls = new ArrayList<String>();
 	String replacedPath = path.replace('\\', '/');

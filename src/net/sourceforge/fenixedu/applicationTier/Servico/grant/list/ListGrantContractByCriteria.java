@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -35,7 +34,7 @@ public class ListGrantContractByCriteria extends Service {
      *          IndoSpanCriteriaListGrantOwner
      */
     public Object[] run(InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner) throws FenixServiceException,
-	    ExcepcaoPersistencia, FenixFilterException, Exception {
+	    FenixFilterException, Exception {
 
 	// Read the grant contracts ordered by persistentSupportan
 	List<GrantContractRegime> grantContractBySpanAndCriteria = readAllContractsByCriteria(
@@ -73,8 +72,7 @@ public class ListGrantContractByCriteria extends Service {
      * each contract 2- Construct the info and put it on the list result
      */
     private void convertToInfoListGrantOwnerByOrder(GrantContractRegime grantContractRegime,
-	    InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner, List<InfoListGrantOwnerByOrder> result)
-	    throws ExcepcaoPersistencia {
+	    InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner, List<InfoListGrantOwnerByOrder> result) {
 
 	GrantOwner grantOwner = grantContractRegime.getGrantContract().getGrantOwner();
 	InfoListGrantOwnerByOrder infoListGrantOwnerByOrder = new InfoListGrantOwnerByOrder(grantOwner);
@@ -127,7 +125,7 @@ public class ListGrantContractByCriteria extends Service {
     public List<GrantContractRegime> readAllContractsByCriteria(String orderBy, Boolean justActiveContracts,
 	    Boolean justDesactiveContracts, Date dateBeginContract, Date dateEndContract, Integer spanNumber,
 	    Integer numberOfElementsInSpan, Integer grantTypeId, Date validToTheDate) throws FenixFilterException,
-	    FenixServiceException, ExcepcaoPersistencia, Exception {
+	    FenixServiceException, Exception {
 
 	List<GrantContractRegime> result = new ArrayList<GrantContractRegime>();
 	Date ToTheDate = null;
@@ -255,8 +253,7 @@ public class ListGrantContractByCriteria extends Service {
     }
 
     public Integer countAllByCriteria(Boolean justActiveContracts, Boolean justDesactiveContracts, Date dateBeginContract,
-	    Date dateEndContract, Integer grantTypeId, Date validToTheDate) throws FenixServiceException, FenixFilterException,
-	    ExcepcaoPersistencia {
+	    Date dateEndContract, Integer grantTypeId, Date validToTheDate) throws FenixServiceException, FenixFilterException {
 	Integer result = new Integer(0);
 
 	List<GrantContractRegime> grantContractRegimes = new ArrayList<GrantContractRegime>();

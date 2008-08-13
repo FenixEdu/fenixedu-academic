@@ -43,17 +43,17 @@ public class ExcepcaoPersistencia extends java.lang.Exception {
     }
 
     public ExcepcaoPersistencia(int erro, Exception ex) {
-        super(ex);
-        _erro = erro;
+	super(ex);
+	_erro = erro;
     }
 
     public ExcepcaoPersistencia(String error, Exception ex) {
-        super(ex);
-        this.errorKey = error;
+	super(ex);
+	this.errorKey = error;
     }
 
     public ExcepcaoPersistencia(int erro) {
-        _erro = erro;
+	_erro = erro;
     }
 
     /**
@@ -64,46 +64,46 @@ public class ExcepcaoPersistencia extends java.lang.Exception {
      *            the detail message.
      */
     public ExcepcaoPersistencia(String msg) {
-        super(msg);
+	super(msg);
     }
 
     public int getErro() {
-        return _erro;
+	return _erro;
     }
 
     public String getErrorKey() {
-        return this.errorKey;
+	return this.errorKey;
     }
 
     public void setErrorKey(int error) {
-        switch (error) {
-        case 1:
-            this.errorKey = "exception.error.openDatabase";
-        case 2:
-            this.errorKey = "exception.error.beginTransaction";
-        case 3:
-            this.errorKey = "exception.error.commitTransaction";
-        case 4:
-            this.errorKey = "exception.error.abortTransaction";
-        case 5:
-            this.errorKey = "exception.error.upgradeLock";
-        case 6:
-            this.errorKey = "exception.error.readLock";
-        case 7:
-            this.errorKey = "exception.error.query";
-        case 8:
-            this.errorKey = "exception.error.closeDatabase";
-        default:
-            this.errorKey = "exception.error.unknown";
-        }
+	switch (error) {
+	case 1:
+	    this.errorKey = "exception.error.openDatabase";
+	case 2:
+	    this.errorKey = "exception.error.beginTransaction";
+	case 3:
+	    this.errorKey = "exception.error.commitTransaction";
+	case 4:
+	    this.errorKey = "exception.error.abortTransaction";
+	case 5:
+	    this.errorKey = "exception.error.upgradeLock";
+	case 6:
+	    this.errorKey = "exception.error.readLock";
+	case 7:
+	    this.errorKey = "exception.error.query";
+	case 8:
+	    this.errorKey = "exception.error.closeDatabase";
+	default:
+	    this.errorKey = "exception.error.unknown";
+	}
     }
 
     public String toString() {
-        String result = "[ExcepcaoPersistencia\n";
-        result += "message" + this.getMessage() + "\n";
-        result += "error" + this.getErrorKey() + "\n";
-        result += "cause" + this.getCause() + "\n";
-        result += "]";
-        return result;
+	String result = "[ExcepcaoPersistencia\n";
+	result += "message" + this.getMessage() + "\n";
+	result += "error" + this.getErrorKey() + "\n";
+	result += "cause" + this.getCause() + "\n";
+	result += "]";
+	return result;
     }
 }

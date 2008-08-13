@@ -16,7 +16,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 public class UpdateObjects extends Service {
     
-    public Collection run(List<ObjectChange> changes) throws ExcepcaoPersistencia, ClassNotFoundException,
+    public Collection run(List<ObjectChange> changes) throws ClassNotFoundException,
             IllegalAccessException, NoSuchMethodException, InstantiationException {
         beforeRun(changes);
         
@@ -138,7 +138,7 @@ public class UpdateObjects extends Service {
         return PropertyUtils.getProperty(object, slot);
     }
 
-    private Object getObject(Hashtable<ObjectKey, Object> objects, ObjectChange change) throws ExcepcaoPersistencia,
+    private Object getObject(Hashtable<ObjectKey, Object> objects, ObjectChange change) throws
             ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Object object = objects.get(change.key);
 
@@ -150,7 +150,7 @@ public class UpdateObjects extends Service {
         return object;
     }
 
-    protected DomainObject getNewObject(ObjectChange change) throws InstantiationException, IllegalAccessException, ExcepcaoPersistencia, ClassNotFoundException, IllegalArgumentException, InvocationTargetException {
+    protected DomainObject getNewObject(ObjectChange change) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IllegalArgumentException, InvocationTargetException {
         return RootDomainObject.readDomainObjectByOID(change.key.getType(), change.key.getOid());
     }
 }

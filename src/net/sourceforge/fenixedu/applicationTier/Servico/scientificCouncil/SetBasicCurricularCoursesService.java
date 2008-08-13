@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class SetBasicCurricularCoursesService extends Service {
 
 	public boolean run(List curricularCoursesIds, Integer degreeCurricularPlanId)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException{
 
 		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 

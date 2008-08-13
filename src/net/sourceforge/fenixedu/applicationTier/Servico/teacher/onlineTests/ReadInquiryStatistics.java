@@ -29,7 +29,7 @@ import org.apache.struts.util.LabelValueBean;
 public class ReadInquiryStatistics extends Service {
 
     public List<InfoInquiryStatistics> run(Integer executionCourseId, Integer distributedTestId,
-            String path) throws FenixServiceException, ExcepcaoPersistencia {
+            String path) throws FenixServiceException{
         List<InfoInquiryStatistics> infoInquiryStatisticsList = new ArrayList<InfoInquiryStatistics>();
         DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
         if (distributedTest == null) {

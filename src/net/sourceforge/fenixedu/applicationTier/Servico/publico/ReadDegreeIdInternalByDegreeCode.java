@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadDegreeIdInternalByDegreeCode extends Service {
 	
-	public Integer run(String degreeCode) throws ExcepcaoPersistencia {
+	public Integer run(String degreeCode) {
         Degree degree = Degree.readBySigla(degreeCode);
 
         return degree != null ? degree.getIdInternal() : null;

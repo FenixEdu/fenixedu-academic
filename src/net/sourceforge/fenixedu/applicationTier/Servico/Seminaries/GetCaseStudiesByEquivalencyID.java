@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetCaseStudiesByEquivalencyID extends Service {
 
-	public List run(Integer equivalencyID) throws BDException, ExcepcaoPersistencia {
+	public List run(Integer equivalencyID) throws BDException{
 		List<InfoCaseStudy> infoCases = new LinkedList<InfoCaseStudy>();
 
 		CourseEquivalency equivalency = rootDomainObject.readCourseEquivalencyByOID(equivalencyID);

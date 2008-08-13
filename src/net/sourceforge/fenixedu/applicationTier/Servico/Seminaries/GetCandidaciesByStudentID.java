@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
  */
 public class GetCandidaciesByStudentID extends Service {
 
-	public List run(final Person person) throws BDException, ExcepcaoPersistencia {
+	public List run(final Person person) throws BDException{
 		final List candidaciesInfo = new LinkedList();
 
 		final Student student = person.getStudent();

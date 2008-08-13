@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class RemoveTeacherFromTeacherServiceDistributions extends Service {
 
-	public void run(Integer tsdId, Integer tsdTeacherId) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(Integer tsdId, Integer tsdTeacherId) throws FenixServiceException{
 
 		TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
 		TSDTeacher tsdTeacher = rootDomainObject.readTSDTeacherByOID(tsdTeacherId);

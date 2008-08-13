@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class DeleteFAQEntry extends Service {
 
-    public void run(Integer entryId) throws ExcepcaoPersistencia {
+    public void run(Integer entryId) {
         rootDomainObject.readFAQEntryByOID(entryId).delete();
     }
 

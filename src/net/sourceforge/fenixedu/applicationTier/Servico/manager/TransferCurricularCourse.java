@@ -19,7 +19,7 @@ import org.apache.commons.collections.Predicate;
 public class TransferCurricularCourse extends Service {
 
     public void run(Integer sourceExecutionCourseId, final Integer curricularCourseId,
-            Integer destinationExecutionCourseId) throws ExcepcaoPersistencia {
+            Integer destinationExecutionCourseId) {
 
         final ExecutionCourse sourceExecutionCourse = rootDomainObject.readExecutionCourseByOID(sourceExecutionCourseId);
         final ExecutionCourse destinationExecutionCourse = rootDomainObject.readExecutionCourseByOID(destinationExecutionCourseId);
@@ -53,7 +53,7 @@ public class TransferCurricularCourse extends Service {
     private void transferAttends(Integer destinationExecutionCourseId,
             ExecutionCourse sourceExecutionCourse, ExecutionCourse destinationExecutionCourse,
             CurricularCourse curricularCourse, Set<Integer> transferedStudents)
-            throws ExcepcaoPersistencia {
+            {
         for (Attends attend : sourceExecutionCourse.getAttends()) {
             Enrolment enrollment = attend.getEnrolment();
             final Registration registration = attend.getRegistration();
@@ -87,7 +87,7 @@ public class TransferCurricularCourse extends Service {
      * @throws ExcepcaoPersistencia
      */
     private void deleteShiftStudents(ExecutionCourse sourceExecutionCourse, CurricularCourse curricularCourse)
-            throws ExcepcaoPersistencia {
+            {
         
 	Set<Shift> shifts = sourceExecutionCourse.getAssociatedShifts();
 

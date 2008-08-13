@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteFAQSection extends Service {
 
-    public void run(Integer faqSectionId) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(Integer faqSectionId) throws FenixServiceException{
         FAQSection faqSection = rootDomainObject.readFAQSectionByOID(faqSectionId);
         if (faqSection != null) {
             faqSection.delete();

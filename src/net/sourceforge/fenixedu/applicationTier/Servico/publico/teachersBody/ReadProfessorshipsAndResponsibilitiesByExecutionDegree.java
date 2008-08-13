@@ -31,7 +31,7 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree extends Service {
 
-    public List run(Integer executionDegreeId) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer executionDegreeId) throws FenixServiceException{
 
         ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
 

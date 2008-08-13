@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.util.SituationName;
 public class ReadCandidatesForSelection extends Service {
 
 	public List run(Integer executionDegreeID, List<SituationName> situationNames)
-			throws FenixServiceException, ExcepcaoPersistencia {
+			throws FenixServiceException{
 
 		// Read the candidates
 

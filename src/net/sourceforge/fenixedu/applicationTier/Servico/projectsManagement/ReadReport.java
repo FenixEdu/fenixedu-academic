@@ -28,35 +28,35 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 public class ReadReport extends Service {
 
     public InfoProjectReport run(String userView, String costCenter, ReportType reportType, Integer projectCode, String userNumber)
-            throws ExcepcaoPersistencia {
-        InfoProjectReport infoReport = new InfoProjectReport();
-        List<IReportLine> infoLines = new ArrayList<IReportLine>();
-        
-               
-        PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
-        if (projectCode != null
-                && (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || ProjectAccess.getByUsernameAndProjectCode(userView, projectCode) != null)
-                || (costCenter!=null && ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(userView, costCenter)!= null)) {
-            infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
-            if (reportType.equals(ReportType.REVENUE)) {
-                List<IRevenueReportLine> lines = p.getIPersistentRevenueReport().getCompleteReport(reportType, projectCode);
-                for (IRevenueReportLine revenueReportLine : lines) {
-                    infoLines.add(InfoRevenueReportLine.newInfoFromDomain(revenueReportLine));
-                }
-            } else if (reportType.equals(ReportType.ADIANTAMENTOS) || reportType.equals(ReportType.CABIMENTOS)) {
-                List<IMovementReport> lines = p.getIPersistentMovementReport().getCompleteReport(reportType, projectCode);
-                for (IMovementReport movementReport : lines) {
-                    infoLines.add(InfoMovementReport.newInfoFromDomain(movementReport));
-                }
-            } else if (reportType.equals(ReportType.PROJECT_BUDGETARY_BALANCE)) {
-                List<IProjectBudgetaryBalanceReportLine> lines = p.getIPersistentProjectBudgetaryBalanceReport().getCompleteReport(reportType,
-                        projectCode);
-                for (IProjectBudgetaryBalanceReportLine projectBudgetaryBalanceReportLine : lines) {
-                    infoLines.add(InfoProjectBudgetaryBalanceReportLine.newInfoFromDomain(projectBudgetaryBalanceReportLine));
-                }
-            }
-        }
-        infoReport.setLines(infoLines);
-        return infoReport;
+	    throws ExcepcaoPersistencia {
+	InfoProjectReport infoReport = new InfoProjectReport();
+	List<IReportLine> infoLines = new ArrayList<IReportLine>();
+
+	PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	if (projectCode != null
+		&& (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || ProjectAccess
+			.getByUsernameAndProjectCode(userView, projectCode) != null)
+		|| (costCenter != null && ProjectAccess.getAllByPersonUsernameAndDatesAndCostCenter(userView, costCenter) != null)) {
+	    infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
+	    if (reportType.equals(ReportType.REVENUE)) {
+		List<IRevenueReportLine> lines = p.getIPersistentRevenueReport().getCompleteReport(reportType, projectCode);
+		for (IRevenueReportLine revenueReportLine : lines) {
+		    infoLines.add(InfoRevenueReportLine.newInfoFromDomain(revenueReportLine));
+		}
+	    } else if (reportType.equals(ReportType.ADIANTAMENTOS) || reportType.equals(ReportType.CABIMENTOS)) {
+		List<IMovementReport> lines = p.getIPersistentMovementReport().getCompleteReport(reportType, projectCode);
+		for (IMovementReport movementReport : lines) {
+		    infoLines.add(InfoMovementReport.newInfoFromDomain(movementReport));
+		}
+	    } else if (reportType.equals(ReportType.PROJECT_BUDGETARY_BALANCE)) {
+		List<IProjectBudgetaryBalanceReportLine> lines = p.getIPersistentProjectBudgetaryBalanceReport()
+			.getCompleteReport(reportType, projectCode);
+		for (IProjectBudgetaryBalanceReportLine projectBudgetaryBalanceReportLine : lines) {
+		    infoLines.add(InfoProjectBudgetaryBalanceReportLine.newInfoFromDomain(projectBudgetaryBalanceReportLine));
+		}
+	    }
+	}
+	infoReport.setLines(infoLines);
+	return infoReport;
     }
 }

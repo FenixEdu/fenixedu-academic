@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadStudentsEnrolledInWrittenEvaluation extends Service {
 
     public SiteView run(Integer executionCourseID, Integer writtenEvaluationID)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationID);
         if (writtenEvaluation == null) {

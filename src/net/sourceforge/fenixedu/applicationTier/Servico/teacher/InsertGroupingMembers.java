@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class InsertGroupingMembers extends Service {
 
     public Boolean run(final Integer executionCourseCode, final Integer groupPropertiesCode, final List studentCodes)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws FenixServiceException{
 
         final Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
         if (groupProperties == null) {

@@ -80,7 +80,7 @@ public class Authenticate extends Service implements Serializable {
 		final Set rolesSet = new HashSet(roles.length);
 		for (int i = 0; i < roles.length; i++) {
 		    final RoleType roleType = RoleType.valueOf(roles[i].trim());
-		    if (LogLevel.INFO) {		        
+		    if (LogLevel.INFO) {
 			logger.info("Host: " + hostname + " provides role: " + roleType.toString() + '.');
 		    }
 		    rolesSet.add(roleType);
@@ -91,8 +91,7 @@ public class Authenticate extends Service implements Serializable {
 	    final InputStream inputStream = Authenticate.class.getResourceAsStream("/.build.version");
 	    buildVersion = FileUtils.readFile(inputStream);
 	} catch (IOException e) {
-	    throw new RuntimeException("Unable to load " + propertiesFilename
-		    + ". User authentication is therefor not possible.");
+	    throw new RuntimeException("Unable to load " + propertiesFilename + ". User authentication is therefor not possible.");
 	}
     }
 
@@ -158,13 +157,12 @@ public class Authenticate extends Service implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-	    if (! (obj instanceof UserView)) {
+	    if (!(obj instanceof UserView)) {
 		return false;
 	    }
 
 	    UserView other = (UserView) obj;
-	    return this.personRef.equals(other.personRef)
-	    && this.roleTypes.equals(other.roleTypes);
+	    return this.personRef.equals(other.personRef) && this.roleTypes.equals(other.roleTypes);
 	}
 
 	@Override
@@ -197,9 +195,8 @@ public class Authenticate extends Service implements Serializable {
 	return userView instanceof UserView;
     }
 
-    public IUserView run(final String username, final String password, final String requestURL,
-	    final String remoteHost) throws ExcepcaoAutenticacao, ExcepcaoPersistencia,
-	    FenixServiceException {
+    public IUserView run(final String username, final String password, final String requestURL, final String remoteHost)
+	    throws ExcepcaoAutenticacao, FenixServiceException {
 
 	Person person = Person.readPersonByUsernameWithOpenedLogin(username);
 	if (person == null || !PasswordEncryptor.areEquals(person.getPassword(), password)) {
@@ -220,8 +217,8 @@ public class Authenticate extends Service implements Serializable {
 	return new UserView(person, allowedRoles, expirationDate);
     }
 
-    public IUserView run(final CASReceipt receipt, final String requestURL, final String remoteHost)
-    throws ExcepcaoPersistencia, ExcepcaoAutenticacao {
+    public IUserView run(final CASReceipt receipt, final String requestURL, final String remoteHost) throws ExcepcaoAutenticacao,
+	    ExcepcaoPersistencia {
 	final String username = receipt.getUserName();
 
 	Person person = Person.readPersonByUsernameWithOpenedLogin(username);
@@ -231,7 +228,7 @@ public class Authenticate extends Service implements Serializable {
 
 	setLoginHostNameAndDateTime(remoteHost, person);
 
-	if(validateExpirationDate) {
+	if (validateExpirationDate) {
 	    try {
 		final DateTime expirationDate = Script.returnExpirationDate(person.getIstUsername());
 		return getUserView(person, requestURL, expirationDate);
@@ -276,14 +273,12 @@ public class Authenticate extends Service implements Serializable {
 	RegisterUserLoginThread.runThread(user, remoteHost);
     }
 
-    public static CASReceipt getCASReceipt(final String casTicket, final String requestURL)
-    throws ExcepcaoAutenticacao {
+    public static CASReceipt getCASReceipt(final String casTicket, final String requestURL) throws ExcepcaoAutenticacao {
 	CASReceipt receipt = null;
 
 	try {
 	    final String casValidateUrl = PropertiesManager.getProperty("cas.validateUrl");
-	    final String casServiceUrl = URLEncoder.encode(CASFilter
-		    .getServiceUrl(requestURL), URL_ENCODING);
+	    final String casServiceUrl = URLEncoder.encode(CASFilter.getServiceUrl(requestURL), URL_ENCODING);
 
 	    ProxyTicketValidator pv = new ProxyTicketValidator();
 	    pv.setCasValidateUrl(casValidateUrl);
@@ -307,7 +302,7 @@ public class Authenticate extends Service implements Serializable {
 	return receipt;
     }
 
-    protected Collection<Role> getInfoRoles(Person person, final Set allowedRoles) {	
+    protected Collection<Role> getInfoRoles(Person person, final Set allowedRoles) {
 	String username = person.getUsername();
 	List<Role> personRoles = person.getPersonRoles();
 
@@ -339,18 +334,18 @@ public class Authenticate extends Service implements Serializable {
     }
 
     protected void filterEmployeeRoleForTeachers(Map<RoleType, Role> infoRoles, Person person) {
-	if(!personHasAssiduousness(person)) {
-	    infoRoles.remove(RoleType.EMPLOYEE);    
-	}	
+	if (!personHasAssiduousness(person)) {
+	    infoRoles.remove(RoleType.EMPLOYEE);
+	}
     }
 
-    private boolean personHasAssiduousness(Person person) {	
-	if(person.hasEmployee()) {
+    private boolean personHasAssiduousness(Person person) {
+	if (person.hasEmployee()) {
 	    LocalDate currentDate = new LocalDate();
-	    if(person.getEmployee().hasAssiduousness()) {
+	    if (person.getEmployee().hasAssiduousness()) {
 		return person.getEmployee().getAssiduousness().isStatusActive(currentDate, currentDate);
 	    }
-	}	
+	}
 	return false;
     }
 }

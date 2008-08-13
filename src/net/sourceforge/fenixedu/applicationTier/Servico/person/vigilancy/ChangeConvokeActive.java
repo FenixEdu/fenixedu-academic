@@ -9,72 +9,68 @@ import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilant;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
 public class ChangeConvokeActive extends Service {
 
-	public void run(Vigilancy convoke, Boolean bool, Person person)
-			throws ExcepcaoPersistencia {
+    public void run(Vigilancy convoke, Boolean bool, Person person) {
 
-		convoke.setActive(bool);
-		sendEmailNotification(bool, person, convoke);
+	convoke.setActive(bool);
+	sendEmailNotification(bool, person, convoke);
+    }
+
+    private void sendEmailNotification(Boolean bool, Person person, Vigilancy convoke) {
+
+	Vigilant vigilant = convoke.getVigilant();
+	String emailTo = vigilant.getEmail();
+	final ArrayList<String> tos = new ArrayList<String>();
+	tos.add(emailTo);
+
+	VigilantGroup group = convoke.getAssociatedVigilantGroup();
+	String groupEmail = group.getContactEmail();
+	String[] replyTo;
+
+	if (groupEmail != null) {
+	    tos.add(groupEmail);
+	    if (person.isExamCoordinatorForVigilantGroup(group)) {
+		replyTo = new String[] { groupEmail };
+	    } else {
+		replyTo = new String[] { person.getEmail() };
+	    }
+	} else {
+	    replyTo = new String[] { person.getEmail() };
 	}
 
-	private void sendEmailNotification(Boolean bool, Person person, Vigilancy convoke) {
-		
-		Vigilant vigilant = convoke.getVigilant();
-		String emailTo = vigilant.getEmail();
-		final ArrayList<String> tos = new ArrayList<String>();
-		tos.add(emailTo);
+	WrittenEvaluation writtenEvaluation = convoke.getWrittenEvaluation();
+	tos.addAll(Vigilancy.getEmailsThatShouldBeContactedFor(writtenEvaluation));
 
-		VigilantGroup group =  convoke.getAssociatedVigilantGroup();
-		String groupEmail = group.getContactEmail();
-		String[] replyTo;
-		
-		if (groupEmail != null) {
-			tos.add(groupEmail);
-			if(person.isExamCoordinatorForVigilantGroup(group)) {
-				replyTo = new String[] { groupEmail };
-			}
-			else {
-				replyTo = new String[] { person.getEmail() };	
-			}
-		} else {
-			replyTo = new String[] { person.getEmail() };
-		}
+	String emailMessage = generateMessage(bool, convoke);
+	DateTime date = writtenEvaluation.getBeginningDateTime();
+	String time = writtenEvaluation.getBeginningDateHourMinuteSecond().toString();
+	String beginDateString = date.getDayOfMonth() + "-" + date.getMonthOfYear() + "-" + date.getYear();
 
-		WrittenEvaluation writtenEvaluation = convoke.getWrittenEvaluation();
-		tos.addAll(Vigilancy.getEmailsThatShouldBeContactedFor(writtenEvaluation));
+	String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject", new Object[] {
+		writtenEvaluation.getName(), group.getName(), beginDateString, time });
+	new Email(person.getName(), (groupEmail != null && person.isExamCoordinatorForVigilantGroup(group)) ? groupEmail : person
+		.getEmail(), replyTo, tos, null, null, subject, emailMessage);
+    }
 
-		String emailMessage = generateMessage(bool, convoke);
-		DateTime date = writtenEvaluation.getBeginningDateTime();
-		String time = writtenEvaluation.getBeginningDateHourMinuteSecond().toString();
-		String beginDateString = date.getDayOfMonth() + "-" + date.getMonthOfYear() + "-" + date.getYear();
+    private String generateMessage(Boolean bool, Vigilancy convoke) {
 
-		String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject",
-				new Object[] { writtenEvaluation.getName(), group.getName(), beginDateString, time });
-		new Email(person.getName(), (groupEmail != null && person.isExamCoordinatorForVigilantGroup(group)) ? groupEmail : person.getEmail(), replyTo,
-				tos, null, null, subject, emailMessage);
-	}
+	String message = "";
+	WrittenEvaluation writtenEvaluation = convoke.getWrittenEvaluation();
+	DateTime beginDate = writtenEvaluation.getBeginningDateTime();
+	String date = beginDate.getDayOfMonth() + "-" + beginDate.getMonthOfYear() + "-" + beginDate.getYear();
 
-	private String generateMessage(Boolean bool, Vigilancy convoke) {
-
-		String message = "";
-		WrittenEvaluation writtenEvaluation = convoke.getWrittenEvaluation();
-		DateTime beginDate = writtenEvaluation.getBeginningDateTime();
-		String date = beginDate.getDayOfMonth() + "-" + beginDate.getMonthOfYear() + "-"
-				+ beginDate.getYear();
-
-		message = "Caro(a) " + convoke.getVigilant().getPerson().getName() + ",\n\n";
-		message += (bool) ? RenderUtils.getResourceString("VIGILANCY_RESOURCES",
-				"email.convoke.convokedAgain") : RenderUtils.getResourceString("VIGILANCY_RESOURCES",
-				"email.convoke.uncovoked");
-		message += "\n\nProva de avaliacao: " + writtenEvaluation.getFullName();
-		message += "\nData: " + date + " (" + writtenEvaluation.getBeginningDateHourMinuteSecond().toString() + ")";
-		return message;
-	}
+	message = "Caro(a) " + convoke.getVigilant().getPerson().getName() + ",\n\n";
+	message += (bool) ? RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.convokedAgain") : RenderUtils
+		.getResourceString("VIGILANCY_RESOURCES", "email.convoke.uncovoked");
+	message += "\n\nProva de avaliacao: " + writtenEvaluation.getFullName();
+	message += "\nData: " + date + " (" + writtenEvaluation.getBeginningDateHourMinuteSecond().toString() + ")";
+	return message;
+    }
 
 }

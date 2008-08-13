@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExecutionDegreesByExecutionYearAndDegreeType extends Service {
 
     public List run(String executionYear, DegreeType degreeType)
-            throws ExcepcaoPersistencia {
+            {
 
     	final List<ExecutionDegree> executionDegrees = degreeType == null ?
             ExecutionDegree.getAllByExecutionYear(executionYear)

@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EnrollGroupShift extends Service {
 
     public boolean run(Integer studentGroupCode, Integer groupPropertiesCode, Integer newShiftCode,
-            String username) throws FenixServiceException, ExcepcaoPersistencia {
+            String username) throws FenixServiceException{
 
         Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
         if (groupProperties == null) {

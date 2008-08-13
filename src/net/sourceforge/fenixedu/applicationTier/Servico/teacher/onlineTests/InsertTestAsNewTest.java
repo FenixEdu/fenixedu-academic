@@ -16,7 +16,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InsertTestAsNewTest extends Service {
 
-    public Integer run(Integer executionCourseId, Integer oldTestId) throws FenixServiceException, ExcepcaoPersistencia {
+    public Integer run(Integer executionCourseId, Integer oldTestId) throws FenixServiceException{
         Test oldTest = rootDomainObject.readTestByOID(oldTestId);
         if (oldTest == null) {
             throw new InvalidArgumentsServiceException();

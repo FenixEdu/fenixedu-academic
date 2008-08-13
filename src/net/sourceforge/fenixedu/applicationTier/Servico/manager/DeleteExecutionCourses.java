@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class DeleteExecutionCourses extends Service {
 
-    public List<String> run(final List<Integer> executionCourseIDs) throws FenixServiceException, ExcepcaoPersistencia {
+    public List<String> run(final List<Integer> executionCourseIDs) throws FenixServiceException{
         final List<String> undeletedExecutionCoursesCodes = new ArrayList<String>();
 
         for (final Integer executionCourseID : executionCourseIDs) {

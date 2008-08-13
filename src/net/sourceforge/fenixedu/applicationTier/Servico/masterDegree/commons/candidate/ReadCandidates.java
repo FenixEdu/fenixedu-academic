@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadCandidates extends Service {
 
-	public List run(String[] candidateList) throws FenixServiceException, ExcepcaoPersistencia {
+	public List run(String[] candidateList) throws FenixServiceException{
 
 		List result = new ArrayList();
 

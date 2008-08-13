@@ -29,7 +29,7 @@ public class SeperateExecutionCourse extends Service {
 
     public void run(final Integer originExecutionCourseOid, final Integer destinationExecutionCourseId,
             final Integer[] shiftIdsToTransfer, final Integer[] curricularCourseIdsToTransfer)
-            throws ExcepcaoPersistencia {
+            {
 
         final ExecutionCourse originExecutionCourse = rootDomainObject.readExecutionCourseByOID( originExecutionCourseOid);
         ExecutionCourse destinationExecutionCourse = rootDomainObject.readExecutionCourseByOID( destinationExecutionCourseId);

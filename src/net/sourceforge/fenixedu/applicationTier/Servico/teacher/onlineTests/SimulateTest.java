@@ -28,7 +28,7 @@ public class SimulateTest extends Service {
 
     public InfoSiteStudentTestFeedback run(Integer executionCourseId, Integer testId, Response[] responses, String[] questionCodes,
             String[] optionShuffle, TestType testType, CorrectionAvailability correctionAvailability, Boolean imsfeedback, String testInformation,
-            String path) throws FenixServiceException, ExcepcaoPersistencia {
+            String path) throws FenixServiceException{
 
 //        InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
 //        this.path = path.replace('\\', '/');
@@ -123,7 +123,7 @@ public class SimulateTest extends Service {
     }
 
     private List<InfoStudentTestQuestion> getInfoStudentTestQuestionList(String[] questionCodes, String[] optionShuffle,
-            Response[] responses, InfoDistributedTest infoDistributedTest, Integer testId) throws ExcepcaoPersistencia,
+            Response[] responses, InfoDistributedTest infoDistributedTest, Integer testId) throws
             InvalidArgumentsServiceException, FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
 

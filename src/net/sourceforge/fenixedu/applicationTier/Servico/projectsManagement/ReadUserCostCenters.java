@@ -21,29 +21,27 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOra
 public class ReadUserCostCenters extends Service {
 
     public List run(Person person, String costCenter, String userNumber) throws ExcepcaoPersistencia {
-        List<InfoRubric> infoCostCenterList = new ArrayList<InfoRubric>();
+	List<InfoRubric> infoCostCenterList = new ArrayList<InfoRubric>();
 
-        PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
-        List<IRubric> costCenterList = p.getIPersistentProjectUser().getInstitucionalProjectCoordId(
-                new Integer(userNumber));
+	PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance();
+	List<IRubric> costCenterList = p.getIPersistentProjectUser().getInstitucionalProjectCoordId(new Integer(userNumber));
 
-        List<Integer> projectCodes = new ArrayList<Integer>();
-        List<ProjectAccess> accesses = ProjectAccess.getAllByPerson(person);
-        for (ProjectAccess access : accesses) {
-            Integer keyCostCenter = access.getKeyProjectCoordinator();
+	List<Integer> projectCodes = new ArrayList<Integer>();
+	List<ProjectAccess> accesses = ProjectAccess.getAllByPerson(person);
+	for (ProjectAccess access : accesses) {
+	    Integer keyCostCenter = access.getKeyProjectCoordinator();
 
-            if (!projectCodes.contains(keyCostCenter)) {
-                projectCodes.add(keyCostCenter);
-            }
-        }
+	    if (!projectCodes.contains(keyCostCenter)) {
+		projectCodes.add(keyCostCenter);
+	    }
+	}
 
-        costCenterList
-                .addAll(p.getIPersistentProjectUser().getInstitucionalProjectByCCIDs(projectCodes));
+	costCenterList.addAll(p.getIPersistentProjectUser().getInstitucionalProjectByCCIDs(projectCodes));
 
-        for (IRubric cc : costCenterList) {
-            infoCostCenterList.add(InfoRubric.newInfoFromDomain(cc));
-        }
+	for (IRubric cc : costCenterList) {
+	    infoCostCenterList.add(InfoRubric.newInfoFromDomain(cc));
+	}
 
-        return infoCostCenterList;
+	return infoCostCenterList;
     }
 }

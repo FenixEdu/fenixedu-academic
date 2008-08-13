@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class DeleteQualification extends Service {
 	
-	public void run(Integer qualificationId) throws ExcepcaoPersistencia {
+	public void run(Integer qualificationId) {
 		Qualification qualification = rootDomainObject.readQualificationByOID(qualificationId);
 		qualification.delete();		
 	}

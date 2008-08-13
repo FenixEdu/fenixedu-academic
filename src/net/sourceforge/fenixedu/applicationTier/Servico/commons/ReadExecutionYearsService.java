@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExecutionYearsService extends Service {
 
-	public List run() throws ExcepcaoPersistencia {
+	public List run() {
 		final List<InfoExecutionYear> infoExecutionYears = new ArrayList<InfoExecutionYear>();
 		for (final ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
 			infoExecutionYears.add(InfoExecutionYear.newInfoFromDomain(executionYear));
@@ -18,7 +18,7 @@ public class ReadExecutionYearsService extends Service {
 		return infoExecutionYears;
 	}
 	
-	public ExecutionYear run(Integer executionYearID) throws ExcepcaoPersistencia {
+	public ExecutionYear run(Integer executionYearID) {
 		return rootDomainObject.readExecutionYearByOID(executionYearID);
 	}
 }

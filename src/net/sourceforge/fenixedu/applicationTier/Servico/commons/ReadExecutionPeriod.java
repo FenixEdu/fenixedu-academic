@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExecutionPeriod extends Service {
 
     public InfoExecutionPeriod run(final String name, final InfoExecutionYear infoExecutionYear)
-            throws ExcepcaoPersistencia {
+            {
 
         final ExecutionSemester executionSemester = ExecutionSemester.readByNameAndExecutionYear(name, infoExecutionYear.getYear());
         return (executionSemester != null) ? InfoExecutionPeriod.newInfoFromDomain(executionSemester) : null;

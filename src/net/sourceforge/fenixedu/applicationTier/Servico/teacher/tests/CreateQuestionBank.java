@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.tests.NewQuestionBank;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateQuestionBank extends Service {
-	public NewQuestionBank run(Person owner) throws FenixServiceException, ExcepcaoPersistencia {
+	public NewQuestionBank run(Person owner) throws FenixServiceException{
 		return new NewQuestionBank(owner);
 	}
 }

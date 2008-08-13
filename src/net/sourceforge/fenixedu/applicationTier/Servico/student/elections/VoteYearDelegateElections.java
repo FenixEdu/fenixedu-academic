@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class VoteYearDelegateElections extends Service  {
 	
-	public void run(YearDelegateElection yearDelegateElection, Student student, Student votedStudent) throws FenixServiceException, ExcepcaoPersistencia {
+	public void run(YearDelegateElection yearDelegateElection, Student student, Student votedStudent) throws FenixServiceException{
 		
 		try {
 			if(!yearDelegateElection.getVotingStudents().contains(student)) {

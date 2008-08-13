@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadCandidateEnrolmentsByCandidateID extends Service {
 
-    public List run(Integer candidateID) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(Integer candidateID) throws FenixServiceException{
         List result = new ArrayList();
 
         MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(

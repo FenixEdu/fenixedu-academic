@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -21,23 +20,22 @@ import org.apache.commons.collections.Transformer;
  */
 public class ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan extends Service {
 
-    public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException {
 
-        StudentCurricularPlan studentCurricularPlan = rootDomainObject
-                .readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());
-        
-        List masterDegreeProofVersions = studentCurricularPlan.readNotActiveMasterDegreeProofVersions();
+	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(infoStudentCurricularPlan
+		.getIdInternal());
 
-        CollectionUtils.transform(masterDegreeProofVersions, new Transformer() {
+	List masterDegreeProofVersions = studentCurricularPlan.readNotActiveMasterDegreeProofVersions();
 
-            public Object transform(Object arg0) {
-                MasterDegreeProofVersion masterDegreeProofVersion = (MasterDegreeProofVersion) arg0;
-                return InfoMasterDegreeProofVersion.newInfoFromDomain(masterDegreeProofVersion);
-            }
+	CollectionUtils.transform(masterDegreeProofVersions, new Transformer() {
 
-        });
+	    public Object transform(Object arg0) {
+		MasterDegreeProofVersion masterDegreeProofVersion = (MasterDegreeProofVersion) arg0;
+		return InfoMasterDegreeProofVersion.newInfoFromDomain(masterDegreeProofVersion);
+	    }
 
-        return masterDegreeProofVersions;
+	});
+
+	return masterDegreeProofVersions;
     }
 }

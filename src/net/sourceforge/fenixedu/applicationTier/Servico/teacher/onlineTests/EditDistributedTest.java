@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
@@ -24,8 +23,7 @@ public class EditDistributedTest extends Service {
 
     public void run(Integer executionCourseId, final Integer distributedTestId, String testInformation, String evaluationTitle,
 	    Calendar beginDate, Calendar beginHour, Calendar endDate, Calendar endHour, TestType testType,
-	    CorrectionAvailability correctionAvailability, Boolean imsFeedback) throws FenixServiceException,
-	    ExcepcaoPersistencia {
+	    CorrectionAvailability correctionAvailability, Boolean imsFeedback) throws FenixServiceException {
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 	if (executionCourse == null)
 	    throw new InvalidArgumentsServiceException();
@@ -67,8 +65,8 @@ public class EditDistributedTest extends Service {
 	    OnlineTest onlineTest = distributedTest.getOnlineTest();
 	    onlineTest.delete();
 	    /*
-	     * persistentSupport.getIPersistentMark().deleteByEvaluation(onlineTest);
-	     * persistentObject.deleteByOID(OnlineTest.class,
+	     * persistentSupport.getIPersistentMark().deleteByEvaluation(onlineTest
+	     * ); persistentObject.deleteByOID(OnlineTest.class,
 	     * onlineTest.getIdInternal());
 	     */
 	} else if (change2EvaluationType) {

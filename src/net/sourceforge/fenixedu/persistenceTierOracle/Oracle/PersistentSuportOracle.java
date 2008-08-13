@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesReport;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesResume;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentOpeningProjectFileReport;
@@ -22,8 +23,6 @@ import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentReport;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentRubric;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSummaryReport;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
-
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Susana Fernandes
@@ -45,8 +44,7 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 
 	private String urlPropertyName;
 
-	public ConnectionProperties(String userNamePropertyName,
-		String userPassPropertyName, String urlPropertyName) {
+	public ConnectionProperties(String userNamePropertyName, String userPassPropertyName, String urlPropertyName) {
 	    super();
 	    this.userNamePropertyName = userNamePropertyName;
 	    this.userPassPropertyName = userPassPropertyName;
@@ -56,17 +54,14 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 
     private static ConnectionProperties connectionProperties;
 
-    public PersistentSuportOracle(String userNamePropertyName,
-	    String userPassPropertyName, String urlPropertyName) {
+    public PersistentSuportOracle(String userNamePropertyName, String userPassPropertyName, String urlPropertyName) {
 	super();
-	connectionProperties = new ConnectionProperties(userNamePropertyName,
-		userPassPropertyName, urlPropertyName);
+	connectionProperties = new ConnectionProperties(userNamePropertyName, userPassPropertyName, urlPropertyName);
     }
 
     public static synchronized PersistentSuportOracle getProjectDBInstance() {
 	if (instance == null) {
-	    instance = new PersistentSuportOracle(
-		    "db.projectManagement.user", "db.projectManagement.pass",
+	    instance = new PersistentSuportOracle("db.projectManagement.user", "db.projectManagement.pass",
 		    "db.projectManagement.alias");
 	}
 	return instance;
@@ -74,8 +69,7 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 
     public static synchronized PersistentSuportOracle getGiafDBInstance() {
 	if (instance == null) {
-	    instance = new PersistentSuportOracle("db.giaf.user", "db.giaf.pass",
-		    "db.giaf.alias");
+	    instance = new PersistentSuportOracle("db.giaf.user", "db.giaf.pass", "db.giaf.alias");
 	}
 	return instance;
     }

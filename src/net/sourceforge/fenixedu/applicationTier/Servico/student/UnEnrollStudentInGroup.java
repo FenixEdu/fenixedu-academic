@@ -16,10 +16,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.utl.ist.fenix.tools.util.EMail;
 
 import org.apache.struts.util.MessageResources;
+
+import pt.utl.ist.fenix.tools.util.EMail;
 
 /**
  * @author asnr and scpo
@@ -30,70 +30,60 @@ public class UnEnrollStudentInGroup extends Service {
 
     public String mailServer() {
 	final String server = PropertiesManager.getProperty("mail.smtp.host");
-        return (server != null) ? server : "mail.adm";
+	return (server != null) ? server : "mail.adm";
     }
 
-    private static final MessageResources messages = MessageResources
-            .getMessageResources("resources/GlobalResources");
+    private static final MessageResources messages = MessageResources.getMessageResources("resources/GlobalResources");
 
-    public Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException {
 
-        StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
+	StudentGroup studentGroup = rootDomainObject.readStudentGroupByOID(studentGroupCode);
 
-        final List<String> emails = new ArrayList<String>();
-        for (final Attends attends : studentGroup.getAttends()) {
-            emails.add(attends.getRegistration().getPerson().getEmail());
-        }
+	final List<String> emails = new ArrayList<String>();
+	for (final Attends attends : studentGroup.getAttends()) {
+	    emails.add(attends.getRegistration().getPerson().getEmail());
+	}
 
-        if (studentGroup == null) {
-            throw new InvalidSituationServiceException();
-        }
+	if (studentGroup == null) {
+	    throw new InvalidSituationServiceException();
+	}
 
-        Registration registration = Registration.readByUsername(userName);
+	Registration registration = Registration.readByUsername(userName);
 
-        Grouping groupProperties = studentGroup.getGrouping();
+	Grouping groupProperties = studentGroup.getGrouping();
 
-        Attends attend = groupProperties.getStudentAttend(registration);
+	Attends attend = groupProperties.getStudentAttend(registration);
 
-        if (attend == null) {
-            throw new NotAuthorizedException();
-        }
+	if (attend == null) {
+	    throw new NotAuthorizedException();
+	}
 
-        IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-                .getInstance();
+	IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
 
-        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-                .getGroupEnrolmentStrategyInstance(groupProperties);
+	IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
 
-        boolean resultEmpty = strategy.checkIfStudentGroupIsEmpty(attend, studentGroup);
+	boolean resultEmpty = strategy.checkIfStudentGroupIsEmpty(attend, studentGroup);
 
-        studentGroup.removeAttends(attend);
+	studentGroup.removeAttends(attend);
 
-        if (resultEmpty) {
-            studentGroup.delete();
-            return Boolean.FALSE;
-        }
+	if (resultEmpty) {
+	    studentGroup.delete();
+	    return Boolean.FALSE;
+	}
 
-        final StringBuilder executionCourseNames = new StringBuilder();
-        for (final ExecutionCourse executionCourse : groupProperties.getExecutionCourses()) {
-            if (executionCourseNames.length() > 0) {
-                executionCourseNames.append(", ");
-            }
-            executionCourseNames.append(executionCourse.getNome());
-        }
-        EMail.send(
-                mailServer(), 
-                "Fenix System", 
-                messages.getMessage("suporte.mail"), 
-                messages.getMessage("message.subject.grouping.change"), 
-                emails, 
-                new ArrayList(),
-                new ArrayList(), 
-                messages.getMessage("message.body.grouping.change.unenrolment", 
-                registration.getNumber().toString(), studentGroup.getGroupNumber().toString(), attend.getExecutionCourse().getNome()));
+	final StringBuilder executionCourseNames = new StringBuilder();
+	for (final ExecutionCourse executionCourse : groupProperties.getExecutionCourses()) {
+	    if (executionCourseNames.length() > 0) {
+		executionCourseNames.append(", ");
+	    }
+	    executionCourseNames.append(executionCourse.getNome());
+	}
+	EMail.send(mailServer(), "Fenix System", messages.getMessage("suporte.mail"), messages
+		.getMessage("message.subject.grouping.change"), emails, new ArrayList(), new ArrayList(), messages.getMessage(
+		"message.body.grouping.change.unenrolment", registration.getNumber().toString(), studentGroup.getGroupNumber()
+			.toString(), attend.getExecutionCourse().getNome()));
 
-        return Boolean.TRUE;
+	return Boolean.TRUE;
     }
 
 }

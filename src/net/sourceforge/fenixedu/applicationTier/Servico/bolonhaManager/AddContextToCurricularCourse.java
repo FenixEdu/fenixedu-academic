@@ -11,12 +11,11 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class AddContextToCurricularCourse extends Service {
 
     public void run(CurricularCourse curricularCourse, CourseGroup courseGroup, Integer beginExecutionPeriodID,
-	    Integer endExecutionPeriodID, Integer year, Integer semester) throws ExcepcaoPersistencia, FenixServiceException {
+	    Integer endExecutionPeriodID, Integer year, Integer semester) throws FenixServiceException {
 
 	CurricularPeriod degreeCurricularPeriod = courseGroup.getParentDegreeCurricularPlan().getDegreeStructure();
 
@@ -24,7 +23,6 @@ public class AddContextToCurricularCourse extends Service {
 	/*
 	 * TODO: Important - change this code (must be generic to support
 	 * several curricularPeriodInfoDTOs, instead of year and semester)
-	 * 
 	 */
 	CurricularPeriod curricularPeriod = null;
 	CurricularPeriodInfoDTO curricularPeriodInfoYear = null;

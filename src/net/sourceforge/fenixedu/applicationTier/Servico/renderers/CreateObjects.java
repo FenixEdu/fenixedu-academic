@@ -13,7 +13,7 @@ public class CreateObjects extends UpdateObjects {
     }
 
     @Override
-    protected DomainObject getNewObject(ObjectChange change) throws ExcepcaoPersistencia, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    protected DomainObject getNewObject(ObjectChange change) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Class objectClass = change.key.getType();
         
         if (change.constructor != null) {

@@ -140,7 +140,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return allInherentFunctions;
     }
 
-    public String getAllUnitsToChooseParentUnit() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
+    public String getAllUnitsToChooseParentUnit() throws FenixFilterException, FenixServiceException{
 	StringBuilder buffer = new StringBuilder();
 	YearMonthDay currentDate = new YearMonthDay();
 	if (this.getUnit().isNoOfficialExternal()) {
@@ -221,7 +221,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	return "listAllUnits";
     }
 
-    public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
+    public String getUnits() throws FenixFilterException, FenixServiceException{
 	
 	StringBuilder buffer = new StringBuilder();
 	List<Unit> unitsToShow = null;
@@ -288,7 +288,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public String getUnitsToChoosePrincipalFunction() throws FenixFilterException,
-	    FenixServiceException, ExcepcaoPersistencia {
+	    FenixServiceException{
 
 	YearMonthDay currentDate = new YearMonthDay();
 	StringBuilder buffer = new StringBuilder();

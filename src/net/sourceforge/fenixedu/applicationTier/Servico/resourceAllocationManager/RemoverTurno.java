@@ -19,7 +19,7 @@ import org.apache.commons.collections.Predicate;
 
 public class RemoverTurno extends Service {
 
-    public Object run(final InfoShift infoShift, final InfoClass infoClass) throws ExcepcaoPersistencia {
+    public Object run(final InfoShift infoShift, final InfoClass infoClass) {
         final Shift shift = rootDomainObject.readShiftByOID(infoShift.getIdInternal());
         if (shift == null) {
             return Boolean.FALSE;

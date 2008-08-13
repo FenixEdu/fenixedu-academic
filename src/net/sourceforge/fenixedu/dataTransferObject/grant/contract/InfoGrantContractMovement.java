@@ -114,7 +114,7 @@ public class InfoGrantContractMovement extends InfoObject {
      * @throws ExcepcaoPersistencia
      */
     public void copyToDomain(InfoGrantContractMovement infoGrantContractMovement,
-            GrantContractMovement grantContractMovement) throws ExcepcaoPersistencia {
+            GrantContractMovement grantContractMovement) {
         super.copyToDomain(infoGrantContractMovement, grantContractMovement);
 
         grantContractMovement.setLocation(infoGrantContractMovement.getLocation());

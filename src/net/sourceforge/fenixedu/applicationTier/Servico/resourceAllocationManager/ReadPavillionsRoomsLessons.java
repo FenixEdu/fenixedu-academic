@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadPavillionsRoomsLessons extends Service {
 
-    public List run(List<String> pavillions, InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
+    public List run(List<String> pavillions, InfoExecutionPeriod infoExecutionPeriod) {
 
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod
 		.getIdInternal());

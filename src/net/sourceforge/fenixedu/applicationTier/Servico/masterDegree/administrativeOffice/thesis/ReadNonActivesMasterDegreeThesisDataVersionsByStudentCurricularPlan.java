@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan extends Service {
 
-    public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws ExcepcaoPersistencia {
+    public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) {
         
         StudentCurricularPlan studentCurricularPlan = rootDomainObject
                 .readStudentCurricularPlanByOID(infoStudentCurricularPlan.getIdInternal());

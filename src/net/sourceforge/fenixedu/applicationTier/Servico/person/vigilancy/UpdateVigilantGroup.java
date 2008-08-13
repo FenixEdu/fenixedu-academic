@@ -10,7 +10,7 @@ public class UpdateVigilantGroup extends Service {
 
     public void run(VigilantGroup vigilantGroup, String name, String convokeStrategy, String contactEmail, String emailPrefix, String rulesLink,
             DateTime beginFirst, DateTime endFirst, DateTime beginSecond, DateTime endSecond)
-            throws ExcepcaoPersistencia {
+            {
 
         vigilantGroup.setName(name);
         vigilantGroup.setConvokeStrategy(convokeStrategy);

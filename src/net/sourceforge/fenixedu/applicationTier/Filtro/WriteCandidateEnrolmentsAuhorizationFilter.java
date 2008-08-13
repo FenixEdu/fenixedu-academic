@@ -41,7 +41,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
         return roles;
     }
 
-    private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia {
+    private boolean hasPrivilege(IUserView id, Object[] arguments) {
         if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             return true;
         }

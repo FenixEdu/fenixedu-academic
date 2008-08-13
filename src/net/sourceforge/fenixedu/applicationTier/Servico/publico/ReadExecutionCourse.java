@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class ReadExecutionCourse extends Service {
 
-    public Object run(InfoExecutionPeriod infoExecutionPeriod, String code) throws ExcepcaoPersistencia {
+    public Object run(InfoExecutionPeriod infoExecutionPeriod, String code) {
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(infoExecutionPeriod
 		.getIdInternal());
 	ExecutionCourse iExecCourse = executionSemester.getExecutionCourseByInitials(code);

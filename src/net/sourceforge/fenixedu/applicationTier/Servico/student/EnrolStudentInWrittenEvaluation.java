@@ -11,22 +11,21 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EnrolStudentInWrittenEvaluation extends Service {
 
-    public void run(String username, Integer writtenEvaluationOID) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public void run(String username, Integer writtenEvaluationOID) throws FenixServiceException {
 
-	final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject.readEvaluationByOID(writtenEvaluationOID);
+	final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject
+		.readEvaluationByOID(writtenEvaluationOID);
 	final Person person = Person.readPersonByUsername(username);
 	final Student student = person.getStudent();
 	final Registration registration = findCorrectRegistration(student, writtenEvaluation.getAssociatedExecutionCoursesSet());
-        if (writtenEvaluation == null || registration == null) {
-            throw new InvalidArgumentsServiceException();
-        }
+	if (writtenEvaluation == null || registration == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
 
-        enrolmentAction(writtenEvaluation, registration);
+	enrolmentAction(writtenEvaluation, registration);
     }
 
     private Registration findCorrectRegistration(final Student student, final Set<ExecutionCourse> associatedExecutionCoursesSet) {
@@ -47,4 +46,3 @@ public class EnrolStudentInWrittenEvaluation extends Service {
 	writtenEvaluation.enrolStudent(registration);
     }
 }
-

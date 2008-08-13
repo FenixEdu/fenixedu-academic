@@ -123,7 +123,7 @@ public abstract class EditDomainObjectService extends Service {
     protected abstract DomainObject readDomainObject(final Integer idInternal);
 
     protected abstract void copyInformationFromInfoToDomain(InfoObject infoObject,
-	    DomainObject domainObject) throws ExcepcaoPersistencia, FenixServiceException;
+	    DomainObject domainObject) throws FenixServiceException;
 
     private DomainObject getObjectFromDatabase(InfoObject infoObject) throws Exception {
 	DomainObject objectFromDatabase = readObjectByUnique(infoObject);

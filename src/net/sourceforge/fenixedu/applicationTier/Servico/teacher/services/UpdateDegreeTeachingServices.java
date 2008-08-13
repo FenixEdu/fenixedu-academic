@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageDegreeTeac
 public class UpdateDegreeTeachingServices extends Service {
 
     public void run(Integer professorshipID, List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages, RoleType roleType)
-            throws ExcepcaoPersistencia {
+            {
         
         Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);        
         Teacher teacher = professorship.getTeacher();

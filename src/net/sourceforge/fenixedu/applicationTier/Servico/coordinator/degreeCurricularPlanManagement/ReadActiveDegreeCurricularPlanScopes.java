@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadActiveDegreeCurricularPlanScopes extends ReadDegreeCurricularPlanBaseService {
 
-    public List run(final Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
+    public List run(final Integer degreeCurricularPlanId) {
 
         return super.readActiveCurricularCourseScopes(degreeCurricularPlanId);
 

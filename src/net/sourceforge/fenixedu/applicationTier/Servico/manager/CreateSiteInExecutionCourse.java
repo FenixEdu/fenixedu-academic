@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class CreateSiteInExecutionCourse extends Service {
 
-    public void run(Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(Integer executionCourseId) throws FenixServiceException{
         final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.non.existing.execution.course", null);

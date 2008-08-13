@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadExportGroupingsByGrouping extends Service {
 
-    public List<InfoExportGrouping> run(Integer groupingOID) throws ExcepcaoPersistencia {
+    public List<InfoExportGrouping> run(Integer groupingOID) {
         final Grouping grouping = rootDomainObject.readGroupingByOID(groupingOID);
         final List<ExportGrouping> exportGroupings = grouping.getExportGroupings();
 
