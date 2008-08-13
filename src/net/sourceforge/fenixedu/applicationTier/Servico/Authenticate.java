@@ -196,7 +196,7 @@ public class Authenticate extends Service implements Serializable {
     }
 
     public IUserView run(final String username, final String password, final String requestURL, final String remoteHost)
-	    throws ExcepcaoAutenticacao, FenixServiceException {
+	    throws ExcepcaoAutenticacao, FenixServiceException, ExcepcaoPersistencia {
 
 	Person person = Person.readPersonByUsernameWithOpenedLogin(username);
 	if (person == null || !PasswordEncryptor.areEquals(person.getPassword(), password)) {
