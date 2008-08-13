@@ -11,9 +11,8 @@ import net.sourceforge.fenixedu.util.kerberos.Script;
 
 public class AuthenticateExpiredKerberos extends Authenticate {
 
-    public IUserView run(final String username, final String password, final String newPassword,
-	    final String requestURL, String remoteHostName) throws ExcepcaoPersistencia,
-	    ExcepcaoAutenticacao, FenixServiceException {
+    public IUserView run(final String username, final String password, final String newPassword, final String requestURL,
+	    String remoteHostName) throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
 
 	Person person = Person.readPersonByUsernameWithOpenedLogin(username);
 	if (person == null) {
@@ -24,6 +23,7 @@ public class AuthenticateExpiredKerberos extends Authenticate {
 	    if (person.getIsPassInKerberos()) {
 		try {
 		    Script.verifyPass(person.getIstUsername(), password);
+		    return getUserView(person, requestURL);
 		} catch (KerberosException e) {
 		    if (e.getReturnCode().equals(KerberosException.CHANGE_PASSWORD_EXPIRED)) {
 			try {
@@ -36,16 +36,12 @@ public class AuthenticateExpiredKerberos extends Authenticate {
 			    if (ke.getExitCode() == 1) {
 				String returnCode = ke.getReturnCode();
 				if (returnCode.equals(KerberosException.CHANGE_PASSWORD_TOO_SHORT)
-					|| returnCode
-						.equals(KerberosException.CHANGE_PASSWORD_NOT_ENOUGH_CHARACTER_CLASSES)
-					|| returnCode
-						.equals(KerberosException.CHANGE_PASSWORD_CANNOT_REUSE)
-					|| returnCode
-						.equals(KerberosException.CHECK_PASSWORD_LOW_QUALITY)) {
+					|| returnCode.equals(KerberosException.CHANGE_PASSWORD_NOT_ENOUGH_CHARACTER_CLASSES)
+					|| returnCode.equals(KerberosException.CHANGE_PASSWORD_CANNOT_REUSE)
+					|| returnCode.equals(KerberosException.CHECK_PASSWORD_LOW_QUALITY)) {
 				    throw new InvalidPasswordServiceException(returnCode);
 				} else {
-				    throw new InvalidPasswordServiceException(
-					    "error.person.impossible.change");
+				    throw new InvalidPasswordServiceException("error.person.impossible.change");
 				}
 			    } else {
 				throw new FenixServiceException(ke);
@@ -77,8 +73,7 @@ public class AuthenticateExpiredKerberos extends Authenticate {
 		} catch (KerberosException ke) {
 		    String returnCode = ke.getReturnCode();
 		    if (returnCode.equals(KerberosException.CHANGE_PASSWORD_TOO_SHORT)
-			    || returnCode
-				    .equals(KerberosException.CHANGE_PASSWORD_NOT_ENOUGH_CHARACTER_CLASSES)
+			    || returnCode.equals(KerberosException.CHANGE_PASSWORD_NOT_ENOUGH_CHARACTER_CLASSES)
 			    || returnCode.equals(KerberosException.CHANGE_PASSWORD_CANNOT_REUSE)
 			    || returnCode.equals(KerberosException.ADD_NOT_ENOUGH_CHARACTER_CLASSES)
 			    || returnCode.equals(KerberosException.ADD_TOO_SHORT)
@@ -92,7 +87,8 @@ public class AuthenticateExpiredKerberos extends Authenticate {
 		return userView;
 
 	    }
+	} else {
+	    throw new FenixServiceException("error.empty.istUsername");
 	}
-	return super.run(username, password, requestURL, remoteHostName);
     }
 }
