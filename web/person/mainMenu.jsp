@@ -25,18 +25,23 @@
 
 	</logic:notEmpty>
 
+
 	<logic:present role="MANAGER">
-		<li>
-			<html:link page="/contentManagement.do?method=viewContainer">
-			Root Portal
-			</html:link>
-			<html:link page="/portalManagement.do?method=prepare">
-			Meta Domain Objects
-			</html:link>
-		</li>
-	
-	<!-- Functionalities -->
-		<li><html:link page="/functionalities/module/viewRoot.do">Funcionalidades</html:link></li>
+		<logic:notEqual name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.user.userUId" value="ist24518"> 
+			<logic:notEqual name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.user.userUId" value="ist24421">
+				<li>
+					<html:link page="/contentManagement.do?method=viewContainer">
+					Root Portal
+					</html:link>
+					<html:link page="/portalManagement.do?method=prepare">
+					Meta Domain Objects
+					</html:link>
+				</li>
+			
+			<!-- Functionalities -->
+				<li><html:link page="/functionalities/module/viewRoot.do">Funcionalidades</html:link></li>
+			</logic:notEqual>
+		</logic:notEqual>
 	</logic:present>
 	
 </ul>
