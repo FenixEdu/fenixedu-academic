@@ -145,7 +145,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	this.setPrevailingScientificArea(prevailingScientificArea == null ? null : prevailingScientificArea.trim());
     }
 
-    public void edit(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale, ExecutionYear executionYear) {
+    public void edit(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale,
+	    ExecutionYear executionYear) {
 	commonFieldsChange(name, nameEn, code, gradeScale, executionYear);
 
 	if (degreeType == null) {
@@ -457,10 +458,14 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return result;
     }
 
-    final public MultiLanguageString getNameFor(ExecutionYear executionYear) {
+    public MultiLanguageString getNameFor(final ExecutionYear executionYear) {
 	DegreeInfo degreeInfo = executionYear == null ? getMostRecentDegreeInfo() : getMostRecentDegreeInfo(executionYear);
 	return degreeInfo == null ? MultiLanguageString.i18n().add("pt", super.getNome()).add("en", super.getNameEn()).finish()
 		: degreeInfo.getName();
+    }
+
+    public MultiLanguageString getNameFor(final ExecutionSemester executionSemester) {
+	return getNameFor(executionSemester != null ? executionSemester.getExecutionYear() : null);
     }
 
     @Override
@@ -480,11 +485,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     final public MultiLanguageString getNameI18N() {
 	return getNameFor(ExecutionYear.readCurrentExecutionYear());
-	}
+    }
 
     final public MultiLanguageString getNameI18N(ExecutionYear executionYear) {
 	return getNameFor(executionYear);
-	}
+    }
 
     final public String getPresentationName() {
 	return getPresentationName(ExecutionYear.readCurrentExecutionYear());
@@ -782,8 +787,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	DegreeInfo mostRecentDegreeInfo = this.getMostRecentDegreeInfo(executionYear);
 	return (mostRecentDegreeInfo != null) ? new DegreeInfo(mostRecentDegreeInfo, executionYear) : new DegreeInfo(this,
 		executionYear);
-	}
-    
+    }
+
     public DegreeInfo createCurrentDegreeInfo() {
 	return createCurrentDegreeInfo(ExecutionYear.readCurrentExecutionYear());
     }
@@ -871,7 +876,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
      * of the execution year.
      * 
      * @param person
-     *                the person to check
+     *            the person to check
      * @return <code>true</code> if the person was a coordinator for a certain
      *         execution degree
      */
@@ -1231,7 +1236,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    for (Registration registration : getActiveRegistrations()) {
 		final int studentCurricularYear = registration.getCurricularYear(executionYear);
 
-		if (studentCurricularYear >= 4 && studentCurricularYear <= 5) { // TODO:
+		if (studentCurricularYear >= 4 && studentCurricularYear <= 5) { // TODO
+		    // :
 		    // how
 		    // to
 		    // make
@@ -1254,7 +1260,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    for (Registration registration : getActiveRegistrations()) {
 		final int studentCurricularYear = registration.getCurricularYear(executionYear);
 
-		if (studentCurricularYear >= 1 && studentCurricularYear <= 3) { // TODO:
+		if (studentCurricularYear >= 1 && studentCurricularYear <= 3) { // TODO
+		    // :
 		    // how
 		    // to
 		    // make
