@@ -2569,7 +2569,8 @@ class DomainObject {
 
 	class inquiries.InquiriesCourse extends DomainObject {
     	Integer weeklyHoursSpentPercentage;
-    	Double studyDaysSpentInExamsSeason;	
+    	Double studyDaysSpentInExamsSeason;
+    	Integer weeklyHoursSpentInClassesSeason;	
     	Long answerDuration;
 	
 		Character approvationRatioClassification;
