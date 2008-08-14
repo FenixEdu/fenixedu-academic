@@ -479,10 +479,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     final public boolean hasEnrolments(final ExecutionYear executionYear) {
-	for (final Enrolment enrolment : getEnrolmentsSet()) {
-	    final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
-	    if (executionSemester.getExecutionYear() == executionYear) {
-		return true;
+	if (hasRoot()) {
+	    return getRoot().hasEnrolment(executionYear);
+	} else {
+	    for (final Enrolment enrolment : super.getEnrolmentsSet()) {
+		final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
+		if (executionSemester.getExecutionYear() == executionYear) {
+		    return true;
+		}
 	    }
 	}
 	return false;
