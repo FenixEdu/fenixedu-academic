@@ -39,8 +39,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.Email;
@@ -748,20 +746,22 @@ public class Thesis extends Thesis_Base {
     }
 
     /**
-     * Do not use this. Create instances of {@link ThesisLibraryOperation} instead.
+     * Do not use this. Create instances of {@link ThesisLibraryOperation}
+     * instead.
      */
     public void setLibraryState(ThesisLibraryState state) {
 	throw new UnsupportedOperationException();
     }
-    
+
     public String getLibraryReference() {
 	if (hasLastLibraryOperation())
 	    return getLastLibraryOperation().getLibraryReference();
 	return null;
     }
-    
+
     /**
-     * Do not use this. Create instances of {@link ThesisLibraryOperation} instead.
+     * Do not use this. Create instances of {@link ThesisLibraryOperation}
+     * instead.
      */
     public void setLibraryReference(String reference) {
 	throw new UnsupportedOperationException();
@@ -772,9 +772,10 @@ public class Thesis extends Thesis_Base {
 	    return getLastLibraryOperation().getPerformer();
 	return null;
     }
-    
+
     /**
-     * Do not use this. Create instances of {@link ThesisLibraryOperation} instead.
+     * Do not use this. Create instances of {@link ThesisLibraryOperation}
+     * instead.
      */
     public void setLibraryOperationPerformer(Person performer) {
 	throw new UnsupportedOperationException();
@@ -1551,6 +1552,10 @@ public class Thesis extends Thesis_Base {
 	    }
 	}
 	return theses;
+    }
+
+    public boolean hasCurrentDiscussedDate() {
+	return getCurrentDiscussedDate() != null;
     }
 
 }
