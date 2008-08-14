@@ -43,7 +43,13 @@ public class Country extends Country_Base {
      * null.
      */
     public static Country readDefault() {
-	return readCountryByNationality(DEFAULT_COUNTRY_NATIONALITY);
+	for (final Country country : RootDomainObject.getInstance().getCountrysSet()) {
+	    if (country.isDefaultCountry()) {
+		return country;
+	    }
+	}
+
+	return null;
     }
 
     public static Country readCountryByNationality(final String nationality) {
@@ -80,6 +86,10 @@ public class Country extends Country_Base {
 	final String nationalitySpecialCase = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale())
 		.getString("label.person.portugueseNationality").toUpperCase();
 	return nationality.trim().contains(nationalitySpecialCase) ? nationalitySpecialCase : nationality;
+    }
+
+    public boolean isDefaultCountry() {
+	return getDefaultCountry();
     }
 
 }

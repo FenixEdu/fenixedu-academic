@@ -205,7 +205,6 @@ enum 	  net.sourceforge.fenixedu.domain.ContractType															 	 as Contrac
 enum 	  net.sourceforge.fenixedu.domain.SchoolLevelType															 as SchoolLevelType;
 enum 	  net.sourceforge.fenixedu.domain.ProfessionType															 as ProfessionType;
 enum 	  net.sourceforge.fenixedu.domain.GrantOwnerType															 as GrantOwnerType;
-enum 	  net.sourceforge.fenixedu.domain.HighSchoolType															 as HighSchoolType;
 enum 	  net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType										 as ProfessionalSituationConditionType;
 
 /*
@@ -319,6 +318,7 @@ class DomainObject {
 		String code;
 		String name;
 		String nationality;
+		Boolean defaultCountry;
 	}
 
 	class CreditsInAnySecundaryArea extends DomainObject {
@@ -2065,7 +2065,31 @@ class DomainObject {
 			Boolean applyForResidence;
 			String notesAboutResidenceAppliance;
 			StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice;
+			
+			String districtOfResidence;
+			String districtSubdivisionOfResidence;
+			Boolean dislocatedFromPermanentResidence;
+			String schoolTimeDistrictOfResidence;
+			String schoolTimeDistrictSubDivisionOfResidence;
+			Integer placingOption;
+			GrantOwnerType grantOwnerType;
+			Integer numberOfCandidaciesToHigherSchool;
+			Integer numberOfFlunksOnHighSchool;
+			AcademicalInstitutionType highSchoolType;
+			MaritalStatus maritalStatus;
+			ProfessionType professionType;
+			ProfessionalSituationConditionType professionalCondition;
+			SchoolLevelType motherSchoolLevel;
+			ProfessionType motherProfessionType;
+			ProfessionalSituationConditionType motherProfessionalCondition;
+			SchoolLevelType fatherSchoolLevel;
+			ProfessionType fatherProfessionType;
+			ProfessionalSituationConditionType fatherProfessionalCondition;
+			SchoolLevelType spouseSchoolLevel;
+			ProfessionType spouseProfessionType;
+			ProfessionalSituationConditionType spouseProfessionalCondition;
 		}
+		
 
 			class candidacy.DFACandidacy extends candidacy.StudentCandidacy {
 			}
@@ -2084,8 +2108,7 @@ class DomainObject {
 
 			class candidacy.SDCandidacy extends candidacy.StudentCandidacy {
 			}
-
-
+	
 	class candidacy.degree.ShiftDistribution extends DomainObject {
 	}
 
@@ -2989,7 +3012,7 @@ class DomainObject {
 			String nameOfMother;
 			String nickname;
 			String parishOfBirth;
-			String profession;			
+			String profession;						
 		}
 
 		class organizationalStructure.Unit extends organizationalStructure.Party {
@@ -3754,6 +3777,8 @@ class DomainObject {
 		String conclusionGrade;
 		Integer conclusionYear;
 		String degreeDesignation;
+		SchoolLevelType schoolLevel;
+		String otherSchoolLevel;		
 	}
 
 	class student.Registration extends DomainObject {
@@ -13181,3 +13206,14 @@ relation ResidencePriceTableResidenceManagementUnit {
   }
   residence.ResidencePriceTable playsRole residencePriceTable;
 }
+
+
+relation StudentCandidacyCountryOfResidence {	
+	candidacy.StudentCandidacy playsRole associatedResidentPersonsCandidacies {
+		multiplicity *;
+	}
+	
+	Country playsRole countryOfResidence;
+}
+
+

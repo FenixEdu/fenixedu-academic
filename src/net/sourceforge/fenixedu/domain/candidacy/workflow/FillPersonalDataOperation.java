@@ -2,18 +2,24 @@ package net.sourceforge.fenixedu.domain.candidacy.workflow;
 
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ContactsForm;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.FiliationForm;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.FillPersonalDataWelcomeForm;
+import net.sourceforge.fenixedu.domain.candidacy.workflow.form.HouseholdInformationForm;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.InquiryAboutYieldingPersonalDataForm;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.PersonalInformationForm;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceApplianceInquiryForm;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -23,9 +29,16 @@ import org.apache.commons.lang.StringUtils;
 
 public class FillPersonalDataOperation extends CandidacyOperation {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     private PersonalInformationForm personalInformationForm;
 
     private FiliationForm filiationForm;
+
+    private HouseholdInformationForm householdInformationForm;
 
     private ResidenceInformationForm residenceInformationForm;
 
@@ -47,6 +60,9 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 
 	setFiliationForm(FiliationForm.createFromPerson(getPerson()));
 	addForm(getFiliationForm());
+
+	setHouseholdInformationForm(new HouseholdInformationForm());
+	addForm(getHouseholdInformationForm());
 
 	setResidenceInformationForm(ResidenceInformationForm.createFromPerson(getPerson()));
 	addForm(getResidenceInformationForm());
@@ -130,6 +146,14 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	this.residenceApplianceInquiryForm = fillResidenceApplianceInquiryForm;
     }
 
+    public HouseholdInformationForm getHouseholdInformationForm() {
+	return householdInformationForm;
+    }
+
+    public void setHouseholdInformationForm(HouseholdInformationForm householdInformationForm) {
+	this.householdInformationForm = householdInformationForm;
+    }
+
     @Override
     public final CandidacyOperationType getType() {
 	return CandidacyOperationType.FILL_PERSONAL_DATA;
@@ -148,14 +172,26 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 
     @Override
     protected void internalExecute() {
-	final Person person = getStudentCandidacy().getPerson();
-	fillPersonalInformation(person);
-	fillFiliation(person);
-	fillResidenceInformation(person);
-	fillContacts(person);
+	fillPersonalInformation();
+	fillFiliation();
+	fillHouseholdInformation();
+	fillResidenceInformation();
+	fillContacts();
 	fillPersonalDataAuthorizationChoice();
 	fillOriginInformation();
 	fillResidenceAppliance();
+    }
+
+    private void fillHouseholdInformation() {
+	getStudentCandidacy().setFatherProfessionalCondition(getHouseholdInformationForm().getFatherProfessionalCondition());
+	getStudentCandidacy().setFatherProfessionType(getHouseholdInformationForm().getFatherProfessionType());
+	getStudentCandidacy().setFatherSchoolLevel(getHouseholdInformationForm().getFatherSchoolLevel());
+	getStudentCandidacy().setMotherProfessionalCondition(getHouseholdInformationForm().getMotherProfessionalCondition());
+	getStudentCandidacy().setMotherProfessionType(getHouseholdInformationForm().getMotherProfessionType());
+	getStudentCandidacy().setMotherSchoolLevel(getHouseholdInformationForm().getMotherSchoolLevel());
+	getStudentCandidacy().setSpouseProfessionalCondition(getHouseholdInformationForm().getSpouseProfessionalCondition());
+	getStudentCandidacy().setSpouseProfessionType(getHouseholdInformationForm().getSpouseProfessionType());
+	getStudentCandidacy().setSpouseSchoolLevel(getHouseholdInformationForm().getSpouseSchoolLevel());
     }
 
     private void fillResidenceAppliance() {
@@ -168,6 +204,10 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	final PrecedentDegreeInformation precedentDegreeInformation = getStudentCandidacy().getPrecedentDegreeInformation();
 	precedentDegreeInformation.setConclusionGrade(getOriginInformationForm().getConclusionGrade());
 	precedentDegreeInformation.setDegreeDesignation(getOriginInformationForm().getDegreeDesignation());
+	precedentDegreeInformation.setSchoolLevel(getOriginInformationForm().getSchoolLevel());
+	if (getOriginInformationForm().getSchoolLevel() == SchoolLevelType.OTHER) {
+	    precedentDegreeInformation.setOtherSchoolLevel(getOriginInformationForm().getOtherSchoolLevel());
+	}
 
 	Unit institution = getOriginInformationForm().getInstitution();
 	if (institution == null) {
@@ -179,6 +219,12 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	precedentDegreeInformation.setInstitution(institution);
 	precedentDegreeInformation.setConclusionYear(getOriginInformationForm().getConclusionYear());
 	precedentDegreeInformation.setCountry(getOriginInformationForm().getCountryWhereFinishedPrecedentDegree());
+
+	getStudentCandidacy().setNumberOfCandidaciesToHigherSchool(
+		getOriginInformationForm().getNumberOfCandidaciesToHigherSchool());
+	getStudentCandidacy().setNumberOfFlunksOnHighSchool(getOriginInformationForm().getNumberOfFlunksOnHighSchool());
+	getStudentCandidacy().setHighSchoolType(getOriginInformationForm().getHighSchoolType());
+
     }
 
     protected void fillPersonalDataAuthorizationChoice() {
@@ -186,7 +232,9 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 		getInquiryAboutYieldingPersonalDataForm().getPersonalDataAuthorizationChoice());
     }
 
-    protected void fillContacts(final Person person) {
+    protected void fillContacts() {
+	final Person person = getStudentCandidacy().getPerson();
+
 	PartyContact.createDefaultPersonalEmailAddress(person, getContactsForm().getEmail());
 	person.getDefaultEmailAddress().setVisibleToPublic(getContactsForm().isEmailAvailable());
 
@@ -205,18 +253,60 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 
     }
 
-    protected void fillResidenceInformation(final Person person) {
-	person.setAddress(getResidenceInformationForm().getAddress());
-	person.setArea(getResidenceInformationForm().getArea());
-	person.setAreaCode(getResidenceInformationForm().getAreaCode());
-	person.setAreaOfAreaCode(getResidenceInformationForm().getAreaOfAreaCode());
-	person.setDistrictOfResidence(getResidenceInformationForm().getDistrictOfResidence());
-	person.setDistrictSubdivisionOfResidence(getResidenceInformationForm().getDistrictSubdivisionOfResidence());
-	person.setParishOfResidence(getResidenceInformationForm().getParishOfResidence());
-	person.setCountryOfResidence(getResidenceInformationForm().getCountryOfResidence());
+    protected void fillResidenceInformation() {
+
+	getStudentCandidacy().setDistrictOfResidence(getResidenceInformationForm().getDistrictOfResidence());
+	getStudentCandidacy()
+		.setDistrictSubdivisionOfResidence(getResidenceInformationForm().getDistrictSubdivisionOfResidence());
+	getStudentCandidacy().setDislocatedFromPermanentResidence(
+		getResidenceInformationForm().getDislocatedFromPermanentResidence());
+
+	if (getResidenceInformationForm().getDislocatedFromPermanentResidence()) {
+	    getStudentCandidacy().setSchoolTimeDistrictOfResidence(
+		    getResidenceInformationForm().getSchoolTimeDistrictOfResidence());
+	    getStudentCandidacy().setSchoolTimeDistrictSubDivisionOfResidence(
+		    getResidenceInformationForm().getSchoolTimeDistrictSubdivisionOfResidence());
+	}
+
+	getStudentCandidacy().setCountryOfResidence(getResidenceInformationForm().getCountryOfResidence());
+
+	final Person person = getStudentCandidacy().getPerson();
+	if (getResidenceInformationForm().getDislocatedFromPermanentResidence()) {
+	    final PhysicalAddress physicalAddress = person.hasDefaultPhysicalAddress() ? person.getDefaultPhysicalAddress()
+		    : PhysicalAddress.createDefaultPersonalPhysicalAddress(person);
+
+	    final PhysicalAddressData physicalAddressData = new PhysicalAddressData(getResidenceInformationForm()
+		    .getSchoolTimeAddress(), getResidenceInformationForm().getSchoolTimeAreaCode(), getResidenceInformationForm()
+		    .getSchoolTimeAreaOfAreaCode(), getResidenceInformationForm().getSchoolTimeArea(),
+		    getResidenceInformationForm().getSchoolTimeParishOfResidence(), getResidenceInformationForm()
+			    .getSchoolTimeDistrictSubdivisionOfResidence(), getResidenceInformationForm()
+			    .getSchoolTimeDistrictOfResidence(), Country.readDefault());
+
+	    physicalAddress.edit(physicalAddressData);
+	}
+
+	if (getResidenceInformationForm().getCountryOfResidence().isDefaultCountry()) {
+
+	    final PhysicalAddressData physicalAddressData = new PhysicalAddressData(getResidenceInformationForm().getAddress(),
+		    getResidenceInformationForm().getAreaCode(), getResidenceInformationForm().getAreaOfAreaCode(),
+		    getResidenceInformationForm().getArea(), getResidenceInformationForm().getParishOfResidence(),
+		    getResidenceInformationForm().getDistrictSubdivisionOfResidence(), getResidenceInformationForm()
+			    .getDistrictOfResidence(), getResidenceInformationForm().getCountryOfResidence());
+
+	    if (!getResidenceInformationForm().getDislocatedFromPermanentResidence()) {
+		final PhysicalAddress residenceAddress = person.hasDefaultPhysicalAddress() ? person.getDefaultPhysicalAddress()
+			: PhysicalAddress.createDefaultPersonalPhysicalAddress(person);
+		residenceAddress.edit(physicalAddressData);
+	    } else {
+		new PhysicalAddress(person, PartyContactType.PERSONAL, false, physicalAddressData);
+
+	    }
+	}
+
     }
 
-    protected void fillFiliation(final Person person) {
+    protected void fillFiliation() {
+	final Person person = getStudentCandidacy().getPerson();
 	person.setDistrictOfBirth(getFiliationForm().getDistrictOfBirth());
 	person.setDistrictSubdivisionOfBirth(getFiliationForm().getDistrictSubdivisionOfBirth());
 	person.setNameOfFather(getFiliationForm().getFatherName());
@@ -228,7 +318,14 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	person.setCountryOfBirth(getFiliationForm().getCountryOfBirth());
     }
 
-    protected void fillPersonalInformation(final Person person) {
+    protected void fillPersonalInformation() {
+
+	getStudentCandidacy().setGrantOwnerType(getPersonalInformationForm().getGrantOwnerType());
+	getStudentCandidacy().setProfessionalCondition(getPersonalInformationForm().getProfessionalCondition());
+	getStudentCandidacy().setProfessionType(getPersonalInformationForm().getProfessionType());
+	getStudentCandidacy().setMaritalStatus(getPersonalInformationForm().getMaritalStatus());
+
+	final Person person = getStudentCandidacy().getPerson();
 	person.setEmissionDateOfDocumentIdYearMonthDay(getPersonalInformationForm().getDocumentIdEmissionDate());
 	person.setExpirationDateOfDocumentIdYearMonthDay(getPersonalInformationForm().getDocumentIdExpirationDate());
 	person.setEmissionLocationOfDocumentId(getPersonalInformationForm().getDocumentIdEmissionLocation());

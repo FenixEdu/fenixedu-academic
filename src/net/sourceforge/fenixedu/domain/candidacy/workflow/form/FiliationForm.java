@@ -6,16 +6,19 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+
 public class FiliationForm extends Form {
 
-    private static final Integer DEFAULT_COUNTRY_ID = Integer.valueOf(1);
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
     private YearMonthDay dateOfBirth;
 
@@ -38,12 +41,11 @@ public class FiliationForm extends Form {
     }
 
     public static FiliationForm createFromPerson(final Person person) {
-	final Country nationality = (person.hasRole(RoleType.EMPLOYEE)) ? person.getCountry() : RootDomainObject.getInstance()
-		.readCountryByOID(DEFAULT_COUNTRY_ID);
+	final Country nationality = (person.hasRole(RoleType.EMPLOYEE)) ? person.getCountry() : Country.readDefault();
 
 	return new FiliationForm(person.getDateOfBirthYearMonthDay(), person.getDistrictOfBirth(), person
 		.getDistrictSubdivisionOfBirth(), person.getNameOfFather(), person.getNameOfMother(), nationality, person
-		.getParishOfBirth(), RootDomainObject.getInstance().readCountryByOID(DEFAULT_COUNTRY_ID));
+		.getParishOfBirth(), Country.readDefault());
     }
 
     private FiliationForm(YearMonthDay dateOfBirth, String districtOfBirth, String districtSubdivisionOfBirth, String fatherName,
@@ -125,7 +127,7 @@ public class FiliationForm extends Form {
 
     @Override
     public List<LabelFormatter> validate() {
-	return Collections.EMPTY_LIST;
+	return Collections.emptyList();
     }
 
     @Override

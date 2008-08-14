@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.util.EntryPhase;
 
 import org.joda.time.DateTime;
 
+//TODO: Refactor Mother, Father and Spouse attributes to new Object (e.g. RelativeInformation)
 public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
     public StudentCandidacy() {

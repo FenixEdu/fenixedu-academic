@@ -3,14 +3,18 @@ package net.sourceforge.fenixedu.domain.candidacy.workflow.form;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.GrantOwnerType;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.ProfessionType;
+import net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PersonalInformationForm extends Form {
 
@@ -33,9 +37,15 @@ public class PersonalInformationForm extends Form {
 
     private String socialSecurityNumber;
 
+    private ProfessionType professionType;
+
+    private ProfessionalSituationConditionType professionalCondition;
+
     private String profession;
 
     private MaritalStatus maritalStatus;
+
+    private GrantOwnerType grantOwnerType;
 
     public PersonalInformationForm() {
 	super();
@@ -56,6 +66,8 @@ public class PersonalInformationForm extends Form {
 	this.profession = profession;
 	this.socialSecurityNumber = socialSecurityNumber;
 	this.username = username;
+	this.professionalCondition = ProfessionalSituationConditionType.STUDENT;
+	this.grantOwnerType = GrantOwnerType.STUDENT_WITHOUT_SCHOLARSHIP;
     }
 
     public static PersonalInformationForm createFromPerson(final Person person) {
@@ -137,6 +149,22 @@ public class PersonalInformationForm extends Form {
 	this.profession = profession;
     }
 
+    public ProfessionType getProfessionType() {
+	return professionType;
+    }
+
+    public void setProfessionType(ProfessionType professionType) {
+	this.professionType = professionType;
+    }
+
+    public ProfessionalSituationConditionType getProfessionalCondition() {
+	return professionalCondition;
+    }
+
+    public void setProfessionalCondition(ProfessionalSituationConditionType professionalCondition) {
+	this.professionalCondition = professionalCondition;
+    }
+
     public String getSocialSecurityNumber() {
 	return socialSecurityNumber;
     }
@@ -151,6 +179,14 @@ public class PersonalInformationForm extends Form {
 
     public void setUsername(String username) {
 	this.username = username;
+    }
+
+    public GrantOwnerType getGrantOwnerType() {
+	return grantOwnerType;
+    }
+
+    public void setGrantOwnerType(GrantOwnerType grantOwnerType) {
+	this.grantOwnerType = grantOwnerType;
     }
 
     @Override

@@ -41,4 +41,7 @@ function executeWithTempFile() {
 }
 
 execute "Altering Inquiries Tables" alterInquiriesTables.sql
+execute "Adding RAIDES columns" addRaidesColumns.sql
+execute "Setting default country" SetDefaultCountry.sql
+
 
