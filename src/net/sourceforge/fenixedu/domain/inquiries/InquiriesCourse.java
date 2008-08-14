@@ -117,6 +117,10 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 	InquiriesCourse inquiriesCourse = new InquiriesCourse(inquiriesRegistry);
 	inquiriesCourse.setAnswerDuration(inquiryDTO.getAnswerDuration());
 
+	final InquiriesStudentExecutionPeriod inquiriesStudentExecutionPeriod = inquiriesRegistry.getStudent().getStudent()
+		.getInquiriesStudentExecutionPeriod(inquiriesRegistry.getExecutionPeriod());
+	inquiriesCourse.setWeeklyHoursSpentInClassesSeason(inquiriesStudentExecutionPeriod.getWeeklyHoursSpentInClassesSeason());
+
 	setAnswers(inquiryDTO, inquiriesCourse);
 
 	inquiriesRegistry.setState(InquiriesRegistryState.ANSWERED);
