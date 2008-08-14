@@ -7,11 +7,14 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -19,6 +22,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 
@@ -322,4 +326,16 @@ public class RootCurriculumGroup extends RootCurriculumGroup_Base {
 	return result;
     }
 
+    public void createNoCourseGroupCurriculumGroupEnrolment(final StudentCurricularPlan studentCurricularPlan,
+	    final CurricularCourse curricularCourse, final ExecutionSemester executionSemester,
+	    final NoCourseGroupCurriculumGroupType groupType) {
+	
+	CurriculumGroup extraCurricularGroup = getNoCourseGroupCurriculumGroup(groupType);
+	if (extraCurricularGroup == null) {
+	    extraCurricularGroup = NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(groupType, this);
+	}
+
+	new Enrolment(studentCurricularPlan, extraCurricularGroup, curricularCourse, executionSemester,
+		EnrollmentCondition.VALIDATED, AccessControl.getUserView().getUtilizador());
+    }
 }

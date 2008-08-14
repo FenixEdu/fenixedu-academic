@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -26,7 +25,6 @@ import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
 
 import org.joda.time.YearMonthDay;
@@ -518,22 +516,6 @@ public class CurriculumGroup extends CurriculumGroup_Base {
 	}
 
 	return false;
-    }
-
-    final public void createNoCourseGroupCurriculumGroupEnrolment(final StudentCurricularPlan studentCurricularPlan,
-	    final CurricularCourse curricularCourse, final ExecutionSemester executionSemester,
-	    final NoCourseGroupCurriculumGroupType groupType) {
-	if (!isRoot()) {
-	    throw new DomainException("error.no.root.curriculum.group");
-	}
-
-	CurriculumGroup extraCurricularGroup = getNoCourseGroupCurriculumGroup(groupType);
-	if (extraCurricularGroup == null) {
-	    extraCurricularGroup = NoCourseGroupCurriculumGroup.createNewNoCourseGroupCurriculumGroup(groupType, this);
-	}
-
-	new Enrolment(studentCurricularPlan, extraCurricularGroup, curricularCourse, executionSemester,
-		EnrollmentCondition.VALIDATED, AccessControl.getUserView().getUtilizador());
     }
 
     final public NoCourseGroupCurriculumGroup getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType groupType) {
