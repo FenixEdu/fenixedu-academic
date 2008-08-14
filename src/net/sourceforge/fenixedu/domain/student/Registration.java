@@ -91,6 +91,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
+import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.Checked;
@@ -2866,7 +2867,8 @@ public class Registration extends Registration_Base {
 	    if (getDegreeType() == DegreeType.MASTER_DEGREE) {
 		return getLastStudentCurricularPlan().getMasterDegreeThesis().getProofDateYearMonthDay().toLocalDate();
 	    } else {
-		return getDissertationEnrolment().getThesis().getCurrentDiscussedDate().toLocalDate();
+		final Thesis  thesis = getDissertationEnrolment().getThesis();
+		return thesis.hasCurrentDiscussedDate() ? thesis.getCurrentDiscussedDate().toLocalDate() : null;
 	    }
 	}
 
