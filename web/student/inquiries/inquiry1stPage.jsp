@@ -24,7 +24,7 @@
 
 <h3 class="separator2 mtop2"><span style="font-weight: normal ;"><bean:message key="title.inquiries.separator.courses_1" bundle="INQUIRIES_RESOURCES"/></span></h3>
 
-<bean:message key="message.inquiries.anonimousFromNow" bundle="INQUIRIES_RESOURCES"/>
+<span class="success0"><bean:message key="message.inquiries.anonimousFromNow" bundle="INQUIRIES_RESOURCES"/></span>
 
 <div class="forminline dinline">
 	<div class="relative">
